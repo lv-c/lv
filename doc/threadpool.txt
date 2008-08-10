@@ -1,0 +1,14 @@
+thread pool:
+参考  boost::thread_pool
+
+1。 Task 的 Schedule, 作为模板参数。当不能再加入新的任务时， 阻塞起来。
+	1)FIFO
+	2)LIFO (Is it useful?)
+	3)(Static) Priority
+2。 线程的数量。
+	1)开始时指定数量，可以动态设置新的数量
+	2)开始时指定数量， 不可以设置新的数量
+3。	How to shutdown
+	1)等待所有任务完成
+	2)等待当前所有任务的完成(先清空任务列队)
+	3)暴力关闭

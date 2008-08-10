@@ -1,0 +1,42 @@
+Interface:
+IFileIO		-- interface for file readers and writers
+	-- 	fulfil(string, BufferPtr) : void throw(file_io_error).	synchronous operation
+	--  add_task(string, BufferPtr)	: IOFuture . asynchronous operation for asynchronous readers/writers, otherwise it has the same functionality as fulfil.
+
+
+IOTask 
+1) use exception or return value
+	exception:	A : the client side need not handle the result explicitly. Instead it could just pass the exception through. Exceptions contain error messages
+			    D : the client side may forget to handle the exception. lua doesn't support exceptions
+
+	Use  EXCEPTION
+
+2) resource id - use string or wstring		(or use template to support both or even more)
+	template : D : a concrete reader or writer can just handle a definite id type
+	wstring	: D : it's a waste of memory, especially in linux where wchar_t takes 4 bytes.
+	string : A : it can also handle utf-8 encoding?
+
+
+	Use string.
+
+
+Declare:
+
+IOTask	:	public boost::promise<void>
+	==	file_	: boost::shared_ptr<string>
+	==	buffer_	: BufferPtr
+
+IOFuture : public boost::future<void>
+	==	file_	: boost::shared_ptr<string>
+	==	buffer_	: BufferPtr
+
+
+
+AsynFileIO	-- turn synchronous file io into asynchronous one
+
+template<SynFileIO>
+AsynFileIO
+	--	add_task
+	--	clear_tasks		clear all the pending tasks
+	--	set_thread_num
+	--	get_thread_num

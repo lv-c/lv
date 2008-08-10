@@ -1,0 +1,38 @@
+参考：
+
+1。传奇脚本
+2。WOW界面
+
+
+
+研究：
+1。RPC
+2。脚本写逻辑层？
+
+
+
+luabind:
+
+#define LUABIND_NO_ERROR_CHECKING　可使速度加快（不知道加快多少）
+
+
+luabind 可以与 LuaWrapper 并存（猜的），也可以加入自己的 FuctionWrap 来实现　RPC
+
+
+
+SQL:(http://lists.boost.org/Archives/boost/2007/03/117971.php)
+
+In my case I have written a C++ binding for PostgreSQL's libpq which
+allows me to define queries as functors:
+
+Query<string,int> insert_thing(db, "insert into things(name,qty) values ($1,$2)");
+SingletonQuery<int, string> count_things(db, "select sum(qty) from
+things where name=$1");
+
+insert_thing("table",1);
+insert_thing("chair",4);
+int n_pens = count_things("pen"); 
+
+
+
+Others: SOCI
