@@ -1,5 +1,5 @@
 // *********************************************************************
-//  Config   version:  1.0   ¡¤  date: 08/04/2008
+//  Level   version:  1.0   ¡¤  date: 09/02/2008
 //  --------------------------------------------------------------------
 //  
 //  --------------------------------------------------------------------
@@ -7,23 +7,20 @@
 // *********************************************************************
 // 
 // *********************************************************************
-#ifndef LV_CONFIG_HPP
-#define LV_CONFIG_HPP
 
-#include <lv/IntType.hpp>
+#ifndef LV_LEVEL_HPP
+#define LV_LEVEL_HPP
 
 
-#if defined(linux) || defined(__linux) || defined(__linux__)
-#	define LV_PLATFORM_LINUX
+namespace lv { namespace log {
 
-#elif defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
-#	define LV_PLATFORM_WINDOWS
+	enum level {
+		debug = 0,
+		info,
+		error,
+		fatal
+	};
 
-#	pragma warning(disable: 4819)
+} }
 
-#else
-#	error "Unknown platform"
-
-#endif
-
-#endif // LV_CONFIG_HPP
+#endif // LV_LEVEL_HPP

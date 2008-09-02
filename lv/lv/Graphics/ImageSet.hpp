@@ -1,5 +1,5 @@
 // *********************************************************************
-//  Config   version:  1.0   ¡¤  date: 08/04/2008
+//  ImageSet   version:  1.0   ¡¤  date: 08/23/2008
 //  --------------------------------------------------------------------
 //  
 //  --------------------------------------------------------------------
@@ -7,23 +7,34 @@
 // *********************************************************************
 // 
 // *********************************************************************
-#ifndef LV_CONFIG_HPP
-#define LV_CONFIG_HPP
 
-#include <lv/IntType.hpp>
+#ifndef LV_IMAGESET_HPP
+#define LV_IMAGESET_HPP
+
+#include <vector>
+#include <lv/Graphics/Rect.hpp>
+
+namespace lv
+{
+	class ImagePos
+	{
+	public:
+		Rect	bbox;		// Bound box
+		Point	offset;
+
+		ImagePos(Rect const & bbox, Point const & offset)
+			: bbox(bbox)
+			, offset(offset)
+		{
+		}
+	};
 
 
-#if defined(linux) || defined(__linux) || defined(__linux__)
-#	define LV_PLATFORM_LINUX
+	class ImageSet : public std::vector<ImagePos>
+	{
 
-#elif defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
-#	define LV_PLATFORM_WINDOWS
+	};
+}
 
-#	pragma warning(disable: 4819)
 
-#else
-#	error "Unknown platform"
-
-#endif
-
-#endif // LV_CONFIG_HPP
+#endif // LV_IMAGESET_HPP

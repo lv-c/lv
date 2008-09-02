@@ -13,11 +13,190 @@
 
 #include <vector>
 #include <boost/shared_ptr.hpp>
+#include <boost/assert.hpp>
 
 namespace lv
 {
 	typedef std::vector<char>	Buffer;
 	typedef boost::shared_ptr<Buffer>	BufferPtr;
+
+	template <typename T> class ConstBufferRefT;
+	template <typename T> class BufferRefT;
+
+	typedef ConstBufferRefT<char>	ConstBufferRef;
+	typedef BufferRefT<char>	BufferRef;
+
+
+	template <typename T>
+	class ConstBufferRefT
+	{
+		T const * data_;
+		size_t	size_;
+
+		boost::shared_ptr<std::vector<T> >	holder_;
+
+	public:
+		typedef T const & const_reference;
+
+
+		typedef T const * iterator;
+		typedef T const * const_iterator;
+
+
+		ConstBufferRefT()
+			: data_(NULL)
+			, size_(0)
+		{
+		}
+
+		ConstBufferRefT(T const * data, size_t size)
+			: data_(data)
+			, size_(size)
+		{
+		}
+
+		ConstBufferRefT(std::vector<T> const & buf)
+			: data_(&buf[0])
+			, size_(buf.size())
+		{
+		}
+
+		ConstBufferRefT(boost::shared_ptr<std::vector<T> > & buf_ptr)
+			: holder_(buf_ptr)
+			, data_(&(*buf_ptr)[0])
+			, size_(buf_ptr->size())
+		{
+		}
+
+		T const * data() const
+		{
+			return data_;
+		}
+
+		size_t size() const 
+		{
+			return size_;
+		}
+
+		bool empty() const
+		{
+			return data_ == NULL || size_ == 0;
+		}
+
+		const_iterator begin() const
+		{
+			return data_;
+		}
+
+		const_iterator end() const
+		{
+			return data_ + size_;
+		}
+
+		const_reference operator[] (size_t index) const
+		{
+			BOOST_ASSERT(data_ != NULL);
+			BOOST_ASSERT(index < size_);
+			return data_[index];
+		}
+	};
+
+	template <typename T>
+	class BufferRefT
+	{
+		T * data_;
+		size_t size_;
+
+		boost::shared_ptr<std::vector<T> >	holder_;
+
+	public:
+	
+		typedef T & reference;
+		typedef T const & const_reference;
+
+		typedef T * iterator;
+		typedef T const * const_iterator;
+
+		BufferRefT()
+			: data_(NULL)
+			, size_(0)
+		{
+		}
+
+		BufferRefT(T * data, size_t size)
+			: data_(data)
+			, size_(size)
+		{
+		}
+
+		BufferRefT(std::vector<T> & buf)
+			: data_(&buf[0])
+			, size_(buf.size())
+		{
+		}
+
+		BufferRefT(boost::shared_ptr<std::vector<T> > & buf_ptr)
+			: holder_(buf_ptr)
+			, data_(&(*buf_ptr)[0])
+			, size_(buf_ptr->size())
+		{
+		}
+
+
+		T * data()
+		{
+			return data_;
+		}
+
+		T const * data() const
+		{
+			return data_;
+		}
+
+		size_t	size() const
+		{
+			return size_;
+		}
+
+		bool empty() const
+		{
+			return data_ == NULL || size_ == 0;
+		}
+
+		iterator begin()
+		{
+			return data_;
+		}
+		const_iterator begin() const
+		{
+			return data_;
+		}
+
+		iterator end()
+		{
+			return data_ + size_;
+		}
+
+		const_iterator end() const
+		{
+			return data_ + size_;
+		}
+
+		reference operator [] (size_t index)
+		{
+			BOOST_ASSERT(data_ != NULL);
+			BOOST_ASSERT(index < size_);
+			return data_[index];
+		}
+
+		const_reference operator[] (size_t index) const
+		{
+			BOOST_ASSERT(data_ != NULL);
+			BOOST_ASSERT(index < size_);
+			return data_[index];
+		}
+	};
+
 
 	namespace buffer
 	{

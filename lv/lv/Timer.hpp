@@ -85,7 +85,7 @@ namespace lv
 			}
 		}
 		
-		// return how many seconds has elapsed
+		// return the seconds that has elapsed
 		double	elapsed() const
 		{
 			if(paused_)

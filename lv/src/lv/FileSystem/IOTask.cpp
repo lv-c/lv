@@ -5,6 +5,6 @@ namespace lv
 {
 	void IOTask::operator ()()
 	{
-		file_io_->fulfill(file_, buffer_);
+		file_io_->fulfill(*file_, buffer_);
 	}
 }

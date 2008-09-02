@@ -32,14 +32,30 @@ namespace lv
 		{
 		}
 
+		/** 
+		 * Add a task into the queue and block until it's finished.
+		 * @see IFileIO::fulfill(std::string const & file, BufferPtr buffer)
+		 * @exception lv::file_io_error on failure
+		 */
 		virtual void fulfill(std::string const & file, BufferPtr buffer)
 		{
-			syn_filio_->fulfill(file, buffer);
+			IOFuture future = add_task(file, buffer);
+
+			try
+			{
+				future();
+			}
+			catch(std::runtime_error const & err)
+			{
+				throw file_io_error(err.what());
+			}
 		}
 
 		virtual	IOFuture add_task(std::string const & file, BufferPtr buffer)
 		{
-			pool_.add_task(IOTask(file, buffer, syn_filio_));
+			IOTask task(file, buffer, syn_filio_);
+			pool_.add_task(task);
+			return IOFuture(task);
 		}
 
 

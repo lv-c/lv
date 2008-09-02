@@ -12,6 +12,9 @@
 #define LV_EXCEPTION_HPP
 
 #include <stdexcept>
+#include <string>
+#include <sstream>
+#include <lv/Config.hpp>
 
 namespace lv
 {
@@ -40,6 +43,27 @@ namespace lv
 	// Defines some common exceptions
 	DEFINE_EXCEPTION_MSG(io_error, std::runtime_error);
 	DEFINE_EXCEPTION_MSG(file_io_error, io_error);
+
+
+#ifdef LV_PLATFORM_WINDOWS
+
+#include <dxerr9.h>
+
+	namespace detail
+	{
+		inline std::string file_line_hr(std::string const & file, int line, HRESULT hr)
+		{
+			std::ostringstream 	oss;
+			oss << file << " : " << line << " : " << DXGetErrorString9A(hr);
+			return oss.str();
+		}
+	}
+
+
+// DirectX. throw if failed
+#define DX_TIF(expr) { HRESULT _hr = expr; if(FAILED(_hr)) { throw std::runtime_error(detail::file_line_hr(__FILE__, __LINE__, _hr));} }
+
+#endif
 }
 
 

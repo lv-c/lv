@@ -1,29 +1,51 @@
 // *********************************************************************
-//  RawFileReader   version:  1.0   ·  date: 08/09/2008
+//  Font   version:  1.0   ·  date: 08/23/2008
 //  --------------------------------------------------------------------
-//  直接读取磁盘文件
+//  
 //  --------------------------------------------------------------------
 //  Copyright (C) jcfly(lv.jcfly@gmail.com) 2008 - All Rights Reserved
 // *********************************************************************
 // 
 // *********************************************************************
 
-#ifndef LV_RAWFILEREADER_HPP
-#define LV_RAWFILEREADER_HPP
+#ifndef LV_FONT_HPP
+#define LV_FONT_HPP
 
-#include <lv/FileSystem/IFileIO.hpp>
+#include <lv/Graphics/ColorRect.hpp>
 
 namespace lv
 {
-	class RawFileReader : public IFileIO
+	
+	class Interpreter
 	{
 	public:
 
-		/** 
-		 * @see IFileIO::fulfill
-		 */
-		virtual void	fulfill(std::string const & file, BufferPtr buffer);
+
+
+		void	operator () (std::wstring const & txt, bool calc_rect)
+		{
+
+		}
+	};
+
+	class Formater
+	{
+
+	};
+
+
+	class Font
+	{
+	public:
+
+		enum TextFormat
+		{
+
+		};
+
+		void	draw_text(std::wstring const & txt, Rect const & rect, ColorRect const & colors, TextFormat format);
+
 	};
 }
 
-#endif // LV_RAWFILEREADER_HPP
+#endif // LV_FONT_HPP

@@ -72,6 +72,9 @@ namespace lv
 		/**
 		 * Get the next task that should be executed
 		 * If the queue is empty, block until it's not empty.
+		 * Note that this function can be interrupted, which will throw a boost::thread_interrupted
+		 * exception.
+		 * @see interrupt_consumers
 		 */
 		task_type get() // throw(boost::thread_interrupted)
 		{

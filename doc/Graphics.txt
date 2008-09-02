@@ -1,0 +1,127 @@
+Requirements:
+1.Supports Direct3D ,OpenGL in Windows and OpenGL in linux.
+2.Supports RRT(render to texture) when possible.
+3.Font (freetype?)
+4.Platform independent image loading. Supports common image formats such as bmp, jpeg, dds and png?	
+5.Render streams ? Render layers?
+
+
+RenderLayer:
+1.Purpose:
+	1)Splits the whole scene into some independent layers. Each layer can be rendered to a texture if RTT is supported. Then, if there are no changes in a layer, no redraw is required.
+	2)Queues all the drawing requests(including images, shapes and texts). If there are no changes in a layer, no recomputations of the requests are required even if RTT is not supported.
+	3)Where to use : 
+		UI rendering - an ideal scenario to use this technology
+		Tiles rendering - render a larger scene to a texture, compared with the game window. If the area to render is within this scene, there's no need to redraw the scene.
+2.Functionalities:
+	1)
+
+Render queue(or render layer ?):
+	1)Queues render requests or execute the requests immediately
+	2)bind a render target (otherwise render directly to the device)
+	3)Shift - shift the positions of all the render requests in the queue.
+	4)check_bound - remove all the render requests which are out of bound
+
+
+Render Target:
+	1)bind a texture
+
+
+
+Design:
+1.How to copy raw pixel data into textures
+	1)supported pixel formats : only rgb and argb
+	2)endian --	rgb, bgr, argb, bgra....	-- layout
+	3)
+	
+2.How to wrap raw pixel data
+3.Texture loading.
+	1)call D3DXCreateTextureFromMemory... directly
+	2)
+
+
+4.Render layer:
+	1)- Constructor(Renderer)
+	2)- bind_target(Texture)
+	3)- add_renderable
+5.RenderCommand
+
+
+-- 
+
+Using ARB_texture_env_combine (core in OGL1.3+) this is very easy.
+Simply call
+
+glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_COMBINE_ARB);
+
+glTexEnvi(GL_TEXTURE_ENV, GL_COMBINE_RGB_ARB, GL_MODULATE;
+glTexEnvi(GL_TEXTURE_ENV, GL_SOURCE0_RGB_ARB, GL_TEXTURE0);
+glTexEnvi(GL_TEXTURE_ENV, GL_SOURCE1_RGB_ARB, GL_TEXTURE1); (or whatever)
+
+glTexEnvi(GL_TEXTURE_ENV, GL_RGB_SCALE_ARB, 2);
+
+Should take care of a 2x modulate on the colour channel...
+
+
+Font:
+All Functionalities:
+1.initialize freetype
+2.create textures and get the view
+3.copy characters to the view
+4.format strings 
+5.render strings
+6.cache characters
+
+some parts:
+1. GIL extension : 1, 3		-- FreeType
+2. Cache : 2(get the view), 6
+3. Rendering : 2(create textures), 4, 5
+
+
+
+
+1. Make a gil extension for freetype and build a font manager on top of it.
+2. The gil extension:		--  Make a texture class and a renderer class for GIL
+	1)GifFont?
+	2)Determine the size of a slot (by user?)
+3.Font manager
+	1)Some parameters: size of the image, (least) number of characters to cache, encoding(unicode?), size of the font
+	2)Caching policy(rle). Write a generic cache module?
+		- key , value (map or hash map)
+		- Strategies : lru, expire, 
+			-- 
+		- Lock strategies : lock , no lock
+			-- provides an empty mutex 
+		- concept check?
+	3)use ImageSet to store the glyphs ?
+		- bound box & offset
+		- one can add or modify an element, but can't delete one.  Problem : dangling IDs.
+
+	4) Formater or Inpterpreter 
+		both: Interpreters break text into some lines, Formaters format these lines.  Use XML ??
+		Interpreter:	- two rounds : the first round only computes the dimensions and the offset of each line, and the second round renders the text
+		Q: can interpreters work together with each other	: no
+		Q: how about formaters : 
+			- Input: text, width of the clip rectangle
+			- Output: 
+				= the size and the baseline of each line
+				= 
+
+		implement a default XML interpreter. the user can define the behaviors of the tags.
+		<font face='宋体' size=12 color=#FFFFFFFF>你好吗，在干什么</font><image name='hello' file='abc.jpg'>
+		
+
+
+Font: cache characters, 
+	- get the information of a specified character
+	- render a character (or a whole string?)
+	< 
+
+TextRenderer : base class for text rendering
+	- render a string (string, bound, colors, format)
+
+
+
+
+OGRE:
+RTT

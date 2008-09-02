@@ -18,8 +18,8 @@
 #include <boost/thread.hpp>
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/condition.hpp>
-#include <boost/foreach.hpp>
 
+#include <lv/Foreach.hpp>
 #include <lv/Concurrent/TaskQueue.hpp>
 #include <lv/Concurrent/FIFOQueue.hpp>
 
@@ -43,7 +43,7 @@ namespace lv
 
 		typedef boost::mutex::scoped_lock	scoped_lock;
 		boost::mutex	mutex_;
-		// guarantee that at most one thread is executing 'resize' at one time
+		// guarantees that at most one thread is executing 'resize' at one time
 		boost::mutex	resize_mutex_;
 
 		// threads which are terminated but might not have been fully destructed.
@@ -60,7 +60,10 @@ namespace lv
 
 	public:
 
-		ThreadPool(size_t initial_threads = 0)	// throw(boost::thread_resource_error) (only if initial_threads > 0)
+		/**
+		 * @exception boost::thread_resource_error
+		 */
+		ThreadPool(size_t initial_threads = 0)
 			: kill_all_threads_(false)
 			, thread_num_(0)
 			, target_thread_num_(0)
@@ -78,6 +81,10 @@ namespace lv
 		}
 
 
+		/** 
+		 * Puts a task into the queue.
+		 * task_type::operator () should not throw an exception.
+		 */ 
 		void	add_task(task_type const & task)
 		{
 			task_queue_.put(task);
@@ -102,10 +109,11 @@ namespace lv
 
 		/**
 		 * Changes the number of worker threads
-		 * @param wait wait for the threads terminated or not when the number of threads running is larger
+		 * @param wait wait for the threads terminated when the number of threads running is larger
 		 *	than the target number.
+		 * @exception boost::thread_resource_error when error creating new threads.
 		 */
-		void	resize(size_t num, bool wait = false)	// throw(boost::thread_resource_error) (only if num > this->thread_num_)
+		void	resize(size_t num, bool wait = false)	
 		{
 			scoped_lock resize_lock(resize_mutex_);
 
@@ -132,7 +140,7 @@ namespace lv
 				{
 					resize_done_.wait(lock);
 
-					BOOST_FOREACH(boost::thread & thread, terminated_threads_)
+					foreach(boost::thread & thread, terminated_threads_)
 					{
 						thread.join();
 					}
@@ -164,7 +172,7 @@ namespace lv
 				{
 					task_type task = task_queue_.get();
 
-					// execute the task. TODO : handle exceptions ?
+					// execute the task. 
 					task();
 				}
 				catch (boost::thread_interrupted const &)

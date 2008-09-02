@@ -11,16 +11,23 @@
 #define LV_SIZE_HPP
 
 #include <boost/operators.hpp>
+#include <boost/assert.hpp>
 
 namespace lv
 {
 	template<typename T>
-	struct SizeT :boost::additive<SizeT<T>, 
+	class SizeT :boost::additive<SizeT<T>, 
 		boost::multiplicative2<SizeT<T>, T,
 		boost::modable2<SizeT<T>, T,
 		boost::equality_comparable<SizeT<T> > > > >
 
 	{
+	public:
+
+		enum {
+			ele_num = 2
+		};
+
 		T	cx;
 		T	cy;
 
@@ -73,6 +80,19 @@ namespace lv
 			return *this;
 		}
 
+		T const & operator[] (size_t i) const
+		{
+			BOOST_ASSERT(i < ele_num);
+			return this->*mem_array[i];
+		}
+
+		T & operator[] (size_t i)
+		{
+			BOOST_ASSERT(i < ele_num);
+			return this->*mem_array[i];
+		}
+
+
 		SizeT abs() const
 		{
 			return SizeT(std::abs(cx), std::abs(cy));
@@ -83,6 +103,10 @@ namespace lv
 		{
 			return lhs.cx == rhs.cx && lhs.cy == rhs.cy;
 		}
+
+	private:
+
+		static T SizeT<T>::* const mem_array[ele_num];
 	};
 
 	typedef SizeT<int32>	Size;

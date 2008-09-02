@@ -22,9 +22,12 @@
 namespace lv
 {
 	class IFileIO;
+	class IOFuture;
 
 	class IOTask : public boost::promise<void>, boost::equality_comparable<IOTask>
 	{
+		friend class IOFuture;
+
 		typedef boost::shared_ptr<std::string> string_ptr;
 		string_ptr	file_;
 		BufferPtr	buffer_;

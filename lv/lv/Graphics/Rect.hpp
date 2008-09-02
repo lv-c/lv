@@ -16,10 +16,16 @@
 namespace lv
 {
 	template<typename T>
-	struct RectT : boost::additive2<RectT, PointT<T>,
+	class RectT : boost::additive2<RectT, PointT<T>,
 		boost::multiplicative2<RectT, T,
 		boost::equality_comparable<RectT> > > 
 	{
+	public:
+
+		enum {
+			ele_num = 4
+		};
+
 		T	left;
 		T	top;
 		T	right;
@@ -93,6 +99,23 @@ namespace lv
 			return PointT<T>((left + right) / 2, (top + bottom) / 2);
 		}
 
+		PointT<T>	top_left() const
+		{
+			return Point<T>(left, top);
+		}
+		PointT<T>	top_right() const
+		{
+			return Point<T>(right, top);
+		}
+		PointT<T>	bottom_left() const
+		{
+			return Point<T>(left, bottom);
+		}
+		PointT<T>	bottom_right() const
+		{
+			return Point<T>(right, bottom);
+		}
+
 		//
 		bool contains(PointT<T> const& pt)
 		{
@@ -137,11 +160,32 @@ namespace lv
 			return *this;
 		}
 
+		T const & operator[] (size_t i) const
+		{
+			BOOST_ASSERT(i < ele_num);
+			return this->*mem_array[i];
+		}
+
+		T & operator[] (size_t i)
+		{
+			BOOST_ASSERT(i < ele_num);
+			return this->*mem_array[i];
+		}
+
 		// comparison
 		friend bool operator == (RectT const& lhs, RectT const& rhs)
 		{
-			return lhs.left == rhs.left && lhs.right == rhs.right && lhs.top == rhs.top && lhs.bottom == rhs.bottom;
-		};
+			for(size_t i = 0; i < ele_num; ++i)
+			{
+				if(lhs[i] != rhs[i])
+					return false;
+			}
+			return true;
+		}
+
+	private:
+
+		static T RectT<T>::* const mem_array[ele_num];
 	};
 
 	typedef RectT<int32>	Rect;

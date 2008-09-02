@@ -1,29 +1,20 @@
 // *********************************************************************
-//  Config   version:  1.0   ·  date: 08/04/2008
+//  Foreach   version:  1.0   ·  date: 07/06/2008
 //  --------------------------------------------------------------------
-//  
+//		定义宏 foreach 来代替 BOOST_FOREACH
 //  --------------------------------------------------------------------
 //  Copyright (C) jcfly(lv.jcfly@gmail.com) 2008 - All Rights Reserved
 // *********************************************************************
 // 
 // *********************************************************************
-#ifndef LV_CONFIG_HPP
-#define LV_CONFIG_HPP
 
-#include <lv/IntType.hpp>
+#ifndef LV_FOREACH_HPP
+#define LV_FOREACH_HPP
 
+#include <boost/foreach.hpp>
 
-#if defined(linux) || defined(__linux) || defined(__linux__)
-#	define LV_PLATFORM_LINUX
-
-#elif defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
-#	define LV_PLATFORM_WINDOWS
-
-#	pragma warning(disable: 4819)
-
-#else
-#	error "Unknown platform"
-
+#ifndef foreach
+#define foreach BOOST_FOREACH
 #endif
 
-#endif // LV_CONFIG_HPP
+#endif // LV_FOREACH_HPP

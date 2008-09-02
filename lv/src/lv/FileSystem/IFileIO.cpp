@@ -7,10 +7,9 @@ namespace lv
 {
 	IOFuture IFileIO::add_task(std::string const & file, BufferPtr buffer)
 	{
-		IOTask task(shared_from_object(file), buffer, this->shared_from_this());
-		IOFuture future(task);
+		IOTask task(shared_from_object(const_cast<std::string &>(file)), buffer, this->shared_from_this());
 
 		task();
-		return future;
+		return IOFuture(task);
 	}
 }

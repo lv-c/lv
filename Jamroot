@@ -1,0 +1,43 @@
+
+import modules ;
+import os ;
+import path ;
+
+BOOST_ROOT = [ modules.peek : BOOST_ROOT ] ;
+LUA_PATH = [ modules.peek : LUA_PATH ] ;
+
+# project root
+path-constant PRJ_ROOT : . ;
+
+# DirectX SDK
+DXSDK_DIR = [ modules.peek : DXSDK_DIR ] ;
+
+# libraries to include. (conditional)
+rule include_directx ( properties * )
+{
+	local result ;
+	if <target-os>windows in $(properties)
+	{
+		result += <include>$(DXSDK_DIR)include ;
+		result += <library-path>$(DXSDK_DIR)lib ;
+	}
+	return $(result) ;
+}
+
+project lv
+	: requirements 
+		<include>lv
+		<include>$(BOOST_ROOT)
+	: usage-requirements <include>lv
+	: build-dir build
+	;
+
+using msvc : : : <compileflags>/wd4819 ;
+
+use-project /lv/lv : projects/lv ;
+# use-project /lv/D3D9Renderer : projects/bjam/lv/D3D9Renderer ;
+
+
+build-project /lv/lv ;
+
+# explicit lv ;

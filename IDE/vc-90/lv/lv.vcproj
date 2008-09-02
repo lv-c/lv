@@ -18,8 +18,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
+			OutputDirectory="..\..\..\bin"
+			IntermediateDirectory="..\..\..\build\msvc-9.0\debug\link-static"
 			ConfigurationType="4"
 			CharacterSet="1"
 			>
@@ -40,13 +40,15 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalOptions="/wd 4819"
 				Optimization="0"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				UsePrecompiledHeader="2"
+				UsePrecompiledHeader="0"
 				WarningLevel="3"
+				Detect64BitPortabilityProblems="false"
 				DebugInformationFormat="4"
 			/>
 			<Tool
@@ -158,7 +160,15 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\DSTree.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\Exception.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Foreach.hpp"
 					>
 				</File>
 				<File
@@ -166,7 +176,15 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\LRUCache.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\NullDeleter.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\NullMutex.hpp"
 					>
 				</File>
 				<File
@@ -192,7 +210,19 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\Graphics\ColorRect.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Graphics\Font.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\Graphics.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Graphics\ImageSet.hpp"
 					>
 				</File>
 				<File
@@ -213,6 +243,14 @@
 				</File>
 				<File
 					RelativePath="..\..\..\lv\lv\graphics\Texture.hpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Source Files"
+				>
+				<File
+					RelativePath="..\..\..\lv\src\lv\Graphics\Color.cpp"
 					>
 				</File>
 			</Filter>
@@ -252,19 +290,19 @@
 				Name="Source Files"
 				>
 				<File
-					RelativePath="..\..\..\lv\src\FileSystem\IFileIO.cpp"
+					RelativePath="..\..\..\lv\src\lv\FileSystem\IFileIO.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\lv\src\FileSystem\IOTask.cpp"
+					RelativePath="..\..\..\lv\src\lv\FileSystem\IOTask.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\lv\src\FileSystem\RawFileReader.cpp"
+					RelativePath="..\..\..\lv\src\lv\FileSystem\RawFileReader.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\lv\src\FileSystem\RawFileWriter.cpp"
+					RelativePath="..\..\..\lv\src\lv\FileSystem\RawFileWriter.cpp"
 					>
 				</File>
 			</Filter>
@@ -289,6 +327,42 @@
 				</File>
 				<File
 					RelativePath="..\..\..\lv\lv\Concurrent\ThreadPool.hpp"
+					>
+				</File>
+			</Filter>
+		</Filter>
+		<Filter
+			Name="Coding"
+			>
+			<Filter
+				Name="Header Files"
+				>
+				<File
+					RelativePath="..\..\..\lv\lv\Coding\Rle.hpp"
+					>
+				</File>
+			</Filter>
+		</Filter>
+		<Filter
+			Name="Log"
+			>
+			<Filter
+				Name="Header Files"
+				>
+				<File
+					RelativePath="..\..\..\lv\lv\Log\Formatter.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Log\Gather.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Log\Level.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Log\Log.hpp"
 					>
 				</File>
 			</Filter>

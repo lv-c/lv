@@ -12,14 +12,28 @@
 #define LV_D3D9TEXTURE_HPP
 
 #include <lv/Graphics/Texture.hpp>
+#include <d3d9.h>
 
 namespace lv
 {
 	class D3D9Texture : public Texture
 	{
+		LPDIRECT3DTEXTURE9	texture_;
+
 	public:
 		D3D9Texture();
 		
+		/**
+		 * @see Texture::load(ConstBufferRef buffer)
+		 * @exception std::runtime_error on failure
+		 */
+		virtual	void	load(ConstBufferRef buffer);
+
+
+		LPDIRECT3DTEXTURE9	d3d_texture() const
+		{
+			return texture_;
+		}
 	};
 }
 

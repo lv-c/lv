@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="D3D9Renderer"
-	ProjectGUID="{50F2EEAB-2922-46BF-B93B-60FA3C276CD9}"
-	RootNamespace="D3D9Renderer"
+	Name="OpenGLRenderer"
+	ProjectGUID="{4E35E796-7DBC-4F32-9FEC-F33A34757C38}"
+	RootNamespace="OpenGLRenderer"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
@@ -148,6 +148,10 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
+			<File
+				RelativePath="..\..\..\lv\src\OpenGLRenderer\OGLTexture.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -155,15 +159,9 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\..\..\lv\lv\d3d9renderer\D3D9Texture.hpp"
+				RelativePath="..\..\..\lv\lv\OpenGLRenderer\OGLTexture.hpp"
 				>
 			</File>
-		</Filter>
-		<Filter
-			Name="Resource Files"
-			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
-			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
-			>
 		</Filter>
 	</Files>
 	<Globals>

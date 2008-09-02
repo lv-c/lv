@@ -21,7 +21,8 @@ namespace lv
 	public:
 
 		/**
-		 * Synchronous operation. Throws an exception (file_io_error ?) on failure
+		 * Synchronous operation. 
+		 * @exception lv::file_io_error on failure
 		 */
 		virtual void	fulfill(std::string const & file, BufferPtr buffer) = 0;
 
