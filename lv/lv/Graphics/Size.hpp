@@ -37,6 +37,13 @@ namespace lv
 			, cy(0)
 		{
 		}
+			
+		explicit SizeT(T dim)
+			: cx(dim)
+			, cy(dim)
+		{
+		}
+
 		SizeT(T _cx, T _cy)
 			: cx(_cx)
 			, cy(_cy)

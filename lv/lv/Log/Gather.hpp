@@ -14,6 +14,7 @@
 #include <iostream>
 #include <list>
 #include <boost/function.hpp>
+#include <boost/shared_ptr.hpp>
 #include <lv/Log/Level.hpp>
 #include <lv/Foreach.hpp>
 
@@ -26,6 +27,7 @@ namespace lv
 		typedef boost::function<void (std::ostream &, log::level)> formatter_t;
 
 		typedef boost::shared_ptr<std::ostream>	ostream_ptr;
+		typedef boost::shared_ptr<Gather>	gather_ptr;
 
 		Gather(ostream_ptr os, log::level log_lvl)
 			: os_(os)
@@ -47,6 +49,16 @@ namespace lv
 		log::level log_level() const
 		{
 			return this->log_lvl_;
+		}
+
+		
+		gather_ptr clone(ostream_ptr os, log::level log_lvl)
+		{
+			gather_ptr gather(new Gather(*this));
+			gather->os_ = os;
+			gather->log_lvl_ = log_lvl;
+
+			return gather;
 		}
 
 	private:

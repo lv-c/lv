@@ -11,6 +11,7 @@
 #define LV_INTTYPE_HPP
 
 #include <boost/cstdint.hpp>
+#include <boost/type_traits/make_unsigned.hpp>
 
 namespace lv
 {
@@ -23,6 +24,43 @@ namespace lv
 	typedef boost::uint16_t	uint16;
 	typedef boost::uint32_t	uint32;
 	typedef boost::uint64_t	uint64;
+
+
+
+	// size to type
+
+	template<size_t size>
+	struct IntType;
+
+	template<>
+	struct IntType<1>
+	{
+		typedef	int8	type;
+	};
+
+	template<>
+	struct IntType<2>
+	{
+		typedef int16	type;
+	};
+
+	template<>
+	struct IntType<4>
+	{
+		typedef int32	type;
+	};
+
+	template<>
+	struct IntType<8>
+	{
+		typedef int64	type;
+	};
+
+
+	template<size_t size>
+	struct UIntType : boost::make_unsigned<typename IntType<size>::type>
+	{
+	};
 
 }
 

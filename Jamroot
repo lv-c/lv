@@ -28,6 +28,7 @@ project lv
 	: requirements 
 		<include>lv
 		<include>$(BOOST_ROOT)
+		<toolset>msvc:<define>NOMINMAX
 	: usage-requirements <include>lv
 	: build-dir build
 	;

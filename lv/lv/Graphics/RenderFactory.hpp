@@ -1,5 +1,5 @@
 // *********************************************************************
-//  Config   version:  1.0   ¡¤  date: 08/04/2008
+//  RenderFactory   version:  1.0   ¡¤  date: 09/03/2008
 //  --------------------------------------------------------------------
 //  
 //  --------------------------------------------------------------------
@@ -7,21 +7,23 @@
 // *********************************************************************
 // 
 // *********************************************************************
-#ifndef LV_CONFIG_HPP
-#define LV_CONFIG_HPP
 
-#include <lv/IntType.hpp>
+#ifndef LV_RENDERFACTORY_HPP
+#define LV_RENDERFACTORY_HPP
 
+#include <lv/Graphics/RenderFwd.hpp>
 
-#if defined(linux) || defined(__linux) || defined(__linux__)
-#	define LV_PLATFORM_LINUX
+#include <lv/Singleton.hpp>
+#include <lv/Graphics/Texture.hpp>
 
-#elif defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
-#	define LV_PLATFORM_WINDOWS
+namespace lv
+{
+	class RenderFactory : public Singleton<RenderFactory>
+	{
+	public:
 
-#else
-#	error "Unknown platform"
+		virtual TexturePtr	create_texture(Size size, PixelFormat format) = 0;
+	};
+}
 
-#endif
-
-#endif // LV_CONFIG_HPP
+#endif // LV_RENDERFACTORY_HPP

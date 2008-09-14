@@ -10,4 +10,4 @@ boost::iostreams library will easy the task of creating new streams
 3. thread-safe
 acquire the lock at the beginning of one record and release it at the end of this record.
 
-
+4. 

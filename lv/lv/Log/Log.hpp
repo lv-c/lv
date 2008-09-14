@@ -22,72 +22,52 @@
 
 namespace lv
 {
-
-	namespace detail
-	{
-		template <class Log>
-		class LogProxy
-		{
-			Log	&	log_;
-		public:
-
-			LogProxy(Log & log)
-				: log_(log)
-			{
-			}
-
-			~LogProxy()
-			{
-				log_.on_record_end();
-			}
-
-			template <typename T>
-			LogProxy & operator << (T const & t)
-			{
-				log_.log(t);
-				return *this;
-			}
-		};
-	}
-
-
 	class Log
 	{
-
-		typedef detail::LogProxy<Log>	proxy_t;
-		friend class proxy_t;
-
 		typedef boost::shared_ptr<Gather> gather_ptr;
 		std::list<gather_ptr>	gathers_;
 
 		boost::mutex	mutex_;
 
-		bool const	syn_;
 	
-		log::level	level_;	// level of the current record
+		log::level	lvl_;	// level of the current record
+
+
+		class Proxy
+		{
+			Log	&	log_;
+		public:
+
+			Proxy(Log & log)
+				: log_(log)
+			{
+			}
+
+			~Proxy()
+			{
+				log_.on_record_end();
+			}
+
+			template <typename T>
+			Proxy & operator << (T const & t)
+			{
+				log_.log(t);
+				return *this;
+			}
+		};
 
 	public:
-
-		/**
-		 * @param syn synchronize logging operations or not. Set it true if this logger
-		 *	is intended to be used in multiple threads.
-		 */
-		Log(bool syn = true)
-			: syn_(syn)
-		{
-		}
-
 
 		/**
 		 * @code 
 		 * log_(log::debug) << "hello world" << 4545;
 		 * @endcode
 		 */
-		proxy_t operator () (level lvl)
+		Proxy operator () (level lvl)
 		{
 			on_record_begin(lvl);
 
-			return proxy_t(*this);
+			return Proxy(*this);
 		}
 
 		void	add_gather(gather_ptr gather)
@@ -109,8 +89,8 @@ namespace lv
 
 		void on_record_begin(level lvl)
 		{
-			if(syn_)
-				mutex_.lock();
+			// lock
+			mutex_.lock();
 
 			this->lvl_ = lvl;
 
@@ -129,8 +109,8 @@ namespace lv
 					gather->on_record_end();
 			}
 
-			if(syn_)
-				mutex_.unlock();
+			// unlock
+			mutex_.unlock();
 		}
 
 	};

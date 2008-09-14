@@ -2,10 +2,11 @@
 //  Singleton   version:  1.0   ·  date: 09/02/2007
 //  --------------------------------------------------------------------
 //						单件模式的实现
-//				由用户负责该唯一对象的创建及销毁
-//	如果要在运行时才能判断由谁来创建该对象，可以通过 initialized 
-//	函数来查询对象是否已创建，如果还没创建，则创建之。注意这不是线程
-//	安全的
+//	有两种对象创建方式供选择：
+//	1 是静态创建， 即在第一次调用 instance 函数时由该函数创建一个静态的
+//		对象。此方式必须要编译时知道要创建的对象类型。
+//	2 是动态创建， 即由用户在运行时动态创建所需的对象。该对象类型可以是 
+//		T 或 T 的子类。
 //  --------------------------------------------------------------------
 //  Copyright (C) jcfly(lv.jcfly@gmail.com) 2007 - All Rights Reserved
 // *********************************************************************
@@ -18,18 +19,42 @@
 
 namespace lv
 {
-	template<class T>
+	/**
+	 * @param StaticAlloc if it's false, it's the user's responsibility to 
+	 *	create the single object. Otherwise a static object of type T will
+	 *	be created when the first time instance() is called.
+	 */
+	template<class T, bool StaticAlloc = false>
 	class Singleton
 	{
 	public:
 		static	T&	instance()
 		{
-			return *instance_;
+			return instance_impl<StaticAlloc>();
 		}
 
 		static bool	initialized()
 		{
 			return instance_ != NULL;
+		}
+
+	private:
+
+		Singleton( const Singleton& );
+		Singleton const & operator = (Singleton const &);
+
+
+		template <bool StaticAlloc>
+		static T & instance_impl()
+		{
+			static T obj;
+			return obj;
+		}
+
+		template <>
+		static T & instance_impl<false>()
+		{
+			return *instance_;
 		}
 
 	protected:
@@ -44,17 +69,14 @@ namespace lv
 			instance_ = NULL;
 		}
 
-	private:  
-		Singleton( const Singleton& );
-		Singleton const & operator = (Singleton const &);
 
 	private:
 
 		static	T*	instance_;
 	};
 
-	template <class T>
-	T* Singleton<T>::instance_ = NULL;
+	template <class T, bool StaticAlloc>
+	T* Singleton<T, StaticAlloc>::instance_ = NULL;
 
 }
 

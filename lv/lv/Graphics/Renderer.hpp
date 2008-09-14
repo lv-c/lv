@@ -13,6 +13,8 @@
 
 
 #include <lv/Singleton.hpp>
+#include <lv/Graphics/ColorRect.hpp>
+#include <lv/Graphics/Rect.hpp>
 
 namespace lv
 {
@@ -27,6 +29,10 @@ namespace lv
 			BL_MODULATE4X,
 			BL_ADD
 		};
+
+		virtual	Size	max_texture_size() = 0;
+
+		virtual	Size	screen_dpi() = 0;
 
 		virtual	void	begin_scene() = 0;
 		virtual	void	end_scene() = 0;

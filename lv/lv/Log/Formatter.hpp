@@ -45,7 +45,7 @@ namespace lv { namespace formatter {
 	{
 		void operator () (std::ostream & os, log::level)
 		{
-			os << Log::format("%1%%|15t|") % (timer_.elapsed() * 1000);
+			os << boost::format("%1%%|15t|") % (timer_.elapsed() * 1000);
 		}
 
 	private:
@@ -57,10 +57,10 @@ namespace lv { namespace formatter {
 	{
 		void operator () (std::ostream & os, log::level lvl)
 		{
-			static std::string const prefix [] = {
+			static std::string const tags [] = {
 				"debug:", "info:", "error:", "fatal:"
 			};
-			os << boost::format("%1%%|10t|") % prefix[lvl];
+			os << boost::format("%1%%|10t|") % tags[lvl];
 		}
 	};
 

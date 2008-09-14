@@ -13,6 +13,7 @@
 #define LV_RLE_HPP
 
 #include <boost/assert.hpp>
+#include <lv/IntType.hpp>
 
 namespace lv { namespace rle {
 
@@ -20,36 +21,6 @@ namespace lv { namespace rle {
 	size_t encode_bound(size_t src_len)
 	{
 		return src_len + (src_len >> 6) + 1;
-	}
-
-	namespace detail
-	{
-		template<size_t Size>
-		struct ele_type;
-
-		template<>
-		struct ele_type<1>
-		{
-			typedef	int8	type;
-		};
-
-		template<>
-		struct ele_type<2>
-		{
-			typedef int16	type;
-		};
-
-		template<>
-		struct ele_type<4>
-		{
-			typedef int32	type;
-		};
-
-		template<>
-		struct ele_type<8>
-		{
-			typedef int64	type;
-		};
 	}
 
 	// EleSize ø…“‘ «°°1, 2, 4, 8.
@@ -64,7 +35,7 @@ namespace lv { namespace rle {
 		if(dest_size < encode_bound(src_size))
 			throw std::invalid_argument("the destination buffer is too small");
 
-		typedef detail::ele_type<EleSize>::type	element;
+		typedef IntType<EleSize>::type element;
 		size_t ele_num = src_size / EleSize;
 
 		element const * src_ele = reinterpret_cast<element const*>(src);
@@ -141,7 +112,7 @@ namespace lv { namespace rle {
 	template<size_t EleSize>
 	size_t decode(char const * src, size_t src_size, char * dest)
 	{
-		typedef detail::ele_type<EleSize>::type	element;
+		typedef IntType<EleSize>::type	element;
 
 		element * dest_ele = reinterpret_cast<element*>(dest);
 		size_t index = 0;

@@ -10,15 +10,15 @@
 #ifndef LV_RECT_HPP
 #define LV_RECT_HPP
 
-#include <lv/Point.hpp>
-#include <lv/Size.hpp>
+#include <lv/Graphics/Point.hpp>
+#include <lv/Graphics/Size.hpp>
 
 namespace lv
 {
 	template<typename T>
-	class RectT : boost::additive2<RectT, PointT<T>,
-		boost::multiplicative2<RectT, T,
-		boost::equality_comparable<RectT> > > 
+	class RectT : boost::additive2<RectT<T>, PointT<T>,
+		boost::multiplicative2<RectT<T>, T,
+		boost::equality_comparable<RectT<T> > > > 
 	{
 	public:
 

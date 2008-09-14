@@ -1,27 +1,27 @@
 // *********************************************************************
-//  Config   version:  1.0   ¡¤  date: 08/04/2008
+//  RenderFwd   version:  1.0   ¡¤  date: 09/03/2008
 //  --------------------------------------------------------------------
-//  
+//		render system forward declaration
 //  --------------------------------------------------------------------
 //  Copyright (C) jcfly(lv.jcfly@gmail.com) 2008 - All Rights Reserved
 // *********************************************************************
 // 
 // *********************************************************************
-#ifndef LV_CONFIG_HPP
-#define LV_CONFIG_HPP
 
-#include <lv/IntType.hpp>
+#ifndef LV_RENDERFWD_HPP
+#define LV_RENDERFWD_HPP
+
+#include <boost/shared_ptr.hpp>
+
+namespace lv
+{
+	class Texture;
+	typedef boost::shared_ptr<Texture>	TexturePtr;
 
 
-#if defined(linux) || defined(__linux) || defined(__linux__)
-#	define LV_PLATFORM_LINUX
+	class Font;
+	typedef boost::shared_ptr<Font>	FontPtr;
+}
 
-#elif defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
-#	define LV_PLATFORM_WINDOWS
 
-#else
-#	error "Unknown platform"
-
-#endif
-
-#endif // LV_CONFIG_HPP
+#endif // LV_RENDERFWD_HPP

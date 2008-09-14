@@ -1,5 +1,5 @@
 // *********************************************************************
-//  Config   version:  1.0   ¡¤  date: 08/04/2008
+//  PacketException   version:  1.0   ¡¤  date: 09/13/2008
 //  --------------------------------------------------------------------
 //  
 //  --------------------------------------------------------------------
@@ -7,21 +7,31 @@
 // *********************************************************************
 // 
 // *********************************************************************
-#ifndef LV_CONFIG_HPP
-#define LV_CONFIG_HPP
 
-#include <lv/IntType.hpp>
+#ifndef LV_PACKETEXCEPTION_HPP
+#define LV_PACKETEXCEPTION_HPP
 
 
-#if defined(linux) || defined(__linux) || defined(__linux__)
-#	define LV_PLATFORM_LINUX
+#include <boost/archive/archive_exception.hpp>
 
-#elif defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
-#	define LV_PLATFORM_WINDOWS
+namespace lv
+{
 
-#else
-#	error "Unknown platform"
+	class PacketException : public boost::archive::archive_exception
+	{
+	public:
 
-#endif
+		PacketException(exception_code c)
+			: boost::archive::archive_exception(c)
+		{
+		}
 
-#endif // LV_CONFIG_HPP
+		PacketException()
+		{
+		}
+
+	};
+
+}
+
+#endif // LV_PACKETEXCEPTION_HPP
