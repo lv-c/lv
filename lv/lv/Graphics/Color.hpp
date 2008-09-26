@@ -29,11 +29,18 @@ namespace lv
 
 		typedef uint8	element;
 
+
 		static Color const white;
 		static Color const black;
+
 		static Color const red;
 		static Color const green;
 		static Color const blue;
+
+		static Color const yellow;
+		static Color const aqua;
+		static Color const fuchsia;
+
 
 		Color()
 		{
@@ -42,7 +49,7 @@ namespace lv
 
 		explicit Color(element color)
 		{
-			set(color, color, color, element(255));
+			set(color, color, color, 255);
 		}
 
 		Color(element r, element g, element b, element a = 255)

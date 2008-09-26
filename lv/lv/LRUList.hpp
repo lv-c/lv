@@ -1,7 +1,7 @@
 // *********************************************************************
 //  LRUList   version:  1.0   ¡¤  date: 09/07/2008
 //  --------------------------------------------------------------------
-//  
+//  Least recently used.
 //  --------------------------------------------------------------------
 //  Copyright (C) jcfly(lv.jcfly@gmail.com) 2008 - All Rights Reserved
 // *********************************************************************
@@ -38,6 +38,10 @@ namespace lv
 			return list_.begin();
 		}
 
+		/**
+		 * Brings the item associated with iterator @i to the front of the list and
+		 * returns the new iterator for this item.
+		 */
 		iterator	touch(iterator const & i)
 		{
 			T value = *i;
@@ -50,6 +54,9 @@ namespace lv
 			list_.erase(i);
 		}
 
+		/**
+		 * Erases and returns the LRU item.
+		 */
 		T		erase_last()
 		{
 			T value = list_.back();

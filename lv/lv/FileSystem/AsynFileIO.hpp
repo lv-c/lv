@@ -60,7 +60,7 @@ namespace lv
 
 
 		/**
-		 * Clear all the pending tasks
+		 * clears all the pending tasks
 		 */
 		void	clear_tasks()
 		{

@@ -75,7 +75,7 @@ namespace lv
 		/**
 		 * Map the given area of this texture to a gil view. 
 		 * @param PF compile-time pixel format of this texture. It should be the same as the 
-		 *	runtime format or an exception will be throw.
+		 *	runtime format or an exception will be thrown.
 		 * @return a smart pointer of the gil view. On final release, the smart pointer will
 		 *	automatically unmap the texture.
 		 * @note DO NOT hold the result long.

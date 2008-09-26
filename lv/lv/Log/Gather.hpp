@@ -52,6 +52,10 @@ namespace lv
 		}
 
 		
+		/**
+		 * Make a copy of this object with a different output stream and log level
+		 * so that these two objects have the same headers and tailers.
+		 */
 		gather_ptr clone(ostream_ptr os, log::level log_lvl)
 		{
 			gather_ptr gather(new Gather(*this));

@@ -204,6 +204,14 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="Source Files"
+				>
+				<File
+					RelativePath="..\..\..\lv\src\lv\Timer.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Graphics"
@@ -373,6 +381,10 @@
 					RelativePath="..\..\..\lv\lv\Coding\Rle.hpp"
 					>
 				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Coding\UniqueHash.hpp"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter
@@ -422,6 +434,62 @@
 		<Filter
 			Name="RPC"
 			>
+			<Filter
+				Name="Header Files"
+				>
+				<File
+					RelativePath="..\..\..\lv\lv\RPC\ArchiveBase.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\RPC\Client.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\RPC\Config.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\RPC\Exceptions.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\RPC\Future.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\RPC\IBufferManager.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\RPC\ISocket.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\RPC\PacketArchive.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\RPC\Protocol.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\RPC\RegisterExceptions.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\RPC\Server.hpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Source Files"
+				>
+				<File
+					RelativePath="..\..\..\lv\src\lv\RPC\Protocol.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 	</Files>
 	<Globals>
