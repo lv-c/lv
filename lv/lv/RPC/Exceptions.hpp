@@ -29,7 +29,7 @@
 namespace lv { namespace rpc { 
 
 	template<class ArchivePair>
-	class Throwable
+	class ExceptIO
 	{
 	public:
 
@@ -43,7 +43,7 @@ namespace lv { namespace rpc {
 		// static void write(typename ArchivePair:oarchive_t & oa, T t);
 	};
 
-	typedef boost::shared_ptr<Throwable>	ThrowablePtr;
+	typedef boost::shared_ptr<ExceptIO>	ExceptIOPtr;
 
 
 
@@ -52,7 +52,7 @@ namespace lv { namespace rpc {
 	 * default implementation. T is serializable.
 	 */
 	template<class T, class ArchivePair, class Enable = void>
-	class ThrowableImpl : public Throwable<ArchivePair>
+	class ExceptIOImpl : public ExceptIO<ArchivePair>
 	{
 	public:
 
@@ -70,13 +70,73 @@ namespace lv { namespace rpc {
 	};
 
 
+
+	// exception holder
+	template<class ArchivePair>
+	class ExceptHolder
+	{
+		std::string	name_;
+
+	public:
+		ExceptHolder(std:;string const & name) : name_(name) {}
+
+		virtual	void write(typename ArchivePair:oarchive_t & oa) = 0;
+
+		std::string const & name() const
+		{
+			return this->name_;
+		}
+	};
+
+	template<class T, class ArchivePair>
+	class ExceptHolderImpl : public ExceptHolder<ArchivePair>
+	{
+		T	ex_;
+	public:
+		
+		ExceptHolderImpl(T const & ex, std::string const & name)
+			: ex_(ex)
+			, ExceptHolder<ArchivePair>(name)
+		{
+		}
+
+		virtual void write(typename ArchivePair:oarchive_t & oa)
+		{
+			ExceptIOImpl<T, ArchivePair>::write(oa, ex_);
+		}
+	};
+
+
+	DEFINE_EXCEPTION_MSG(RpcUnknownException, std::exception);
+
+
+	template<class ArchivePair>
+	std::auto_ptr<ExceptHolder>	current_except()
+	{
+		try
+		{
+			throw;		// rethrow the current exception
+		}
+		// catch the registered exceptions
+#define	RPC_REG_EXCEP(except)			\
+	catch(except const & ex) { return std::auto_ptr<ExceptHolder>(new ExceptHolderImpl<except, ArchivePair>(ex, #except)) }	
+#include <lv/RPC/RegisterExceptions.hpp>
+
+		// catch unknown exceptions
+		catch(...) 
+		{
+			return std::auto_ptr<ExceptHolder>(new ExceptHolderImpl<RpcUnknownException, ArchivePair>(RpcUnknownException(), "RpcUnknownException")) ;
+		}
+	}
+
+
 	/**
 	 * partial specialization for std::exception and all the exception classes derived from std::exception.
 	 */
 	template<class T, class ArchivePair>
-	class ThrowableImpl<T, ArchivePair, typename boost::enable_if<
+	class ExceptIOImpl<T, ArchivePair, typename boost::enable_if<
 		boost::is_base_and_derived<std::exception, T> >::type>
-		: public Throwable<ArchivePair>
+		: public ExceptIO<ArchivePair>
 	{
 	public:
 
@@ -101,7 +161,6 @@ namespace lv { namespace rpc {
 
 #define	RPC_REG_EXCEP(ex) except_list.push_back(#ex);
 #include <lv/RPC/RegisterExceptions.hpp>
-#undef RPC_REG_EXCEP
 
 		return unique_hash::seed(except_list);
 	}
@@ -122,7 +181,7 @@ namespace lv { namespace rpc {
 	{
 		typedef typename Pro::except_key_type key_type;
 
-		typedef boost::unordered_map<key_type, ThrowablePtr>	except_map;
+		typedef boost::unordered_map<key_type, ExceptIOPtr>	except_map;
 
 		except_map except_;
 
@@ -142,9 +201,8 @@ namespace lv { namespace rpc {
 				throw InvalidHashSeedError();
 
 #define RPC_REG_EXCEP(ex) except_.insert(std::make_pair(unique_hash::hash(seed_, #ex), \
-	ThrowablePtr(new ThrowableImpl<ex, ArchivePair>())));
+	ExceptIOPtr(new ExceptIOImpl<ex, ArchivePair>())));
 #include <lv/RPC/RegisterExceptions.hpp>
-#undef RPC_REG_EXCEP
 
 		}
 

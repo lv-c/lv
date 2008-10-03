@@ -31,18 +31,6 @@ namespace lv
 		return boost::shared_ptr<T>(&t, NullDeleter());
 	}
 
-	template<class T>
-	boost::shared_ptr<T> shared_new()
-	{
-		return boost::shared_ptr<T>(new T());
-	}
-
-	template<class T, class Param1>
-	boost::shared_ptr<T> shared_new(Param1 param1)
-	{
-		return boost::shared_ptr<T>(new T(param1));
-	}
-
 }
 
 #endif // LV_NULLDELETER_HPP

@@ -24,11 +24,14 @@
 #include PRC_USER_EXCEPTIONS
 #endif
 
+
+// represent all the unregistered exceptions
+RPC_REG_EXCEP( RpcUnknownException )
+
 // default exceptions. the user can define RPC_NO_DEFAULT_EXCEPTIONS to disable 
 // the registration of all the default exceptions.
 
 #ifndef RPC_NO_DEFAULT_EXCEPTIONS
-
 
 // logic_error standard subclasses
 RPC_REG_EXCEP( std::domain_error )
@@ -55,3 +58,4 @@ RPC_REG_EXCEP( std::runtime_error )
 #endif // RPC_NO_DEFAULT_EXCEPTIONS
 
 
+#undef RPC_REG_EXCEP

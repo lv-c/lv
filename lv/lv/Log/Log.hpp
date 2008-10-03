@@ -16,17 +16,22 @@
 
 #include <boost/thread/mutex.hpp>
 #include <boost/shared_ptr.hpp>
+#include <boost/noncopyable.hpp>
 
 #include <lv/Log/Gather.hpp>
 
 
 namespace lv
 {
-	class Log
+	/**
+	 * Thread-safe
+	 */
+	class Log : boost::noncopyable
 	{
 		typedef boost::shared_ptr<Gather> gather_ptr;
 		std::list<gather_ptr>	gathers_;
 
+		typedef boost::mutex::scoped_lock	scoped_lock;	
 		boost::mutex	mutex_;
 
 	
@@ -72,6 +77,8 @@ namespace lv
 
 		void	add_gather(gather_ptr gather)
 		{
+			scoped_lock lock(mutex_);
+
 			this->gathers_.push_back(gather);
 		}
 

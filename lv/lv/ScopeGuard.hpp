@@ -17,7 +17,7 @@
 namespace lv
 {
 
-	// How to use: ScopeGuard const & guard = scope_guard(boost::bind<void>(&ReleaseDC, hWnd, hDC);
+	// How to use: ScopeGuard const & guard = scope_guard(boost::bind<void>(&ReleaseDC, hWnd, hDC));
 
 	class ScopeGuard
 	{

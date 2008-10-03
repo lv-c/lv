@@ -13,12 +13,14 @@
 
 #include <climits>
 
-#include <boost/type_traits/is_arithmetic.hpp>
 #include <boost/functional/hash.hpp>
+#include <boost/type_traits/is_arithmetic.hpp>
 #include <boost/type_traits/make_unsigned.hpp>
+#include <boost/type_traits/is_integral.hpp>
 #include <boost/range.hpp>
 #include <boost/range/concepts.hpp>
 #include <boost/unordered_map.hpp>
+#include <boost/utility/enable_if.hpp>
 
 #include <lv/IntType.hpp>
 #include <lv/Foreach.hpp>
@@ -37,13 +39,36 @@ namespace lv { namespace unique_hash {
 		{
 			return std::numeric_limits<typename boost::make_unsigned<Key>::type>::max();
 		}
+
+
+		/**
+		 * compute the hash value of a range type (models boost::SinglePassRangeConcept concept)
+		 */
+		template<typename Value>
+		typename boost::disable_if<boost::is_arithmetic<Value>, std::size_t>::type 
+			hash_impl(uint32 seed, Value const & value)
+		{
+			BOOST_CONCEPT_ASSERT((boost::SinglePassRangeConcept<Value>));	// concept check
+
+			return boost::hash_range(seed, boost::begin(value), boost::end(value));
+		}
+
+		/**
+		 * compute the hash value of an arithmetic type.
+		 */
+		template<typename Value>
+		typename boost::enable_if<boost::is_arithmetic<Value>, std::size_t>::type
+			hash_impl(uint32 seed, Value value)
+		{
+			return boost::hash_value(value);
+		}
+
 	}
 
 	/**
 	 * compute the hash code of @a value with @a seed
-	 * the @a Value type should model the SinglePassRangeConcept
 	 */
-	template<typename Key, class Value>
+	template<typename Key, typename Value>
 	Key hash(uint32 seed, Value const & value)
 	{
 		BOOST_STATIC_ASSERT(boost::is_arithmetic<Key>::value);
@@ -51,9 +76,7 @@ namespace lv { namespace unique_hash {
 		// if this assertion fails, we may have to implement our own hash functions.
 		BOOST_STATIC_ASSERT(sizeof(std::size_t) == 4);		
 
-		BOOST_CONCEPT_ASSERT((boost::SinglePassRangeConcept<Value>));	// concept check
-
-		return boost::hash_range(seed, boost::begin(value), boost::end(value)) % detail::max_value<Key>();
+		return detail::hash_impl(seed, value) % detail::max_value<Key>();
 	}
 
 

@@ -348,30 +348,6 @@
 			</Filter>
 		</Filter>
 		<Filter
-			Name="Concurrent"
-			>
-			<Filter
-				Name="Header Files"
-				>
-				<File
-					RelativePath="..\..\..\lv\lv\Concurrent\FIFOQueue.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\lv\lv\Concurrent\PriorityQueue.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\lv\lv\Concurrent\TaskQueue.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\lv\lv\Concurrent\ThreadPool.hpp"
-					>
-				</File>
-			</Filter>
-		</Filter>
-		<Filter
 			Name="Coding"
 			>
 			<Filter
@@ -409,6 +385,10 @@
 					RelativePath="..\..\..\lv\lv\Log\Log.hpp"
 					>
 				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Log\LogManager.hpp"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter
@@ -427,6 +407,10 @@
 				</File>
 				<File
 					RelativePath="..\..\..\lv\lv\Packet\PacketException.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Packet\Serializable.hpp"
 					>
 				</File>
 			</Filter>
@@ -462,6 +446,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\RPC\Invoker.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\RPC\ISocket.hpp"
 					>
 				</File>
@@ -478,6 +466,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\RPC\Registery.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\RPC\Server.hpp"
 					>
 				</File>
@@ -487,6 +479,30 @@
 				>
 				<File
 					RelativePath="..\..\..\lv\src\lv\RPC\Protocol.cpp"
+					>
+				</File>
+			</Filter>
+		</Filter>
+		<Filter
+			Name="Concurrent"
+			>
+			<Filter
+				Name="Header Files"
+				>
+				<File
+					RelativePath="..\..\..\lv\lv\Concurrent\FIFOQueue.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Concurrent\PriorityQueue.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Concurrent\TaskQueue.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Concurrent\ThreadPool.hpp"
 					>
 				</File>
 			</Filter>

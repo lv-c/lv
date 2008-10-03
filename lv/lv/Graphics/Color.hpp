@@ -37,9 +37,9 @@ namespace lv
 		static Color const green;
 		static Color const blue;
 
-		static Color const yellow;
-		static Color const aqua;
-		static Color const fuchsia;
+		static Color const yellow;		// (255, 255, 0)
+		static Color const aqua;		// (0, 255, 255)
+		static Color const fuchsia;		// (255, 0, 255)
 
 
 		Color()

@@ -29,7 +29,7 @@
 
 #include <boost/assert.hpp>
 #include <boost/shared_ptr.hpp>
-#include <boost/unordered_map.hpp>
+#include <boost/ptr_container/ptr_unordered_map.hpp>
 #include <boost/pool/pool_alloc.hpp>
 #include <boost/noncopyable.hpp>
 
@@ -44,7 +44,7 @@ namespace lv { namespace rpc {
 	struct PacketArchive;
 	struct Protocol;
 
-	template<typename Id, class ArchivePair = PacketArchive, class Pro = Protocol>
+	template<typename Id = std::string, class ArchivePair = PacketArchive, class Pro = Protocol>
 	class Client : boost::noncopyable
 	{
 
@@ -57,9 +57,10 @@ namespace lv { namespace rpc {
 
 		int32		next_request_id_;
 
-		typedef boost::shared_ptr<detail::PromiseBase>	promise_ptr;
-		typedef boost::unordered_map<int32, promise_ptr, boost::hash<int32>, std::equal_to<int32>,
-			boost::pool_allocator<std::pair<int32, promise_ptr> > >	promise_map;
+		typedef detail::PromiseBase * promise_ptr;
+
+		typedef boost::ptr_unordered_map<int32, detail::PromiseBase, boost::hash<int32>, std::equal_to<int32>,
+			boost::heap_clone_allocator, boost::pool_allocator<std::pair<int32, void*> > >	promise_map;
 
 		promise_map	promises_;
 
@@ -84,23 +85,27 @@ namespace lv { namespace rpc {
 			{
 			}
 
+			~PrivateHandler()
+			{
+				client_.send(buffer_, request_id_, Pro::options::none);
+			}
 
 			operator Acknowledgment ()
 			{
-				client_.send(buffer_, Pro::options::ack);
+				client_.send(buffer_, request_id_, Pro::options::ack);
 
 				detail::AchnowPromise<ArchivePair, Pro> * promise = new detail::AchnowPromise<ArchivePair, Pro>(*except_);
-				client_.add_promise(request_id_, promise_ptr(promise));
+				client_.add_promise(request_id_, promise);
 
 				return Acknowledgment(*promise);		
 			}
 
 			operator ReturningHandler<Ret> ()
 			{
-				client_.send(buffer_, Pro::options::ret);
+				client_.send(buffer_, request_id_, Pro::options::ret);
 
 				detail::ReturnPromise<Ret, ArchivePair, Pro> * promise = new detail::ReturnPromise<Ret, ArchivePair, Pro>(*except_);
-				client_.add_promise(request_id_, promise_ptr(promise));
+				client_.add_promise(request_id_, promise);
 
 				return ReturningHandler<Ret>(*promise);
 			}
@@ -169,24 +174,30 @@ namespace lv { namespace rpc {
 			oarchive_t oa(io::filtering_ostream(io::back_inserter(*buf)), boost::archive::no_header);
 
 			int32 request_id = next_request_id_++;
-			oa << Pro::header::call << request_id << id;
+			oa << Pro::header::call << id;
 			boost::fusion::for_each(args, Serialize(oa));
 		}
 
 
-		void	send(BufferPtr & buf, typename Pro::options::type call_option)
+		void	send(BufferPtr & buf, int request_id, typename Pro::options::type call_option)
 		{
 			namespace io = boost::iostreams;
 			oarchive_t oa(io::filtering_ostream(io::back_inserter(*buf)), boost::archive::no_header);
 
 			oa << call_option;
+			// sends the request id only when an acknowledgment or a return value is required
+			if(call_option != Pro::options::none)
+				oa << request_id;
 
 			socket_->send(postprocess(buf));
 		}
 
+		/**
+		 * @note the ownership of promise will be transfered to promises_
+		 */
 		inline void	add_promise(int request_id, promise_ptr promise)
 		{
-			promises_.insert(std::make_pair(request_id, promise));
+			promises_.insert(request_id, promise);
 		}
 
 	};

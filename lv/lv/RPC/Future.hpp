@@ -69,7 +69,7 @@ namespace lv { namespace rpc {
 				ia >> ex;
 				if(ex == Pro::except::has_ex)
 				{
-					Key key;
+					Pro::except_key_type key;
 					ia >> key;
 					promise_.set_exception(exceptions_.get(key, ia));
 				}
@@ -113,7 +113,7 @@ namespace lv { namespace rpc {
 				ia >> ex;
 				if(ex == Pro::except::has_ex)
 				{
-					Key key;
+					Pro::except_key_type key;
 					ia >> key;
 					promise_.set_exception(exceptions_.get(key, ia));
 				}
