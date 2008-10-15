@@ -12,7 +12,8 @@
 #include <boost/thread/xtime.hpp>
 #include <boost/utility/result_of.hpp>
 
-#include "exception_ptr.hpp"
+//#include "exception_ptr.hpp"
+#include <boost/exception_ptr.hpp>
 #include "future_exceptions.hpp"
 #include "future_detail.hpp"
 
@@ -34,15 +35,17 @@ namespace boost {
       untyped_promise& operator=(const untyped_promise& t) {f_ = t.f_; return *this;}
       template<typename E> void set_exception( E const & e ) { // stores the exception e and transitions to ready()
         // f_->set_exception(detail::copy_exception(e));
-        f_->set_exception(detail::exception_ptr(new detail::_exp_throwable_impl<E>(e)));
+        //f_->set_exception(detail::exception_ptr(new detail::_exp_throwable_impl<E>(e)));
+		  f_->set_exception(boost::copy_exception(e));
       }
 
       // Attempt's a 'throw', assuming there is an exception set
       void set_current_exception() {
-        f_->set_exception(detail::current_exception());
+        //f_->set_exception(detail::current_exception());
+		  f_->set_exception(boost::current_exception());
       }
 
-      void set_exception( const detail::exception_ptr & e) {
+      void set_exception( const boost::exception_ptr & e) {
         f_->set_exception(e);
       }
 
@@ -357,7 +360,7 @@ namespace boost {
           fn_();
           ft_.set();
         } catch (...) {
-          ft_.set_exception(detail::current_exception());
+          ft_.set_exception(boost::current_exception());
         }
       }
       future<void> get_future() const {return future<void>(ft_);}

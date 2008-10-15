@@ -160,10 +160,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\lv\lv\DSTree.hpp"
-					>
-				</File>
-				<File
 					RelativePath="..\..\..\lv\lv\Exception.hpp"
 					>
 				</File>
@@ -173,10 +169,6 @@
 				</File>
 				<File
 					RelativePath="..\..\..\lv\lv\IntType.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\lv\lv\LRUCache.hpp"
 					>
 				</File>
 				<File
@@ -348,17 +340,21 @@
 			</Filter>
 		</Filter>
 		<Filter
-			Name="Coding"
+			Name="Algorithm"
 			>
 			<Filter
 				Name="Header Files"
 				>
 				<File
-					RelativePath="..\..\..\lv\lv\Coding\Rle.hpp"
+					RelativePath="..\..\..\lv\lv\Algorithm\DSTree.hpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\lv\lv\Coding\UniqueHash.hpp"
+					RelativePath="..\..\..\lv\lv\Algorithm\Rle.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Algorithm\UniqueHash.hpp"
 					>
 				</File>
 			</Filter>
@@ -503,6 +499,70 @@
 				</File>
 				<File
 					RelativePath="..\..\..\lv\lv\Concurrent\ThreadPool.hpp"
+					>
+				</File>
+			</Filter>
+		</Filter>
+		<Filter
+			Name="UI"
+			>
+			<Filter
+				Name="Header Files"
+				>
+				<File
+					RelativePath="..\..\..\lv\lv\UI\Button.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\UI\ButtonBase.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\UI\Dialog.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\UI\Editbox.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\UI\EditboxFilter.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\UI\EventArgs.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\UI\Progress.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\UI\Window.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\UI\WindowRenderer.hpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Source Files"
+				>
+				<File
+					RelativePath="..\..\..\lv\src\lv\UI\Button.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\src\lv\UI\ButtonBase.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\src\lv\UI\Editbox.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\src\lv\UI\Window.cpp"
 					>
 				</File>
 			</Filter>

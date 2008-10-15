@@ -134,7 +134,7 @@ namespace boost {
 	void cancel() {
 	  boost::mutex::scoped_lock lck(mutex_);
 	  if (has_value_ || has_exception_) return; // ignore 
-	  exception_ = detail::exception_ptr(new detail::_exp_throwable_impl<future_cancel>(future_cancel()));
+	  exception_ = boost::exception_ptr(boost::copy_exception(future_cancel()));
 	  has_exception_ = true;
 	  is_canceled_ = true;
 	  boost::function<void (void)> canhan = cancel_handler_;
@@ -144,7 +144,7 @@ namespace boost {
 	void end_promise() {
 	  boost::mutex::scoped_lock lck(mutex_);
 	  if (has_value_ || has_exception_) return; // ignore 
-	  exception_ = detail::exception_ptr(new detail::_exp_throwable_impl<broken_promise>(broken_promise()));
+	  exception_ = boost::exception_ptr(boost::copy_exception(broken_promise()));
 	  has_exception_ = true;
 	  notify(lck);
 	}
