@@ -57,7 +57,7 @@ namespace lv { namespace rpc {
 
 		int32		next_request_id_;
 
-		typedef detail::PromiseBase * promise_ptr;
+		typedef std::auto_ptr<detail::PromiseBase> promise_ptr;
 
 		typedef boost::ptr_unordered_map<int32, detail::PromiseBase, boost::hash<int32>, std::equal_to<int32>,
 			boost::heap_clone_allocator, boost::pool_allocator<std::pair<int32, void*> > >	promise_map;
@@ -69,7 +69,7 @@ namespace lv { namespace rpc {
 
 
 		template<typename Ret>
-		class PrivateHandler
+		class PrivateHandler : boost::noncopyable
 		{
 			Client & client_;
 
@@ -77,35 +77,43 @@ namespace lv { namespace rpc {
 
 			BufferPtr	buffer_;
 
+			bool	sent_;
+
 		public:
 			PrivateHandler(Client & client, int request_id, BufferPtr buf)
 				: client_(client)
 				, request_id_(request_id)
 				, buffer_(buf)
+				, sent_(false)
 			{
 			}
 
 			~PrivateHandler()
 			{
-				client_.send(buffer_, request_id_, Pro::options::none);
+				if(! sent_)
+					client_.send(buffer_, request_id_, Pro::options::none);
 			}
 
 			operator Acknowledgment ()
 			{
+				sent_ = true;
+				//
 				client_.send(buffer_, request_id_, Pro::options::ack);
 
 				detail::AchnowPromise<ArchivePair, Pro> * promise = new detail::AchnowPromise<ArchivePair, Pro>(*except_);
-				client_.add_promise(request_id_, promise);
+				client_.add_promise(request_id_, promise_ptr(promise));
 
 				return Acknowledgment(*promise);		
 			}
 
 			operator ReturningHandler<Ret> ()
 			{
+				sent_ = true;
+				//
 				client_.send(buffer_, request_id_, Pro::options::ret);
 
 				detail::ReturnPromise<Ret, ArchivePair, Pro> * promise = new detail::ReturnPromise<Ret, ArchivePair, Pro>(*except_);
-				client_.add_promise(request_id_, promise);
+				client_.add_promise(request_id_, promise_ptr(promise));
 
 				return ReturningHandler<Ret>(*promise);
 			}

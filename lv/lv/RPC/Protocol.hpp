@@ -11,6 +11,7 @@
 #ifndef LV_PRC_PROTOCOL_HPP
 #define LV_PRC_PROTOCOL_HPP
 
+#include <lv/IntType.hpp>
 
 namespace lv { namespace rpc {
 

@@ -23,7 +23,7 @@
 
 #include <boost/noncopyable.hpp>
 
-#include <lv/Coding/UniqueHash.hpp>
+#include <lv/Algorithm/UniqueHash.hpp>
 #include <lv/Exception.hpp>
 
 namespace lv { namespace rpc { 

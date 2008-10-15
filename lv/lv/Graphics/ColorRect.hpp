@@ -45,7 +45,7 @@ namespace lv
 
 		/**
 		 * Constructs a ColorRect object from a Color object. 
-		 * All the four colors are set to color.
+		 * All the four colors are set to @a color.
 		 */
 		explicit ColorRect(Color const & color)
 			: top_left(color)
@@ -65,7 +65,7 @@ namespace lv
 
 		
 		/**
-		 * Set all the four colors to color.
+		 * Set all the four colors to @a color.
 		 */
 		void	set(Color const & color)
 		{

@@ -27,7 +27,6 @@ namespace lv
 		typedef boost::function<void (std::ostream &, log::level)> formatter_t;
 
 		typedef boost::shared_ptr<std::ostream>	ostream_ptr;
-		typedef boost::shared_ptr<Gather>	gather_ptr;
 
 		Gather(ostream_ptr os, log::level log_lvl)
 			: os_(os)
@@ -36,14 +35,16 @@ namespace lv
 		}
 
 		
-		void	add_header(formatter_t header)
+		Gather &	add_header(formatter_t header)
 		{
 			this->headers_.push_back(header);
+			return *this;
 		}
 
-		void	add_tailer(formatter_t tailer)
+		Gather &	add_tailer(formatter_t tailer)
 		{
 			this->tailers_.push_back(tailer);
+			return *this;
 		}
 
 		log::level log_level() const
@@ -56,9 +57,9 @@ namespace lv
 		 * Make a copy of this object with a different output stream and log level
 		 * so that these two objects have the same headers and tailers.
 		 */
-		gather_ptr clone(ostream_ptr os, log::level log_lvl)
+		std::auto_ptr<Gather> clone(ostream_ptr os, log::level log_lvl)
 		{
-			gather_ptr gather(new Gather(*this));
+			std::auto_ptr<Gather> gather(new Gather(*this));
 			gather->os_ = os;
 			gather->log_lvl_ = log_lvl;
 

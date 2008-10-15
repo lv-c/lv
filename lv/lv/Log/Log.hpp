@@ -12,11 +12,11 @@
 #define LV_LOG_HPP
 
 #include <iostream>
-#include <list>
 
 #include <boost/thread/mutex.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/noncopyable.hpp>
+#include <boost/ptr_container/ptr_list.hpp>
 
 #include <lv/Log/Gather.hpp>
 
@@ -28,8 +28,8 @@ namespace lv
 	 */
 	class Log : boost::noncopyable
 	{
-		typedef boost::shared_ptr<Gather> gather_ptr;
-		std::list<gather_ptr>	gathers_;
+		typedef boost::ptr_list<Gather>	gather_list;
+		gather_list gathers_;
 
 		typedef boost::mutex::scoped_lock	scoped_lock;	
 		boost::mutex	mutex_;
@@ -75,7 +75,7 @@ namespace lv
 			return Proxy(*this);
 		}
 
-		void	add_gather(gather_ptr gather)
+		void	add_gather(std::auto_ptr<Gather> gather)
 		{
 			scoped_lock lock(mutex_);
 
@@ -87,10 +87,10 @@ namespace lv
 		template <typename T>
 		void log(T const & t)
 		{
-			foreach(gather_ptr & gather, this->gathers_)
+			foreach(Gather & gather, this->gathers_)
 			{
-				if(gather->log_level() <= this->lvl_)
-					gather->log(t);
+				if(gather.log_level() <= this->lvl_)
+					gather.log(t);
 			}
 		}
 
@@ -101,19 +101,19 @@ namespace lv
 
 			this->lvl_ = lvl;
 
-			foreach(gather_ptr & gather, this->gathers_)
+			foreach(Gather & gather, this->gathers_)
 			{
-				if(gather->log_level() <= this->lvl_)
-					gather->on_record_begin();
+				if(gather.log_level() <= this->lvl_)
+					gather.on_record_begin();
 			}
 		}
 
 		void on_record_end()
 		{
-			foreach(gather_ptr & gather, this->gathers_)
+			foreach(Gather & gather, this->gathers_)
 			{
-				if(gather->log_level() <= this->lvl_)
-					gather->on_record_end();
+				if(gather.log_level() <= this->lvl_)
+					gather.on_record_end();
 			}
 
 			// unlock

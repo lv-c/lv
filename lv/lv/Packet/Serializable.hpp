@@ -92,6 +92,7 @@ namespace lv
 
 	/**
 	 * @param T the type of object to be saved. supports boost::shared_ptr<> type
+	 *	(and reference type)
 	 */
 	template<typename T, class OArchive, class Tag = void>
 	class SavableImpl : public Savable<OArchive, Tag>

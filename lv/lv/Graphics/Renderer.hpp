@@ -32,8 +32,6 @@ namespace lv
 
 		virtual	Size	max_texture_size() = 0;
 
-		virtual	Size	screen_dpi() = 0;
-
 		virtual	void	begin_scene() = 0;
 		virtual	void	end_scene() = 0;
 

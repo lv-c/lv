@@ -16,9 +16,12 @@
 #include <vector>
 #include <algorithm>
 #include <functional>
+
 #include <boost/shared_ptr.hpp>
 #include <boost/optional.hpp>
 #include <boost/range.hpp>
+#include <boost/range/concepts.hpp>
+
 #include <lv/NullDeleter.hpp>
 #include <lv/Foreach.hpp>
 
@@ -62,6 +65,8 @@ namespace lv
 		template<class RangeT>
 		void	insert(RangeT const & seq, Info info)
 		{
+			BOOST_CONCEPT_ASSERT((boost::SinglePassRangeConcept<RangeT>));	// concept check
+
 			DSTNode * node = this;
 			foreach(Ele ele, seq)
 			{
@@ -84,6 +89,8 @@ namespace lv
 		template<class RangeT>
 		bool	find(RangeT const & seq, Info & info)		// fixed count
 		{
+			BOOST_CONCEPT_ASSERT((boost::SinglePassRangeConcept<RangeT>));
+
 			DSTNode* node = this;
 			foreach(boost::range_value<RangeT>::type ele, seq)
 			{
@@ -107,6 +114,8 @@ namespace lv
 		template<class RangeT>
 		bool first_match(RangeT const & seq, Info & info, size_t * size = NULL)
 		{
+			BOOST_CONCEPT_ASSERT((boost::SinglePassRangeConcept<RangeT>));
+
 			size_t len = 0;
 
 			DSTNode * node = this;

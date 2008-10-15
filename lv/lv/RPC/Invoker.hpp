@@ -56,7 +56,7 @@ namespace lv { namespace rpc { namespace detail {
 
 
 	/**
-	 * get the extractor for type T
+	 * get the default extractor for type T (the user doesn't provide an extractor for it)
 	 */
 	template<typename T, class ParamExtractors, class Enable = void>
 	struct Extractor
@@ -69,6 +69,9 @@ namespace lv { namespace rpc { namespace detail {
 		}
 	};
 
+	/**
+	 * get the user provided extractor for type T 
+	 */
 	template<typename T, class ParamExtractors>
 	struct Extractor<T, ParamExtractors, typename boost::enable_if<
 		boost::fusion::result_of::has_key<ParamExtractors, T> >::type>
@@ -118,7 +121,7 @@ namespace lv { namespace rpc { namespace detail {
 		template<typename T>
 		struct Storable : boost::remove_const<typename boost::remove_reference<T>::type> {};
 
-		//
+		// storable result type
 		typedef typename Storable<result_type>::type storable_result_type;
 		BOOST_STATIC_ASSERT(! boost::is_pointer<storable_result_type>::value);
 

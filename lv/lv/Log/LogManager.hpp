@@ -1,7 +1,7 @@
 // *********************************************************************
 //  LogManager   version:  1.0   ¡¤  date: 10/03/2008
 //  --------------------------------------------------------------------
-//  A simple & stupid logger manager.
+//  A simple logger manager.
 //  --------------------------------------------------------------------
 //  Copyright (C) jcfly(lv.jcfly@gmail.com) 2008 - All Rights Reserved
 // *********************************************************************
@@ -45,7 +45,7 @@ namespace lv
 
 		/**
 		 * creates a new logger if no logger with the given name exists, otherwise returns 
-		 *	the existing logger.
+		 *	the existing logger.173618586
 		 */
 		Log & create_logger(std::string const & name)
 		{

@@ -28,7 +28,7 @@ namespace lv
 
 		/**
 		 * This should perform an asynchronous operation if it's an asynchronous io class.
-		 * Otherwise it should call fulfill to perform a synchronous operation, which is
+		 * Otherwise it should call @a fulfill to perform a synchronous operation, which is
 		 * the default behavior.
 		 */
 		virtual	IOFuture	add_task(std::string const & file, BufferPtr buffer);
