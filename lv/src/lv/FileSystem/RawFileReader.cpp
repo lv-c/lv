@@ -22,5 +22,8 @@ namespace lv
 		}
 		else
 			buffer->clear();
+
+		if(! infile.good())
+			throw(file_io_error(std::string("error reading file : ") + file));
 	}
 }

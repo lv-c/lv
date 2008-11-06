@@ -1,5 +1,5 @@
 // *********************************************************************
-//  Point   version:  1.0   ¡¤  date: 08/05/2008
+//  Vector   version:  1.0   ¡¤  date: 10/24/2008
 //  --------------------------------------------------------------------
 //  
 //  --------------------------------------------------------------------
@@ -7,8 +7,10 @@
 // *********************************************************************
 // 
 // *********************************************************************
-#ifndef LV_POINT_HPP
-#define LV_POINT_HPP
+
+#ifndef LV_AUDIO_VECTOR_HPP
+#define LV_AUDIO_VECTOR_HPP
+
 
 #include <boost/operators.hpp>
 #include <boost/assert.hpp>
@@ -16,76 +18,64 @@
 namespace lv
 {
 	template<typename T>
-	class PointT : boost::additive<PointT<T>, 
-		boost::multiplicative2<PointT<T>, T,
-		boost::modable2<PointT<T>, T,
-		boost::equality_comparable<PointT<T> > > > >
-
+	class VectorT : boost::additive<VectorT<T>,
+		boost::multipliable2<VectorT<T>, T,
+		boost::modable2<VectorT<T>, T,
+		boost::equality_comparable<VectorT<T> > > > >
 	{
 	public:
 
 		enum {
-			ele_num = 2
+			ele_num = 3
 		};
-
 
 		T	x;
 		T	y;
+		T	z;
 
-		// constructors 
-		PointT()
-			: x(0)
-			, y(0)
-		{
-		}
-		PointT(T _x, T _y)
-			: x(_x)
-			, y(_y)
-		{
-		}
+		VectorT() : x(0), y(0), z(0) {}
+		VectorT(T _x, T _y, T _z) : x(_x), y(_y), z(_z) {}
 
-		template<typename U>
-		PointT(PointT<U> const & pt)
-			: x(pt.x)
-			, y(pt.y)
-		{
-		}
-
-		// 
-		void	set(T _x, T _y)
+		void	set(T _x, T _y, T _z)
 		{
 			this->x = _x;
 			this->y = _y;
+			this->z = _z;
 		}
-		// operators
-		PointT& operator += (PointT const& pt)
+
+		VectorT & operator += (VectorT const & vec)
 		{
-			x += pt.x;
-			y += pt.y;
+			x += vec.x;
+			y += vec.y;
+			z += vec.z;
 			return *this;
 		}
-		PointT& operator -= (PointT const& pt)
+		VectorT & operator -= (VectorT const & vec)
 		{
-			x -= pt.x;
-			y -= pt.y;
+			x -= vec.x;
+			y -= vec.y;
+			z -= vec.z;
 			return *this;
 		}
-		PointT& operator *= (T i)
+		VectorT & operator *= (T i)
 		{
 			x *= i;
 			y *= i;
+			z *= i;
 			return *this;
 		}
-		PointT& operator /= (T i)
+		VectorT & operator /= (T i)
 		{
 			x /= i;
 			y /= i;
+			z /= i;
 			return *this;
 		}
-		PointT& operator %= (T i)
+		VectorT & operator %= (T i)
 		{
 			x %= i;
 			y %= i;
+			z %= i;
 			return *this;
 		}
 
@@ -101,36 +91,29 @@ namespace lv
 			return this->*mem_array[i];
 		}
 
-
-		void	offset(T _x, T _y)
+		VectorT abs() const
 		{
-			this->x += _x;
-			this->y += _y;
-		}
-
-		PointT abs() const
-		{
-			return PointT(std::abs(x), std::abs(y));
+			return VectorT(std::abs(x), std::abs(y), std::abs(z));
 		}
 
 		// comparison
 		friend bool operator == (PointT const& lhs, PointT const& rhs)
 		{
-			return lhs.x == rhs.x && lhs.y == rhs.y;
+			return (lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z);
 		}
 
 	private:
 
-		// array of pointers to member variables
 		static T PointT<T>::* const		mem_array[ele_num];
+
 	};
 
+
 	template<typename T>
-	T PointT<T>::* const mem_array[PointT<T>::ele_num] = { &PointT<T>::x, &PointT<T>::y };
-
-
-	typedef PointT<int32>	Point;
+	T VectorT<T>::* const mem_array[VectorT<T>::ele_num] = { &VectorT<T>::x, &VectorT<T>::y, &VectorT<T>::z};
 
 }
 
-#endif // LV_POINT_HPP
+
+
+#endif // LV_AUDIO_VECTOR_HPP

@@ -21,11 +21,19 @@
 
 namespace lv
 {
-	class Timer
+	/// fwd.  You should use Timer rather than TimerT
+	template<class>	class TimerT;
+	typedef TimerT<void> Timer;
+
+	/**
+	 * use template to make it a header-only class
+	 */
+	template<class Dummy = void>	
+	class TimerT
 	{
 	public:
 		// start the timer
-		Timer()
+		TimerT()
 		{
 			if(cps_ == 0)
 			{
@@ -74,6 +82,8 @@ namespace lv
 		static	uint64	cps_;
 	};
 
+	template<class T>
+	uint64 TimerT<T>::cps_ = 0;
 
 }
 

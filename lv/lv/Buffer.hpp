@@ -14,12 +14,15 @@
 #include <vector>
 #include <boost/shared_ptr.hpp>
 #include <boost/assert.hpp>
+#include <boost/range.hpp>
 
 namespace lv
 {
 	typedef std::vector<char>	Buffer;
 	typedef boost::shared_ptr<Buffer>	BufferPtr;
 
+
+	/// note : these two classes are compatible with boost.range and boost.foreach
 	template <typename T> class ConstBufferRefT;
 	template <typename T> class BufferRefT;
 
@@ -208,5 +211,6 @@ namespace lv
 		}
 	}
 }
+
 
 #endif // LV_BUFFER_HPP

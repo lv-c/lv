@@ -45,7 +45,7 @@ namespace lv
 
 		/**
 		 * creates a new logger if no logger with the given name exists, otherwise returns 
-		 *	the existing logger.173618586
+		 *	the existing logger.
 		 */
 		Log & create_logger(std::string const & name)
 		{

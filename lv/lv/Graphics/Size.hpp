@@ -116,6 +116,9 @@ namespace lv
 		static T SizeT<T>::* const mem_array[ele_num];
 	};
 
+	template<typename T>
+	T SizeT<T>::* const SizeT<T>::mem_array[SizeT<T>::ele_num] = { &SizeT<T>::cx, &SizeT<T>::cy };
+
 	typedef SizeT<int32>	Size;
 }
 

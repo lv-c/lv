@@ -19,7 +19,7 @@
 namespace lv { namespace rpc {
 
 	
-	DEFINE_EXCEPTION_MSG(InvalidRPCHeaderError, std::runtime_error);
+	DEFINE_EXCEPTION_MSG(InvalidRPCHeader, std::runtime_error);
 
 
 	// Not intended to be used by the user.
@@ -32,7 +32,7 @@ namespace lv { namespace rpc {
 
 			/**
 			 * @exception boost::archive::archive_exception ?
-			 * @exception InvalidRPCHeaderError
+			 * @exception InvalidRPCHeader
 			 * @exception ExceptionNotFoundError
 			 */
 			virtual	void set(typename ArchivePair::iarchive_t & ia) = 0;
@@ -76,7 +76,7 @@ namespace lv { namespace rpc {
 				else if(ex == Pro::except::no_ex)
 					promise_.set();
 				else
-					throw InvalidRPCHeaderError();
+					throw InvalidRPCHeader();
 			}
 
 	
@@ -124,7 +124,7 @@ namespace lv { namespace rpc {
 					promise_.set(ret);
 				}
 				else
-					throw InvalidRPCHeaderError();
+					throw InvalidRPCHeader();
 			}
 		};
 	}

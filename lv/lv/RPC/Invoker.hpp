@@ -145,7 +145,7 @@ namespace lv { namespace rpc { namespace detail {
 
 	private:
 
-		/// invokes the function and wrap the result.
+		/// invokes the function and wraps the result.
 		template<typename ResultType>
 		std::auto_ptr<ResultHolder>	invoke_proxy(iarchive_t & ia, ParamExtractors & extractors)
 		{

@@ -122,7 +122,7 @@ namespace lv
 		}
 
 		IPacket(ConstBufferRef buffer, unsigned int flags = 0)
-			: buf_istream_(boost::iterator_range(buffer.begin(), buffer.end()))
+			: buf_istream_(boost::make_iterator_range(buffer.begin(), buffer.end()))
 			, archive_base_t(buf_istream_, flags | boost::archive::no_header)
 		{
 		}

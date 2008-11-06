@@ -26,6 +26,8 @@
 #include <lv/Algorithm/UniqueHash.hpp>
 #include <lv/Exception.hpp>
 
+#include <boost/exception/exception.hpp>
+
 namespace lv { namespace rpc { 
 
 	template<class ArchivePair>
@@ -166,9 +168,9 @@ namespace lv { namespace rpc {
 	}
 
 	// no exception is found associated with the specified key.
-	DEFINE_EXCEPTION_MSG(ExceptionNotFoundError, std::runtime_error);
+	DEFINE_EXCEPTION_MSG(ExceptionNotFound, std::runtime_error);
 	// exception hash key from the remote server is not the same as the local one.
-	DEFINE_EXCEPTION_MSG(InvalidHashSeedError, std::runtime_error);
+	DEFINE_EXCEPTION_MSG(InvalidHashSeed, std::runtime_error);
 
 	/**
 	 * It was derived from boost::noncopyable to prevent unintended copying.
@@ -192,13 +194,13 @@ namespace lv { namespace rpc {
 		/**
 		 * @param seed hash seed for registered exception types of the server.It SHOULD be the same
 		 *	as the hash seed for registered exception types of the client.
-		 * @exception InvalidHashSeedError if(seed != exception_hash_seed())
+		 * @exception InvalidHashSeed if(seed != exception_hash_seed())
 		 */
 		Exceptions(int32 seed)
 			: seed_(seed)
 		{
 			if(seed != exception_hash_seed())
-				throw InvalidHashSeedError();
+				throw InvalidHashSeed();
 
 #define RPC_REG_EXCEP(ex) except_.insert(std::make_pair(unique_hash::hash(seed_, #ex), \
 	ExceptIOPtr(new ExceptIOImpl<ex, ArchivePair>())));
@@ -215,14 +217,14 @@ namespace lv { namespace rpc {
 		}
 
 		/**
-		 * @exception ExceptionNotFoundError no exception found associated with @key.
+		 * @exception ExceptionNotFound no exception found associated with @key.
 		 * @exception boost::archive::archive_exception ? error serializing (loading) the exception.
 		 */
 		virtual	boost::exception_ptr get(key_type key, typename ArchivePair::iarchive_t & ia)
 		{
 			except_map::iterator it = except_.find(key);
 			if(it == except_.end())
-				throw ExceptionNotFoundError();
+				throw ExceptionNotFound();
 			else
 				return it->second.get(ia);
 		}

@@ -13,5 +13,8 @@ namespace lv
 		// get the size of the file
 		if(buffer->size() != 0)
 			ofile.write(&(*buffer)[0], buffer->size());	// write the whole file
+
+		if(! ofile.good())
+			throw(file_io_error(std::string("error writing file : ") + file));
 	}
 }

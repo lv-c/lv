@@ -188,6 +188,11 @@ namespace lv
 		static T RectT<T>::* const mem_array[ele_num];
 	};
 
+	template<typename T>
+	T RectT<T>::* const mem_array[RectT<T>::ele_num] = {
+		&RectT<T>::left, &RectT<T>::top, &RectT<T>::right, &RectT<T>::bottom
+	};
+
 	typedef RectT<int32>	Rect;
 }
 

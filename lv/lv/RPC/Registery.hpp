@@ -29,7 +29,7 @@ namespace lv { namespace rpc {
 	struct PacketArchive;
 	struct Protocol;
 
-	DEFINE_EXCEPTION_MSG(InvalidFunctionIDError, std::runtime_error);
+	DEFINE_EXCEPTION_MSG(InvalidFunctionID, std::runtime_error);
 
 
 	template<class ParamExtractors = boost::fusion::map<>, typename Id = std::string, class ArchivePair = PacketArchive, class Pro = Protocol>
@@ -92,7 +92,7 @@ namespace lv { namespace rpc {
 		}
 
 		/**
-		 * @exception InvalidFunctionIDError no function found associated with the given id
+		 * @exception InvalidFunctionID no function found associated with the given id
 		 * @exception boost::archive::archive_exception
 		 * @exception exceptions thrown by the target function
 		 */
@@ -103,7 +103,7 @@ namespace lv { namespace rpc {
 
 			id_invoker_map::iterator it = id_invoker_.find(id);
 			if(it == id_invoker_.end())
-				throw InvalidFunctionIDError();
+				throw InvalidFunctionID();
 
 			it->second->invoke(ia, extractors_);
 		}

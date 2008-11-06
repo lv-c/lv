@@ -53,7 +53,7 @@ namespace lv
 			return container_.size();
 		}
 
-		bool		empty() const
+		bool	empty() const
 		{
 			return container_.empty();
 		}

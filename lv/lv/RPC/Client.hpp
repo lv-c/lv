@@ -13,9 +13,6 @@
 #ifndef LV_RPC_CLIENT_HPP
 #define LV_RPC_CLIENT_HPP
 
-#include <lv/IntType.hpp>
-#include <lv/RPC/Config.hpp>
-
 #include <boost/preprocessor/iteration/iterate.hpp>
 #include <boost/preprocessor/repetition/enum.hpp>
 #include <boost/preprocessor/repetition/enum_params.hpp>
@@ -33,6 +30,8 @@
 #include <boost/pool/pool_alloc.hpp>
 #include <boost/noncopyable.hpp>
 
+#include <lv/IntType.hpp>
+#include <lv/RPC/Config.hpp>
 #include <lv/RPC/ISocket.hpp>
 #include <lv/RPC/IBufferManager.hpp>
 
@@ -181,9 +180,10 @@ namespace lv { namespace rpc {
 			namespace io = boost::iostreams;
 			oarchive_t oa(io::filtering_ostream(io::back_inserter(*buf)), boost::archive::no_header);
 
-			int32 request_id = next_request_id_++;
 			oa << Pro::header::call << id;
 			boost::fusion::for_each(args, Serialize(oa));
+
+			return PrivateHandler<Ret>(*this, request_id ++, buf);
 		}
 
 

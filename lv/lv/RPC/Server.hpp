@@ -48,7 +48,7 @@ namespace lv { namespace rpc {
 
 
 		/**
-		 * @exception InvalidFunctionIDError
+		 * @exception InvalidFunctionID
 		 * @exception boost::archive::archive_exception
 		 */
 		template<class Range>
@@ -69,7 +69,7 @@ namespace lv { namespace rpc {
 				result = registery_->invoke(ia);
 				ia >> call_option;
 			}
-			catch(InvalidFunctionIDError const & )
+			catch(InvalidFunctionID const & )
 			{
 				throw;
 			}

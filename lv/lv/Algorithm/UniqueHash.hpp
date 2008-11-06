@@ -81,14 +81,14 @@ namespace lv { namespace unique_hash {
 
 
 
-	DEFINE_EXCEPTION_MSG(DuplicatedObjectsError, std::runtime_error);
-	DEFINE_EXCEPTION_MSG(NoSeedFoundError, std::runtime_error);
+	DEFINE_EXCEPTION_MSG(DuplicatedObjects, std::runtime_error);
+	DEFINE_EXCEPTION_MSG(NoSeedFound, std::runtime_error);
 
 	/**
 	 * Find a hash seed with which the function @a lv::hash will generate
 	 * a unique hash code for each value in @a values.
-	 * @exception DuplicatedObjectsError if @a values contains duplicated objects 
-	 * @exception NoSeedFoundError if there's no seed found that meets the requirements.
+	 * @exception DuplicatedObjects if @a values contains duplicated objects 
+	 * @exception NoSeedFound if there's no seed found that meets the requirements.
 	 */
 	template<typename Key, class Values>
 	uint32 seed(Values const & values)
@@ -112,7 +112,7 @@ namespace lv { namespace unique_hash {
 				if(it != map.end())
 				{
 					if(*it == v)		// duplicated
-						throw DuplicatedObjectsError();
+						throw DuplicatedObjects();
 
 					ok = false;
 					break;
@@ -125,7 +125,7 @@ namespace lv { namespace unique_hash {
 				return i;
 		}
 
-		throw NoSeedFoundError();
+		throw NoSeedFound();
 	}
 
 

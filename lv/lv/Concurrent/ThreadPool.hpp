@@ -20,14 +20,24 @@
 #include <boost/thread/condition.hpp>
 
 #include <lv/Foreach.hpp>
+#include <lv/Singleton.hpp>
 #include <lv/Concurrent/TaskQueue.hpp>
 #include <lv/Concurrent/FIFOQueue.hpp>
 
 namespace lv
 {
-	template <
-		typename Task, 
-		template <typename> class SchedulingPolicy = FIFOQueue
+
+	/// fwd.
+	template<typename, template<typename> class> ThreadPool;
+	/// the most commonly used thread pool type. note that singleton thread pool object constructed
+	/// with the default parameters has 0 threads running and it's your responsibility to create more
+	/// by calling @a SingletonThreadPool::instance().resize(...) if you are going to use it. 
+	typedef Singleton<ThreadPool<boost::function<void()>, FIFOQueue>, true>	SingletonThreadPool;
+	
+
+	template<
+		typename Task = boost::function<void()>, 
+		template<typename> class SchedulingPolicy = FIFOQueue
 	>
 	class ThreadPool : private boost::noncopyable
 	{
