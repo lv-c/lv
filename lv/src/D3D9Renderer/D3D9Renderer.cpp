@@ -1,4 +1,8 @@
+#pragma warning(push)
+#pragma warning(disable : 4244) //'initializing' : conversion from 'const lv::int32' to 'float', possible loss of data
+
 #include <lv/D3D9Renderer/D3D9Renderer.hpp>
+#include <lv/D3D9Renderer/D3D9Texture.hpp>
 #include <lv/Graphics/Rect.hpp>
 #include <lv/Graphics/ColorRect.hpp>
 #include <lv/Exception.hpp>
@@ -7,13 +11,34 @@
 namespace lv
 {
 
-	uint32 D3D9Renderer::VERTEX_FVF = (D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1);
+	uint32 const D3D9Renderer::VERTEX_FVF = (D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1);
 
-	D3D9Renderer::D3D9Renderer()
-		: device_(NULL)
+	D3D9Renderer::D3D9Renderer(LPDIRECT3DDEVICE9 device)
+		: device_(device)
 		, vbuffer_(NULL)
 	{
 	}
+
+	/*
+	void D3D9Renderer::init(Size const & size, bool windowed, int bit_depth)
+	{
+		d3d_ = Direct3DCreate9(D3D_SDK_VERSION);
+		if(d3d_ == NULL)
+			throw(std::runtime_error("error creating direct3d"));
+
+		D3DDISPLAYMODE d3ddm;
+		DX_TIF(d3d_->GetAdapterDisplayMode(D3DADAPTER_DEFAULT, &d3ddm));
+		D3DPRESENT_PARAMETERS d3dparm;
+		ZeroMemory(d3dparm, sizeof(d3dparm));
+
+		d3dparm.SwapEffect = D3DSWAPEFFECT_DISCARD;
+		d3dparm.Windowed = windowed;
+		d3dparm.BackBufferWidth = size.cx;
+		d3dparm.BackBufferHeight = size.cy;
+
+		
+	}
+	*/
 
 	void D3D9Renderer::begin_scene()
 	{
@@ -59,13 +84,10 @@ namespace lv
 		for(int i = 0; i < 4; ++i)
 			vertices[i].color = colors[i].argb();
 
+		
+		Rect dest_rect(dest_pos, dest_size == Size() ? src_rect.size() : dest_size);
 
-		// size of the destination quad
-		if(dest_size == Size())
-			dest_size = src_rect.size();
-		
-		
-		Rect dest_rect(dest_pos, dest_size);
+
 		// top-left vertex
 		vertices[0].dest_pt = dest_rect.top_left();
 		vertices[0].tex_pt	= src_rect.top_left();
@@ -82,6 +104,7 @@ namespace lv
 		vertices[3].dest_pt = dest_rect.bottom_right();
 		vertices[3].tex_pt	= src_rect.bottom_right();
 
+
 		// size of the texture
 		Size tex_size = tex.texture_size();
 		for(int i = 0; i < 4; ++i)
@@ -92,7 +115,7 @@ namespace lv
 
 
 		// set the texture if the texture passed in is not the same as the current texture
-		set_texture(static_cast<D3D9Texture*>(&tex)->d3d_texture());
+		set_texture(static_cast<D3D9Texture const*>(&tex)->d3d_texture());
 
 		// blend
 		if(blend != cur_blend_)
@@ -219,3 +242,5 @@ namespace lv
 		}
 	}
 }
+
+#pragma warning(pop)

@@ -18,6 +18,8 @@
 
 namespace lv
 {
+	class Texture;
+
 	class Renderer : public Singleton<Renderer>
 	{
 	public:

@@ -15,7 +15,7 @@
 #include <boost/shared_ptr.hpp>
 
 #include <lv/Buffer.hpp>
-#include <lv/Graphics/Size.hpp>
+#include <lv/Graphics/Rect.hpp>
 #include <lv/Graphics/PixelFormat.hpp>
 
 namespace lv

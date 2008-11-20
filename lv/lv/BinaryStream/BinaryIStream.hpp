@@ -54,7 +54,7 @@ namespace lv
 			return *this;
 		}
 
-		inline BinaryIStream & ignore(std::streamsize size, int_type metadelim = traits::eof)
+		inline BinaryIStream & ignore(std::streamsize size, int_type metadelim = traits::eof())
 		{
 			istream_->ignore(size, metadelim);
 			return *this;

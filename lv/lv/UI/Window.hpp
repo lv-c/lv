@@ -11,14 +11,13 @@
 #ifndef LV_WINDOW_HPP
 #define LV_WINDOW_HPP
 
-
+#include <memory>
 #include <string>
 using std::wstring;
 
 #include <lv/Graphics/Rect.hpp>
 #include <lv/UI/EventArgs.hpp>
-
-class IWindowRenderer;
+#include <lv/UI/WindowRenderer.hpp>
 
 namespace lv
 {

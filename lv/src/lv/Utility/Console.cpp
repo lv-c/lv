@@ -1,7 +1,7 @@
 #include <lv/Utility/Console.hpp>
 
 #ifdef LV_PLATFORM_WINDOWS
-
+#include <Windows.h>
 #include <fcntl.h>
 #include <io.h>
 

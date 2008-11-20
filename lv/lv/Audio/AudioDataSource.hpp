@@ -21,20 +21,12 @@ namespace lv
 	DEFINE_EXCEPTION_MSG(InvalidAudioData, std::runtime_error);
 	DEFINE_EXCEPTION_MSG(UnSupportedAudioFormat, std::runtime_error);
 
-	enum AudioFormat
-	{
-		AF_MONO8,
-		AF_MONO16,
-		AF_STEREO8,
-		AF_STEREO16,
-		AF_UNKNOWN
-	};
-
 	class AudioDataSource
 	{
 	protected:
 
-		AudioFormat	format_;
+		uint16		channels_;
+		uint16		bits_per_sample_;
 
 		size_t		freq_;
 
@@ -42,7 +34,8 @@ namespace lv
 
 	public:
 		AudioDataSource()
-			: format_(AF_UNKNOWN)
+			: channels_(0)
+			, bits_per_sample_(0)
 			, freq_(0)
 			, size_(0)
 		{
@@ -50,16 +43,20 @@ namespace lv
 
 		virtual size_t	read(BufferRef buf) = 0;
 
-		void	reset() = 0;
+		virtual void	reset() = 0;
 
 		size_t	size() const
 		{
 			return size_;
 		}
 
-		AudioFormat	format() const
+		uint16	channels() const 
 		{
-			return format_;
+			return channels_;
+		}
+		uint16	bits_per_sample() const
+		{
+			return bits_per_sample_;
 		}
 
 		size_t	frequency() const

@@ -25,4 +25,4 @@ namespace lv
 }
 
 
-#define // LV_FOURCC_HPP
+#endif // LV_FOURCC_HPP

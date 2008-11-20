@@ -97,20 +97,20 @@ namespace lv
 		}
 
 		// comparison
-		friend bool operator == (PointT const& lhs, PointT const& rhs)
+		friend bool operator == (VectorT const& lhs, VectorT const& rhs)
 		{
 			return (lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z);
 		}
 
 	private:
 
-		static T PointT<T>::* const		mem_array[ele_num];
+		static T VectorT::* const		mem_array[ele_num];
 
 	};
 
 
 	template<typename T>
-	T VectorT<T>::* const mem_array[VectorT<T>::ele_num] = { &VectorT<T>::x, &VectorT<T>::y, &VectorT<T>::z};
+	T VectorT<T>::* const VectorT<T>::mem_array[VectorT<T>::ele_num] = { &VectorT<T>::x, &VectorT<T>::y, &VectorT<T>::z};
 
 }
 

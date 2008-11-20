@@ -11,6 +11,8 @@
 #ifndef LV_OGLTEXTURE_HPP
 #define LV_OGLTEXTURE_HPP
 
+#include <GL/GLU.h>
+
 #include <lv/Graphics/Texture.hpp>
 
 namespace lv

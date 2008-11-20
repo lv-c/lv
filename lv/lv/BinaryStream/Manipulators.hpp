@@ -45,8 +45,8 @@ namespace lv { namespace bstream {
 			{
 				T val;
 				is >> val;
-				if(val != t_)
-					throw ex_;
+				if(val != ce.t_)
+					throw ce.ex_;
 
 				return is;
 			}
@@ -54,15 +54,15 @@ namespace lv { namespace bstream {
 	}
 
 	template<typename T>
-	inline detail::check_equal_impl<T>	check_equal(T const & t)
+	inline detail::check_equal_impl<T, CheckEqualError>	check_equal(T const & t)
 	{
-		return check_equal_impl<T, CheckEqualError>(t, CheckEqualError());
+		return detail::check_equal_impl<T, CheckEqualError>(t, CheckEqualError());
 	}
 	
 	template<typename T, class Except>
-	inline detail::check_equal_impl<T>	check_equal(T const & t, Except const & ex)
+	inline detail::check_equal_impl<T, Except>	check_equal(T const & t, Except const & ex)
 	{
-		return check_equal_impl<T, Except>(t, ex);
+		return detail::check_equal_impl<T, Except>(t, ex);
 	}
 
 	// ignore 
@@ -76,7 +76,7 @@ namespace lv { namespace bstream {
 		int_type	metadelim_;
 	public:
 
-		ignore(streamsize sz, int_type metadelim = BinaryIStream::traits::eof) 
+		ignore(std::streamsize sz, int_type metadelim = BinaryIStream::traits::eof()) 
 			: size_(sz) 
 			, metadelim_(metadelim)
 		{
@@ -84,7 +84,7 @@ namespace lv { namespace bstream {
 
 		friend inline BinaryIStream & operator >> (BinaryIStream & is, ignore const & sk)
 		{
-			return is.ignore(sk.size_, sk.metadelim_)
+			return is.ignore(sk.size_, sk.metadelim_);
 		}
 	};
 

@@ -11,15 +11,39 @@
 #ifndef LV_DSSOUNDBUFFER_HPP
 #define LV_DSSOUNDBUFFER_HPP
 
+#include <vector>
+#include <boost/shared_ptr.hpp>
+#include <dsound.h>
 
 #include <lv/Audio/SoundBuffer.hpp>
 
 namespace lv
 {
+	class AudioDataSource;
+
 	class DSSoundBuffer : public SoundBuffer
 	{
+
+		typedef boost::shared_ptr<IDirectSoundBuffer>	dsbuffer_ptr;
+		typedef std::vector<dsbuffer_ptr>	buffer_vec;
+
+		buffer_vec	buffers_;
+
 	public:
 
+		DSSoundBuffer(AudioDataSource & data, size_t buf_num);
+
+
+		virtual	void	play(bool loop = false);
+
+		virtual	void	stop();
+
+		virtual	void	reset();
+
+		virtual	void	set_volume(float vol);
+		virtual	void	set_position(vector_type const & pos);
+
+		virtual	bool	playing() const;
 
 	};
 }

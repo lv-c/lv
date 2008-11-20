@@ -21,7 +21,7 @@ namespace lv
 
 		IStreamPtr	istream_;
 
-		std::ios_base::off_type	data_offset_;
+		std::streamoff	data_offset_;
 
 	public:
 

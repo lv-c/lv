@@ -12,9 +12,11 @@
 #define LV_EDITBOXFILTER_HPP
 
 #include <list>
+#include <locale>
 
 #include <lv/Foreach.hpp>
 #include <lv/UI/Editbox.hpp>
+#include <lv/Foreach.hpp>
 
 namespace lv
 {
@@ -78,7 +80,7 @@ namespace lv
 
 	private:
 
-		list<Editbox::filter_type>	filters_;
+		std::list<Editbox::filter_type>	filters_;
 	};
 
 	struct NotFilter
@@ -88,9 +90,9 @@ namespace lv
 		{
 		}
 
-		bool operator (wchar_t c, Editbox const & edit)
+		bool operator () (wchar_t c, Editbox const & edit)
 		{
-			return ! filter(c, edit);
+			return ! filter_(c, edit);
 		}
 
 	private:

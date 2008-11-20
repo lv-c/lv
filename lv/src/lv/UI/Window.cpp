@@ -1,5 +1,4 @@
 #include <lv/UI/Window.hpp>
-#include <lv/UI/WindowRenderer.hpp>
 
 namespace lv
 {
@@ -16,7 +15,7 @@ namespace lv
 		if(! visible())
 			return;
 
-		if(renderer_)
+		if(renderer_.get() != NULL)
 			renderer_->render();
 	}
 

@@ -13,6 +13,8 @@
 #include <boost/operators.hpp>
 #include <boost/assert.hpp>
 
+#include <lv/IntType.hpp>
+
 namespace lv
 {
 	template<typename T>
@@ -122,11 +124,11 @@ namespace lv
 	private:
 
 		// array of pointers to member variables
-		static T PointT<T>::* const		mem_array[ele_num];
+		static T PointT::* const		mem_array[ele_num];
 	};
 
 	template<typename T>
-	T PointT<T>::* const mem_array[PointT<T>::ele_num] = { &PointT<T>::x, &PointT<T>::y };
+	T PointT<T>::* const PointT<T>::mem_array[PointT<T>::ele_num] = { &PointT<T>::x, &PointT<T>::y };
 
 
 	typedef PointT<int32>	Point;

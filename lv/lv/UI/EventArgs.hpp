@@ -226,17 +226,17 @@ namespace lv
 
 		bool	shift_down() const
 		{
-			return modifier_ & ModifierKey::Shift;
+			return (modifier_ & ModifierKey::Shift) != 0;
 		}
 
 		bool	ctrl_down() const
 		{
-			return modifier_ & ModifierKey::Ctrl;
+			return (modifier_ & ModifierKey::Ctrl) != 0;
 		}
 
 		bool	alt_down() const
 		{
-			return modifier_ & ModifierKey::Alt;
+			return (modifier_ & ModifierKey::Alt) != 0;
 		}
 	};
 
@@ -290,7 +290,7 @@ namespace lv
 		/**
 		 * constructs a key event except KEY_CHAR
 		 */
-		KeyEvent(Action action, Key::Scan key, wchar_t c = 0, int modifier = 0)
+		KeyEvent(Key::Scan key, wchar_t c = 0, int modifier = 0)
 			: key_(key)
 			, char_(c)
 			, InputEvent(modifier)
@@ -309,6 +309,7 @@ namespace lv
 	};
 
 
+	class Window;
 	class WindowEvent : public EventArgs
 	{
 

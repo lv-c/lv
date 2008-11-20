@@ -30,6 +30,10 @@ namespace lv
 		virtual	void	set_position(vector_type const & pos) = 0;
 
 		virtual	bool	playing() const = 0;
+
+	protected:
+
+		vector_type		pos_;
 	};
 }
 

@@ -3,10 +3,6 @@
 namespace lv
 {
 
-	ButtonBase()
-	{
-	}
-
 	void Button::on_button_up(MouseEvent & e)
 	{
 		if(e.button() == Mouse::Left && pushed())

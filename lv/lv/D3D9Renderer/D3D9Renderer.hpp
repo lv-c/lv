@@ -38,7 +38,7 @@ namespace lv
 			PointT<float>	tex_pt;
 		};
 
-		static const	uint32	VERTEX_FVF;
+		static uint32 const	VERTEX_FVF;
 
 		Blend	cur_blend_;
 		LPDIRECT3DTEXTURE9	cur_texture_;
@@ -52,7 +52,7 @@ namespace lv
 
 	public:
 
-		D3D9Renderer();
+		D3D9Renderer(LPDIRECT3DDEVICE9 device);
 
 
 		LPDIRECT3DDEVICE9	device() const

@@ -50,10 +50,8 @@ namespace lv
 						bin_is >> check_equal(fmt_id) >> fmt_chunk_size >> check_equal(uint16(1), UnSupportedAudioFormat())
 							>> channels >> freq >> forward(6) >> bits_per_sample;
 
-						if(channels == 1)
-							format_ = bits_per_sample == 8 ? AF_MONO8 : AF_MONO16;
-						else
-							format_ = bits_per_sample == 8 ? AF_STEREO8 : AF_STEREO16;
+						this->channels_ = channels;
+						this->bits_per_sample_ = bits_per_sample;
 
 						this->freq_ = freq;
 

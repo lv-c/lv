@@ -25,7 +25,7 @@ namespace lv { namespace bstream {
 	template<typename T, class Tag>
 	struct Serialize;
 
-	template<typename T, class Enabled = void>
+	template<typename T, class Enabled>
 	struct object_tag;
 
 	template<typename T, class OStream>
@@ -49,15 +49,15 @@ namespace lv { namespace bstream {
 	DEFINE_tag(pod_tag);
 	DEFINE_tag(pod_buffer_tag);	// PODs in continuous memory (vector<PodType>, (w)string ...)
 	DEFINE_tag(range_tag);		// list, boost::iterator_range, boost::sub_range ...
-	DEFINE_tag(unkonwn_tag);
+	DEFINE_tag(unknown_tag);
 
 #undef DEFINE_tag
 
 	template<typename T, class Enabled = void>
-	struct object_tag : unkown_tag {};
+	struct object_tag : unknown_tag {};
 
 	template<typename T>
-	struct object_tag<T, boost::enable_if<boost::is_pod<T> > >
+	struct object_tag<T, typename boost::enable_if<boost::is_pod<T> >::type>
 		: pod_tag
 	{
 	};

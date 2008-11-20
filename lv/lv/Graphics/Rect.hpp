@@ -101,19 +101,19 @@ namespace lv
 
 		PointT<T>	top_left() const
 		{
-			return Point<T>(left, top);
+			return PointT<T>(left, top);
 		}
 		PointT<T>	top_right() const
 		{
-			return Point<T>(right, top);
+			return PointT<T>(right, top);
 		}
 		PointT<T>	bottom_left() const
 		{
-			return Point<T>(left, bottom);
+			return PointT<T>(left, bottom);
 		}
 		PointT<T>	bottom_right() const
 		{
-			return Point<T>(right, bottom);
+			return PointT<T>(right, bottom);
 		}
 
 		//
@@ -185,11 +185,11 @@ namespace lv
 
 	private:
 
-		static T RectT<T>::* const mem_array[ele_num];
+		static T RectT::* const mem_array[ele_num];
 	};
 
 	template<typename T>
-	T RectT<T>::* const mem_array[RectT<T>::ele_num] = {
+	T RectT<T>::* const RectT<T>::mem_array[RectT<T>::ele_num] = {
 		&RectT<T>::left, &RectT<T>::top, &RectT<T>::right, &RectT<T>::bottom
 	};
 

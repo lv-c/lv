@@ -156,7 +156,15 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\ComPtr.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\Config.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Utility\Console.hpp"
 					>
 				</File>
 				<File
@@ -165,6 +173,10 @@
 				</File>
 				<File
 					RelativePath="..\..\..\lv\lv\Foreach.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\FourCC.hpp"
 					>
 				</File>
 				<File
@@ -184,11 +196,19 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\ParamType.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\ScopeGuard.hpp"
 					>
 				</File>
 				<File
 					RelativePath="..\..\..\lv\lv\Singleton.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\StreamPtr.hpp"
 					>
 				</File>
 				<File
@@ -200,7 +220,7 @@
 				Name="Source Files"
 				>
 				<File
-					RelativePath="..\..\..\lv\src\lv\Timer.cpp"
+					RelativePath="..\..\..\lv\src\lv\Utility\Console.cpp"
 					>
 				</File>
 			</Filter>
@@ -499,6 +519,90 @@
 				</File>
 				<File
 					RelativePath="..\..\..\lv\lv\Concurrent\ThreadPool.hpp"
+					>
+				</File>
+			</Filter>
+		</Filter>
+		<Filter
+			Name="Audio"
+			>
+			<Filter
+				Name="Header Files"
+				>
+				<File
+					RelativePath="..\..\..\lv\lv\Audio\AudioBuffer.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Audio\AudioDataSource.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Audio\AudioEngine.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Audio\MusicBuffer.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Audio\SoundBuffer.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Audio\Vector.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Audio\WavSource.hpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Source Files"
+				>
+				<File
+					RelativePath="..\..\..\lv\src\lv\Audio\WavSource.cpp"
+					>
+				</File>
+			</Filter>
+		</Filter>
+		<Filter
+			Name="BinaryStream"
+			>
+			<Filter
+				Name="Header Files"
+				>
+				<File
+					RelativePath="..\..\..\lv\lv\BinaryStream\BinaryIStream.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\BinaryStream\BinaryOStream.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\BinaryStream\Buffer.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\BinaryStream\List.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\BinaryStream\Manipulators.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\BinaryStream\Serialize.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\BinaryStream\String.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\BinaryStream\Vector.hpp"
 					>
 				</File>
 			</Filter>

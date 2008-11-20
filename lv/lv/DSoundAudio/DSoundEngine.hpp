@@ -1,5 +1,5 @@
 // *********************************************************************
-//  Config   version:  1.0   ¡¤  date: 08/04/2008
+//  DSoundEngine   version:  1.0   ¡¤  date: 11/19/2008
 //  --------------------------------------------------------------------
 //  
 //  --------------------------------------------------------------------
@@ -7,26 +7,29 @@
 // *********************************************************************
 // 
 // *********************************************************************
-#ifndef LV_CONFIG_HPP
-#define LV_CONFIG_HPP
 
-#include <lv/IntType.hpp>
+#ifndef LV_DSOUNDENGINE_HPP
+#define LV_DSOUNDENGINE_HPP
 
+#include <dsound.h>
 
-#if defined(linux) || defined(__linux) || defined(__linux__)
-#	define LV_PLATFORM_LINUX
+#include <lv/Audio/AudioEngine.hpp>
 
-#elif defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
-#	define LV_PLATFORM_WINDOWS
+namespace lv
+{
+	class DSoundEngine : public AudioEngine
+	{
 
-#else
-#	error "Unknown platform"
+		IDirectSound8 *	dsound_;
 
-#endif
+	public:
 
-#ifndef NULL
-#define NULL	0
-#endif
+		IDirectSound8 & dsound() const
+		{
+			return *dsound_;
+		}
 
+	};
+}
 
-#endif // LV_CONFIG_HPP
+#endif // LV_DSOUNDENGINE_HPP

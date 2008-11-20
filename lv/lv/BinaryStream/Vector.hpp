@@ -19,13 +19,13 @@
 namespace lv { namespace bstream {
 
 	template<typename T>
-	struct object_tag<std::vector<T>, boost::enable_if<boost::is_pod<T> > >
+	struct object_tag<std::vector<T>, typename boost::enable_if<boost::is_pod<T> >::type>
 		: pod_buffer_tag
 	{
 	};
 
 	template<typename>
-	struct object_tag<std::vector<T>, boost::disable_if<boost::is_pod<T> > >
+	struct object_tag<std::vector<T>, typename boost::disable_if<boost::is_pod<T> >::type>
 		: range_tag
 	{
 	};

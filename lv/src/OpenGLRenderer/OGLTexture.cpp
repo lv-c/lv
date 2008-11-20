@@ -1,5 +1,5 @@
 #include <lv/OpenGLRenderer/OGLTexture.hpp>
-#include <GL/GLU.h>
+
 
 namespace lv
 {

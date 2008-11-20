@@ -13,6 +13,8 @@
 #include <boost/operators.hpp>
 #include <boost/assert.hpp>
 
+#include <lv/IntType.hpp>
+
 namespace lv
 {
 	template<typename T>
@@ -113,7 +115,7 @@ namespace lv
 
 	private:
 
-		static T SizeT<T>::* const mem_array[ele_num];
+		static T SizeT::* const mem_array[ele_num];
 	};
 
 	template<typename T>

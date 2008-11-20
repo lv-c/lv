@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenGLRenderer", "OpenGLRen
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTest", "UnitTest.vcproj", "{B213214B-7FEA-4104-B36C-08C8BE719EEE}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DSoundAudio", "..\DSoundAudio\DSoundAudio.vcproj", "{957DE246-87B7-4C97-9BFE-CA05BE00FA8B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -31,6 +33,10 @@ Global
 		{B213214B-7FEA-4104-B36C-08C8BE719EEE}.Debug|Win32.Build.0 = Debug|Win32
 		{B213214B-7FEA-4104-B36C-08C8BE719EEE}.Release|Win32.ActiveCfg = Release|Win32
 		{B213214B-7FEA-4104-B36C-08C8BE719EEE}.Release|Win32.Build.0 = Release|Win32
+		{957DE246-87B7-4C97-9BFE-CA05BE00FA8B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{957DE246-87B7-4C97-9BFE-CA05BE00FA8B}.Debug|Win32.Build.0 = Debug|Win32
+		{957DE246-87B7-4C97-9BFE-CA05BE00FA8B}.Release|Win32.ActiveCfg = Release|Win32
+		{957DE246-87B7-4C97-9BFE-CA05BE00FA8B}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

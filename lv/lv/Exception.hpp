@@ -13,8 +13,14 @@
 
 #include <stdexcept>
 #include <string>
-#include <sstream>
 #include <lv/Config.hpp>
+
+#ifdef LV_PLATFORM_WINDOWS
+#include <Windows.h>
+#include <sstream>
+#include <dxerr9.h>
+
+#endif	// LV_PLATFORM_WINDOWS
 
 namespace lv
 {
@@ -46,8 +52,6 @@ namespace lv
 
 
 #ifdef LV_PLATFORM_WINDOWS
-
-#include <dxerr9.h>
 
 	namespace detail
 	{
