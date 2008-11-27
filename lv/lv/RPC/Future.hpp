@@ -14,13 +14,17 @@
 #include <boost/future.hpp>
 
 #include <lv/Exception.hpp>
-#include <lv/RPC/Exception.hpp>
+#include <lv/RPC/Exceptions.hpp>
 
 namespace lv { namespace rpc {
 
 	
 	DEFINE_EXCEPTION_MSG(InvalidRPCHeader, std::runtime_error);
 
+
+	// fwd
+	template<typename> class ReturningHandler;
+	class Acknowledgment;
 
 	// Not intended to be used by the user.
 	namespace detail
@@ -29,6 +33,7 @@ namespace lv { namespace rpc {
 		class PromiseBase
 		{
 		public:
+			virtual ~PromiseBase() {}
 
 			/**
 			 * @exception boost::archive::archive_exception ?
@@ -90,7 +95,7 @@ namespace lv { namespace rpc {
 			Exceptions<ArchivePair, Pro> & exceptions_;
 
 		private:
-			template<typename> friend class ReturningHandler;
+			friend class ReturningHandler<Ret>;
 
 			boost::promise<Ret> const & get() const
 			{
@@ -135,7 +140,7 @@ namespace lv { namespace rpc {
 		template<typename, class, class> friend class Client;
 
 		template<class ArchivePair, class Pro>
-		Acknowledgment(AchnowPromise<ArchivePair, Pro> const & promise)
+		Acknowledgment(detail::AchnowPromise<ArchivePair, Pro> const & promise)
 			: boost::future<void>(promise.get())
 		{
 		}
@@ -149,7 +154,7 @@ namespace lv { namespace rpc {
 		template<typename, class, class> friend class Client;
 
 		template<class ArchivePair, class Pro>
-		ReturningHandler(ReturnPromise<Ret, ArchivePair, Pro> const & promise)
+		ReturningHandler(detail::ReturnPromise<Ret, ArchivePair, Pro> const & promise)
 			: boost::future<Ret>(promise.get())
 		{
 		}

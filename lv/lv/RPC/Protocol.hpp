@@ -35,8 +35,8 @@ namespace lv { namespace rpc {
 			// be same type.
 			typedef int8 type;
 
-			static type const	call;
-			static type const	reply;
+			static type const	call	= 0x30;
+			static type const	reply	= 0x31;
 		};
 
 
@@ -47,9 +47,9 @@ namespace lv { namespace rpc {
 		{
 			typedef int8 type;
 
-			static type const	ret;	// send back the result
-			static type const	ack;	// send back an acknowledgment
-			static type const	none;	// nothing should be sent back
+			static type const	ret		= 0x40;	// send back the result
+			static type const	ack		= 0x41;	// send back an acknowledgment
+			static type const	none	= 0x42;	// nothing should be sent back
 		};
 
 
@@ -60,8 +60,8 @@ namespace lv { namespace rpc {
 		{
 			typedef int8 type;
 
-			static type const	has_ex;		// contains an exception
-			static type const	no_ex;		// contains no exception
+			static type const	has_ex	= 0x50;		// contains an exception
+			static type const	no_ex	= 0x51;		// contains no exception
 		};
 		
 

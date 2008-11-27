@@ -11,6 +11,8 @@
 #ifndef LV_RPC_ISOCKET_HPP
 #define LV_RPC_ISOCKET_HPP
 
+#include <lv/Buffer.hpp>
+
 namespace lv { namespace rpc {
 
 	class ISocket

@@ -15,12 +15,13 @@
 #include <map>
 
 #include <boost/fusion/container/map.hpp>
-#include <boost/ptr_container/ptr_unordered_map.hpp>
+#include <boost/unordered_map.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/assert.hpp>
 
+#include <lv/Functional.hpp>
 #include <lv/RPC/Invoker.hpp>
-#include <lv/Coding/UniqueHash.hpp>
+#include <lv/Algorithm/UniqueHash.hpp>
 #include <lv/Foreach.hpp>
 #include <lv/Exception.hpp>
 
@@ -36,13 +37,18 @@ namespace lv { namespace rpc {
 	class Registery
 	{
 
+		typedef typename detail::InvokerBase<ArchivePair>::ResultHolderPtr	ResultHolderPtr;
+
+		typedef typename ArchivePair::iarchive_t iarchive_t;
+
 		typedef typename Pro::id_key_type id_key_type;
 
-		typedef boost::ptr_unordered_map<id_key_type, detail::Invoker> hash_invoker_map;
+		typedef boost::function<ResultHolderPtr(iarchive_t, ParamExtractors)>	invoker_type;
+
+		typedef boost::unordered_map<id_key_type, invoker_type> hash_invoker_map;
 		hash_invoker_map	hash_invoker_;
 
-		typedef boost::shared_ptr<detail::Invoker> invoker_ptr;
-		typedef std::map<Id, invoker_ptr>	id_invoker_map;
+		typedef std::map<Id, invoker_type>	id_invoker_map;
 		id_invoker_map		id_invoker_;
 
 
@@ -50,12 +56,11 @@ namespace lv { namespace rpc {
 
 	private:
 
-		template<class, class> friend class Server;
+		template<class> friend class Server;
 
 		typedef	Id				id_type;
 		typedef ArchivePair		archive_pair_type;
 		typedef	Pro				protocol_type;
-		typedef ParamExtractors	param_extractor_type;
 
 
 		/** 
@@ -82,7 +87,7 @@ namespace lv { namespace rpc {
 			// hash
 			foreach(id_invoker_map::value_type & item, id_invoker_)
 			{
-				hash_invoker_.insert(unique_hash::hash<id_key_type>(seed, item.first), item.second->clone());
+				hash_invoker_.insert(unique_hash::hash<id_key_type>(seed, item.first), item.second);
 			}
 
 			// clear id_invoker_ to save memory 
@@ -96,7 +101,7 @@ namespace lv { namespace rpc {
 		 * @exception boost::archive::archive_exception
 		 * @exception exceptions thrown by the target function
 		 */
-		void	invoke(typename ArchivePair::iarchive_t & ia)
+		ResultHolderPtr	invoke(typename ArchivePair::iarchive_t & ia)
 		{
 			id_key_type id;
 			ia >> id;
@@ -105,7 +110,7 @@ namespace lv { namespace rpc {
 			if(it == id_invoker_.end())
 				throw InvalidFunctionID();
 
-			it->second->invoke(ia, extractors_);
+			return it->second(ia, extractors_);
 		}
 
 
@@ -118,19 +123,18 @@ namespace lv { namespace rpc {
 
 
 		/**
-		 * register a function or a member function
+		 * register a function, a member function or a function object
 		 * @exception std::runtime_error if @a id has already been used
 		 */
 		template<class F>
 		Registery & reg(Id const & id, F f)
 		{
-			return reg<F, F>(id, f);
+			return reg<typename Signature<F>::type, F>(id, f);
 		}
 
 		/**
 		 * the signature is required to be explicitly pointed out and you can use this 
-		 * function to register a function object, for example, the result of boost::bind 
-		 * function.
+		 * function to register a overloaded function/member function/function object
 		 * @exception std::runtime_error if @a id has already been used
 		 */
 		template<class Signature, class F>
@@ -141,7 +145,7 @@ namespace lv { namespace rpc {
 			if(id_invoker_.find(id) != id_invoker_.end())
 				throw std::runtime_error("The id has already been used");
 
-			id_invoker_.insert(id, invoker_ptr(new detail::InvokerImpl<Signature, ArchivePair, ParamExtractors>(f)));
+			id_invoker_.insert(std::make_pair(id, detail::Invoker<Signature, ArchivePair, ParamExtractors>(f)));
 
 			return *this;
 		}

@@ -18,8 +18,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
+			OutputDirectory="..\..\..\bin"
+			IntermediateDirectory="..\..\..\build\UnitTest\msvc-9.0\debug\"
 			ConfigurationType="1"
 			CharacterSet="1"
 			>
@@ -40,14 +40,17 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalOptions="/D &quot;NOMINMAX&quot;  /D &quot;_SCL_SECURE_NO_WARNINGS&quot;"
 				Optimization="0"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
+				ExceptionHandling="2"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="4"
+				DisableSpecificWarnings="4819"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -85,6 +88,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine="&quot;$(TargetDir)\$(TargetName).exe&quot; --result_code=no --report_level=no"
 			/>
 		</Configuration>
 		<Configuration
@@ -168,6 +172,22 @@
 		<Filter
 			Name="Header Files"
 			>
+			<File
+				RelativePath="..\..\..\UnitTest\UnitTest.hpp"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Source Files"
+			>
+			<File
+				RelativePath="..\..\..\UnitTest\Rpc.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\UnitTest\UnitTest.cpp"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>

@@ -19,7 +19,8 @@
 
 #include <boost/archive/binary_iarchive.hpp>
 #include <boost/archive/archive_exception.hpp>
-#include <boost/archive/detail/polymorphic_iarchive_route.hpp>
+#include <boost/archive/impl/basic_binary_iprimitive.ipp>
+#include <boost/archive/impl/basic_binary_iarchive.ipp>
 
 
 #include <boost/type_traits/is_arithmetic.hpp>
@@ -36,7 +37,9 @@
 #include <boost/iostreams/filtering_stream.hpp>
 #include <boost/range/iterator_range.hpp>
 
+#include <lv/Buffer.hpp>
 #include <lv/Packet/PacketException.hpp>
+
 
 namespace lv
 {
@@ -49,10 +52,13 @@ namespace lv
 		typedef boost::archive::binary_iarchive_impl<IPacket, std::istream::char_type, 
 			std::istream::traits_type>	archive_base_t;
 
-
 		boost::iostreams::filtering_istream buf_istream_;
 
-		
+		friend class boost::archive::basic_binary_iprimitive<IPacket, std::istream::char_type,
+			std::istream::traits_type>;
+		friend class boost::archive::load_access;
+
+
 		void load_size(char size)
 		{
 #ifdef LV_DEBUG_PACKET
@@ -79,13 +85,6 @@ namespace lv
 			load_binary(&temp, sizeof(T));
 			t = boost::detail::load_little_endian<T, sizeof(T)>(&temp);
 		}
-
-		void	save(bool const & b)
-		{
-			save_size(sizeof(char));
-			archive_base_t::save<char>(b);
-		}
-
 
 		void	load(bool & b)
 		{
@@ -121,11 +120,14 @@ namespace lv
 		{
 		}
 
+		/*
+		bug
 		IPacket(ConstBufferRef buffer, unsigned int flags = 0)
 			: buf_istream_(boost::make_iterator_range(buffer.begin(), buffer.end()))
 			, archive_base_t(buf_istream_, flags | boost::archive::no_header)
 		{
 		}
+		*/
 	};
 }
 

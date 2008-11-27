@@ -43,7 +43,6 @@ namespace lv
 
 		inline BinaryOStream & write(char const * buf, std::streamsize size)
 		{
-			ostream_->fill()
 			ostream_->write(buf, size);
 			return *this;
 		}

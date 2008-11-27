@@ -14,7 +14,7 @@
 
 #include <lv/FileSystem/IFileIO.hpp>
 #include <lv/Concurrent/ThreadPool.hpp>
-#include <lv/NullDeleter.hpp>
+#include <lv/SharedPtr.hpp>
 
 namespace lv
 {

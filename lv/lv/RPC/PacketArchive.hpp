@@ -19,7 +19,7 @@
 #include <lv/RPC/ArchiveBase.hpp>
 
 namespace lv { namespace rpc {
-{
+
 	struct PacketArchive : ArchiveBase<IPacket, OPacket>
 	{
 	};

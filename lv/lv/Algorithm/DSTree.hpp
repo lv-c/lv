@@ -22,7 +22,7 @@
 #include <boost/range.hpp>
 #include <boost/range/concepts.hpp>
 
-#include <lv/NullDeleter.hpp>
+#include <lv/SharedPtr.hpp>
 #include <lv/Foreach.hpp>
 
 namespace lv

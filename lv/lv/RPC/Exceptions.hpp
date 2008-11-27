@@ -34,6 +34,7 @@ namespace lv { namespace rpc {
 	class ExceptIO
 	{
 	public:
+		virtual	~ExceptIO() {}
 
 		/**
 		 * @exception boost::archive::archive_exception ?
@@ -45,7 +46,11 @@ namespace lv { namespace rpc {
 		// static void write(typename ArchivePair:oarchive_t & oa, T t);
 	};
 
-	typedef boost::shared_ptr<ExceptIO>	ExceptIOPtr;
+	template<class ArchivePair>
+	struct ExceptIOPtr
+	{
+		typedef boost::shared_ptr<ExceptIO<ArchivePair> >	type;
+	};
 
 
 
@@ -65,7 +70,7 @@ namespace lv { namespace rpc {
 			return boost::copy_exception(t);
 		}
 
-		static void write(typename ArchivePair:oarchive_t & oa, T t)
+		static void write(typename ArchivePair::oarchive_t & oa, T t)
 		{
 			oa << t;
 		}
@@ -80,9 +85,10 @@ namespace lv { namespace rpc {
 		std::string	name_;
 
 	public:
-		ExceptHolder(std:;string const & name) : name_(name) {}
+		ExceptHolder(std::string const & name) : name_(name) {}
+		virtual ~ExceptHolder() {}
 
-		virtual	void write(typename ArchivePair:oarchive_t & oa) = 0;
+		virtual	void write(typename ArchivePair::oarchive_t & oa) = 0;
 
 		std::string const & name() const
 		{
@@ -102,18 +108,18 @@ namespace lv { namespace rpc {
 		{
 		}
 
-		virtual void write(typename ArchivePair:oarchive_t & oa)
+		virtual void write(typename ArchivePair::oarchive_t & oa)
 		{
 			ExceptIOImpl<T, ArchivePair>::write(oa, ex_);
 		}
 	};
 
 
-	DEFINE_EXCEPTION_MSG(RpcUnknownException, std::exception);
+	DEFINE_EXCEPTION_MSG(RpcUnknownException, std::runtime_error);
 
 
 	template<class ArchivePair>
-	std::auto_ptr<ExceptHolder>	current_except()
+	std::auto_ptr<ExceptHolder<ArchivePair> >	current_except()
 	{
 		try
 		{
@@ -121,13 +127,13 @@ namespace lv { namespace rpc {
 		}
 		// catch the registered exceptions
 #define	RPC_REG_EXCEP(except)			\
-	catch(except const & ex) { return std::auto_ptr<ExceptHolder>(new ExceptHolderImpl<except, ArchivePair>(ex, #except)) }	
+	catch(except const & ex) { return std::auto_ptr<ExceptHolder<ArchivePair> >(new ExceptHolderImpl<except, ArchivePair>(ex, #except)) }	
 #include <lv/RPC/RegisterExceptions.hpp>
 
 		// catch unknown exceptions
 		catch(...) 
 		{
-			return std::auto_ptr<ExceptHolder>(new ExceptHolderImpl<RpcUnknownException, ArchivePair>(RpcUnknownException(), "RpcUnknownException")) ;
+			return std::auto_ptr<ExceptHolder<ArchivePair> >(new ExceptHolderImpl<RpcUnknownException, ArchivePair>(RpcUnknownException(), "RpcUnknownException")) ;
 		}
 	}
 
@@ -149,7 +155,7 @@ namespace lv { namespace rpc {
 			return boost::copy_exception(T(str.c_str()));
 		}
 
-		static void	write(typename ArchivePair:oarchive_t & oa, T const & ex)
+		static void	write(typename ArchivePair::oarchive_t & oa, T const & ex)
 		{
 			oa << std::string(ex.what());
 		}
@@ -157,14 +163,15 @@ namespace lv { namespace rpc {
 	};
 
 
+	template<typename Key>
 	uint32	exception_hash_seed()
 	{
-		std::list except_list;
+		std::list<std::string> except_list;
 
 #define	RPC_REG_EXCEP(ex) except_list.push_back(#ex);
 #include <lv/RPC/RegisterExceptions.hpp>
 
-		return unique_hash::seed(except_list);
+		return unique_hash::seed<Key>(except_list);
 	}
 
 	// no exception is found associated with the specified key.
@@ -183,7 +190,7 @@ namespace lv { namespace rpc {
 	{
 		typedef typename Pro::except_key_type key_type;
 
-		typedef boost::unordered_map<key_type, ExceptIOPtr>	except_map;
+		typedef boost::unordered_map<key_type, typename ExceptIOPtr<ArchivePair>::type>	except_map;
 
 		except_map except_;
 
@@ -199,11 +206,11 @@ namespace lv { namespace rpc {
 		Exceptions(int32 seed)
 			: seed_(seed)
 		{
-			if(seed != exception_hash_seed())
+			if(seed != exception_hash_seed<key_type>())
 				throw InvalidHashSeed();
 
-#define RPC_REG_EXCEP(ex) except_.insert(std::make_pair(unique_hash::hash(seed_, #ex), \
-	ExceptIOPtr(new ExceptIOImpl<ex, ArchivePair>())));
+#define RPC_REG_EXCEP(ex) except_.insert(std::make_pair(unique_hash::hash<key_type>(seed_, #ex), \
+		ExceptIOPtr<ArchivePair>::type(new ExceptIOImpl<ex, ArchivePair>())));
 #include <lv/RPC/RegisterExceptions.hpp>
 
 		}
@@ -226,7 +233,7 @@ namespace lv { namespace rpc {
 			if(it == except_.end())
 				throw ExceptionNotFound();
 			else
-				return it->second.get(ia);
+				return it->second->get(ia);
 		}
 	};
 

@@ -50,7 +50,9 @@ namespace lv { namespace unique_hash {
 		{
 			BOOST_CONCEPT_ASSERT((boost::SinglePassRangeConcept<Value>));	// concept check
 
-			return boost::hash_range(seed, boost::begin(value), boost::end(value));
+			size_t result(seed);
+			boost::hash_range(result, boost::begin(value), boost::end(value));
+			return result;
 		}
 
 		/**
@@ -106,12 +108,12 @@ namespace lv { namespace unique_hash {
 			bool ok = true;
 			foreach(value_t const & v, values)
 			{
-				Key key = hash(i, v);
+				Key key = hash<Key>(i, v);
 				map_t::iterator it = map.find(key);
 
 				if(it != map.end())
 				{
-					if(*it == v)		// duplicated
+					if(it->second == v)		// duplicated
 						throw DuplicatedObjects();
 
 					ok = false;

@@ -11,6 +11,7 @@
 #ifndef LV_AUDIODATASOURCE_HPP
 #define LV_AUDIODATASOURCE_HPP
 
+#include <boost/shared_ptr.hpp>
 
 #include <lv/Buffer.hpp>
 #include <lv/Exception.hpp>
@@ -20,6 +21,10 @@ namespace lv
 
 	DEFINE_EXCEPTION_MSG(InvalidAudioData, std::runtime_error);
 	DEFINE_EXCEPTION_MSG(UnSupportedAudioFormat, std::runtime_error);
+
+	// fwd
+	class AudioDataSource;
+	typedef boost::shared_ptr<AudioDataSource>	AudioDataSourcePtr;
 
 	class AudioDataSource
 	{

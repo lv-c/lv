@@ -13,7 +13,7 @@
 
 
 namespace lv { namespace rpc {
-{
+
 	template<class IArchive, class OArchive>
 	struct ArchiveBase
 	{

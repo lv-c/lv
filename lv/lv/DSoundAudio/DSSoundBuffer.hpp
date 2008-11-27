@@ -15,7 +15,7 @@
 #include <boost/shared_ptr.hpp>
 #include <dsound.h>
 
-#include <lv/Audio/SoundBuffer.hpp>
+#include <lv/Audio/AudioBuffer.hpp>
 
 namespace lv
 {
@@ -41,8 +41,7 @@ namespace lv
 		virtual	void	reset();
 
 		virtual	void	set_volume(float vol);
-		virtual	void	set_position(vector_type const & pos);
-
+		
 		virtual	bool	playing() const;
 
 	};

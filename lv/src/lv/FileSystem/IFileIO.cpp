@@ -1,6 +1,6 @@
 #include <lv/FileSystem/IFileIO.hpp>
 #include <lv/FileSystem/IOTask.hpp>
-#include <lv/NullDeleter.hpp>
+#include <lv/SharedPtr.hpp>
 
 
 namespace lv

@@ -23,6 +23,7 @@
 
 #include <boost/tuple/tuple.hpp>
 #include <boost/fusion/algorithm/iteration/for_each.hpp>
+#include <boost/fusion/adapted/boost_tuple.hpp>
 
 #include <boost/assert.hpp>
 #include <boost/shared_ptr.hpp>
@@ -36,6 +37,9 @@
 #include <lv/RPC/IBufferManager.hpp>
 
 #include <lv/RPC/Future.hpp>
+#include <lv/RPC/PacketArchive.hpp>
+#include <lv/RPC/Protocol.hpp>
+#include <lv/RPC/Fwd.hpp>
 
 namespace lv { namespace rpc {
 
@@ -50,15 +54,16 @@ namespace lv { namespace rpc {
 		typedef typename ArchivePair::iarchive_t	iarchive_t;
 		typedef typename ArchivePair::oarchive_t	oarchive_t;
 
-		boost::shared_ptr<ISocket>	socket_;
+		ISocketPtr	socket_;
 
-		boost::shared_ptr<IBufferManager>	buf_manager_;
+		IBufferManagerPtr	buf_manager_;
 
-		int32		next_request_id_;
+		typedef int32 request_id_type;
+		request_id_type		next_request_id_;
 
-		typedef std::auto_ptr<detail::PromiseBase> promise_ptr;
+		typedef std::auto_ptr<detail::PromiseBase<ArchivePair> > promise_ptr;
 
-		typedef boost::ptr_unordered_map<int32, detail::PromiseBase, boost::hash<int32>, std::equal_to<int32>,
+		typedef boost::ptr_unordered_map<int32, detail::PromiseBase<ArchivePair>, boost::hash<int32>, std::equal_to<int32>,
 			boost::heap_clone_allocator, boost::pool_allocator<std::pair<int32, void*> > >	promise_map;
 
 		promise_map	promises_;
@@ -68,23 +73,34 @@ namespace lv { namespace rpc {
 
 
 		template<typename Ret>
-		class PrivateHandler : boost::noncopyable
+		class PrivateHandler
 		{
 			Client & client_;
 
-			int	request_id_;
+			request_id_type	request_id_;
 
 			BufferPtr	buffer_;
 
 			bool	sent_;
 
 		public:
-			PrivateHandler(Client & client, int request_id, BufferPtr buf)
+			PrivateHandler(Client & client, request_id_type request_id, BufferPtr buf)
 				: client_(client)
 				, request_id_(request_id)
 				, buffer_(buf)
 				, sent_(false)
 			{
+			}
+
+			/// copy constructor
+			PrivateHandler(PrivateHandler & rhs)
+				: client_(rhs.client_)
+				, request_id_(rhs.request_id_)
+				, buffer_(rhs.buffer_)
+				, sent_(false)
+			{
+				BOOST_ASSERT(! rhs.sent_);
+				rhs.sent_ = true;
 			}
 
 			~PrivateHandler()
@@ -99,7 +115,7 @@ namespace lv { namespace rpc {
 				//
 				client_.send(buffer_, request_id_, Pro::options::ack);
 
-				detail::AchnowPromise<ArchivePair, Pro> * promise = new detail::AchnowPromise<ArchivePair, Pro>(*except_);
+				detail::AchnowPromise<ArchivePair, Pro> * promise = new detail::AchnowPromise<ArchivePair, Pro>(*client_.except_);
 				client_.add_promise(request_id_, promise_ptr(promise));
 
 				return Acknowledgment(*promise);		
@@ -111,7 +127,7 @@ namespace lv { namespace rpc {
 				//
 				client_.send(buffer_, request_id_, Pro::options::ret);
 
-				detail::ReturnPromise<Ret, ArchivePair, Pro> * promise = new detail::ReturnPromise<Ret, ArchivePair, Pro>(*except_);
+				detail::ReturnPromise<Ret, ArchivePair, Pro> * promise = new detail::ReturnPromise<Ret, ArchivePair, Pro>(*client_.except_);
 				client_.add_promise(request_id_, promise_ptr(promise));
 
 				return ReturningHandler<Ret>(*promise);
@@ -120,12 +136,18 @@ namespace lv { namespace rpc {
 
 	public:
 
-		Client(boost::shared_ptr<ISocket> socket, boost::shared_ptr<IBufferManager> buf_manager, except_ptr except)
+		Client(ISocketPtr socket, IBufferManagerPtr buf_manager, except_ptr except)
 			: socket_(socket)
 			, buf_manager_(buf_manager)
 			, except_(except)
 			, next_request_id_(1)
 		{
+		}
+
+
+		void on_receive(ConstBufferRef buf)
+		{
+			
 		}
 
 
@@ -137,7 +159,7 @@ namespace lv { namespace rpc {
 		/**
 		 * calls a remote function.
 		 */
-#		define BOOST_PP_ITERATION_PARAMS_1(3, (0, LV_RPC_MAX_ARITY, <lv/RPC/Client.hpp>))
+#		define BOOST_PP_ITERATION_PARAMS_1 (3, (0, LV_RPC_MAX_ARITY, <lv/RPC/Client.hpp>))
 #		include BOOST_PP_ITERATE()
 
 
@@ -148,7 +170,7 @@ namespace lv { namespace rpc {
 			return socket_->preprocess(buf);
 		}
 
-		virtual	BufferPtr postprocess(Id const & id, BufferPtr buf) 
+		virtual	BufferPtr postprocess(BufferPtr buf) 
 		{ 
 			return buf; 
 		}
@@ -174,28 +196,33 @@ namespace lv { namespace rpc {
 		{
 			BufferPtr buf = buf_manager_->get();
 
-			buf = preprocess(buf);
+			buf = preprocess(id, buf);
 			BOOST_ASSERT(buf);
 
 			namespace io = boost::iostreams;
-			oarchive_t oa(io::filtering_ostream(io::back_inserter(*buf)), boost::archive::no_header);
+			io::filtering_ostream raw_os(io::back_inserter(*buf));
+			oarchive_t oa(raw_os, boost::archive::no_header);
 
 			oa << Pro::header::call << id;
 			boost::fusion::for_each(args, Serialize(oa));
 
-			return PrivateHandler<Ret>(*this, request_id ++, buf);
+			return PrivateHandler<Ret>(*this, next_request_id_ ++, buf);
 		}
 
 
-		void	send(BufferPtr & buf, int request_id, typename Pro::options::type call_option)
+		void	send(BufferPtr & buf, request_id_type request_id, typename Pro::options::type call_option)
 		{
 			namespace io = boost::iostreams;
-			oarchive_t oa(io::filtering_ostream(io::back_inserter(*buf)), boost::archive::no_header);
 
-			oa << call_option;
-			// sends the request id only when an acknowledgment or a return value is required
-			if(call_option != Pro::options::none)
-				oa << request_id;
+			{	// auto flush
+				io::filtering_ostream raw_os(io::back_inserter(*buf));
+				oarchive_t oa(raw_os, boost::archive::no_header);
+
+				oa << call_option;
+				// sends the request id only when an acknowledgment or a return value is required
+				if(call_option != Pro::options::none)
+					oa << request_id;
+			}
 
 			socket_->send(postprocess(buf));
 		}
@@ -223,15 +250,15 @@ namespace lv { namespace rpc {
 
 #define n BOOST_PP_ITERATION()
 
-template<typename Ret BOOST_PP_COMMA_IF(n) BOOST_PP_ENUM_PARAMS(n, T)>
-PrivateHandler<Ret>	call(Id const & id, BOOST_PP_COMMA_IF(n) BOOST_PP_ENUM(n, LV_RPC_call_params, ~))
+template<typename Ret BOOST_PP_COMMA_IF(n) BOOST_PP_ENUM_PARAMS(n, typename T)>
+PrivateHandler<Ret>	call(Id const & id BOOST_PP_COMMA_IF(n) BOOST_PP_ENUM(n, LV_RPC_call_params, ~))
 {
 	typedef boost::tuples::tuple<BOOST_PP_ENUM(n, LV_RPC_pointer_type, ~)> tuple_t;
 
 #if n == 0
 	tuple_t args;
 #else
-	tuple_t args(BOOST_PP_ENUM_PARAMS(n, &T));
+	tuple_t args(BOOST_PP_ENUM_PARAMS(n, &t));
 #endif
 
 	return this->call_impl<Ret>(id, args);

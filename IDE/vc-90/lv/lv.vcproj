@@ -156,10 +156,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\lv\lv\ComPtr.hpp"
-					>
-				</File>
-				<File
 					RelativePath="..\..\..\lv\lv\Config.hpp"
 					>
 				</File>
@@ -180,15 +176,19 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\Functional.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Fusion.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\IntType.hpp"
 					>
 				</File>
 				<File
 					RelativePath="..\..\..\lv\lv\LRUList.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\lv\lv\NullDeleter.hpp"
 					>
 				</File>
 				<File
@@ -201,6 +201,10 @@
 				</File>
 				<File
 					RelativePath="..\..\..\lv\lv\ScopeGuard.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\SharedPtr.hpp"
 					>
 				</File>
 				<File
@@ -458,6 +462,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\RPC\Fwd.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\RPC\IBufferManager.hpp"
 					>
 				</File>
@@ -487,14 +495,6 @@
 				</File>
 				<File
 					RelativePath="..\..\..\lv\lv\RPC\Server.hpp"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Source Files"
-				>
-				<File
-					RelativePath="..\..\..\lv\src\lv\RPC\Protocol.cpp"
 					>
 				</File>
 			</Filter>
@@ -539,14 +539,6 @@
 				</File>
 				<File
 					RelativePath="..\..\..\lv\lv\Audio\AudioEngine.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\lv\lv\Audio\MusicBuffer.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\lv\lv\Audio\SoundBuffer.hpp"
 					>
 				</File>
 				<File

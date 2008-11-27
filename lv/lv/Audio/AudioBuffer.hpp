@@ -27,7 +27,10 @@ namespace lv
 		virtual	void	reset() = 0;
 
 		virtual	void	set_volume(float vol) = 0;
-		virtual	void	set_position(vector_type const & pos) = 0;
+		virtual	void	set_position(vector_type const & pos)
+		{
+			this->pos_ = pos;
+		}
 
 		virtual	bool	playing() const = 0;
 
@@ -35,6 +38,9 @@ namespace lv
 
 		vector_type		pos_;
 	};
+
+	class SoundBuffer : public AudioBuffer {};
+	class MusicBuffer : public AudioBuffer {};
 }
 
 #endif // LV_AUDIOBUFFER_HPP

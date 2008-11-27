@@ -20,7 +20,8 @@
 #include <boost/assert.hpp>
 
 #include <boost/archive/binary_oarchive.hpp>
-#include <boost/archive/detail/polymorphic_oarchive_route.hpp>
+#include <boost/archive/impl/basic_binary_oprimitive.ipp>
+#include <boost/archive/impl/basic_binary_oarchive.ipp>
 
 #include <boost/type_traits/is_arithmetic.hpp>
 #include <boost/type_traits/is_integral.hpp>
@@ -36,6 +37,8 @@
 #include <boost/iostreams/filtering_stream.hpp>
 #include <lv/Buffer.hpp>
 
+
+
 namespace lv
 {
 
@@ -45,12 +48,14 @@ namespace lv
 
 		boost::iostreams::filtering_ostream buf_ostream_;
 
-	private:
-
 		typedef boost::archive::binary_oarchive_impl<OPacket, 
 			std::ostream::char_type, std::ostream::traits_type>	archive_base_t;
 
 
+		friend class boost::archive::basic_binary_oprimitive<OPacket, std::ostream::char_type,
+			std::ostream::traits_type>;
+		friend class boost::archive::save_access;
+		
 		void	save_size(char size)
 		{
 #ifdef LV_DEBUG_PACKET
@@ -58,13 +63,6 @@ namespace lv
 #endif
 		}
 
-		/*
-
-		friend class boost::archive::detail::polymorphic_oarchive_route<OPacket>;
-		friend class boost::archive::basic_binary_oarchive<OPacket>;
-		friend class boost::archive::save_access;
-		*/
-		
 		template<class T>
 		typename boost::disable_if<boost::is_arithmetic<T> >::type save(T const & t)
 		{
@@ -78,7 +76,7 @@ namespace lv
 			save_size(sizeof(T));
 
 			T temp;
-			boost::detail::store_little_endian(<T, sizeof(T)>(&temp, t));
+			boost::detail::store_little_endian<T, sizeof(T)>(&temp, t);
 			save_binary(&temp, sizeof(T));
 		}
 
@@ -109,11 +107,13 @@ namespace lv
 		{
 		}
 
+		/*
+		// bug
 		OPacket(Buffer & buffer, unsigned int flags = 0)
 			: buf_ostream_(boost::iostreams::back_inserter(buffer))
 			, archive_base_t(buf_ostream_, flags | boost::archive::no_header)
 		{
-		}
+		}*/
 
 	};
 

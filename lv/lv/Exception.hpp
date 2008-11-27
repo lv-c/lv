@@ -20,6 +20,8 @@
 #include <sstream>
 #include <dxerr9.h>
 
+#include <boost/assert.hpp>
+
 #endif	// LV_PLATFORM_WINDOWS
 
 namespace lv
@@ -29,7 +31,7 @@ namespace lv
 	class excp : public base							\
 	{													\
 	public:												\
-		explicit excp(std::string const & msg) throw()	\
+		explicit excp(std::string const & msg)			\
 			: base(msg)									\
 		{												\
 		}												\
@@ -66,6 +68,8 @@ namespace lv
 
 // DirectX. throw if failed
 #define DX_TIF(expr) { HRESULT _hr = expr; if(FAILED(_hr)) { throw std::runtime_error(detail::file_line_hr(__FILE__, __LINE__, _hr));} }
+
+#define DX_VERIFY(expr) BOOST_VERIFY(SUCCEEDED(expr))
 
 #endif	// LV_PLATFORM_WINDOWS
 }

@@ -44,7 +44,7 @@ namespace lv
 		};
 
 
-		template<class T, class class OArchive>
+		template<class T, class OArchive>
 		struct Saver<T, OArchive, typename boost::enable_if<IsSharedPtr<T> >::type>
 		{
 			static void save(T t, OArchive & oa)
@@ -68,7 +68,7 @@ namespace lv
 		};
 
 		template<class T, class IArchive>
-		struct Loader<T, IArchive, typename boost::enable_if<IsSharedPtr<T> >::type>
+		struct Loader<T, IArchive, typename boost::enable_if<detail::IsSharedPtr<T> >::type>
 		{
 			static void load(T t, IArchive & ia)
 			{
@@ -87,6 +87,8 @@ namespace lv
 	class Savable
 	{
 	public:
+		virtual ~Savable() {}
+
 		virtual void save(OArchive & oa, unsigned int const version) = 0;
 	};
 
@@ -104,7 +106,7 @@ namespace lv
 	
 		virtual void save(OArchive & oa, unsigned int const version)
 		{
-			detail::Saver::<T, OArchive>::save(t_, oa);
+			detail::Saver<T, OArchive>::save(t_, oa);
 		}
 	};
 
@@ -122,6 +124,8 @@ namespace lv
 	class Loadable
 	{
 	public:
+		virtual ~Loadable() {}
+
 		virtual	void load(IArchive & ia, unsigned int const version) = 0;
 	};
 
@@ -130,7 +134,7 @@ namespace lv
 	{
 		T t_;
 
-		BOOST_STATIC_ASSERT(boost::is_reference<T>::value || IsSharedPtr<T>::value);
+		BOOST_STATIC_ASSERT(boost::is_reference<T>::value || detail::IsSharedPtr<T>::value);
 
 	public:
 		LoadableImpl(T t) : t_(t) {}

@@ -1,10 +1,10 @@
 #include <lv/DSoundAudio/DSSoundBuffer.hpp>
-#include <lv/Audio/AudioDataSource.hpp>
 #include <lv/DSoundAudio/DSoundEngine.hpp>
-#include <lv/ComPtr.hpp>
+#include <lv/DSoundAudio/DSoundHelper.hpp>
+#include <lv/SharedPtr.hpp>
 #include <lv/Foreach.hpp>
-#include <boost/bind.hpp>
-#include <boost/assert.hpp>
+#include <lv/Exception.hpp>
+#include <boost/functional.hpp>
 #include <xutility>
 
 namespace lv
@@ -13,20 +13,14 @@ namespace lv
 	bool free_buffer(boost::shared_ptr<IDirectSoundBuffer> const & buf)
 	{
 		DWORD status;
-		buf->GetStatus(&status);
+		DX_VERIFY(buf->GetStatus(&status));
 		return !(status & DSBSTATUS_PLAYING);
 	}
 
 	DSSoundBuffer::DSSoundBuffer(AudioDataSource & data, size_t buf_num)
 	{
 		WAVEFORMATEX wf;
-		ZeroMemory(&wf, sizeof(wf));
-		wf.wFormatTag = WAVE_FORMAT_PCM;
-		wf.nSamplesPerSec = data.frequency();
-		wf.nChannels = data.channels();
-		wf.wBitsPerSample = data.bits_per_sample();
-		wf.nBlockAlign = wf.nChannels * wf.wBitsPerSample / 8;
-		wf.nAvgBytesPerSec = wf.nSamplesPerSec * wf.nBlockAlign;
+		DSoundHealper::fill_format(wf, data);
 
 		DSBUFFERDESC dsbd;
 		ZeroMemory(&dsbd, sizeof(dsbd));
@@ -62,6 +56,9 @@ namespace lv
 		BOOST_ASSERT(read_size == data.size());
 
 		buf->Unlock(locked_ptr, locked_size, NULL, 0);
+
+		// reset
+		data.reset();
 	}
 
 
@@ -72,20 +69,42 @@ namespace lv
 			it = buffers_.begin();
 
 		LPDIRECTSOUND3DBUFFER ds3dbuf;
-		(*it)->QueryInterface(IID_IDirectSound3DBuffer, reinterpret_cast<void**>(&ds3dbuf));
+		DX_VERIFY((*it)->QueryInterface(IID_IDirectSound3DBuffer, reinterpret_cast<void**>(&ds3dbuf)));
 		if(ds3dbuf != NULL)
 		{
-			ds3dbuf->SetPosition(pos_.x, pos_.y, pos_.z, DS3D_IMMEDIATE);
+			DX_VERIFY(ds3dbuf->SetPosition(pos_.x, pos_.y, pos_.z, DS3D_IMMEDIATE));
 			ds3dbuf->Release();
 		}
 
-		(*it)->Play(0, 0, loop ? DSBPLAY_LOOPING : 0);
+		DX_VERIFY((*it)->Play(0, 0, loop ? DSBPLAY_LOOPING : 0));
+	}
+
+
+	void DSSoundBuffer::stop()
+	{
+		foreach(dsbuffer_ptr & buf, buffers_)
+		{
+			DX_VERIFY(buf->Stop());
+			DX_VERIFY(buf->SetCurrentPosition(0));
+		}
 	}
 
 	bool DSSoundBuffer::playing() const
 	{
-		return std::find_if(buffers_.begin(), buffers_.end(), ! boost::bind(
-			free_buffer, _1)) == buffers_.end();
+		return std::find_if(buffers_.begin(), buffers_.end(), boost::not1(free_buffer)) == buffers_.end();
+	}
+
+	void DSSoundBuffer::set_volume(float vol)
+	{
+		foreach(dsbuffer_ptr & buf, buffers_)
+		{
+			DX_VERIFY(buf->SetVolume(DSoundHealper::linear_to_db(vol)));
+		}
+	}
+
+	void DSSoundBuffer::reset()
+	{
+		stop();
 	}
 
 }
