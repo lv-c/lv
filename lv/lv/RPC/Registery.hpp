@@ -18,12 +18,18 @@
 #include <boost/unordered_map.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/assert.hpp>
+#include <boost/lexical_cast.hpp>
+#include <boost/archive/archive_exception.hpp>
 
 #include <lv/Functional.hpp>
-#include <lv/RPC/Invoker.hpp>
 #include <lv/Algorithm/UniqueHash.hpp>
 #include <lv/Foreach.hpp>
 #include <lv/Exception.hpp>
+
+#include <lv/rpc/Fwd.hpp>
+#include <lv/rpc/Invoker.hpp>
+#include <lv/rpc/Exceptions.hpp>
+
 
 namespace lv { namespace rpc {
 
@@ -33,20 +39,45 @@ namespace lv { namespace rpc {
 	DEFINE_EXCEPTION_MSG(InvalidFunctionID, std::runtime_error);
 
 
-	template<class ParamExtractors = boost::fusion::map<>, typename Id = std::string, class ArchivePair = PacketArchive, class Pro = Protocol>
+	class SerializationError : public boost::archive::archive_exception
+	{
+		std::string const & msg_;
+	public:
+
+		SerializationError(boost::archive::archive_exception::exception_code code, std::string const & msg)
+			: boost::archive::archive_exception(code)
+			, msg_(msg)
+		{
+		}
+
+		virtual char const * what() const
+		{
+			return (std::string(boost::archive::archive_exception::what()) + msg_).c_str();
+		}
+	};
+
+
+	template<class ParamExtractors, typename Id, class ArchivePair, class Pro>
 	class Registery
 	{
 
-		typedef typename detail::InvokerBase<ArchivePair>::ResultHolderPtr	ResultHolderPtr;
-
 		typedef typename ArchivePair::iarchive_t iarchive_t;
+		typedef typename ArchivePair::oarchive_t oarchive_t;
+
+		typedef typename detail::InvokerBase<ArchivePair>::ResultHolder	ResultHolder;
+		typedef typename ExceptHolder<oarchive_t>::type	ExceptHolder;
+
 
 		typedef typename Pro::id_key_type id_key_type;
 
-		typedef boost::function<ResultHolderPtr(iarchive_t, ParamExtractors)>	invoker_type;
+		typedef boost::function<ResultHolder(iarchive_t &, ParamExtractors)>	invoker_type;
 
 		typedef boost::unordered_map<id_key_type, invoker_type> hash_invoker_map;
 		hash_invoker_map	hash_invoker_;
+
+		// used to look up the function id when failed to serialize the parameter
+		typedef boost::unordered_map<id_key_type, Id>	hash_id_map;
+		hash_id_map	hash_id_;
 
 		typedef std::map<Id, invoker_type>	id_invoker_map;
 		id_invoker_map		id_invoker_;
@@ -87,7 +118,9 @@ namespace lv { namespace rpc {
 			// hash
 			foreach(id_invoker_map::value_type & item, id_invoker_)
 			{
-				hash_invoker_.insert(unique_hash::hash<id_key_type>(seed, item.first), item.second);
+				id_key_type key = unique_hash::hash<id_key_type>(seed, item.first);
+				hash_invoker_.insert(std::make_pair(key, item.second));
+				hash_id_.insert(std::make_pair(key, item.first));
 			}
 
 			// clear id_invoker_ to save memory 
@@ -98,25 +131,36 @@ namespace lv { namespace rpc {
 
 		/**
 		 * @exception InvalidFunctionID no function found associated with the given id
-		 * @exception boost::archive::archive_exception
+		 * @exception SerializationError  ( public boost::archive::archive_exception)
 		 * @exception exceptions thrown by the target function
 		 */
-		ResultHolderPtr	invoke(typename ArchivePair::iarchive_t & ia)
+		ResultHolder	invoke(typename ArchivePair::iarchive_t & ia)
 		{
 			id_key_type id;
 			ia >> id;
 
-			id_invoker_map::iterator it = id_invoker_.find(id);
-			if(it == id_invoker_.end())
-				throw InvalidFunctionID();
+			hash_invoker_map::iterator it = hash_invoker_.find(id);
+			if(it == hash_invoker_.end())
+				throw InvalidFunctionID(boost::lexical_cast<std::string>(id));
 
-			return it->second(ia, extractors_);
+			try
+			{
+				return it->second(ia, extractors_);
+			}
+			catch (boost::archive::archive_exception const & ex)
+			{
+				throw SerializationError(ex.code, boost::lexical_cast<std::string>(hash_id_[id]));
+			}
+			catch(...)
+			{
+				throw;
+			}
 		}
 
 
 	public:
 
-		Registery(ParamExtractors const & extractors)
+		explicit Registery(ParamExtractors const & extractors = ParamExtractors())
 			: extractors_(extractors)
 		{
 		}

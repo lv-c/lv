@@ -4,6 +4,8 @@
 //  Provides three common interfaces, one for all loadable objects, one 
 //	for all savable objects and the last for all serializable objects (
 //	both loadable and savable)
+//	
+//	11-29 : 效率有问题(new)，　可能会扔掉，　可以用　boost::function 代替
 //  --------------------------------------------------------------------
 //  Copyright (C) jcfly(lv.jcfly@gmail.com) 2008 - All Rights Reserved
 // *********************************************************************

@@ -35,7 +35,7 @@ namespace lv
 		/**
 		 * get the static logger
 		 */
-		Log & logger() const
+		Log & logger()
 		{
 			scoped_lock lock(mutex_);
 
@@ -66,7 +66,7 @@ namespace lv
 			if(it == loggers_.end())
 				throw std::runtime_error(std::string("logger not exist : ") + name);
 
-			return *it;
+			return *it->second;
 		}
 
 	};

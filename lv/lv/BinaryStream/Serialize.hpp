@@ -15,8 +15,8 @@
 #include <boost/utility/enable_if.hpp>
 #include <boost/mpl/identity.hpp>
 #include <boost/range.hpp>
+#include <boost/call_traits.hpp>
 
-#include <lv/ParamType.hpp>
 #include <lv/Foreach.hpp>
 
 namespace lv { namespace bstream {
@@ -29,7 +29,7 @@ namespace lv { namespace bstream {
 	struct object_tag;
 
 	template<typename T, class OStream>
-	inline void	write(OStream & os, typename ParamType<T>::type t)
+	inline void	write(OStream & os, typename boost::call_traits<T>::param_type t)
 	{
 		Serialize<T, typename object_tag<T>::type>::write(os, t);
 	}
@@ -69,7 +69,7 @@ namespace lv { namespace bstream {
 	struct Serialize<T, pod_tag>
 	{
 		template<class OStream>
-		static inline void write(OStream & os, typename ParamType<T>::type t)
+		static inline void write(OStream & os, typename boost::call_traits<T>::param_type t)
 		{
 			os.write(reinterpret_cast<char const*>(&t), sizeof(T));
 		}

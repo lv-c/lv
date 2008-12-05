@@ -14,14 +14,12 @@
 #include <boost/future.hpp>
 
 #include <lv/Exception.hpp>
-#include <lv/RPC/Exceptions.hpp>
+#include <lv/rpc/Exceptions.hpp>
+#include <lv/rpc/Common.hpp>
 
 namespace lv { namespace rpc {
 
 	
-	DEFINE_EXCEPTION_MSG(InvalidRPCHeader, std::runtime_error);
-
-
 	// fwd
 	template<typename> class ReturningHandler;
 	class Acknowledgment;
@@ -29,22 +27,8 @@ namespace lv { namespace rpc {
 	// Not intended to be used by the user.
 	namespace detail
 	{
-		template<class ArchivePair>
-		class PromiseBase
-		{
-		public:
-			virtual ~PromiseBase() {}
-
-			/**
-			 * @exception boost::archive::archive_exception ?
-			 * @exception InvalidRPCHeader
-			 * @exception ExceptionNotFoundError
-			 */
-			virtual	void set(typename ArchivePair::iarchive_t & ia) = 0;
-		};
-
 		template<class ArchivePair, class Pro>
-		class AchnowPromise : public PromiseBase<ArchivePair>
+		class AchnowPromise
 		{
 			boost::promise<void> promise_;
 
@@ -66,9 +50,11 @@ namespace lv { namespace rpc {
 			}
 
 			/**
-			 * @copydoc PromiseBase::set
+			 * @exception boost::archive::archive_exception ?
+			 * @exception InvalidProtocolValue
+			 * @exception InvalidExceptionID
 			 */
-			virtual	void set(typename ArchivePair::iarchive_t & ia) 
+			void operator () (typename ArchivePair::iarchive_t & ia) 
 			{
 				Pro::except::type ex;
 				ia >> ex;
@@ -81,14 +67,12 @@ namespace lv { namespace rpc {
 				else if(ex == Pro::except::no_ex)
 					promise_.set();
 				else
-					throw InvalidRPCHeader();
+					throw InvalidProtocolValue();
 			}
-
-	
 		};
 
 		template<typename Ret, class ArchivePair, class Pro>
-		class ReturnPromise : PromiseBase<ArchivePair>
+		class ReturnPromise
 		{
 			boost::promise<Ret>	promise_;
 
@@ -110,9 +94,11 @@ namespace lv { namespace rpc {
 			}
 
 			/**
-			 * @copydoc PromiseBase::set
+			 * @exception boost::archive::archive_exception ?
+			 * @exception InvalidProtocolValue
+			 * @exception InvalidExceptionID
 			 */
-			virtual	void set(typename ArchivePair::iarchive_t & ia)
+			void operator () (typename ArchivePair::iarchive_t & ia)
 			{
 				Pro::except::type ex;
 				ia >> ex;
@@ -129,7 +115,7 @@ namespace lv { namespace rpc {
 					promise_.set(ret);
 				}
 				else
-					throw InvalidRPCHeader();
+					throw InvalidProtocolValue();
 			}
 		};
 	}

@@ -42,6 +42,7 @@ namespace lv
 
 	private:
 
+		// noncopyable
 		Singleton( const Singleton& );
 		Singleton const & operator = (Singleton const &);
 
@@ -56,6 +57,7 @@ namespace lv
 		template <>
 		static T & instance_impl<false>()
 		{
+			BOOST_ASSERT(instance_ != NULL);
 			return *instance_;
 		}
 

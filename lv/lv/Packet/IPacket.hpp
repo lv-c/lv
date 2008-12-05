@@ -34,10 +34,13 @@
 #include <boost/spirit/home/support/detail/math/fpclassify.hpp>
 #include <boost/spirit/home/support/detail/integer/endian.hpp>	
 
+/*
 #include <boost/iostreams/filtering_stream.hpp>
 #include <boost/range/iterator_range.hpp>
 
 #include <lv/Buffer.hpp>
+*/
+
 #include <lv/Packet/PacketException.hpp>
 
 
@@ -52,7 +55,7 @@ namespace lv
 		typedef boost::archive::binary_iarchive_impl<IPacket, std::istream::char_type, 
 			std::istream::traits_type>	archive_base_t;
 
-		boost::iostreams::filtering_istream buf_istream_;
+		//boost::iostreams::filtering_istream buf_istream_;
 
 		friend class boost::archive::basic_binary_iprimitive<IPacket, std::istream::char_type,
 			std::istream::traits_type>;
@@ -61,7 +64,7 @@ namespace lv
 
 		void load_size(char size)
 		{
-#ifdef LV_DEBUG_PACKET
+#if	LV_PACKET_DEBUG
 			char temp;
 			archive_base_t::load(temp);
 			if(temp != size)

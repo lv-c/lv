@@ -278,6 +278,12 @@ namespace boost {
       void get() const {
         base_type::get();
       }
+
+	  // added by jcfly
+	  void operator () () const
+	  {
+		  this->get();
+	  }
   };
 
   template <typename R > class promise< R& > : public promise<R*> {

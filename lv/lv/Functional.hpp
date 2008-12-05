@@ -1,7 +1,8 @@
 // *********************************************************************
 //  Functional   version:  1.0   ¡¤  date: 11/25/2008
 //  --------------------------------------------------------------------
-//  
+//  deduce the Signature of functions / member functions / function 
+//	objects that can be used with the boost::function template
 //  --------------------------------------------------------------------
 //  Copyright (C) jcfly(lv.jcfly@gmail.com) 2008 - All Rights Reserved
 // *********************************************************************
@@ -35,6 +36,7 @@ namespace lv
 		template<typename T, typename ClassTypeTransform, class Enable = void>
 		struct SignatureImpl;
 
+		// function
 		template<typename T, typename ClassTypeTransform>
 		struct SignatureImpl<T, ClassTypeTransform, typename boost::enable_if<boost::is_function<T> >::type>
 		{
@@ -44,7 +46,7 @@ namespace lv
 
 		namespace mpl = boost::mpl;
 
-
+		// member function
 		template<typename T, typename ClassTypeTransform>
 		struct SignatureImpl<T, ClassTypeTransform, typename boost::enable_if<boost::is_member_function_pointer<T> >::type>
 		{
@@ -62,6 +64,7 @@ namespace lv
 			>::type type;
 		};
 
+		// function object
 		template<typename T, typename ClassTypeTransform>
 		struct SignatureImpl<T, ClassTypeTransform, typename boost::enable_if<boost::is_class<T> >::type>
 		{

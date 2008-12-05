@@ -11,17 +11,17 @@
 #ifndef LV_PACKETEXCEPTION_HPP
 #define LV_PACKETEXCEPTION_HPP
 
-
 #include <boost/archive/archive_exception.hpp>
 
 namespace lv
 {
 
+
 	class PacketException : public boost::archive::archive_exception
 	{
 	public:
 
-		PacketException(exception_code c)
+		PacketException(boost::archive::archive_exception::exception_code c)
 			: boost::archive::archive_exception(c)
 		{
 		}

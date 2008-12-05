@@ -25,6 +25,9 @@
 
 #include <lv/Algorithm/UniqueHash.hpp>
 #include <lv/Exception.hpp>
+#include <lv/SharedPtr.hpp>
+
+#include <lv/rpc/Fwd.hpp>
 
 #include <boost/exception/exception.hpp>
 
@@ -33,13 +36,18 @@ namespace lv { namespace rpc {
 	template<class ArchivePair>
 	class ExceptIO
 	{
+	protected:
+
+		typedef typename ArchivePair::iarchive_t	iarchive_t;
+		typedef typename ArchivePair::oarchive_t	oarchive_t;
+
 	public:
 		virtual	~ExceptIO() {}
 
 		/**
 		 * @exception boost::archive::archive_exception ?
 		 */
-		virtual	boost::exception_ptr get(typename ArchivePair::iarchive_t & ia) = 0;
+		virtual	boost::exception_ptr get(iarchive_t & ia) = 0;
 
 		// All the subclasses should also define the following function to serialize the 
 		// exception @a t to @a oa
@@ -52,9 +60,6 @@ namespace lv { namespace rpc {
 		typedef boost::shared_ptr<ExceptIO<ArchivePair> >	type;
 	};
 
-
-
-
 	/**
 	 * default implementation. T is serializable.
 	 */
@@ -63,80 +68,18 @@ namespace lv { namespace rpc {
 	{
 	public:
 
-		virtual	boost::exception_ptr get(typename ArchivePair::iarchive_t & ia)
+		virtual	boost::exception_ptr get(iarchive_t & ia)
 		{
 			T t;
 			ia >> t;
 			return boost::copy_exception(t);
 		}
 
-		static void write(typename ArchivePair::oarchive_t & oa, T t)
+		static void write(oarchive_t & oa, T t)
 		{
 			oa << t;
 		}
 	};
-
-
-
-	// exception holder
-	template<class ArchivePair>
-	class ExceptHolder
-	{
-		std::string	name_;
-
-	public:
-		ExceptHolder(std::string const & name) : name_(name) {}
-		virtual ~ExceptHolder() {}
-
-		virtual	void write(typename ArchivePair::oarchive_t & oa) = 0;
-
-		std::string const & name() const
-		{
-			return this->name_;
-		}
-	};
-
-	template<class T, class ArchivePair>
-	class ExceptHolderImpl : public ExceptHolder<ArchivePair>
-	{
-		T	ex_;
-	public:
-		
-		ExceptHolderImpl(T const & ex, std::string const & name)
-			: ex_(ex)
-			, ExceptHolder<ArchivePair>(name)
-		{
-		}
-
-		virtual void write(typename ArchivePair::oarchive_t & oa)
-		{
-			ExceptIOImpl<T, ArchivePair>::write(oa, ex_);
-		}
-	};
-
-
-	DEFINE_EXCEPTION_MSG(RpcUnknownException, std::runtime_error);
-
-
-	template<class ArchivePair>
-	std::auto_ptr<ExceptHolder<ArchivePair> >	current_except()
-	{
-		try
-		{
-			throw;		// rethrow the current exception
-		}
-		// catch the registered exceptions
-#define	RPC_REG_EXCEP(except)			\
-	catch(except const & ex) { return std::auto_ptr<ExceptHolder<ArchivePair> >(new ExceptHolderImpl<except, ArchivePair>(ex, #except)) }	
-#include <lv/RPC/RegisterExceptions.hpp>
-
-		// catch unknown exceptions
-		catch(...) 
-		{
-			return std::auto_ptr<ExceptHolder<ArchivePair> >(new ExceptHolderImpl<RpcUnknownException, ArchivePair>(RpcUnknownException(), "RpcUnknownException")) ;
-		}
-	}
-
 
 	/**
 	 * partial specialization for std::exception and all the exception classes derived from std::exception.
@@ -148,19 +91,83 @@ namespace lv { namespace rpc {
 	{
 	public:
 
-		virtual	boost::exception_ptr get(typename ArchivePair::iarchive_t & ia)
+		virtual	boost::exception_ptr get(iarchive_t & ia)
 		{
 			std::string str;
 			ia >> str;
 			return boost::copy_exception(T(str.c_str()));
 		}
 
-		static void	write(typename ArchivePair::oarchive_t & oa, T const & ex)
+		static void	write(oarchive_t & oa, T const & ex)
 		{
 			oa << std::string(ex.what());
 		}
 
 	};
+
+
+
+
+	// exception holder
+	template<class OArchive>
+	struct ExceptHolder
+	{
+		typedef boost::function<void(OArchive &)>	type;
+	};
+
+	namespace detail
+	{
+		template<class T, class ArchivePair, class Pro>
+		class ExceptWrapper
+		{
+			T	ex_;
+
+			typedef typename Pro::except_key_type	except_key_type;
+			except_key_type	ex_key_;
+
+		public:
+
+			ExceptWrapper(T const & ex, except_key_type key)
+				: ex_(ex)
+				, ex_key_(key)
+			{
+			}
+
+			void operator () (typename ArchivePair::oarchive_t & oa) const
+			{
+				oa << ex_key_;
+				ExceptIOImpl<T, ArchivePair>::write(oa, ex_);
+			}
+		};
+	}
+	
+	
+
+	DEFINE_EXCEPTION_MSG(RpcUnknownException, std::runtime_error);
+
+
+	template<class ArchivePair, class Pro>
+	typename ExceptHolder<typename ArchivePair::oarchive_t>::type	current_except(uint32 ex_seed)
+	{
+		try
+		{
+			throw;		// rethrow the current exception
+		}
+		// catch the registered exceptions
+#define	RPC_REG_EXCEP(except)			\
+	catch(except const & ex) { return detail::ExceptWrapper<except, ArchivePair, Pro>(ex, \
+		unique_hash::hash<typename Pro::except_key_type>(ex_seed, #except)); }	
+#include <lv/rpc/RegisterExceptions.hpp>
+
+		// catch unknown exceptions
+		catch(...) 
+		{
+			return detail::ExceptWrapper<RpcUnknownException, ArchivePair, Pro>(RpcUnknownException(),\
+				 unique_hash::hash<typename Pro::except_key_type>(ex_seed, "RpcUnknownException"));
+		}
+
+		return ExceptHolder<typename ArchivePair::oarchive_t>::type();
+	}
 
 
 	template<typename Key>
@@ -169,18 +176,17 @@ namespace lv { namespace rpc {
 		std::list<std::string> except_list;
 
 #define	RPC_REG_EXCEP(ex) except_list.push_back(#ex);
-#include <lv/RPC/RegisterExceptions.hpp>
+#include <lv/rpc/RegisterExceptions.hpp>
 
 		return unique_hash::seed<Key>(except_list);
 	}
 
 	// no exception is found associated with the specified key.
-	DEFINE_EXCEPTION_MSG(ExceptionNotFound, std::runtime_error);
-	// exception hash key from the remote server is not the same as the local one.
-	DEFINE_EXCEPTION_MSG(InvalidHashSeed, std::runtime_error);
+	DEFINE_EXCEPTION_MSG(InvalidExceptionID, std::runtime_error);
+	
 
 	/**
-	 * It was derived from boost::noncopyable to prevent unintended copying.
+	 * It's derived from boost::noncopyable to prevent unintended copying. Used by Client.
 	 * @param Key an exception will be mapped to a value of integral type @a Key 
 	 *	using UniqueHash. Usually an int16 type should be competent. Otherwise you 
 	 *	can use an int32 type.
@@ -194,24 +200,17 @@ namespace lv { namespace rpc {
 
 		except_map except_;
 
-		int32	seed_;
+		uint32	seed_;
 
 	public:
 
-		/**
-		 * @param seed hash seed for registered exception types of the server.It SHOULD be the same
-		 *	as the hash seed for registered exception types of the client.
-		 * @exception InvalidHashSeed if(seed != exception_hash_seed())
-		 */
-		Exceptions(int32 seed)
-			: seed_(seed)
+		Exceptions()
+			: seed_(exception_hash_seed<key_type>())
 		{
-			if(seed != exception_hash_seed<key_type>())
-				throw InvalidHashSeed();
 
 #define RPC_REG_EXCEP(ex) except_.insert(std::make_pair(unique_hash::hash<key_type>(seed_, #ex), \
 		ExceptIOPtr<ArchivePair>::type(new ExceptIOImpl<ex, ArchivePair>())));
-#include <lv/RPC/RegisterExceptions.hpp>
+#include <lv/rpc/RegisterExceptions.hpp>
 
 		}
 
@@ -223,15 +222,20 @@ namespace lv { namespace rpc {
 			return except_.size();
 		}
 
+		uint32	seed() const
+		{
+			return seed_;
+		}
+
 		/**
-		 * @exception ExceptionNotFound no exception found associated with @key.
+		 * @exception InvalidExceptionID no exception found associated with @key.
 		 * @exception boost::archive::archive_exception ? error serializing (loading) the exception.
 		 */
-		virtual	boost::exception_ptr get(key_type key, typename ArchivePair::iarchive_t & ia)
+		boost::exception_ptr get(key_type key, typename ArchivePair::iarchive_t & ia)
 		{
 			except_map::iterator it = except_.find(key);
 			if(it == except_.end())
-				throw ExceptionNotFound();
+				throw InvalidExceptionID();
 			else
 				return it->second->get(ia);
 		}

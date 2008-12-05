@@ -48,6 +48,7 @@
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
+				PrecompiledHeaderThrough="PreCompile.hpp"
 				WarningLevel="3"
 				DebugInformationFormat="4"
 				DisableSpecificWarnings="4819"
@@ -122,6 +123,7 @@
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
+				PrecompiledHeaderThrough="PreCompile.hpp"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 			/>
@@ -173,6 +175,10 @@
 			Name="Header Files"
 			>
 			<File
+				RelativePath="..\..\..\UnitTest\PreCompile.hpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\UnitTest\UnitTest.hpp"
 				>
 			</File>
@@ -180,6 +186,10 @@
 		<Filter
 			Name="Source Files"
 			>
+			<File
+				RelativePath="..\..\..\UnitTest\PreCompile.cpp"
+				>
+			</File>
 			<File
 				RelativePath="..\..\..\UnitTest\Rpc.cpp"
 				>

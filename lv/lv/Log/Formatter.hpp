@@ -19,13 +19,13 @@
 #include <lv/Log/Level.hpp>
 #include <lv/Timer.hpp>
 
-namespace lv { namespace formatter {
+namespace lv { namespace log {
 
 
 	// most often this's used as a tailer
 	struct LineBreak
 	{
-		void operator () (std::ostream & os, log::level)
+		void operator () (std::ostream & os, log::level) const
 		{
 			os << std::endl;
 		}
@@ -33,7 +33,7 @@ namespace lv { namespace formatter {
 
 	struct Time
 	{
-		void operator () (std::ostream & os, log::level)
+		void operator () (std::ostream & os, log::level) const
 		{
 			using namespace boost::posix_time;
 			os << boost::format("%1%%|24t|") % to_simple_string(
@@ -43,7 +43,7 @@ namespace lv { namespace formatter {
 
 	struct Clock 
 	{
-		void operator () (std::ostream & os, log::level)
+		void operator () (std::ostream & os, log::level) const
 		{
 			os << boost::format("%1%%|15t|") % (timer_.elapsed() * 1000);
 		}
@@ -55,7 +55,7 @@ namespace lv { namespace formatter {
 
 	struct Tag
 	{
-		void operator () (std::ostream & os, log::level lvl)
+		void operator () (std::ostream & os, log::level lvl) const
 		{
 			static std::string const tags [] = {
 				"debug:", "info:", "error:", "fatal:"

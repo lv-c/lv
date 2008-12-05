@@ -15,6 +15,7 @@
 
 #include <lv/Graphics/ColorRect.hpp>
 #include <lv/Graphics/Rect.hpp>
+#include <lv/Graphics/RenderFwd.hpp>
 
 namespace lv
 {

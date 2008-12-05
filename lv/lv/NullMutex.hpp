@@ -1,10 +1,13 @@
 // *********************************************************************
 //  NullMutex   version:  1.0   ·  date: 08/20/2008
 //  --------------------------------------------------------------------
-//			空的 mutex. 用于锁策略
+//			a null mutex.
 //	see http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2006/n2043.html
 // "Simplifying And Extending Mutex and Scoped Lock Types For C++ 
 //		Multi-Threading Library"
+//	
+//	In fact, the overhead of boost::mutex is really negligible and there's
+//	no need to use this in general.
 //  --------------------------------------------------------------------
 //  Copyright (C) jcfly(lv.jcfly@gmail.com) 2008 - All Rights Reserved
 // *********************************************************************

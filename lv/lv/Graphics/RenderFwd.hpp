@@ -13,6 +13,8 @@
 
 #include <boost/shared_ptr.hpp>
 
+#include <lv/IntType.hpp>
+
 namespace lv
 {
 	class Texture;
@@ -21,6 +23,16 @@ namespace lv
 
 	class Font;
 	typedef boost::shared_ptr<Font>	FontPtr;
+
+	template<typename>	class PointT;
+	typedef PointT<int32>	Point;
+
+	template<typename>	class SizeT;
+	typedef SizeT<int32>	Size;
+
+	template<typename>	class RectT;
+	typedef RectT<int32>	Rect;
+
 }
 
 

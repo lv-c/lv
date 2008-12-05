@@ -13,6 +13,8 @@
 
 #include <boost/assert.hpp>
 
+#include <lv/Graphics/RenderFwd.hpp>
+
 namespace lv
 {
 

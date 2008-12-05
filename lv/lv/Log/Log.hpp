@@ -43,10 +43,7 @@ namespace lv
 			Log	&	log_;
 		public:
 
-			Proxy(Log & log)
-				: log_(log)
-			{
-			}
+			Proxy(Log & log) : log_(log) {}
 
 			~Proxy()
 			{
@@ -64,18 +61,20 @@ namespace lv
 	public:
 
 		/**
+		 * the default parameter will make your life easier if you just want a simple
+		 *	logger
 		 * @code 
 		 * log_(log::debug) << "hello world" << 4545;
 		 * @endcode
 		 */
-		Proxy operator () (level lvl)
+		Proxy operator () (log::level lvl = log::info)
 		{
 			on_record_begin(lvl);
 
 			return Proxy(*this);
 		}
 
-		void	add_gather(std::auto_ptr<Gather> gather)
+		void	add_gather(GatherPtr gather)
 		{
 			scoped_lock lock(mutex_);
 
@@ -89,12 +88,12 @@ namespace lv
 		{
 			foreach(Gather & gather, this->gathers_)
 			{
-				if(gather.log_level() <= this->lvl_)
+				if(gather.output(lvl_))
 					gather.log(t);
 			}
 		}
 
-		void on_record_begin(level lvl)
+		void on_record_begin(log::level lvl)
 		{
 			// lock
 			mutex_.lock();
@@ -103,8 +102,8 @@ namespace lv
 
 			foreach(Gather & gather, this->gathers_)
 			{
-				if(gather.log_level() <= this->lvl_)
-					gather.on_record_begin();
+				if(gather.output(lvl_))
+					gather.on_record_begin(lvl_);
 			}
 		}
 
@@ -112,8 +111,8 @@ namespace lv
 		{
 			foreach(Gather & gather, this->gathers_)
 			{
-				if(gather.log_level() <= this->lvl_)
-					gather.on_record_end();
+				if(gather.output(lvl_))
+					gather.on_record_end(lvl_);
 			}
 
 			// unlock

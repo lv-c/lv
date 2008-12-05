@@ -5,7 +5,7 @@
 //	library. This's a modification of the portable_binary_oarchive 
 //	implementation made by christian.pfligersdorffer@eos.info. Here is the 
 //	major changes:
-//	1. Only write the size of the objects to the stream when LV_DEBUG_PACKET 
+//	1. Only write the size of the objects to the stream when LV_PACKET_DEBUG 
 //		is defined.
 //
 //  --------------------------------------------------------------------
@@ -33,10 +33,11 @@
 #include <boost/spirit/home/support/detail/math/fpclassify.hpp>
 #include <boost/spirit/home/support/detail/integer/endian.hpp>	
 
+/*
 #include <boost/iostreams/device/back_inserter.hpp>
 #include <boost/iostreams/filtering_stream.hpp>
 #include <lv/Buffer.hpp>
-
+*/
 
 
 namespace lv
@@ -46,7 +47,7 @@ namespace lv
 		OPacket, std::ostream::char_type, std::ostream::traits_type>
 	{
 
-		boost::iostreams::filtering_ostream buf_ostream_;
+		// boost::iostreams::filtering_ostream buf_ostream_;
 
 		typedef boost::archive::binary_oarchive_impl<OPacket, 
 			std::ostream::char_type, std::ostream::traits_type>	archive_base_t;
@@ -58,7 +59,7 @@ namespace lv
 		
 		void	save_size(char size)
 		{
-#ifdef LV_DEBUG_PACKET
+#if	LV_PACKET_DEBUG
 			archive_base_t::save(size);
 #endif
 		}

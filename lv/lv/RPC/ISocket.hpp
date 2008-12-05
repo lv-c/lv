@@ -19,12 +19,7 @@ namespace lv { namespace rpc {
 	{
 	public:
 
-		virtual bool	connected() const = 0;
-
-		virtual	BufferPtr	preprocess(BufferPtr buf) 
-		{
-			return buf;
-		}
+		virtual	~ISocket() {}
 
 		virtual	void	send(BufferPtr buf) = 0;
 	};

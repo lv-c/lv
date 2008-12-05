@@ -20,6 +20,8 @@ namespace lv { namespace rpc {
 	{
 	public:
 
+		virtual ~IBufferManager(){}
+
 		virtual BufferPtr	get() = 0;
 	};
 

@@ -17,6 +17,7 @@
 #include <boost/type_traits/is_arithmetic.hpp>
 #include <boost/type_traits/make_unsigned.hpp>
 #include <boost/type_traits/is_integral.hpp>
+#include <boost/type_traits/remove_const.hpp>
 #include <boost/range.hpp>
 #include <boost/range/concepts.hpp>
 #include <boost/unordered_map.hpp>
@@ -37,7 +38,13 @@ namespace lv { namespace unique_hash {
 		template<typename Key>
 		inline typename boost::make_unsigned<Key>::type max_value()
 		{
-			return std::numeric_limits<typename boost::make_unsigned<Key>::type>::max();
+			// std::numeric_limits<T const>::max() == 0   ...(T = char , short ...)
+			// so we have to remove the const qualifier
+			return std::numeric_limits<
+				typename boost::make_unsigned<
+					typename boost::remove_const<Key>::type
+				>::type
+			>::max();
 		}
 
 
@@ -55,8 +62,27 @@ namespace lv { namespace unique_hash {
 			return result;
 		}
 
+		/// c string
+		inline std::size_t hash_impl(uint32 seed, char const * value)
+		{
+			size_t result(seed);
+			for(char const * p = value; *p != '\0'; ++p)
+				boost::hash_combine(result, *p);
+		
+			return result;
+		}
+
+		inline std::size_t hash_impl(uint32 seed, wchar_t const * value)
+		{
+			size_t result(seed);
+			for(wchar_t const * p = value; *p != '\0'; ++p)
+				boost::hash_combine(result, *p);
+
+			return result;
+		}
+
 		/**
-		 * compute the hash value of an arithmetic type.
+		 * compute the hash value of an arithmetic type. @a seed is ignored
 		 */
 		template<typename Value>
 		typename boost::enable_if<boost::is_arithmetic<Value>, std::size_t>::type

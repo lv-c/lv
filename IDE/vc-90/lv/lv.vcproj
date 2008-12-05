@@ -104,12 +104,13 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalOptions="/wd 4819 /D &quot;NOMINMAX&quot;"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				UsePrecompiledHeader="2"
+				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 			/>
@@ -196,10 +197,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\lv\lv\ParamType.hpp"
-					>
-				</File>
-				<File
 					RelativePath="..\..\..\lv\lv\ScopeGuard.hpp"
 					>
 				</File>
@@ -251,10 +248,6 @@
 				</File>
 				<File
 					RelativePath="..\..\..\lv\lv\Graphics\FreeTypeFont.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\lv\lv\Graphics.hpp"
 					>
 				</File>
 				<File
@@ -390,6 +383,10 @@
 				Name="Header Files"
 				>
 				<File
+					RelativePath="..\..\..\lv\lv\Log\DebugStringGather.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\Log\Formatter.hpp"
 					>
 				</File>
@@ -407,6 +404,10 @@
 				</File>
 				<File
 					RelativePath="..\..\..\lv\lv\Log\LogManager.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Log\StringGather.hpp"
 					>
 				</File>
 			</Filter>
@@ -450,6 +451,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\RPC\Common.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\RPC\Config.hpp"
 					>
 				</File>
@@ -486,6 +491,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\RPC\Ref.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\RPC\RegisterExceptions.hpp"
 					>
 				</File>
@@ -494,7 +503,19 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\RPC\RpcBase.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\RPC\Server.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\RPC\SimpleBufferManager.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\RPC\SingletonExtractor.hpp"
 					>
 				</File>
 			</Filter>

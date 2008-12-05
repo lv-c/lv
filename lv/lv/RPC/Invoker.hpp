@@ -31,23 +31,28 @@
 
 #include <boost/static_assert.hpp>
 
-#include <lv/Packet/Serializable.hpp>
 #include <lv/Fusion.hpp>
+#include <lv/rpc/Ref.hpp>
 
 namespace lv { namespace rpc { namespace detail {
 
+	namespace fusion = boost::fusion;
+	namespace mpl = boost::mpl;
 
 	template<typename T>
 	struct DefaultExtractor
 	{
-		typedef	T	result_type;
+		typedef	T	type;
 
 		/**
 		 * @exception boost::archive::archive_exception ?
 		 */
 		template<class IArchive>
-		inline void operator () (IArchive & ia, result_type & re) const
+		void operator () (IArchive & ia, type & re) const
 		{
+			// use RPC_REGISTER_CLASS to register your class
+			BOOST_STATIC_ASSERT((boost::serialization::implementation_level<type>::value != 
+				boost::serialization::object_class_info));
 			ia >> re;
 		}
 	};
@@ -69,13 +74,15 @@ namespace lv { namespace rpc { namespace detail {
 	/// get the user provided extractor for type T 
 	template<typename T, class ParamExtractors>
 	struct Extractor<T, ParamExtractors, typename boost::enable_if<
-		boost::fusion::result_of::has_key<ParamExtractors, T> >::type>
+		fusion::result_of::has_key<ParamExtractors, T> >::type>
 	{
-		typedef typename boost::fusion::result_of::at_key<ParamExtractors, T>::type	type;
+		typedef typename boost::remove_reference<
+			typename fusion::result_of::at_key<ParamExtractors, T>::type	// it's a reference type
+		>::type type;
 
 		static type & get(ParamExtractors & extractors)
 		{
-			return boost::fusion::at_key<T>(extractors);
+			return fusion::at_key<T>(extractors);
 		}
 	};
 
@@ -99,12 +106,25 @@ namespace lv { namespace rpc { namespace detail {
 			typename boost::remove_const<
 				typename boost::remove_reference<T>::type
 			>::type
-		>::type type;
+		>::type	type;
 
 		/// parameter type of the registered function cann't be a pointer type if you don't provide 
 		/// an extractor for it.
-		BOOST_STATIC_ASSERT((boost::fusion::result_of::has_key<ParamExtractors, type>::value ||
-			! boost::is_pointer<type>::value));
+		BOOST_STATIC_ASSERT((! boost::is_pointer<type>::value));
+	};
+
+	template<typename T, class ParamExtractors>
+	class ParamType
+	{
+		typedef typename RawParamType<T, ParamExtractors>::type raw_param_type;
+	public:
+		typedef typename mpl::eval_if<
+			fusion::result_of::has_key<ParamExtractors, raw_param_type>,
+			typename boost::remove_reference<
+				typename fusion::result_of::at_key<ParamExtractors, raw_param_type>::type	// reference type
+			>::type,
+			RawParamType<T, ParamExtractors>
+		>::type type;
 	};
 
 	template<class IArchive, class ParamExtractors> 
@@ -119,10 +139,10 @@ namespace lv { namespace rpc { namespace detail {
 		{
 		}
 
-		template<typename T>
+		template<typename OriType, typename T>
 		void operator () (T & t) const
 		{
-			Extractor<T, ParamExtractors>::get(ex_)(ia_, t);
+			Extractor<typename RawParamType<OriType, ParamExtractors>::type, ParamExtractors>::get(ex_)(ia_, t);
 		}
 	};
 
@@ -135,12 +155,51 @@ namespace lv { namespace rpc { namespace detail {
 
 		typedef typename ArchivePair::iarchive_t iarchive_t;
 		typedef typename ArchivePair::oarchive_t oarchive_t;
+
+		template<typename T>
+		class ResultWrapper
+		{
+			T	val_;
+		public:
+
+			ResultWrapper(T val) : val_(val) {}
+
+			void operator() (oarchive_t & oa)
+			{
+				oa << val_;
+			}
+		};
+
 	public:
 
-		typedef Savable<oarchive_t>					ResultHolder;
-		typedef std::auto_ptr<ResultHolder>			ResultHolderPtr;
+		typedef boost::function<void(oarchive_t &)>		ResultHolder;
 
 	};
+
+
+	// custom for_each
+	template <typename FirstU, typename First, typename Last, typename F>
+	void for_each_linear(First const&, Last const&, F const&, mpl::true_)
+	{
+	}
+
+	template <typename FirstU, typename First, typename Last, typename F>
+	void for_each_linear(First const& first, Last const& last, F const& f, mpl::false_)
+	{
+		f.operator()<typename mpl::deref<FirstU>::type>(*first);
+		for_each_linear<typename mpl::next<FirstU>::type>(fusion::next(first), last, f, 
+			fusion::result_of::equal_to<typename fusion::result_of::next<First>::type, Last>());
+	}
+
+
+	template <typename SequenceU, typename Sequence, typename F>
+	void for_each(Sequence& seq, F const& f)
+	{
+		for_each_linear<typename mpl::begin<SequenceU>::type>(fusion::begin(seq)
+			, fusion::end(seq), f, fusion::result_of::equal_to<
+			typename fusion::result_of::begin<Sequence>::type
+			, typename fusion::result_of::end<Sequence>::type>());
+	}
 
 
 	template<class Signature, class ArchivePair, class ParamExtractors>
@@ -151,7 +210,7 @@ namespace lv { namespace rpc { namespace detail {
 
 		// result type of the function
 		typedef typename function_type::result_type result_type;
-		typedef boost::function_types::parameter_types<Signature> param_type;
+		typedef typename boost::function_types::parameter_types<Signature>::type param_type;
 
 		static unsigned const arity = function_type::arity;
 
@@ -174,34 +233,34 @@ namespace lv { namespace rpc { namespace detail {
 		{
 		}
 
-		ResultHolderPtr operator ()(iarchive_t & ia, ParamExtractors & extractors)
+		ResultHolder operator ()(iarchive_t & ia, ParamExtractors & extractors)
 		{
-			return invoke(ia, extractors, boost::mpl::bool_<boost::is_same<result_type, void>::value>());
+			return invoke(ia, extractors, mpl::bool_<boost::is_same<result_type, void>::value>());
 		}
 
 
 	private:
 
 		/// invokes the function and wraps the result.
-		ResultHolderPtr	invoke(iarchive_t & ia, ParamExtractors & extractors, boost::mpl::false_ void_result)
+		ResultHolder	invoke(iarchive_t & ia, ParamExtractors & extractors, mpl::false_ void_result)
 		{
-			return ResultHolderPtr(new SavableImpl<storable_result_type, oarchive_t>(invoke_impl(ia, extractors)));
+			return ResultWrapper<result_type>(invoke_impl(ia, extractors));
 		}
 
-		ResultHolderPtr	invoke(iarchive_t & ia, ParamExtractors & extractors, boost::mpl::true_ void_result)
+		ResultHolder	invoke(iarchive_t & ia, ParamExtractors & extractors, mpl::true_ void_result)
 		{
 			invoke_impl(ia, extractors);
-			return ResultHolderPtr(new NullSavable<oarchive_t>());
+			return ResultHolder();
 		}
 
 
 		result_type invoke_impl(iarchive_t & ia, ParamExtractors & extractors)
 		{
-			MplToFusionCons<typename boost::mpl::transform<param_type, RawParamType<boost::mpl::_, 
+			MplToFusionCons<typename mpl::transform<param_type, ParamType<mpl::_, 
 				ParamExtractors> >::type>::type params;
 		
-			boost::fusion::for_each(params, ExtractParam<iarchive_t, ParamExtractors>(ia, extractors));
-			return boost::fusion::invoke(f_, params);
+			for_each<param_type>(params, ExtractParam<iarchive_t, ParamExtractors>(ia, extractors));
+			return fusion::invoke(f_, params);
 		}
 
 	};

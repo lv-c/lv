@@ -13,24 +13,77 @@
 
 #include <iostream>
 #include <list>
+
 #include <boost/function.hpp>
 #include <boost/shared_ptr.hpp>
+
 #include <lv/Log/Level.hpp>
 #include <lv/Foreach.hpp>
+#include <lv/StreamPtr.hpp>
 
 namespace lv
 {
+
+	namespace log
+	{
+		// filters
+		
+		template<class Pred>
+		class UnaryFilter
+		{
+			Pred	pred_;
+
+			log::level	lvl_;
+		public:
+			UnaryFilter(log::level lvl, Pred pred = Pred()) 
+				: lvl_(lvl)
+				, pred_(pred)
+			{
+			}
+			
+			bool operator () (log::level l) const
+			{ 
+				return pred_(l, lvl_); 
+			}
+		};
+
+		typedef UnaryFilter<std::equal_to<log::level> >			EqualFilter;
+		typedef UnaryFilter<std::greater_equal<log::level> >	GreaterEqualFilter;
+		typedef UnaryFilter<std::less_equal<log::level> >		LessEualFilter;
+	}
+
+	// fwd
+	class Gather;
+	typedef std::auto_ptr<Gather>	GatherPtr;
+
 	class Gather
 	{
-		friend class Log;
 	public:
-		typedef boost::function<void (std::ostream &, log::level)> formatter_t;
 
 		typedef boost::shared_ptr<std::ostream>	ostream_ptr;
 
-		Gather(ostream_ptr os, log::level log_lvl)
+		typedef boost::function<void (std::ostream &, log::level)> formatter_t;
+
+		// returns true to output the record and false to suppress it
+		typedef boost::function<bool (log::level)>	filter_t;
+
+	protected:
+
+		friend class Log;
+
+		std::list<formatter_t>	headers_;
+		std::list<formatter_t>	tailers_;
+
+		OStreamPtr	os_;
+
+		filter_t	filter_;
+
+	public:
+
+
+		Gather(OStreamPtr os, filter_t filter = filter_t())
 			: os_(os)
-			, log_lvl_(log_lvl_)
+			, filter_(filter)
 		{
 		}
 
@@ -47,26 +100,14 @@ namespace lv
 			return *this;
 		}
 
-		log::level log_level() const
+	protected:
+
+		/// whether we should the record with the given level
+		bool	output(log::level lvl)
 		{
-			return this->log_lvl_;
+			return filter_ ? filter_(lvl) : true;
 		}
 
-		
-		/**
-		 * Make a copy of this object with a different output stream and log level
-		 * so that these two objects have the same headers and tailers.
-		 */
-		std::auto_ptr<Gather> clone(ostream_ptr os, log::level log_lvl)
-		{
-			std::auto_ptr<Gather> gather(new Gather(*this));
-			gather->os_ = os;
-			gather->log_lvl_ = log_lvl;
-
-			return gather;
-		}
-
-	private:
 
 		template <typename T>
 		void log(T const & t)
@@ -75,30 +116,21 @@ namespace lv
 		}
 
 
-		void on_record_begin()
+		virtual void on_record_begin(log::level lvl)
 		{
 			foreach(formatter_t & fmt, headers_)
 			{
-				fmt(*os_);
+				fmt(*os_, lvl);
 			}
 		}
 
-		void on_record_end()
+		virtual void on_record_end(log::level lvl)
 		{
 			foreach(formatter_t & fmt, tailers_)
 			{
-				fmt(*os_);
+				fmt(*os_, lvl);
 			}
 		}
-
-	private:
-
-		log::level const	log_lvl_;
-
-		std::list<formatter_t>	headers_;
-		std::list<formatter_t>	tailers_;
-
-		ostream_ptr	os_;
 	};
 }
 
