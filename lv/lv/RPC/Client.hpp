@@ -32,8 +32,8 @@
 #include <lv/IntType.hpp>
 #include <lv/Exception.hpp>
 
-#include <lv/rpc/Fwd.hpp>
 #include <lv/rpc/Config.hpp>
+#include <lv/rpc/Fwd.hpp>
 
 #include <lv/rpc/RpcBase.hpp>
 #include <lv/rpc/Future.hpp>
@@ -245,13 +245,29 @@ namespace lv { namespace rpc {
 		}
 		
 		/**
-		 * returns true when we have received the exception seed and the function id seed from the server
-		 *	and you can invoke @call now.
+		 * returns true when the exception seed and the function id seed are received from 
+		 *	the server or set by the user and you can invoke @call now.
 		 */
 		bool ready()
 		{
 			scoped_lock lock(mutex_);
 			return ready_;
+		}
+
+		/**
+		 * if you are quite sure what these seeds are, you can set it directly rather than 
+		 *	receiving them from the server
+		 * @exception UnmatchedExceptSeed
+		 */
+		void	set_seeds(uint32	ex_seed, uint32	func_seed)
+		{
+			scoped_lock lock(mutex_);
+
+			if(ex_seed != except_->seed())
+				throw UnmatchedExceptSeed();
+
+			this->func_seed_ = func_seed;
+			ready_ = true;
 		}
 
 		SocketPtr	socket() const
@@ -317,7 +333,7 @@ namespace lv { namespace rpc {
 
 			raw_os.flush();
 
-			this->send_buffer(buf, *socket_);
+			this->send_buffer(buf, socket_);
 		}
 
 		/**

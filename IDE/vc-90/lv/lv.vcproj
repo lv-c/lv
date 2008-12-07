@@ -430,10 +430,6 @@
 					RelativePath="..\..\..\lv\lv\Packet\PacketException.hpp"
 					>
 				</File>
-				<File
-					RelativePath="..\..\..\lv\lv\Packet\Serializable.hpp"
-					>
-				</File>
 			</Filter>
 		</Filter>
 		<Filter

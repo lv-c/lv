@@ -20,6 +20,7 @@
 #include <boost/assert.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/archive/archive_exception.hpp>
+#include <boost/noncopyable.hpp>
 
 #include <lv/Functional.hpp>
 #include <lv/Algorithm/UniqueHash.hpp>
@@ -58,7 +59,7 @@ namespace lv { namespace rpc {
 
 
 	template<class ParamExtractors, typename Id, class ArchivePair, class Pro>
-	class Registery
+	class Registery : boost::noncopyable
 	{
 
 		typedef typename ArchivePair::iarchive_t iarchive_t;
@@ -184,7 +185,7 @@ namespace lv { namespace rpc {
 		template<class Signature, class F>
 		Registery & reg(Id const & id, F f)
 		{
-			BOOST_ASSERT(hash_invoker_.empty() && "You should not register funtions any more");
+			BOOST_ASSERT(hash_invoker_.empty() && "You should not register functions any more");
 
 			if(id_invoker_.find(id) != id_invoker_.end())
 				throw std::runtime_error("The id has already been used");

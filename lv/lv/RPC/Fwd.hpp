@@ -19,7 +19,7 @@ namespace lv { namespace rpc {
 
 	struct Protocol;
 	struct PacketArchive;
-
+	
 	class ISocket;
 	typedef boost::shared_ptr<ISocket> SocketPtr;
 
@@ -51,6 +51,9 @@ namespace lv { namespace rpc {
 		class Pro = Protocol
 	>
 	class Exceptions;
+
+	template<class T>
+	struct SingletonExtractor;
 	
 } }
 

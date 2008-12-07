@@ -51,7 +51,7 @@ namespace lv { namespace rpc {
 			return buf;
 		}
 
-		void	send_buffer(BufferPtr buf, ISocket & sock)
+		void	send_buffer(BufferPtr buf, SocketPtr sock)
 		{
 			{
 				scoped_lock lock(mutex_);
@@ -59,7 +59,7 @@ namespace lv { namespace rpc {
 					postpro_(buf);
 			}
 			
-			sock.send(buf);
+			sock->send(buf);
 		}
 
 	public:

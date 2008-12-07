@@ -12,13 +12,18 @@
 #define LV_RPC_SERVER_HPP
 
 #include <boost/iostreams/filtering_stream.hpp>
+#include <boost/iostreams/device/back_inserter.hpp>
 
+#include <lv/rpc/Config.hpp>
 #include <lv/rpc/Fwd.hpp>
+
 #include <lv/rpc/Registery.hpp>
 #include <lv/rpc/Invoker.hpp>
 #include <lv/rpc/Exceptions.hpp>
 #include <lv/rpc/Common.hpp>
 #include <lv/rpc/RpcBase.hpp>
+#include <lv/rpc/Protocol.hpp>
+#include <lv/rpc/PacketArchive.hpp>
 
 namespace lv { namespace rpc {
 
@@ -56,7 +61,17 @@ namespace lv { namespace rpc {
 			func_seed_ = this->registery_->hash();
 		}
 
-		void	on_connected(ISocket & sock)
+		uint32	exception_seed() const
+		{
+			return ex_seed_;
+		}
+
+		uint32	function_seed() const
+		{
+			return func_seed_;
+		}
+
+		void	on_connected(SocketPtr sock)
 		{
 			BufferPtr buf = this->get_buffer();
 
@@ -77,7 +92,7 @@ namespace lv { namespace rpc {
 		 * @exception boost::archive::archive_exception
 		 */
 		template<class Range>
-		void	on_receive(Range const & data, ISocket & sock)
+		void	on_receive(Range const & data, SocketPtr sock)
 		{
 			boost::iostreams::filtering_istream raw_is(boost::make_iterator_range(data));
 			iarchive_t ia(raw_is);
