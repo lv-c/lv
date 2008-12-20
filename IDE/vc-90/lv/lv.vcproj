@@ -430,6 +430,10 @@
 					RelativePath="..\..\..\lv\lv\Packet\PacketException.hpp"
 					>
 				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Packet\Tuple.hpp"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter
