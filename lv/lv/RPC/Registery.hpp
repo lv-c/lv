@@ -142,7 +142,7 @@ namespace lv { namespace rpc {
 
 			hash_invoker_map::iterator it = hash_invoker_.find(id);
 			if(it == hash_invoker_.end())
-				throw InvalidFunctionID(boost::lexical_cast<std::string>(id));
+				throw InvalidFunctionID(string("invalid function id: ") + boost::lexical_cast<std::string>(id));
 
 			try
 			{
@@ -168,7 +168,7 @@ namespace lv { namespace rpc {
 
 
 		/**
-		 * register a function, a member function or a function object
+		 * register a function object
 		 * @exception std::runtime_error if @a id has already been used
 		 */
 		template<class F>
@@ -179,7 +179,7 @@ namespace lv { namespace rpc {
 
 		/**
 		 * the signature is required to be explicitly pointed out and you can use this 
-		 * function to register a overloaded function/member function/function object
+		 * function to register an overloaded function object
 		 * @exception std::runtime_error if @a id has already been used
 		 */
 		template<class Signature, class F>

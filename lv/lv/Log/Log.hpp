@@ -19,6 +19,7 @@
 #include <boost/ptr_container/ptr_list.hpp>
 
 #include <lv/Log/Gather.hpp>
+#include <lv/Log/Formatter.hpp>
 
 
 namespace lv

@@ -50,6 +50,19 @@ namespace lv
 		typedef UnaryFilter<std::equal_to<log::level> >			EqualFilter;
 		typedef UnaryFilter<std::greater_equal<log::level> >	GreaterEqualFilter;
 		typedef UnaryFilter<std::less_equal<log::level> >		LessEualFilter;
+
+		// do not output debug messages in release version
+		struct DebugFilter
+		{
+			bool operator () (log::level l) const
+			{
+#ifdef _DEBUG
+				return true;
+#else
+				return l > log::debug;
+#endif
+			}
+		};
 	}
 
 	// fwd

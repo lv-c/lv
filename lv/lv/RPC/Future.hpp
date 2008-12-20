@@ -67,7 +67,7 @@ namespace lv { namespace rpc {
 				else if(ex == Pro::except::no_ex)
 					promise_.set();
 				else
-					throw InvalidProtocolValue();
+					throw InvalidProtocolValue("invalid Pro::except value");
 			}
 		};
 
@@ -115,7 +115,7 @@ namespace lv { namespace rpc {
 					promise_.set(ret);
 				}
 				else
-					throw InvalidProtocolValue();
+					throw InvalidProtocolValue("invalid Pro::except value");
 			}
 		};
 	}
@@ -124,13 +124,17 @@ namespace lv { namespace rpc {
 	class Acknowledgment : public boost::future<void>
 	{
 		template<typename, class, class> friend class Client;
-
+		
 		template<class ArchivePair, class Pro>
 		Acknowledgment(detail::AchnowPromise<ArchivePair, Pro> const & promise)
 			: boost::future<void>(promise.get())
 		{
 		}
 
+	public:
+
+		/// creates an empty acknowledgment
+		Acknowledgment() {}
 	};
 
 
@@ -144,6 +148,11 @@ namespace lv { namespace rpc {
 			: boost::future<Ret>(promise.get())
 		{
 		}
+
+	public:
+
+		/// creates an empty returning handler
+		ReturningHandler() {}
 	};
 
 

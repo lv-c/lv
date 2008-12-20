@@ -59,6 +59,7 @@ namespace lv
 	}
 
 	/// shared_new<T>(...parameters for constructor of T...)
+	/// parameters are passed as T const & type, if you want a T & type, use boost::ref
 #	define SMART_POINTER_TYPE boost::shared_ptr
 #	define SHARED_NEW_FUNC_NAME	shared_new
 #	define BOOST_PP_ITERATION_PARAMS_1 (3, (0, LV_SHARED_NEW_MAX_PARAMS_NUM, <lv/SharedPtr.hpp>))

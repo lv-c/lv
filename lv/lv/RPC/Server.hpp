@@ -104,7 +104,7 @@ namespace lv { namespace rpc {
 			protocol_type::header::type header;
 			ia >> header;
 			if(header != protocol_type::header::call)
-				throw InvalidProtocolValue();
+				throw InvalidProtocolValue("invalid Pro::header value");
 
 			try
 			{
@@ -133,7 +133,7 @@ namespace lv { namespace rpc {
 			if(call_option == protocol_type::options::none)
 				return;
 			else if(call_option != protocol_type::options::ret && call_option != protocol_type::options::ack)
-				throw InvalidProtocolValue();
+				throw InvalidProtocolValue("invalid Pro::options value");
 
 			// send back the result
 			request_id_type id;

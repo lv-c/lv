@@ -51,8 +51,8 @@ namespace lv { namespace rpc { namespace detail {
 		void operator () (IArchive & ia, type & re) const
 		{
 			// use RPC_REGISTER_CLASS to register your class
-			BOOST_STATIC_ASSERT((boost::serialization::implementation_level<type>::value != 
-				boost::serialization::object_class_info));
+			//BOOST_STATIC_ASSERT((boost::serialization::implementation_level<type>::value != 
+			//	boost::serialization::object_class_info));
 			ia >> re;
 		}
 	};

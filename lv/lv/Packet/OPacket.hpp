@@ -29,10 +29,6 @@
 
 #include <boost/utility/enable_if.hpp>
 
-// TODO: replace these with something else.
-#include <boost/spirit/home/support/detail/math/fpclassify.hpp>
-#include <boost/spirit/home/support/detail/integer/endian.hpp>	
-
 /*
 #include <boost/iostreams/device/back_inserter.hpp>
 #include <boost/iostreams/filtering_stream.hpp>
@@ -72,13 +68,11 @@ namespace lv
 
 
 		template<typename T>
-		typename boost::enable_if<boost::is_integral<T> >::type save(T const & t)
+		typename boost::enable_if<boost::is_arithmetic<T> >::type save(T const & t)
 		{
 			save_size(sizeof(T));
 
-			T temp;
-			boost::detail::store_little_endian<T, sizeof(T)>(&temp, t);
-			save_binary(&temp, sizeof(T));
+			save_binary(&t, sizeof(T));
 		}
 
 		void	save(bool const & b)
@@ -87,19 +81,6 @@ namespace lv
 			archive_base_t::save<char>(b);
 		}
 
-		template<typename T>
-		typename boost::enable_if<boost::is_floating_point<T> >::type save(T const & t)
-		{
-			/*
-			using namespace boost::math::detail;
-			typename fp_traits<T>::type::bits bits;
-			fp_traits<T>::type::get_bits(t, bits);
-			save(bits);
-			*/
-
-			BOOST_ASSERT(false && "DO NOT use this at the moment");
-			throw PacketException();
-		}
 
 	public:
 

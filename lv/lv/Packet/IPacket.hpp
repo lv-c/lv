@@ -30,10 +30,6 @@
 
 #include <boost/utility/enable_if.hpp>
 
-// TODO: replace these with something else.
-#include <boost/spirit/home/support/detail/math/fpclassify.hpp>
-#include <boost/spirit/home/support/detail/integer/endian.hpp>	
-
 /*
 #include <boost/iostreams/filtering_stream.hpp>
 #include <boost/range/iterator_range.hpp>
@@ -80,13 +76,11 @@ namespace lv
 
 		
 		template<typename T>
-		typename boost::enable_if<boost::is_integral<T> >::type load(T & t)
+		typename boost::enable_if<boost::is_arithmetic<T> >::type load(T & t)
 		{
 			load_size(sizeof(T));
 				
-			T temp;
-			load_binary(&temp, sizeof(T));
-			t = boost::detail::load_little_endian<T, sizeof(T)>(&temp);
+			load_binary(&t, sizeof(T));
 		}
 
 		void	load(bool & b)
@@ -99,21 +93,6 @@ namespace lv
 				throw PacketException(PacketException::incompatible_native_format);
 
 			b = (c != 0);
-		}
-
-
-		template<typename T>
-		typename boost::enable_if<boost::is_floating_point<T> >::type load(T & t)
-		{
-			/*
-			using namespace boost::math::detail;
-			typename fp_traits<T>::type::bits bits;
-			load(bits);
-			fp_traits<T>:::type::set_bits(t, bits);
-			*/
-
-			BOOST_ASSERT(false && "DO NOT use this at the moment");
-			throw PacketException();
 		}
 
 	public:

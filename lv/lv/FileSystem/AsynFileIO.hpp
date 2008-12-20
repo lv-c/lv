@@ -56,7 +56,7 @@ namespace lv
 		/** 
 		 * Add a task into the queue and block until it's finished.
 		 * If it's an urgent task and you don't want to pay the price of switching between threads or don't
-		 *	want this task to be executed after all the previous tasks have be finished, call @a 
+		 *	want this task to be executed after all the previous tasks have been finished, call @a 
 		 *	synio()->fulfill(file, buffer) instead.
 		 * @see IFileIO::fulfill(std::string const & file, BufferPtr buffer)
 		 * @exception lv::file_io_error on failure

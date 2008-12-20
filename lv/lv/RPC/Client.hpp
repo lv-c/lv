@@ -240,7 +240,7 @@ namespace lv { namespace rpc {
 				ready_ = true;
 			}
 			else
-				throw InvalidProtocolValue();
+				throw InvalidProtocolValue("invalid Pro::header value");
 			
 		}
 		
@@ -297,8 +297,8 @@ namespace lv { namespace rpc {
 			void operator() (T const * t) const
 			{
 				// use RPC_REGISTER_CLASS to register your class
-				BOOST_STATIC_ASSERT((boost::serialization::implementation_level<T>::value != 
-					boost::serialization::object_class_info));
+				//BOOST_STATIC_ASSERT((boost::serialization::implementation_level<T>::value != 
+				//	boost::serialization::object_class_info));
 				oa_ << *t;
 			}
 		};

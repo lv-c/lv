@@ -39,8 +39,8 @@ namespace lv { namespace bstream {
 			}
 
 			/**
-			* @exception CheckEqualError
-			*/
+			 * @exception CheckEqualError
+			 */
 			friend BinaryIStream & operator >> (BinaryIStream & is, check_equal_impl const & ce)
 			{
 				T val;
