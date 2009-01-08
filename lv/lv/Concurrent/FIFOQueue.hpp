@@ -25,12 +25,12 @@ namespace lv
 		
 		void	push(value_type const & value)
 		{
-			container_.push(value);
+			container_.push_back(value);
 		}
 
 		void	pop()
 		{
-			container_.pop();
+			container_.pop_front();
 		}
 
 		/** 
@@ -38,7 +38,7 @@ namespace lv
 		 */
 		value_type const & top() const
 		{
-			return container_.back();
+			return container_.front();
 		}
 
 		void	clear()

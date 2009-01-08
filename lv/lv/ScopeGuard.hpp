@@ -23,7 +23,11 @@ namespace lv
 	{
 	protected:
 
-		ScopeGuard(){}
+		bool	enabled_;
+
+	protected:
+
+		ScopeGuard() : enabled_(true) {}
 
 		/**
 		 * This's made protected to ensure that the user will not hold an object of the @a ScopeGuard type
@@ -33,13 +37,23 @@ namespace lv
 
 	public:
 
+		void	enable(bool e)
+		{
+			enabled_ = e;
+		}
+
+		bool	enabled() const
+		{
+			return enabled_;
+		}
+
 		virtual ~ ScopeGuard(){}
 	};
 
 	namespace detail
 	{
 		template<class T>
-		class ScopeGuarDerived :ScopeGuard
+		class ScopeGuarDerived : public ScopeGuard
 		{
 			T t_;
 
@@ -52,9 +66,10 @@ namespace lv
 
 			virtual	~ScopeGuarDerived()
 			{
-				t_();
+				if(enabled_)
+					t_();
 			}
-		}
+		};
 	}
 
 	template<class T>

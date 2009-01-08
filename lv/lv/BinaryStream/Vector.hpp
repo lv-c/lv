@@ -24,7 +24,7 @@ namespace lv { namespace bstream {
 	{
 	};
 
-	template<typename>
+	template<typename T>
 	struct object_tag<std::vector<T>, typename boost::disable_if<boost::is_pod<T> >::type>
 		: range_tag
 	{

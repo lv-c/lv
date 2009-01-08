@@ -1,7 +1,7 @@
 #include <lv/DSoundAudio/DSSoundBuffer.hpp>
 #include <lv/DSoundAudio/DSoundEngine.hpp>
 #include <lv/DSoundAudio/DSoundHelper.hpp>
-#include <lv/SharedPtr.hpp>
+#include <lv/ComPtr.hpp>
 #include <lv/Foreach.hpp>
 #include <lv/Exception.hpp>
 #include <boost/functional.hpp>

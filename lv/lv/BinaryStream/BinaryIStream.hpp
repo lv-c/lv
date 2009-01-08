@@ -41,7 +41,7 @@ namespace lv
 		 *		std::ios::badbit | std::ios::failbit | std::ios::eofbit
 		 * @exception std::ios::failure if the stream passed in has an error state
 		 */
-		BinaryIStream(IStreamPtr & is)
+		explicit BinaryIStream(IStreamPtr is)
 			: istream_(is)
 		{
 			istream_->exceptions(std::ios::badbit | std::ios::failbit | std::ios::eofbit);

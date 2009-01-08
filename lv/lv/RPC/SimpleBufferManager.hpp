@@ -1,7 +1,10 @@
 // *********************************************************************
 //  SimpleBufferManager   version:  1.0   ·  date: 12/03/2008
 //  --------------------------------------------------------------------
-//  
+//  boost::bind(&SimpleBufferManager::release, shared_from_this(), _1)
+//	比较耗时，如果先保存这个结果，效率提高2倍，但是因为这个结果中保存有
+//	shared_ptr<SimpleBufferManager> 的对象，所以这个 SimpleBufferManager
+//	永远不会被释放
 //  --------------------------------------------------------------------
 //  Copyright (C) jcfly(lv.jcfly@gmail.com) 2008 - All Rights Reserved
 // *********************************************************************
@@ -19,6 +22,7 @@
 #include <boost/thread/mutex.hpp>
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/bind.hpp>
+#include <boost/function.hpp>
 
 #include <lv/rpc/IBufferManager.hpp>
 
@@ -58,23 +62,24 @@ namespace lv { namespace rpc {
 		/// return an empty buffer whose capacity is at lease @a init_capacity_
 		virtual BufferPtr	get()
 		{
+			// lock
+			scoped_lock lock(mutex_);
+
 			Buffer * buf = NULL;
 			if(! free_buffers_.empty())
 			{
-				// lock
-				scoped_lock lock(mutex_);
-
 				buf = free_buffers_.back();
 				free_buffers_.pop_back();
+
+				// TODO : this may release the allocated memory.
+				buf->clear();
 			}
 			else
 			{
 				buf = new Buffer();
 				buf->reserve(init_capacity_);
 			}
-
-			buf->clear();
-
+			
 			return BufferPtr(buf, boost::bind(&SimpleBufferManager::release, 
 				shared_from_this(), _1));
 		}

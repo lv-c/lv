@@ -42,18 +42,20 @@ namespace lv { namespace rpc {
 
 	class SerializationError : public boost::archive::archive_exception
 	{
-		std::string const & msg_;
+		typedef boost::archive::archive_exception	base_type;
+
+		std::string const msg_;
 	public:
 
 		SerializationError(boost::archive::archive_exception::exception_code code, std::string const & msg)
 			: boost::archive::archive_exception(code)
-			, msg_(msg)
+			, msg_(std::string(base_type::what()) + msg)
 		{
 		}
 
 		virtual char const * what() const
 		{
-			return (std::string(boost::archive::archive_exception::what()) + msg_).c_str();
+			return msg_.c_str();
 		}
 	};
 
@@ -142,7 +144,7 @@ namespace lv { namespace rpc {
 
 			hash_invoker_map::iterator it = hash_invoker_.find(id);
 			if(it == hash_invoker_.end())
-				throw InvalidFunctionID(string("invalid function id: ") + boost::lexical_cast<std::string>(id));
+				throw InvalidFunctionID(std::string("invalid function id: ") + boost::lexical_cast<std::string>(id));
 
 			try
 			{
@@ -150,7 +152,7 @@ namespace lv { namespace rpc {
 			}
 			catch (boost::archive::archive_exception const & ex)
 			{
-				throw SerializationError(ex.code, boost::lexical_cast<std::string>(hash_id_[id]));
+				throw SerializationError(ex.code, std::string(".error calling function:") + boost::lexical_cast<std::string>(hash_id_[id]));
 			}
 			catch(...)
 			{

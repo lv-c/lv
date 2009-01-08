@@ -12,7 +12,7 @@
 #define LV_RPC_CONFIG_HPP
 
 #ifndef LV_RPC_MAX_ARITY
-#	define LV_RPC_MAX_ARITY	10
+#	define LV_RPC_MAX_ARITY	8
 #endif
 
 // debug support

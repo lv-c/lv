@@ -15,6 +15,7 @@
 
 #include <lv/BinaryStream/Serialize.hpp>
 #include <lv/StreamPtr.hpp>
+#include <boost/archive/basic_binary_iarchive.hpp>
 
 namespace lv
 {
@@ -34,7 +35,7 @@ namespace lv
 		 *		std::ios::badbit | std::ios::failbit | std::ios::eofbit
 		 * @exception std::ios::failure if the stream passed in has an error state
 		 */
-		BinaryOStream(OStreamPtr & os)
+		explicit BinaryOStream(OStreamPtr os)
 			: ostream_(os)
 		{
 			ostream_->exceptions(std::ios::badbit | std::ios::failbit | std::ios::eofbit);
@@ -54,7 +55,7 @@ namespace lv
 		template<typename T>
 		BinaryOStream & operator << (T const & val)
 		{
-			bstream::write(*this, val);
+			bstream::write<T>(*this, val);
 			return *this;
 		}
 

@@ -64,6 +64,21 @@ namespace lv { namespace bstream {
 
 	// serialization
 
+	template<typename T>
+	struct Serialize<T, unknown_tag>
+	{
+		template<class OStream>
+		static inline void write(OStream & os, T const & t)
+		{
+			const_cast<T &>(t).serialize(os, 1);
+		}
+
+		template<class IStream>
+		static inline void read(IStream & is, T & t)
+		{
+			t.serialize(is, 1);
+		}
+	};
 
 	template<typename T>
 	struct Serialize<T, pod_tag>

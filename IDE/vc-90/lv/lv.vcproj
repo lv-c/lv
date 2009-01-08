@@ -157,6 +157,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\ComPtr.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\Config.hpp"
 					>
 				</File>
