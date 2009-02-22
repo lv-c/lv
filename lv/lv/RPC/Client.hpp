@@ -28,9 +28,12 @@
 #include <boost/assert.hpp>
 #include <boost/unordered_map.hpp>
 #include <boost/pool/pool_alloc.hpp>
+#include <boost/scope_exit.hpp>
 
 #include <lv/IntType.hpp>
 #include <lv/Exception.hpp>
+#include <lv/ScopeGuard.hpp>
+
 
 #include <lv/rpc/Config.hpp>
 #include <lv/rpc/Fwd.hpp>
@@ -218,15 +221,14 @@ namespace lv { namespace rpc {
 				if(it == promises_.end())
 					throw InvalidRequestID();
 				
-				try
-				{
-					it->second(ia);
-				}
-				catch (...)
+				// 
+				BOOST_SCOPE_EXIT((&promises_)(it))
 				{
 					promises_.erase(it);
-					throw;
-				}
+				} BOOST_SCOPE_EXIT_END
+
+				// the following code may throw exception
+				it->second(ia);
 			}
 			else if(header == Pro::header::confer)
 			{

@@ -16,6 +16,7 @@
 #include <boost/mpl/identity.hpp>
 #include <boost/range.hpp>
 #include <boost/call_traits.hpp>
+#include <boost/serialization/serialization.hpp>
 
 #include <lv/Foreach.hpp>
 
@@ -70,13 +71,13 @@ namespace lv { namespace bstream {
 		template<class OStream>
 		static inline void write(OStream & os, T const & t)
 		{
-			const_cast<T &>(t).serialize(os, 1);
+			boost::serialization::save(os, t, 1);
 		}
 
 		template<class IStream>
 		static inline void read(IStream & is, T & t)
 		{
-			t.serialize(is, 1);
+			boost::serialization::load(is, t, 1);
 		}
 	};
 

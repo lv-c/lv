@@ -13,6 +13,7 @@
 #include <boost/operators.hpp>
 #include <boost/assert.hpp>
 
+#include <lv/IntType.hpp>
 
 namespace lv
 {
@@ -129,7 +130,8 @@ namespace lv
 	template<typename T>
 	T PointT<T>::* const PointT<T>::mem_array[PointT<T>::ele_num] = { &PointT<T>::x, &PointT<T>::y };
 
-
+	
+	typedef PointT<int32>	Point;
 }
 
 #endif // LV_POINT_HPP
