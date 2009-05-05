@@ -177,7 +177,7 @@ namespace lv
 
 	private:
 
-		element color_[4];
+		element color_[ele_num];
 
 	};
 }

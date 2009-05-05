@@ -29,7 +29,7 @@ namespace lv
 		 * @exception InvalidAudioData
 		 * @exception UnSupportedAudioFormat
 		 */
-		WavSource(IStreamPtr is);
+		explicit WavSource(IStreamPtr is);
 
 		virtual	size_t	read(BufferRef buf);
 

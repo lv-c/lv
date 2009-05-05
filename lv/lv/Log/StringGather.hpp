@@ -13,26 +13,27 @@
 
 #include <sstream>
 
+#include <lv/Log/Fwd.hpp>
 #include <lv/Log/Gather.hpp>
 #include <lv/SharedPtr.hpp>
 
-namespace lv
-{
+namespace lv { namespace log {
+	
 	class StringGather : public Gather
 	{
 	public:
 		
-		typedef boost::function<void(std::string const &, log::level)> receiver_t;
+		typedef boost::function<void(log::string_type const &, log::level)> receiver_t;
 
 	protected:
 
-		std::ostringstream	oss_;
+		std::basic_ostringstream<log::char_type> 	oss_;
 
 		receiver_t	receiver_;
 
 	public:
 
-		StringGather(receiver_t receiver, filter_t filter = filter_t())
+		StringGather(receiver_t receiver, filter_type filter = filter_type())
 			: Gather(lv::shared_from_object(oss_), filter)
 			, receiver_(receiver)
 		{
@@ -47,9 +48,9 @@ namespace lv
 			if(receiver_)
 				receiver_(oss_.str(), lvl);
 			// empty the stringstream
-			oss_.str(std::string());
+			oss_.str(log::string_type());
 		}
 	};
-}
+} }
 
 #endif // LV_STRINGGATHER_HPP

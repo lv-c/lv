@@ -17,28 +17,33 @@
 
 #include <Windows.h>
 
+#include <lv/Log/Fwd.hpp>
 #include <lv/Log/StringGather.hpp>
 
-namespace lv
-{
+namespace lv { namespace log {
+	
 	class DebugStringGather : public StringGather
 	{
 		struct Receiver
 		{
-			void operator () (std::string const & str, log::level) const
+			void operator () (string_type const & str, level) const
 			{
+#ifndef LV_UNICODE_LOG
 				::OutputDebugStringA(str.c_str());
+#else
+				::OutputDebugStringW(str.c_str());
+#endif
 			}
 		};
 
 	public:
 
-		explicit DebugStringGather(filter_t filter = filter_t())
+		explicit DebugStringGather(filter_type filter = filter_type())
 			: StringGather(Receiver(), filter)
 		{
 		}
 	};
-}
+} }
 
 #endif // LV_PLATFORM_WINDOWS
 

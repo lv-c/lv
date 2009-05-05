@@ -17,6 +17,7 @@ namespace lv { namespace log {
 	enum level {
 		debug = 0,
 		info,
+		warning,
 		error,
 		fatal
 	};

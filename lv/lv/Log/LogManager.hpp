@@ -19,8 +19,8 @@
 #include <lv/Singleton.hpp>
 #include <lv/Log/Log.hpp>
 
-namespace lv
-{
+namespace lv { namespace log {
+	
 	class LogManager : public Singleton<LogManager, true>
 	{
 		typedef boost::mutex::scoped_lock	scoped_lock; 
@@ -70,6 +70,6 @@ namespace lv
 		}
 
 	};
-}
+} }
 
 #endif // LV_LOGMANAGER_HPP
