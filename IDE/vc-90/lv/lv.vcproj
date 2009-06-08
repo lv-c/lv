@@ -169,6 +169,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\DelayTimer.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\DXErr.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\Exception.hpp"
 					>
 				</File>
@@ -395,6 +403,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\Log\Fwd.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\Log\Gather.hpp"
 					>
 				</File>
@@ -412,6 +424,10 @@
 				</File>
 				<File
 					RelativePath="..\..\..\lv\lv\Log\StringGather.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Log\Utility.hpp"
 					>
 				</File>
 			</Filter>
@@ -687,6 +703,14 @@
 					>
 				</File>
 			</Filter>
+		</Filter>
+		<Filter
+			Name="Lab"
+			>
+			<File
+				RelativePath="..\..\..\lv\lv\Lab\note.txt"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>

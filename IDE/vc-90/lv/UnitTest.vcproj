@@ -175,10 +175,6 @@
 			Name="Header Files"
 			>
 			<File
-				RelativePath="..\..\..\UnitTest\PreCompile.hpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\UnitTest\UnitTest.hpp"
 				>
 			</File>
@@ -187,7 +183,7 @@
 			Name="Source Files"
 			>
 			<File
-				RelativePath="..\..\..\UnitTest\PreCompile.cpp"
+				RelativePath="..\..\..\UnitTest\Log.cpp"
 				>
 			</File>
 			<File
