@@ -1,7 +1,7 @@
 // *********************************************************************
 //  Utility   version:  1.0   ¡¤  date: 04/11/2009
 //  --------------------------------------------------------------------
-//  
+//  Utilities which make the initialization of Log easier.
 //  --------------------------------------------------------------------
 //  Copyright (C) jcfly(lv.jcfly@gmail.com) 2009 - All Rights Reserved
 // *********************************************************************
@@ -22,23 +22,38 @@
 namespace lv { namespace log {
 
 	typedef boost::function<gather_ptr(gather_ptr)>	FormmatterSet;
+	
+
+	struct EmptyFormatters
+	{
+		gather_ptr operator () (gather_ptr gather) const
+		{
+			return gather;
+		}
+	};
 
 	class CommonFormatters
 	{
 		bool	line_break_;
 
+		bool	use_clock_;
+
 	public:
-		explicit CommonFormatters(bool line_break = true)
+		CommonFormatters(bool use_clock = false, bool line_break = true)
 			: line_break_(line_break)
+			, use_clock_(use_clock)
 		{
 		}
 
 		gather_ptr operator () (gather_ptr gather) const
 		{
-			(*gather)
-				.add_header(Time())
-				.add_header(Tag())
-			;
+			if(use_clock_)
+				gather->add_header(Clock());
+			else
+				gather->add_header(Time());
+
+			gather->add_header(Tag());
+			
 			if(line_break_)
 				gather->add_tailer(LineBreak());
 
@@ -47,7 +62,7 @@ namespace lv { namespace log {
 	};
 
 
-	gather_ptr	add_gather(Log & log, ostream_ptr os, FormmatterSet formatters = CommonFormatters())
+	inline gather_ptr	add_gather(Log & log, ostream_ptr os, FormmatterSet formatters = CommonFormatters())
 	{
 		gather_ptr gather(new Gather(os));
 
@@ -61,7 +76,7 @@ namespace lv { namespace log {
 	/**
 	 * @exception lv::file_io_error error opening the file
 	 */
-	gather_ptr	add_file_gather(Log & log, char const * file, bool append = true, FormmatterSet formatters = CommonFormatters())
+	inline gather_ptr	add_file_gather(Log & log, char const * file, bool append = true, FormmatterSet formatters = CommonFormatters())
 	{
 		ostream_ptr ofile(new std::basic_ofstream<char_type>(file, append ? 0 : std::ios_base::trunc));
 		if(! (*ofile))
@@ -71,7 +86,7 @@ namespace lv { namespace log {
 	}
 
 
-	gather_ptr	add_stdio_gather(Log & log, FormmatterSet formatters = CommonFormatters())
+	inline gather_ptr	add_stdio_gather(Log & log, FormmatterSet formatters = CommonFormatters())
 	{
 #ifndef LV_UNICODE_LOG
 		return add_gather(log, shared_from_object(std::cout), formatters);
@@ -84,7 +99,7 @@ namespace lv { namespace log {
 
 #ifdef LV_PLATFORM_WINDOWS
 
-	gather_ptr	add_debug_string_gather(Log & log, FormmatterSet formatters = CommonFormatters(false))
+	inline gather_ptr	add_debug_string_gather(Log & log, FormmatterSet formatters = CommonFormatters(true, false))
 	{
 		gather_ptr gather(new DebugStringGather());
 		

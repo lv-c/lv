@@ -57,6 +57,13 @@ namespace lv { namespace log {
 				log_.log(t);
 				return *this;
 			}
+
+			// streaming std::endl, std::ends, std::flush ...
+			Proxy & operator << (ostream_type & (* fun)(ostream_type &))
+			{
+				log_.log(fun);
+				return *this;
+			}
 		};
 
 	public:

@@ -51,7 +51,7 @@ namespace lv { namespace log {
 	{
 		void operator () (ostream_type & os, level) const
 		{
-			os << format_type(L_TEXT("%1%%|15t|")) % (timer_.elapsed() * 1000);
+			os << format_type(L_TEXT("%8f%|10t|")) % timer_.elapsed();
 		}
 
 	private:

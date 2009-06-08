@@ -13,6 +13,7 @@
 
 #include <boost/shared_ptr.hpp>
 
+#include <lv/IntType.hpp>
 #include <lv/Buffer.hpp>
 #include <lv/Exception.hpp>
 
