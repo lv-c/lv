@@ -89,6 +89,16 @@ namespace lv { namespace log {
 			this->gathers_.push_back(gather);
 		}
 
+		void	remove_gather(gather_ptr gather)
+		{
+			scoped_lock lock(mutex_);
+
+			gather_list::iterator it = std::find(this->gathers_.begin(), this->gathers_.end(), gather);
+			if(it != this->gathers_.end())
+				this->gathers_.erase(it);
+		}
+		
+
 	private:
 		
 		template <typename T>

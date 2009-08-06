@@ -17,4 +17,8 @@
 #define foreach BOOST_FOREACH
 #endif
 
+#ifndef reverse_foreach
+#define reverse_foreach	BOOST_REVERSE_FOREACH
+#endif
+
 #endif // LV_FOREACH_HPP

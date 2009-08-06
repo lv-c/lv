@@ -73,6 +73,12 @@ namespace lv { namespace rpc {
 
 				// TODO : this may release the allocated memory.
 				buf->clear();
+
+				if(buf->capacity() < init_capacity_)
+				{
+					BOOST_ASSERT(false);
+					buf->reserve(init_capacity_);
+				}
 			}
 			else
 			{
