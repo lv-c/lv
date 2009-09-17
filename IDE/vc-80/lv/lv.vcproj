@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="gb2312"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="8.00"
 	Name="lv"
 	ProjectGUID="{472407C2-8B6A-49AA-8B94-23A9B089B055}"
 	RootNamespace="lv"
@@ -19,7 +19,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="..\..\..\bin"
-			IntermediateDirectory="..\..\..\build\msvc-9.0\debug\link-static"
+			IntermediateDirectory="..\..\..\build\msvc-8.0\debug\link-static"
 			ConfigurationType="4"
 			CharacterSet="1"
 			>

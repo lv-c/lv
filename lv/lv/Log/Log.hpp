@@ -39,7 +39,7 @@ namespace lv { namespace log {
 		level	lvl_;	// level of the current record
 
 
-		class Proxy
+		class Proxy : boost::noncopyable
 		{
 			Log	&	log_;
 		public:

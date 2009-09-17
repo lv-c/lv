@@ -20,6 +20,7 @@ namespace lv
 {
 	typedef std::vector<char>	Buffer;
 	typedef boost::shared_ptr<Buffer>	BufferPtr;
+	typedef boost::shared_ptr<Buffer const>	ConstBufferPtr;
 
 
 	/// note : these two classes are compatible with boost.range and boost.foreach
@@ -205,9 +206,9 @@ namespace lv
 	{
 		// Write to the end of the buffer . You'd better reserve enough space to prevent frequent
 		// memory allocation.
-		inline void write(BufferPtr buf, void const* data, size_t size)
+		inline void write(Buffer & buf, void const* data, size_t size)
 		{
-			buf->insert(buf->end(), static_cast<char const*>(data), static_cast<char const*>(data) + size);
+			buf.insert(buf.end(), static_cast<char const*>(data), static_cast<char const*>(data) + size);
 		}
 	}
 }

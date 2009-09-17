@@ -47,6 +47,10 @@ namespace lv
 			istream_->exceptions(std::ios::badbit | std::ios::failbit | std::ios::eofbit);
 		}
 
+		IStreamPtr	istream() const
+		{
+			return istream_;
+		}
 
 		inline BinaryIStream & read(char * buf, std::streamsize size)
 		{

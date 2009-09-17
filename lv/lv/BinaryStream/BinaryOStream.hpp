@@ -11,10 +11,11 @@
 #ifndef LV_BINARYOSTREAM_HPP
 #define LV_BINARYOSTREAM_HPP
 
-#include <boost/mpl/bool.hpp>
-
+#include <lv/Buffer.hpp>
 #include <lv/BinaryStream/Serialize.hpp>
 #include <lv/StreamPtr.hpp>
+
+#include <boost/mpl/bool.hpp>
 #include <boost/archive/basic_binary_iarchive.hpp>
 
 namespace lv
@@ -22,6 +23,8 @@ namespace lv
 	class BinaryOStream
 	{
 		OStreamPtr	ostream_;
+
+		BufferPtr	buf_;
 
 	public:
 
@@ -41,10 +44,25 @@ namespace lv
 			ostream_->exceptions(std::ios::badbit | std::ios::failbit | std::ios::eofbit);
 		}
 
+		explicit BinaryOStream(BufferPtr buf) : buf_(buf) {}
+
+		OStreamPtr	ostream() const
+		{
+			return ostream_;
+		}
+
+		BufferPtr	buffer() const
+		{
+			return buf_;
+		}
+
 
 		inline BinaryOStream & write(char const * buf, std::streamsize size)
 		{
-			ostream_->write(buf, size);
+			if(ostream_)
+				ostream_->write(buf, size);
+			else
+				buffer::write(*buf_, buf, size);
 			return *this;
 		}
 

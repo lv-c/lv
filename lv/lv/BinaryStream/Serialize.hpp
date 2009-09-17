@@ -71,13 +71,13 @@ namespace lv { namespace bstream {
 		template<class OStream>
 		static inline void write(OStream & os, T const & t)
 		{
-			boost::serialization::save(os, t, 1);
+			boost::serialization::serialize(os, t, 1);
 		}
 
 		template<class IStream>
 		static inline void read(IStream & is, T & t)
 		{
-			boost::serialization::load(is, t, 1);
+			boost::serialization::serialize(is, t, 1);
 		}
 	};
 
