@@ -39,7 +39,7 @@ namespace lv
 		size_t				max_count_;		// maximum number of tasks
 		size_t				consumers_to_interrupt_;
 	public:
-		typedef Task	task_type;
+		typedef Task	value_type;
 
 
 		TaskQueue(size_t max_count = std::numeric_limits<size_t>::max())
@@ -53,7 +53,7 @@ namespace lv
 		 * Put a task into the queue. 
 		 * If the queue is full, block until it's not full.
 		 */
-		void	put(task_type const & task)
+		void	put(value_type const & task)
 		{
 			scoped_lock lock(mutex_);
 
@@ -76,7 +76,7 @@ namespace lv
 		 * exception.
 		 * @see interrupt_consumers
 		 */
-		task_type get() // throw(boost::thread_interrupted)
+		value_type get() // throw(boost::thread_interrupted)
 		{
 			scoped_lock lock(mutex_);
 
@@ -103,7 +103,7 @@ namespace lv
 				full_.notify_all();
 			//
 
-			task_type task = queue_.top();
+			value_type task = queue_.top();
 			queue_.pop();
 
 			return task;

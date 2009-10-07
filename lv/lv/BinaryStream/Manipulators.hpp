@@ -59,6 +59,7 @@ namespace lv { namespace bstream {
 		return detail::check_equal_impl<T, CheckEqualError>(t, CheckEqualError());
 	}
 	
+	// you can specify your own exception type
 	template<typename T, class Except>
 	inline detail::check_equal_impl<T, Except>	check_equal(T const & t, Except const & ex)
 	{
@@ -102,6 +103,44 @@ namespace lv { namespace bstream {
 		friend inline BinaryIStream & operator >> (BinaryIStream & is, forward const & fwd)
 		{
 			return is.seekg(fwd.off_, std::ios_base::cur);
+		}
+
+	};
+
+	//
+	class fill_n
+	{
+		std::streamsize	size_;
+
+		char	char_;
+
+	public:
+		
+		fill_n(std::streamsize size, char c) 
+			: size_(size) 
+			, char_(c)
+		{
+		}
+
+		friend BinaryOStream & operator << (BinaryOStream & os, fill_n const & fill)
+		{
+			std::streamsize const buf_size = 128;
+			char buf[buf_size];
+
+			std::fill_n(buf, std::min(buf_size, fill.size_), fill.char_);
+
+			std::streamsize left = fill.size_;
+
+			while(left > 0)
+			{
+				std::streamsize sz = std::min(left, buf_size);
+
+				os.write(buf, sz);
+
+				left -= sz;
+			}
+
+			return os;
 		}
 
 	};
