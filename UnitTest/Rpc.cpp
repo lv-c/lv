@@ -8,7 +8,6 @@
 // 
 // *********************************************************************
 
-#pragma once
 
 #include "UnitTest.hpp"
 
@@ -39,11 +38,11 @@ using namespace std;
 #include <boost/fusion/include/comparison.hpp>
 
 #include <lv/Packet/Tuple.hpp>
+#include <lv/SimpleBufferManager.hpp>
 
 #include <lv/rpc/Server.hpp>
 #include <lv/rpc/Client.hpp>
 #include <lv/rpc/Registery.hpp>
-#include <lv/rpc/SimpleBufferManager.hpp>
 using namespace lv;
 using namespace lv::rpc;
 
@@ -222,7 +221,7 @@ public:
 
 struct SOExtractor
 {
-	typedef lv::rpc::RefWrapper<SingleObject>	type;
+	typedef lv::RefWrapper<SingleObject>	type;
 
 	template<class IArchive>
 	void operator () (IArchive & ia, type & re) const

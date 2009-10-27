@@ -32,7 +32,7 @@
 #include <boost/static_assert.hpp>
 
 #include <lv/Fusion.hpp>
-#include <lv/rpc/Ref.hpp>
+#include <lv/Ref.hpp>
 
 namespace lv { namespace rpc { namespace detail {
 

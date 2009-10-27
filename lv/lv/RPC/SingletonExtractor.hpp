@@ -11,7 +11,7 @@
 #ifndef LV_SINGLETONEXTRACTOR_HPP
 #define LV_SINGLETONEXTRACTOR_HPP
 
-#include <lv/rpc/Ref.hpp>
+#include <lv/Ref.hpp>
 
 namespace lv { namespace rpc {
 

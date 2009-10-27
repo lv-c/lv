@@ -12,6 +12,7 @@
 #define LV_BINARYSTREAM_MANIPULATORS_HPP
 
 #include <lv/BinaryStream/BinaryIStream.hpp>
+#include <lv/BinaryStream/BinaryOStream.hpp>
 #include <lv/Exception.hpp>
 
 namespace lv { namespace bstream {

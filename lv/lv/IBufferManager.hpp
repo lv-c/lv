@@ -8,13 +8,13 @@
 // 
 // *********************************************************************
 
-#ifndef LV_RPC_IBUFFERMANAGER_HPP
-#define LV_RPC_IBUFFERMANAGER_HPP
+#ifndef LV_IBUFFERMANAGER_HPP
+#define LV_IBUFFERMANAGER_HPP
 
 #include <lv/Buffer.hpp>
 
-namespace lv { namespace rpc {
-
+namespace lv 
+{
 
 	class IBufferManager
 	{
@@ -25,6 +25,8 @@ namespace lv { namespace rpc {
 		virtual BufferPtr	get() = 0;
 	};
 
-} }
+	typedef boost::shared_ptr<IBufferManager> BufferManagerPtr;
 
-#endif // LV_RPC_IBUFFERMANAGER_HPP
+}
+
+#endif // LV_IBUFFERMANAGER_HPP

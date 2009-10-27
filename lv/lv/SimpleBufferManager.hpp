@@ -24,9 +24,10 @@
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
 
-#include <lv/rpc/IBufferManager.hpp>
+#include <lv/IBufferManager.hpp>
 
-namespace lv { namespace rpc {
+namespace lv 
+{
 
 	class SimpleBufferManager 
 		: public IBufferManager
@@ -101,6 +102,6 @@ namespace lv { namespace rpc {
 		}
 	};
 
-} }
+}
 
 #endif // LV_SIMPLEBUFFERMANAGER_HPP

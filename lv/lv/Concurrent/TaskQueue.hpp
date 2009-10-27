@@ -16,10 +16,7 @@
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/condition.hpp>
 
-/*
-#include <lv/Concurrent/FIFOQueue.hpp>
-#include <lv/Concurrent/PriorityQueue.hpp>
-*/
+#include <lv/Concurrent/Fwd.hpp>
 
 namespace lv
 {
@@ -164,29 +161,6 @@ namespace lv
 		}
 	};
 
-
-	/*
-	// 
-	template <typename Task>
-	class FIFOTaskQueue : public TaskQueue<Task, FIFOQueue>
-	{
-	public:
-		FIFOTaskQueue(size_t max_count = std::numeric_limits<size_t>::max())
-			: TaskQueue(max_count)
-		{
-		}
-	};
-
-	template <typename Task>
-	class PriorityTaskQueue : public TaskQueue<Task, PriorityQueue>
-	{
-	public:
-		PriorityTaskQueue(size_t max_count = std::numeric_limits<size_t>::max())
-			: TaskQueue(max_count)
-		{
-		}
-	};
-	*/
 }
 
 

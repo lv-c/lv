@@ -15,8 +15,9 @@
 #include <boost/function.hpp>
 #include <boost/thread/mutex.hpp>
 
+#include <lv/IBufferManager.hpp>
+
 #include <lv/rpc/Fwd.hpp>
-#include <lv/rpc/IBufferManager.hpp>
 #include <lv/rpc/ISocket.hpp>
 
 namespace lv { namespace rpc {

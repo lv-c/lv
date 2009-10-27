@@ -8,14 +8,15 @@
 // 
 // *********************************************************************
 
-#ifndef LV_RPC_REF_HPP
-#define LV_RPC_REF_HPP
+#ifndef LV_REF_HPP
+#define LV_REF_HPP
 
 #include <boost/mpl/if.hpp>
 #include <boost/ref.hpp>
 #include <boost/noncopyable.hpp>
 
-namespace lv { namespace rpc {
+namespace lv
+{
 
 	template<typename T>
 	class RefWrapper : public boost::noncopyable	// prevent mistaken use
@@ -68,24 +69,24 @@ namespace lv { namespace rpc {
 	};
 	*/
 	
-} }
+}
+
+#endif // LV_REF_HPP
+
 
 namespace boost
 {
 	template<typename T>
-	class is_reference_wrapper<lv::rpc::RefWrapper<T> >
+	class is_reference_wrapper<lv::RefWrapper<T> >
 		: public mpl::true_
 	{
 	};
 
 	template<typename T>
-	class unwrap_reference<lv::rpc::RefWrapper<T> >
+	class unwrap_reference<lv::RefWrapper<T> >
 	{
 	public:
 		typedef T type;
 	};
 }
 
-
-
-#endif // LV_RPC_REF_HPP

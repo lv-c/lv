@@ -15,6 +15,8 @@
 #define LV_BINARYISTREAM_HPP
 
 #include <boost/mpl/bool.hpp>
+#include <boost/iostreams/device/array.hpp>
+#include <boost/iostreams/stream.hpp>
 
 #include <lv/StreamPtr.hpp>
 #include <lv/BinaryStream/Serialize.hpp>
@@ -25,6 +27,8 @@ namespace lv
 	{
 
 		IStreamPtr	istream_;
+
+		ConstBufferRef	buf_;
 
 	public:
 		
@@ -38,18 +42,29 @@ namespace lv
 
 		/**
 		 * constructor. sets the exception mask of the stream to 
-		 *		std::ios::badbit | std::ios::failbit | std::ios::eofbit
+		 *		std::ios::badbit | std::ios::failbit
 		 * @exception std::ios::failure if the stream passed in has an error state
 		 */
 		explicit BinaryIStream(IStreamPtr is)
 			: istream_(is)
 		{
-			istream_->exceptions(std::ios::badbit | std::ios::failbit | std::ios::eofbit);
+			istream_->exceptions(std::ios::badbit | std::ios::failbit);
+		}
+
+		explicit BinaryIStream(ConstBufferRef buf)
+			: buf_(buf)
+			, istream_(new boost::iostreams::stream<boost::iostreams::array_source>(buf.data(), buf.size()))
+		{
 		}
 
 		IStreamPtr	istream() const
 		{
 			return istream_;
+		}
+
+		ConstBufferRef	buffer() const
+		{
+			return buf_;
 		}
 
 		inline BinaryIStream & read(char * buf, std::streamsize size)

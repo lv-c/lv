@@ -21,6 +21,8 @@
 
 #include <lv/Foreach.hpp>
 #include <lv/Singleton.hpp>
+
+#include <lv/Concurrent/Fwd.hpp>
 #include <lv/Concurrent/TaskQueue.hpp>
 #include <lv/Concurrent/FIFOQueue.hpp>
 
@@ -35,10 +37,7 @@ namespace lv
 	typedef Singleton<ThreadPool<boost::function<void()>, FIFOQueue>, true>	SingletonThreadPool;
 	
 
-	template<
-		typename Task = boost::function<void()>, 
-		template<typename> class SchedulingPolicy = FIFOQueue
-	>
+	template<typename Task, template<typename> class SchedulingPolicy>
 	class ThreadPool : private boost::noncopyable
 	{
 	public:

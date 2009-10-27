@@ -21,7 +21,7 @@
 #include <boost/archive/archive_exception.hpp>
 #include <boost/archive/impl/basic_binary_iprimitive.ipp>
 #include <boost/archive/impl/basic_binary_iarchive.ipp>
-
+#include <boost/archive/impl/archive_serializer_map.ipp>
 
 #include <boost/type_traits/is_arithmetic.hpp>
 #include <boost/type_traits/is_integral.hpp>

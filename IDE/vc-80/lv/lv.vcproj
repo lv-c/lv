@@ -6,7 +6,6 @@
 	ProjectGUID="{472407C2-8B6A-49AA-8B94-23A9B089B055}"
 	RootNamespace="lv"
 	Keyword="Win32Proj"
-	TargetFrameworkVersion="196613"
 	>
 	<Platforms>
 		<Platform
@@ -197,6 +196,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\IBufferManager.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\IntType.hpp"
 					>
 				</File>
@@ -209,11 +212,19 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\Ref.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\ScopeGuard.hpp"
 					>
 				</File>
 				<File
 					RelativePath="..\..\..\lv\lv\SharedPtr.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\SimpleBufferManager.hpp"
 					>
 				</File>
 				<File
@@ -495,10 +506,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\lv\lv\RPC\IBufferManager.hpp"
-					>
-				</File>
-				<File
 					RelativePath="..\..\..\lv\lv\RPC\Invoker.hpp"
 					>
 				</File>
@@ -512,10 +519,6 @@
 				</File>
 				<File
 					RelativePath="..\..\..\lv\lv\RPC\Protocol.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\lv\lv\RPC\Ref.hpp"
 					>
 				</File>
 				<File
@@ -535,10 +538,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\lv\lv\RPC\SimpleBufferManager.hpp"
-					>
-				</File>
-				<File
 					RelativePath="..\..\..\lv\lv\RPC\SingletonExtractor.hpp"
 					>
 				</File>
@@ -552,6 +551,10 @@
 				>
 				<File
 					RelativePath="..\..\..\lv\lv\Concurrent\FIFOQueue.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Concurrent\Fwd.hpp"
 					>
 				</File>
 				<File
@@ -724,6 +727,66 @@
 				>
 				<File
 					RelativePath="..\..\..\lv\lv\IO\BufferDevice.hpp"
+					>
+				</File>
+			</Filter>
+		</Filter>
+		<Filter
+			Name="DataFlow"
+			>
+			<Filter
+				Name="Header Files"
+				>
+				<File
+					RelativePath="..\..\..\lv\lv\DataFlow\AsyncPush.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\DataFlow\Config.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\DataFlow\Connection.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\DataFlow\DataFlow.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\DataFlow\Fwd.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\DataFlow\Invoker.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\DataFlow\PushPolicyBase.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\DataFlow\Registery.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\DataFlow\Sink.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\DataFlow\Source.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\DataFlow\StreamProxy.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\DataFlow\SyncPush.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\DataFlow\ThreadedPush.hpp"
 					>
 				</File>
 			</Filter>

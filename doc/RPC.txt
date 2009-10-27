@@ -10,7 +10,7 @@ Design:
 
 
 
-2.Use proxy classes to simply the calling of remote functions.
+2.Use proxy classes to simplify the calling of remote functions.
 3.A registered function can have a parameter of type IArchive to manually read the rest of the packet data.
 
 	/** (it's wrong)

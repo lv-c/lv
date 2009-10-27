@@ -35,13 +35,13 @@ namespace lv
 
 		/**
 		 * constructor. sets the exception mask of the stream to 
-		 *		std::ios::badbit | std::ios::failbit | std::ios::eofbit
+		 *		std::ios::badbit | std::ios::failbit
 		 * @exception std::ios::failure if the stream passed in has an error state
 		 */
 		explicit BinaryOStream(OStreamPtr os)
 			: ostream_(os)
 		{
-			ostream_->exceptions(std::ios::badbit | std::ios::failbit | std::ios::eofbit);
+			ostream_->exceptions(std::ios::badbit | std::ios::failbit);
 		}
 
 		explicit BinaryOStream(BufferPtr buf) : buf_(buf) {}

@@ -23,10 +23,6 @@ namespace lv { namespace rpc {
 	class ISocket;
 	typedef boost::shared_ptr<ISocket> SocketPtr;
 
-	class IBufferManager;
-	typedef boost::shared_ptr<IBufferManager> BufferManagerPtr;
-
-
 	template<
 		typename Id = std::string, 
 		class ArchivePair = PacketArchive, 

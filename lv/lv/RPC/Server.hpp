@@ -49,8 +49,8 @@ namespace lv { namespace rpc {
 	public:
 
 		/**
-		 * @buf_manager should be thread-safe
-		 * @registery use std::auto_ptr to indicate that the ownership of @a registery will be 
+		 * @param buf_manager should be thread-safe
+		 * @param registery use std::auto_ptr to indicate that the ownership of @a registery will be 
 		 *	transfered and no functions should be registered any more.
 		 */
 		Server(BufferManagerPtr buf_manager, std::auto_ptr<Reg> registery)
