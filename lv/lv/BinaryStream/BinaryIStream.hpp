@@ -18,6 +18,7 @@
 #include <boost/iostreams/device/array.hpp>
 #include <boost/iostreams/stream.hpp>
 
+#include <lv/Buffer.hpp>
 #include <lv/StreamPtr.hpp>
 #include <lv/BinaryStream/Serialize.hpp>
 

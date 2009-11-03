@@ -22,6 +22,12 @@
 
 namespace lv
 {
+	/*
+	"""boost.random is thread-safe as long as you don't access
+	any given object from two threads simultaneously.
+	(Accessing two different objects is ok, as long as
+	they don't share an engine). """
+	*/
 	template<typename T = int>
 	class Random
 	{
