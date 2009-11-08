@@ -24,15 +24,21 @@ namespace lv { namespace flow {
 	class AsyncPush : public PushPolicyBase<T>
 	{
 
-		boost::asio::io_service & service_;
+		boost::asio::io_service * service_;
 
-		boost::asio::strand *	strand_;
+		boost::asio::strand * strand_;
 
 	public:
 
-		AsyncPush(boost::asio::io_service & service, boost::asio::strand * strand = NULL)
-			: service_(service)
-			, strand_(strand)
+		AsyncPush(boost::asio::io_service & service)
+			: service_(&service)
+			, strand_(NULL)
+		{
+		}
+
+		AsyncPush(boost::asio::strand & strand)
+			: service_(NULL)
+			, strand_(&strand)
 		{
 		}
 
@@ -40,11 +46,11 @@ namespace lv { namespace flow {
 		{
 			if(strand_ != NULL)
 			{
-				service_.post((*strand_)(boost::bind(callback_, t)));
+				strand_->post(boost::bind(callback_, t));
 			}
 			else
 			{
-				service_.post(boost::bind(callback_, t));
+				service_->post(boost::bind(callback_, t));
 			}
 		}
 	};

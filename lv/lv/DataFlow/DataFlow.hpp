@@ -8,8 +8,10 @@
 // 
 // *********************************************************************
 
-#ifndef LV_DATAFLOW_HPP
-#define LV_DATAFLOW_HPP
+#ifndef LV_DATAFLOW_DATAFLOW_HPP
+#define LV_DATAFLOW_DATAFLOW_HPP
+
+#include <lv/Buffer.hpp>
 
 #include <lv/DataFlow/Fwd.hpp>
 #include <lv/DataFlow/Connection.hpp>
@@ -17,6 +19,7 @@
 #include <map>
 
 #include <boost/bind.hpp>
+#include <boost/function.hpp>
 #include <boost/noncopyable.hpp>
 
 #include <boost/thread/shared_mutex.hpp>
@@ -106,6 +109,7 @@ namespace lv { namespace flow {
 			
 			// a write lock
 			boost::unique_lock<boost::shared_mutex> lock(dataflow->shared_mutex_);
+
 			dataflow->slots_.erase(it);
 		}
 
@@ -114,4 +118,4 @@ namespace lv { namespace flow {
 } }
 
 
-#endif // LV_DATAFLOW_HPP
+#endif

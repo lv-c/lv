@@ -37,9 +37,8 @@ namespace lv
 		Pred	pred_;
 		boost::optional<Info>	info_;	// value associated with this node
 
-		typedef std::vector<NodePtr>	children_t;
-		typedef typename children_t::iterator	iterator;
-		children_t	children_;
+		typedef std::vector<NodePtr>	children_type;
+		children_type	children_;
 
 		
 		static bool node_pred(NodePtr const & lhs, NodePtr const & rhs)
@@ -56,19 +55,32 @@ namespace lv
 
 	public:
 
+		typedef typename children_type::iterator	iterator;
+		typedef typename children_type::const_iterator	const_iterator;
+
 		DSTNode(Pred pred = Pred())
 			: pred_(pred)
 		{
 		}
 
+		Ele const & element() const
+		{
+			return element_;
+		}
+
+		boost::optional<Info> const & info() const
+		{
+			return info_;
+		}
+
 		// insert a sequence
 		template<class RangeT>
-		void	insert(RangeT const & seq, Info info)
+		void	insert(RangeT const & seq, Info const & info)
 		{
 			BOOST_CONCEPT_ASSERT((boost::SinglePassRangeConcept<RangeT>));	// concept check
 
 			DSTNode * node = this;
-			foreach(Ele ele, seq)
+			foreach(Ele const & ele, seq)
 			{
 				iterator it = node->find_child(ele);
 				
@@ -92,7 +104,7 @@ namespace lv
 			BOOST_CONCEPT_ASSERT((boost::SinglePassRangeConcept<RangeT>));
 
 			DSTNode* node = this;
-			foreach(boost::range_value<RangeT>::type ele, seq)
+			foreach(boost::range_value<RangeT>::type const & ele, seq)
 			{
 				iterator it = node->find_child(ele);
 				if(it == node->end())
@@ -119,7 +131,7 @@ namespace lv
 			size_t len = 0;
 
 			DSTNode * node = this;
-			foreach(Ele ele, seq)
+			foreach(Ele const & ele, seq)
 			{
 				len ++;
 
@@ -146,19 +158,33 @@ namespace lv
 			children_.clear();
 		}
 
-	private:
 
-		inline iterator	begin()
+		iterator	begin()
 		{
 			return children_.begin();
 		}
 
-		inline iterator end()
+		const_iterator begin() const
+		{
+			return children_.begin();
+		}
+
+		iterator end()
 		{
 			return children_.end();
 		}
 
-		inline iterator find_child(Ele ele)
+		const_iterator end() const
+		{
+			return children_.end();
+		}
+
+		size_t	size() const
+		{
+			return children_.size();
+		}
+
+		iterator find_child(Ele const & ele)
 		{
 			DSTNode node(ele, pred_);
 			iterator it = std::lower_bound(begin(), end(), lv::shared_from_object(node), &DSTNode::node_pred);

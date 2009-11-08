@@ -24,6 +24,7 @@
 #include <boost/noncopyable.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/archive/archive_exception.hpp>
+#include <boost/thread/shared_mutex.hpp>
 
 namespace lv { namespace flow {
 
@@ -49,102 +50,78 @@ namespace lv { namespace flow {
 		}
 	};
 
-
-	template<class Key, class IArchive>
-	class Registery : boost::noncopyable
+	namespace detail
 	{
-		
-		typedef boost::function<void(IArchive &)>	invoker_type;
-
-		typedef std::map<Key, invoker_type>	invoker_map;
-
-		invoker_map	invokers_;
-
-		bool	reg_ended_;
-
-	private:
-
-		// to be called by the Sink class
-
-		template<template<class> class, class, class> friend class Sink;
-
-
-		/**
-		 * @exception InvalidKey no function found associated with the given key
-		 * @exception SerializationError  ( public boost::archive::archive_exception)
-		 * @exception exceptions thrown by the target function
-		 */
-		void	invoke(IArchive & ia)
+		template<class Key, class IArchive>
+		class Registery : boost::noncopyable
 		{
-			Key key;
-			ia >> key;
 
-			invoker_map::iterator it = invokers_.find(key);
-			if(it == invokers_.end())
-				throw InvalidKey(std::string("Invalid key:") + boost::lexical_cast<std::string>(key));
+			typedef boost::function<void(IArchive &)>	invoker_type;
 
-			try
+			typedef std::map<Key, invoker_type>	invoker_map;
+
+			invoker_map	invokers_;
+
+			boost::shared_mutex shared_mutex_;
+
+		public:
+
+
+			/**
+			 * @exception std::runtime_error if @a key has already been used
+			 */
+			template<class Signature, class F>
+			void reg(Key const & key, F f)
 			{
-				it->second(ia);
-			}
-			catch (boost::archive::archive_exception const & ex)
-			{
-				throw SerializationError(ex.code, std::string(".error calling function:") + boost::lexical_cast<std::string>(key));
-			}
-			catch(...)
-			{
-				throw;
-			}
-		}
+				// a write lock
+				boost::unique_lock<boost::shared_mutex> lock(shared_mutex_);
 
-		void	end_reg()
-		{
-			reg_ended_ = true;
-		}
+				if(invokers_.find(key) != invokers_.end())
+				{
+					throw std::runtime_error(std::string("The key has already been used:") + 
+						boost::lexical_cast<std::string>(key));
+				}
 
-	public:
-
-		Registery()
-			: reg_ended_(false)
-		{
-		}
-
-		/**
-		 * register a function object
-		 * @exception std::runtime_error if @a key has already been used
-		 */
-		template<class F>
-		Registery & reg(Key const & key, F f)
-		{
-			return reg<typename Signature<F>::type, F>(key, f);
-		}
-
-		/**
-		 * the signature is required to be explicitly pointed out and you can use this 
-		 * function to register an overloaded function object
-		 * @exception std::runtime_error if @a key has already been used
-		 */
-		template<class Signature, class F>
-		Registery & reg(Key const & key, F f)
-		{
-			if(reg_ended_)
-			{
-				BOOST_ASSERT(false && "You should not register functions any more");
-				return *this;
+				invokers_.insert(std::make_pair(key, detail::Invoker<Signature, IArchive>(f)));
 			}
 
-			if(invokers_.find(key) != invokers_.end())
+
+			/**
+			 * @exception InvalidKey no function found associated with the given key
+			 * @exception SerializationError  ( public boost::archive::archive_exception)
+			 * @exception exceptions thrown by the target function
+			 */
+			void	invoke(IArchive & ia)
 			{
-				throw std::runtime_error(std::string("The key has already been used:") + 
-					boost::lexical_cast<std::string>(key));
+				Key key;
+				ia >> key;
+
+				// a read lock
+				boost::shared_lock<boost::shared_mutex> lock(shared_mutex_);
+
+				invoker_map::iterator it = invokers_.find(key);
+				if(it == invokers_.end())
+					throw InvalidKey(std::string("Invalid key:") + boost::lexical_cast<std::string>(key));
+
+				try
+				{
+					it->second(ia);
+				}
+				catch (boost::archive::archive_exception const & ex)
+				{
+					throw SerializationError(ex.code, std::string(".error calling function:") + boost::lexical_cast<std::string>(key));
+				}
+				catch(...)
+				{
+					throw;
+				}
 			}
 
-			invokers_.insert(std::make_pair(key, detail::Invoker<Signature, IArchive>(f)));
 
-			return *this;
-		}
+		};
+	}
 
-	};
+	
 
 } }
 

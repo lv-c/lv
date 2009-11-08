@@ -43,10 +43,10 @@ namespace lv
 		
 		typedef boost::shared_ptr<ostream_type>	ostream_ptr;
 
-		typedef boost::function<void (log::ostream_type &, log::level)> formatter_type;
+		typedef boost::function<void (log::ostream_type &, int)> formatter_type;
 
 		// returns true to output the record and false to suppress it
-		typedef boost::function<bool (log::level)>	filter_type;
+		typedef boost::function<bool (int)>	filter_type;
 
 
 		class Gather;

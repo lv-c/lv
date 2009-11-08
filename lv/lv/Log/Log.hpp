@@ -36,24 +36,41 @@ namespace lv { namespace log {
 		boost::mutex	mutex_;
 
 	
-		level	lvl_;	// level of the current record
+		int	lvl_;	// int of the current record
 
 
 		class Proxy : boost::noncopyable
 		{
 			Log	&	log_;
+
+			bool	active_;
+
 		public:
 
-			Proxy(Log & log) : log_(log) {}
+			Proxy(Log & log) 
+				: log_(log)
+				, active_(true)
+			{
+			}
+
+			Proxy(Proxy & rhs)
+				: log_(rhs.log_)
+				, active_(true)
+			{
+				rhs.active_ = false;
+			}
 
 			~Proxy()
 			{
-				log_.on_record_end();
+				if(active_)
+					log_.on_record_end();
 			}
 
 			template <typename T>
 			Proxy & operator << (T const & t)
 			{
+				BOOST_ASSERT(active_);
+
 				log_.log(t);
 				return *this;
 			}
@@ -61,6 +78,8 @@ namespace lv { namespace log {
 			// streaming std::endl, std::ends, std::flush ...
 			Proxy & operator << (ostream_type & (* fun)(ostream_type &))
 			{
+				BOOST_ASSERT(active_);
+
 				log_.log(fun);
 				return *this;
 			}
@@ -75,7 +94,7 @@ namespace lv { namespace log {
 		 * log_(debug) << "hello world" << 4545;
 		 * @endcode
 		 */
-		Proxy operator () (level lvl = info)
+		Proxy operator () (int lvl = info)
 		{
 			on_record_begin(lvl);
 
@@ -111,7 +130,7 @@ namespace lv { namespace log {
 			}
 		}
 
-		void on_record_begin(level lvl)
+		void on_record_begin(int lvl)
 		{
 			// lock
 			mutex_.lock();

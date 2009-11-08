@@ -29,9 +29,7 @@ namespace lv { namespace flow {
 	template<template<class> class PushPolicy, class Key, class IArchive>
 	class Sink : boost::noncopyable
 	{
-		typedef Registery<Key, IArchive> registery_type;
-		std::auto_ptr<registery_type> registery_;
-
+		detail::Registery<Key, IArchive> registery_;
 
 		typedef PushPolicy<BufferPtr> push_policy_type;
 		push_policy_type	push_policy_;
@@ -40,16 +38,10 @@ namespace lv { namespace flow {
 
 		/**
 		 * @proxy_push you can handle exceptions using a proxy push
-		 * @param reg use std::auto_ptr to indicate that the ownership of @a reg will be 
-		 *	transfered and no functions should be registered any more.
 		 */
-		Sink(std::auto_ptr<registery_type> reg, proxy_push_type const & proxy_push = proxy_push_type(), 
-				push_policy_type const & policy = push_policy_type())
-			: registery_(reg) 
-			, push_policy_(policy)
+		Sink(proxy_push_type const & proxy_push = proxy_push_type(), push_policy_type const & policy = push_policy_type())
+			: push_policy_(policy)
 		{
-			registery_->end_reg();
-
 			slot_type slot = boost::bind(&Sink::push_impl, this, _1);
 
 			if(proxy_push)
@@ -67,6 +59,28 @@ namespace lv { namespace flow {
 			push_policy_(buf);
 		}
 
+		/**
+		 * register a function object
+		 * @exception std::runtime_error if @a key has already been used
+		 */
+		template<class F>
+		Sink & reg(Key const & key, F f)
+		{
+			return reg<typename Signature<F>::type, F>(key, f);
+		}
+
+		/**
+		 * the signature is required to be explicitly pointed out and you can use this 
+		 * function to register an overloaded function object
+		 * @exception std::runtime_error if @a key has already been used
+		 */
+		template<class Signature, class F>
+		Sink & reg(Key const & key, F f)
+		{
+			registery_.reg<Signature>(key, f);
+			return *this;
+		}
+
 	private:
 
 		void	push_impl(BufferPtr buf)
@@ -74,7 +88,7 @@ namespace lv { namespace flow {
 			boost::iostreams::filtering_istream raw_is(boost::make_iterator_range(*buf));
 			IArchive ia(raw_is);
 
-			registery_->invoke(ia);
+			registery_.invoke(ia);
 		}
 	};
 

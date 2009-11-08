@@ -8,8 +8,8 @@
 // 
 // *********************************************************************
 
-#ifndef LV_BINARYSTREAM_HPP
-#define LV_BINARYSTREAM_HPP
+#ifndef LV_BINARYSTREAM_LIST_HPP
+#define LV_BINARYSTREAM_LIST_HPP
 
 
 #include <list>
@@ -26,4 +26,4 @@ namespace lv { namespace bstream {
 
 } }
 
-#endif // LV_BINARYSTREAM_HPP
+#endif // LV_BINARYSTREAM_LIST_HPP

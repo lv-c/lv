@@ -60,7 +60,7 @@ namespace lv
 			}
 
 			if(queue_.empty())
-				empty_.notify_all();
+				empty_.notify_one();
 
 			queue_.push(task);
 		}

@@ -1,27 +1,18 @@
 // *********************************************************************
-//  Level   version:  1.0   ¡¤  date: 09/02/2008
+//  BinaryStream   version:  1.0   ¡¤  date: 11/07/2009
 //  --------------------------------------------------------------------
 //  
 //  --------------------------------------------------------------------
-//  Copyright (C) jcfly(lv.jcfly@gmail.com) 2008 - All Rights Reserved
+//  Copyright (C) jcfly(lv.jcfly@gmail.com) 2009 - All Rights Reserved
 // *********************************************************************
 // 
 // *********************************************************************
 
-#ifndef LV_LEVEL_HPP
-#define LV_LEVEL_HPP
+#ifndef LV_BINARYSTREAM_HPP
+#define LV_BINARYSTREAM_HPP
 
+#include <lv/BinaryStream/BinaryIStream.hpp>
+#include <lv/BinaryStream/BinaryOStream.hpp>
+#include <lv/BinaryStream/Manipulators.hpp>
 
-namespace lv { namespace log {
-
-	enum level {
-		debug	= 10,
-		info	= 20,
-		warning	= 30,
-		error	= 40,
-		fatal	= 50
-	};
-
-} }
-
-#endif // LV_LEVEL_HPP
+#endif

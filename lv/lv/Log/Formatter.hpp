@@ -31,7 +31,7 @@ namespace lv { namespace log {
 	// most often this's used as a tailer
 	struct LineBreak
 	{
-		void operator () (ostream_type& os, level) const
+		void operator () (ostream_type& os, int) const
 		{
 			os << std::endl;
 		}
@@ -39,7 +39,7 @@ namespace lv { namespace log {
 
 	struct Time
 	{
-		void operator () (ostream_type & os, level) const
+		void operator () (ostream_type & os, int) const
 		{
 			using namespace boost::posix_time;
 			os << format_type(L_TEXT("%1%%|24t|")) % to_simple_string_type<char_type>(
@@ -49,7 +49,7 @@ namespace lv { namespace log {
 
 	struct Clock 
 	{
-		void operator () (ostream_type & os, level) const
+		void operator () (ostream_type & os, int) const
 		{
 			os << format_type(L_TEXT("%8f%|10t|")) % timer_.elapsed();
 		}
@@ -61,13 +61,37 @@ namespace lv { namespace log {
 
 	struct Tag
 	{
-		void operator () (ostream_type & os, level lvl) const
+		void operator () (ostream_type & os, int lvl) const
 		{
 			static string_type const tags [] = {
 				L_TEXT("[debug]"), L_TEXT("[info]"), L_TEXT("[warning]"), L_TEXT("[error]"),
 				L_TEXT("[fatal]")
 			};
-			os << format_type(L_TEXT("%1%%|10t|")) % tags[lvl];
+
+			int index = -1;
+			switch(lvl)
+			{
+			case debug:
+				index = 0;
+				break;
+			case info:
+				index = 1;
+				break;
+			case warning:
+				index = 2;
+				break;
+			case error:
+				index = 3;
+				break;
+			case fatal:
+				index = 4;
+				break;
+			}
+
+			if(index >= 0)
+			{
+				os << format_type(L_TEXT("%1%%|10t|")) % tags[index];
+			}
 		}
 	};
 

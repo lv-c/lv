@@ -31,28 +31,28 @@ namespace lv { namespace log {
 	{
 		Pred	pred_;
 
-		level	lvl_;
+		int	lvl_;
 	public:
-		UnaryFilter(level lvl, Pred pred = Pred()) 
+		UnaryFilter(int lvl, Pred pred = Pred()) 
 			: lvl_(lvl)
 			, pred_(pred)
 		{
 		}
 		
-		bool operator () (level l) const
+		bool operator () (int l) const
 		{ 
 			return pred_(l, lvl_); 
 		}
 	};
 
-	typedef UnaryFilter<std::equal_to<level> >			EqualFilter;
-	typedef UnaryFilter<std::greater_equal<level> >	GreaterEqualFilter;
-	typedef UnaryFilter<std::less_equal<level> >		LessEualFilter;
+	typedef UnaryFilter<std::equal_to<int> >		EqualFilter;
+	typedef UnaryFilter<std::greater_equal<int> >	GreaterEqualFilter;
+	typedef UnaryFilter<std::less_equal<int> >		LessEualFilter;
 
 	// do not output debug messages in release version
 	struct DebugFilter
 	{
-		bool operator () (level l) const
+		bool operator () (int l) const
 		{
 #ifdef _DEBUG
 			return true;
@@ -109,8 +109,8 @@ namespace lv { namespace log {
 
 	protected:
 
-		/// whether we should output the record with the given level
-		bool	output(level lvl)
+		/// whether we should output the record with the given int
+		bool	output(int lvl)
 		{
 			scoped_lock lock(mutex_);
 
@@ -125,7 +125,7 @@ namespace lv { namespace log {
 		}
 
 
-		virtual void on_record_begin(level lvl)
+		virtual void on_record_begin(int lvl)
 		{
 			foreach(formatter_type & fmt, headers_)
 			{
@@ -133,7 +133,7 @@ namespace lv { namespace log {
 			}
 		}
 
-		virtual void on_record_end(level lvl)
+		virtual void on_record_end(int lvl)
 		{
 			foreach(formatter_type & fmt, tailers_)
 			{

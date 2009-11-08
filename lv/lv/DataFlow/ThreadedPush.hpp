@@ -80,7 +80,7 @@ namespace lv { namespace flow {
 
 	public:
 
-		explicit ThreadedPush(size_t thread_num = 1)
+		ThreadedPush(size_t thread_num = 1)
 			: impl_(new detail::ThreadedPushImpl<T>(thread_num))
 		{
 		}
