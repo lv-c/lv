@@ -791,6 +791,22 @@
 				</File>
 			</Filter>
 		</Filter>
+		<Filter
+			Name="Include"
+			>
+			<Filter
+				Name="Header Files"
+				>
+				<File
+					RelativePath="..\..\..\lv\lv\BinaryStream.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\DataFlow.hpp"
+					>
+				</File>
+			</Filter>
+		</Filter>
 	</Files>
 	<Globals>
 	</Globals>

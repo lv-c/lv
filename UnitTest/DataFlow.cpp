@@ -10,6 +10,14 @@
 
 #include "UnitTest.hpp"
 
+
+#include <excpt.h>
+// this macro is defined in excpt.h (Windows). has a conflict with 
+// boost::archive::archive_exception::exception_code
+#ifdef exception_code	
+#undef exception_code
+#endif
+
 #include <lv/DataFlow/DataFlow.hpp>
 #include <lv/DataFlow/Sink.hpp>
 #include <lv/DataFlow/Source.hpp>
@@ -84,27 +92,30 @@ BOOST_AUTO_TEST_CASE(test_dataflow)
 	typedef std::string port_type;
 
 	typedef lv::flow::DataFlow<lv::flow::ThreadedPush, port_type> dataflow_type;
-	dataflow_type dataflow(dataflow_type::push_policy_type(5));	// number of threads
+	dataflow_type dataflow(5);	// number of threads
 
 	typedef lv::flow::Source<key_type, port_type> source_type;
 	source_type source(port_type(), boost::bind(&dataflow_type::push, &dataflow, _1, _2), buf_manager);
 
-	typedef lv::flow::Registery<key_type> registery_type;
-	std::auto_ptr<registery_type> reg(new registery_type());
+	typedef lv::flow::Sink<lv::flow::SyncPush, key_type> sink_type;
+	sink_type sink(&proxy_push);
 
-	(*reg)
+	sink
 		.reg("sum", &sum)
 		.reg("echo", &echo)
+		.reg<void(float)>("sum_5", boost::bind(&sum, 5, _1))
 		//.reg("pass_iarchive_obj", &pass_iarchive_obj)  // won't compile and shouldn't compile
 	;
 
-	typedef lv::flow::Sink<lv::flow::SyncPush, key_type> sink_type;
-	sink_type sink(reg, &proxy_push);
+	
 
 	lv::flow::Connection conn = dataflow.connect(port_type(), boost::bind(&sink_type::push, &sink, _1));
 
 	// streaming
 	source.stream("sum") << 10 << 40.3f;
+
+	// function object
+	source.call("sum_5", 10.0f);
 
 	// flow::SerializationError
 	source.call("sum", 20);
