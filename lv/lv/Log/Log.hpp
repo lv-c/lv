@@ -11,7 +11,7 @@
 #ifndef LV_LOG_HPP
 #define LV_LOG_HPP
 
-#include <list>
+#include <set>
 #include <iostream>
 
 #include <boost/thread/mutex.hpp>
@@ -29,14 +29,16 @@ namespace lv { namespace log {
 	 */
 	class Log : boost::noncopyable
 	{
-		typedef std::list<gather_ptr>	gather_list;
-		gather_list gathers_;
+		// we use set rather than list here to prevent deadlock when some
+		// gathers are shared among different loggers
+		typedef std::set<gather_ptr>	gather_set;
+		gather_set gathers_;
 
 		typedef boost::mutex::scoped_lock	scoped_lock;	
 		boost::mutex	mutex_;
 
 	
-		int	lvl_;	// int of the current record
+		int	lvl_;	// level of the current record
 
 
 		class Proxy : boost::noncopyable
@@ -105,14 +107,14 @@ namespace lv { namespace log {
 		{
 			scoped_lock lock(mutex_);
 
-			this->gathers_.push_back(gather);
+			this->gathers_.insert(gather);
 		}
 
 		void	remove_gather(gather_ptr gather)
 		{
 			scoped_lock lock(mutex_);
 
-			gather_list::iterator it = std::find(this->gathers_.begin(), this->gathers_.end(), gather);
+			gather_set::iterator it = std::find(this->gathers_.begin(), this->gathers_.end(), gather);
 			if(it != this->gathers_.end())
 				this->gathers_.erase(it);
 		}

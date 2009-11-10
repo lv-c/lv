@@ -614,6 +614,10 @@
 				Name="Header Files"
 				>
 				<File
+					RelativePath="..\..\..\lv\lv\BinaryStream\Array.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\BinaryStream\BinaryIStream.hpp"
 					>
 				</File>

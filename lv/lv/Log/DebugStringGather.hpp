@@ -26,7 +26,7 @@ namespace lv { namespace log {
 	{
 		struct Receiver
 		{
-			void operator () (string_type const & str, level) const
+			void operator () (string_type const & str, int) const
 			{
 #ifndef LV_UNICODE_LOG
 				::OutputDebugStringA(str.c_str());

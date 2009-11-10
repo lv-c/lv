@@ -18,13 +18,13 @@
 namespace lv { namespace bstream {
 
 	template<typename T, size_t N>
-	struct object_tag<boost::array<T, N>, typename boost::enable_if<boost::is_pod<T> >::type>
-		: pod_buffer_tag
+	struct object_tag<boost::array<T, N>, typename boost::enable_if<is_copyable<T> >::type>
+		: copyable_buffer_tag
 	{
 	};
 
 	template<typename T, size_t N>
-	struct object_tag<boost::array<T, N>, typename boost::disable_if<boost::is_pod<T> >::type>
+	struct object_tag<boost::array<T, N>, typename boost::disable_if<is_copyable<T> >::type>
 		: range_tag
 	{
 	};

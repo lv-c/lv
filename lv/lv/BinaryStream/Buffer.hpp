@@ -18,13 +18,13 @@ namespace lv { namespace bstream {
 
 
 	template<>
-	struct object_tag<Buffer> : pod_buffer_tag {};			//
+	struct object_tag<Buffer> : copyable_buffer_tag {};			//
 
 	template<>
-	struct object_tag<BufferRef> : pod_buffer_tag {};
+	struct object_tag<BufferRef> : copyable_buffer_tag {};
 
 	template<>
-	struct object_tag<ConstBufferRef> : pod_buffer_tag{};
+	struct object_tag<ConstBufferRef> : copyable_buffer_tag{};
 
 } }
 

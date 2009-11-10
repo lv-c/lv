@@ -23,7 +23,7 @@ namespace lv { namespace log {
 	{
 	public:
 		
-		typedef boost::function<void(log::string_type const &, log::level)> receiver_t;
+		typedef boost::function<void(log::string_type const &, int)> receiver_t;
 
 	protected:
 
@@ -41,14 +41,17 @@ namespace lv { namespace log {
 
 	protected:
 
-		virtual	void on_record_end(log::level lvl)
+		virtual	void on_record_end(int lvl)
 		{
-			Gather::on_record_end(lvl);
+			end_record(lvl);
 
 			if(receiver_)
 				receiver_(oss_.str(), lvl);
 			// empty the stringstream
 			oss_.str(log::string_type());
+
+			// unlock
+			mutex_.unlock();
 		}
 	};
 } }

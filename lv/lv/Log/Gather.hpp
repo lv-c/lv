@@ -62,6 +62,7 @@ namespace lv { namespace log {
 		}
 	};
 
+	/// A gather could be shared among different loggers.
 	class Gather
 	{
 	protected:
@@ -87,10 +88,11 @@ namespace lv { namespace log {
 		{
 		}
 
+		/// The following three functions are not thread-safe. Usually you should
+		/// only call them at the very beginning
+
 		void	set_filter(filter_type filter)
 		{
-			scoped_lock lock(mutex_);
-
 			this->filter_ = filter;
 		}
 
@@ -109,11 +111,9 @@ namespace lv { namespace log {
 
 	protected:
 
-		/// whether we should output the record with the given int
+		/// whether we should output the record with the given level
 		bool	output(int lvl)
 		{
-			scoped_lock lock(mutex_);
-
 			return filter_ ? filter_(lvl) : true;
 		}
 
@@ -127,13 +127,25 @@ namespace lv { namespace log {
 
 		virtual void on_record_begin(int lvl)
 		{
+			// lock
+			mutex_.lock();
+
 			foreach(formatter_type & fmt, headers_)
 			{
 				fmt(*os_, lvl);
 			}
 		}
 
+		/// overloaded function should take care of the unlock
 		virtual void on_record_end(int lvl)
+		{
+			end_record(lvl);
+
+			// unlock
+			mutex_.unlock();
+		}
+
+		void	end_record(int lvl)
 		{
 			foreach(formatter_type & fmt, tailers_)
 			{

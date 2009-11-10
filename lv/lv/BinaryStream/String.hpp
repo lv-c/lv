@@ -17,10 +17,10 @@
 namespace lv { namespace bstream {
 
 	template<>
-	struct object_tag<std::string> : pod_buffer_tag {};
+	struct object_tag<std::string> : copyable_buffer_tag {};
 
 	template<>
-	struct object_tag<std::wstring> : pod_buffer_tag {};
+	struct object_tag<std::wstring> : copyable_buffer_tag {};
 
 } }
 
