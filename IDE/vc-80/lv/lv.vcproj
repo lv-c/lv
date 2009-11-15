@@ -302,6 +302,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\Graphics\Serialization.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\graphics\Size.hpp"
 					>
 				</File>
@@ -809,6 +813,30 @@
 					RelativePath="..\..\..\lv\lv\DataFlow.hpp"
 					>
 				</File>
+			</Filter>
+		</Filter>
+		<Filter
+			Name="Lua"
+			>
+			<Filter
+				Name="Bind"
+				>
+				<Filter
+					Name="Header Files"
+					>
+					<File
+						RelativePath="..\..\..\lv\lv\Lua\Bind\Array.hpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\lv\lv\Lua\Bind\Graphics.hpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\lv\lv\Lua\Bind\Vector.hpp"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 	</Files>

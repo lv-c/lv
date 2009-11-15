@@ -6,7 +6,7 @@ namespace lv
 {
 	void RawFileReader::fulfill(std::string const & file, BufferPtr buffer)
 	{
-		std::ifstream infile(file.c_str(), std::ios::in | std::ios::binary);
+		std::ifstream infile(file.c_str(), std::ios_base::binary);
 		if(! infile)
 			throw(file_io_error(std::string("error opening file: ") + file));
 

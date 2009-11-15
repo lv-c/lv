@@ -61,6 +61,11 @@ void echo(ParamType type, lv::IPacket & ia)
 	}
 }
 
+void hello()
+{
+	std::cout << "Hello World" << std::endl;
+}
+
 void sum(int a, float b)
 {
 	std::cout << "sum:" << (a + static_cast<int>(b)) << std::endl;
@@ -101,15 +106,19 @@ BOOST_AUTO_TEST_CASE(test_dataflow)
 	sink_type sink(&proxy_push);
 
 	sink
+		.reg("hello", &hello)
 		.reg("sum", &sum)
 		.reg("echo", &echo)
-		.reg<void(float)>("sum_5", boost::bind(&sum, 5, _1))
+		.reg<void(float)>("sum_5", boost::bind(&sum, 5, _1))	// boost::bind
 		//.reg("pass_iarchive_obj", &pass_iarchive_obj)  // won't compile and shouldn't compile
 	;
 
 	
 
 	lv::flow::Connection conn = dataflow.connect(port_type(), boost::bind(&sink_type::push, &sink, _1));
+
+	source.call("hello");
+	source.stream("hello");
 
 	// streaming
 	source.stream("sum") << 10 << 40.3f;

@@ -135,7 +135,11 @@ void call(Key const & key BOOST_PP_COMMA_IF(n) BOOST_PP_ENUM(n, LV_DATAFLOW_call
 {
 	typedef boost::tuples::tuple<BOOST_PP_ENUM(n, LV_DATAFLOW_pointer_types, ~)> tuple_type;
 
+#if n == 0
+	tuple_type args;
+#else
 	tuple_type args(BOOST_PP_ENUM_PARAMS(n, &t));
+#endif
 
 	return this->call_impl(key, args);
 }

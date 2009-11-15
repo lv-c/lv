@@ -87,7 +87,6 @@ namespace lv { namespace flow {
 
 
 			/**
-			 * @exception InvalidKey no function found associated with the given key
 			 * @exception SerializationError  ( public boost::archive::archive_exception)
 			 * @exception exceptions thrown by the target function
 			 */
@@ -101,7 +100,7 @@ namespace lv { namespace flow {
 
 				invoker_map::iterator it = invokers_.find(key);
 				if(it == invokers_.end())
-					throw InvalidKey(std::string("Invalid key:") + boost::lexical_cast<std::string>(key));
+					return;
 
 				try
 				{
