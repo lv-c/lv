@@ -13,13 +13,12 @@
 
 #include <boost/mpl/if.hpp>
 #include <boost/ref.hpp>
-#include <boost/noncopyable.hpp>
 
 namespace lv
 {
 
 	template<typename T>
-	class RefWrapper : public boost::noncopyable	// prevent mistaken use
+	class RefWrapper
 	{
 		T * t_;
 	public:
@@ -71,9 +70,6 @@ namespace lv
 	
 }
 
-#endif // LV_REF_HPP
-
-
 namespace boost
 {
 	template<typename T>
@@ -90,3 +86,4 @@ namespace boost
 	};
 }
 
+#endif // LV_REF_HPP

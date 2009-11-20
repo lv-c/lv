@@ -35,7 +35,7 @@ namespace lv { namespace lua {
 		{
 			static void bind(luabind::class_<T> & x)
 			{
-				x.def(constructor<typename T::size_type>());		// need default constructor
+				x.def(luabind::constructor<typename T::size_type>());		// need default constructor
 			}
 		};
 	}

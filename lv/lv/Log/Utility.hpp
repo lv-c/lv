@@ -76,9 +76,9 @@ namespace lv { namespace log {
 	/**
 	 * @exception lv::file_io_error error opening the file
 	 */
-	inline gather_ptr	add_file_gather(Log & log, char const * file, bool append = true, FormmatterSet formatters = CommonFormatters())
+	inline gather_ptr	add_file_gather(Log & log, char const * file, bool append = false, FormmatterSet formatters = CommonFormatters())
 	{
-		ostream_ptr ofile(new std::basic_ofstream<char_type>(file, append ? 0 : std::ios_base::trunc));
+		ostream_ptr ofile(new std::basic_ofstream<char_type>(file, append ? std::ios_base::app : std::ios_base::trunc));
 		if(! (*ofile))
 			throw file_io_error(std::string("error opening file:") + file);
 

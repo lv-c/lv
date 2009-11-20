@@ -40,6 +40,8 @@ namespace lv
 		typedef std::vector<NodePtr>	children_type;
 		children_type	children_;
 
+		DSTNode *	parent_;
+
 		
 		static bool node_pred(NodePtr const & lhs, NodePtr const & rhs)
 		{
@@ -47,9 +49,10 @@ namespace lv
 		}
 
 	private:
-		DSTNode(Ele ele, Pred pred = Pred())
+		DSTNode(Ele ele, DSTNode * parent, Pred pred = Pred())
 			: pred_(pred)
 			, element_(ele)
+			, parent_(parent)
 		{
 		}
 
@@ -60,6 +63,7 @@ namespace lv
 
 		DSTNode(Pred pred = Pred())
 			: pred_(pred)
+			, parent_(NULL)
 		{
 		}
 
@@ -72,6 +76,19 @@ namespace lv
 		{
 			return info_;
 		}
+
+		boost::optional<Info> & info()
+		{
+			return info_;
+		}
+
+		DSTNode * parent()
+		{
+			return parent_;
+		}
+
+		// boost::ref is supported for all the following sequence
+		// that's , seq can be a sequence of reference_wrapper type objects
 
 		// insert a sequence
 		template<class RangeT>
@@ -86,7 +103,7 @@ namespace lv
 				
 				if(it == node->end())
 				{
-					NodePtr new_node(new DSTNode(ele, pred_));
+					NodePtr new_node(new DSTNode(ele, node, pred_));
 					it = node->children_.insert(std::lower_bound(node->begin(), node->end(), new_node,
 						&DSTNode::node_pred), new_node);
 				}
@@ -97,21 +114,33 @@ namespace lv
 			node->info_ = info;
 		}
 
-		// find a specified sequence
 		template<class RangeT>
-		bool	find(RangeT const & seq, Info & info)		// fixed count
+		DSTNode * sub_tree(RangeT const & seq)
 		{
 			BOOST_CONCEPT_ASSERT((boost::SinglePassRangeConcept<RangeT>));
 
-			DSTNode* node = this;
+			DSTNode * node = this;
 			foreach(boost::range_value<RangeT>::type const & ele, seq)
 			{
 				iterator it = node->find_child(ele);
 				if(it == node->end())
-					return false;
+					return NULL;
 
 				node = it->get();
 			}
+
+			return node;
+		}
+
+
+		// find a specified sequence
+		template<class RangeT>
+		bool	find(RangeT const & seq, Info & info) 		// fixed count
+		{
+			DSTNode * node = sub_tree(seq);
+
+			if(node == NULL)
+				return false;
 
 			if(node->info_)
 				info = *node->info_;
@@ -124,7 +153,7 @@ namespace lv
 		 * @param size size of the matched sequence
 		 */
 		template<class RangeT>
-		bool first_match(RangeT const & seq, Info & info, size_t * size = NULL)
+		bool first_match(RangeT const & seq, Info & info, size_t * size = NULL) 
 		{
 			BOOST_CONCEPT_ASSERT((boost::SinglePassRangeConcept<RangeT>));
 
@@ -179,14 +208,24 @@ namespace lv
 			return children_.end();
 		}
 
+		bool	empty() const
+		{
+			return children_.empty();
+		}
+
 		size_t	size() const
 		{
 			return children_.size();
 		}
 
+		void erase(iterator it)
+		{
+			children_.erase(it);
+		}
+
 		iterator find_child(Ele const & ele)
 		{
-			DSTNode node(ele, pred_);
+			DSTNode node(ele, this, pred_);
 			iterator it = std::lower_bound(begin(), end(), lv::shared_from_object(node), &DSTNode::node_pred);
 			return (it == end() || pred_(ele, (*it)->element_) ? end() : it);
 		}
