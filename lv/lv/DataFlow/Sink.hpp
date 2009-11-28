@@ -81,6 +81,13 @@ namespace lv { namespace flow {
 			return *this;
 		}
 
+
+		/// clear all the registered functions
+		void clear()
+		{
+			registery_.clear();
+		}
+
 	private:
 
 		void	push_impl(BufferPtr buf)

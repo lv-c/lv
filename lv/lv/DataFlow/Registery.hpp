@@ -86,6 +86,15 @@ namespace lv { namespace flow {
 			}
 
 
+			void clear()
+			{
+				// a write lock
+				boost::unique_lock<boost::shared_mutex> lock(shared_mutex_);
+
+				invokers_.clear();
+			}
+
+
 			/**
 			 * @exception SerializationError  ( public boost::archive::archive_exception)
 			 * @exception exceptions thrown by the target function

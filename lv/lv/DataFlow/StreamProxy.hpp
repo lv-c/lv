@@ -67,10 +67,16 @@ namespace lv { namespace flow { namespace detail {
 		{
 		}
 
+		// creates an empty StreamProxy
+		StreamProxy()
+		{
+		}
+
 		template<typename T>
 		StreamProxy & operator << (T const & t)
 		{
-			(*impl_) << t;
+			if(impl_.get() != NULL)
+				(*impl_) << t;
 
 			return *this;
 		}

@@ -42,13 +42,27 @@ namespace lv { namespace flow {
 
 		Port port_;
 
+		// It's a simple flag. So we don't have a mutex for it.
+		bool enabled_;
+
 	public:
 
 		Source(Port const & port, boost::function<void(Port const &, BufferPtr)> const & callback, BufferManagerPtr buf_manager)
 			: port_(port)
 			, callback_(callback)
 			, buf_manager_(buf_manager)
+			, enabled_(true)
 		{
+		}
+
+		void enable(bool enabled)
+		{
+			this->enabled_ = enabled;
+		}
+
+		bool enabled() const
+		{
+			return enabled_;
 		}
 
 		/**
@@ -66,6 +80,10 @@ namespace lv { namespace flow {
 		 */
 		detail::StreamProxy<OArchive, Source> stream(Key const & key)
 		{
+			// returns an empty StreamProxy object if it's not enabled
+			if(! enabled_)
+				return detail::StreamProxy<OArchive, Source>();
+
 			detail::StreamProxy<OArchive, Source> proxy(buf_manager_->get(), *this);
 			proxy << key;
 
@@ -133,6 +151,10 @@ template<BOOST_PP_ENUM_PARAMS(n, typename T)>
 #endif
 void call(Key const & key BOOST_PP_COMMA_IF(n) BOOST_PP_ENUM(n, LV_DATAFLOW_call_params, ~))
 {
+	// it's not enabled
+	if(! enabled_)
+		return;
+
 	typedef boost::tuples::tuple<BOOST_PP_ENUM(n, LV_DATAFLOW_pointer_types, ~)> tuple_type;
 
 #if n == 0
