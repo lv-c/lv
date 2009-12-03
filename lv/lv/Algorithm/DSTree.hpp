@@ -49,7 +49,7 @@ namespace lv
 		}
 
 	private:
-		DSTNode(Ele ele, DSTNode * parent, Pred pred = Pred())
+		DSTNode(Ele const & ele, DSTNode * parent, Pred pred = Pred())
 			: pred_(pred)
 			, element_(ele)
 			, parent_(parent)
@@ -221,6 +221,18 @@ namespace lv
 		void erase(iterator it)
 		{
 			children_.erase(it);
+		}
+
+		bool erase(Ele const & ele)
+		{
+			iterator it = find_child(ele);
+			if(it != end())
+			{
+				erase(it);
+				return true;
+			}
+			else
+				return false;
 		}
 
 		iterator find_child(Ele const & ele)

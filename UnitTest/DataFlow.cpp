@@ -10,14 +10,6 @@
 
 #include "UnitTest.hpp"
 
-
-#include <excpt.h>
-// this macro is defined in excpt.h (Windows). has a conflict with 
-// boost::archive::archive_exception::exception_code
-#ifdef exception_code	
-#undef exception_code
-#endif
-
 #include <lv/DataFlow/DataFlow.hpp>
 #include <lv/DataFlow/Sink.hpp>
 #include <lv/DataFlow/Source.hpp>
