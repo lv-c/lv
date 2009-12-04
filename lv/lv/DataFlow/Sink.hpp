@@ -19,7 +19,8 @@
 
 #include <boost/bind.hpp>
 #include <boost/noncopyable.hpp>
-#include <boost/iostreams/filtering_stream.hpp>
+#include <boost/iostreams/device/array.hpp>
+#include <boost/iostreams/stream.hpp>
 
 namespace lv { namespace flow {
 
@@ -92,7 +93,7 @@ namespace lv { namespace flow {
 
 		void	push_impl(BufferPtr buf)
 		{
-			boost::iostreams::filtering_istream raw_is(boost::make_iterator_range(*buf));
+			boost::iostreams::stream<boost::iostreams::array_source> raw_is(&(*buf)[0], buf->size());
 			IArchive ia(raw_is);
 
 			registery_.invoke(ia);

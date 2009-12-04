@@ -4,6 +4,7 @@
 //						Digital Search Tree
 //			对孩子结点进行有序插入，然后使用折半查找
 //			为提高效率，所以函数均使用非递归实现
+//	TODO: 换一个 iterator, 遍历算法
 //  --------------------------------------------------------------------
 //  Copyright (C) jcfly(lv.jcfly@gmail.com) 2008 - All Rights Reserved
 // *********************************************************************
@@ -20,7 +21,7 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/optional.hpp>
 #include <boost/range.hpp>
-#include <boost/range/concepts.hpp>
+#include <boost/operators.hpp>
 
 #include <lv/SharedPtr.hpp>
 #include <lv/Foreach.hpp>
@@ -29,7 +30,7 @@ namespace lv
 {
 
 	template<class Ele, class Info, class Pred = std::less<Ele> >
-	class DSTNode
+	class DSTNode : boost::equality_comparable<DSTNode<Ele, Info, Pred> >
 	{
 		typedef boost::shared_ptr<DSTNode>	NodePtr;
 
@@ -61,6 +62,10 @@ namespace lv
 		typedef typename children_type::iterator	iterator;
 		typedef typename children_type::const_iterator	const_iterator;
 
+		typedef typename children_type::size_type	size_type;
+
+		typedef NodePtr	shared_pointer;
+
 		DSTNode(Pred pred = Pred())
 			: pred_(pred)
 			, parent_(NULL)
@@ -87,15 +92,19 @@ namespace lv
 			return parent_;
 		}
 
+		DSTNode const * parent() const
+		{
+			return parent_;
+		}
+
 		// boost::ref is supported for all the following sequence
 		// that's , seq can be a sequence of reference_wrapper type objects
 
 		// insert a sequence
+		// @param info you can use boost::none_t here 
 		template<class RangeT>
-		void	insert(RangeT const & seq, Info const & info)
+		void	insert(RangeT const & seq, boost::optional<Info> const & info)
 		{
-			BOOST_CONCEPT_ASSERT((boost::SinglePassRangeConcept<RangeT>));	// concept check
-
 			DSTNode * node = this;
 			foreach(Ele const & ele, seq)
 			{
@@ -117,8 +126,6 @@ namespace lv
 		template<class RangeT>
 		DSTNode * sub_tree(RangeT const & seq)
 		{
-			BOOST_CONCEPT_ASSERT((boost::SinglePassRangeConcept<RangeT>));
-
 			DSTNode * node = this;
 			foreach(boost::range_value<RangeT>::type const & ele, seq)
 			{
@@ -155,8 +162,6 @@ namespace lv
 		template<class RangeT>
 		bool first_match(RangeT const & seq, Info & info, size_t * size = NULL) 
 		{
-			BOOST_CONCEPT_ASSERT((boost::SinglePassRangeConcept<RangeT>));
-
 			size_t len = 0;
 
 			DSTNode * node = this;
@@ -187,6 +192,10 @@ namespace lv
 			children_.clear();
 		}
 
+		void	reserve(size_type count)
+		{
+			children_.reserve(count);
+		}
 
 		iterator	begin()
 		{
@@ -213,7 +222,7 @@ namespace lv
 			return children_.empty();
 		}
 
-		size_t	size() const
+		size_type	size() const
 		{
 			return children_.size();
 		}
@@ -240,6 +249,31 @@ namespace lv
 			DSTNode node(ele, this, pred_);
 			iterator it = std::lower_bound(begin(), end(), lv::shared_from_object(node), &DSTNode::node_pred);
 			return (it == end() || pred_(ele, (*it)->element_) ? end() : it);
+		}
+
+		bool operator == (DSTNode const & rhs) const
+		{
+			if(size() != rhs.size())
+				return false;
+
+			if(parent_ == NULL)
+			{
+				if(rhs.parent_ != NULL)
+					return false;
+			}
+			else
+			{
+				if(element_ != rhs.element_ || info_ != rhs.info_)
+					return false;
+			}
+
+			for(const_iterator it1 = begin(), it2 = rhs.begin(); it1 != end(); ++it1, ++it2)
+			{
+				if((**it1) != (**it2))
+					return false;
+			}
+
+			return true;
 		}
 	};
 

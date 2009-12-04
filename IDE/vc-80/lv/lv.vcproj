@@ -839,6 +839,22 @@
 				</Filter>
 			</Filter>
 		</Filter>
+		<Filter
+			Name="Serialization"
+			>
+			<Filter
+				Name="Header Files"
+				>
+				<File
+					RelativePath="..\..\..\lv\lv\Serialization\DSTree.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Serialization\Graphics.hpp"
+					>
+				</File>
+			</Filter>
+		</Filter>
 	</Files>
 	<Globals>
 	</Globals>

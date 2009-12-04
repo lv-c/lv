@@ -1,5 +1,5 @@
 // *********************************************************************
-//  Serialization   version:  1.0   ¡¤  date: 11/11/2009
+//  Graphics   version:  1.0   ¡¤  date: 11/11/2009
 //  --------------------------------------------------------------------
 //  
 //  --------------------------------------------------------------------
@@ -8,8 +8,8 @@
 // 
 // *********************************************************************
 
-#ifndef LV_GRAPHICS_SERIALIZATION_HPP
-#define LV_GRAPHICS_SERIALIZATION_HPP
+#ifndef LV_SERIALIZATION_GRAPHICS_HPP
+#define LV_SERIALIZATION_GRAPHICS_HPP
 
 #include <lv/Graphics/Point.hpp>
 
