@@ -23,7 +23,7 @@
 #include <boost/preprocessor/repetition/enum_params.hpp>
 #include <boost/preprocessor/punctuation/comma_if.hpp>
 
-#include <boost/iostreams/filtering_stream.hpp>
+#include <boost/iostreams/stream_buffer.hpp>
 #include <boost/iostreams/device/back_inserter.hpp>
 
 #include <boost/tuple/tuple.hpp>
@@ -115,13 +115,15 @@ namespace lv { namespace flow {
 		{
 			BufferPtr buf = buf_manager_->get();
 
-			boost::iostreams::filtering_ostream raw_os(boost::iostreams::back_inserter(*buf));
-			OArchive oa(raw_os, boost::archive::no_header);
-			
-			oa << key;
-			boost::fusion::for_each(args, Serialize(oa));
+			{
+				// auto flush
+				boost::iostreams::stream_buffer<boost::iostreams::back_insert_device<Buffer> > 
+					raw_os(boost::iostreams::back_inserter(*buf));
+				OArchive oa(raw_os);
 
-			raw_os.flush();
+				oa << key;
+				boost::fusion::for_each(args, Serialize(oa));
+			}
 
 			callback_(port_, buf);
 		}

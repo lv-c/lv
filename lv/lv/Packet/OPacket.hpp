@@ -85,7 +85,12 @@ namespace lv
 	public:
 
 		OPacket(std::ostream & os, unsigned int flags = 0)
-			: archive_base_t(os, flags | boost::archive::no_header)
+			: archive_base_t(os, flags | boost::archive::no_header | boost::archive::no_codecvt)
+		{
+		}
+
+		OPacket(std::streambuf & buf, unsigned int flags = 0)
+			: archive_base_t(buf, flags | boost::archive::no_header | boost::archive::no_codecvt)
 		{
 		}
 

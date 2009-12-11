@@ -98,7 +98,12 @@ namespace lv
 	public:
 
 		IPacket(std::istream & is, unsigned int flags = 0)
-			: archive_base_t(is, flags | boost::archive::no_header)
+			: archive_base_t(is, flags | boost::archive::no_header | boost::archive::no_codecvt)
+		{
+		}
+
+		IPacket(std::streambuf & buf, unsigned int flags = 0)
+			: archive_base_t(buf, flags | boost::archive::no_header | boost::archive::no_codecvt)
 		{
 		}
 
