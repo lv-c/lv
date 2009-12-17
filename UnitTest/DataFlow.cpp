@@ -10,6 +10,8 @@
 
 #include "UnitTest.hpp"
 
+#include "MemoryAnalyser.h"
+
 #include <lv/DataFlow/DataFlow.hpp>
 #include <lv/DataFlow/Sink.hpp>
 #include <lv/DataFlow/Source.hpp>
@@ -21,6 +23,8 @@
 #include <lv/Packet/OPacket.hpp>
 
 #include <lv/SimpleBufferManager.hpp>
+
+#include <lv/Timer.hpp>
 
 #include <string>
 
@@ -115,8 +119,26 @@ BOOST_AUTO_TEST_CASE(test_dataflow)
 	// streaming
 	source.stream("sum") << 10 << 40.3f;
 
+
+	MemoryAnalyser::instance().attach();
+	MemoryAnalyser::instance().begin_analyse();
+
+	lv::Timer timer;
+
 	// function object
 	source.call("sum_5", 10.0f);
+
+	double elapsed = timer.elapsed() * 1000;
+
+	int counter;
+	uint64 total_memory = MemoryAnalyser::instance().end_analyse(counter);
+	MemoryAnalyser::instance().detach();
+
+	cout << "Time elapsed:" << elapsed << endl;
+	cout << "Total memory:" << total_memory << "  counter:" << counter << endl;
+
+
+	
 
 	// flow::SerializationError
 	source.call("sum", 20);
