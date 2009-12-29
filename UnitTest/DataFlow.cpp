@@ -68,6 +68,20 @@ void sum(int a, float b)
 }
 
 
+struct TestMemFn
+{
+	void test(int a, float b, float r) 
+	{
+		BOOST_CHECK_EQUAL(a + b, r);
+	}
+
+	void test_const(int a, float b, float r) const
+	{
+		BOOST_CHECK_EQUAL(a + b, r);
+	}
+};
+
+
 // handle some exceptions
 void proxy_push(lv::flow::slot_type const & slot, lv::BufferPtr buf)
 {
@@ -106,6 +120,8 @@ BOOST_AUTO_TEST_CASE(test_dataflow)
 		.reg("sum", &sum)
 		.reg("echo", &echo)
 		.reg<void(float)>("sum_5", boost::bind(&sum, 5, _1))	// boost::bind
+		.reg_mem_fn("mem_fn", &TestMemFn::test, TestMemFn())
+		.reg_mem_fn("const_mem_fn", &TestMemFn::test_const, TestMemFn())
 		//.reg("pass_iarchive_obj", &pass_iarchive_obj)  // won't compile and shouldn't compile
 	;
 
@@ -127,6 +143,9 @@ BOOST_AUTO_TEST_CASE(test_dataflow)
 
 	// function object
 	source.call("sum_5", 10.0f);
+
+	source.call("mem_fn", 10, 5.0f, 15.0f);
+	source.call("const_mem_fn", 10, 5.0f, 15.0f);
 
 	double elapsed = timer.elapsed() * 1000;
 

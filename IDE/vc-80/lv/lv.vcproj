@@ -208,6 +208,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\MemFn.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\NullMutex.hpp"
 					>
 				</File>
@@ -245,6 +249,14 @@
 				>
 				<File
 					RelativePath="..\..\..\lv\src\lv\Utility\Console.cpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="detail"
+				>
+				<File
+					RelativePath="..\..\..\lv\lv\detail\RemoveSecond.hpp"
 					>
 				</File>
 			</Filter>

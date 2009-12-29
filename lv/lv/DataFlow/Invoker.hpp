@@ -15,8 +15,8 @@
 #include <lv/Fusion.hpp>
 
 #include <boost/mpl/transform.hpp>
+#include <boost/mpl/assert.hpp>
 
-#include <boost/static_assert.hpp>
 #include <boost/type_traits/is_pointer.hpp>
 
 #include <boost/function_types/parameter_types.hpp>
@@ -33,7 +33,7 @@ namespace lv { namespace flow { namespace detail {
 		>::type type;
 
 		// parameter types of the registered functions can't be pointer types
-		BOOST_STATIC_ASSERT((! boost::is_pointer<type>::value));
+		BOOST_MPL_ASSERT_NOT((boost::is_pointer<type>));
 	};
 
 	template<class T>

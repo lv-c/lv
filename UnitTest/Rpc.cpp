@@ -11,18 +11,6 @@
 
 #include "UnitTest.hpp"
 
-#include <boost/archive/impl/archive_serializer_map.ipp>
-
-
-// damn
-#include <excpt.h>
-// this macro is defined in excpt.h (Windows). has a conflict with 
-// boost::archive::archive_exception::exception_code
-#ifdef exception_code	
-#undef exception_code
-#endif
-
-
 #include <iostream>
 using namespace std;
 

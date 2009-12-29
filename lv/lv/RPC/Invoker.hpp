@@ -28,6 +28,7 @@
 #include <boost/function_types/parameter_types.hpp>
 
 #include <boost/mpl/transform.hpp>
+#include <boost/mpl/assert.hpp>
 
 #include <boost/static_assert.hpp>
 
@@ -108,9 +109,9 @@ namespace lv { namespace rpc { namespace detail {
 			>::type
 		>::type	type;
 
-		/// parameter type of the registered function cann't be a pointer type if you don't provide 
+		/// parameter type of the registered function can't be a pointer type if you don't provide 
 		/// an extractor for it.
-		BOOST_STATIC_ASSERT((! boost::is_pointer<type>::value));
+		BOOST_MPL_ASSERT_NOT((boost::is_pointer<type>));
 	};
 
 	template<typename T, class ParamExtractors>
@@ -215,7 +216,7 @@ namespace lv { namespace rpc { namespace detail {
 		static unsigned const arity = function_type::arity;
 
 		// The result type shouldn't be a pointer type
-		BOOST_STATIC_ASSERT(! boost::is_pointer<result_type>::value);
+		BOOST_MPL_ASSERT_NOT((boost::is_pointer<result_type>));
 
 
 		/// "Converts a type into a storable type by removing const qualifiers and references."
@@ -224,7 +225,7 @@ namespace lv { namespace rpc { namespace detail {
 
 		// storable result type
 		typedef typename Storable<result_type>::type storable_result_type;
-		BOOST_STATIC_ASSERT(! boost::is_pointer<storable_result_type>::value);
+		BOOST_MPL_ASSERT_NOT((boost::is_pointer<storable_result_type>));
 
 	public:
 		

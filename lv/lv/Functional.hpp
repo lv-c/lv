@@ -12,6 +12,8 @@
 #ifndef LV_FUNCTIONAL_HPP
 #define LV_FUNCTIONAL_HPP
 
+#include <lv/detail/RemoveSecond.hpp>
+
 #include <boost/function_types/function_type.hpp>
 #include <boost/function_types/components.hpp>
 
@@ -19,10 +21,6 @@
 #include <boost/type_traits/is_member_function_pointer.hpp>
 #include <boost/type_traits/is_class.hpp>
 #include <boost/type_traits/remove_pointer.hpp>
-
-#include <boost/mpl/begin.hpp>
-#include <boost/mpl/next.hpp>
-#include <boost/mpl/erase.hpp>
 
 #include <boost/utility/enable_if.hpp>
 #include <boost/typeof/typeof.hpp>
@@ -53,16 +51,6 @@ namespace lv
 			typedef typename ft::function_type<typename ft::components<T, ClassTypeTransform>::type>::type type;
 		};
 
-
-		template<class T>
-		struct RemoveSecond
-		{
-			typedef typename mpl::erase<T, 
-				typename mpl::next<
-					typename mpl::begin<T>::type
-				>::type
-			>::type type;
-		};
 
 		// class type function object
 		template<typename T, typename ClassTypeTransform>

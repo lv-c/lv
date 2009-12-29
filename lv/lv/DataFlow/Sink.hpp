@@ -12,6 +12,7 @@
 #define LV_DATAFLOW_SINK_HPP
 
 #include <lv/Buffer.hpp>
+#include <lv/MemFn.hpp>
 
 #include <lv/DataFlow/Registery.hpp>
 
@@ -58,6 +59,17 @@ namespace lv { namespace flow {
 		void	push(BufferPtr buf)
 		{
 			push_policy_(buf);
+		}
+
+		/**
+		 * register a member function with a given object
+		 * @param t could be an object, a pointer, a reference wrapper or 
+		 *	a smart pointer.
+		 */
+		template<class MemFn, class T>
+		Sink & reg_mem_fn(Key const & key, MemFn f, T t)
+		{
+			return reg<typename BindMemFnSignature<MemFn>::type>(key, bind_mem_fn(f, t));
 		}
 
 		/**
