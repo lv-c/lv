@@ -24,7 +24,7 @@ namespace lv { namespace detail {
 	{
 		typedef typename mpl::erase<T, 
 			typename mpl::next<
-			typename mpl::begin<T>::type
+				typename mpl::begin<T>::type
 			>::type
 		>::type type;
 	};

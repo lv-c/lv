@@ -204,10 +204,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\lv\lv\LRUList.hpp"
-					>
-				</File>
-				<File
 					RelativePath="..\..\..\lv\lv\MemFn.hpp"
 					>
 				</File>
@@ -407,6 +403,14 @@
 				>
 				<File
 					RelativePath="..\..\..\lv\lv\Algorithm\DSTree.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Algorithm\LRUCache.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Algorithm\LRUList.hpp"
 					>
 				</File>
 				<File
@@ -738,6 +742,14 @@
 				RelativePath="..\..\..\lv\lv\Lab\note.txt"
 				>
 			</File>
+			<Filter
+				Name="Header Files"
+				>
+				<File
+					RelativePath="..\..\..\lv\lv\Lab\Mapping.hpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="IO"

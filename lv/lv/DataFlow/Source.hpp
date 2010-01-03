@@ -15,6 +15,7 @@
 
 #include <lv/IBufferManager.hpp>
 
+#include <lv/DataFlow/Fwd.hpp>
 #include <lv/DataFlow/Config.hpp>
 #include <lv/DataFlow/StreamProxy.hpp>
 
@@ -25,6 +26,8 @@
 
 #include <boost/iostreams/stream_buffer.hpp>
 #include <boost/iostreams/device/back_inserter.hpp>
+
+#include <boost/function.hpp>
 
 #include <boost/tuple/tuple.hpp>
 #include <boost/fusion/include/for_each.hpp>

@@ -11,6 +11,7 @@
 #ifndef LV_DATAFLOW_HPP
 #define LV_DATAFLOW_HPP
 
+#include <lv/DataFlow/Fwd.hpp>
 #include <lv/DataFlow/DataFlow.hpp>
 #include <lv/DataFlow/Source.hpp>
 #include <lv/DataFlow/Sink.hpp>

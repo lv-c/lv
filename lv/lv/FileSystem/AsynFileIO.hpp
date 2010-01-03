@@ -13,8 +13,9 @@
 #define LV_ASYNFILEIO_HPP
 
 #include <lv/FileSystem/IFileIO.hpp>
-#include <lv/Concurrent/ThreadPool.hpp>
-#include <lv/SharedPtr.hpp>
+
+#include <boost/asio/io_service.hpp>
+#include <boost/asio/strand.hpp>
 
 namespace lv
 {
@@ -22,27 +23,30 @@ namespace lv
 	{
 	public:
 		typedef boost::shared_ptr<IFileIO>	synio_ptr;
-		typedef boost::shared_ptr<ThreadPool<> >	threadpool_ptr;
 
 	private:
 
 		synio_ptr	syn_filio_;
 
-		threadpool_ptr	pool_;
+		boost::asio::io_service * service_;
+
+		boost::asio::strand * strand_;
 
 	public:
 		
-		/**
-		 * @param pool if it's empty, SingletonThreadPool will be used.
-		 */
-		AsynFileIO(synio_ptr synio, threadpool_ptr pool = threadpool_ptr())
+		AsynFileIO(synio_ptr synio, boost::asio::io_service & service)
 			: syn_filio_(synio)
-			, pool_(pool)
+			, service_(&service)
+			, strand_(NULL)
 		{
-			if(! pool_)
-				pool_ = shared_from_object(SingletonThreadPool::instance());
 		}
 
+		AsynFileIO(synio_ptr synio, boost::asio::strand & strand)
+			: syn_filio_(synio)
+			, service_(NULL)
+			, strand_(&strand)
+		{
+		}
 		
 		/**
 		 * get the underlying synchronous file io
@@ -78,7 +82,12 @@ namespace lv
 		virtual	IOFuture add_task(std::string const & file, BufferPtr buffer)
 		{
 			IOTask task(file, buffer, syn_filio_);
-			pool_->add_task(task);
+			
+			if(service_ != NULL)
+				service_->post(task);
+			else
+				strand_->post(task);
+
 			return IOFuture(task);
 		}
 	};

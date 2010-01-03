@@ -14,6 +14,7 @@
 #include <lv/Buffer.hpp>
 #include <lv/MemFn.hpp>
 
+#include <lv/DataFlow/Fwd.hpp>
 #include <lv/DataFlow/Registery.hpp>
 
 #include <memory>

@@ -21,18 +21,18 @@ namespace lv
 	template <typename T, class Ax = std::allocator<T> >
 	class LRUList
 	{
-		typedef std::list<T, Ax>	list_t;
+		typedef std::list<T, Ax>	list_type;
 
-		list_t list_;
+		list_type list_;
 
 	public:
 
-		typedef typename list_t::size_type	size_type;
-		typedef typename list_t::value_type	value_type;
-		typedef typename list_t::iterator	iterator;
-		typedef typename list_t::const_iterator	const_iterator;
+		typedef typename list_type::size_type	size_type;
+		typedef typename list_type::value_type	value_type;
+		typedef typename list_type::iterator	iterator;
+		typedef typename list_type::const_iterator	const_iterator;
 
-		iterator	add(T const & t)
+		iterator	insert(T const & t)
 		{
 			list_.push_front(t);
 			return list_.begin();
@@ -44,9 +44,9 @@ namespace lv
 		 */
 		iterator	touch(iterator const & i)
 		{
-			T value = *i;
-			list_.erase(i);
-			return add(value);			
+			list_.splice(list_.begin(), list_, i);
+
+			return list_.begin();
 		}
 
 		void	erase(iterator const & i)

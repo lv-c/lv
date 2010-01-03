@@ -44,7 +44,7 @@ namespace lv
 
 	public:
 
-		SimpleBufferManager(size_t init_capacity) 
+		explicit SimpleBufferManager(size_t init_capacity) 
 			: init_capacity_(init_capacity) 
 		{
 		}
