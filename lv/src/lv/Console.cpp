@@ -1,4 +1,4 @@
-#include <lv/Utility/Console.hpp>
+#include <lv/Console.hpp>
 
 #ifdef LV_PLATFORM_WINDOWS
 #include <Windows.h>

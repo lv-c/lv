@@ -14,6 +14,9 @@
 #include <lv/Config.hpp>
 
 #ifdef LV_PLATFORM_WINDOWS
+
+#include <lv/lvlib2.hpp>
+
 #include <string>
 
 namespace lv

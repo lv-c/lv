@@ -29,6 +29,8 @@ namespace lv
 
 		typedef typename list_type::size_type	size_type;
 		typedef typename list_type::value_type	value_type;
+		typedef typename list_type::reference	reference;
+		typedef typename list_type::const_reference	const_reference;
 		typedef typename list_type::iterator	iterator;
 		typedef typename list_type::const_iterator	const_iterator;
 
@@ -52,6 +54,16 @@ namespace lv
 		void	erase(iterator const & i)
 		{
 			list_.erase(i);
+		}
+
+		reference	last()
+		{
+			return list_.back();
+		}
+
+		const_reference	last() const
+		{
+			return list_.back();
 		}
 
 		/**

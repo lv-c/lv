@@ -61,6 +61,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
+				OutputFile="$(OutDir)\$(ProjectName)2d.lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -80,8 +81,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
+			OutputDirectory="..\..\..\bin"
+			IntermediateDirectory="..\..\..\build\msvc-8.0\release\link-static"
 			ConfigurationType="4"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
@@ -124,6 +125,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
+				OutputFile="$(OutDir)\$(ProjectName)2.lib"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -164,7 +166,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\lv\lv\Utility\Console.hpp"
+					RelativePath="..\..\..\lv\lv\Console.hpp"
 					>
 				</File>
 				<File
@@ -201,6 +203,10 @@
 				</File>
 				<File
 					RelativePath="..\..\..\lv\lv\IntType.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\lvlib2.hpp"
 					>
 				</File>
 				<File

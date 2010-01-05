@@ -104,7 +104,7 @@ namespace lv
 
 			if(map_.size() > max_size_)
 			{
-				remove(list_.erase_last().first);
+				remove(list_.last().first);
 			}
 
 			return true;
@@ -118,7 +118,7 @@ namespace lv
 			{
 				if(touch)
 				{
-					list_.touch(map_it->second);
+					map_it->second = list_.touch(map_it->second);
 				}
 				return map_it->second;
 			}
@@ -133,7 +133,7 @@ namespace lv
 			map_type::iterator map_it = map_.find(key);
 			if(map_it != map_.end())
 			{
-				list_.touch(it->second);
+				map_it->second = list_.touch(it->second);
 			}
 		}
 

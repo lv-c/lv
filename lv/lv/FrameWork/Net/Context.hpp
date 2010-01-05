@@ -15,6 +15,8 @@
 
 #include <lv/IBufferManager.hpp>
 
+#include <boost/asio/io_service.hpp>
+
 namespace lv { namespace net {
 
 	class Context
