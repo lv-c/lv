@@ -210,6 +210,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\Mapping.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\MemFn.hpp"
 					>
 				</File>
@@ -751,10 +755,6 @@
 			<Filter
 				Name="Header Files"
 				>
-				<File
-					RelativePath="..\..\..\lv\lv\Lab\Mapping.hpp"
-					>
-				</File>
 			</Filter>
 		</Filter>
 		<Filter

@@ -207,6 +207,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\UnitTest\Mapping.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\UnitTest\MemFn.cpp"
 				>
 			</File>

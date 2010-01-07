@@ -32,7 +32,7 @@ namespace lv
 		{												\
 		}												\
 														\
-	}													
+	};													
 
 	// use the class name as the default message
 #define DEFINE_EXCEPTION_MSG(excp, base)					\
@@ -40,8 +40,8 @@ namespace lv
 
 
 	// Defines some common exceptions
-	DEFINE_EXCEPTION_MSG(io_error, std::runtime_error);
-	DEFINE_EXCEPTION_MSG(file_io_error, io_error);
+	DEFINE_EXCEPTION_MSG(io_error, std::runtime_error)
+	DEFINE_EXCEPTION_MSG(file_io_error, io_error)
 
 }
 

@@ -61,6 +61,7 @@ private:
 
 		std::cout << "notify:" << str << std::endl;
 
+		boost::mutex::scoped_lock lock(g_mutex);
 		g_condition_called.notify_all();
 	}
 
@@ -111,10 +112,11 @@ BOOST_AUTO_TEST_CASE(test_net)
 	boost::shared_ptr<ClientSession> client(new ClientSession(context));
 	client->start("127.0.0.1", "5555");
 
+	boost::mutex::scoped_lock lock(g_mutex);
+
 	boost::thread thread(boost::bind(&asio::io_service::run, &service));
 
 	// wait until it's finished
-	boost::mutex::scoped_lock lock(g_mutex);
 	g_condition_called.wait(lock);
 
 	service.stop();
