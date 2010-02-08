@@ -40,6 +40,9 @@ BOOST_AUTO_TEST_CASE(test_mapping)
 		BOOST_CHECK_EQUAL(m.get_left(Cpp), "Cpp");
 		BOOST_CHECK_EQUAL(m.get_right("Java"), Java);
 
+		// shouldn't compile
+		// m.begin()->second = "D";
+
 		BOOST_CHECK_THROW(m.get_left(Php), mapping_key_not_found);
 		
 		BOOST_CHECK_EQUAL(m.get_left(Php, "Php"), "Php");

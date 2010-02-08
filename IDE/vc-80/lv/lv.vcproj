@@ -254,7 +254,7 @@
 				Name="Source Files"
 				>
 				<File
-					RelativePath="..\..\..\lv\src\lv\Utility\Console.cpp"
+					RelativePath="..\..\..\lv\src\lv\Console.cpp"
 					>
 				</File>
 			</Filter>

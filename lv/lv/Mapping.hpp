@@ -16,6 +16,8 @@
 #include <boost/bimap.hpp>
 #include <boost/optional.hpp>
 
+#include <list>
+
 namespace lv
 {
 	DEFINE_EXCEPTION_MSG(mapping_key_not_found, std::runtime_error)
@@ -27,18 +29,32 @@ namespace lv
 		typedef boost::bimap<X, Y>	bimap_type;
 		bimap_type	bimap_;
 
+		// reserve the insert order
+		typedef std::list<std::pair<X const, Y const> > list_type;
+		list_type	list_;
+
 	public:
 
-		// sorted by X value
 
-		typedef typename bimap_type::left_map::value_type	value_type;
-		typedef typename bimap_type::left_map::iterator		iterator;
-		typedef typename bimap_type::left_map::const_iterator	const_iterator;
+		typedef typename list_type::value_type	value_type;
+		typedef typename list_type::reference	reference;
+		typedef typename list_type::const_reference	const_reference;
+		typedef typename list_type::iterator		iterator;
+		typedef typename list_type::const_iterator	const_iterator;
+
+		typedef typename bimap_type::left_map	left_map;
+		typedef typename bimap_type::right_map	right_map;
 
 
 		std::pair<iterator, bool> insert(value_type const & v)
 		{
-			return bimap_.left.insert(v);
+			std::pair<left_map::iterator, bool> ret = bimap_.left.insert(v);
+			if(ret.second)
+			{
+				return std::make_pair(list_.insert(list_.end(), v), true);
+			}
+
+			return std::make_pair(list_.end(), false);
 		}
 
 		/// @exception mapping_key_not_found
@@ -96,35 +112,44 @@ namespace lv
 			return boost::optional<X>();
 		}
 
+		left_map const & left() const
+		{
+			return bimap_.left;
+		}
+
+		right_map const & right() const
+		{
+			return bimap_.right;
+		}
 
 		size_t	size() const
 		{
-			return bimap_.size();
+			return list_.size();
 		}
 
 		bool	empty() const
 		{
-			return bimap_.empty();
+			return list_.empty();
 		}
 
 		iterator	begin()
 		{
-			return bimap_.left.begin();
+			return list_.begin();
 		}
 
 		const_iterator	begin() const
 		{
-			return bimap_.left.begin();
+			return list_.begin();
 		}
 
 		iterator	end()
 		{
-			return bimap_.left.end();
+			return list_.end();
 		}
 
 		const_iterator	end() const
 		{
-			return bimap_.left.end();
+			return list_.end();
 		}
 	};
 }
