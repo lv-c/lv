@@ -146,6 +146,35 @@ namespace lv { namespace bstream {
 
 	};
 
+	//
+
+	class fixed_len_str
+	{
+		std::string	&	str_;
+
+		std::size_t		size_;
+
+
+	public:
+
+		fixed_len_str(std::string & str, std::size_t size) 
+			: str_(str)
+			, size_(size) 
+		{
+		}
+
+		friend BinaryIStream & operator >> (BinaryIStream & is, fixed_len_str const & fixed)
+		{
+			fixed.str_.assign(fixed.size_, '\0');
+			is >> fixed.str_;
+
+			fixed.str_ = fixed.str_.c_str();
+
+			return is;
+		}
+
+	};
+
 } }
 
 
