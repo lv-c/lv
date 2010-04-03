@@ -18,97 +18,49 @@
 #include <boost/iostreams/device/array.hpp>
 #include <boost/iostreams/stream.hpp>
 
-#include <lv/Buffer.hpp>
-#include <lv/StreamPtr.hpp>
+#include <lv/Stream/IStreamProxy.hpp>
 #include <lv/BinaryStream/Serialize.hpp>
 
 namespace lv
 {
-	class BinaryIStream
+	class BinaryIStream : public IStreamProxy
 	{
-
-		IStreamPtr	istream_;
-
-		ConstBufferRef	buf_;
-
 	public:
 		
 		typedef boost::mpl::true_	is_loading;
 		typedef boost::mpl::false_	is_saving;
 
-		typedef std::char_traits<char>	traits;
-		typedef traits::off_type	off_type;
-		typedef traits::pos_type	pos_type;
-		typedef traits::int_type	int_type;
 
 		/**
 		 * constructor. sets the exception mask of the stream to 
-		 *		std::ios::badbit | std::ios::failbit
-		 * @exception std::ios::failure if the stream passed in has an error state
+		 *		std::ios_base::badbit | std::ios_base::failbit
+		 * @exception std::ios_base::failure if the stream passed in has an error state
 		 */
-		explicit BinaryIStream(IStreamPtr is)
-			: istream_(is)
+		BinaryIStream(std::istream & is)
+			: IStreamProxy(is)
 		{
-			istream_->exceptions(std::ios::badbit | std::ios::failbit);
+			exceptions(std::ios_base::badbit | std::ios_base::failbit);
 		}
 
-		explicit BinaryIStream(ConstBufferRef buf)
-			: buf_(buf)
-			, istream_(new boost::iostreams::stream<boost::iostreams::array_source>(buf.data(), buf.size()))
+		BinaryIStream(IBufferStream & is)
+			: IStreamProxy(is)
 		{
+			exceptions(std::ios_base::badbit | std::ios_base::failbit);
 		}
 
-		IStreamPtr	istream() const
-		{
-			return istream_;
-		}
-
-		ConstBufferRef	buffer() const
-		{
-			return buf_;
-		}
-
-		inline BinaryIStream & read(char * buf, std::streamsize size)
-		{
-			istream_->read(buf, size);
-			return *this;
-		}
-
-		inline BinaryIStream & ignore(std::streamsize size, int_type metadelim = traits::eof())
-		{
-			istream_->ignore(size, metadelim);
-			return *this;
-		}
-
-		inline BinaryIStream & seekg(pos_type pos)
-		{
-			istream_->seekg(pos);
-			return *this;
-		}
-
-		inline BinaryIStream & seekg(off_type off, std::ios_base::seekdir way)
-		{
-			istream_->seekg(off, way);
-			return *this;
-		}
-
-		inline pos_type tellg()
-		{
-			return istream_->tellg();
-		}
 
 		/**
 		 * @exception std::ios_base::failure
 		 */
 		template<typename T>
-		inline BinaryIStream & operator >> (T & val)
+		BinaryIStream & operator >> (T & val)
 		{
 			bstream::read(*this, val);
 			return *this;
 		}
 
 		template<typename T>
-		inline BinaryIStream & operator & (T & val)
+		BinaryIStream & operator & (T & val)
 		{
 			return *this >> val;
 		}

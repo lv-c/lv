@@ -11,15 +11,14 @@
 #ifndef LV_BINARYSTREAM_SERIALIZE_HPP
 #define LV_BINARYSTREAM_SERIALIZE_HPP
 
-#include <boost/type_traits/is_arithmetic.hpp>
-#include <boost/type_traits/is_enum.hpp>
+#include <lv/Foreach.hpp>
+#include <lv/BinaryStream/Tags.hpp>
+
 #include <boost/utility/enable_if.hpp>
-#include <boost/mpl/identity.hpp>
 #include <boost/range.hpp>
 #include <boost/call_traits.hpp>
 #include <boost/serialization/serialization.hpp>
 
-#include <lv/Foreach.hpp>
 
 namespace lv { namespace bstream {
 	
@@ -27,8 +26,6 @@ namespace lv { namespace bstream {
 	template<typename T, class Tag>
 	struct Serialize;
 
-	template<typename T, class Enabled>
-	struct object_tag;
 
 	template<typename T, class OStream>
 	inline void	write(OStream & os, typename boost::call_traits<T>::param_type t)
@@ -42,38 +39,6 @@ namespace lv { namespace bstream {
 		Serialize<T, typename object_tag<T>::type>::read(is, t);
 	}
 
-	// arithmetic type or enum type
-	template<typename T>
-	struct is_copyable
-	{
-		static bool const value = 
-			boost::type_traits::ice_or<
-				boost::is_arithmetic<T>::value,
-				boost::is_enum<T>::value
-			>::value;
-	};
-
-
-	// tag
-
-#define DEFINE_tag(tag) \
-	struct tag : boost::mpl::identity<tag> {}
-
-	DEFINE_tag(copyable_tag);
-	DEFINE_tag(copyable_buffer_tag);	// PODs in continuous memory (vector<PodType>, (w)string ...)
-	DEFINE_tag(range_tag);		// list, boost::iterator_range, boost::sub_range ...
-	DEFINE_tag(unknown_tag);
-
-#undef DEFINE_tag
-
-	template<typename T, class Enabled = void>
-	struct object_tag : unknown_tag {};
-
-	template<typename T>
-	struct object_tag<T, typename boost::enable_if<is_copyable<T> >::type>
-		: copyable_tag
-	{
-	};
 
 	// serialization
 

@@ -11,21 +11,16 @@
 #ifndef LV_BINARYOSTREAM_HPP
 #define LV_BINARYOSTREAM_HPP
 
-#include <lv/Buffer.hpp>
 #include <lv/BinaryStream/Serialize.hpp>
-#include <lv/StreamPtr.hpp>
+#include <lv/Stream/OStreamProxy.hpp>
 
 #include <boost/mpl/bool.hpp>
 #include <boost/archive/basic_binary_iarchive.hpp>
 
 namespace lv
 {
-	class BinaryOStream
+	class BinaryOStream : public OStreamProxy
 	{
-		OStreamPtr	ostream_;
-
-		BufferPtr	buf_;
-
 	public:
 
 		typedef boost::mpl::true_	is_saving;
@@ -35,40 +30,23 @@ namespace lv
 
 		/**
 		 * constructor. sets the exception mask of the stream to 
-		 *		std::ios::badbit | std::ios::failbit
-		 * @exception std::ios::failure if the stream passed in has an error state
+		 *		std::ios_base::badbit | std::ios_base::failbit
+		 * @exception std::ios_base::failure if the stream passed in has an error state
 		 */
-		explicit BinaryOStream(OStreamPtr os)
-			: ostream_(os)
+		BinaryOStream(std::ostream & os)
+			: OStreamProxy(os)
 		{
-			ostream_->exceptions(std::ios::badbit | std::ios::failbit);
+			exceptions(std::ios_base::badbit | std::ios_base::failbit);
 		}
 
-		explicit BinaryOStream(BufferPtr buf) : buf_(buf) {}
-
-		OStreamPtr	ostream() const
+		BinaryOStream(OBufferStream & os)
+			: OStreamProxy(os)
 		{
-			return ostream_;
+			exceptions(std::ios_base::badbit | std::ios_base::failbit);
 		}
-
-		BufferPtr	buffer() const
-		{
-			return buf_;
-		}
-
-
-		inline BinaryOStream & write(char const * buf, std::streamsize size)
-		{
-			if(ostream_)
-				ostream_->write(buf, size);
-			else
-				buffer::write(*buf_, buf, size);
-			return *this;
-		}
-
 
 		/**
-		 * @exception std::ios::failure
+		 * @exception std::ios_base::failure
 		 */
 		template<typename T>
 		BinaryOStream & operator << (T const & val)

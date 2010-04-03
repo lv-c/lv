@@ -676,6 +676,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\BinaryStream\Tags.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\BinaryStream\Vector.hpp"
 					>
 				</File>
@@ -755,18 +759,6 @@
 			<Filter
 				Name="Header Files"
 				>
-			</Filter>
-		</Filter>
-		<Filter
-			Name="IO"
-			>
-			<Filter
-				Name="Header Files"
-				>
-				<File
-					RelativePath="..\..\..\lv\lv\IO\BufferDevice.hpp"
-					>
-				</File>
 			</Filter>
 		</Filter>
 		<Filter
@@ -881,6 +873,50 @@
 				</File>
 				<File
 					RelativePath="..\..\..\lv\lv\Serialization\Graphics.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Serialization\Serialize.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Serialization\Tags.hpp"
+					>
+				</File>
+			</Filter>
+		</Filter>
+		<Filter
+			Name="Stream"
+			>
+			<Filter
+				Name="Header Files"
+				>
+				<File
+					RelativePath="..\..\..\lv\lv\Stream\CallForwarding.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Stream\IBufferStream.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Stream\IStreamProxy.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Stream\OBufferStream.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Stream\OStreamProxy.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Stream\StreamBase.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Stream\StreamProxyBase.hpp"
 					>
 				</File>
 			</Filter>

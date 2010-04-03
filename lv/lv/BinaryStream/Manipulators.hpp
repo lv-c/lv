@@ -13,6 +13,7 @@
 
 #include <lv/BinaryStream/BinaryIStream.hpp>
 #include <lv/BinaryStream/BinaryOStream.hpp>
+#include <lv/BinaryStream/String.hpp>
 #include <lv/Exception.hpp>
 
 namespace lv { namespace bstream {
@@ -73,20 +74,20 @@ namespace lv { namespace bstream {
 	{
 		std::streamsize	size_;
 
-		typedef BinaryIStream::traits::int_type	int_type;
+		int	metadelim_;
 
-		int_type	metadelim_;
 	public:
 
-		ignore(std::streamsize sz, int_type metadelim = BinaryIStream::traits::eof()) 
+		ignore(std::streamsize sz, int metadelim = std::char_traits<char>::eof()) 
 			: size_(sz) 
 			, metadelim_(metadelim)
 		{
 		}
 
-		friend inline BinaryIStream & operator >> (BinaryIStream & is, ignore const & sk)
+		friend inline BinaryIStream & operator >> (BinaryIStream & is, ignore const & ig)
 		{
-			return is.ignore(sk.size_, sk.metadelim_);
+			is.ignore(ig.size_, ig.metadelim_);
+			return is;
 		}
 	};
 
@@ -94,16 +95,16 @@ namespace lv { namespace bstream {
 
 	class forward
 	{
-		typedef BinaryIStream::traits::off_type	off_type;
-		off_type off_;
+		std::streamoff off_;
 
 	public:
 		
-		forward(off_type off) : off_(off) {}
+		forward(std::streamoff off) : off_(off) {}
 
 		friend inline BinaryIStream & operator >> (BinaryIStream & is, forward const & fwd)
 		{
-			return is.seekg(fwd.off_, std::ios_base::cur);
+			is.seekg(fwd.off_, std::ios_base::cur);
+			return is;
 		}
 
 	};

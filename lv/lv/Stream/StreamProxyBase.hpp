@@ -1,0 +1,101 @@
+// *********************************************************************
+//  StreamProxyBase   version:  1.0   ¡¤  date: 04/02/2010
+//  --------------------------------------------------------------------
+//  
+//  --------------------------------------------------------------------
+//  Copyright (C) jcfly(lv.jcfly@gmail.com) 2010 - All Rights Reserved
+// *********************************************************************
+// 
+// *********************************************************************
+
+#ifndef LV_STREAM_STREAMPROXYBASE_HPP
+#define LV_STREAM_STREAMPROXYBASE_HPP
+
+#include <lv/Stream/StreamBase.hpp>
+#include <lv/Stream/CallForwarding.hpp>
+
+#include <ios>
+
+
+namespace lv
+{
+
+	class StreamProxyBase
+	{
+		std::ios_base *	std_ios_;
+
+		StreamBase * lv_ios_;
+
+	protected:
+
+		typedef std::ios_base::iostate	iostate;
+		typedef std::ios_base::failure	failure;
+
+		typedef std::streamsize	streamsize;
+		typedef std::streamoff	streamoff;
+		typedef std::streampos	streampos;
+
+		StreamProxyBase(std::ios_base & ios)
+			: std_ios_(&ios)
+			, lv_ios_(NULL)
+		{
+		}
+
+		StreamProxyBase(StreamBase & ios)
+			: lv_ios_(&ios)
+			, std_ios_(NULL)
+		{
+		}
+
+	public:
+
+		iostate	exceptions() const
+		{
+			LV_STREAMPROXY_FW_CALL_0(exceptions, return);
+		}
+
+		void	exceptions(iostate except)
+		{
+			LV_STREAMPROXY_FW_CALL_1(exceptions, except, (void));
+		}
+
+		iostate	rdstate() const
+		{
+			LV_STREAMPROXY_FW_CALL_0(rdstate, return);
+		}
+
+		void	setstate(iostate state)
+		{
+			LV_STREAMPROXY_FW_CALL_1(setstate, state, (void));
+		}
+
+		void	clear(iostate state = std::ios_base::goodbit)
+		{
+			LV_STREAMPROXY_FW_CALL_1(clear, state, (void));
+		}
+
+		bool	good() const
+		{
+			LV_STREAMPROXY_FW_CALL_0(good, return);
+		}
+
+		bool	eof() const
+		{
+			LV_STREAMPROXY_FW_CALL_0(eof, return);
+		}
+
+		bool	fail() const
+		{
+			LV_STREAMPROXY_FW_CALL_0(fail, return);
+		}
+
+		bool	bad() const
+		{
+			LV_STREAMPROXY_FW_CALL_0(bad, return);
+		}
+
+	};
+
+}
+
+#endif

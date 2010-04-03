@@ -17,7 +17,7 @@ namespace lv
 
 		using namespace bstream;
 
-		BinaryIStream bin_is(is);
+		BinaryIStream bin_is(*is);
 
 		try
 		{

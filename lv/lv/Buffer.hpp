@@ -60,14 +60,14 @@ namespace lv
 		}
 
 		ConstBufferRefT(std::vector<T> const & buf)
-			: data_(&buf[0])
+			: data_(buf.empty() ? NULL : &buf[0])
 			, size_(buf.size())
 		{
 		}
 
 		ConstBufferRefT(boost::shared_ptr<std::vector<T> > & buf_ptr)
 			: holder_(buf_ptr)
-			, data_(&(*buf_ptr)[0])
+			, data_(buf_ptr->empty() ? NULL : &(*buf_ptr)[0])
 			, size_(buf_ptr->size())
 		{
 		}
