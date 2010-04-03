@@ -19,7 +19,7 @@
 #include <boost/iostreams/stream.hpp>
 
 #include <lv/Stream/IStreamProxy.hpp>
-#include <lv/BinaryStream/Serialize.hpp>
+#include <lv/BinaryStream/Serializer.hpp>
 
 namespace lv
 {

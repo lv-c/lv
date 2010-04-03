@@ -1,5 +1,5 @@
 // *********************************************************************
-//  Serialize   version:  1.0   ¡¤  date: 10/28/2008
+//  Serializer   version:  1.0   ¡¤  date: 10/28/2008
 //  --------------------------------------------------------------------
 //  
 //  --------------------------------------------------------------------
@@ -8,8 +8,8 @@
 // 
 // *********************************************************************
 
-#ifndef LV_BINARYSTREAM_SERIALIZE_HPP
-#define LV_BINARYSTREAM_SERIALIZE_HPP
+#ifndef LV_BINARYSTREAM_SERIALIZER_HPP
+#define LV_BINARYSTREAM_SERIALIZER_HPP
 
 #include <lv/Foreach.hpp>
 #include <lv/BinaryStream/Tags.hpp>
@@ -24,26 +24,26 @@ namespace lv { namespace bstream {
 	
 	// fwd
 	template<typename T, class Tag>
-	struct Serialize;
+	struct Serializer;
 
 
 	template<typename T, class OStream>
 	inline void	write(OStream & os, typename boost::call_traits<T>::param_type t)
 	{
-		Serialize<T, typename object_tag<T>::type>::write(os, t);
+		Serializer<T, typename object_tag<T>::type>::write(os, t);
 	}
 
 	template<typename T, class IStream>
 	inline void read(IStream & is, T & t)
 	{
-		Serialize<T, typename object_tag<T>::type>::read(is, t);
+		Serializer<T, typename object_tag<T>::type>::read(is, t);
 	}
 
 
 	// serialization
 
 	template<typename T>
-	struct Serialize<T, unknown_tag>
+	struct Serializer<T, unknown_tag>
 	{
 		template<class OStream>
 		static inline void write(OStream & os, T const & t)
@@ -59,7 +59,7 @@ namespace lv { namespace bstream {
 	};
 
 	template<typename T>
-	struct Serialize<T, copyable_tag>
+	struct Serializer<T, copyable_tag>
 	{
 		template<class OStream>
 		static inline void write(OStream & os, typename boost::call_traits<T>::param_type t)
@@ -76,7 +76,7 @@ namespace lv { namespace bstream {
 
 
 	template<typename T>
-	struct Serialize<T, copyable_buffer_tag>
+	struct Serializer<T, copyable_buffer_tag>
 	{
 		template<class OStream>
 		static void write(OStream & os, T const & t)
@@ -95,7 +95,7 @@ namespace lv { namespace bstream {
 
 
 	template<typename T>
-	struct Serialize<T, range_tag>
+	struct Serializer<T, range_tag>
 	{
 		template<class OStream>
 		static void write(OStream & os, T const & t)
@@ -119,4 +119,4 @@ namespace lv { namespace bstream {
 
 } }
 
-#endif // LV_BINARYSTREAM_SERIALIZE_HPP
+#endif

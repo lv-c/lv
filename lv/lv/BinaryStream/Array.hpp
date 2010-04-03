@@ -13,7 +13,7 @@
 
 #include <boost/array.hpp>
 
-#include <lv/BinaryStream/Serialize.hpp>
+#include <lv/BinaryStream/Serializer.hpp>
 
 namespace lv { namespace bstream {
 

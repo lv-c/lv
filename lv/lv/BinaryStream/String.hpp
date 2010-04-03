@@ -12,7 +12,7 @@
 #define LV_BINARYSTREAM_STRING_HPP
 
 #include <string>
-#include <lv/BinaryStream/Serialize.hpp>
+#include <lv/BinaryStream/Serializer.hpp>
 
 namespace lv { namespace bstream {
 

@@ -668,7 +668,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\lv\lv\BinaryStream\Serialize.hpp"
+					RelativePath="..\..\..\lv\lv\BinaryStream\Serializer.hpp"
 					>
 				</File>
 				<File
@@ -876,7 +876,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\lv\lv\Serialization\Serialize.hpp"
+					RelativePath="..\..\..\lv\lv\Serialization\Serializer.hpp"
 					>
 				</File>
 				<File
