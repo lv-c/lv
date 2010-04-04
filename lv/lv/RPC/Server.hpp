@@ -34,8 +34,8 @@ namespace lv { namespace rpc {
 	class Server : public RpcBase
 	{
 		typedef typename Reg::archive_pair_type archive_pair_type;
-		typedef typename archive_pair_type::iarchive_t	iarchive_t;
-		typedef typename archive_pair_type::oarchive_t	oarchive_t;
+		typedef typename archive_pair_type::iarchive_type	iarchive_type;
+		typedef typename archive_pair_type::oarchive_type	oarchive_type;
 
 		typedef typename Reg::protocol_type	protocol_type;
 
@@ -77,7 +77,7 @@ namespace lv { namespace rpc {
 
 			namespace io = boost::iostreams;
 			io::filtering_ostream raw_os(io::back_inserter(*buf));
-			oarchive_t oa(raw_os, boost::archive::no_header);
+			oarchive_type oa(raw_os, boost::archive::no_header);
 
 			oa << protocol_type::header::confer << ex_seed_ << func_seed_;
 			raw_os.flush();
@@ -95,7 +95,7 @@ namespace lv { namespace rpc {
 		void	on_receive(Range const & data, SocketPtr sock)
 		{
 			boost::iostreams::filtering_istream raw_is(boost::make_iterator_range(data));
-			iarchive_t ia(raw_is);
+			iarchive_type ia(raw_is);
 
 			Reg::ExceptHolder	 ex;
 
@@ -143,7 +143,7 @@ namespace lv { namespace rpc {
 
 			namespace io = boost::iostreams;
 			io::filtering_ostream raw_os(io::back_inserter(*buf));
-			oarchive_t oa(raw_os, boost::archive::no_header);
+			oarchive_type oa(raw_os, boost::archive::no_header);
 
 			oa << protocol_type::header::reply << id;
 			if(ex)

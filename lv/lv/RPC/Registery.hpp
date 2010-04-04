@@ -64,16 +64,16 @@ namespace lv { namespace rpc {
 	class Registery : boost::noncopyable
 	{
 
-		typedef typename ArchivePair::iarchive_t iarchive_t;
-		typedef typename ArchivePair::oarchive_t oarchive_t;
+		typedef typename ArchivePair::iarchive_type iarchive_type;
+		typedef typename ArchivePair::oarchive_type oarchive_type;
 
 		typedef typename detail::InvokerBase<ArchivePair>::ResultHolder	ResultHolder;
-		typedef typename ExceptHolder<oarchive_t>::type	ExceptHolder;
+		typedef typename ExceptHolder<oarchive_type>::type	ExceptHolder;
 
 
 		typedef typename Pro::id_key_type id_key_type;
 
-		typedef boost::function<ResultHolder(iarchive_t &, ParamExtractors)>	invoker_type;
+		typedef boost::function<ResultHolder(iarchive_type &, ParamExtractors)>	invoker_type;
 
 		typedef boost::unordered_map<id_key_type, invoker_type> hash_invoker_map;
 		hash_invoker_map	hash_invoker_;
@@ -137,7 +137,7 @@ namespace lv { namespace rpc {
 		 * @exception SerializationError  ( public boost::archive::archive_exception)
 		 * @exception exceptions thrown by the target function
 		 */
-		ResultHolder	invoke(typename ArchivePair::iarchive_t & ia)
+		ResultHolder	invoke(typename ArchivePair::iarchive_type & ia)
 		{
 			id_key_type id;
 			ia >> id;

@@ -39,18 +39,23 @@ namespace lv { namespace flow {
 	template<class Key, class Port, class OArchive>
 	class Source
 	{
+		typedef typename Key		key_type;
+		typedef typename Port		port_type;
+		typedef typename OArchive	oarchive_type;
+
+
 		BufferManagerPtr buf_manager_;
 
-		boost::function<void(Port const&, BufferPtr)> callback_;
+		boost::function<void(port_type const&, BufferPtr)> callback_;
 
-		Port port_;
+		port_type port_;
 
 		// It's a simple flag. So we don't have a mutex for it.
 		bool enabled_;
 
 	public:
 
-		Source(Port const & port, boost::function<void(Port const &, BufferPtr)> const & callback, BufferManagerPtr buf_manager)
+		Source(port_type const & port, boost::function<void(port_type const &, BufferPtr)> const & callback, BufferManagerPtr buf_manager)
 			: port_(port)
 			, callback_(callback)
 			, buf_manager_(buf_manager)
@@ -81,13 +86,13 @@ namespace lv { namespace flow {
 		 *	@a call at compilation time and the number of arguments is not limited.
 		 * @note Do NOT call this after the corresponding DataFlow object is destroyed.
 		 */
-		detail::StreamProxy<OArchive, Source> stream(Key const & key)
+		detail::StreamProxy<oarchive_type, Source> stream(key_type const & key)
 		{
 			// returns an empty StreamProxy object if it's not enabled
 			if(! enabled_)
-				return detail::StreamProxy<OArchive, Source>();
+				return detail::StreamProxy<oarchive_type, Source>();
 
-			detail::StreamProxy<OArchive, Source> proxy(buf_manager_->get(), *this);
+			detail::StreamProxy<oarchive_type, Source> proxy(buf_manager_->get(), *this);
 			proxy << key;
 
 			return proxy;
@@ -97,11 +102,11 @@ namespace lv { namespace flow {
 
 		class Serialize
 		{
-			OArchive & oa_;
+			oarchive_type & oa_;
 
 		public:
 
-			Serialize(OArchive & oa) : oa_(oa) {}
+			Serialize(oarchive_type & oa) : oa_(oa) {}
 
 			template<typename T>
 			void operator() (T const * t) const
@@ -114,7 +119,7 @@ namespace lv { namespace flow {
 		};
 
 		template<class Tuple>
-		void call_impl(Key const & key, Tuple const & args)
+		void call_impl(key_type const & key, Tuple const & args)
 		{
 			BufferPtr buf = buf_manager_->get();
 
@@ -122,7 +127,7 @@ namespace lv { namespace flow {
 				// auto flush
 				boost::iostreams::stream_buffer<boost::iostreams::back_insert_device<Buffer> > 
 					raw_os(boost::iostreams::back_inserter(*buf));
-				OArchive oa(raw_os);
+				oarchive_type oa(raw_os);
 
 				oa << key;
 				boost::fusion::for_each(args, Serialize(oa));
@@ -154,7 +159,7 @@ namespace lv { namespace flow {
 #if n > 0
 template<BOOST_PP_ENUM_PARAMS(n, typename T)>
 #endif
-void call(Key const & key BOOST_PP_COMMA_IF(n) BOOST_PP_ENUM(n, LV_DATAFLOW_call_params, ~))
+void call(key_type const & key BOOST_PP_COMMA_IF(n) BOOST_PP_ENUM(n, LV_DATAFLOW_call_params, ~))
 {
 	// it's not enabled
 	if(! enabled_)

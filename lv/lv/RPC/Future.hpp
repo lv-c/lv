@@ -54,7 +54,7 @@ namespace lv { namespace rpc {
 			 * @exception InvalidProtocolValue
 			 * @exception InvalidExceptionID
 			 */
-			void operator () (typename ArchivePair::iarchive_t & ia) 
+			void operator () (typename ArchivePair::iarchive_type & ia) 
 			{
 				Pro::except::type ex;
 				ia >> ex;
@@ -98,7 +98,7 @@ namespace lv { namespace rpc {
 			 * @exception InvalidProtocolValue
 			 * @exception InvalidExceptionID
 			 */
-			void operator () (typename ArchivePair::iarchive_t & ia)
+			void operator () (typename ArchivePair::iarchive_type & ia)
 			{
 				Pro::except::type ex;
 				ia >> ex;

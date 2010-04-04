@@ -19,20 +19,23 @@ namespace lv { namespace flow { namespace detail {
 	template<class OArchive, class Src>
 	class StreamProxyImpl
 	{
+		typedef typename OArchive	oarchive_type;
+		typedef typename Src		source_type;
+
 		// "Class members are initialized in declaration order (regardless of
 		// their order in the initialization list)."
 		// So raw_os_ should be declared before oa_
 		boost::iostreams::filtering_ostream raw_os_;
 
-		OArchive oa_;
+		oarchive_type oa_;
 
 		BufferPtr	buffer_;
 
-		Src	& source_;
+		source_type	& source_;
 
 	public:
 
-		StreamProxyImpl(BufferPtr buf, Src & source)
+		StreamProxyImpl(BufferPtr buf, source_type & source)
 			: buffer_(buf)
 			, source_(source)
 			, raw_os_(boost::iostreams::back_inserter(*buf))

@@ -114,6 +114,14 @@ namespace lv { namespace rpc { namespace detail {
 		BOOST_MPL_ASSERT_NOT((boost::is_pointer<type>));
 	};
 
+	template<class ParamExtractors, typename T>
+	struct ExtractorParamType
+	{
+		typedef typename boost::remove_reference<
+			typename fusion::result_of::at_key<ParamExtractors, T>::type	// reference type
+		>::type::type type;
+	};
+
 	template<typename T, class ParamExtractors>
 	class ParamType
 	{
@@ -121,9 +129,7 @@ namespace lv { namespace rpc { namespace detail {
 	public:
 		typedef typename mpl::eval_if<
 			fusion::result_of::has_key<ParamExtractors, raw_param_type>,
-			typename boost::remove_reference<
-				typename fusion::result_of::at_key<ParamExtractors, raw_param_type>::type	// reference type
-			>::type,
+			ExtractorParamType<ParamExtractors, raw_param_type>,
 			RawParamType<T, ParamExtractors>
 		>::type type;
 	};
@@ -154,8 +160,8 @@ namespace lv { namespace rpc { namespace detail {
 	{
 	protected:
 
-		typedef typename ArchivePair::iarchive_t iarchive_t;
-		typedef typename ArchivePair::oarchive_t oarchive_t;
+		typedef typename ArchivePair::iarchive_type iarchive_type;
+		typedef typename ArchivePair::oarchive_type oarchive_type;
 
 		template<typename T>
 		class ResultWrapper
@@ -165,7 +171,7 @@ namespace lv { namespace rpc { namespace detail {
 
 			ResultWrapper(T val) : val_(val) {}
 
-			void operator() (oarchive_t & oa)
+			void operator() (oarchive_type & oa)
 			{
 				oa << val_;
 			}
@@ -173,7 +179,7 @@ namespace lv { namespace rpc { namespace detail {
 
 	public:
 
-		typedef boost::function<void(oarchive_t &)>		ResultHolder;
+		typedef boost::function<void(oarchive_type &)>		ResultHolder;
 
 	};
 
@@ -234,7 +240,7 @@ namespace lv { namespace rpc { namespace detail {
 		{
 		}
 
-		ResultHolder operator ()(iarchive_t & ia, ParamExtractors & extractors)
+		ResultHolder operator ()(iarchive_type & ia, ParamExtractors & extractors)
 		{
 			return invoke(ia, extractors, mpl::bool_<boost::is_same<result_type, void>::value>());
 		}
@@ -243,24 +249,24 @@ namespace lv { namespace rpc { namespace detail {
 	private:
 
 		/// invokes the function and wraps the result.
-		ResultHolder	invoke(iarchive_t & ia, ParamExtractors & extractors, mpl::false_ void_result)
+		ResultHolder	invoke(iarchive_type & ia, ParamExtractors & extractors, mpl::false_ void_result)
 		{
 			return ResultWrapper<result_type>(invoke_impl(ia, extractors));
 		}
 
-		ResultHolder	invoke(iarchive_t & ia, ParamExtractors & extractors, mpl::true_ void_result)
+		ResultHolder	invoke(iarchive_type & ia, ParamExtractors & extractors, mpl::true_ void_result)
 		{
 			invoke_impl(ia, extractors);
 			return ResultHolder();
 		}
 
 
-		result_type invoke_impl(iarchive_t & ia, ParamExtractors & extractors)
+		result_type invoke_impl(iarchive_type & ia, ParamExtractors & extractors)
 		{
 			MplToFusionCons<typename mpl::transform<param_type, ParamType<mpl::_, 
 				ParamExtractors> >::type>::type params;
 		
-			for_each<param_type>(params, ExtractParam<iarchive_t, ParamExtractors>(ia, extractors));
+			for_each<param_type>(params, ExtractParam<iarchive_type, ParamExtractors>(ia, extractors));
 			return fusion::invoke(f_, params);
 		}
 

@@ -63,8 +63,8 @@ namespace lv { namespace rpc {
 	class Client : public RpcBase
 	{
 
-		typedef typename ArchivePair::iarchive_t	iarchive_t;
-		typedef typename ArchivePair::oarchive_t	oarchive_t;
+		typedef typename ArchivePair::iarchive_type	iarchive_type;
+		typedef typename ArchivePair::oarchive_type	oarchive_type;
 
 		SocketPtr	socket_;
 
@@ -72,7 +72,7 @@ namespace lv { namespace rpc {
 		request_id_type		next_request_id_;
 
 
-		typedef boost::function<void(iarchive_t &)>	promise_base;
+		typedef boost::function<void(iarchive_type &)>	promise_base;
 		typedef boost::unordered_map<request_id_type, 
 			promise_base, 
 			boost::hash<request_id_type>, 
@@ -204,7 +204,7 @@ namespace lv { namespace rpc {
 		void	on_receive(Range const & buf)
 		{
 			boost::iostreams::filtering_istream raw_is(boost::make_iterator_range(buf));
-			iarchive_t ia(raw_is);
+			iarchive_type ia(raw_is);
 
 			Pro::header::type header;
 			ia >> header;
@@ -290,10 +290,10 @@ namespace lv { namespace rpc {
 
 		class Serialize
 		{
-			oarchive_t & oa_;
+			oarchive_type & oa_;
 
 		public:
-			Serialize(oarchive_t & oa) : oa_(oa) {}
+			Serialize(oarchive_type & oa) : oa_(oa) {}
 
 			template<typename T>
 			void operator() (T const * t) const
@@ -312,7 +312,7 @@ namespace lv { namespace rpc {
 
 			namespace io = boost::iostreams;
 			io::filtering_ostream raw_os(io::back_inserter(*buf));
-			oarchive_t oa(raw_os, boost::archive::no_header);
+			oarchive_type oa(raw_os, boost::archive::no_header);
 
 			oa << Pro::header::call << unique_hash::hash<typename Pro::id_key_type const>(func_seed_, id);
 			boost::fusion::for_each(args, Serialize(oa));
@@ -326,7 +326,7 @@ namespace lv { namespace rpc {
 			namespace io = boost::iostreams;
 
 			io::filtering_ostream raw_os(io::back_inserter(*buf));
-			oarchive_t oa(raw_os, boost::archive::no_header);
+			oarchive_type oa(raw_os, boost::archive::no_header);
 
 			oa << call_option;
 			// sends the request id only when an acknowledgment or a return value is required

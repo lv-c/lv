@@ -32,7 +32,10 @@ namespace lv { namespace flow {
 	template<template<class> class PushPolicy, class Key, class IArchive>
 	class Sink : boost::noncopyable
 	{
-		detail::Registery<Key, IArchive> registery_;
+		typedef typename Key		key_type;
+		typedef typename IArchive	iarchive_type;
+
+		detail::Registery<key_type, iarchive_type> registery_;
 
 		typedef PushPolicy<BufferPtr> push_policy_type;
 		push_policy_type	push_policy_;
@@ -68,7 +71,7 @@ namespace lv { namespace flow {
 		 *	a smart pointer.
 		 */
 		template<class MemFn, class T>
-		Sink & reg_mem_fn(Key const & key, MemFn f, T t)
+		Sink & reg_mem_fn(key_type const & key, MemFn f, T t)
 		{
 			return reg<typename BindMemFnSignature<MemFn>::type>(key, bind_mem_fn(f, t));
 		}
@@ -78,7 +81,7 @@ namespace lv { namespace flow {
 		 * @exception std::runtime_error if @a key has already been used
 		 */
 		template<class F>
-		Sink & reg(Key const & key, F f)
+		Sink & reg(key_type const & key, F f)
 		{
 			return reg<typename Signature<F>::type, F>(key, f);
 		}
@@ -89,7 +92,7 @@ namespace lv { namespace flow {
 		 * @exception std::runtime_error if @a key has already been used
 		 */
 		template<class Signature, class F>
-		Sink & reg(Key const & key, F f)
+		Sink & reg(key_type const & key, F f)
 		{
 			registery_.reg<Signature>(key, f);
 			return *this;
@@ -107,7 +110,7 @@ namespace lv { namespace flow {
 		void	push_impl(BufferPtr buf)
 		{
 			boost::iostreams::stream_buffer<boost::iostreams::array_source> raw_is(&(*buf)[0], buf->size());
-			IArchive ia(raw_is);
+			iarchive_type ia(raw_is);
 
 			registery_.invoke(ia);
 		}

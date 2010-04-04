@@ -38,8 +38,8 @@ namespace lv { namespace rpc {
 	{
 	protected:
 
-		typedef typename ArchivePair::iarchive_t	iarchive_t;
-		typedef typename ArchivePair::oarchive_t	oarchive_t;
+		typedef typename ArchivePair::iarchive_type	iarchive_type;
+		typedef typename ArchivePair::oarchive_type	oarchive_type;
 
 	public:
 		virtual	~ExceptIO() {}
@@ -47,11 +47,11 @@ namespace lv { namespace rpc {
 		/**
 		 * @exception boost::archive::archive_exception ?
 		 */
-		virtual	boost::exception_ptr get(iarchive_t & ia) = 0;
+		virtual	boost::exception_ptr get(iarchive_type & ia) = 0;
 
 		// All the subclasses should also define the following function to serialize the 
 		// exception @a t to @a oa
-		// static void write(typename ArchivePair:oarchive_t & oa, T t);
+		// static void write(typename ArchivePair:iarchive_type & oa, T t);
 	};
 
 	template<class ArchivePair>
@@ -68,14 +68,14 @@ namespace lv { namespace rpc {
 	{
 	public:
 
-		virtual	boost::exception_ptr get(iarchive_t & ia)
+		virtual	boost::exception_ptr get(iarchive_type & ia)
 		{
 			T t;
 			ia >> t;
 			return boost::copy_exception(t);
 		}
 
-		static void write(oarchive_t & oa, T t)
+		static void write(oarchive_type & oa, T t)
 		{
 			oa << t;
 		}
@@ -91,14 +91,14 @@ namespace lv { namespace rpc {
 	{
 	public:
 
-		virtual	boost::exception_ptr get(iarchive_t & ia)
+		virtual	boost::exception_ptr get(iarchive_type & ia)
 		{
 			std::string str;
 			ia >> str;
 			return boost::copy_exception(T(str.c_str()));
 		}
 
-		static void	write(oarchive_t & oa, T const & ex)
+		static void	write(oarchive_type & oa, T const & ex)
 		{
 			oa << std::string(ex.what());
 		}
@@ -133,7 +133,7 @@ namespace lv { namespace rpc {
 			{
 			}
 
-			void operator () (typename ArchivePair::oarchive_t & oa) const
+			void operator () (typename ArchivePair::oarchive_type & oa) const
 			{
 				oa << ex_key_;
 				ExceptIOImpl<T, ArchivePair>::write(oa, ex_);
@@ -147,7 +147,7 @@ namespace lv { namespace rpc {
 
 
 	template<class ArchivePair, class Pro>
-	typename ExceptHolder<typename ArchivePair::oarchive_t>::type	current_except(uint32 ex_seed)
+	typename ExceptHolder<typename ArchivePair::oarchive_type>::type	current_except(uint32 ex_seed)
 	{
 		try
 		{
@@ -166,7 +166,7 @@ namespace lv { namespace rpc {
 				 unique_hash::hash<typename Pro::except_key_type>(ex_seed, "RpcUnknownException"));
 		}
 
-		return ExceptHolder<typename ArchivePair::oarchive_t>::type();
+		return ExceptHolder<typename ArchivePair::oarchive_type>::type();
 	}
 
 
@@ -231,7 +231,7 @@ namespace lv { namespace rpc {
 		 * @exception InvalidExceptionID no exception found associated with @key.
 		 * @exception boost::archive::archive_exception ? error serializing (loading) the exception.
 		 */
-		boost::exception_ptr get(key_type key, typename ArchivePair::iarchive_t & ia)
+		boost::exception_ptr get(key_type key, typename ArchivePair::iarchive_type & ia)
 		{
 			except_map::iterator it = except_.find(key);
 			if(it == except_.end())
