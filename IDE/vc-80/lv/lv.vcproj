@@ -876,6 +876,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\Serialization\IArchive.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\Serialization\Serializer.hpp"
 					>
 				</File>

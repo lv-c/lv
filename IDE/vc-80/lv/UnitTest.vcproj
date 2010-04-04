@@ -223,6 +223,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\UnitTest\Rpc.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\UnitTest\Stream.cpp"
 				>
 			</File>
