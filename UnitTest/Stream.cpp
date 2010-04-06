@@ -41,5 +41,6 @@ BOOST_AUTO_TEST_CASE(test_stream)
 
 	BOOST_CHECK_EQUAL(memcmp(str, new_str, size), 0);
 
+	is.exceptions(std::ios_base::badbit | std::ios_base::failbit);
 	BOOST_CHECK_THROW(is.read(new_str, 1), std::ios_base::failure);
 }

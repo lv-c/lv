@@ -28,12 +28,11 @@ namespace lv
 
 	protected:
 
-		typedef std::ios_base::iostate	iostate;
-		typedef std::ios_base::failure	failure;
-
-		typedef std::streamsize	streamsize;
-		typedef std::streamoff	streamoff;
-		typedef std::streampos	streampos;
+		StreamProxyBase()
+			: std_ios_(NULL)
+			, lv_ios_(NULL)
+		{
+		}
 
 		StreamProxyBase(std::ios_base & ios)
 			: std_ios_(&ios)
@@ -47,7 +46,20 @@ namespace lv
 		{
 		}
 
+		void	set(StreamBase & ios)
+		{
+			lv_ios_ = &ios;
+		}
+
 	public:
+
+		typedef std::ios_base::iostate	iostate;
+		typedef std::ios_base::failure	failure;
+
+		typedef std::streamsize	streamsize;
+		typedef std::streamoff	streamoff;
+		typedef std::streampos	streampos;
+
 
 		iostate	exceptions() const
 		{

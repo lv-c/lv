@@ -195,6 +195,10 @@
 			Name="Source Files"
 			>
 			<File
+				RelativePath="..\..\..\UnitTest\BinaryStream.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\UnitTest\DataFlow.cpp"
 				>
 			</File>
@@ -224,6 +228,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\UnitTest\Rpc.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\UnitTest\Serialization.cpp"
 				>
 			</File>
 			<File

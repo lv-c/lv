@@ -28,13 +28,13 @@ namespace lv { namespace bstream {
 
 
 	template<typename T, class OStream>
-	inline void	write(OStream & os, typename boost::call_traits<T>::param_type t)
+	void	write(OStream & os, typename boost::call_traits<T>::param_type t)
 	{
 		Serializer<T, typename object_tag<T>::type>::write(os, t);
 	}
 
 	template<typename T, class IStream>
-	inline void read(IStream & is, T & t)
+	void read(IStream & is, T & t)
 	{
 		Serializer<T, typename object_tag<T>::type>::read(is, t);
 	}
@@ -46,29 +46,29 @@ namespace lv { namespace bstream {
 	struct Serializer<T, unknown_tag>
 	{
 		template<class OStream>
-		static inline void write(OStream & os, T const & t)
+		static void write(OStream & os, T const & t)
 		{
-			boost::serialization::serialize(os, t, 1);
+			boost::serialization::serialize(os, const_cast<T&>(t), 1);
 		}
 
 		template<class IStream>
-		static inline void read(IStream & is, T & t)
+		static void read(IStream & is, T & t)
 		{
 			boost::serialization::serialize(is, t, 1);
 		}
 	};
 
 	template<typename T>
-	struct Serializer<T, copyable_tag>
+	struct Serializer<T, primitive_tag>
 	{
 		template<class OStream>
-		static inline void write(OStream & os, typename boost::call_traits<T>::param_type t)
+		static void write(OStream & os, typename boost::call_traits<T>::param_type t)
 		{
 			os.write(reinterpret_cast<char const*>(&t), sizeof(T));
 		}
 
 		template<class IStream>
-		static inline void read(IStream & is, T & t)
+		static void read(IStream & is, T & t)
 		{
 			is.read(reinterpret_cast<char*>(&t), sizeof(T));
 		}
@@ -76,7 +76,7 @@ namespace lv { namespace bstream {
 
 
 	template<typename T>
-	struct Serializer<T, copyable_buffer_tag>
+	struct Serializer<T, primitive_buffer_tag>
 	{
 		template<class OStream>
 		static void write(OStream & os, T const & t)

@@ -20,7 +20,7 @@ namespace lv { namespace bstream {
 
 	// arithmetic type or enum type
 	template<typename T>
-	struct is_copyable
+	struct is_primitive
 	{
 		static bool const value = 
 			boost::type_traits::ice_or<
@@ -35,8 +35,8 @@ namespace lv { namespace bstream {
 #define DEFINE_tag(tag) \
 	struct tag : boost::mpl::identity<tag> {}
 
-	DEFINE_tag(copyable_tag);
-	DEFINE_tag(copyable_buffer_tag);	// copyable in continuous memory (vector<PodType>, (w)string ...)
+	DEFINE_tag(primitive_tag);
+	DEFINE_tag(primitive_buffer_tag);	// copyable in continuous memory (vector<PodType>, (w)string ...)
 	DEFINE_tag(range_tag);		// list, boost::iterator_range, boost::sub_range ...
 	DEFINE_tag(unknown_tag);
 
@@ -46,8 +46,8 @@ namespace lv { namespace bstream {
 	struct object_tag : unknown_tag {};
 
 	template<typename T>
-	struct object_tag<T, typename boost::enable_if<is_copyable<T> >::type>
-		: copyable_tag
+	struct object_tag<T, typename boost::enable_if<is_primitive<T> >::type>
+		: primitive_tag
 	{
 	};
 

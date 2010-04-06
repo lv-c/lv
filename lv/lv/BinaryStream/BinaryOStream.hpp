@@ -26,7 +26,6 @@ namespace lv
 		typedef boost::mpl::true_	is_saving;
 		typedef boost::mpl::false_	is_loading;
 
-		typedef std::char_traits<char>	traits;
 
 		/**
 		 * constructor. sets the exception mask of the stream to 

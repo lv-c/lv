@@ -30,6 +30,12 @@ namespace lv
 		typedef std::streamoff	streamoff;
 		typedef std::streampos	streampos;
 
+		StreamBase()
+			: state_(std::ios_base::goodbit)
+			, except_(std::ios_base::goodbit)
+		{
+		}
+
 
 		iostate	exceptions() const
 		{

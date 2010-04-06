@@ -19,13 +19,13 @@
 namespace lv { namespace bstream {
 
 	template<typename T>
-	struct object_tag<std::vector<T>, typename boost::enable_if<is_copyable<T> >::type>
-		: copyable_buffer_tag
+	struct object_tag<std::vector<T>, typename boost::enable_if<is_primitive<T> >::type>
+		: primitive_buffer_tag
 	{
 	};
 
 	template<typename T>
-	struct object_tag<std::vector<T>, typename boost::disable_if<is_copyable<T> >::type>
+	struct object_tag<std::vector<T>, typename boost::disable_if<is_primitive<T> >::type>
 		: range_tag
 	{
 	};
