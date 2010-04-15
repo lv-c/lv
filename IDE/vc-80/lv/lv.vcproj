@@ -182,6 +182,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\Factory.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\Foreach.hpp"
 					>
 				</File>
@@ -908,6 +912,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\Stream\IStreamFactory.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\Stream\IStreamProxy.hpp"
 					>
 				</File>
@@ -916,11 +924,19 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\Stream\OStreamFactory.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\Stream\OStreamProxy.hpp"
 					>
 				</File>
 				<File
 					RelativePath="..\..\..\lv\lv\Stream\StreamBase.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Stream\StreamFactory.hpp"
 					>
 				</File>
 				<File

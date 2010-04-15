@@ -13,6 +13,7 @@
 
 #include <lv/Buffer.hpp>
 #include <lv/MemFn.hpp>
+#include <lv/Stream/IStreamFactory.hpp>
 
 #include <lv/DataFlow/Fwd.hpp>
 #include <lv/DataFlow/Registery.hpp>
@@ -22,7 +23,7 @@
 #include <boost/bind.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/iostreams/device/array.hpp>
-#include <boost/iostreams/stream_buffer.hpp>
+#include <boost/iostreams/stream.hpp>
 
 namespace lv { namespace flow {
 
@@ -39,6 +40,8 @@ namespace lv { namespace flow {
 
 		typedef PushPolicy<BufferPtr> push_policy_type;
 		push_policy_type	push_policy_;
+
+		IStreamFactory	istream_factory_;
 
 	public:
 
@@ -109,8 +112,8 @@ namespace lv { namespace flow {
 
 		void	push_impl(BufferPtr buf)
 		{
-			boost::iostreams::stream_buffer<boost::iostreams::array_source> raw_is(&(*buf)[0], buf->size());
-			iarchive_type ia(raw_is);
+			IStreamPtr raw_is = istream_factory_.open(ConstBufferRef(&(*buf)[0], buf->size()));
+			iarchive_type ia(*raw_is);
 
 			registery_.invoke(ia);
 		}

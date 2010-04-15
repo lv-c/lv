@@ -11,8 +11,7 @@
 #ifndef LV_DATAFLOW_STREAMPROXY_HPP
 #define LV_DATAFLOW_STREAMPROXY_HPP
 
-#include <boost/iostreams/filtering_stream.hpp>
-#include <boost/iostreams/device/back_inserter.hpp>
+#include <lv/StreamPtr.hpp>
 
 namespace lv { namespace flow { namespace detail {
 
@@ -22,10 +21,7 @@ namespace lv { namespace flow { namespace detail {
 		typedef typename OArchive	oarchive_type;
 		typedef typename Src		source_type;
 
-		// "Class members are initialized in declaration order (regardless of
-		// their order in the initialization list)."
-		// So raw_os_ should be declared before oa_
-		boost::iostreams::filtering_ostream raw_os_;
+		OStreamPtr raw_os_;
 
 		oarchive_type oa_;
 
@@ -35,17 +31,17 @@ namespace lv { namespace flow { namespace detail {
 
 	public:
 
-		StreamProxyImpl(BufferPtr buf, source_type & source)
+		StreamProxyImpl(BufferPtr buf, OStreamPtr raw_os, source_type & source)
 			: buffer_(buf)
+			, raw_os_(raw_os)
 			, source_(source)
-			, raw_os_(boost::iostreams::back_inserter(*buf))
-			, oa_(raw_os_, boost::archive::no_header)
+			, oa_(*raw_os)
 		{
 		}
 
 		~StreamProxyImpl()
 		{
-			raw_os_.flush();
+			raw_os_->flush();
 
 			source_.push(buffer_);
 		}
@@ -65,8 +61,8 @@ namespace lv { namespace flow { namespace detail {
 
 	public:
 
-		StreamProxy(BufferPtr buf, Src & source)
-			: impl_(new impl_type(buf, source))
+		StreamProxy(BufferPtr buf, OStreamPtr raw_os, Src & source)
+			: impl_(new impl_type(buf, raw_os, source))
 		{
 		}
 

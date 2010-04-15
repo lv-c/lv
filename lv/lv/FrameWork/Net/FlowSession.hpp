@@ -16,8 +16,8 @@
 
 #include <lv/DataFlow.hpp>
 
-#include <lv/Packet/IPacket.hpp>
-#include <lv/Packet/OPacket.hpp>
+#include <lv/Serialization/IArchive.hpp>
+#include <lv/Serialization/OArchive.hpp>
 
 
 namespace lv { namespace net {

@@ -14,6 +14,7 @@
 #define LV_DATAFLOW_SOURCE_HPP
 
 #include <lv/IBufferManager.hpp>
+#include <lv/Stream/OStreamFactory.hpp>
 
 #include <lv/DataFlow/Fwd.hpp>
 #include <lv/DataFlow/Config.hpp>
@@ -24,7 +25,7 @@
 #include <boost/preprocessor/repetition/enum_params.hpp>
 #include <boost/preprocessor/punctuation/comma_if.hpp>
 
-#include <boost/iostreams/stream_buffer.hpp>
+#include <boost/iostreams/stream.hpp>
 #include <boost/iostreams/device/back_inserter.hpp>
 
 #include <boost/function.hpp>
@@ -49,6 +50,8 @@ namespace lv { namespace flow {
 		boost::function<void(port_type const&, BufferPtr)> callback_;
 
 		port_type port_;
+
+		OStreamFactory	ostream_factory_;
 
 		// It's a simple flag. So we don't have a mutex for it.
 		bool enabled_;
@@ -92,7 +95,10 @@ namespace lv { namespace flow {
 			if(! enabled_)
 				return detail::StreamProxy<oarchive_type, Source>();
 
-			detail::StreamProxy<oarchive_type, Source> proxy(buf_manager_->get(), *this);
+			BufferPtr buf = buf_manager_->get();
+			OStreamPtr raw_os = ostream_factory_.open(*buf);
+
+			detail::StreamProxy<oarchive_type, Source> proxy(buf, raw_os, *this);
 			proxy << key;
 
 			return proxy;
@@ -123,15 +129,12 @@ namespace lv { namespace flow {
 		{
 			BufferPtr buf = buf_manager_->get();
 
-			{
-				// auto flush
-				boost::iostreams::stream_buffer<boost::iostreams::back_insert_device<Buffer> > 
-					raw_os(boost::iostreams::back_inserter(*buf));
-				oarchive_type oa(raw_os);
+			OStreamPtr raw_os = ostream_factory_.open(*buf);
+			oarchive_type oa(*raw_os);
 
-				oa << key;
-				boost::fusion::for_each(args, Serialize(oa));
-			}
+			oa << key;
+			boost::fusion::for_each(args, Serialize(oa));
+			raw_os->flush();
 
 			callback_(port_, buf);
 		}

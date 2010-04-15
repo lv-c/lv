@@ -50,7 +50,7 @@ namespace lv { namespace net {
 		}
 
 		/// @exception runtime_error
-		virtual	void	start(string const & ip, string const & port)
+		virtual	void	start(std::string const & ip, std::string const & port)
 		{
 			asio::ip::tcp::resolver::query query(ip, port);
 			asio::ip::tcp::resolver resolver(context_.service());

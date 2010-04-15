@@ -114,9 +114,7 @@ namespace lv { namespace log {
 		{
 			scoped_lock lock(mutex_);
 
-			gather_set::iterator it = std::find(this->gathers_.begin(), this->gathers_.end(), gather);
-			if(it != this->gathers_.end())
-				this->gathers_.erase(it);
+			gathers_.erase(gather);
 		}
 		
 

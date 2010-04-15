@@ -19,8 +19,11 @@
 #include <lv/DataFlow/SyncPush.hpp>
 #include <lv/DataFlow/ThreadedPush.hpp>
 
-#include <lv/Packet/IPacket.hpp>
-#include <lv/Packet/OPacket.hpp>
+#include <lv/Serialization/IArchive.hpp>
+#include <lv/Serialization/OArchive.hpp>
+
+//#include <lv/Packet/IPacket.hpp>
+//#include <lv/Packet/OPacket.hpp>
 
 #include <lv/SimpleBufferManager.hpp>
 
@@ -36,12 +39,17 @@ enum ParamType
 	PT_String
 };
 
-void pass_iarchive_obj(lv::IPacket ia)
+typedef lv::IArchive iarchive_type;
+typedef lv::OArchive oarchive_type;
+
+using namespace std;
+
+void pass_iarchive_obj(iarchive_type ia)
 {
 
 }
 
-void echo(ParamType type, lv::IPacket & ia)
+void echo(ParamType type, iarchive_type & ia)
 {
 	if(type == PT_Int)
 	{
