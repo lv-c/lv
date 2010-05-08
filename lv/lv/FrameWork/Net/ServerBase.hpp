@@ -12,6 +12,7 @@
 #define LV_NET_SERVERBASE_HPP
 
 #include <lv/FrameWork/Net/Fwd.hpp>
+#include <lv/FrameWork/Net/Context.hpp>
 
 #include <boost/asio.hpp>
 #include <boost/bind.hpp>
@@ -28,21 +29,17 @@ namespace lv { namespace net {
 		typedef	S	session_type;
 		typedef boost::shared_ptr<session_type>	session_ptr;
 
-		asio::io_service & service_;
-
 		asio::ip::tcp::acceptor	acceptor_;
 
-		boost::function<session_ptr()> session_creator_;
+		Context	context_;
 
 	public:
 
 		/// you can either pass in a session_creator function or overload create_session
 		///		to create a new session
-		ServerBase(asio::io_service & service, unsigned short port, 
-			boost::function<session_ptr()> session_creator = boost::function<session_ptr()>())
-			: service_(service)
-			, acceptor_(service, asio::ip::tcp::endpoint(asio::ip::tcp::v4(), port))
-			, session_creator_(session_creator)
+		ServerBase(Context const & context, unsigned short port)
+			: context_(context)
+			, acceptor_(context.service(), asio::ip::tcp::endpoint(asio::ip::tcp::v4(), port))
 		{
 		}
 
@@ -80,13 +77,7 @@ namespace lv { namespace net {
 
 		virtual	session_ptr	create_session()
 		{
-			if(session_creator_)
-			{
-				return session_creator_();
-			}
-
-			BOOST_ASSERT(false);
-			return session_ptr();
+			return session_ptr(new session_type(context_));
 		}
 
 		virtual	void	on_new_session(session_ptr session)

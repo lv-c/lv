@@ -16,6 +16,8 @@
 #include <lv/IBufferManager.hpp>
 
 #include <boost/asio/io_service.hpp>
+#include <boost/asio/strand.hpp>
+#include <boost/asio/ssl/context.hpp>
 
 namespace lv { namespace net {
 
@@ -29,6 +31,9 @@ namespace lv { namespace net {
 		typedef boost::shared_ptr<asio::io_service::strand>	strand_ptr;
 		strand_ptr	strand_;
 
+		typedef boost::shared_ptr<asio::ssl::context>	ssl_context_ptr;
+		ssl_context_ptr	ssl_context_;
+
 	public:
 
 		Context(BufferManagerPtr buf_manager, service_ptr service)
@@ -41,6 +46,24 @@ namespace lv { namespace net {
 			: buf_manager_(buf_manager)
 			, strand_(strand)
 		{
+		}
+
+		void	set_ssl_context(ssl_context_ptr ssl_context)
+		{
+			this->ssl_context_ = ssl_context;
+		}
+
+		ssl_context_ptr	create_ssl_context(asio::ssl::context::method method = asio::ssl::context::sslv23)
+		{
+			BOOST_ASSERT(! ssl_context_);
+
+			ssl_context_.reset(new asio::ssl::context(service(), method));
+			return ssl_context_;
+		}
+
+		ssl_context_ptr	get_ssl_context() const
+		{
+			return ssl_context_;
 		}
 
 		BufferPtr	buffer()

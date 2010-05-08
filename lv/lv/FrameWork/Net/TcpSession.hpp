@@ -18,14 +18,15 @@ namespace lv { namespace net {
 	template<typename Side>
 	class TcpSession : public CsSession<Side>
 	{
-	protected:
 
+		typedef CsSession<Side>	base_type;
+		
 		asio::ip::tcp::socket	socket_;
 
 	public:
 
 		TcpSession(Context const & context)
-			: CsSession(context)
+			: base_type(context)
 			, socket_(context.service())
 		{
 		}

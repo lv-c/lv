@@ -15,7 +15,7 @@
 #include <lv/FrameWork/Net/Context.hpp>
 
 
-#include <boost/asio/io_service.hpp>
+#include <boost/asio.hpp>
 #include <boost/bind.hpp>
 #include <boost/enable_shared_from_this.hpp>
 
@@ -35,6 +35,19 @@ namespace lv { namespace net {
 			
 		}
 
+		std::string		remote_ip()
+		{
+			boost::system::error_code error;
+			asio::ip::tcp::endpoint endpoint = socket().remote_endpoint(error);
+
+			if(! error)
+			{
+				return endpoint.address().to_string(error);
+			}
+
+			return std::string();
+		}
+
 	protected:
 
 		virtual	asio::ip::tcp::socket & socket() = 0;
@@ -43,7 +56,7 @@ namespace lv { namespace net {
 		{
 		}
 
-		void	on_connected_internal()
+		virtual	void	on_connected_internal()
 		{
 			start_read();
 			on_connected();

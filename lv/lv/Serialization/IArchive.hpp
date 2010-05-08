@@ -14,11 +14,6 @@
 #include <lv/Serialization/Serialization.hpp>
 #include <lv/Stream/IStreamProxy.hpp>
 
-#include <boost/utility/enable_if.hpp>
-#include <boost/serialization/collection_size_type.hpp>
-#include <boost/archive/archive_exception.hpp>
-#include <boost/archive/basic_archive.hpp>
-
 #include <string>
 
 namespace lv
@@ -71,14 +66,14 @@ namespace lv
 
 
 		template<typename T>
-		typename boost::disable_if<serialization::is_primitive<T> >::type	load(T & t)
+		typename boost::disable_if<boost::is_arithmetic<T> >::type	load(T & t)
 		{
-			boost::serialization::serialize(*this, t, 0);
+			serialization::load(*this, t);
 		}
 
 
 		template<typename T>
-		typename boost::enable_if<serialization::is_primitive<T> >::type	load(T & t)
+		typename boost::enable_if<boost::is_arithmetic<T> >::type	load(T & t)
 		{
 			load_binary(&t, sizeof(T));
 		}

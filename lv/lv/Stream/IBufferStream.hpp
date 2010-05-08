@@ -115,11 +115,14 @@ namespace lv
 					break;
 				}
 
-				if(buf_[pos] == delim)
+				unsigned char c = buf_[pos];
+				if(static_cast<int>(c) == delim)
 				{
 					break;
 				}
 			}
+
+			gpos_ = pos;
 
 			setstate(state);
 			return *this;

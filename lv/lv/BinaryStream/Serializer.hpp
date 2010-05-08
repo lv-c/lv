@@ -111,7 +111,7 @@ namespace lv { namespace bstream {
 		{
 			foreach(typename boost::range_value<T>::type & item, t)
 			{
-				is >> t;
+				is >> item;
 			}
 		}
 	};

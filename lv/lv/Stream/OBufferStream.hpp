@@ -27,7 +27,6 @@ namespace lv
 		OBufferStream(Buffer & buf) 
 			: buf_(buf) 
 		{
-			buf_.clear();
 		}
 
 
@@ -35,7 +34,6 @@ namespace lv
 			: buf_(*buf)
 			, holder_(buf)
 		{
-			buf_.clear();
 		}
 
 		OBufferStream & put(char c)

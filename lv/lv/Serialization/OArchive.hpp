@@ -15,11 +15,6 @@
 #include <lv/Serialization/Serialization.hpp>
 #include <lv/Stream/OStreamProxy.hpp>
 
-#include <boost/utility/enable_if.hpp>
-#include <boost/serialization/collection_size_type.hpp>
-#include <boost/archive/archive_exception.hpp>
-#include <boost/archive/basic_archive.hpp>
-
 #include <string>
 
 namespace lv
@@ -67,13 +62,13 @@ namespace lv
 	protected:
 
 		template<typename T>
-		typename boost::disable_if<serialization::is_primitive<T> >::type	save(T const & t)
+		typename boost::disable_if<boost::is_arithmetic<T> >::type	save(T const & t)
 		{
-			boost::serialization::serialize(*this, const_cast<T &>(t), 0);
+			serialization::save(*this, t);
 		}
 
 		template<typename T>
-		typename boost::enable_if<serialization::is_primitive<T> >::type	save(T t)
+		typename boost::enable_if<boost::is_arithmetic<T> >::type	save(T t)
 		{
 			save_binary(&t, sizeof(T));
 		}
