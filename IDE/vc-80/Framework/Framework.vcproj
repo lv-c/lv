@@ -180,6 +180,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\FrameWork\Net\SSLServer.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\FrameWork\Net\SSLSession.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\FrameWork\Net\TcpSession.hpp"
 					>
 				</File>

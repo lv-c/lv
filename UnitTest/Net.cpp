@@ -10,12 +10,22 @@
 
 #include "UnitTest.hpp"
 
-#include <lv/FrameWork/Net/ServerBase.hpp>
 #include <lv/FrameWork/Net/FlowSession.hpp>
 #include <lv/FrameWork/Net/TcpSession.hpp>
+#include <lv/FrameWork/Net/SSLServer.hpp>
+#include <lv/FrameWork/Net/SSLSession.hpp>
 
 #include <lv/SharedPtr.hpp>
 #include <lv/SimpleBufferManager.hpp>
+
+
+#ifndef _DEBUG
+#pragma comment(lib, "libeay32.lib")
+#pragma comment(lib, "ssleay32.lib")
+#else
+#pragma comment(lib, "libeay32d.lib")
+#pragma comment(lib, "ssleay32d.lib")
+#endif
 
 
 using namespace lv::net;
@@ -32,9 +42,10 @@ namespace asio = boost::asio;
 boost::condition g_condition_called;
 boost::mutex	g_mutex;
 
-class ClientSession : public FlowSession<string, TcpSession<ClientSide> >
+template<template <class> class LowerSession>
+class ClientSession : public FlowSession<string, LowerSession<ClientSide> >
 {
-	typedef FlowSession<string, TcpSession<ClientSide> > base_type;
+	typedef FlowSession<string, LowerSession<ClientSide> > base_type;
 
 	string	text_;
 
@@ -67,9 +78,10 @@ private:
 
 };
 
-class ServerSession : public FlowSession<string, TcpSession<ServerSide> >
+template<template <class> class LowerSession>
+class ServerSession : public FlowSession<string, LowerSession<ServerSide> >
 {
-	typedef FlowSession<string, TcpSession<ServerSide> > base_type;
+	typedef FlowSession<string, LowerSession<ServerSide> > base_type;
 
 public:
 	ServerSession(Context const & context)
@@ -90,26 +102,36 @@ public:
 };
 
 
-boost::shared_ptr<ServerSession> create_session(Context const & context)
+template<class SessionType>
+boost::shared_ptr<SessionType> create_session(Context const & context)
 {
-	return boost::shared_ptr<ServerSession>(new ServerSession(context));
+	return boost::shared_ptr<SessionType>(new SessionType (context));
 }
 
-BOOST_AUTO_TEST_CASE(test_net)
+template<template<class> class Server, template<class> class LowerSession>
+void test_net_impl()
 {
+	typedef ServerSession<LowerSession>	server_session_type;
+	typedef ClientSession<LowerSession> client_session_type;
+
+	typedef Server<server_session_type>	server_type;
 
 	asio::io_service service;
 
-	Context context(BufferManagerPtr(new SimpleBufferManager(1024)), lv::shared_from_object(service));
+	Context context(lv::shared_new<SimpleBufferManager>(1024), lv::shared_from_object(service));
+
+	if(boost::is_same<client_session_type, ClientSession<SSLSession> >::value)
+	{
+		context.create_ssl_context();
+	}
 
 	// server
-	typedef ServerBase<ServerSession> server_type;
-	server_type server(service, 5555, boost::bind(create_session, context));
+	server_type server(context, 5555);
 
 	server.start();
 
 	// client. We must use shared_ptr here.
-	boost::shared_ptr<ClientSession> client(new ClientSession(context));
+	boost::shared_ptr<client_session_type> client(new client_session_type(context));
 	client->start("127.0.0.1", "5555");
 
 	boost::mutex::scoped_lock lock(g_mutex);
@@ -120,4 +142,11 @@ BOOST_AUTO_TEST_CASE(test_net)
 	g_condition_called.wait(lock);
 
 	service.stop();
+}
+
+BOOST_AUTO_TEST_CASE(test_net)
+{
+	test_net_impl<ServerBase, TcpSession>();
+	test_net_impl<SSLServer, SSLSession>();
+
 }

@@ -69,8 +69,10 @@ BOOST_AUTO_TEST_CASE(test_serialization)
 
 	vector<int> int_vec(10, 20);
 	Test obj(20, "hh");
+	boost::array<int, 10> int_arr;
+	int_arr.assign(20);
 
-	oa << int(10) << str_vec << int_vec << obj;
+	oa << int(10) << str_vec << int_vec << obj << int_arr;
 
 	IBufferStream is(buf);
 	IArchive ia(is);
@@ -79,13 +81,15 @@ BOOST_AUTO_TEST_CASE(test_serialization)
 	vector<string> new_str_vec;
 	vector<int> new_int_vec;
 	Test new_obj;
+	boost::array<int, 10> new_int_arr;
 
-	ia >> i >> new_str_vec >> new_int_vec >> new_obj;
+	ia >> i >> new_str_vec >> new_int_vec >> new_obj >> new_int_arr;
 
 	BOOST_CHECK_EQUAL(i, 10);
 	BOOST_CHECK(str_vec == new_str_vec);
 	BOOST_CHECK(int_vec == new_int_vec);
 	BOOST_CHECK(obj == new_obj);
+	BOOST_CHECK(int_arr == new_int_arr);
 
 	// end of the buffer
 	BOOST_CHECK_EQUAL(static_cast<size_t>(is.tellg()), buf.size());

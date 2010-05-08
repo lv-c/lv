@@ -444,6 +444,10 @@
 				Name="Header Files"
 				>
 				<File
+					RelativePath="..\..\..\lv\lv\Log\DbgPrint.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\Log\DebugStringGather.hpp"
 					>
 				</File>
