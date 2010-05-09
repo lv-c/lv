@@ -503,10 +503,6 @@
 					RelativePath="..\..\..\lv\lv\Packet\PacketException.hpp"
 					>
 				</File>
-				<File
-					RelativePath="..\..\..\lv\lv\Packet\Tuple.hpp"
-					>
-				</File>
 			</Filter>
 		</Filter>
 		<Filter
@@ -897,6 +893,10 @@
 				</File>
 				<File
 					RelativePath="..\..\..\lv\lv\Serialization\Serialization.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Serialization\Tuple.hpp"
 					>
 				</File>
 			</Filter>

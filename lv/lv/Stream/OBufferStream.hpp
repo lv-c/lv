@@ -36,6 +36,18 @@ namespace lv
 		{
 		}
 
+		Buffer &	buffer()
+		{
+			return buf_;
+		}
+
+		BufferPtr	buffer_ptr()
+		{
+			BOOST_ASSERT(holder_);
+
+			return holder_;
+		}
+
 		OBufferStream & put(char c)
 		{
 			buf_.push_back(c);
