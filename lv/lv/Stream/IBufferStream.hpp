@@ -77,7 +77,7 @@ namespace lv
 				break;
 
 			case std::ios_base::end:
-				off += buf_.size();
+				off += static_cast<streamoff>(buf_.size());
 				break;
 
 			default:

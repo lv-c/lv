@@ -50,7 +50,7 @@ class ClientSession : public FlowSession<string, LowerSession<ClientSide> >
 	string	text_;
 
 public:
-	ClientSession(Context const & context)
+	ClientSession(ContextPtr context)
 		: base_type(context)
 		, text_("Hello Net")
 	{
@@ -84,7 +84,7 @@ class ServerSession : public FlowSession<string, LowerSession<ServerSide> >
 	typedef FlowSession<string, LowerSession<ServerSide> > base_type;
 
 public:
-	ServerSession(Context const & context)
+	ServerSession(ContextPtr context)
 		: base_type(context)
 	{
 		sink_
@@ -118,20 +118,22 @@ void test_net_impl()
 
 	asio::io_service service;
 
-	Context context(lv::shared_new<SimpleBufferManager>(1024), lv::shared_from_object(service));
+	// 
+	boost::shared_ptr<SSLContext> server_context(new SSLContext(lv::shared_new<SimpleBufferManager>(1024), lv::shared_from_object(service)));
+	boost::shared_ptr<SSLContext> client_context(new SSLContext(lv::shared_new<SimpleBufferManager>(1024), lv::shared_from_object(service)));
 
 	if(boost::is_same<client_session_type, ClientSession<SSLSession> >::value)
 	{
-		context.create_ssl_context();
+		client_context->create_ssl_context();
 	}
 
 	// server
-	server_type server(context, 5555);
+	server_type server(server_context, 5555);
 
 	server.start();
 
 	// client. We must use shared_ptr here.
-	boost::shared_ptr<client_session_type> client(new client_session_type(context));
+	boost::shared_ptr<client_session_type> client(new client_session_type(client_context));
 	client->start("127.0.0.1", "5555");
 
 	boost::mutex::scoped_lock lock(g_mutex);

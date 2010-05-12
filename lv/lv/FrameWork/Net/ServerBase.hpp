@@ -31,15 +31,15 @@ namespace lv { namespace net {
 
 		asio::ip::tcp::acceptor	acceptor_;
 
-		Context	context_;
+		ContextPtr	context_;
 
 	public:
 
 		/// you can either pass in a session_creator function or overload create_session
 		///		to create a new session
-		ServerBase(Context const & context, unsigned short port)
+		ServerBase(ContextPtr context, unsigned short port)
 			: context_(context)
-			, acceptor_(context.service(), asio::ip::tcp::endpoint(asio::ip::tcp::v4(), port))
+			, acceptor_(context->service(), asio::ip::tcp::endpoint(asio::ip::tcp::v4(), port))
 		{
 		}
 

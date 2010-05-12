@@ -12,6 +12,7 @@
 #define LV_NET_SSLSERVER_HPP
 
 #include <lv/FrameWork/Net/ServerBase.hpp>
+#include <lv/FrameWork/Net/SSLContext.hpp>
 #include <lv/SharedPtr.hpp>
 
 #include <boost/asio/ssl.hpp>
@@ -30,13 +31,13 @@ namespace lv { namespace net {
 
 	public:
 
-		SSLServer(Context const & context, unsigned short port, 
+		SSLServer(ContextPtr context, unsigned short port, 
 			std::string const & password = "rswvfbuk")
 			: base_type(context, port)
 			, password_(password)
-			, ssl_context_(context.service(), asio::ssl::context::sslv23)
+			, ssl_context_(context->service(), asio::ssl::context::sslv23)
 		{
-			context_.set_ssl_context(lv::shared_from_object(ssl_context_));
+			boost::dynamic_pointer_cast<SSLContext>(context_)->set_ssl_context(lv::shared_from_object(ssl_context_));
 		}
 
 		/// @exception boost::system::system_error

@@ -11,11 +11,14 @@
 #ifndef LV_NET_FWD_HPP
 #define LV_NET_FWD_HPP
 
+#include <boost/shared_ptr.hpp>
+
 namespace boost { namespace asio {} }
 
 namespace lv { namespace net {
 
 	class Context;
+	typedef boost::shared_ptr<Context>	ContextPtr;
 
 	class SessionBase;
 
@@ -34,7 +37,12 @@ namespace lv { namespace net {
 	template<class S>
 	class ServerBase;
 
+	template<typename Side>
+	class SSLSession;
 	
+	template<class S>
+	class SSLServer;
+
 	namespace asio = boost::asio;
 
 } }

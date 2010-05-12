@@ -27,7 +27,7 @@ namespace lv { namespace net {
 	{
 	public:
 
-		CsSession(Context const & context)
+		CsSession(ContextPtr context)
 			: SessionBase(context)
 		{
 		}
@@ -44,7 +44,7 @@ namespace lv { namespace net {
 	{
 	public:
 		
-		CsSession(Context const & context)
+		CsSession(ContextPtr context)
 			: SessionBase(context)
 		{
 		}
@@ -53,12 +53,12 @@ namespace lv { namespace net {
 		virtual	void	start(std::string const & ip, std::string const & port)
 		{
 			asio::ip::tcp::resolver::query query(ip, port);
-			asio::ip::tcp::resolver resolver(context_.service());
+			asio::ip::tcp::resolver resolver(context_->service());
 
-			if(context_.strand())
+			if(context_->strand())
 			{
 				socket().async_connect(*resolver.resolve(query), 
-					context_.strand()->wrap(
+					context_->strand()->wrap(
 					boost::bind(&CsSession::handle_connect, 
 					boost::shared_dynamic_cast<CsSession>(shared_from_this()),
 					asio::placeholders::error)));

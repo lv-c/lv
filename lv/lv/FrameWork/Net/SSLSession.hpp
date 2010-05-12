@@ -12,6 +12,7 @@
 #define LV_NET_SSLSESSION_HPP
 
 #include <lv/FrameWork/Net/CsSession.hpp>
+#include <lv/FrameWork/Net/SSLContext.hpp>
 
 #include <boost/asio/ssl.hpp>
 
@@ -28,9 +29,10 @@ namespace lv { namespace net {
 
 	public:
 
-		SSLSession(Context const & context)
+		SSLSession(ContextPtr context)
 			: base_type(context)
-			, socket_(context.service(), *context.get_ssl_context())
+			, socket_(context->service(), 
+				*boost::dynamic_pointer_cast<SSLContext>(context)->get_ssl_context())
 		{
 		}
 

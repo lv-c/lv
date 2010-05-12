@@ -25,9 +25,9 @@ namespace lv { namespace net {
 
 	public:
 
-		TcpSession(Context const & context)
+		TcpSession(ContextPtr context)
 			: base_type(context)
-			, socket_(context.service())
+			, socket_(context->service())
 		{
 		}
 

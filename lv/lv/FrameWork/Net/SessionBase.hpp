@@ -25,11 +25,11 @@ namespace lv { namespace net {
 	{
 	protected:
 
-		Context	context_;
+		ContextPtr	context_;
 
 	public:
 
-		SessionBase(Context const & context)
+		SessionBase(ContextPtr context)
 			: context_(context)
 		{
 			
@@ -74,13 +74,13 @@ namespace lv { namespace net {
 
 		virtual void	start_read()
 		{
-			BufferPtr buf = context_.buffer();
+			BufferPtr buf = context_->buffer();
 
 			buf->resize(buf->capacity());
 
-			if(context_.strand())
+			if(context_->strand())
 			{
-				socket().async_read_some(asio::buffer(*buf), context_.strand()->wrap(
+				socket().async_read_some(asio::buffer(*buf), context_->strand()->wrap(
 					boost::bind(&SessionBase::handle_read, shared_from_this(), buf,
 					asio::placeholders::bytes_transferred, asio::placeholders::error)));
 			}
@@ -95,9 +95,9 @@ namespace lv { namespace net {
 
 		virtual	void	start_write(BufferPtr buf)
 		{
-			if(context_.strand())
+			if(context_->strand())
 			{
-				boost::asio::async_write(socket(), asio::buffer(*buf), context_.strand()->wrap(
+				boost::asio::async_write(socket(), asio::buffer(*buf), context_->strand()->wrap(
 					boost::bind(&SessionBase::handle_write, shared_from_this(), 
 					buf, asio::placeholders::error)));
 			}

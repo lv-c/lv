@@ -42,7 +42,7 @@ namespace lv { namespace net {
 	public:
 
 		/// @TODO constructor of the base_type may take other parameters
-		FlowSession(Context const & context)
+		FlowSession(ContextPtr context)
 			: base_type(context)
 		{
 			source_.reset(new source_type(0, boost::bind(&FlowSession::push, this, _1, _2), 
@@ -77,7 +77,7 @@ namespace lv { namespace net {
 				if(index + 2 + size > cache_.size())
 					break;
 
-				BufferPtr newbuf = context_.buffer();
+				BufferPtr newbuf = context_->buffer();
 				newbuf->assign(cache_.begin() + index + 2, cache_.begin() + index + 2 + size);
 
 				index += 2 + size;
