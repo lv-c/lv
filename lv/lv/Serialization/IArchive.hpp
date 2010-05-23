@@ -86,6 +86,15 @@ namespace lv
 			t = boost::serialization::collection_size_type(x);
 		}
 
+		void	load(boost::archive::version_type & ver)
+		{
+			uint8 x = 0;
+			load(x);
+
+			ver.t = x;
+		}
+
+
 		void	load(std::string & str)
 		{
 			std::size_t size;

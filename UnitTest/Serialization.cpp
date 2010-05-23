@@ -51,6 +51,16 @@ struct Test : boost::noncopyable
 	}
 };
 
+struct CheckVersion
+{
+	template<class Archive>
+	void serialize(Archive & ar, unsigned int version)
+	{
+		BOOST_CHECK_EQUAL(version, 2);
+	}
+};
+
+BOOST_CLASS_VERSION(CheckVersion, 2)
 
 BOOST_AUTO_TEST_CASE(test_serialization)
 {
@@ -71,8 +81,9 @@ BOOST_AUTO_TEST_CASE(test_serialization)
 	Test obj(20, "hh");
 	boost::array<int, 10> int_arr;
 	int_arr.assign(20);
+	CheckVersion ver;
 
-	oa << int(10) << str_vec << int_vec << obj << int_arr;
+	oa << int(10) << str_vec << int_vec << obj << int_arr << ver;
 
 	IBufferStream is(buf);
 	IArchive ia(is);
@@ -82,8 +93,9 @@ BOOST_AUTO_TEST_CASE(test_serialization)
 	vector<int> new_int_vec;
 	Test new_obj;
 	boost::array<int, 10> new_int_arr;
+	CheckVersion new_ver;
 
-	ia >> i >> new_str_vec >> new_int_vec >> new_obj >> new_int_arr;
+	ia >> i >> new_str_vec >> new_int_vec >> new_obj >> new_int_arr >> new_ver;
 
 	BOOST_CHECK_EQUAL(i, 10);
 	BOOST_CHECK(str_vec == new_str_vec);

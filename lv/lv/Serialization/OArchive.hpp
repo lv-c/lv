@@ -78,6 +78,12 @@ namespace lv
 			save(static_cast<uint32>(t));
 		}
 		
+		void	save(boost::archive::version_type ver)
+		{
+			BOOST_ASSERT(ver.t < boost::integer_traits<uint8>::const_max);
+			save(static_cast<uint8>(ver.t));
+		}
+
 		void	save(std::string const & str)
 		{
 			std::size_t size = str.size();

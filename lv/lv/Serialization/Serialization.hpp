@@ -20,6 +20,7 @@
 
 #include <boost/archive/archive_exception.hpp>
 #include <boost/archive/basic_archive.hpp>
+#include <boost/archive/detail/check.hpp>
 
 #include <boost/type_traits/remove_extent.hpp>
 #include <boost/type_traits/is_enum.hpp>
@@ -91,13 +92,26 @@ namespace lv { namespace serialization {
 			template<typename T>
 			static void save(Archive & ar, T const & t)
 			{
-				boost::serialization::serialize(ar, const_cast<T &>(t), 0);
+				boost::archive::detail::check_object_versioning<T>();
+
+				unsigned int ver = boost::serialization::version<T>::value;
+
+				ar << boost::archive::version_type(ver);
+				boost::serialization::serialize(ar, const_cast<T &>(t), ver);
 			}
 
 			template<typename T>
 			static void load(Archive & ar, T & t)
 			{
-				boost::serialization::serialize(ar, t, 0);
+				boost::archive::version_type file_ver;
+				ar >> file_ver;
+
+				if(file_ver.t > static_cast<unsigned int>(boost::serialization::version<T>::value))
+				{
+					throw boost::archive::archive_exception(boost::archive::archive_exception::unsupported_class_version);
+				}
+
+				boost::serialization::serialize(ar, t, file_ver.t);
 			}
 		};
 

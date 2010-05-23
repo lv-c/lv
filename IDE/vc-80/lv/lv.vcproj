@@ -324,10 +324,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\lv\lv\Graphics\Serialization.hpp"
-					>
-				</File>
-				<File
 					RelativePath="..\..\..\lv\lv\graphics\Size.hpp"
 					>
 				</File>
