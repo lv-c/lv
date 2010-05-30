@@ -58,7 +58,7 @@ namespace lv
 		}
 
 		/// @exception mapping_key_not_found
-		Y	get_left(X const & x)
+		Y	get_left(X const & x) const
 		{
 			if(boost::optional<Y> o = get_left_optional(x))
 			{
@@ -69,7 +69,7 @@ namespace lv
 		}
 
 		/// @exception mapping_key_not_found
-		X	get_right(Y const & y)
+		X	get_right(Y const & y) const
 		{
 			if(boost::optional<X> o = get_right_optional(y))
 			{
@@ -79,18 +79,18 @@ namespace lv
 			throw mapping_key_not_found();
 		}
 
-		Y	get_left(X const & x, Y const & default_value)
+		Y	get_left(X const & x, Y const & default_value) const
 		{
 			return get_left_optional(x).get_value_or(default_value);
 		}
 
 
-		X	get_right(Y const & y, X const & default_value)
+		X	get_right(Y const & y, X const & default_value) const
 		{
 			return get_right_optional(y).get_value_or(default_value);
 		}
 
-		boost::optional<Y>	get_left_optional(X const & x)
+		boost::optional<Y>	get_left_optional(X const & x) const
 		{
 			bimap_type::left_map::const_iterator it = bimap_.left.find(x);
 			if(it != bimap_.left.end())
@@ -101,7 +101,7 @@ namespace lv
 			return boost::optional<Y>();
 		}
 
-		boost::optional<X>	get_right_optional(Y const & y)
+		boost::optional<X>	get_right_optional(Y const & y) const
 		{
 			bimap_type::right_map::const_iterator it = bimap_.right.find(y);
 			if(it != bimap_.right.end())

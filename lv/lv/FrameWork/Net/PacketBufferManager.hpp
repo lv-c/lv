@@ -20,13 +20,13 @@ namespace lv { namespace net {
 	public:
 
 		explicit PacketBufferManager(size_t init_capacity)
-			: lv::SimpleBufferManager(init_capacity)
+			: SimpleBufferManager(init_capacity)
 		{
 		}
 
 		virtual BufferPtr	get()
 		{
-			BufferPtr buf = lv::SimpleBufferManager::get();
+			BufferPtr buf = SimpleBufferManager::get();
 
 			// used to store the size of this packet
 			buf->assign(2, 0);
