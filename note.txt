@@ -1,0 +1,1 @@
+1. boost.thread 有 future 库， 代替原来的？

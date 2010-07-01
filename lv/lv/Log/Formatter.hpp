@@ -59,6 +59,14 @@ namespace lv { namespace log {
 		Timer timer_;
 	};
 
+	struct Flush
+	{
+		void operator () (ostream_type & os, int) const
+		{
+			os << std::flush;
+		}
+	};
+
 	struct Tag
 	{
 		void operator () (ostream_type & os, int lvl) const

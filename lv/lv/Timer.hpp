@@ -13,6 +13,8 @@
 
 #include <lv/Config.hpp>
 
+#include <boost/operators.hpp>
+
 #ifdef LV_PLATFORM_WINDOWS
 #	include <Windows.h>
 #else
@@ -24,6 +26,66 @@ namespace lv
 	/// fwd.  You should use Timer rather than TimerT
 	template<class>	class TimerT;
 	typedef TimerT<void> Timer;
+
+	class TimeSpan : public boost::additive<TimeSpan>
+	{
+
+		double	seconds_;
+
+	public:
+
+		// seconds
+		explicit TimeSpan(double sec)
+			: seconds_(sec)
+		{
+		}
+
+		// seconds
+		inline operator double() const
+		{
+			return seconds_;
+		}
+
+		inline double	milliseconds() const
+		{
+			return seconds() * 1000.0;
+		}
+
+		inline double	seconds() const
+		{
+			return seconds_;
+		}
+
+		inline double	minutes() const
+		{
+			return seconds() / 60.0;
+		}
+
+		inline double	hours() const
+		{
+			return minutes() / 60.0;
+		}
+
+		inline double	days() const
+		{
+			return hours() / 24.0;
+		}
+
+
+		TimeSpan & operator += (TimeSpan const & rhs)
+		{
+			seconds_ += rhs.seconds_;
+			return *this;
+		}
+
+		TimeSpan & operator -= (TimeSpan const & rhs)
+		{
+			seconds_ -= rhs.seconds_;
+			return *this;
+		}
+		
+	};
+
 
 	/**
 	 * use template to make it a header-only class
@@ -57,9 +119,9 @@ namespace lv
 
 		
 		// return the seconds that has elapsed
-		inline double	elapsed() const
+		inline TimeSpan	elapsed() const
 		{
-			return cur_time() - start_time_;
+			return TimeSpan(cur_time() - start_time_);
 		}
 
 	private:
