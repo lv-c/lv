@@ -81,15 +81,21 @@ namespace lv { namespace bstream {
 		template<class OStream>
 		static void write(OStream & os, T const & t)
 		{
-			os.write(reinterpret_cast<char const*>(&*boost::begin(t)), boost::size(t) * 
-				sizeof(typename boost::range_value<T>::type));
+			if(! boost::empty(t))
+			{
+				os.write(reinterpret_cast<char const*>(&*boost::begin(t)), boost::size(t) * 
+					sizeof(typename boost::range_value<T>::type));
+			}
 		}
 
 		template<class IStream>
 		static void read(IStream & is, T & t)
 		{
-			is.read(reinterpret_cast<char*>(&*boost::begin(t)), boost::size(t) * 
-				sizeof(typename boost::range_value<T>::type));
+			if(! boost::empty(t))
+			{
+				is.read(reinterpret_cast<char*>(&*boost::begin(t)), boost::size(t) * 
+					sizeof(typename boost::range_value<T>::type));
+			}
 		}
 	};
 
