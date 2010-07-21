@@ -40,11 +40,13 @@ public:
 
 	virtual	void	send(BufferPtr buf) 
 	{
+		/*
 		cout << buf->size() << endl;
 		for(size_t i = 0; i < buf->size(); ++i)
 			cout << (int)(*buf)[i] << ' ';
 
 		cout << endl;
+		*/
 	}
 };
 
@@ -248,10 +250,10 @@ BOOST_AUTO_TEST_CASE(test_rpc)
 	;
 
 	typedef Server<registery_t> server_t;
-	server_t server(shared_new<MyBufferManager>(), reg);
+	server_t server(BufferManagerPtr(new MyBufferManager()), reg);
 
 	boost::shared_ptr<ServerSocket<Client<> > > ssock(new ServerSocket<Client<> >());
-	Client<>	client(shared_new<ClientSocket<server_t> >(&server, ssock), shared_new<SimpleBufferManager>(100), ex);
+	Client<>	client(SocketPtr(new ClientSocket<server_t>(&server, ssock)), BufferManagerPtr(new SimpleBufferManager(100)), ex);
 
 	ssock->client_ = &client;
 	server.on_connected(ssock);

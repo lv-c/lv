@@ -855,6 +855,14 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\..\lv\lv\Lua\Bind\Pair.hpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\lv\lv\Lua\Bind\Set.hpp"
+						>
+					</File>
+					<File
 						RelativePath="..\..\..\lv\lv\Lua\Bind\Vector.hpp"
 						>
 					</File>
