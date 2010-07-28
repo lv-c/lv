@@ -34,7 +34,7 @@ namespace lv { namespace bstream {
 	}
 
 	template<typename T, class IStream>
-	void read(IStream & is, T & t)
+	void	read(IStream & is, T & t)
 	{
 		Serializer<T, typename object_tag<T>::type>::read(is, t);
 	}

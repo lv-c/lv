@@ -13,7 +13,6 @@
 
 #include <lv/BinaryStream/BinaryIStream.hpp>
 #include <lv/BinaryStream/BinaryOStream.hpp>
-#include <lv/BinaryStream/String.hpp>
 #include <lv/Exception.hpp>
 
 namespace lv { namespace bstream {
@@ -167,9 +166,12 @@ namespace lv { namespace bstream {
 		friend BinaryIStream & operator >> (BinaryIStream & is, fixed_len_str const & fixed)
 		{
 			fixed.str_.assign(fixed.size_, '\0');
-			is >> fixed.str_;
 
-			fixed.str_ = fixed.str_.c_str();
+			if(fixed.size_ > 0)
+			{
+				is.read(&fixed.str_[0], fixed.size_);
+				fixed.str_ = fixed.str_.c_str();
+			}
 
 			return is;
 		}

@@ -99,7 +99,7 @@ namespace lv { namespace log {
 
 #ifdef LV_PLATFORM_WINDOWS
 
-	inline gather_ptr	add_debug_string_gather(Log & log, FormmatterSet formatters = CommonFormatters(true, false))
+	inline gather_ptr	add_debug_string_gather(Log & log, FormmatterSet formatters = CommonFormatters(true))
 	{
 		gather_ptr gather(new DebugStringGather());
 		
