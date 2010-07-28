@@ -21,6 +21,14 @@
 
 namespace lv { namespace net {
 
+	enum ErrorType
+	{
+		ErrorConnect,
+		ErrorHandshake,
+		ErrorRead,
+		ErrorWrite
+	};
+
 	class SessionBase : public boost::enable_shared_from_this<SessionBase>
 	{
 	protected:
@@ -52,7 +60,7 @@ namespace lv { namespace net {
 
 		virtual	asio::ip::tcp::socket & socket() = 0;
 
-		virtual	void	on_error(boost::system::error_code const & error)
+		virtual	void	on_error(ErrorType type, boost::system::error_code const & error)
 		{
 		}
 
@@ -115,7 +123,7 @@ namespace lv { namespace net {
 		{
 			if(error)
 			{
-				on_error(error);
+				on_error(ErrorRead, error);
 			}
 			else
 			{
@@ -131,7 +139,7 @@ namespace lv { namespace net {
 		{
 			if(error)
 			{
-				on_error(error);
+				on_error(ErrorWrite, error);
 			}
 		}
 		

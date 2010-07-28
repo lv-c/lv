@@ -56,6 +56,11 @@ namespace lv { namespace net {
 			return buf_manager_->get();
 		}
 
+		BufferManagerPtr buffer_manager() const
+		{
+			return buf_manager_;
+		}
+
 		asio::io_service & service() const
 		{
 			if(strand_)

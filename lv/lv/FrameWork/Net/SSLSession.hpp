@@ -67,7 +67,7 @@ namespace lv { namespace net {
 			}
 			else
 			{
-				on_error(error);
+				on_error(ErrorHandshake, error);
 			}
 		}
 

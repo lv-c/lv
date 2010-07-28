@@ -83,7 +83,7 @@ namespace lv { namespace net {
 			}
 			else
 			{
-				on_error(error);
+				on_error(ErrorConnect, error);
 			}
 		}
 
