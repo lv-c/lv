@@ -15,17 +15,17 @@
 
 namespace lv
 {
-	class IOFuture : public boost::future<void>, boost::equality_comparable<IOFuture>
+	class IOFuture : public boost::unique_future<void>, boost::equality_comparable<IOFuture>
 	{
 		boost::shared_ptr<std::string const>	file_;
 		BufferPtr	buffer_;
 
 	public:
 
-		IOFuture(IOTask const & task)
+		IOFuture(IOTask & task)
 			: file_(task.file_)
 			, buffer_(task.buffer_)
-			, boost::future<void>(task)
+			, boost::unique_future<void>(task.get_future())
 		{
 		}
 

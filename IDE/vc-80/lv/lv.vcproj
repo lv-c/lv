@@ -178,6 +178,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\Endian.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\Exception.hpp"
 					>
 				</File>

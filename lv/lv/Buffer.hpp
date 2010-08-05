@@ -210,6 +210,21 @@ namespace lv
 		{
 			buf.insert(buf.end(), static_cast<char const*>(data), static_cast<char const*>(data) + size);
 		}
+
+		inline char * data(Buffer & buf)
+		{
+			return &buf[0];
+		}
+
+		inline char const * data(Buffer const & buf)
+		{
+			return &buf[0];
+		}
+
+		inline char * data(BufferPtr const & buf)
+		{
+			return &(*buf)[0];
+		}
 	}
 }
 
