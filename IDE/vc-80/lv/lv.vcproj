@@ -476,6 +476,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\Log\Manipulators.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\Log\StringGather.hpp"
 					>
 				</File>
