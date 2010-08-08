@@ -57,7 +57,7 @@ namespace lv
 
 		OBufferStream &	write(char const * data, streamsize size)
 		{
-			buffer::write(buf_, data, size);
+			buffer::append(buf_, data, size);
 
 			return reset_state();
 		}

@@ -12,9 +12,12 @@
 #define LV_BUFFER_HPP
 
 #include <vector>
+
 #include <boost/shared_ptr.hpp>
 #include <boost/assert.hpp>
 #include <boost/range.hpp>
+#include <boost/type_traits/is_arithmetic.hpp>
+#include <boost/utility/enable_if.hpp>
 
 namespace lv
 {
@@ -134,14 +137,14 @@ namespace lv
 		}
 
 		BufferRefT(std::vector<T> & buf)
-			: data_(&buf[0])
+			: data_(buf.empty() ? NULL : &buf[0])
 			, size_(buf.size())
 		{
 		}
 
 		BufferRefT(boost::shared_ptr<std::vector<T> > & buf_ptr)
 			: holder_(buf_ptr)
-			, data_(&(*buf_ptr)[0])
+			, data_(buf_ptr->empty() ? NULL : &(*buf_ptr)[0])
 			, size_(buf_ptr->size())
 		{
 		}
@@ -206,9 +209,39 @@ namespace lv
 	{
 		// Write to the end of the buffer . You'd better reserve enough space to prevent frequent
 		// memory allocation.
-		inline void write(Buffer & buf, void const* data, size_t size)
+		inline void append(Buffer & buf, void const* data, size_t size)
 		{
 			buf.insert(buf.end(), static_cast<char const*>(data), static_cast<char const*>(data) + size);
+		}
+
+		/// @exception std::out_of_range
+		inline	void write(BufferRef buf, size_t pos, void const* data, size_t size)
+		{
+			if(pos + size > buf.size())
+				throw std::out_of_range("buffer::write out of range");
+
+			std::copy(static_cast<char const *>(data), static_cast<char const *>(data) + size, buf.data() + pos);
+		}
+
+		template<typename T>
+		typename boost::enable_if<boost::is_arithmetic<T> >::type	write(BufferRef buf, size_t pos, T t)
+		{
+			write(buf, pos, &t, sizeof(t));
+		}
+		
+		/// @exception std::out_of_range
+		inline	void read(ConstBufferRef const & buf, size_t pos, void * data, size_t size)
+		{
+			if(pos + size > buf.size())
+				throw std::out_of_range("buffer::read out of range");
+
+			std::copy(buf.data() + pos, buf.data() + pos + size, static_cast<char *>(data));
+		}
+
+		template<typename T>
+		typename boost::enable_if<boost::is_arithmetic<T> >::type	read(ConstBufferRef const & buf, size_t pos, T & t)
+		{
+			read(buf, pos, &t, sizeof(t));
 		}
 
 		inline char * data(Buffer & buf)
@@ -224,6 +257,11 @@ namespace lv
 		inline char * data(BufferPtr const & buf)
 		{
 			return &(*buf)[0];
+		}
+
+		inline std::string	to_string(ConstBufferRef const & buf)
+		{
+			return std::string(buf.data(), buf.size());
 		}
 	}
 }
