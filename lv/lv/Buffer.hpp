@@ -34,79 +34,6 @@ namespace lv
 	typedef BufferRefT<char>	BufferRef;
 
 
-	template <typename T>
-	class ConstBufferRefT
-	{
-		T const * data_;
-		size_t	size_;
-
-		boost::shared_ptr<std::vector<T> >	holder_;
-
-	public:
-		typedef T const & const_reference;
-
-
-		typedef T const * iterator;
-		typedef T const * const_iterator;
-
-
-		ConstBufferRefT()
-			: data_(NULL)
-			, size_(0)
-		{
-		}
-
-		ConstBufferRefT(T const * data, size_t size)
-			: data_(data)
-			, size_(size)
-		{
-		}
-
-		ConstBufferRefT(std::vector<T> const & buf)
-			: data_(buf.empty() ? NULL : &buf[0])
-			, size_(buf.size())
-		{
-		}
-
-		ConstBufferRefT(boost::shared_ptr<std::vector<T> > & buf_ptr)
-			: holder_(buf_ptr)
-			, data_(buf_ptr->empty() ? NULL : &(*buf_ptr)[0])
-			, size_(buf_ptr->size())
-		{
-		}
-
-		T const * data() const
-		{
-			return data_;
-		}
-
-		size_t size() const 
-		{
-			return size_;
-		}
-
-		bool empty() const
-		{
-			return data_ == NULL || size_ == 0;
-		}
-
-		const_iterator begin() const
-		{
-			return data_;
-		}
-
-		const_iterator end() const
-		{
-			return data_ + size_;
-		}
-
-		const_reference operator[] (size_t index) const
-		{
-			BOOST_ASSERT(data_ != NULL);
-			BOOST_ASSERT(index < size_);
-			return data_[index];
-		}
-	};
 
 	template <typename T>
 	class BufferRefT
@@ -114,10 +41,12 @@ namespace lv
 		T * data_;
 		size_t size_;
 
+		template<typename> friend class ConstBufferRefT;
+
 		boost::shared_ptr<std::vector<T> >	holder_;
 
 	public:
-	
+
 		typedef T & reference;
 		typedef T const & const_reference;
 
@@ -194,6 +123,88 @@ namespace lv
 			BOOST_ASSERT(data_ != NULL);
 			BOOST_ASSERT(index < size_);
 			return data_[index];
+		}
+
+		const_reference operator[] (size_t index) const
+		{
+			BOOST_ASSERT(data_ != NULL);
+			BOOST_ASSERT(index < size_);
+			return data_[index];
+		}
+	};
+
+
+	template <typename T>
+	class ConstBufferRefT
+	{
+		T const * data_;
+		size_t	size_;
+
+		boost::shared_ptr<std::vector<T> >	holder_;
+
+	public:
+		typedef T const & const_reference;
+
+
+		typedef T const * iterator;
+		typedef T const * const_iterator;
+
+
+		ConstBufferRefT()
+			: data_(NULL)
+			, size_(0)
+		{
+		}
+
+		ConstBufferRefT(T const * data, size_t size)
+			: data_(data)
+			, size_(size)
+		{
+		}
+
+		ConstBufferRefT(std::vector<T> const & buf)
+			: data_(buf.empty() ? NULL : &buf[0])
+			, size_(buf.size())
+		{
+		}
+
+		ConstBufferRefT(boost::shared_ptr<std::vector<T> > & buf_ptr)
+			: holder_(buf_ptr)
+			, data_(buf_ptr->empty() ? NULL : &(*buf_ptr)[0])
+			, size_(buf_ptr->size())
+		{
+		}
+
+		ConstBufferRefT(BufferRefT<T> const & buf)
+			: data_(buf.data())
+			, size_(buf.size())
+			, holder_(buf.holder_)
+		{
+		}
+
+		T const * data() const
+		{
+			return data_;
+		}
+
+		size_t size() const 
+		{
+			return size_;
+		}
+
+		bool empty() const
+		{
+			return data_ == NULL || size_ == 0;
+		}
+
+		const_iterator begin() const
+		{
+			return data_;
+		}
+
+		const_iterator end() const
+		{
+			return data_ + size_;
 		}
 
 		const_reference operator[] (size_t index) const
