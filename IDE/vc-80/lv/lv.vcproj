@@ -876,6 +876,14 @@
 					</File>
 				</Filter>
 			</Filter>
+			<Filter
+				Name="Header Files"
+				>
+				<File
+					RelativePath="..\..\..\lv\lv\Lua\Reg.hpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Serialization"
