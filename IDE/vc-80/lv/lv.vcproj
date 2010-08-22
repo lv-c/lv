@@ -380,6 +380,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\FileSystem\MyZipReader.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\FileSystem\RawFileReader.hpp"
 					>
 				</File>
@@ -397,6 +401,10 @@
 				</File>
 				<File
 					RelativePath="..\..\..\lv\src\lv\FileSystem\IOTask.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\src\lv\FileSystem\MyZipReader.cpp"
 					>
 				</File>
 				<File
@@ -880,7 +888,19 @@
 				Name="Header Files"
 				>
 				<File
+					RelativePath="..\..\..\lv\lv\Lua\Exec.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\Lua\Reg.hpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Source Files"
+				>
+				<File
+					RelativePath="..\..\..\lv\src\lv\Lua\Exec.cpp"
 					>
 				</File>
 			</Filter>

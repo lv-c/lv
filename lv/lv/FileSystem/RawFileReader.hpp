@@ -22,7 +22,7 @@ namespace lv
 		/** 
 		 * @see IFileIO::fulfill
 		 */
-		virtual void	fulfill(std::string const & file, BufferPtr buffer);
+		virtual void	fulfill(std::string const & file, BufferPtr buf);
 	};
 }
 

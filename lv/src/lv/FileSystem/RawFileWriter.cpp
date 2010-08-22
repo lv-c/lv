@@ -4,17 +4,17 @@
 
 namespace lv
 {
-	void RawFileWriter::fulfill(std::string const & file, BufferPtr buffer)
+	void RawFileWriter::fulfill(std::string const & file, BufferPtr buf)
 	{
-		std::ofstream ofile(file.c_str(), std::ios::out | std::ios::binary | std::ios::trunc);
+		std::ofstream ofile(file.c_str(), std::ios_base::out | std::ios_base::binary | std::ios_base::trunc);
 		if(! ofile)
-			throw(file_io_error(std::string("error opening file: ") + file));
+			throw(file_io_error("error opening file: " + file));
 		
 		// get the size of the file
-		if(buffer->size() != 0)
-			ofile.write(&(*buffer)[0], buffer->size());	// write the whole file
+		if(buf->size() != 0)
+			ofile.write(buffer::data(buf), buf->size());	// write the whole file
 
 		if(! ofile.good())
-			throw(file_io_error(std::string("error writing file : ") + file));
+			throw(file_io_error("error writing file: " + file));
 	}
 }

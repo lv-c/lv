@@ -24,14 +24,19 @@ namespace lv
 		 * Synchronous operation. 
 		 * @exception lv::file_io_error on failure
 		 */
-		virtual void	fulfill(std::string const & file, BufferPtr buffer) = 0;
+		virtual void	fulfill(std::string const & file, BufferPtr buf) = 0;
 
 		/**
 		 * This should perform an asynchronous operation if it's an asynchronous io class.
 		 * Otherwise it should call @a fulfill to perform a synchronous operation, which is
 		 * the default behavior.
 		 */
-		virtual	IOFuture	add_task(std::string const & file, BufferPtr buffer);
+		virtual	IOFuture	add_task(std::string const & file, BufferPtr buf);
+
+	protected:
+
+		// post condition: buf.size() == len, buf.capacity() > buf.size(), buf[len] = '\0'
+		static void	init_buffer(Buffer & buf, size_t len);
 	};
 }
 
