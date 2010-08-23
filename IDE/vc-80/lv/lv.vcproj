@@ -368,6 +368,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\FileSystem\Fwd.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\FileSystem\IFileIO.hpp"
 					>
 				</File>

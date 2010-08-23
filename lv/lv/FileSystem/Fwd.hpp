@@ -1,5 +1,5 @@
 // *********************************************************************
-//  Exec   version:  1.0   ¡¤  date: 08/22/2010
+//  Fwd   version:  1.0   ¡¤  date: 08/22/2010
 //  --------------------------------------------------------------------
 //  
 //  --------------------------------------------------------------------
@@ -8,28 +8,25 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUA_EXEC_HPP
-#define LV_LUA_EXEC_HPP
+#ifndef LV_FILESYSTEM_HPP
+#define LV_FILESYSTEM_HPP
 
-#include <lv/lvlib2.hpp>
+#include <boost/shared_ptr.hpp>
 
-struct lua_State;
+namespace lv
+{
+	class IFileIO;
+	typedef boost::shared_ptr<IFileIO>	IFileIOPtr;
 
-namespace lv { namespace lua {
+	class RawFileReader;
+	class RawFileWriter;
 
-	typedef int (* pcall_handler)(lua_State * L);
+	class MyZipReader;
 
-	inline int default_pcall_handler(lua_State * L)
-	{
-		return 1;
-	}
+	class IOFuture;
 
-
-	/// @exception runtime_error
-	void dostr(lua_State * L, char const * str, pcall_handler h = default_pcall_handler);
-
-
-} }
+	class IOTask;
+}
 
 
 #endif

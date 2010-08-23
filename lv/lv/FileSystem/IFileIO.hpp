@@ -11,8 +11,10 @@
 #ifndef LV_IFILEIO_HPP
 #define LV_IFILEIO_HPP
 
-#include <boost/enable_shared_from_this.hpp>
+#include <lv/FileSystem/Fwd.hpp>
 #include <lv/FileSystem/IOFuture.hpp>
+
+#include <boost/enable_shared_from_this.hpp>
 
 namespace lv
 {

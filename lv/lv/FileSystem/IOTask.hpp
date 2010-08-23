@@ -12,21 +12,21 @@
 #ifndef LV_IOTASK_HPP
 #define LV_IOTASK_HPP
 
-#include <string>
+#include <lv/FileSystem/Fwd.hpp>
+#include <lv/Buffer.hpp>
+#include <lv/lvlib2.hpp>
+
 // the author forgot to include this in future.hpp ?
 #include <boost/thread/condition_variable.hpp>
 #include <boost/thread/future.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/operators.hpp>
 
-#include <lv/Buffer.hpp>
-#include <lv/lvlib2.hpp>
+#include <string>
+
 
 namespace lv
 {
-	class IFileIO;
-	class IOFuture;
-
 	class IOTask : public boost::promise<void>, boost::equality_comparable<IOTask>
 	{
 		friend class IOFuture;

@@ -79,6 +79,6 @@ namespace lv { namespace lua {
 	.def(#fun, & base##::##fun, & base##Wrapper::default_##fun)
 
 #define LUA_REG_FUN(base, fun)	\
-	.def(#fun, & base##: 
+	.def(#fun, & base##::##fun)
 
 #endif
