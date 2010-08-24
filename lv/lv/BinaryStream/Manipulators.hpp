@@ -143,7 +143,6 @@ namespace lv { namespace bstream {
 
 			return os;
 		}
-
 	};
 
 	//
@@ -153,7 +152,6 @@ namespace lv { namespace bstream {
 		std::string	&	str_;
 
 		std::size_t		size_;
-
 
 	public:
 
@@ -165,21 +163,78 @@ namespace lv { namespace bstream {
 
 		friend BinaryIStream & operator >> (BinaryIStream & is, fixed_len_str const & fixed)
 		{
-			fixed.str_.assign(fixed.size_, '\0');
+			std::string & str = fixed.str_;
+			std::size_t size = fixed.size_;
 
-			if(fixed.size_ > 0)
+			str.resize(size);
+
+			if(size > 0)
 			{
-				is.read(&fixed.str_[0], fixed.size_);
-				fixed.str_ = fixed.str_.c_str();
+				is.read(&str[0], size);
+
+				for(size_t i = 0; i < size; ++i)
+				{
+					if(str[i] == '\0')
+					{
+						str.resize(i);
+						break;
+					}
+				}
 			}
 
 			return is;
 		}
 
+		friend BinaryOStream & operator << (BinaryOStream & os, fixed_len_str const & fixed)
+		{
+			BOOST_ASSERT(fixed.str_.size() <= fixed.size_);
+
+			std::size_t size = std::min(fixed.str_.size(), fixed.size_);
+			if(size > 0)
+				os.write(&fixed.str_[0], size);
+
+			if(size < fixed.size_)
+				os << fill_n(fixed.size_ - size, '\0');
+		}
+	};
+
+	template<typename SizeType>
+	class variable_len_str
+	{
+		std::string	&	str_;
+
+	public:
+
+		explicit variable_len_str(std::string & str)
+			: str_(str)
+		{
+		}
+
+		friend BinaryIStream & operator >> (BinaryIStream & is, variable_len_str const & var)
+		{
+			SizeType size;
+			is >> size;
+
+			var.str_.resize(size);
+			if(size > 0)
+				is.read(&var.str_[0], size);
+
+			return is;
+		}
+
+		friend BinaryOStream & operator << (BinaryOStream & os, variable_len_str const & var)
+		{
+			SizeType size(var.str_.size());
+			os << size;
+
+			if(size > 0)
+				os.write(&var.str_[0], size);
+
+			return os;
+		}
 	};
 
 } }
-
 
 
 #endif // LV_BINARYSTREAM_MANIPULATORS_HPP
