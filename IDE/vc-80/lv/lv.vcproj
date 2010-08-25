@@ -339,6 +339,10 @@
 					RelativePath="..\..\..\lv\lv\graphics\Texture.hpp"
 					>
 				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Graphics\Vector.hpp"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Source Files"
@@ -637,10 +641,6 @@
 				</File>
 				<File
 					RelativePath="..\..\..\lv\lv\Audio\AudioEngine.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\lv\lv\Audio\Vector.hpp"
 					>
 				</File>
 				<File

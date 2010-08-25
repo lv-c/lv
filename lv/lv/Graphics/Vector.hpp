@@ -8,8 +8,8 @@
 // 
 // *********************************************************************
 
-#ifndef LV_AUDIO_VECTOR_HPP
-#define LV_AUDIO_VECTOR_HPP
+#ifndef LV_GRAPHICS_VECTOR_HPP
+#define LV_GRAPHICS_VECTOR_HPP
 
 
 #include <boost/operators.hpp>
@@ -19,7 +19,7 @@ namespace lv
 {
 	template<typename T>
 	class VectorT : boost::additive<VectorT<T>,
-		boost::multipliable2<VectorT<T>, T,
+		boost::multiplicative2<VectorT<T>, T,
 		boost::modable2<VectorT<T>, T,
 		boost::equality_comparable<VectorT<T> > > > >
 	{
@@ -35,6 +35,14 @@ namespace lv
 
 		VectorT() : x(0), y(0), z(0) {}
 		VectorT(T _x, T _y, T _z) : x(_x), y(_y), z(_z) {}
+
+		template<typename U>
+		explicit VectorT(VectorT<U> const & vec)
+		{
+			x = static_cast<T>(vec.x);
+			y = static_cast<T>(vec.y);
+			z = static_cast<T>(vec.z);
+		}
 
 		void	set(T _x, T _y, T _z)
 		{
@@ -112,8 +120,8 @@ namespace lv
 	template<typename T>
 	T VectorT<T>::* const VectorT<T>::mem_array[VectorT<T>::ele_num] = { &VectorT<T>::x, &VectorT<T>::y, &VectorT<T>::z};
 
+	typedef VectorT<float>	Vector3f;
+
 }
 
-
-
-#endif // LV_AUDIO_VECTOR_HPP
+#endif

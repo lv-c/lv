@@ -251,6 +251,10 @@
 				RelativePath="..\..\..\UnitTest\UnitTest.cpp"
 				>
 			</File>
+			<File
+				RelativePath="..\..\..\UnitTest\Vector.cpp"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>
