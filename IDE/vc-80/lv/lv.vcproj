@@ -304,6 +304,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\Graphics\Math.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\Graphics\PixelFormat.hpp"
 					>
 				</File>

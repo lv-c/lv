@@ -22,5 +22,13 @@
 #define DbgPrint(exp)	((void)0)
 #endif
 
+#ifdef LOG_ENABLE_WEAK_PRINT
+#ifdef _DEBUG
+#define WeakPrint(exp)	LOG_DBG_LOGGER(lv::debug - 1) << exp
+#else
+#define WeakPrint(exp)	((void)0)
+#endif
+#endif
+
 
 #endif
