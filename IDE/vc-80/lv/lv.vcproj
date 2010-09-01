@@ -928,10 +928,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\lv\lv\Serialization\Graphics.hpp"
-					>
-				</File>
-				<File
 					RelativePath="..\..\..\lv\lv\Serialization\IArchive.hpp"
 					>
 				</File>
@@ -947,6 +943,30 @@
 					RelativePath="..\..\..\lv\lv\Serialization\Tuple.hpp"
 					>
 				</File>
+			</Filter>
+			<Filter
+				Name="Graphics"
+				>
+				<Filter
+					Name="Header Files"
+					>
+					<File
+						RelativePath="..\..\..\lv\lv\Serialization\Graphics\Point.hpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\lv\lv\Serialization\Graphics\Rect.hpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\lv\lv\Serialization\Graphics\Size.hpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\lv\lv\Serialization\Graphics\Vector.hpp"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 		<Filter
