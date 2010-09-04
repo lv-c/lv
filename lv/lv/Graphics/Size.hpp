@@ -10,25 +10,18 @@
 #ifndef LV_SIZE_HPP
 #define LV_SIZE_HPP
 
-#include <boost/operators.hpp>
-#include <boost/assert.hpp>
-
+#include <lv/Graphics/ContainerBase.hpp>
 #include <lv/IntType.hpp>
 
 namespace lv
 {
 	template<typename T>
-	class SizeT :boost::additive<SizeT<T>, 
+	class SizeT : public ContainerBase<SizeT<T>, T, 2>,
+		boost::additive<SizeT<T>, 
 		boost::multiplicative2<SizeT<T>, T,
-		boost::modable2<SizeT<T>, T,
-		boost::equality_comparable<SizeT<T> > > > >
-
+		boost::modable2<SizeT<T>, T> > >
 	{
 	public:
-
-		enum {
-			ele_num = 2
-		};
 
 		T	cx;
 		T	cy;
@@ -89,31 +82,14 @@ namespace lv
 			return *this;
 		}
 
-		T const & operator[] (size_t i) const
-		{
-			BOOST_ASSERT(i < ele_num);
-			return this->*mem_array[i];
-		}
-
-		T & operator[] (size_t i)
-		{
-			BOOST_ASSERT(i < ele_num);
-			return this->*mem_array[i];
-		}
-
-
 		SizeT abs() const
 		{
 			return SizeT(std::abs(cx), std::abs(cy));
 		}
 
-		// comparison
-		friend bool operator == (SizeT const& lhs, SizeT const& rhs)
-		{
-			return lhs.cx == rhs.cx && lhs.cy == rhs.cy;
-		}
-
 	private:
+
+		template<class, typename, size_t>	friend class ContainerBase;
 
 		static T SizeT::* const mem_array[ele_num];
 	};

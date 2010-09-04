@@ -10,26 +10,19 @@
 #ifndef LV_POINT_HPP
 #define LV_POINT_HPP
 
-#include <boost/operators.hpp>
-#include <boost/assert.hpp>
-
+#include <lv/Graphics/ContainerBase.hpp>
 #include <lv/IntType.hpp>
 
 namespace lv
 {
 	template<typename T>
-	class PointT : boost::additive<PointT<T>, 
+	class PointT : public ContainerBase<PointT<T>, T, 2>,
+		boost::additive<PointT<T>, 
 		boost::multiplicative2<PointT<T>, T,
-		boost::modable2<PointT<T>, T,
-		boost::equality_comparable<PointT<T> > > > >
+		boost::modable2<PointT<T>, T> > >
 
 	{
 	public:
-
-		enum {
-			ele_num = 2
-		};
-
 
 		T	x;
 		T	y;
@@ -91,19 +84,6 @@ namespace lv
 			return *this;
 		}
 
-		T const & operator[] (size_t i) const
-		{
-			BOOST_ASSERT(i < ele_num);
-			return this->*mem_array[i];
-		}
-
-		T & operator[] (size_t i)
-		{
-			BOOST_ASSERT(i < ele_num);
-			return this->*mem_array[i];
-		}
-
-
 		void	offset(T _x, T _y)
 		{
 			this->x += _x;
@@ -115,13 +95,9 @@ namespace lv
 			return PointT(std::abs(x), std::abs(y));
 		}
 
-		// comparison
-		friend bool operator == (PointT const& lhs, PointT const& rhs)
-		{
-			return lhs.x == rhs.x && lhs.y == rhs.y;
-		}
-
 	private:
+
+		template<class, typename, size_t>	friend class ContainerBase;
 
 		// array of pointers to member variables
 		static T PointT::* const		mem_array[ele_num];

@@ -16,22 +16,16 @@
 namespace lv
 {
 	template<typename T>
-	class RectT : boost::additive2<RectT<T>, PointT<T>,
-		boost::multiplicative2<RectT<T>, T,
-		boost::equality_comparable<RectT<T> > > > 
+	class RectT : public ContainerBase<RectT<T>, T, 4>,
+		boost::additive2<RectT<T>, PointT<T>,
+		boost::multiplicative2<RectT<T>, T> > 
 	{
 	public:
-
-		enum {
-			ele_num = 4
-		};
 
 		T	left;
 		T	top;
 		T	right;
 		T	bottom;
-
-
 
 		// constructors
 		RectT()
@@ -160,30 +154,9 @@ namespace lv
 			return *this;
 		}
 
-		T const & operator[] (size_t i) const
-		{
-			BOOST_ASSERT(i < ele_num);
-			return this->*mem_array[i];
-		}
-
-		T & operator[] (size_t i)
-		{
-			BOOST_ASSERT(i < ele_num);
-			return this->*mem_array[i];
-		}
-
-		// comparison
-		friend bool operator == (RectT const& lhs, RectT const& rhs)
-		{
-			for(size_t i = 0; i < ele_num; ++i)
-			{
-				if(lhs[i] != rhs[i])
-					return false;
-			}
-			return true;
-		}
-
 	private:
+
+		template<class, typename, size_t>	friend class ContainerBase;
 
 		static T RectT::* const mem_array[ele_num];
 	};

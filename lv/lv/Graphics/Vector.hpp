@@ -11,23 +11,17 @@
 #ifndef LV_GRAPHICS_VECTOR_HPP
 #define LV_GRAPHICS_VECTOR_HPP
 
-
-#include <boost/operators.hpp>
-#include <boost/assert.hpp>
+#include <lv/Graphics/ContainerBase.hpp>
 
 namespace lv
 {
 	template<typename T>
-	class VectorT : boost::additive<VectorT<T>,
+	class VectorT : public ContainerBase<VectorT<T>, T, 3>,
+		boost::additive<VectorT<T>,
 		boost::multiplicative2<VectorT<T>, T,
-		boost::modable2<VectorT<T>, T,
-		boost::equality_comparable<VectorT<T> > > > >
+		boost::modable2<VectorT<T>, T> > >
 	{
 	public:
-
-		enum {
-			ele_num = 3
-		};
 
 		T	x;
 		T	y;
@@ -86,31 +80,16 @@ namespace lv
 			z %= i;
 			return *this;
 		}
-
-		T const & operator[] (size_t i) const
-		{
-			BOOST_ASSERT(i < ele_num);
-			return this->*mem_array[i];
-		}
-
-		T & operator[] (size_t i)
-		{
-			BOOST_ASSERT(i < ele_num);
-			return this->*mem_array[i];
-		}
+		
 
 		VectorT abs() const
 		{
 			return VectorT(std::abs(x), std::abs(y), std::abs(z));
 		}
 
-		// comparison
-		friend bool operator == (VectorT const& lhs, VectorT const& rhs)
-		{
-			return (lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z);
-		}
-
 	private:
+
+		template<class, typename, size_t>	friend class ContainerBase;
 
 		static T VectorT::* const		mem_array[ele_num];
 

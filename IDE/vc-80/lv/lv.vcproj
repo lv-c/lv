@@ -292,6 +292,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\Graphics\ContainerBase.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\Graphics\Font.hpp"
 					>
 				</File>
@@ -341,6 +345,10 @@
 				</File>
 				<File
 					RelativePath="..\..\..\lv\lv\graphics\Texture.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Graphics\Triangle.hpp"
 					>
 				</File>
 				<File
@@ -960,6 +968,10 @@
 					</File>
 					<File
 						RelativePath="..\..\..\lv\lv\Serialization\Graphics\Size.hpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\lv\lv\Serialization\Graphics\Triangle.hpp"
 						>
 					</File>
 					<File
