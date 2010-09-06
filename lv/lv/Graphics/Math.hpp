@@ -11,6 +11,7 @@
 #ifndef LV_GRAPHICS_MATH_HPP
 #define LV_GRAPHICS_MATH_HPP
 
+#include <lv/Graphics/Point.hpp>
 #include <lv/Graphics/Vector.hpp>
 
 #include <cmath>
@@ -22,6 +23,13 @@ namespace lv { namespace math {
 	float const PI		=	3.14159265f;
 	float const PId2	=	1.57079632f;
 	float const PId4	=	0.78539816f;
+
+
+	template<typename T>
+	T	dist(PointT<T> const & lhs, PointT<T> const & rhs)
+	{
+		return std::sqrt((lhs.x - rhs.x) * (lhs.x - rhs.x) + (lhs.y - rhs.y) * (lhs.y - rhs.y));
+	}
 
 	inline __declspec(naked) float	rsqrt(float v)
 	{
