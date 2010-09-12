@@ -340,10 +340,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\lv\lv\Graphics\Streaming.hpp"
-					>
-				</File>
-				<File
 					RelativePath="..\..\..\lv\lv\graphics\Texture.hpp"
 					>
 				</File>
@@ -371,6 +367,30 @@
 					RelativePath="..\..\..\lv\src\lv\Graphics\FreeTypeFont.cpp"
 					>
 				</File>
+			</Filter>
+			<Filter
+				Name="Stream"
+				>
+				<Filter
+					Name="Header Fiels"
+					>
+					<File
+						RelativePath="..\..\..\lv\lv\Graphics\Stream\Point.hpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\lv\lv\Graphics\Stream\Rect.hpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\lv\lv\Graphics\Stream\Size.hpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\lv\lv\Graphics\Stream\Vector.hpp"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 		<Filter
@@ -873,42 +893,10 @@
 			Name="Lua"
 			>
 			<Filter
-				Name="Bind"
-				>
-				<Filter
-					Name="Header Files"
-					>
-					<File
-						RelativePath="..\..\..\lv\lv\Lua\Bind\Array.hpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\lv\lv\Lua\Bind\Graphics.hpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\lv\lv\Lua\Bind\Pair.hpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\lv\lv\Lua\Bind\Set.hpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\lv\lv\Lua\Bind\Vector.hpp"
-						>
-					</File>
-				</Filter>
-			</Filter>
-			<Filter
 				Name="Header Files"
 				>
 				<File
 					RelativePath="..\..\..\lv\lv\Lua\Exec.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\lv\lv\Lua\Reg.hpp"
 					>
 				</File>
 			</Filter>
@@ -1027,6 +1015,58 @@
 					RelativePath="..\..\..\lv\lv\Stream\StreamProxyBase.hpp"
 					>
 				</File>
+			</Filter>
+		</Filter>
+		<Filter
+			Name="Luabind"
+			>
+			<Filter
+				Name="Header Files"
+				>
+				<File
+					RelativePath="..\..\..\lv\lv\Luabind\Array.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Luabind\Pair.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Luabind\Reg.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Luabind\Set.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Luabind\Vector.hpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Graphics"
+				>
+				<Filter
+					Name="Header Files"
+					>
+					<File
+						RelativePath="..\..\..\lv\lv\Luabind\Graphics\Point.hpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\lv\lv\Luabind\Graphics\Rect.hpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\lv\lv\Luabind\Graphics\Size.hpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\lv\lv\Luabind\Graphics\Vector.hpp"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 	</Files>

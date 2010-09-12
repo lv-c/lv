@@ -8,14 +8,14 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUA_BIND_VECTOR_HPP
-#define LV_LUA_BIND_VECTOR_HPP
+#ifndef LV_LUABIND_VECTOR_HPP
+#define LV_LUABIND_VECTOR_HPP
 
 #include <vector>
 
 #include <boost/type_traits/has_trivial_constructor.hpp>
 
-#include <luabind/luabind.hpp>
+#include <luabind/class.hpp>
 #include <luabind/iterator_policy.hpp>
 
 namespace lv { namespace lua {

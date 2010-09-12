@@ -14,7 +14,7 @@
 #include <lv/Graphics/Rect.hpp>
 #include <lv/Graphics/Streaming.hpp>
 
-#include <luabind/luabind.hpp>
+#include <luabind/class.hpp>
 #include <luabind/operator.hpp>
 
 namespace lv { namespace lua {

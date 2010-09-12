@@ -1,5 +1,5 @@
 // *********************************************************************
-//  Point   version:  1.0   ¡¤  date: 11/25/2007
+//  Vector   version:  1.0   ¡¤  date: 09/10/2010
 //  --------------------------------------------------------------------
 //  
 //  --------------------------------------------------------------------
@@ -8,20 +8,18 @@
 // 
 // *********************************************************************
 
-#ifndef LV_SERIALIZATION_GRAPHICS_POINT_HPP
-#define LV_SERIALIZATION_GRAPHICS_POINT_HPP
+#ifndef LV_GRAPHICS_STREAM_VECTOR_HPP
+#define LV_GRAPHICS_STREAM_VECTOR_HPP
 
+#include <lv/Graphics/Vector.hpp>
 
-#include <lv/Graphics/Point.hpp>
-
-namespace boost { namespace serialization {
-
-	template<typename Archive, typename T>
-	void serialize(Archive & ar, lv::PointT<T> & pt, unsigned int)
+namespace lv
+{
+	template<typename T>
+	std::ostream & operator << (std::ostream & stream, VectorT<T> const & vec)
 	{
-		ar & pt.x & pt.y;
+		return stream << "Vector(" << vec.x << ", " << vec.y << ", " << vec.z << ')';
 	}
-
-} }
+}
 
 #endif

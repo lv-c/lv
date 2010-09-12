@@ -8,8 +8,8 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUA_REG_HPP
-#define LV_LUA_REG_HPP
+#ifndef LV_LUABIND_REG_HPP
+#define LV_LUABIND_REG_HPP
 
 #include <boost/utility/enable_if.hpp>
 #include <boost/type_traits/is_same.hpp>

@@ -8,11 +8,12 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUA_BIND_PAIR_HPP
-#define LV_LUA_BIND_PAIR_HPP
+#ifndef LV_LUABIND_PAIR_HPP
+#define LV_LUABIND_PAIR_HPP
 
 #include <utility>
-#include <luabind/luabind.hpp>
+
+#include <luabind/class.hpp>
 #include <luabind/operator.hpp>
 
 namespace lv

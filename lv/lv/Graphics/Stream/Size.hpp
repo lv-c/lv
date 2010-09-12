@@ -1,5 +1,5 @@
 // *********************************************************************
-//  Point   version:  1.0   ¡¤  date: 11/25/2007
+//  Size   version:  1.0   ¡¤  date: 09/07/2009
 //  --------------------------------------------------------------------
 //  
 //  --------------------------------------------------------------------
@@ -8,20 +8,18 @@
 // 
 // *********************************************************************
 
-#ifndef LV_SERIALIZATION_GRAPHICS_POINT_HPP
-#define LV_SERIALIZATION_GRAPHICS_POINT_HPP
+#ifndef LV_GRAPHICS_STREAM_SIZE_HPP
+#define LV_GRAPHICS_STREAM_SIZE_HPP
 
+#include <lv/Graphics/Size.hpp>
 
-#include <lv/Graphics/Point.hpp>
-
-namespace boost { namespace serialization {
-
-	template<typename Archive, typename T>
-	void serialize(Archive & ar, lv::PointT<T> & pt, unsigned int)
+namespace lv
+{
+	template<typename T>
+	std::ostream & operator << (std::ostream & stream, SizeT<T> const & sz)
 	{
-		ar & pt.x & pt.y;
+		return stream << "Size(" << sz.cx << ", " << sz.cy << ')';
 	}
-
-} }
+}
 
 #endif

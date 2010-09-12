@@ -8,12 +8,12 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUA_BIND_ARRAY_HPP
-#define LV_LUA_BIND_ARRAY_HPP
+#ifndef LV_LUABIND_ARRAY_HPP
+#define LV_LUABIND_ARRAY_HPP
 
 #include <boost/array.hpp>
 
-#include <luabind/luabind.hpp>
+#include <luabind/class.hpp>
 
 namespace lv { namespace lua {
 

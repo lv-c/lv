@@ -8,8 +8,8 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUA_BIND_SET_HPP
-#define LV_LUA_BIND_SET_HPP
+#ifndef LV_LUABIND_SET_HPP
+#define LV_LUABIND_SET_HPP
 
 #include <lv/Lua/Bind/Pair.hpp>
 
