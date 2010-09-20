@@ -16,8 +16,8 @@
 #include <luabind/class.hpp>
 #include <luabind/operator.hpp>
 
-namespace lv
-{
+namespace lv { namespace lua {
+
 	template<typename T1, typename T2>
 	void bind_pair(lua_State * state, char const * name)
 	{
@@ -34,6 +34,6 @@ namespace lv
 				.def(self == type())
 		];
 	}
-}
+} }
 
 #endif

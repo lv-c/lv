@@ -22,9 +22,6 @@
 #include <lv/Serialization/IArchive.hpp>
 #include <lv/Serialization/OArchive.hpp>
 
-//#include <lv/Packet/IPacket.hpp>
-//#include <lv/Packet/OPacket.hpp>
-
 #include <lv/SimpleBufferManager.hpp>
 
 #include <lv/Timer.hpp>

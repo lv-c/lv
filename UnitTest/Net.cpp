@@ -19,13 +19,8 @@
 #include <lv/SimpleBufferManager.hpp>
 
 
-#ifndef _DEBUG
 #pragma comment(lib, "libeay32.lib")
 #pragma comment(lib, "ssleay32.lib")
-#else
-#pragma comment(lib, "libeay32d.lib")
-#pragma comment(lib, "ssleay32d.lib")
-#endif
 
 
 using namespace lv::net;

@@ -200,10 +200,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\UnitTest\Buffer.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\UnitTest\DataFlow.cpp"
 				>
 			</File>
@@ -213,6 +209,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\UnitTest\Log.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\UnitTest\LuaArchive.cpp"
 				>
 			</File>
 			<File

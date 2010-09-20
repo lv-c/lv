@@ -34,11 +34,12 @@ namespace lv
 		}
 
 
-		IStreamPtr	open(ConstBufferRef buf)
+		IStreamPtr	open(ConstBufferRef buf, std::ios_base::iostate except = std::ios_base::badbit | std::ios_base::failbit)
 		{
 			boost::shared_ptr<istream_type> is = factory_->get();
 
 			is->open(buf.data(), buf.size());
+			is->exceptions(except);
 
 			return is;
 		}

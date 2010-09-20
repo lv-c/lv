@@ -1,1 +1,5 @@
 1. boost.thread 有 future 库， 代替原来的？
+
+2. BinaryStream , LuaArchive 
+
+如果没有包括各自的 Vector.hpp， 而包含了 boost.serialization 的， 是不是编译不错而运行出错

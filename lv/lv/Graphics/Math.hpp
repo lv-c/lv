@@ -14,6 +14,8 @@
 #include <lv/Graphics/Point.hpp>
 #include <lv/Graphics/Vector.hpp>
 
+#include <boost/static_assert.hpp>
+
 #include <cmath>
 #include <numeric>
 
@@ -33,6 +35,8 @@ namespace lv { namespace math {
 
 	inline __declspec(naked) float	rsqrt(float v)
 	{
+		BOOST_STATIC_ASSERT((sizeof(float) == 4));
+
 		__asm{
 			rsqrtss xmm0, dword ptr [esp + 4]
 			movss [esp + 4], xmm0

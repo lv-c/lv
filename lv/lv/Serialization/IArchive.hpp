@@ -91,7 +91,15 @@ namespace lv
 			uint8 x = 0;
 			load(x);
 
-			ver.t = x;
+			ver = boost::archive::version_type(x);
+		}
+
+		void	load(boost::serialization::item_version_type & ver)
+		{
+			uint8 x = 0;
+			load(x);
+
+			ver = boost::serialization::item_version_type(x);
 		}
 
 
@@ -117,11 +125,19 @@ namespace lv
 
 		void	load_binary(void * address, std::size_t count)
 		{
-			istream_.read(static_cast<char *>(address), count);
-
-			if(! istream_.good())
+			bool success = true;
+			try
 			{
-				throw boost::archive::archive_exception(boost::archive::archive_exception::stream_error);
+				istream_.read(static_cast<char *>(address), count);
+			}
+			catch(std::ios_base::failure const &)
+			{
+				success = false;
+			}
+
+			if(! istream_.good() || ! success)
+			{
+				throw boost::archive::archive_exception(boost::archive::archive_exception::input_stream_error);
 			}
 		}
 

@@ -17,6 +17,7 @@
 #include <boost/serialization/collection_size_type.hpp>
 #include <boost/serialization/array.hpp>
 #include <boost/serialization/serialization.hpp>
+#include <boost/serialization/item_version_type.hpp>
 
 #include <boost/archive/archive_exception.hpp>
 #include <boost/archive/basic_archive.hpp>
@@ -106,12 +107,12 @@ namespace lv { namespace serialization {
 				boost::archive::version_type file_ver;
 				ar >> file_ver;
 
-				if(file_ver.t > static_cast<unsigned int>(boost::serialization::version<T>::value))
+				if(file_ver > boost::archive::version_type(boost::serialization::version<T>::value))
 				{
 					throw boost::archive::archive_exception(boost::archive::archive_exception::unsupported_class_version);
 				}
 
-				boost::serialization::serialize(ar, t, file_ver.t);
+				boost::serialization::serialize(ar, t, file_ver);
 			}
 		};
 

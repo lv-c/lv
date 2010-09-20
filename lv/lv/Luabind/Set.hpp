@@ -11,13 +11,13 @@
 #ifndef LV_LUABIND_SET_HPP
 #define LV_LUABIND_SET_HPP
 
-#include <lv/Lua/Bind/Pair.hpp>
+#include <lv/Luabind/Pair.hpp>
 
 #include <set>
 #include <string>
 
-namespace lv
-{
+namespace lv { namespace lua {
+
 	template<typename T>
 	void bind_set(lua_State * state, char const * name)
 	{
@@ -44,6 +44,6 @@ namespace lv
 		// used by type::insert
 		bind_pair<type::iterator, bool>(state, (std::string(name) + "_ib_pair").c_str());
 	}
-}
+} }
 
 #endif

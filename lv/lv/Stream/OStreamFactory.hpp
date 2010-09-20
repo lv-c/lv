@@ -35,11 +35,12 @@ namespace lv
 		}
 
 
-		OStreamPtr	open(Buffer & buf)
+		OStreamPtr	open(Buffer & buf, std::ios_base::iostate except = std::ios_base::badbit | std::ios_base::failbit)
 		{
 			boost::shared_ptr<ostream_type> os = factory_->get();
 
 			os->open(boost::iostreams::back_inserter(buf));
+			os->exceptions(except);
 
 			return os;
 		}

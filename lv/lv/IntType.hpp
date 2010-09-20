@@ -12,6 +12,8 @@
 
 #include <boost/cstdint.hpp>
 #include <boost/type_traits/make_unsigned.hpp>
+#include <boost/type_traits/is_integral.hpp>
+#include <boost/mpl/assert.hpp>
 
 namespace lv
 {
@@ -61,6 +63,36 @@ namespace lv
 	struct UIntType : boost::make_unsigned<typename IntType<size>::type>
 	{
 	};
+
+
+
+	// for streaming
+	template<typename T>
+	struct WidenInt
+	{
+		BOOST_MPL_ASSERT((boost::is_integral<T>));
+
+		typedef	typename T	type;
+	};
+
+	template<>
+	struct WidenInt<int8>
+	{
+		typedef int32 type;
+	};
+
+	template<>
+	struct WidenInt<uint8>
+	{
+		typedef uint32 type;
+	};
+
+	
+	template<typename T>
+	typename WidenInt<T>::type widen_int(T t)
+	{
+		return t;
+	}
 
 }
 

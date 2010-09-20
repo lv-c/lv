@@ -312,7 +312,7 @@ namespace lv { namespace rpc {
 
 			namespace io = boost::iostreams;
 			io::filtering_ostream raw_os(io::back_inserter(*buf));
-			oarchive_type oa(raw_os, boost::archive::no_header);
+			oarchive_type oa(raw_os);
 
 			oa << Pro::header::call << unique_hash::hash<typename Pro::id_key_type const>(func_seed_, id);
 			boost::fusion::for_each(args, Serialize(oa));
@@ -326,7 +326,7 @@ namespace lv { namespace rpc {
 			namespace io = boost::iostreams;
 
 			io::filtering_ostream raw_os(io::back_inserter(*buf));
-			oarchive_type oa(raw_os, boost::archive::no_header);
+			oarchive_type oa(raw_os);
 
 			oa << call_option;
 			// sends the request id only when an acknowledgment or a return value is required

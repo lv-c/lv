@@ -80,8 +80,14 @@ namespace lv
 		
 		void	save(boost::archive::version_type ver)
 		{
-			BOOST_ASSERT(ver.t < boost::integer_traits<uint8>::const_max);
-			save(static_cast<uint8>(ver.t));
+			BOOST_ASSERT(ver < boost::archive::version_type(boost::integer_traits<uint8>::const_max));
+			save(static_cast<uint8>(ver));
+		}
+
+		void	save(boost::serialization::item_version_type ver)
+		{
+			BOOST_ASSERT(ver < boost::serialization::item_version_type(boost::integer_traits<uint8>::const_max));
+			save(static_cast<uint8>(ver));
 		}
 
 		void	save(std::string const & str)
@@ -100,11 +106,19 @@ namespace lv
 
 		void	save_binary(void const * address, std::size_t count)
 		{
-			ostream_.write(static_cast<char const*>(address), count);
-
-			if(! ostream_.good())
+			bool success = true;
+			try
 			{
-				throw boost::archive::archive_exception(boost::archive::archive_exception::stream_error);
+				ostream_.write(static_cast<char const*>(address), count);
+			}
+			catch(std::ios_base::failure const &)
+			{
+				success = false;
+			}
+
+			if(! ostream_.good() || ! success)
+			{
+				throw boost::archive::archive_exception(boost::archive::archive_exception::output_stream_error);
 			}
 		}
 

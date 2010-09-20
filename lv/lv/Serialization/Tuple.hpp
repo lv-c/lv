@@ -45,7 +45,7 @@ namespace boost { namespace serialization {
 #	define LV_TUPLE_SERIALIZATION_ARITY	5
 #endif
 
-#	define BOOST_PP_ITERATION_PARAMS_1 (3, (0, LV_TUPLE_SERIALIZATION_ARITY, <lv/Packet/Tuple.hpp>))
+#	define BOOST_PP_ITERATION_PARAMS_1 (3, (0, LV_TUPLE_SERIALIZATION_ARITY, <lv/Serialization/Tuple.hpp>))
 #	include BOOST_PP_ITERATE()
 
 } }

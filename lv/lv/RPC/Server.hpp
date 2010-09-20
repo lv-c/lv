@@ -77,7 +77,7 @@ namespace lv { namespace rpc {
 
 			namespace io = boost::iostreams;
 			io::filtering_ostream raw_os(io::back_inserter(*buf));
-			oarchive_type oa(raw_os, boost::archive::no_header);
+			oarchive_type oa(raw_os);
 
 			oa << protocol_type::header::confer << ex_seed_ << func_seed_;
 			raw_os.flush();
@@ -143,7 +143,7 @@ namespace lv { namespace rpc {
 
 			namespace io = boost::iostreams;
 			io::filtering_ostream raw_os(io::back_inserter(*buf));
-			oarchive_type oa(raw_os, boost::archive::no_header);
+			oarchive_type oa(raw_os);
 
 			oa << protocol_type::header::reply << id;
 			if(ex)

@@ -1,29 +1,32 @@
 // *********************************************************************
-//  List   version:  1.0   ¡¤  date: 10/28/2008
+//  Vector   version:  1.0   ¡¤  date: 09/19/2010
 //  --------------------------------------------------------------------
 //  
 //  --------------------------------------------------------------------
-//  Copyright (C) jcfly(lv.jcfly@gmail.com) 2008 - All Rights Reserved
+//  Copyright (C) jcfly(lv.jcfly@gmail.com) 2010 - All Rights Reserved
 // *********************************************************************
 // 
 // *********************************************************************
 
-#ifndef LV_BINARYSTREAM_LIST_HPP
-#define LV_BINARYSTREAM_LIST_HPP
+#ifndef LV_LUAARCHIVE_VECTOR_HPP
+#define LV_LUAARCHIVE_VECTOR_HPP
 
+#include <vector>
 
-#include <list>
+#include <lv/LuaArchive/Tags.hpp>
 
-#include <lv/BinaryStream/Serializer.hpp>
+namespace lv { namespace lua { namespace archive {
 
-namespace lv { namespace bstream {
 
 	template<typename T, typename Ax>
-	struct object_tag<std::list<T, Ax> >
-		: range_tag
+	struct object_tag<std::vector<T, Ax> >
+		: sequence_tag
 	{
 	};
 
-} }
 
-#endif // LV_BINARYSTREAM_LIST_HPP
+} } }
+
+
+
+#endif

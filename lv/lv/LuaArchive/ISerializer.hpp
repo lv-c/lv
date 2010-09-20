@@ -1,0 +1,218 @@
+// *********************************************************************
+//  ISerializer   version:  1.0   ¡¤  date: 09/19/2010
+//  --------------------------------------------------------------------
+//  
+//  --------------------------------------------------------------------
+//  Copyright (C) jcfly(lv.jcfly@gmail.com) 2010 - All Rights Reserved
+// *********************************************************************
+// 
+// *********************************************************************
+
+#ifndef LV_LUAARCHIVE_ISERIALIZER_HPP
+#define LV_LUAARCHIVE_ISERIALIZER_HPP
+
+#include <lv/LuaArchive/Tags.hpp>
+#include <lv/LuaArchive/Common.hpp>
+
+#include <luabind/object.hpp>
+
+#include <boost/serialization/nvp.hpp>
+#include <boost/serialization/serialization.hpp>
+#include <boost/serialization/version.hpp>
+#include <boost/logic/tribool.hpp>
+#include <boost/noncopyable.hpp>
+
+#include <stdexcept>
+
+namespace lv { namespace lua { namespace archive {
+
+	class UnmatchedLuaType : public std::runtime_error
+	{
+	public:
+		UnmatchedLuaType(int given, int expected)
+			: std::runtime_error(std::string("unmatched lua type:") +
+				lua_typename(NULL, expected) + " expected, " +
+				lua_typename(NULL, given) + " given.")
+		{
+		}
+	};
+	
+	
+	inline void	expect_obj_type(luabind::object const & obj, int expected)
+	{
+		int given = luabind::type(obj);
+		if(given != expected)
+			throw UnmatchedLuaType(given, expected);
+	}
+
+
+	template<typename T>
+	void	load(luabind::object const & obj, T & t);
+
+
+	namespace detail
+	{		
+		// unknown_tag
+		class IArchiveProxy : boost::noncopyable
+		{
+			luabind::object const & obj_;
+
+			size_t	index_;
+
+			boost::tribool	nvp_;
+
+		public:
+
+			typedef boost::mpl::true_	is_loading;
+			typedef boost::mpl::false_	is_saving;
+
+			IArchiveProxy(luabind::object const & obj)
+				: obj_(obj)
+				, index_(1)
+				, nvp_(boost::indeterminate)
+			{
+				expect_obj_type(obj, LUA_TTABLE);
+			}
+
+
+			template<typename T>
+			IArchiveProxy & operator >> (T & t)
+			{
+				this->load(t);
+
+				return *this;
+			}
+
+			template<typename T>	
+			IArchiveProxy & operator & (T & t)
+			{
+				return *this >> t;
+			}
+
+		private:
+
+			template<typename T>
+			void	load(T & t)
+			{
+				check_nvp(false);
+
+				archive::load(obj_[index_], t);
+				index_++;
+			}
+
+			template<typename T>
+			void	load(boost::serialization::nvp<T> const & t)
+			{
+				check_nvp(true);
+
+				archive::load(obj_, t);
+			}
+
+
+			void	check_nvp(bool is_nvp)
+			{
+				if(! boost::indeterminate(nvp_))
+				{
+					BOOST_ASSERT(((bool)nvp_ == is_nvp) && "you are trying to mix nvp with non-nvp");
+				}
+
+				nvp_ = is_nvp;
+			}
+		};
+
+
+		template<typename T>
+		void	load_impl(luabind::object const & obj, T & t, unknown_tag)
+		{
+			IArchiveProxy proxy(obj);
+			unsigned int version = DefaultVersion;
+
+			luabind::object version_obj = obj[VersionKey];
+			if(version_obj)
+				version = luabind::object_cast<unsigned int>(version_obj);
+
+			boost::serialization::serialize(proxy, t, version);
+		}
+
+		// primitive_tag
+		template<typename T>
+		struct primitive_type : boost::mpl::int_<LUA_TNUMBER> {};
+
+		template<>
+		struct primitive_type<bool> : boost::mpl::int_<LUA_TBOOLEAN> {};
+
+		template<>
+		struct primitive_type<std::string> : boost::mpl::int_<LUA_TSTRING> {};
+
+
+		template<typename T>
+		void	load_impl(luabind::object const & obj, T & t, primitive_tag)
+		{
+			expect_obj_type(obj, primitive_type<T>::value);
+
+			t = luabind::object_cast<T>(obj);
+		}
+
+		// sequence_tag
+		bool	is_version_key(luabind::object const & obj)
+		{
+			if(obj && luabind::type(obj) == LUA_TSTRING)
+				return (luabind::object_cast<std::string>(obj) == VersionKey);
+			
+			return false;
+		}
+
+		template<typename T>
+		void	load_impl(luabind::object const & obj, T & t, sequence_tag)
+		{
+			expect_obj_type(obj, LUA_TTABLE);
+
+			t.clear();
+			for(luabind::iterator it(obj), end; it != end; ++it)
+			{
+				typename T::value_type item;
+
+				BOOST_ASSERT(! is_version_key(it.key()) && "you shouldn't place a version key here");
+
+				load(*it, item);
+				t.push_back(item);
+			}
+		}
+
+		// associative_tag
+		template<typename T>
+		void	load_impl(luabind::object const & obj, T & t, associative_tag)
+		{
+			expect_obj_type(obj, LUA_TTABLE);
+
+			t.clear();
+			for(luabind::iterator it(obj), end; it != end; ++it)
+			{
+				typename T::key_type key;
+				typename T::value_type::second_type value;
+
+				BOOST_ASSERT(! is_version_key(it.key()) && "you shouldn't place a version key here");
+
+				load(it.key(), key);
+				load(*it, value);
+				t.insert(std::make_pair(key, value));
+			}
+		}
+	}
+
+
+	template<typename T>
+	void	load(luabind::object const & obj, T & t)
+	{
+		detail::load_impl(obj, t, object_tag<T>::type());
+	}
+
+	template<typename T>
+	void	load(luabind::object const & obj, boost::serialization::nvp<T> const & t)
+	{
+		load(obj[t.name()], t.value());
+	}
+
+} } }
+
+#endif

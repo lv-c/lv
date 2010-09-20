@@ -538,26 +538,6 @@
 			</Filter>
 		</Filter>
 		<Filter
-			Name="Packet"
-			>
-			<Filter
-				Name="Header Files"
-				>
-				<File
-					RelativePath="..\..\..\lv\lv\Packet\IPacket.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\lv\lv\Packet\OPacket.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\lv\lv\Packet\PacketException.hpp"
-					>
-				</File>
-			</Filter>
-		</Filter>
-		<Filter
 			Name="RPC"
 			>
 			<Filter
@@ -1067,6 +1047,58 @@
 						>
 					</File>
 				</Filter>
+			</Filter>
+		</Filter>
+		<Filter
+			Name="LuaArchive"
+			>
+			<Filter
+				Name="Header Files"
+				>
+				<File
+					RelativePath="..\..\..\lv\lv\LuaArchive\Common.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\LuaArchive\Fwd.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\LuaArchive\ISerializer.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\LuaArchive\List.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\LuaArchive\LuaIArchive.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\LuaArchive\LuaOArchive.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\LuaArchive\Map.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\LuaArchive\OSerializer.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\LuaArchive\Pair.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\LuaArchive\Tags.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\LuaArchive\Vector.hpp"
+					>
+				</File>
 			</Filter>
 		</Filter>
 	</Files>

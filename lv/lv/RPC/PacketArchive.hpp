@@ -13,18 +13,14 @@
 #ifndef LV_RPC_PACKETARCHIVE_HPP
 #define LV_RPC_PACKETARCHIVE_HPP
 
-#if LV_RPC_DEBUG
-#	define LV_PACKET_DEBUG	1
-#endif
-
-#include <lv/Packet/IPacket.hpp>
-#include <lv/Packet/OPacket.hpp>
+#include <lv/Serialization/IArchive.hpp>
+#include <lv/Serialization/OArchive.hpp>
 
 #include <lv/rpc/ArchiveBase.hpp>
 
 namespace lv { namespace rpc {
 
-	struct PacketArchive : ArchiveBase<IPacket, OPacket>
+	struct PacketArchive : ArchiveBase<IArchive, OArchive>
 	{
 	};
 
