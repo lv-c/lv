@@ -15,7 +15,6 @@
 #include <lv/Stream/OStreamProxy.hpp>
 
 #include <boost/mpl/bool.hpp>
-#include <boost/archive/basic_binary_iarchive.hpp>
 
 namespace lv
 {

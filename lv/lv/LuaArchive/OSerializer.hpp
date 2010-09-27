@@ -12,6 +12,7 @@
 #define LV_LUAARCHIVE_OSERIALIZER_HPP
 
 #include <lv/LuaArchive/Tags.hpp>
+#include <lv/LuaArchive/Common.hpp>
 #include <lv/IntType.hpp>
 
 #include <boost/noncopyable.hpp>

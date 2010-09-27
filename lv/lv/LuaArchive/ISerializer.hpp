@@ -154,7 +154,7 @@ namespace lv { namespace lua { namespace archive {
 		}
 
 		// sequence_tag
-		bool	is_version_key(luabind::object const & obj)
+		inline bool	is_version_key(luabind::object const & obj)
 		{
 			if(obj && luabind::type(obj) == LUA_TSTRING)
 				return (luabind::object_cast<std::string>(obj) == VersionKey);

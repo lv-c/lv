@@ -14,12 +14,10 @@
 #ifndef LV_BINARYISTREAM_HPP
 #define LV_BINARYISTREAM_HPP
 
-#include <boost/mpl/bool.hpp>
-#include <boost/iostreams/device/array.hpp>
-#include <boost/iostreams/stream.hpp>
-
 #include <lv/Stream/IStreamProxy.hpp>
 #include <lv/BinaryStream/Serializer.hpp>
+
+#include <boost/mpl/bool.hpp>
 
 namespace lv
 {

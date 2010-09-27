@@ -14,9 +14,11 @@
 #include <lv/LuaArchive/Fwd.hpp>
 #include <lv/LuaArchive/ISerializer.hpp>
 
+#include <boost/noncopyable.hpp>
+
 namespace lv
 {
-	class LuaIArchive
+	class LuaIArchive : boost::noncopyable
 	{
 		luabind::object	table_;
 

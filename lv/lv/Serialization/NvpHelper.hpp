@@ -1,5 +1,5 @@
 // *********************************************************************
-//  Fwd   version:  1.0   ¡¤  date: 04/06/2010
+//  NvpHelper   version:  1.0   ¡¤  date: 09/26/2010
 //  --------------------------------------------------------------------
 //  
 //  --------------------------------------------------------------------
@@ -8,16 +8,32 @@
 // 
 // *********************************************************************
 
-#ifndef LV_SERIALIZATION_FWD_HPP
-#define LV_SERIALIZATION_FWD_HPP
+#ifndef LV_SERIALIZATION_NVPHELPER_HPP
+#define LV_SERIALIZATION_NVPHELPER_HPP
+
+#include <boost/serialization/nvp.hpp>
 
 namespace lv
 {
-	class IArchive;
-	class OArchive;
-
 	template<class Archive>
-	class NvpHelper;
+	class NvpHelper
+	{
+		Archive &	ar_;
+
+	public:
+		
+		explicit NvpHelper(Archive & ar)
+			: ar_(ar)
+		{
+		}
+
+		template<typename T>
+		NvpHelper const & operator () (char const * name, T & t) const
+		{
+			ar_ & boost::serialization::make_nvp(name, t);
+			return *this;
+		}
+	};
 }
 
 

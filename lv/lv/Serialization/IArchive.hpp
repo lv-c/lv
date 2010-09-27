@@ -14,11 +14,13 @@
 #include <lv/Serialization/Serialization.hpp>
 #include <lv/Stream/IStreamProxy.hpp>
 
+#include <boost/noncopyable.hpp>
+
 #include <string>
 
 namespace lv
 {
-	class IArchive
+	class IArchive : boost::noncopyable
 	{
 		IStreamProxy	istream_;
 

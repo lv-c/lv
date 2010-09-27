@@ -908,6 +908,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\Serialization\NvpHelper.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\Serialization\OArchive.hpp"
 					>
 				</File>

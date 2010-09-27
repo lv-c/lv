@@ -15,11 +15,13 @@
 #include <lv/Serialization/Serialization.hpp>
 #include <lv/Stream/OStreamProxy.hpp>
 
+#include <boost/noncopyable.hpp>
+
 #include <string>
 
 namespace lv
 {
-	class OArchive
+	class OArchive : boost::noncopyable
 	{
 		OStreamProxy	ostream_;
 

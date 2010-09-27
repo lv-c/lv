@@ -14,9 +14,11 @@
 #include <lv/LuaArchive/Fwd.hpp>
 #include <lv/LuaArchive/OSerializer.hpp>
 
+#include <boost/noncopyable.hpp>
+
 namespace lv { namespace lua { namespace archive {
 
-	class LuaOArchive
+	class LuaOArchive : boost::noncopyable
 	{
 		std::ostream &	os_;
 
