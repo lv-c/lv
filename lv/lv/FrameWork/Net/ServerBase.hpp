@@ -43,6 +43,10 @@ namespace lv { namespace net {
 		{
 		}
 
+		virtual	~ServerBase()
+		{
+		}
+
 		virtual	void	start()
 		{
 			start_accept();

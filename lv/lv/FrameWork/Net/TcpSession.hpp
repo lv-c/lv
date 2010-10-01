@@ -25,7 +25,7 @@ namespace lv { namespace net {
 
 	public:
 
-		TcpSession(ContextPtr context)
+		explicit TcpSession(ContextPtr context)
 			: base_type(context)
 			, socket_(context->service())
 		{

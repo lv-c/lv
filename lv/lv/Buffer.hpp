@@ -225,6 +225,13 @@ namespace lv
 			buf.insert(buf.end(), static_cast<char const*>(data), static_cast<char const*>(data) + size);
 		}
 
+		template<typename T>
+		typename boost::enable_if<boost::is_arithmetic<T> >::type	append(Buffer & buf, T t)
+		{
+			append(buf, &t, sizeof(t));
+		}
+
+
 		/// @exception std::out_of_range
 		inline	void write(BufferRef buf, size_t pos, void const* data, size_t size)
 		{

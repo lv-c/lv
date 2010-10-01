@@ -13,6 +13,7 @@
 
 #include <lv/FrameWork/Net/Fwd.hpp>
 #include <lv/FrameWork/Net/PacketBufferManager.hpp>
+#include <lv/FrameWork/Net/PacketSplitter.hpp>
 
 #include <lv/DataFlow.hpp>
 
@@ -25,6 +26,8 @@ namespace lv { namespace net {
 	template<typename Key, class S>
 	class FlowSession : public S
 	{
+		PacketSplitter<uint16>	splitter_;
+
 	protected:
 
 		typedef S	base_type;
@@ -36,14 +39,12 @@ namespace lv { namespace net {
 		typedef flow::Source<key_type, int>	source_type;
 		boost::shared_ptr<source_type>	source_;
 
-		Buffer	cache_;
-
-
 	public:
 
 		/// @TODO constructor of the base_type may take other parameters
-		FlowSession(ContextPtr context)
+		explicit FlowSession(ContextPtr context)
 			: base_type(context)
+			, splitter_(context->buffer_manager())
 		{
 			source_.reset(new source_type(0, boost::bind(&FlowSession::push, this, _1, _2), 
 				BufferManagerPtr(new PacketBufferManager(1024))));
@@ -55,7 +56,7 @@ namespace lv { namespace net {
 		{
 			if(buf->size() > 2)
 			{
-				*reinterpret_cast<uint16*>(&(*buf)[0]) = static_cast<uint16>(buf->size() - 2);
+				buffer::write(buf, 0, uint16(buf->size()));
 
 				start_write(buf);
 			}
@@ -67,24 +68,17 @@ namespace lv { namespace net {
 
 		virtual void	on_receive(BufferPtr buf)
 		{
-			cache_.insert(cache_.end(), buf->begin(), buf->end());
+			splitter_.push(buf);
 
-			size_t index = 0;
-			while(index + 2 < cache_.size())
+			while(true)
 			{
-				uint16 size = *reinterpret_cast<uint16*>(&cache_[index]);
-
-				if(index + 2 + size > cache_.size())
+				BufferPtr new_buf = splitter_.get();
+				if(! new_buf)
 					break;
-
-				BufferPtr newbuf = context_->buffer();
-				newbuf->assign(cache_.begin() + index + 2, cache_.begin() + index + 2 + size);
-
-				index += 2 + size;
 
 				try
 				{
-					handle_packet(newbuf);
+					handle_packet(new_buf);
 				}
 				catch (std::exception const & /* ex */)
 				{
@@ -94,9 +88,6 @@ namespace lv { namespace net {
 					return;
 				}
 			}
-
-			cache_.erase(cache_.begin(), cache_.begin() + index);
-
 		}
 
 		/// @note overload this function to handle the exceptions. If any exception is thrown

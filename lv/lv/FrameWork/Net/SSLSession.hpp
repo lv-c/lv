@@ -29,7 +29,7 @@ namespace lv { namespace net {
 
 	public:
 
-		SSLSession(ContextPtr context)
+		explicit SSLSession(ContextPtr context)
 			: base_type(context)
 			, socket_(context->service(), 
 				*boost::dynamic_pointer_cast<SSLContext>(context)->get_ssl_context())

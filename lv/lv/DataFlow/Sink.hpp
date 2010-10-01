@@ -22,8 +22,6 @@
 
 #include <boost/bind.hpp>
 #include <boost/noncopyable.hpp>
-#include <boost/iostreams/device/array.hpp>
-#include <boost/iostreams/stream.hpp>
 
 namespace lv { namespace flow {
 

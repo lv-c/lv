@@ -25,9 +25,6 @@
 #include <boost/preprocessor/repetition/enum_params.hpp>
 #include <boost/preprocessor/punctuation/comma_if.hpp>
 
-#include <boost/iostreams/stream.hpp>
-#include <boost/iostreams/device/back_inserter.hpp>
-
 #include <boost/function.hpp>
 
 #include <boost/tuple/tuple.hpp>

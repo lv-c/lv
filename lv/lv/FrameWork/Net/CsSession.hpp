@@ -27,7 +27,7 @@ namespace lv { namespace net {
 	{
 	public:
 
-		CsSession(ContextPtr context)
+		explicit CsSession(ContextPtr context)
 			: SessionBase(context)
 		{
 		}
@@ -44,7 +44,7 @@ namespace lv { namespace net {
 	{
 	public:
 		
-		CsSession(ContextPtr context)
+		explicit CsSession(ContextPtr context)
 			: SessionBase(context)
 		{
 		}

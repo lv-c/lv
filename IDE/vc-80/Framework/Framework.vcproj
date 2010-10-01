@@ -172,6 +172,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\FrameWork\Net\PacketSplitter.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\FrameWork\Net\ServerBase.hpp"
 					>
 				</File>

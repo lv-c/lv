@@ -29,6 +29,24 @@ namespace lv { namespace net {
 		ErrorWrite
 	};
 
+	inline char const *	error_string(ErrorType type)
+	{
+		switch(type)
+		{
+		case ErrorConnect:
+			return "ErrorConnect";
+		case ErrorHandshake:
+			return "ErrorHandshake";
+		case ErrorRead:
+			return "ErrorRead";
+		case ErrorWrite:
+			return "ErrorWrite";
+		default:
+			BOOST_ASSERT(false);
+			return "";
+		}
+	}
+
 	class SessionBase : public boost::enable_shared_from_this<SessionBase>
 	{
 	protected:
@@ -37,10 +55,13 @@ namespace lv { namespace net {
 
 	public:
 
-		SessionBase(ContextPtr context)
+		explicit SessionBase(ContextPtr context)
 			: context_(context)
 		{
-			
+		}
+
+		virtual	~SessionBase()
+		{
 		}
 
 		std::string		remote_ip()
