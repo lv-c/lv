@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="Framework"
-	ProjectGUID="{51098B53-78E6-4FD6-AF7E-D4D0668618BD}"
-	RootNamespace="Framework"
+	Name="Toolkit"
+	ProjectGUID="{6D9FB40B-19E3-4B2D-9835-B121F01FF9AD}"
+	RootNamespace="Toolkit"
 	Keyword="Win32Proj"
 	>
 	<Platforms>
@@ -18,7 +18,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="..\..\..\bin"
-			IntermediateDirectory="..\..\..\build\Framework\msvc-8.0\debug\link-static"
+			IntermediateDirectory="..\..\..\build\Toolkit\msvc-8.0\debug\link-static"
 			ConfigurationType="4"
 			CharacterSet="1"
 			>
@@ -81,7 +81,7 @@
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="..\..\..\bin"
-			IntermediateDirectory="..\..\..\build\Framework\msvc-8.0\release\link-static"
+			IntermediateDirectory="..\..\..\build\Toolkit\msvc-8.0\release\link-static"
 			ConfigurationType="4"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
@@ -143,65 +143,41 @@
 	</References>
 	<Files>
 		<Filter
-			Name="Net"
+			Name="Lua"
 			>
 			<Filter
 				Name="Header Files"
 				>
 				<File
-					RelativePath="..\..\..\lv\lv\FrameWork\Net\Context.hpp"
+					RelativePath="..\..\..\lv\lv\Toolkit\Lua\Fwd.hpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\lv\lv\FrameWork\Net\CsSession.hpp"
+					RelativePath="..\..\..\lv\lv\Toolkit\Lua\LuaConfig.hpp"
 					>
 				</File>
+			</Filter>
+			<Filter
+				Name="Source Files"
+				>
 				<File
-					RelativePath="..\..\..\lv\lv\FrameWork\Net\FlowSession.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\lv\lv\FrameWork\Net\Fwd.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\lv\lv\FrameWork\Net.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\lv\lv\FrameWork\Net\PacketBufferManager.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\lv\lv\FrameWork\Net\PacketSplitter.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\lv\lv\FrameWork\Net\ServerBase.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\lv\lv\FrameWork\Net\SessionBase.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\lv\lv\FrameWork\Net\SSLContext.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\lv\lv\FrameWork\Net\SSLServer.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\lv\lv\FrameWork\Net\SSLSession.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\lv\lv\FrameWork\Net\TcpSession.hpp"
+					RelativePath="..\..\..\lv\src\Toolkit\Lua\LuaConfig.cpp"
 					>
 				</File>
 			</Filter>
 		</Filter>
+		<Filter
+			Name="Header Files"
+			>
+			<File
+				RelativePath="..\..\..\lv\lv\Toolkit\ToolkitLib.hpp"
+				>
+			</File>
+		</Filter>
+		<File
+			RelativePath="..\..\..\lv\lv\Toolkit\note.txt"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>
