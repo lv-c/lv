@@ -12,6 +12,7 @@
 #define LV_LOG_MANIPULATORS_HPP
 
 #include <lv/Log/Fwd.hpp>
+#include <lv/IntType.hpp>
 
 namespace lv { namespace log {
 
@@ -26,7 +27,7 @@ namespace lv { namespace log {
 
 			friend ostream_type & operator << (ostream_type & os, hex_impl const & h)
 			{
-				return os << "0x" << std::hex << h.t_ << std::dec;
+				return os << "0x" << std::hex << lv::widen_int(h.t_) << std::dec;
 			}
 		};
 	}

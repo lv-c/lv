@@ -18,7 +18,7 @@
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/text_iarchive.hpp>
 
-typedef lv::DSTree<char, int>::type dstree_type;
+typedef lv::DSTree<char, int>	dstree_type;
 
 void check_serialize_dstree(dstree_type const & tree)
 {

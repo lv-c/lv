@@ -28,17 +28,17 @@ namespace lv { namespace lua { namespace graphics {
 		module(state)
 		[
 			class_<type>(name)
-			.def(constructor<>())
-			.def(constructor<T, T>())
-			.def_readwrite("cx", &type::cx)
-			.def_readwrite("cy", &type::cy)
-			.def("set", &type::set)
-			.def(tostring(self))
-			.def(self + type())
-			.def(self - type())
-			.def(self * T())
-			.def(self / T())
-			.def(self == type())
+				.def(constructor<>())
+				.def(constructor<T, T>())
+				.def_readwrite("cx", &type::cx)
+				.def_readwrite("cy", &type::cy)
+				.def("set", &type::set)
+				.def(tostring(self))
+				.def(self + type())
+				.def(self - type())
+				.def(self * T())
+				.def(self / T())
+				.def(self == type())
 		];
 	}
 

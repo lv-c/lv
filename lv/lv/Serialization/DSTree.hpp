@@ -15,33 +15,36 @@
 #include <lv/Foreach.hpp>
 
 #include <boost/serialization/serialization.hpp>
-#include <boost/serialization/optional.hpp>
 #include <boost/serialization/split_free.hpp>
 
 #include <boost/range/as_array.hpp>
 
 namespace boost { namespace serialization {
 
-	template<typename Archive, typename Ele, typename Info, typename Pred>
-	void save(Archive & ar, lv::DSTNode<Ele, Info, Pred> const & tree, unsigned int)
+	template<typename Archive, typename Key, typename Data, typename Pred>
+	void save(Archive & ar, lv::DSTree<Key, Data, Pred> const & tree, unsigned int)
 	{
-		typedef lv::DSTNode<Ele, Info, Pred> tree_type;
+		typedef lv::DSTree<Key, Data, Pred> tree_type;
 
 		tree_type::size_type size = tree.size();
 		ar & size;
 
-		foreach(tree_type::shared_pointer const & sp, tree)
+		foreach(tree_type::value_type const & v, tree)
 		{
-			tree_type const & p = *sp;
+			bool has_data = v.data();
+			ar & v.key() & has_data;
 
-			ar & p.element() & p.info() & p;
+			if(has_data)
+				ar & (*v.data());
+				
+			ar & v;
 		}
 	}
 
-	template<typename Archive, typename Ele, typename Info, typename Pred>
-	void load(Archive & ar, lv::DSTNode<Ele, Info, Pred> & tree, unsigned int)
+	template<typename Archive, typename Key, typename Data, typename Pred>
+	void load(Archive & ar, lv::DSTree<Key, Data, Pred> & tree, unsigned int)
 	{
-		typedef lv::DSTNode<Ele, Info, Pred> tree_type;
+		typedef lv::DSTree<Key, Data, Pred> tree_type;
 
 		tree_type::size_type size;
 		ar & size;
@@ -50,21 +53,29 @@ namespace boost { namespace serialization {
 
 		for(tree_type::size_type i = 0; i < size; ++i)
 		{
-			Ele ele[1];
-			boost::optional<Info> info;
+			Key key[1];
+			tree_type::data_pointer data;
+			bool has_data;
 
-			ar & ele[0] & info;
-			tree.insert(boost::as_array(ele), info);
+			ar & key[0] & has_data;
 
-			tree_type::iterator it = tree.find_child(ele[0]);
+			if(has_data)
+			{
+				data.reset(new tree_type::data_type());
+				ar & (*data);
+			}
+
+			tree.insert(boost::as_array(key), data);
+
+			tree_type::iterator it = tree.find_child(key[0]);
 			BOOST_ASSERT(it != tree.end());
 
-			ar & (**it);
+			ar & (*it);
 		}
 	}
 
-	template<typename Archive, typename Ele, typename Info, typename Pred>
-	void serialize(Archive & ar, lv::DSTNode<Ele, Info, Pred> & tree, unsigned int version)
+	template<typename Archive, typename Key, typename Data, typename Pred>
+	void serialize(Archive & ar, lv::DSTree<Key, Data, Pred> & tree, unsigned int version)
 	{
 		split_free(ar, tree, version);
 	}

@@ -2,11 +2,8 @@
 //  DSTree   version:  1.0   ·  date: 09/07/2007
 //  --------------------------------------------------------------------
 //						Digital Search Tree
-//			对孩子结点进行有序插入，然后使用折半查找
-//			为提高效率，所以函数均使用非递归实现
-//	TODO: 换一个 iterator, 遍历算法
 //  --------------------------------------------------------------------
-//  Copyright (C) jcfly(lv.jcfly@gmail.com) 2008 - All Rights Reserved
+//  Copyright (C) jcfly(lv.jcfly@gmail.com) 2007 - All Rights Reserved
 // *********************************************************************
 // 
 // *********************************************************************
@@ -14,177 +11,105 @@
 #ifndef LV_DSTREE_HPP
 #define LV_DSTREE_HPP
 
-#include <vector>
-#include <algorithm>
-#include <functional>
+#include <lv/Foreach.hpp>
 
+#include <boost/ptr_container/ptr_vector.hpp>
 #include <boost/shared_ptr.hpp>
-#include <boost/optional.hpp>
-#include <boost/range.hpp>
 #include <boost/operators.hpp>
 
-#include <lv/SharedPtr.hpp>
-#include <lv/Foreach.hpp>
+#include <functional>
 
 namespace lv
 {
-
-	template<class Ele, class Info, class Pred = std::less<Ele> >
-	class DSTNode : boost::equality_comparable<DSTNode<Ele, Info, Pred> >
+	template<class Key, class Data, class Pred = std::less<Key> >
+	class DSTree : boost::equality_comparable<DSTree<Key, Data, Pred> >
 	{
-		typedef boost::shared_ptr<DSTNode>	NodePtr;
+		typedef boost::shared_ptr<Data>	DataPtr;
 
-		Ele		element_;
-		Pred	pred_;
-		boost::optional<Info>	info_;	// value associated with this node
+		Key			key_;
+		DataPtr		data_;
 
-		typedef std::vector<NodePtr>	children_type;
+		Pred		pred_;
+
+		typedef boost::ptr_vector<DSTree>	children_type;
 		children_type	children_;
 
-		DSTNode *	parent_;
-
-		
-		static bool node_pred(NodePtr const & lhs, NodePtr const & rhs)
-		{
-			return lhs->pred_(lhs->element_, rhs->element_);
-		}
+		DSTree	*	parent_;
 
 	private:
-		DSTNode(Ele const & ele, DSTNode * parent, Pred pred = Pred())
+		
+		DSTree(Key const & key, DSTree * parent, Pred const & pred)
 			: pred_(pred)
-			, element_(ele)
+			, key_(key)
 			, parent_(parent)
 		{
 		}
 
+		struct NodePred
+		{
+			bool operator () (DSTree const & lhs, Key const & key) const
+			{
+				return lhs.pred_(lhs.key_, key);
+			}
+
+			// Bug of vc2005?
+			bool operator () (Key const & key, DSTree const & rhs) const
+			{
+				return rhs.pred_(key, rhs.key_);
+			}
+
+			bool operator () (DSTree const & lhs, DSTree const & rhs) const
+			{
+				return lhs.pred_(lhs.key_, rhs.key_);
+			}
+		};
+
 	public:
+
+		typedef typename Key	key_type;
+		typedef typename Data	data_type;
+
+		typedef DSTree	value_type;
 
 		typedef typename children_type::iterator	iterator;
 		typedef typename children_type::const_iterator	const_iterator;
 
 		typedef typename children_type::size_type	size_type;
 
-		typedef NodePtr	shared_pointer;
+		typedef boost::shared_ptr<Data>			data_pointer;
+		typedef boost::shared_ptr<Data const>	const_data_pointer;
 
-		DSTNode(Pred pred = Pred())
+
+		explicit DSTree(Pred const & pred = Pred())
 			: pred_(pred)
 			, parent_(NULL)
 		{
 		}
 
-		Ele const & element() const
+
+		key_type const & key() const
 		{
-			return element_;
+			return key_;
 		}
 
-		boost::optional<Info> const & info() const
+		data_pointer	data()
 		{
-			return info_;
+			return data_;
 		}
 
-		boost::optional<Info> & info()
+		const_data_pointer	data() const
 		{
-			return info_;
+			return data_;
 		}
 
-		DSTNode * parent()
+		DSTree *	parent()
 		{
 			return parent_;
 		}
 
-		DSTNode const * parent() const
+		DSTree const * parent() const
 		{
 			return parent_;
-		}
-
-		// boost::ref is supported for all the following sequence
-		// that's , seq can be a sequence of reference_wrapper type objects
-
-		// insert a sequence
-		// @param info you can use boost::none_t here 
-		template<class RangeT>
-		void	insert(RangeT const & seq, boost::optional<Info> const & info)
-		{
-			DSTNode * node = this;
-			foreach(Ele const & ele, seq)
-			{
-				iterator it = node->find_child(ele);
-				
-				if(it == node->end())
-				{
-					NodePtr new_node(new DSTNode(ele, node, pred_));
-					it = node->children_.insert(std::lower_bound(node->begin(), node->end(), new_node,
-						&DSTNode::node_pred), new_node);
-				}
-
-				node = it->get();
-			}
-
-			node->info_ = info;
-		}
-
-		template<class RangeT>
-		DSTNode * sub_tree(RangeT const & seq)
-		{
-			DSTNode * node = this;
-			foreach(boost::range_value<RangeT>::type const & ele, seq)
-			{
-				iterator it = node->find_child(ele);
-				if(it == node->end())
-					return NULL;
-
-				node = it->get();
-			}
-
-			return node;
-		}
-
-
-		// find a specified sequence
-		template<class RangeT>
-		bool	find(RangeT const & seq, Info & info) 		// fixed count
-		{
-			DSTNode * node = sub_tree(seq);
-
-			if(node == NULL)
-				return false;
-
-			if(node->info_)
-				info = *node->info_;
-
-			return node->info_;
-		}
-
-		/**
-		 * Find the first matched sequence
-		 * @param size size of the matched sequence
-		 */
-		template<class RangeT>
-		bool first_match(RangeT const & seq, Info & info, size_t * size = NULL) 
-		{
-			size_t len = 0;
-
-			DSTNode * node = this;
-			foreach(Ele const & ele, seq)
-			{
-				len ++;
-
-				iterator it = node->find_child(ele);
-				if(it == node->end())
-					return false;
-				else if((*it)->info_)
-				{
-					info = *(*it)->info_;
-					if(size != NULL)
-						*size = len;
-
-					return true;
-				}
-
-				node = it->get();
-			}
-			
-			return false;
 		}
 
 		void	clear()
@@ -232,9 +157,9 @@ namespace lv
 			children_.erase(it);
 		}
 
-		bool erase(Ele const & ele)
+		bool erase(key_type const & key)
 		{
-			iterator it = find_child(ele);
+			iterator it = find_child(key);
 			if(it != end())
 			{
 				erase(it);
@@ -244,14 +169,102 @@ namespace lv
 				return false;
 		}
 
-		iterator find_child(Ele const & ele)
+		template<class KeyRange>
+		void	insert(KeyRange const & seq, data_pointer data)
 		{
-			DSTNode node(ele, this, pred_);
-			iterator it = std::lower_bound(begin(), end(), lv::shared_from_object(node), &DSTNode::node_pred);
-			return (it == end() || pred_(ele, (*it)->element_) ? end() : it);
+			DSTree * tree = this;
+			foreach(key_type const & key, seq)
+			{
+				iterator it = tree->find_child(key);
+
+				if(it == tree->end())
+				{
+					DSTree * new_node = new DSTree(key, tree, pred_);
+					it = tree->children_.insert(std::lower_bound(tree->begin(), tree->end(), key,
+						NodePred()), new_node);
+				}
+
+				tree = &*it;
+			}
+
+			tree->data_ = data;
 		}
 
-		bool operator == (DSTNode const & rhs) const
+		template<class KeyRange>
+		void	insert(KeyRange const & seq, data_type const & data)
+		{
+			insert(seq, data_pointer(new data_type(data)));
+		}
+
+
+		template<class KeyRange>
+		DSTree * sub_tree(KeyRange const & seq)
+		{
+			DSTree * tree = this;
+			foreach(boost::range_value<KeyRange>::type const & key, seq)
+			{
+				iterator it = tree->find_child(key);
+				if(it == tree->end())
+					return NULL;
+
+				tree = &*it;
+			}
+
+			return tree;
+		}
+
+
+		// find a specified sequence
+		template<class KeyRange>
+		data_pointer	find(KeyRange const & seq) 		// fixed count
+		{
+			DSTree * tree = sub_tree(seq);
+
+			if(tree == NULL)
+				return data_pointer();
+
+			return tree->data_;
+		}
+
+		/**
+		 * Find the first matched sequence
+		 * @param size size of the matched sequence
+		 */
+		template<class KeyRange>
+		data_pointer first_match(KeyRange const & seq, size_t * size = NULL) const
+		{
+			size_t len = 0;
+
+			DSTree * tree = this;
+			foreach(key_type const & key, seq)
+			{
+				len ++;
+
+				iterator it = tree->find_child(key);
+				if(it == tree->end())
+					return data_pointer();
+				else if(it->data_)
+				{
+					if(size != NULL)
+						*size = len;
+
+					return it->data_;
+				}
+
+				tree = &*it;
+			}
+
+			return data_pointer();
+		}
+
+		iterator find_child(key_type const & key)
+		{
+			iterator it = std::lower_bound(begin(), end(), key, NodePred());
+			return (it == end() || pred_(key, it->key_) ? end() : it);
+		}
+
+
+		bool operator == (DSTree const & rhs) const
 		{
 			if(size() != rhs.size())
 				return false;
@@ -263,28 +276,19 @@ namespace lv
 			}
 			else
 			{
-				if(element_ != rhs.element_ || info_ != rhs.info_)
+				if(key_ != rhs.key_)
 					return false;
+
+				 if(data_ && rhs.data_)
+					 return *data_ == *rhs.data_;
+				 else
+					 return bool(data_) == bool(rhs.data_);
 			}
 
-			for(const_iterator it1 = begin(), it2 = rhs.begin(); it1 != end(); ++it1, ++it2)
-			{
-				if((**it1) != (**it2))
-					return false;
-			}
-
-			return true;
+			return std::equal(begin(), end(), rhs.begin());
 		}
-	};
-
-
-	// "Today's C++ doesn't support template typedefs."
-	template<class Ele, class Info, class Pred = std::less<Ele> >
-	struct DSTree 
-	{
-		typedef DSTNode<Ele, Info, Pred>	type;
 	};
 }
 
 
-#endif // LV_DSTREE_HPP
+#endif
