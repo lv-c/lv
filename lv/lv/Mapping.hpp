@@ -54,6 +54,8 @@ namespace lv
 				return std::make_pair(list_.insert(list_.end(), v), true);
 			}
 
+			BOOST_ASSERT(false);
+
 			return std::make_pair(list_.end(), false);
 		}
 

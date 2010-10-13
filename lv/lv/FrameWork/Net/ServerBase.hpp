@@ -17,19 +17,20 @@
 #include <boost/asio.hpp>
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
+#include <boost/scoped_ptr.hpp>
 
 namespace lv { namespace net {
 
 
 	template<class S>
-	class ServerBase
+	class ServerBase : boost::noncopyable
 	{
 	protected:
 
 		typedef	S	session_type;
 		typedef boost::shared_ptr<session_type>	session_ptr;
 
-		asio::ip::tcp::acceptor	acceptor_;
+		boost::scoped_ptr<asio::ip::tcp::acceptor>	acceptor_;
 
 		ContextPtr	context_;
 
@@ -39,7 +40,8 @@ namespace lv { namespace net {
 		///		to create a new session
 		ServerBase(ContextPtr context, unsigned short port)
 			: context_(context)
-			, acceptor_(context->service(), asio::ip::tcp::endpoint(asio::ip::tcp::v4(), port))
+			, acceptor_(new asio::ip::tcp::acceptor(context->service(), 
+				asio::ip::tcp::endpoint(asio::ip::tcp::v4(), port)))
 		{
 		}
 
@@ -55,7 +57,8 @@ namespace lv { namespace net {
 		virtual	void	close()
 		{
 			boost::system::error_code error;
-			acceptor_.close(error);
+			acceptor_->close(error);
+			acceptor_.reset();
 		}
 
 	protected:
@@ -74,7 +77,7 @@ namespace lv { namespace net {
 		{
 			session_ptr	session = create_session();
 
-			acceptor_.async_accept(session->socket(), 
+			acceptor_->async_accept(session->socket(), 
 				boost::bind(&ServerBase::handle_accept, this, session,
 				asio::placeholders::error));
 		}
