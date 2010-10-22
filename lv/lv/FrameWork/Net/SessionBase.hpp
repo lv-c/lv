@@ -94,6 +94,7 @@ namespace lv { namespace net {
 		virtual	void	on_connected() {}
 
 		virtual	void	on_receive(BufferPtr buf) {}
+		virtual	void	on_write(BufferPtr buf) {}
 
 		virtual	void	close()
 		{
@@ -161,6 +162,10 @@ namespace lv { namespace net {
 			if(error)
 			{
 				on_error(ErrorWrite, error);
+			}
+			else
+			{
+				on_write(buf);
 			}
 		}
 		
