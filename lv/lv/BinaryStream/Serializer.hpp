@@ -83,8 +83,8 @@ namespace lv { namespace bstream {
 		{
 			if(! boost::empty(t))
 			{
-				os.write(reinterpret_cast<char const*>(&*boost::begin(t)), boost::size(t) * 
-					sizeof(typename boost::range_value<T>::type));
+				os.write(reinterpret_cast<char const*>(&*boost::begin(t)), static_cast<std::streamsize>(
+					boost::size(t) * sizeof(typename boost::range_value<T>::type)));
 			}
 		}
 
@@ -93,8 +93,8 @@ namespace lv { namespace bstream {
 		{
 			if(! boost::empty(t))
 			{
-				is.read(reinterpret_cast<char*>(&*boost::begin(t)), boost::size(t) * 
-					sizeof(typename boost::range_value<T>::type));
+				is.read(reinterpret_cast<char*>(&*boost::begin(t)), static_cast<std::streamsize>(
+					boost::size(t) * sizeof(typename boost::range_value<T>::type)));
 			}
 		}
 	};

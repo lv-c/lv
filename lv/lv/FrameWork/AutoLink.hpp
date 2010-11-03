@@ -1,5 +1,5 @@
 // *********************************************************************
-//  Map   version:  1.0   ¡¤  date: 09/19/2010
+//  AutoLink   version:  1.0   ¡¤  date: 10/29/2010
 //  --------------------------------------------------------------------
 //  
 //  --------------------------------------------------------------------
@@ -8,25 +8,20 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUAARCHIVE_MAP_HPP
-#define LV_LUAARCHIVE_MAP_HPP
+#ifndef LV_FRAMEWORK_AUTOLINK_HPP
+#define LV_FRAMEWORK_AUTOLINK_HPP
 
-#include <map>
+#include <lv/Config.hpp>
 
-#include <lv/LuaArchive/Tags.hpp>
-#include <lv/LuaArchive/Pair.hpp>
+#ifdef LV_PLATFORM_WINDOWS
 
-namespace lv { namespace lua { namespace archive {
+#	ifdef _DEBUG
+#		pragma comment(lib, "FrameworkD.lib")
+#	else
+#		pragma comment(lib, "Framework.lib")
+#	endif
 
-	template<typename K, typename V, typename Pr, typename Ax>
-	struct object_tag<std::map<K, V, Pr, Ax> >
-		: unordered_tag
-	{
-	};
-
-
-} } }
-
+#endif
 
 
 #endif

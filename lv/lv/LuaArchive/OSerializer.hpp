@@ -187,7 +187,7 @@ namespace lv { namespace lua { namespace archive {
 		}
 
 		template<typename T>
-		void	save_impl(std::ostream & os, T const & t, size_t level, associative_tag)
+		void	save_impl(std::ostream & os, T const & t, size_t level, unordered_tag)
 		{
 			save_range(os, boost::begin(t), boost::end(t), level);
 		}

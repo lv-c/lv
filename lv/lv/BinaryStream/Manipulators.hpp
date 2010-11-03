@@ -111,13 +111,13 @@ namespace lv { namespace bstream {
 	//
 	class fill_n
 	{
-		std::streamsize	size_;
+		std::size_t	size_;
 
 		char	char_;
 
 	public:
 		
-		fill_n(std::streamsize size, char c) 
+		fill_n(std::size_t size, char c) 
 			: size_(size) 
 			, char_(c)
 		{
@@ -125,18 +125,18 @@ namespace lv { namespace bstream {
 
 		friend BinaryOStream & operator << (BinaryOStream & os, fill_n const & fill)
 		{
-			std::streamsize const buf_size = 128;
+			std::size_t const buf_size = 128;
 			char buf[buf_size];
 
 			std::fill_n(buf, std::min(buf_size, fill.size_), fill.char_);
 
-			std::streamsize left = fill.size_;
+			std::size_t left = fill.size_;
 
 			while(left > 0)
 			{
-				std::streamsize sz = std::min(left, buf_size);
+				std::size_t sz = std::min(left, buf_size);
 
-				os.write(buf, sz);
+				os.write(buf, static_cast<std::streamsize>(sz));
 
 				left -= sz;
 			}
@@ -170,7 +170,7 @@ namespace lv { namespace bstream {
 
 			if(size > 0)
 			{
-				is.read(&str[0], size);
+				is.read(&str[0], static_cast<std::streamsize>(size));
 
 				for(size_t i = 0; i < size; ++i)
 				{
@@ -191,7 +191,7 @@ namespace lv { namespace bstream {
 
 			std::size_t size = std::min(fixed.str_.size(), fixed.size_);
 			if(size > 0)
-				os.write(&fixed.str_[0], size);
+				os.write(&fixed.str_[0], static_cast<std::streamsize>(size));
 
 			if(size < fixed.size_)
 				os << fill_n(fixed.size_ - size, '\0');
@@ -224,7 +224,7 @@ namespace lv { namespace bstream {
 
 		friend BinaryOStream & operator << (BinaryOStream & os, variable_len_str const & var)
 		{
-			SizeType size(var.str_.size());
+			SizeType size = static_cast<SizeType>(var.str_.size());
 			os << size;
 
 			if(size > 0)

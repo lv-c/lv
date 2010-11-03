@@ -38,7 +38,7 @@ namespace lv
 			streamsize to_read = 0;
 			if(size >= 0)
 			{
-				to_read = std::min<streamsize>(size, buf_.size() - gpos_);
+				to_read = std::min<streamsize>(size, stream_size() - gpos_);
 				std::copy(buf_.begin() + gpos_, buf_.begin() + gpos_ + to_read, data);
 				
 				gpos_ += to_read;
@@ -77,7 +77,7 @@ namespace lv
 				break;
 
 			case std::ios_base::end:
-				off += static_cast<streamoff>(buf_.size());
+				off += stream_size();
 				break;
 
 			default:
@@ -87,7 +87,7 @@ namespace lv
 
 			if(state == std::ios_base::goodbit)
 			{
-				if(off >= 0 && off <= static_cast<streamsize>(buf_.size()))
+				if(off >= 0 && off <= stream_size())
 				{
 					gpos_ = off;
 				}
@@ -105,7 +105,7 @@ namespace lv
 		{
 			iostate	state = std::ios_base::goodbit;
 			streampos pos = gpos_;
-			streamsize size = buf_.size();
+			streamsize size = stream_size();
 
 			for(streamsize i = 0; i < n; ++i, pos += 1)
 			{
@@ -127,6 +127,13 @@ namespace lv
 			setstate(state);
 			return *this;
 		}
+
+		private:
+
+			streamsize	stream_size() const
+			{
+				return static_cast<streamsize>(buf_.size());
+			}
 	};
 
 }

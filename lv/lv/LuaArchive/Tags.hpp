@@ -26,7 +26,7 @@ namespace lv { namespace lua { namespace archive {
 
 	DEFINE_tag(primitive_tag);
 	DEFINE_tag(sequence_tag);
-	DEFINE_tag(associative_tag);
+	DEFINE_tag(unordered_tag);
 	DEFINE_tag(unknown_tag);
 
 #undef DEFINE_tag

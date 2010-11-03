@@ -1,5 +1,5 @@
 // *********************************************************************
-//  Map   version:  1.0   ¡¤  date: 09/19/2010
+//  Set   version:  1.0   ¡¤  date: 10/27/2010
 //  --------------------------------------------------------------------
 //  
 //  --------------------------------------------------------------------
@@ -8,25 +8,21 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUAARCHIVE_MAP_HPP
-#define LV_LUAARCHIVE_MAP_HPP
+#ifndef LV_LUAARCHIVE_SET_HPP
+#define LV_LUAARCHIVE_SET_HPP
 
-#include <map>
+#include <set>
 
 #include <lv/LuaArchive/Tags.hpp>
-#include <lv/LuaArchive/Pair.hpp>
 
 namespace lv { namespace lua { namespace archive {
 
-	template<typename K, typename V, typename Pr, typename Ax>
-	struct object_tag<std::map<K, V, Pr, Ax> >
+	template<typename T, typename Pr, typename Ax>
+	struct object_tag<std::set<T, Pr, Ax> >
 		: unordered_tag
 	{
 	};
 
-
 } } }
-
-
 
 #endif

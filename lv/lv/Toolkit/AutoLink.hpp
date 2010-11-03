@@ -1,5 +1,5 @@
 // *********************************************************************
-//  ToolkitLib   version:  1.0   ¡¤  date: 10/02/2010
+//  AutoLink   version:  1.0   ¡¤  date: 10/29/2010
 //  --------------------------------------------------------------------
 //  
 //  --------------------------------------------------------------------
@@ -8,8 +8,8 @@
 // 
 // *********************************************************************
 
-#ifndef LV_TOOLKIT_TOOLKITLIB_HPP
-#define LV_TOOLKIT_TOOLKITLIB_HPP
+#ifndef LV_TOOLKIT_AUTOLINK_HPP
+#define LV_TOOLKIT_AUTOLINK_HPP
 
 #include <lv/Config.hpp>
 

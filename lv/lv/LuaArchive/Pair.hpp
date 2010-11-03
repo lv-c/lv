@@ -9,7 +9,7 @@
 // *********************************************************************
 
 #ifndef LV_LUAARCHIVE_PAIR_HPP
-#define LV_LUAARCHIVE_VECTOR_HPP
+#define LV_LUAARCHIVE_PAIR_HPP
 
 #include <utility>
 
@@ -23,6 +23,20 @@ namespace lv { namespace lua { namespace archive {
 		os << "] = ";
 
 		save(os, v.second, level);
+	}
+
+	template<typename F, typename S>
+	void	load_item(luabind::iterator const & it, std::pair<F, S> & v)
+	{
+		load(it.key(), v.first);
+		load(*it, v.second);
+	}
+
+	template<typename F, typename S>
+	void	load_item(luabind::iterator const & it, std::pair<F const, S> & v)
+	{
+		load(it.key(), const_cast<F &>(v.first));
+		load(*it, v.second);
 	}
 
 } } }

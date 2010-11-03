@@ -12,7 +12,7 @@
 #define LV_TOOLKIT_LUA_LUACONFIG_HPP
 
 #include <lv/Toolkit/Lua/Fwd.hpp>
-#include <lv/Toolkit/ToolkitLib.hpp>
+#include <lv/Toolkit/AutoLink.hpp>
 #include <lv/LuaArchive/LuaIArchive.hpp>
 #include <lv/FileSystem/Fwd.hpp>
 

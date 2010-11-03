@@ -123,9 +123,9 @@ void test_net_impl()
 	}
 
 	// server
-	server_type server(server_context, 5555);
+	server_type server(server_context);
 
-	server.start();
+	server.start(5555);
 
 	// client. We must use shared_ptr here.
 	boost::shared_ptr<client_session_type> client(new client_session_type(client_context));

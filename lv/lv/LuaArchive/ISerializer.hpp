@@ -49,6 +49,11 @@ namespace lv { namespace lua { namespace archive {
 	template<typename T>
 	void	load(luabind::object const & obj, T & t);
 
+	// load items of a container. you should overload this function if the item
+	// needs both the key and the value, such as std::pair
+	template<typename T>
+	void	load_item(luabind::iterator const & it, T & t);
+
 
 	namespace detail
 	{		
@@ -170,32 +175,30 @@ namespace lv { namespace lua { namespace archive {
 			t.clear();
 			for(luabind::iterator it(obj), end; it != end; ++it)
 			{
-				typename T::value_type item;
-
 				BOOST_ASSERT(! is_version_key(it.key()) && "you shouldn't place a version key here");
 
-				load(*it, item);
+				typename T::value_type item;
+
+				load_item(it, item);
 				t.push_back(item);
 			}
 		}
 
-		// associative_tag
+		// unordered_tag
 		template<typename T>
-		void	load_impl(luabind::object const & obj, T & t, associative_tag)
+		void	load_impl(luabind::object const & obj, T & t, unordered_tag)
 		{
 			expect_obj_type(obj, LUA_TTABLE);
 
 			t.clear();
 			for(luabind::iterator it(obj), end; it != end; ++it)
 			{
-				typename T::key_type key;
-				typename T::value_type::second_type value;
-
 				BOOST_ASSERT(! is_version_key(it.key()) && "you shouldn't place a version key here");
 
-				load(it.key(), key);
-				load(*it, value);
-				t.insert(std::make_pair(key, value));
+				typename T::value_type item;
+
+				load_item(it, item);
+				t.insert(item);
 			}
 		}
 	}
@@ -211,6 +214,12 @@ namespace lv { namespace lua { namespace archive {
 	void	load(luabind::object const & obj, boost::serialization::nvp<T> const & t)
 	{
 		load(obj[t.name()], t.value());
+	}
+
+	template<typename T>
+	void	load_item(luabind::iterator const & it, T & t)
+	{
+		load(*it, t);
 	}
 
 } } }

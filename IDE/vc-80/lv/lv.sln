@@ -6,12 +6,19 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTest", "UnitTest.vcproj", "{B213214B-7FEA-4104-B36C-08C8BE719EEE}"
 	ProjectSection(ProjectDependencies) = postProject
 		{6D9FB40B-19E3-4B2D-9835-B121F01FF9AD} = {6D9FB40B-19E3-4B2D-9835-B121F01FF9AD}
+		{51098B53-78E6-4FD6-AF7E-D4D0668618BD} = {51098B53-78E6-4FD6-AF7E-D4D0668618BD}
 		{472407C2-8B6A-49AA-8B94-23A9B089B055} = {472407C2-8B6A-49AA-8B94-23A9B089B055}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Framework", "..\Framework\Framework.vcproj", "{51098B53-78E6-4FD6-AF7E-D4D0668618BD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{472407C2-8B6A-49AA-8B94-23A9B089B055} = {472407C2-8B6A-49AA-8B94-23A9B089B055}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Toolkit", "..\Toolkit\Toolkit.vcproj", "{6D9FB40B-19E3-4B2D-9835-B121F01FF9AD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{472407C2-8B6A-49AA-8B94-23A9B089B055} = {472407C2-8B6A-49AA-8B94-23A9B089B055}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -16,10 +16,18 @@
 
 #include <boost/serialization/serialization.hpp>
 #include <boost/serialization/split_free.hpp>
+#include <boost/serialization/optional.hpp>
 
 #include <boost/range/as_array.hpp>
 
 namespace boost { namespace serialization {
+
+	template<typename Key, typename Data, typename Pred>
+	struct version<lv::DSTree<Key, Data, Pred> >
+		: mpl::int_<1>
+	{
+	};
+
 
 	template<typename Archive, typename Key, typename Data, typename Pred>
 	void save(Archive & ar, lv::DSTree<Key, Data, Pred> const & tree, unsigned int)
@@ -42,7 +50,7 @@ namespace boost { namespace serialization {
 	}
 
 	template<typename Archive, typename Key, typename Data, typename Pred>
-	void load(Archive & ar, lv::DSTree<Key, Data, Pred> & tree, unsigned int)
+	void load(Archive & ar, lv::DSTree<Key, Data, Pred> & tree, unsigned int version)
 	{
 		typedef lv::DSTree<Key, Data, Pred> tree_type;
 
@@ -55,14 +63,27 @@ namespace boost { namespace serialization {
 		{
 			Key key[1];
 			tree_type::data_pointer data;
-			bool has_data;
 
-			ar & key[0] & has_data;
+			ar & key[0];
 
-			if(has_data)
+			if(version == 0)
 			{
-				data.reset(new tree_type::data_type());
-				ar & (*data);
+				boost::optional<tree_type::data_type> od;
+				ar & od;
+
+				if(od)
+					data.reset(new tree_type::data_type(*od));
+			}
+			else
+			{
+				bool has_data;
+				ar & has_data;
+
+				if(has_data)
+				{
+					data.reset(new tree_type::data_type());
+					ar & (*data);
+				}
 			}
 
 			tree.insert(boost::as_array(key), data);

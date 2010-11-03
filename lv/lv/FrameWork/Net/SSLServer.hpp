@@ -31,9 +31,8 @@ namespace lv { namespace net {
 
 	public:
 
-		SSLServer(ContextPtr context, unsigned short port, 
-			std::string const & password = "rswvfbuk")
-			: base_type(context, port)
+		SSLServer(ContextPtr context, std::string const & password = "rswvfbuk")
+			: base_type(context)
 			, password_(password)
 			, ssl_context_(context->service(), asio::ssl::context::sslv23)
 		{
@@ -41,11 +40,11 @@ namespace lv { namespace net {
 		}
 
 		/// @exception boost::system::system_error
-		virtual	void	start()
+		virtual	void	start(unsigned short port)
 		{
 			init_context();
 
-			start_accept();
+			base_type::start(port);
 		}
 
 

@@ -38,10 +38,8 @@ namespace lv { namespace net {
 
 		/// you can either pass in a session_creator function or overload create_session
 		///		to create a new session
-		ServerBase(ContextPtr context, unsigned short port)
+		ServerBase(ContextPtr context)
 			: context_(context)
-			, acceptor_(new asio::ip::tcp::acceptor(context->service(), 
-				asio::ip::tcp::endpoint(asio::ip::tcp::v4(), port)))
 		{
 		}
 
@@ -49,8 +47,11 @@ namespace lv { namespace net {
 		{
 		}
 
-		virtual	void	start()
+		virtual	void	start(unsigned short port)
 		{
+			acceptor_.reset(new asio::ip::tcp::acceptor(context_->service(), 
+				asio::ip::tcp::endpoint(asio::ip::tcp::v4(), port)));
+
 			start_accept();
 		}
 

@@ -1060,6 +1060,10 @@
 				Name="Header Files"
 				>
 				<File
+					RelativePath="..\..\..\lv\lv\LuaArchive\Array.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\LuaArchive\Common.hpp"
 					>
 				</File>
@@ -1093,6 +1097,14 @@
 				</File>
 				<File
 					RelativePath="..\..\..\lv\lv\LuaArchive\Pair.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\LuaArchive\Set.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\LuaArchive\SharedPtr.hpp"
 					>
 				</File>
 				<File

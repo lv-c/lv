@@ -70,7 +70,7 @@ namespace lv
 
 		streampos	tellp() const
 		{
-			return buf_.size();
+			return static_cast<streamoff>(buf_.size());
 		}
 
 	private:
