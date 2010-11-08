@@ -50,10 +50,17 @@ namespace lv { namespace net {
 		}
 
 		/// @exception runtime_error
-		virtual	void	start(std::string const & ip, std::string const & port)
+		virtual	void	start(std::string const & ip, std::string const & port,
+			boost::asio::ip::address const & to_bind = boost::asio::ip::address())
 		{
 			asio::ip::tcp::resolver::query query(ip, port);
 			asio::ip::tcp::resolver resolver(context_->service());
+
+			if(to_bind != boost::asio::ip::address())
+			{
+				socket().open(to_bind.is_v4() ? boost::asio::ip::tcp::v4() : boost::asio::ip::tcp::v6());
+				socket().bind(boost::asio::ip::tcp::endpoint(to_bind, 0));
+			}
 
 			if(context_->strand())
 			{

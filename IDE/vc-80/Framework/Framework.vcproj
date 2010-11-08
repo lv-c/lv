@@ -17,7 +17,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="..\..\..\bin"
+			OutputDirectory="..\..\..\bin\lv"
 			IntermediateDirectory="..\..\..\build\Framework\msvc-8.0\debug\link-static"
 			ConfigurationType="4"
 			CharacterSet="1"
@@ -81,7 +81,7 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="..\..\..\bin"
+			OutputDirectory="..\..\..\bin\lv"
 			IntermediateDirectory="..\..\..\build\Framework\msvc-8.0\release\link-static"
 			ConfigurationType="4"
 			CharacterSet="1"
@@ -191,11 +191,23 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\lv\lv\FrameWork\Net\Socks5Context.hpp"
+					RelativePath="..\..\..\lv\lv\FrameWork\Net\Socks5.hpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\lv\lv\FrameWork\Net\Socks5Session.hpp"
+					RelativePath="..\..\..\lv\lv\FrameWork\Net\Socks5ClientContext.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\FrameWork\Net\Socks5ClientSession.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\FrameWork\Net\Socks5ServerContext.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\FrameWork\Net\Socks5ServerSession.hpp"
 					>
 				</File>
 				<File
@@ -223,7 +235,11 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\lv\src\FrameWork\Net\Socks5Session.cpp"
+					RelativePath="..\..\..\lv\src\FrameWork\Net\Socks5ClientSession.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\src\FrameWork\Net\Socks5ServerSession.cpp"
 					>
 				</File>
 			</Filter>

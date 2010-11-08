@@ -18,6 +18,7 @@
 #include <boost/asio.hpp>
 #include <boost/bind.hpp>
 #include <boost/enable_shared_from_this.hpp>
+#include <boost/signals2.hpp>
 
 namespace lv { namespace net {
 
@@ -49,6 +50,20 @@ namespace lv { namespace net {
 
 	class SessionBase : public boost::enable_shared_from_this<SessionBase>
 	{
+	public:
+
+		typedef boost::signals2::signal<void(ErrorType, boost::system::error_code const &)>	ErrorEvent;
+		typedef boost::signals2::signal<void()>				ConnectEvent;
+		typedef boost::signals2::signal<void(BufferPtr)>	ReceiveEvent;
+		typedef boost::signals2::signal<void(BufferPtr)>	WriteEvent;
+
+	private:
+
+		ErrorEvent		error_event_;
+		ConnectEvent	connect_event_;
+		ReceiveEvent	receive_event_;
+		WriteEvent		write_event_;
+
 	protected:
 
 		ContextPtr	context_;
@@ -77,30 +92,40 @@ namespace lv { namespace net {
 			return std::string();
 		}
 
-	protected:
+		ErrorEvent &	error_event()
+		{
+			return error_event_;
+		}
+
+		ConnectEvent &	connect_event()
+		{
+			return connect_event_;
+		}
+
+		ReceiveEvent &	receive_event()
+		{
+			return receive_event_;
+		}
+
+		WriteEvent &	write_event()
+		{
+			return write_event_;
+		}
 
 		virtual	asio::ip::tcp::socket & socket() = 0;
 
-		virtual	void	on_error(ErrorType type, boost::system::error_code const & error)
+		virtual	void	shutdown()
 		{
+			boost::system::error_code error;
+			socket().shutdown(boost::asio::ip::tcp::socket::shutdown_both, error);
 		}
-
-		virtual	void	on_connected_internal()
-		{
-			start_read();
-			on_connected();
-		}
-
-		virtual	void	on_connected() {}
-
-		virtual	void	on_receive(BufferPtr buf) {}
-		virtual	void	on_write(BufferPtr buf) {}
 
 		virtual	void	close()
 		{
 			boost::system::error_code error;
 			socket().close(error);
 		}
+
 
 		virtual void	start_read()
 		{
@@ -120,7 +145,7 @@ namespace lv { namespace net {
 					boost::bind(&SessionBase::handle_read, shared_from_this(), buf,
 					asio::placeholders::bytes_transferred, asio::placeholders::error));
 			}
-			
+
 		}
 
 		virtual	void	start_write(BufferPtr buf)
@@ -137,9 +162,36 @@ namespace lv { namespace net {
 					boost::bind(&SessionBase::handle_write, shared_from_this(), 
 					buf, asio::placeholders::error));
 			}
-			
+
 		}
 
+
+	protected:
+
+		virtual	void	on_error(ErrorType type, boost::system::error_code const & error)
+		{
+			error_event_(type, error);
+		}
+
+		virtual	void	on_connected_internal()
+		{
+			start_read();
+			on_connected();
+		}
+
+		virtual	void	on_connected()
+		{
+			connect_event_();
+		}
+
+		virtual	void	on_receive(BufferPtr buf)
+		{
+			receive_event_(buf);
+		}
+		virtual	void	on_write(BufferPtr buf)
+		{
+			write_event_(buf);
+		}
 
 		virtual	void	handle_read(BufferPtr buf, size_t bytes_transferred, boost::system::error_code const & error)
 		{
@@ -168,8 +220,6 @@ namespace lv { namespace net {
 				on_write(buf);
 			}
 		}
-		
-
 	};
 
 } }

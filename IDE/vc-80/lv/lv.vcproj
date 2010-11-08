@@ -17,7 +17,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="..\..\..\bin"
+			OutputDirectory="..\..\..\bin\lv"
 			IntermediateDirectory="..\..\..\build\msvc-8.0\debug\link-static"
 			ConfigurationType="4"
 			CharacterSet="1"
@@ -81,7 +81,7 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="..\..\..\bin"
+			OutputDirectory="..\..\..\bin\lv"
 			IntermediateDirectory="..\..\..\build\msvc-8.0\release\link-static"
 			ConfigurationType="4"
 			CharacterSet="1"
@@ -689,6 +689,10 @@
 				</File>
 				<File
 					RelativePath="..\..\..\lv\lv\BinaryStream\Buffer.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\BinaryStream\Fwd.hpp"
 					>
 				</File>
 				<File

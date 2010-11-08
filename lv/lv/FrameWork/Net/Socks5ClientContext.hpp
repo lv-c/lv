@@ -1,5 +1,5 @@
 // *********************************************************************
-//  Socks5Context   version:  1.0   ¡¤  date: 10/14/2010
+//  Socks5ClientContext   version:  1.0   ¡¤  date: 10/14/2010
 //  --------------------------------------------------------------------
 //  
 //  --------------------------------------------------------------------
@@ -8,8 +8,8 @@
 // 
 // *********************************************************************
 
-#ifndef LV_NET_SOCKS5CONTEXT_HPP
-#define LV_NET_SOCKS5CONTEXT_HPP
+#ifndef LV_NET_SOCKS5CLIENTCONTEXT_HPP
+#define LV_NET_SOCKS5CLIENTCONTEXT_HPP
 
 #include <lv/FrameWork/Net/Context.hpp>
 
@@ -17,7 +17,7 @@
 
 namespace lv { namespace net {
 
-	class Socks5Context : public Context
+	class Socks5ClientContext : public Context
 	{
 		std::string	proxy_;
 		std::string	port_;
@@ -27,13 +27,9 @@ namespace lv { namespace net {
 
 	public:
 
-		Socks5Context(BufferManagerPtr buf_manager, service_ptr service)
-			: Context(buf_manager, service)
-		{
-		}
-
-		Socks5Context(BufferManagerPtr buf_manager, strand_ptr strand)
-			: Context(buf_manager, strand)
+		/// use only strand
+		Socks5ClientContext(BufferManagerPtr buf_manager, boost::asio::io_service & service)
+			: Context(buf_manager, strand_ptr(new boost::asio::strand(service)))
 		{
 		}
 

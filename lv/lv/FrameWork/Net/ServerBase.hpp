@@ -18,6 +18,7 @@
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
 #include <boost/scoped_ptr.hpp>
+#include <boost/signals2.hpp>
 
 namespace lv { namespace net {
 
@@ -25,14 +26,20 @@ namespace lv { namespace net {
 	template<class S>
 	class ServerBase : boost::noncopyable
 	{
-	protected:
+	public:
 
 		typedef	S	session_type;
 		typedef boost::shared_ptr<session_type>	session_ptr;
 
+		typedef boost::signals2::signal<void(session_ptr)>	NewSessionEvent;
+
+	protected:
+
 		boost::scoped_ptr<asio::ip::tcp::acceptor>	acceptor_;
 
 		ContextPtr	context_;
+
+		NewSessionEvent	new_session_event_;
 
 	public:
 
@@ -47,10 +54,11 @@ namespace lv { namespace net {
 		{
 		}
 
-		virtual	void	start(unsigned short port)
+		virtual	void	start(unsigned short port, 
+			boost::asio::ip::address const & to_bind = boost::asio::ip::address())
 		{
 			acceptor_.reset(new asio::ip::tcp::acceptor(context_->service(), 
-				asio::ip::tcp::endpoint(asio::ip::tcp::v4(), port)));
+				asio::ip::tcp::endpoint(to_bind, port)));
 
 			start_accept();
 		}
@@ -62,6 +70,11 @@ namespace lv { namespace net {
 			acceptor_.reset();
 		}
 
+		NewSessionEvent &	new_session_event()
+		{
+			return new_session_event_;
+		}
+
 	protected:
 
 		virtual	void	handle_accept(session_ptr session, boost::system::error_code const & error)
@@ -69,6 +82,7 @@ namespace lv { namespace net {
 			if(! error)
 			{
 				on_new_session(session);
+				session->start();
 
 				start_accept();
 			}
@@ -90,7 +104,7 @@ namespace lv { namespace net {
 
 		virtual	void	on_new_session(session_ptr session)
 		{
-			session->start();
+			new_session_event_(session);
 		}
 
 	};

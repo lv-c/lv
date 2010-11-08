@@ -1,5 +1,5 @@
 // *********************************************************************
-//  Socks5Session   version:  1.0   ¡¤  date: 10/14/2010
+//  Socks5ClientSession   version:  1.0   ¡¤  date: 10/14/2010
 //  --------------------------------------------------------------------
 //  
 //  --------------------------------------------------------------------
@@ -8,20 +8,19 @@
 // 
 // *********************************************************************
 
-#ifndef LV_NET_SOCKS5SESSION_HPP
-#define LV_NET_SOCKS5SESSION_HPP
+#ifndef LV_NET_SOCKS5CLIENTSESSION_HPP
+#define LV_NET_SOCKS5CLIENTSESSION_HPP
 
 #include <lv/FrameWork/AutoLink.hpp>
 #include <lv/FrameWork/Net/TcpSession.hpp>
 #include <lv/FrameWork/Net/PacketProxy.hpp>
+#include <lv/BinaryStream/Fwd.hpp>
 
 namespace lv { namespace net {
 
-	class Socks5Session : public TcpSession<ClientSide>
+	class Socks5ClientSession : public TcpSession<ClientSide>
 	{
 		typedef public TcpSession<ClientSide>	base_type;
-
-		static uint8 const	version_ = 0x05;
 
 		bool	use_proxy_;
 
@@ -34,19 +33,6 @@ namespace lv { namespace net {
 			Established
 		};
 
-		enum Method : uint8
-		{
-			NoAuth			=	0,
-			UserPassword	=	2
-		};
-
-		enum AddrType : uint8
-		{
-			IPV4		=	1,
-			DomainName	=	3,
-			IPV6		=	4
-		};
-
 		Status	status_;
 
 		BufferPtr	cache_;
@@ -57,10 +43,11 @@ namespace lv { namespace net {
 
 	public:
 		
-		explicit Socks5Session(ContextPtr context);
+		explicit Socks5ClientSession(ContextPtr context);
 
 		/// @exception runtime_error
-		virtual	void	start(std::string const & ip, std::string const & port);
+		virtual	void	start(std::string const & ip, std::string const & port,
+			boost::asio::ip::address const & to_bind = boost::asio::ip::address());
 
 	protected:
 
@@ -81,6 +68,14 @@ namespace lv { namespace net {
 		void	send_request();
 
 		void	on_error_internal(ErrorType type, boost::system::error_code const & error);
+
+
+		/// @exception std::ios_base::failure
+
+		void	handle_method_select_response(BinaryIStream & bis);
+		void	handle_auth_response(BinaryIStream & bis);
+		void	handle_request_response(BinaryIStream & bis);
+
 	};
 
 } }
