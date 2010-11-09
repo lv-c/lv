@@ -27,9 +27,10 @@ namespace lv
 
 	public:
 
-		explicit SimpleBufferManager(size_t init_capacity) 
+		explicit SimpleBufferManager(size_t init_capacity, 
+			boost::shared_ptr<factory_type> factory = boost::shared_ptr<factory_type>(new factory_type()))
 			: init_capacity_(init_capacity)
-			, factory_(new factory_type())
+			, factory_(factory)
 		{
 		}
 

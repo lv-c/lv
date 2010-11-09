@@ -41,6 +41,8 @@ namespace lv
 	template<typename T>
 	class Factory : public boost::enable_shared_from_this<Factory<T> >
 	{
+	protected:
+
 		typedef boost::mutex::scoped_lock	scoped_lock;
 		boost::mutex	mutex_;
 
@@ -59,7 +61,7 @@ namespace lv
 
 		typedef boost::shared_ptr<T>	shared_pointer;
 
-		shared_pointer	get()
+		virtual	shared_pointer	get()
 		{
 			scoped_lock lock(mutex_);
 

@@ -24,7 +24,6 @@ namespace lv { namespace net {
 		if(status_ == Established)
 		{
 			dest_session_->start_write(buf);
-			start_read();
 			return;
 		}
 		else if(status_ == Ended)
@@ -63,8 +62,6 @@ namespace lv { namespace net {
 			// an incomplete packet
 			cache_ = buf;
 		}
-
-		start_read();
 	}
 
 	void Socks5ServerSession::on_write(BufferPtr buf)
@@ -180,8 +177,6 @@ namespace lv { namespace net {
 		bis >> high_byte >> low_byte;
 
 		uint16 port = (high_byte << 8) | low_byte;
-
-		boost::shared_ptr<boost::asio::strand>	strand(new boost::asio::strand(context_->service()));
 
 		ContextPtr context(new Context(context_->buffer_manager(), context_->strand()));
 
