@@ -28,8 +28,8 @@ namespace lv { namespace net {
 	public:
 
 		/// use only strand
-		Socks5ClientContext(BufferManagerPtr buf_manager, boost::asio::io_service & service)
-			: Context(buf_manager, strand_ptr(new boost::asio::strand(service)))
+		Socks5ClientContext(BufferManagerPtr buf_manager, strand_ptr strand)
+			: Context(buf_manager, strand)
 		{
 		}
 

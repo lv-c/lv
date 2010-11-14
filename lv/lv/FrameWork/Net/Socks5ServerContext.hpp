@@ -42,8 +42,8 @@ namespace lv { namespace net {
 	public:
 
 		/// use only strand
-		ISocks5ServerContext(BufferManagerPtr buf_manager, boost::asio::io_service & service)
-			: Context(buf_manager, strand_ptr(new boost::asio::strand(service)))
+		ISocks5ServerContext(BufferManagerPtr buf_manager, strand_ptr strand)
+			: Context(buf_manager, strand)
 		{
 		}
 
@@ -70,8 +70,8 @@ namespace lv { namespace net {
 
 	public:
 
-		Socks5ServerContext(BufferManagerPtr buf_manager, boost::asio::io_service & service)
-			: ISocks5ServerContext(buf_manager, service)
+		Socks5ServerContext(BufferManagerPtr buf_manager, strand_ptr strand)
+			: ISocks5ServerContext(buf_manager, strand)
 		{
 		}
 
