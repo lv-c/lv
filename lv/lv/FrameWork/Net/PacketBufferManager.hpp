@@ -17,16 +17,18 @@ namespace lv { namespace net {
 
 	class PacketBufferManager : public SimpleBufferManager
 	{
+		typedef SimpleBufferManager	base_type;
+
 	public:
 
 		explicit PacketBufferManager(size_t init_capacity)
-			: SimpleBufferManager(init_capacity)
+			: base_type(init_capacity)
 		{
 		}
 
 		virtual BufferPtr	get()
 		{
-			BufferPtr buf = SimpleBufferManager::get();
+			BufferPtr buf = base_type::get();
 
 			// used to store the size of this packet
 			buf->assign(2, 0);

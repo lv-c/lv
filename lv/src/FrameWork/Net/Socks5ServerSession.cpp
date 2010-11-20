@@ -116,11 +116,11 @@ namespace lv { namespace net {
 		bis >> ver >> bstream::variable_len_str<uint8>(auth.user)
 			>> bstream::variable_len_str<uint8>(auth.password);
 
-		BOOST_ASSERT(ver == Socks5::Version);
+		// BOOST_ASSERT(ver == Socks5::Version);
 
 		bool valid = boost::shared_dynamic_cast<ISocks5ServerContext>(context_)->verify(auth);
 
-		send() << Socks5::Version << uint8(valid ? 0 : 1);
+		send() << uint8(1) << uint8(valid ? 0 : 1);
 
 		if(valid)
 			status_ = Request;

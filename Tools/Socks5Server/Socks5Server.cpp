@@ -188,7 +188,8 @@ int main(int argc, char **argv)
 	{
 		foreach(string const & v, ip)
 		{
-			boost::shared_ptr<Socks5ServerContext> context(new Socks5ServerContext(buf_manager, io));
+			boost::shared_ptr<boost::asio::strand> strand(new boost::asio::strand(io));
+			boost::shared_ptr<Socks5ServerContext> context(new Socks5ServerContext(buf_manager, strand));
 			context->address_to_bind(boost::asio::ip::address::from_string(v));
 			context->set_auth(auth);
 
