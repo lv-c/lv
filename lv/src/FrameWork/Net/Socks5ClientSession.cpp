@@ -203,7 +203,7 @@ namespace lv { namespace net {
 		if(rep == 0)
 		{
 			status_ = Established;
-			base_type::on_connected_internal();
+			on_connected();
 		}
 		else
 		{
