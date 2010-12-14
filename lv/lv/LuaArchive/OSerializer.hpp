@@ -22,6 +22,7 @@
 #include <boost/range.hpp>
 #include <boost/type_traits/is_integral.hpp>
 #include <boost/type_traits/is_float.hpp>
+#include <boost/algorithm/string/replace.hpp>
 
 namespace lv { namespace lua { namespace archive {
 
@@ -137,14 +138,25 @@ namespace lv { namespace lua { namespace archive {
 			os << t;
 		}
 
-		void	save_primitive(std::ostream & os, bool t)
+		inline void	save_primitive(std::ostream & os, bool t)
 		{
 			os << (t ? "true" : "false");
 		}
 
-		void	save_primitive(std::ostream & os, std::string const & t)
+		inline void	save_primitive(std::ostream & os, std::string const & t)
 		{
-			os << '\'' << t << '\'';
+			os << '\'';
+
+			if(t.find('\'') != std::string::npos)
+			{
+				std::string new_str(t);
+				boost::algorithm::replace_all(new_str, "\'", "\\\'");
+				os << new_str;
+			}
+			else
+				os << t;
+
+			os << '\'';
 		}
 
 		template<typename T>

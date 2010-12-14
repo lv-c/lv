@@ -13,6 +13,8 @@
 
 #include <utility>
 
+#include <luabind/object.hpp>
+
 namespace lv { namespace lua { namespace archive {
 
 	template<typename F, typename S>
