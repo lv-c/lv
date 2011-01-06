@@ -11,6 +11,8 @@
 #ifndef LV_LUAARCHIVE_SHAREDPTR_HPP
 #define LV_LUAARCHIVE_SHAREDPTR_HPP
 
+#include <luabind/object.hpp>
+
 #include <boost/shared_ptr.hpp>
 
 namespace lv { namespace lua { namespace archive {

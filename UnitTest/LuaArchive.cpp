@@ -148,6 +148,12 @@ struct Vertex
 
 };
 
+enum Mode
+{
+	FullScreen	=	-1,
+	Windowed	=	-2
+};
+
 BOOST_CLASS_VERSION(Color, 1)
 BOOST_CLASS_VERSION(Vertex, 2)
 
@@ -166,6 +172,7 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 
 	Vertex vertex;
 	int num(100);
+	Mode const mode(Windowed);
 
 	boost::assign::push_back(vertex.points) (10, 20) (50, 60);
 	boost::assign::insert(vertex.int_map) (Point(5, 6), 2) (Point(8, 9), 3);
@@ -173,7 +180,8 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 	vertex.color = Color(100, 128, 228);
 
 	oa << boost::serialization::make_nvp("vertex", vertex) 
-		<< boost::serialization::make_nvp("number", num);
+		<< boost::serialization::make_nvp("number", num)
+		<< boost::serialization::make_nvp("mode", mode);
 
 	cout << oss.str();
 
@@ -201,6 +209,8 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 		"}\n"
 		"\n"
 		"number = 100\n"
+		"\n"
+		"mode = -2\n"
 		"\n"
 	;
 
@@ -230,12 +240,15 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 
 		Vertex new_vertex;
 		int new_num;
+		Mode new_mode;
 
 		ia >> boost::serialization::make_nvp("vertex", new_vertex) 
-			>> boost::serialization::make_nvp("number", new_num);
+			>> boost::serialization::make_nvp("number", new_num)
+			>> boost::serialization::make_nvp("mode", new_mode);
 
 		BOOST_CHECK(vertex == new_vertex);
 		BOOST_CHECK_EQUAL(num, new_num);
+		BOOST_CHECK_EQUAL(mode, new_mode);
 	}
 	
 

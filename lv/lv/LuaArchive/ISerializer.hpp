@@ -158,6 +158,16 @@ namespace lv { namespace lua { namespace archive {
 			t = luabind::object_cast<T>(obj);
 		}
 
+		// enum_tag
+		template<typename T>
+		void	load_impl(luabind::object const & obj, T & t, enum_tag)
+		{
+			int v;
+			archive::load(obj, v);
+
+			t = static_cast<T>(v);
+		}
+
 		// sequence_tag
 		inline bool	is_version_key(luabind::object const & obj)
 		{

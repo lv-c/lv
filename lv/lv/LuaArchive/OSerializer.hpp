@@ -165,6 +165,13 @@ namespace lv { namespace lua { namespace archive {
 			save_primitive(os, t);
 		}
 
+		// enum_tag
+		template<typename T>
+		void	save_impl(std::ostream & os, T t, size_t level, enum_tag)
+		{
+			archive::save(os, static_cast<int>(t), level);
+		}
+
 		// sequence_tag
 
 		template<typename Iter>

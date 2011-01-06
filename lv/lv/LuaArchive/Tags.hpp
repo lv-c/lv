@@ -25,6 +25,7 @@ namespace lv { namespace lua { namespace archive {
 	struct tag : boost::mpl::identity<tag> {}
 
 	DEFINE_tag(primitive_tag);
+	DEFINE_tag(enum_tag);
 	DEFINE_tag(sequence_tag);
 	DEFINE_tag(unordered_tag);
 	DEFINE_tag(unknown_tag);
@@ -34,13 +35,8 @@ namespace lv { namespace lua { namespace archive {
 
 	// arithmetic type or enum type or string type
 	template<typename T>
-	struct is_primitive
+	struct is_primitive : boost::is_arithmetic<T>
 	{
-		static bool const value = 
-			boost::type_traits::ice_or<
-				boost::is_arithmetic<T>::value,
-				boost::is_enum<T>::value
-			>::value;
 	};
 
 	template<>
@@ -55,6 +51,12 @@ namespace lv { namespace lua { namespace archive {
 	template<typename T>
 	struct object_tag<T, typename boost::enable_if<is_primitive<T> >::type>
 		: primitive_tag
+	{
+	};
+
+	template<typename T>
+	struct object_tag<T, typename boost::enable_if<boost::is_enum<T> >::type>
+		: enum_tag
 	{
 	};
 
