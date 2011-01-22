@@ -20,25 +20,19 @@ namespace lv { namespace lua { namespace archive {
 	template<typename F, typename S>
 	void	save(std::ostream & os, std::pair<F, S> const & v, size_t level)
 	{
-		os << '[';
-		save(os, v.first, level);
-		os << "] = ";
-
-		save(os, v.second, level);
+		detail::save_key_value(os, v.first, v.second, level);
 	}
 
 	template<typename F, typename S>
 	void	load_item(luabind::iterator const & it, std::pair<F, S> & v)
 	{
-		load(it.key(), v.first);
-		load(*it, v.second);
+		detail::load_key_value(it, v.first, v.second);
 	}
 
 	template<typename F, typename S>
 	void	load_item(luabind::iterator const & it, std::pair<F const, S> & v)
 	{
-		load(it.key(), const_cast<F &>(v.first));
-		load(*it, v.second);
+		detail::load_key_value(it, const_cast<F &>(v.first), v.second);
 	}
 
 } } }

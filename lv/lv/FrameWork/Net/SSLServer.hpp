@@ -25,6 +25,8 @@ namespace lv { namespace net {
 	{
 		typedef ServerBase<S>	base_type;
 
+	protected:
+
 		asio::ssl::context	ssl_context_;
 		
 		std::string	password_;

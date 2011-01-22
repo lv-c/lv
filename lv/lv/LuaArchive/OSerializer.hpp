@@ -210,6 +210,17 @@ namespace lv { namespace lua { namespace archive {
 		{
 			save_range(os, boost::begin(t), boost::end(t), level);
 		}
+
+		// utility
+		template<typename K, typename V>
+		void	save_key_value(std::ostream & os, K const & key, V const & value, size_t level)
+		{
+			os << '[';
+			save(os, key, level);
+			os << "] = ";
+
+			save(os, value, level);
+		}
 	}
 
 

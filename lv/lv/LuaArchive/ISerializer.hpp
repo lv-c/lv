@@ -211,6 +211,14 @@ namespace lv { namespace lua { namespace archive {
 				t.insert(item);
 			}
 		}
+
+		// utility
+		template<typename K, typename V>
+		void	load_key_value(luabind::iterator const & it, K & key, V & value)
+		{
+			load(it.key(), key);
+			load(*it, value);
+		}
 	}
 
 

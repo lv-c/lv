@@ -76,15 +76,21 @@ namespace lv
 	};
 
 	template<>
-	struct WidenInt<int8>
+	struct WidenInt<int8>		// signed char
 	{
 		typedef int32 type;
 	};
 
 	template<>
-	struct WidenInt<uint8>
+	struct WidenInt<uint8>		// unsigned char
 	{
 		typedef uint32 type;
+	};
+
+	template<>
+	struct WidenInt<char>		// plain char
+	{
+		typedef int32 type;
 	};
 
 	

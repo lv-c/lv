@@ -1072,6 +1072,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\LuaArchive\Deque.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\LuaArchive\DSTree.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\LuaArchive\Fwd.hpp"
 					>
 				</File>
@@ -1093,6 +1101,10 @@
 				</File>
 				<File
 					RelativePath="..\..\..\lv\lv\LuaArchive\Map.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\LuaArchive\Optional.hpp"
 					>
 				</File>
 				<File
