@@ -54,6 +54,8 @@ namespace boost { namespace serialization {
 	{
 		typedef lv::DSTree<Key, Data, Pred> tree_type;
 
+		tree.clear();
+
 		tree_type::size_type size;
 		ar & size;
 

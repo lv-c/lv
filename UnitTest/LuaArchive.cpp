@@ -175,6 +175,7 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 	int num(100);
 	Mode const mode(Windowed);
 	DSTree<char, int> tree;
+	DSTree<string, string>	tree2;
 
 	boost::assign::push_back(vertex.points) (10, 20) (50, 60);
 	boost::assign::insert(vertex.int_map) (Point(5, 6), 2) (Point(8, 9), 3);
@@ -185,10 +186,19 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 	tree.insert((char const *)"hem", 20);
 	tree.insert((char const *)"what", 55);
 
+	string const str1[] = {"aa", "ab", "fefe"};
+	string const str2[] = {"mihn", "333"};
+	string const str3[] = {"mihn", "xxxxx", "f", "3"};
+
+	tree2.insert(str1, "hex");
+	tree2.insert(str2, "xyy");
+	tree2.insert(str3, boost::shared_ptr<string>());
+
 	oa << boost::serialization::make_nvp("vertex", vertex) 
 		<< boost::serialization::make_nvp("number", num)
 		<< boost::serialization::make_nvp("mode", mode)
-		<< boost::serialization::make_nvp("tree", tree);
+		<< boost::serialization::make_nvp("tree", tree)
+		<< boost::serialization::make_nvp("tree2", tree2);
 
 	cout << oss.str();
 
@@ -251,16 +261,19 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 		int new_num;
 		Mode new_mode;
 		DSTree<char, int> new_tree;
+		DSTree<string, string> new_tree2;
 
 		ia >> boost::serialization::make_nvp("vertex", new_vertex) 
 			>> boost::serialization::make_nvp("number", new_num)
 			>> boost::serialization::make_nvp("mode", new_mode)
-			>> boost::serialization::make_nvp("tree", new_tree);
+			>> boost::serialization::make_nvp("tree", new_tree)
+			>> boost::serialization::make_nvp("tree2", new_tree2);
 
 		BOOST_CHECK(vertex == new_vertex);
 		BOOST_CHECK_EQUAL(num, new_num);
 		BOOST_CHECK_EQUAL(mode, new_mode);
 		BOOST_CHECK(tree == new_tree);
+		BOOST_CHECK(tree2 == new_tree2);
 	}
 	
 

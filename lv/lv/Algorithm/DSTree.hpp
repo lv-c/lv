@@ -115,6 +115,7 @@ namespace lv
 		void	clear()
 		{
 			children_.clear();
+			data_.reset();
 		}
 
 		void	reserve(size_type count)

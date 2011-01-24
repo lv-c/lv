@@ -141,6 +141,8 @@ namespace lv { namespace lua { namespace archive {
 	{
 		typedef DSTree<Key, Data, Pred> tree_type;
 
+		tree.clear();
+
 		std::vector<Key> keys;
 		std::string str;
 
@@ -157,7 +159,7 @@ namespace lv { namespace lua { namespace archive {
 
 			tree_type::data_pointer data;
 
-			if(luabind::type(*v_it) != LUA_TNIL)
+			if(v_it != end && luabind::type(*v_it) != LUA_TNIL)
 			{
 				data.reset(new tree_type::data_type());
 				load(*v_it, *data);
