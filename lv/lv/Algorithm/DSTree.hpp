@@ -86,6 +86,34 @@ namespace lv
 		{
 		}
 
+		DSTree(DSTree const & rhs)
+		{
+			*this = rhs;	
+		}
+
+		DSTree const & operator = (DSTree const & rhs)
+		{
+			if(this != &rhs)
+			{
+				key_ = rhs.key_;
+				pred_ = rhs.pred_;
+
+				if(rhs.data_)
+					data_.reset(new data_type(*rhs.data_));
+				else
+					data_.reset();
+
+				children_ = rhs.children_;
+
+				foreach(value_type & v, children_)
+				{
+					v.parent_ = this;
+				}
+			}
+
+			return *this;
+		}
+
 
 		key_type const & key() const
 		{

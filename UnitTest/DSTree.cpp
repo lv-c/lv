@@ -20,6 +20,17 @@
 
 typedef lv::DSTree<char, int>	dstree_type;
 
+void verify_dstree(dstree_type const & tree)
+{
+	foreach(dstree_type const & v, tree)
+	{
+		BOOST_CHECK(v.parent() == &tree);
+
+		verify_dstree(v);
+	}
+}
+
+
 void check_serialize_dstree(dstree_type const & tree)
 {
 	std::ostringstream oss;
@@ -33,6 +44,8 @@ void check_serialize_dstree(dstree_type const & tree)
 
 	dstree_type new_tree;
 	ia >> new_tree;
+
+	verify_dstree(new_tree);
 
 	BOOST_CHECK(tree == new_tree);
 }
@@ -58,4 +71,16 @@ BOOST_AUTO_TEST_CASE(test_dstree)
 	BOOST_CHECK(a != b);
 
 	check_serialize_dstree(a);
+
+	// copy a dstree
+	dstree_type c = a;		// copy constructor
+	dstree_type d;
+
+	d = a;					// operator =
+
+	verify_dstree(c);
+	verify_dstree(d);
+
+	BOOST_CHECK(c == a);
+	BOOST_CHECK(d == a);
 }
