@@ -67,6 +67,9 @@ BOOST_AUTO_TEST_CASE(test_dstree)
 	b.insert((char const*)"hello", 10);
 	BOOST_CHECK(a == b);
 
+	b.insert((char const*)"hello", 15);
+	BOOST_CHECK(a != b);
+
 	a.insert((char const*)"what???", 40);
 	BOOST_CHECK(a != b);
 

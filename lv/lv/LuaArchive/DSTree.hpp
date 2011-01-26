@@ -23,7 +23,7 @@ namespace lv { namespace lua { namespace archive {
 
 	namespace detail
 	{
-		void	dstree_save_deque(std::ostream & os, std::deque<char> const & v, size_t level)
+		inline void	dstree_save_deque(std::ostream & os, std::deque<char> const & v, size_t level)
 		{
 			save(os, std::string(v.begin(), v.end()), level);
 		}

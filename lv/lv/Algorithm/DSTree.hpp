@@ -143,7 +143,6 @@ namespace lv
 		void	clear()
 		{
 			children_.clear();
-			data_.reset();
 		}
 
 		void	reserve(size_type count)
@@ -309,9 +308,15 @@ namespace lv
 					return false;
 
 				 if(data_ && rhs.data_)
-					 return *data_ == *rhs.data_;
+				 {
+					 if(*data_ != *rhs.data_)
+						 return false;
+				 }
 				 else
-					 return bool(data_) == bool(rhs.data_);
+				 {
+					 if(bool(data_) != bool(rhs.data_))
+						 return false;
+				 }
 			}
 
 			return std::equal(begin(), end(), rhs.begin());
