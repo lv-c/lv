@@ -30,6 +30,8 @@ namespace lv { namespace lua {
 	{
 		state_ = lua_open();
 		luaopen_base(state_);
+		luaL_openlibs(state_);
+
 		luabind::open(state_);
 	}
 
