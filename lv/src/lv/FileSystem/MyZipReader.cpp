@@ -77,7 +77,7 @@ namespace lv
 
 		// sometimes returns ZR_MORE while it's actually finished
 		if(ret != ZR_OK && ret != ZR_MORE)
-			throw file_io_error("error reading file");
+			throw file_io_error("error reading file:" + file);
 	}
 
 

@@ -1,4 +1,5 @@
 #define _SCL_SECURE_NO_WARNINGS
+#define BOOST_SP_USE_QUICK_ALLOCATOR
 
 #pragma warning(disable : 4819)
 
