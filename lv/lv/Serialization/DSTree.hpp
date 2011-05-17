@@ -16,7 +16,6 @@
 
 #include <boost/serialization/serialization.hpp>
 #include <boost/serialization/split_free.hpp>
-#include <boost/serialization/optional.hpp>
 
 #include <boost/range/as_array.hpp>
 
@@ -54,6 +53,8 @@ namespace boost { namespace serialization {
 	{
 		typedef lv::DSTree<Key, Data, Pred> tree_type;
 
+		BOOST_ASSERT(version == 1);		// version 0 has been removed
+
 		tree.clear();
 
 		tree_type::size_type size;
@@ -68,24 +69,13 @@ namespace boost { namespace serialization {
 
 			ar & key[0];
 
-			if(version == 0)
-			{
-				boost::optional<tree_type::data_type> od;
-				ar & od;
+			bool has_data;
+			ar & has_data;
 
-				if(od)
-					data.reset(new tree_type::data_type(*od));
-			}
-			else
+			if(has_data)
 			{
-				bool has_data;
-				ar & has_data;
-
-				if(has_data)
-				{
-					data.reset(new tree_type::data_type());
-					ar & (*data);
-				}
+				data.reset(new tree_type::data_type());
+				ar & (*data);
 			}
 
 			tree.insert(boost::as_array(key), data);

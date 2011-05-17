@@ -200,10 +200,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\UnitTest\Buffer.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\UnitTest\DataFlow.cpp"
 				>
 			</File>
