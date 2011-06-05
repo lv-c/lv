@@ -15,7 +15,7 @@ namespace lv { namespace lua {
 		if(! this->file_loader_)
 			this->file_loader_.reset(new RawFileReader());
 
-		init_lua();
+		state_ = init_lua();
 
 		ia_.reset(new LuaIArchive(luabind::globals(state_)));
 	}
@@ -26,18 +26,26 @@ namespace lv { namespace lua {
 		lua_close(state_);
 	}
 
-	void LuaConfig::init_lua()
+	lua_State * LuaConfig::init_lua()
 	{
-		state_ = lua_open();
-		luaopen_base(state_);
-		luaL_openlibs(state_);
+		lua_State * state = lua_open();
 
-		luabind::open(state_);
+		luaopen_base(state);
+		luaL_openlibs(state);
+
+		luabind::open(state);
+
+		return state;
 	}
 
 	LuaIArchive const & LuaConfig::archive() const
 	{
 		return *ia_;
+	}
+
+	lua_State * LuaConfig::lua_state()
+	{
+		return state_;
 	}
 
 	void LuaConfig::load_file(std::string const & file)

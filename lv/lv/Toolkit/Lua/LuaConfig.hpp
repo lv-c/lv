@@ -47,6 +47,7 @@ namespace lv { namespace lua {
 
 		LuaIArchive	const &	archive() const;
 
+		lua_State *	lua_state();
 
 		template<typename T>
 		LuaConfig const & operator () (char const * name, T & t) const
@@ -57,7 +58,7 @@ namespace lv { namespace lua {
 
 	private:
 
-		void	init_lua();
+		lua_State *	init_lua();
 
 	};
 

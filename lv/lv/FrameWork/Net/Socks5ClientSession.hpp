@@ -39,7 +39,7 @@ namespace lv { namespace net {
 
 		boost::asio::ip::tcp::endpoint	endpoint_;
 
-		bool	first_error_;
+		volatile bool	first_error_;
 
 	public:
 		
