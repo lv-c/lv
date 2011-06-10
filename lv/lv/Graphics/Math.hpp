@@ -15,6 +15,8 @@
 #include <lv/Graphics/Vector.hpp>
 
 #include <boost/static_assert.hpp>
+#include <boost/type_traits/is_float.hpp>
+#include <boost/utility/enable_if.hpp>
 
 #include <cmath>
 #include <numeric>
@@ -27,10 +29,29 @@ namespace lv { namespace math {
 	float const PId4	=	0.78539816f;
 
 
-	template<typename T>
-	T	dist(PointT<T> const & lhs, PointT<T> const & rhs)
+	template<typename T, typename Enabled = void>
+	struct FloatType 
+		: boost::mpl::identity<float> 
 	{
-		return std::sqrt((lhs.x - rhs.x) * (lhs.x - rhs.x) + (lhs.y - rhs.y) * (lhs.y - rhs.y));
+	};
+
+	template<typename T>
+	struct FloatType<T, typename boost::enable_if<boost::is_float<T> >::type>
+		: boost::mpl::identity<T>
+	{
+	};
+
+	template<typename T>
+	typename FloatType<T>::type	sqrt(T v)
+	{
+		return std::sqrt(static_cast<typename FloatType<T>::type>(v));
+	}
+
+
+	template<typename T>
+	typename FloatType<T>::type	dist(PointT<T> const & lhs, PointT<T> const & rhs)
+	{
+		return math::sqrt((lhs.x - rhs.x) * (lhs.x - rhs.x) + (lhs.y - rhs.y) * (lhs.y - rhs.y));
 	}
 
 	inline __declspec(naked) float	rsqrt(float v)
@@ -68,9 +89,9 @@ namespace lv { namespace math {
 	}
 
 	template<typename T>
-	T	length(VectorT<T> const & v)
+	typename FloatType<T>::type	length(VectorT<T> const & v)
 	{
-		return std::sqrt(length_sq(v));
+		return math::sqrt(length_sq(v));
 	}
 
 	inline Vector3f	normalize(Vector3f const & v)
