@@ -29,8 +29,11 @@ namespace lv { namespace lua {
 				.def("assign", &type::assign)
 				.def("size", &type::size)
 				.def("at", (type::reference(type::*)(type::size_type))&type::at)
+				.def("at", (type::const_reference(type::*)(type::size_type) const)&type::at)
 				.def("front", (type::reference(type::*)())&type::front)
+				.def("front", (type::const_reference(type::*)() const)&type::front)
 				.def("back", (type::reference(type::*)())&type::back)
+				.def("back", (type::const_reference(type::*)() const)&type::back)
 		];
 	}
 } }

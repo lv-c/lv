@@ -33,7 +33,7 @@ namespace lv { namespace lua { namespace graphics {
 				.def_readwrite("cx", &type::cx)
 				.def_readwrite("cy", &type::cy)
 				.def("set", &type::set)
-				.def(tostring(self))
+				.def(tostring(const_self))
 				.def(self + type())
 				.def(self - type())
 				.def(self * T())

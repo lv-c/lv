@@ -48,7 +48,7 @@ namespace lv { namespace lua { namespace graphics {
 				.def("width", &type::width)
 				.def("contains", (bool(type::*)(point_type const&))&type::contains)
 				.def("contains", (bool(type::*)(type const&))&type::contains)
-				.def(tostring(self))
+				.def(tostring(const_self))
 				.def(self + point_type())
 				.def(self - point_type())
 				.def(self * T())
