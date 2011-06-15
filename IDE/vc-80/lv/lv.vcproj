@@ -230,6 +230,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\Random.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\Ref.hpp"
 					>
 				</File>

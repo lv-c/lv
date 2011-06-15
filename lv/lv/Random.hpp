@@ -17,7 +17,10 @@
 
 #include <boost/random/mersenne_twister.hpp>
 #include <boost/random/uniform_int.hpp>
+#include <boost/random/uniform_real.hpp>
 #include <boost/random/variate_generator.hpp>
+#include <boost/type_traits/is_integral.hpp>
+#include <boost/type_traits/is_float.hpp>
 
 
 namespace lv
@@ -28,10 +31,33 @@ namespace lv
 	(Accessing two different objects is ok, as long as
 	they don't share an engine). """
 	*/
-	template<typename T = int>
+
+	template<typename T, typename Enabled = void>
+	struct RandomTraits;
+
+	template<typename T>
+	struct RandomTraits<T, typename boost::enable_if<boost::is_integral<T> >::type>
+	{
+		typedef boost::mt19937	generator_type;
+
+		typedef boost::uniform_int<T>	distribution_type;
+	};
+
+
+	template<typename T>
+	struct RandomTraits<T, typename boost::enable_if<boost::is_float<T> >::type>
+	{
+		typedef boost::mt19937	generator_type;
+
+		typedef boost::uniform_real<T>	distribution_type;
+	};
+
+
+	template<typename T = int, typename Traits = RandomTraits<T> >
 	class Random
 	{
-		boost::variate_generator<boost::mt19937, boost::uniform_int<T> > die_;
+		boost::variate_generator<typename Traits::generator_type, 
+			typename Traits::distribution_type> die_;
 
 	public:
 
@@ -39,7 +65,7 @@ namespace lv
 
 		Random(uint32 seed = 5489, T min = std::numeric_limits<T>::min(), 
 			T max = std::numeric_limits<T>::max())
-			: die_(boost::mt19937(seed), boost::uniform_int<T>(min, max))
+			: die_(Traits::generator_type(seed), Traits::distribution_type(min, max))
 		{
 		}
 
@@ -47,11 +73,20 @@ namespace lv
 		{
 			die_.engine().seed(value);
 		}
-
 		
 		result_type	operator() ()
 		{
 			return die_();
+		}
+
+		result_type	min() const
+		{
+			return die_.distribution().min();
+		}
+
+		result_type	max() const
+		{
+			return die_.distribution().max();
 		}
 		
 	};
