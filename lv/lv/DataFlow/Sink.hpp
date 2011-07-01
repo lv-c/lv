@@ -25,7 +25,7 @@
 
 namespace lv { namespace flow {
 
-	typedef boost::function<void(slot_type, BufferPtr)> proxy_push_type;
+	typedef boost::function<void(slot_type const &, BufferPtr)> proxy_push_type;
 
 	/// thread-safe
 	template<template<class> class PushPolicy, class Key, class IArchive>
