@@ -1,6 +1,7 @@
 #include <lv/FileSystem/MyZipReader.hpp>
 
 #include <lv/Foreach.hpp>
+#include <lv/MyZip.hpp>
 #include <lv/lvlib.hpp>
 
 #include <clocale>
@@ -30,7 +31,7 @@ namespace lv
 	{
 		scoped_lock lock(mutex_);
 
-		foreach(unzip_map::value_type const & it, unzip_)
+		foreach(UnzipMap::value_type const & it, unzip_)
 		{
 			ZRESULT ret = it.second->close();
 			BOOST_ASSERT(ret == ZR_OK);
@@ -46,9 +47,9 @@ namespace lv
 		if(zip_file.empty() || zip_file.size() + 1 >= file.size())	// + 1 : '\\' or '/'
 			throw file_io_error("invalid file name:" + file);
 
-		unzip_map::iterator it = unzip_.find(zip_file);
+		UnzipMap::iterator it = unzip_.find(zip_file);
 
-		unzip_ptr uz;
+		UnzipPtr uz;
 		if(it == unzip_.end())
 		{
 			// open the zip file

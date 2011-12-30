@@ -13,8 +13,6 @@
 
 #include <lv/FileSystem/IFileIO.hpp>
 
-#include <lv/MyZip.hpp>
-
 #include <boost/thread/mutex.hpp>
 
 #include <string>
@@ -22,12 +20,14 @@
 
 namespace lv
 {
+	class MyUnzip;
+
 	class MyZipReader : public IFileIO
 	{
-		typedef boost::shared_ptr<MyUnzip>	unzip_ptr;
-		typedef std::map<std::string, unzip_ptr>	unzip_map;
+		typedef boost::shared_ptr<MyUnzip>	UnzipPtr;
+		typedef std::map<std::string, UnzipPtr>	UnzipMap;
 
-		unzip_map	unzip_;
+		UnzipMap	unzip_;
 
 		std::string	path_;
 
