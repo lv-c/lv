@@ -46,7 +46,9 @@ namespace lv
 			if(timer_ != NULL && SetWaitableTimer(timer_, &due_time, 0, NULL, NULL, 0))
 			{
 				if(WaitForSingleObject(timer_, INFINITE) == WAIT_OBJECT_0)
+				{
 					return;
+				}
 			}
 
 			// failed. use Sleep instead

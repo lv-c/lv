@@ -109,7 +109,9 @@ namespace lv { namespace flow {
 
 				invoker_map::iterator it = invokers_.find(key);
 				if(it == invokers_.end())
+				{
 					return;
+				}
 
 				try
 				{

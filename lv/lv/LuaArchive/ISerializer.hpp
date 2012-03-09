@@ -47,7 +47,9 @@ namespace lv { namespace lua { namespace archive {
 	{
 		int given = luabind::type(obj);
 		if(given != expected)
+		{
 			throw UnmatchedLuaType(given, expected);
+		}
 	}
 
 
@@ -139,7 +141,9 @@ namespace lv { namespace lua { namespace archive {
 
 			luabind::object version_obj = obj[VersionKey];
 			if(version_obj)
+			{
 				version = luabind::object_cast<unsigned int>(version_obj);
+			}
 
 			boost::serialization::serialize(proxy, t, version);
 		}
@@ -177,7 +181,9 @@ namespace lv { namespace lua { namespace archive {
 		inline bool	is_version_key(luabind::object const & obj)
 		{
 			if(obj && luabind::type(obj) == LUA_TSTRING)
+			{
 				return (luabind::object_cast<std::string>(obj) == VersionKey);
+			}
 			
 			return false;
 		}

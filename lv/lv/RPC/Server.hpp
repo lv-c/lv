@@ -104,7 +104,9 @@ namespace lv { namespace rpc {
 			protocol_type::header::type header;
 			ia >> header;
 			if(header != protocol_type::header::call)
+			{
 				throw InvalidProtocolValue("invalid Pro::header value");
+			}
 
 			try
 			{
@@ -131,9 +133,13 @@ namespace lv { namespace rpc {
 			ia >> call_option;
 
 			if(call_option == protocol_type::options::none)
+			{
 				return;
+			}
 			else if(call_option != protocol_type::options::ret && call_option != protocol_type::options::ack)
+			{
 				throw InvalidProtocolValue("invalid Pro::options value");
+			}
 
 			// send back the result
 			request_id_type id;
@@ -155,7 +161,9 @@ namespace lv { namespace rpc {
 			{
 				oa << protocol_type::except::no_ex;
 				if(call_option == protocol_type::options::ret)
+				{
 					result(oa);	// write the result
+				}
 			}
 
 			raw_os.flush();

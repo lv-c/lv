@@ -35,7 +35,9 @@ namespace lv { namespace lua { namespace archive {
 		for(luabind::iterator it(obj), end; it != end; ++it, ++index)
 		{
 			if(index >= N)
+			{
 				throw ArraySizeTooShort();
+			}
 
 			BOOST_ASSERT(! detail::is_version_key(it.key()) && "you shouldn't place a version key here");
 

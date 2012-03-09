@@ -235,9 +235,13 @@ namespace lv { namespace rpc {
 		{
 			except_map::iterator it = except_.find(key);
 			if(it == except_.end())
+			{
 				throw InvalidExceptionID();
+			}
 			else
+			{
 				return it->second->get(ia);
+			}
 		}
 	};
 

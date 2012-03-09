@@ -21,20 +21,28 @@ namespace lv { namespace lua { namespace archive {
 	void	save(std::ostream & os, boost::shared_ptr<T> const & v, size_t level)
 	{
 		if(v)
+		{
 			save(os, *v, level);
+		}
 		else
+		{
 			os << "nil";
+		}
 	}
 
 	template<typename T>
 	void	load(luabind::object const & obj, boost::shared_ptr<T> & v)
 	{
 		if(luabind::type(obj) == LUA_TNIL)
+		{
 			v.reset();
+		}
 		else
 		{
 			if(! v)
+			{
 				v.reset(new T());
+			}
 			load(obj, *v);
 		}
 	}

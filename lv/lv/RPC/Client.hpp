@@ -126,7 +126,9 @@ namespace lv { namespace rpc {
 			~PrivateHandler()
 			{
 				if(! sent_)
+				{
 					client_.send(buffer_, request_id_, Pro::options::none);
+				}
 			}
 
 			operator Acknowledgment ()
@@ -219,7 +221,9 @@ namespace lv { namespace rpc {
 				
 				promise_map::iterator it = promises_.find(id);
 				if(it == promises_.end())
+				{
 					throw InvalidRequestID();
+				}
 				
 				// 
 				BOOST_SCOPE_EXIT((&promises_)(it))
@@ -237,12 +241,16 @@ namespace lv { namespace rpc {
 				uint32 ex_seed;
 				ia >> ex_seed >> func_seed_;
 				if(ex_seed != except_->seed())
+				{
 					throw UnmatchedExceptSeed();
+				}
 
 				ready_ = true;
 			}
 			else
+			{
 				throw InvalidProtocolValue("invalid Pro::header value");
+			}
 			
 		}
 		
@@ -266,7 +274,9 @@ namespace lv { namespace rpc {
 			scoped_lock lock(mutex_);
 
 			if(ex_seed != except_->seed())
+			{
 				throw UnmatchedExceptSeed();
+			}
 
 			this->func_seed_ = func_seed;
 			ready_ = true;
@@ -331,7 +341,9 @@ namespace lv { namespace rpc {
 			oa << call_option;
 			// sends the request id only when an acknowledgment or a return value is required
 			if(call_option != Pro::options::none)
+			{
 				oa << request_id;
+			}
 
 			raw_os.flush();
 
@@ -372,7 +384,9 @@ template<typename Ret BOOST_PP_COMMA_IF(n) BOOST_PP_ENUM_PARAMS(n, typename T)>
 PrivateHandler<Ret>	call(Id const & id BOOST_PP_COMMA_IF(n) BOOST_PP_ENUM(n, LV_RPC_call_params, ~))
 {
 	if(! ready())
+	{
 		throw(std::runtime_error("It's not ready yet!"));
+	}
 
 	typedef boost::tuples::tuple<BOOST_PP_ENUM(n, LV_RPC_pointer_type, ~)> tuple_t;
 

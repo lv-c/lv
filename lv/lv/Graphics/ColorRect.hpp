@@ -115,8 +115,11 @@ namespace lv
 			for(size_t i = 0; i < ele_num; ++i)
 			{
 				if(lhs[i] != rhs[i])
+				{
 					return false;
+				}
 			}
+
 			return true;
 		}
 

@@ -65,9 +65,13 @@ namespace lv { namespace rpc {
 					promise_.set_exception(exceptions_.get(key, ia));
 				}
 				else if(ex == Pro::except::no_ex)
+				{
 					promise_.set();
+				}
 				else
+				{
 					throw InvalidProtocolValue("invalid Pro::except value");
+				}
 			}
 		};
 
@@ -115,7 +119,9 @@ namespace lv { namespace rpc {
 					promise_.set(ret);
 				}
 				else
+				{
 					throw InvalidProtocolValue("invalid Pro::except value");
+				}
 			}
 		};
 	}

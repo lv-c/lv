@@ -33,7 +33,9 @@ namespace lv { namespace rle {
 		BOOST_ASSERT(src_size % EleSize == 0);
 
 		if(dest_size < encode_bound(src_size))
+		{
 			throw std::invalid_argument("the destination buffer is too small");
+		}
 
 		typedef IntType<EleSize>::type element;
 		size_t ele_num = src_size / EleSize;
@@ -74,6 +76,7 @@ namespace lv { namespace rle {
 						memcpy(dest_pt, &src_ele[round_start], diff_num * EleSize);
 						dest_pt += diff_num * EleSize;
 					}
+
 					diff_num = 0;
 
 

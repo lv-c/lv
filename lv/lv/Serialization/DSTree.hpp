@@ -43,7 +43,9 @@ namespace boost { namespace serialization {
 			ar & v.key() & has_data;
 
 			if(has_data)
+			{
 				ar & (*v.data());
+			}
 				
 			ar & v;
 		}

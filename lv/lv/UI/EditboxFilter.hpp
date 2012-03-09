@@ -73,8 +73,11 @@ namespace lv
 			foreach(Editbox::filter_type & f, filters_)
 			{
 				if(! f(c, edit))
+				{
 					return false;
+				}
 			}
+
 			return true;
 		}
 

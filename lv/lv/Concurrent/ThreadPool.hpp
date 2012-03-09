@@ -167,7 +167,9 @@ namespace lv
 		void	shutdown(bool clear_pending_tasks = false)
 		{
 			if(clear_pending_tasks)
+			{
 				clear();
+			}
 
 			resize(0, true);
 		}
@@ -191,7 +193,9 @@ namespace lv
 					{
 						thread_num_ --;
 						if(thread_num_ == target_thread_num_)
+						{
 							resize_done_.notify_all();
+						}
 
 						// id of the current thread
 						thread_id id = boost::this_thread::get_id();

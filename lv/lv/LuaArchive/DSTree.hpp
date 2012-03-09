@@ -73,7 +73,9 @@ namespace lv { namespace lua { namespace archive {
 				save(os, *tree.data(), level + 1);
 			}
 			else
+			{
 				os << "nil";
+			}
 
 
 			if(! primitive)
@@ -94,7 +96,9 @@ namespace lv { namespace lua { namespace archive {
 				if(v.empty() || v.data())
 				{
 					if(! first_time)
+					{
 						os << ", ";
+					}
 
 					first_time = false;
 
@@ -151,9 +155,13 @@ namespace lv { namespace lua { namespace archive {
 			luabind::iterator v_it(*it);
 
 			if(boost::is_same<Key, char>::value)
+			{
 				load(*v_it, str);
+			}
 			else
+			{
 				load(*v_it, keys);
+			}
 
 			++v_it;
 

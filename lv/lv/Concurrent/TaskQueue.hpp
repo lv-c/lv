@@ -60,7 +60,9 @@ namespace lv
 			}
 
 			if(queue_.empty())
+			{
 				empty_.notify_one();
+			}
 
 			queue_.push(task);
 		}
@@ -84,20 +86,26 @@ namespace lv
 					consumers_to_interrupt_ --;
 
 					if(consumers_to_interrupt_ == 0)
+					{
 						consumer_interruption_done_.notify_all();
+					}
 
 					throw boost::thread_interrupted();
 				}
 
 				if(! queue_.empty())
+				{
 					break;
+				}
 
 				empty_.wait(lock);
 			}
 
 			//
 			if(queue_.size() == max_count_)
+			{
 				full_.notify_all();
+			}
 			//
 
 			value_type task = queue_.top();
@@ -139,7 +147,9 @@ namespace lv
 			empty_.notify_all();
 
 			if(wait)
+			{
 				consumer_interruption_done_.wait(lock);
+			}
 		}
 
 		/**

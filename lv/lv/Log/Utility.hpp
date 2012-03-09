@@ -48,14 +48,20 @@ namespace lv { namespace log {
 		gather_ptr operator () (gather_ptr gather) const
 		{
 			if(use_clock_)
+			{
 				gather->add_header(Clock());
+			}
 			else
+			{
 				gather->add_header(Time());
+			}
 
 			gather->add_header(Tag());
 			
 			if(line_break_)
+			{
 				gather->add_tailer(LineBreak());
+			}
 
 			return gather;
 		}
@@ -80,7 +86,9 @@ namespace lv { namespace log {
 	{
 		ostream_ptr ofile(new std::basic_ofstream<char_type>(file, append ? std::ios_base::app : std::ios_base::trunc));
 		if(! (*ofile))
+		{
 			throw file_io_error(std::string("error opening file:") + file);
+		}
 
 		return add_gather(log, ofile, formatters);
 	}

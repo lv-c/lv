@@ -30,7 +30,9 @@ namespace lv
 		{
 		case Key::ArrowLeft:
 			if(caret_index_ > 0)
+			{
 				set_caret_index(caret_index_ - 1);
+			}
 			break;
 
 		case Key::ArrowRight:

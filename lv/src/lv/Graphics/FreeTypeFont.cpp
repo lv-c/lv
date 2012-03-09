@@ -23,7 +23,9 @@ namespace lv
 		, anti_aliased_(anti_aliased)
 	{
 		if(ft_ref_count_ ++ == 0)	
+		{
 			FT_Init_FreeType(&ft_lib_);
+		}
 	}
 
 	FreeTypeFont::~FreeTypeFont()
@@ -31,7 +33,9 @@ namespace lv
 		clear();
 
 		if(--ft_ref_count_ == 0)
+		{
 			FT_Done_FreeType(ft_lib_);
+		}
 	}
 
 	void FreeTypeFont::clear()
@@ -68,9 +72,13 @@ namespace lv
 		//
 		int ret = 0;
 		if(buffer)
+		{
 			ret = FT_New_Memory_Face(ft_lib_, reinterpret_cast<FT_Byte*>(&(*buffer)[0]), buffer->size(), 0, &face_);
+		}
 		else
+		{
 			ret = FT_New_Face(ft_lib_, file.c_str(), 0, &face_);
+		}
 
 		check_ft_result(ret, std::string("FreeTypeFont::load Error loading font : ") + name());
 		
@@ -88,7 +96,9 @@ namespace lv
 		tex_size_.set(std::min(sz.cx, tex_size_.cx), std::min(sz.cy, tex_size_.cy));
 		texture_ = RenderFactory::instance().create_texture(tex_size_, PF_L8);
 		if(! texture_)
+		{
 			throw std::runtime_error(std::string("FreeTypeFont::load Error creating texture : ") + name());
+		}
 
 		// keep the buffer
 		buf_holder_ = buffer;
@@ -174,7 +184,9 @@ namespace lv
 		glyph_map::iterator it = glyphs_.find(c);
 
 		if(it != glyphs_.end())
+		{
 			return it->second.advance;
+		}
 		else
 		{
 			BOOST_ASSERT(false);

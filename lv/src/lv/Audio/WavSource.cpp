@@ -35,7 +35,10 @@ namespace lv
 				catch (std::ios_base::failure const &)
 				{
 					if(data_offset_ == 0)
+					{
 						throw InvalidAudioData();
+					}
+
 					bin_is.seekg(data_offset_);
 
 					return;
@@ -58,6 +61,7 @@ namespace lv
 						bin_is >> forward(fmt_chunk_size - 16);
 					}
 					break;
+
 				case data_id:
 					data_offset_ = bin_is.tellg();
 					size_ = chunk_size;

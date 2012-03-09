@@ -13,10 +13,14 @@ namespace lv
 	void Window::render()
 	{
 		if(! visible())
+		{
 			return;
+		}
 
 		if(renderer_.get() != NULL)
+		{
 			renderer_->render();
+		}
 	}
 
 }

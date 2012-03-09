@@ -18,7 +18,9 @@ namespace lv
 		{
 			char last = path_[path_.size() - 1];
 			if(last != '/' && last != '\\')
+			{
 				path_.push_back('/');
+			}
 		}
 	}
 
@@ -45,7 +47,9 @@ namespace lv
 
 		std::string zip_file = get_zip_file(file);
 		if(zip_file.empty() || zip_file.size() + 1 >= file.size())	// + 1 : '\\' or '/'
+		{
 			throw file_io_error("invalid file name:" + file);
+		}
 
 		UnzipMap::iterator it = unzip_.find(zip_file);
 
@@ -58,12 +62,16 @@ namespace lv
 			std::string zip_path = path_ + zip_file + postfix_;
 			ZRESULT ret = uz->open(zip_path, password_);
 			if(ret != ZR_OK)
+			{
 				throw file_io_error("error opening zip file:" + zip_path);
+			}
 			
 			unzip_.insert(std::make_pair(zip_file, uz));
 		}
 		else
+		{
 			uz = it->second;
+		}
 
 		//
 		int index;
@@ -78,7 +86,9 @@ namespace lv
 
 		// sometimes returns ZR_MORE while it's actually finished
 		if(ret != ZR_OK && ret != ZR_MORE)
+		{
 			throw file_io_error("error reading file:" + file);
+		}
 	}
 
 

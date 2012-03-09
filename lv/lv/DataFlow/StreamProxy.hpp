@@ -75,7 +75,9 @@ namespace lv { namespace flow { namespace detail {
 		StreamProxy & operator << (T const & t)
 		{
 			if(impl_.get() != NULL)
+			{
 				(*impl_) << t;
+			}
 
 			return *this;
 		}

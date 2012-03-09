@@ -47,7 +47,9 @@ namespace lv { namespace rpc {
 
 			scoped_lock lock(mutex_);
 			if(prepro_)
+			{
 				prepro_(buf);
+			}
 
 			return buf;
 		}
@@ -57,7 +59,9 @@ namespace lv { namespace rpc {
 			{
 				scoped_lock lock(mutex_);
 				if(postpro_)
+				{
 					postpro_(buf);
+				}
 			}
 			
 			sock->send(buf);

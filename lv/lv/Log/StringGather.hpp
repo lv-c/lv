@@ -46,7 +46,9 @@ namespace lv { namespace log {
 			end_record(lvl);
 
 			if(receiver_)
+			{
 				receiver_(oss_.str(), lvl);
+			}
 			// empty the stringstream
 			oss_.str(log::string_type());
 

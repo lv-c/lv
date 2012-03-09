@@ -140,17 +140,23 @@ namespace lv { namespace unique_hash {
 				if(it != map.end())
 				{
 					if(it->second == v)		// duplicated
+					{
 						throw DuplicatedObjects();
+					}
 
 					ok = false;
 					break;
 				}
 				else
+				{
 					map.insert(std::make_pair(key, v));
+				}
 			}
 			
 			if(ok)
+			{
 				return i;
+			}
 		}
 
 		throw NoSeedFound();

@@ -72,13 +72,17 @@ namespace lv { namespace lua { namespace archive {
 			{
 				os_ << '{';
 				if(version != DefaultVersion)
+				{
 					*this << boost::serialization::make_nvp(VersionKey.c_str(), version);
+				}
 			}
 
 			~OArchiveProxy()
 			{
 				if(! primitive_)
+				{
 					os_ << std::endl << write_tabs(level_ - 1);
+				}
 
 				os_ << '}';
 			}
@@ -102,7 +106,9 @@ namespace lv { namespace lua { namespace archive {
 			void	save(T const & t)
 			{
 				if(! first_time_)
+				{
 					os_ << ", ";
+				}
 
 				first_time_ = false;
 
@@ -154,7 +160,9 @@ namespace lv { namespace lua { namespace archive {
 				os << new_str;
 			}
 			else
+			{
 				os << t;
+			}
 
 			os << '\'';
 		}
@@ -184,17 +192,23 @@ namespace lv { namespace lua { namespace archive {
 			for(Iter it = begin; it != end; ++it)
 			{
 				if(! is_primitive_item)
+				{
 					os << std::endl << write_tabs(level + 1);
+				}
 
 				archive::save(os, *it, level + 1);
 
 				Iter next = it;
 				if(++next != end)
+				{
 					os << ", ";
+				}
 			}
 
 			if(! is_primitive_item)
+			{
 				os << std::endl << write_tabs(level);
+			}
 
 			os << '}';
 		}

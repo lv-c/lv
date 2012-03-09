@@ -120,6 +120,7 @@ namespace lv
 				{
 					map_it->second = list_.touch(map_it->second);
 				}
+
 				return map_it->second;
 			}
 

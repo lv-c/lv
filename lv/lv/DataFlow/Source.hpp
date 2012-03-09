@@ -90,7 +90,9 @@ namespace lv { namespace flow {
 		{
 			// returns an empty StreamProxy object if it's not enabled
 			if(! enabled_)
+			{
 				return detail::StreamProxy<oarchive_type, Source>();
+			}
 
 			BufferPtr buf = buf_manager_->get();
 			OStreamPtr raw_os = ostream_factory_.open(*buf);
@@ -163,7 +165,9 @@ void call(key_type const & key BOOST_PP_COMMA_IF(n) BOOST_PP_ENUM(n, LV_DATAFLOW
 {
 	// it's not enabled
 	if(! enabled_)
+	{
 		return;
+	}
 
 	typedef boost::tuples::tuple<BOOST_PP_ENUM(n, LV_DATAFLOW_pointer_types, ~)> tuple_type;
 

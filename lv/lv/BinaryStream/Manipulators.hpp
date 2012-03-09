@@ -47,7 +47,9 @@ namespace lv { namespace bstream {
 				T val;
 				is >> val;
 				if(val != ce.t_)
+				{
 					throw ce.ex_;
+				}
 
 				return is;
 			}
@@ -66,29 +68,6 @@ namespace lv { namespace bstream {
 	{
 		return detail::check_equal_impl<T, Except>(t, ex);
 	}
-
-	// ignore 
-
-	class ignore
-	{
-		std::streamsize	size_;
-
-		int	metadelim_;
-
-	public:
-
-		ignore(std::streamsize sz, int metadelim = std::char_traits<char>::eof()) 
-			: size_(sz) 
-			, metadelim_(metadelim)
-		{
-		}
-
-		friend inline BinaryIStream & operator >> (BinaryIStream & is, ignore const & ig)
-		{
-			is.ignore(ig.size_, ig.metadelim_);
-			return is;
-		}
-	};
 
 	// forward
 
@@ -191,10 +170,14 @@ namespace lv { namespace bstream {
 
 			std::size_t size = std::min(fixed.str_.size(), fixed.size_);
 			if(size > 0)
+			{
 				os.write(&fixed.str_[0], static_cast<std::streamsize>(size));
+			}
 
 			if(size < fixed.size_)
+			{
 				os << fill_n(fixed.size_ - size, '\0');
+			}
 		}
 	};
 
@@ -217,7 +200,9 @@ namespace lv { namespace bstream {
 
 			var.str_.resize(size);
 			if(size > 0)
+			{
 				is.read(&var.str_[0], size);
+			}
 
 			return is;
 		}
@@ -228,7 +213,9 @@ namespace lv { namespace bstream {
 			os << size;
 
 			if(size > 0)
+			{
 				os.write(&var.str_[0], size);
+			}
 
 			return os;
 		}

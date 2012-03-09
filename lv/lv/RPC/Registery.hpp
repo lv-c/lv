@@ -108,7 +108,9 @@ namespace lv { namespace rpc {
 		uint32	hash()
 		{
 			if(! hash_invoker_.empty())
+			{
 				throw std::logic_error("hash() functions should only be called once.");
+			}
 
 			// compute the hash seed
 			std::list<Id> ids;
@@ -144,7 +146,9 @@ namespace lv { namespace rpc {
 
 			hash_invoker_map::iterator it = hash_invoker_.find(id);
 			if(it == hash_invoker_.end())
+			{
 				throw InvalidFunctionID(std::string("invalid function id: ") + boost::lexical_cast<std::string>(id));
+			}
 
 			try
 			{
@@ -190,7 +194,9 @@ namespace lv { namespace rpc {
 			BOOST_ASSERT(hash_invoker_.empty() && "You should not register functions any more");
 
 			if(id_invoker_.find(id) != id_invoker_.end())
+			{
 				throw std::runtime_error("The id has already been used");
+			}
 
 			id_invoker_.insert(std::make_pair(id, detail::Invoker<Signature, ArchivePair, ParamExtractors>(f)));
 

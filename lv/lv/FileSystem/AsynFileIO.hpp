@@ -84,9 +84,13 @@ namespace lv
 			IOTask task(file, buffer, syn_filio_);
 			
 			if(service_ != NULL)
+			{
 				service_->post(task);
+			}
 			else
+			{
 				strand_->post(task);
+			}
 
 			return IOFuture(task);
 		}

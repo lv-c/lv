@@ -65,7 +65,9 @@ namespace lv { namespace log {
 			~Proxy()
 			{
 				if(active_)
+				{
 					log_.on_record_end();
+				}
 			}
 
 			template <typename T>
@@ -126,7 +128,9 @@ namespace lv { namespace log {
 			foreach(gather_ptr & gather, this->gathers_)
 			{
 				if(gather->output(lvl_))
+				{
 					gather->log(t);
+				}
 			}
 		}
 
@@ -140,7 +144,9 @@ namespace lv { namespace log {
 			foreach(gather_ptr & gather, this->gathers_)
 			{
 				if(gather->output(lvl_))
+				{
 					gather->on_record_begin(lvl_);
+				}
 			}
 		}
 
@@ -149,7 +155,9 @@ namespace lv { namespace log {
 			foreach(gather_ptr & gather, this->gathers_)
 			{
 				if(gather->output(lvl_))
+				{
 					gather->on_record_end(lvl_);
+				}
 			}
 
 			// unlock

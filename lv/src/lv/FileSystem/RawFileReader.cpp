@@ -8,7 +8,9 @@ namespace lv
 	{
 		std::ifstream infile(file.c_str(), std::ios_base::binary);
 		if(! infile)
+		{
 			throw(file_io_error("error opening file: " + file));
+		}
 
 		// get the size of the file
 		infile.seekg(0, std::ios_base::end);
@@ -22,9 +24,13 @@ namespace lv
 			infile.read(buffer::data(buf), len);
 		}
 		else
+		{
 			buf->clear();
+		}
 
 		if(! infile.good())
+		{
 			throw(file_io_error("error reading file : " + file));
+		}
 	}
 }

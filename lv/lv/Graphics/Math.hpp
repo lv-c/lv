@@ -114,7 +114,9 @@ namespace lv { namespace math {
 		// if determinant is near zero, ray lies in plane of triangle
 		T det = dot(edge1, pvec);
 		if(det <= std::numeric_limits<T>::epsilon())
+		{
 			return false;
+		}
 
 		// calculate distance from vert0 to ray origin
 		VectorT<T> tvec = orig - v0;
@@ -122,7 +124,9 @@ namespace lv { namespace math {
 		//calculate U parameter and test bounds
 		T u = dot(tvec, pvec);
 		if(u < T(0) || u > det)
+		{
 			return false;
+		}
 
 		// prepare to test V parameter
 		VectorT<T> qvec = cross(tvec, edge1);
@@ -130,7 +134,9 @@ namespace lv { namespace math {
 		// calculate V parameter and test bounds
 		T v = dot(dir, qvec);
 		if(v < T(0) || u + v > det)
+		{
 			return false;
+		}
 
 		T t = dot(edge2, qvec) / det;
 		ret = orig + dir * t;
