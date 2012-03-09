@@ -692,6 +692,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\BinaryStream\BinaryStreamBase.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\BinaryStream\Buffer.hpp"
 					>
 				</File>

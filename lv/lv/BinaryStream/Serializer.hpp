@@ -12,6 +12,7 @@
 #define LV_BINARYSTREAM_SERIALIZER_HPP
 
 #include <lv/Foreach.hpp>
+#include <lv/Endian.hpp>
 #include <lv/BinaryStream/Tags.hpp>
 
 #include <boost/utility/enable_if.hpp>
@@ -62,8 +63,13 @@ namespace lv { namespace bstream {
 	struct Serializer<T, primitive_tag>
 	{
 		template<class OStream>
-		static void write(OStream & os, typename boost::call_traits<T>::param_type t)
+		static void write(OStream & os, T t)
 		{
+			if(os.switch_endian())
+			{
+				t = lv::endian_switch(t);
+			}
+				
 			os.write(reinterpret_cast<char const*>(&t), sizeof(T));
 		}
 
@@ -71,6 +77,11 @@ namespace lv { namespace bstream {
 		static void read(IStream & is, T & t)
 		{
 			is.read(reinterpret_cast<char*>(&t), sizeof(T));
+
+			if(is.switch_endian())
+			{
+				t = lv::endian_switch(t);
+			}
 		}
 	};
 
@@ -83,8 +94,17 @@ namespace lv { namespace bstream {
 		{
 			if(! boost::empty(t))
 			{
-				os.write(reinterpret_cast<char const*>(&*boost::begin(t)), static_cast<std::streamsize>(
-					boost::size(t) * sizeof(typename boost::range_value<T>::type)));
+				size_t const value_size = sizeof(typename boost::range_value<T>::type);
+
+				if(os.switch_endian() && value_size != 1)
+				{
+					os.write(reinterpret_cast<char const*>(&*boost::begin(t)), static_cast<std::streamsize>(
+						boost::size(t) * value_size));
+				}
+				else
+				{
+					Serializer<T, range_tag>::write(os, t);
+				}
 			}
 		}
 
@@ -93,8 +113,17 @@ namespace lv { namespace bstream {
 		{
 			if(! boost::empty(t))
 			{
-				is.read(reinterpret_cast<char*>(&*boost::begin(t)), static_cast<std::streamsize>(
-					boost::size(t) * sizeof(typename boost::range_value<T>::type)));
+				size_t const value_size = sizeof(typename boost::range_value<T>::type);
+
+				if(is.switch_endian() && value_size != 1)
+				{
+					is.read(reinterpret_cast<char*>(&*boost::begin(t)), static_cast<std::streamsize>(
+						boost::size(t) * sizeof(typename boost::range_value<T>::type)));
+				}
+				else
+				{
+					Serializer<T, range_tag>::read(is, t);
+				}
 			}
 		}
 	};

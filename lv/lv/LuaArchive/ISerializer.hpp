@@ -35,6 +35,11 @@ namespace lv { namespace lua { namespace archive {
 				lua_typename(NULL, given) + " given.")
 		{
 		}
+
+		explicit UnmatchedLuaType(std::string const & msg)
+			: std::runtime_error(msg)
+		{
+		}
 	};
 	
 	
@@ -231,7 +236,14 @@ namespace lv { namespace lua { namespace archive {
 	template<typename T>
 	void	load(luabind::object const & obj, boost::serialization::nvp<T> const & t)
 	{
-		load(obj[t.name()], t.value());
+		try
+		{
+			load(obj[t.name()], t.value());
+		}
+		catch(UnmatchedLuaType const & ex)
+		{
+			throw UnmatchedLuaType(t.name() + string(" -> ") + ex.what());
+		}
 	}
 
 	template<typename T>

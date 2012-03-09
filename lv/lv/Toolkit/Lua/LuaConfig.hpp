@@ -56,6 +56,13 @@ namespace lv { namespace lua {
 			return *this;
 		}
 
+		template<typename T>
+		LuaConfig const & operator () (T & t) const
+		{
+			*ia_ & t;
+			return *this;
+		}
+
 	private:
 
 		lua_State *	init_lua();

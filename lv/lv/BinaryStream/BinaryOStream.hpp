@@ -11,6 +11,7 @@
 #ifndef LV_BINARYOSTREAM_HPP
 #define LV_BINARYOSTREAM_HPP
 
+#include <lv/BinaryStream/BinaryStreamBase.hpp>
 #include <lv/BinaryStream/Serializer.hpp>
 #include <lv/Stream/OStreamProxy.hpp>
 
@@ -18,7 +19,7 @@
 
 namespace lv
 {
-	class BinaryOStream : public OStreamProxy
+	class BinaryOStream : public BinaryStreamBase, public OStreamProxy
 	{
 	public:
 
@@ -31,13 +32,13 @@ namespace lv
 		 *		std::ios_base::badbit | std::ios_base::failbit
 		 * @exception std::ios_base::failure if the stream passed in has an error state
 		 */
-		BinaryOStream(std::ostream & os)
+		explicit BinaryOStream(std::ostream & os)
 			: OStreamProxy(os)
 		{
 			exceptions(std::ios_base::badbit | std::ios_base::failbit);
 		}
 
-		BinaryOStream(OBufferStream & os)
+		explicit BinaryOStream(OBufferStream & os)
 			: OStreamProxy(os)
 		{
 			exceptions(std::ios_base::badbit | std::ios_base::failbit);

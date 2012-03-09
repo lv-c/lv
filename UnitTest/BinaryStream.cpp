@@ -23,16 +23,43 @@ struct Test
 	{
 		ar & i;
 	}
+
+	bool operator == (Test const & rhs)
+	{
+		return i == rhs.i;
+	}
 };
 
-BOOST_AUTO_TEST_CASE(test_binary_stream)
+void test_binary_stream_impl(bool switch_endian)
 {
 	Buffer buf;
 	OBufferStream os(buf);
 
 	BinaryOStream bos(os);
+	
+	bos.switch_endian(switch_endian);
 
 	Test t;
-	bos << t << int(1);
-	
+	int i(0x123455);
+	bos << t << i;
+
+	//
+
+	IBufferStream is(buf);
+	BinaryIStream bis(is);
+
+	bis.switch_endian(switch_endian);
+
+	Test new_t;
+	int new_i;
+	bis >> new_t >> new_i;
+
+	BOOST_CHECK(new_t == t);
+	BOOST_CHECK_EQUAL(new_i, i);
+}
+
+BOOST_AUTO_TEST_CASE(test_binary_stream)
+{
+	test_binary_stream_impl(true);
+	test_binary_stream_impl(false);
 }

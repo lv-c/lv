@@ -14,19 +14,16 @@
 #include <boost/type_traits/is_arithmetic.hpp>
 #include <boost/type_traits/is_enum.hpp>
 #include <boost/mpl/identity.hpp>
+#include <boost/mpl/or.hpp>
 
 namespace lv { namespace bstream {
 
 
 	// arithmetic type or enum type
 	template<typename T>
-	struct is_primitive
+	struct is_primitive 
+		: boost::mpl::or_<boost::is_arithmetic<T>, boost::is_enum<T> >
 	{
-		static bool const value = 
-			boost::type_traits::ice_or<
-				boost::is_arithmetic<T>::value,
-				boost::is_enum<T>::value
-			>::value;
 	};
 
 

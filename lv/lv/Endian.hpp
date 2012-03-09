@@ -14,28 +14,34 @@
 #include <lv/IntType.hpp>
 
 #include <boost/mpl/assert.hpp>
+#include <boost/mpl/or.hpp>
 #include <boost/type_traits/is_integral.hpp>
+#include <boost/type_traits/is_enum.hpp>
+
+#include <algorithm>
 
 namespace lv
 {
 	template<typename T>
 	T	endian_switch(T t)
 	{
-		BOOST_MPL_ASSERT((boost::is_integral<T>));
+		BOOST_MPL_ASSERT((boost::mpl::or_<boost::is_integral<T>, boost::is_enum<T> >));
 
-		T ret = t;
-		uint8 * front = reinterpret_cast<uint8*>(&ret);
-		uint8 * back = reinterpret_cast<uint8*>(&ret) + sizeof(T) - 1;
-
-		while(front < back)
+		if(sizeof(t) == 1)
 		{
-			std::swap(*front, *back);
-			
-			front++;
-			back--;
+			return t;
 		}
+		else
+		{
+			T ret;
 
-		return ret;
+			uint8 * pold = reinterpret_cast<uint8*>(&t);
+			uint8 * pnew = reinterpret_cast<uint8*>(&ret);
+
+			std::reverse_copy(pold, pold + sizeof(t), pnew);
+
+			return ret;
+		}
 	}
 }
 

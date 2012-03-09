@@ -14,14 +14,15 @@
 #ifndef LV_BINARYISTREAM_HPP
 #define LV_BINARYISTREAM_HPP
 
-#include <lv/Stream/IStreamProxy.hpp>
+#include <lv/BinaryStream/BinaryStreamBase.hpp>
 #include <lv/BinaryStream/Serializer.hpp>
+#include <lv/Stream/IStreamProxy.hpp>
 
 #include <boost/mpl/bool.hpp>
 
 namespace lv
 {
-	class BinaryIStream : public IStreamProxy
+	class BinaryIStream : public BinaryStreamBase, public IStreamProxy
 	{
 	public:
 		
@@ -34,13 +35,13 @@ namespace lv
 		 *		std::ios_base::badbit | std::ios_base::failbit
 		 * @exception std::ios_base::failure if the stream passed in has an error state
 		 */
-		BinaryIStream(std::istream & is)
+		explicit BinaryIStream(std::istream & is)
 			: IStreamProxy(is)
 		{
 			exceptions(std::ios_base::badbit | std::ios_base::failbit);
 		}
 
-		BinaryIStream(IBufferStream & is)
+		explicit BinaryIStream(IBufferStream & is)
 			: IStreamProxy(is)
 		{
 			exceptions(std::ios_base::badbit | std::ios_base::failbit);
