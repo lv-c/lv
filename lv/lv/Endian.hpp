@@ -15,7 +15,7 @@
 
 #include <boost/mpl/assert.hpp>
 #include <boost/mpl/or.hpp>
-#include <boost/type_traits/is_integral.hpp>
+#include <boost/type_traits/is_arithmetic.hpp>
 #include <boost/type_traits/is_enum.hpp>
 
 #include <algorithm>
@@ -25,7 +25,7 @@ namespace lv
 	template<typename T>
 	T	endian_switch(T t)
 	{
-		BOOST_MPL_ASSERT((boost::mpl::or_<boost::is_integral<T>, boost::is_enum<T> >));
+		BOOST_MPL_ASSERT((boost::mpl::or_<boost::is_arithmetic<T>, boost::is_enum<T> >));
 
 		if(sizeof(t) == 1)
 		{
