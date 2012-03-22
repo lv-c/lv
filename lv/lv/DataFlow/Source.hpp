@@ -42,16 +42,16 @@ namespace lv { namespace flow {
 		typedef typename OArchive	oarchive_type;
 
 
-		BufferManagerPtr buf_manager_;
+		BufferManagerPtr	buf_manager_;
 
-		boost::function<void(port_type const&, BufferPtr)> callback_;
+		boost::function<void(port_type const&, BufferPtr)>	callback_;
 
-		port_type port_;
+		port_type	port_;
 
 		OStreamFactory	ostream_factory_;
 
 		// It's a simple flag. So we don't have a mutex for it.
-		bool enabled_;
+		volatile bool	enabled_;
 
 	public:
 
