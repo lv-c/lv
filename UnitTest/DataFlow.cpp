@@ -114,8 +114,8 @@ BOOST_AUTO_TEST_CASE(test_dataflow)
 	typedef lv::flow::DataFlow<lv::flow::ThreadedPush, port_type> dataflow_type;
 	dataflow_type dataflow(5);	// number of threads
 
-	typedef lv::flow::Source<key_type, port_type> source_type;
-	source_type source(port_type(), boost::bind(&dataflow_type::push, &dataflow, _1, _2), buf_manager);
+	typedef lv::flow::Source<key_type> source_type;
+	source_type source(boost::bind(&dataflow_type::push, &dataflow, port_type(), _1), buf_manager);
 
 	typedef lv::flow::Sink<lv::flow::SyncPush, key_type> sink_type;
 	sink_type sink(&proxy_push);

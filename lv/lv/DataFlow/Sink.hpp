@@ -31,12 +31,17 @@ namespace lv { namespace flow {
 	template<template<class> class PushPolicy, class Key, class IArchive>
 	class Sink : boost::noncopyable
 	{
+	public:
+
 		typedef typename Key		key_type;
 		typedef typename IArchive	iarchive_type;
 
+		typedef PushPolicy<BufferPtr> push_policy_type;
+
+	private:
+
 		detail::Registery<key_type, iarchive_type> registery_;
 
-		typedef PushPolicy<BufferPtr> push_policy_type;
 		push_policy_type	push_policy_;
 
 		IStreamFactory	istream_factory_;
@@ -106,11 +111,11 @@ namespace lv { namespace flow {
 			registery_.clear();
 		}
 
-	private:
+	protected:
 
-		void	push_impl(BufferPtr buf)
+		void	push_impl(ConstBufferRef const & buf)
 		{
-			IStreamPtr raw_is = istream_factory_.open(ConstBufferRef(&(*buf)[0], buf->size()));
+			IStreamPtr raw_is = istream_factory_.open(buf);
 			iarchive_type ia(*raw_is);
 
 			registery_.invoke(ia);

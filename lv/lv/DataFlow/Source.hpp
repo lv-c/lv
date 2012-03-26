@@ -34,19 +34,21 @@
 namespace lv { namespace flow {
 
 	/// thread-safe (as long as the BufferManager is thread-safe)
-	template<class Key, class Port, class OArchive>
+	template<class Key, class OArchive>
 	class Source
 	{
+	public:
+
 		typedef typename Key		key_type;
-		typedef typename Port		port_type;
 		typedef typename OArchive	oarchive_type;
 
+		typedef boost::function<void(BufferPtr)>	callback_type;
+
+	private:
 
 		BufferManagerPtr	buf_manager_;
 
-		boost::function<void(port_type const&, BufferPtr)>	callback_;
-
-		port_type	port_;
+		callback_type	callback_;
 
 		OStreamFactory	ostream_factory_;
 
@@ -55,9 +57,8 @@ namespace lv { namespace flow {
 
 	public:
 
-		Source(port_type const & port, boost::function<void(port_type const &, BufferPtr)> const & callback, BufferManagerPtr buf_manager)
-			: port_(port)
-			, callback_(callback)
+		Source(callback_type const & callback, BufferManagerPtr buf_manager)
+			: callback_(callback)
 			, buf_manager_(buf_manager)
 			, enabled_(true)
 		{
@@ -103,6 +104,15 @@ namespace lv { namespace flow {
 			return proxy;
 		}
 
+	protected:
+
+		// If you inherit from this class and can't set the callback function on construction,
+		// you can call this function to set it latter. Note that this is NOT thread-safe.
+		void	set_callback(callback_type const & callback)
+		{
+			this->callback_ = callback;
+		}
+
 	private:
 
 		class Serialize
@@ -135,14 +145,14 @@ namespace lv { namespace flow {
 			boost::fusion::for_each(args, Serialize(oa));
 			raw_os->flush();
 
-			callback_(port_, buf);
+			callback_(buf);
 		}
 
 		template<class, class> friend class detail::StreamProxyImpl;
 
 		void push(BufferPtr buf)
 		{
-			callback_(port_, buf);
+			callback_(buf);
 		}
 
 	};

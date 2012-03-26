@@ -26,8 +26,6 @@
 
 namespace lv { namespace flow {
 
-	typedef boost::function<void(BufferPtr)>	slot_type;
-
 	// thread-safe and the data flow is running concurrently when 
 	// push_impl is called in multiple threads.
 	template<template<class> class PushPolicy, class Port, class Compare>

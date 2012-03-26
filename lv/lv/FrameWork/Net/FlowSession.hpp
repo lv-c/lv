@@ -36,7 +36,7 @@ namespace lv { namespace net {
 		typedef flow::Sink<flow::SyncPush, key_type> sink_type;
 		sink_type	sink_;
 
-		typedef flow::Source<key_type, int>	source_type;
+		typedef flow::Source<key_type>	source_type;
 		boost::shared_ptr<source_type>	source_;
 
 	public:
@@ -46,13 +46,13 @@ namespace lv { namespace net {
 			: base_type(context)
 			, splitter_(context->buffer_manager())
 		{
-			source_.reset(new source_type(0, boost::bind(&FlowSession::push, this, _1, _2), 
+			source_.reset(new source_type(boost::bind(&FlowSession::push, this, _1), 
 				BufferManagerPtr(new PacketBufferManager(1024))));
 		}
 
 	protected:
 
-		void	push(int const & port, BufferPtr buf)
+		void	push(BufferPtr buf)
 		{
 			if(buf->size() > 2)
 			{
