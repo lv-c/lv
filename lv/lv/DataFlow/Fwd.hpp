@@ -11,6 +11,8 @@
 #ifndef LV_DATAFLOW_FWD_HPP
 #define LV_DATAFLOW_FWD_HPP
 
+#include <lv/Buffer.hpp>
+
 #include <boost/function.hpp>
 
 namespace lv { namespace flow {

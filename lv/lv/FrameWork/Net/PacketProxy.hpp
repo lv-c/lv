@@ -40,6 +40,8 @@ namespace lv { namespace net {
 
 		~PacketProxy();
 
+		void	switch_endian(bool s);
+
 		template<typename T>
 		PacketProxy & operator << (T const & t)
 		{

@@ -27,4 +27,9 @@ namespace lv { namespace net {
 		}
 	}
 
+	void PacketProxy::switch_endian(bool s)
+	{
+		bos_.switch_endian(s);
+	}
+
 } }
