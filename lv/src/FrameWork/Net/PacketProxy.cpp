@@ -16,6 +16,7 @@ namespace lv { namespace net {
 		, bos_(raw_os_)
 		, valid_(true)
 	{
+		bos_.switch_endian(rhs.bos_.switch_endian());
 		rhs.valid_ = false;
 	}
 
