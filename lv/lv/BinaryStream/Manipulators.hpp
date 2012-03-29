@@ -181,45 +181,47 @@ namespace lv { namespace bstream {
 		}
 	};
 
-	template<typename SizeType>
-	class variable_len_str
+
+	namespace detail
 	{
-		std::string	&	str_;
-
-	public:
-
-		explicit variable_len_str(std::string & str)
-			: str_(str)
+		template<typename SizeType, class Range>
+		class variable_len_range_impl
 		{
-		}
+			Range &	range_;
 
-		friend BinaryIStream & operator >> (BinaryIStream & is, variable_len_str const & var)
-		{
-			SizeType size;
-			is >> size;
+		public:
 
-			var.str_.resize(size);
-			if(size > 0)
+			explicit variable_len_range_impl(Range & range)
+				: range_(range)
 			{
-				is.read(&var.str_[0], size);
 			}
 
-			return is;
-		}
-
-		friend BinaryOStream & operator << (BinaryOStream & os, variable_len_str const & var)
-		{
-			SizeType size = static_cast<SizeType>(var.str_.size());
-			os << size;
-
-			if(size > 0)
+			friend BinaryIStream & operator >> (BinaryIStream & is, variable_len_range_impl const & var)
 			{
-				os.write(&var.str_[0], size);
+				SizeType size;
+				is >> size;
+
+				var.range_.resize(size);
+				is >> var.range_;
+
+				return is;
 			}
 
-			return os;
-		}
-	};
+			friend BinaryOStream & operator << (BinaryOStream & os, variable_len_range_impl const & var)
+			{
+				SizeType size = static_cast<SizeType>(var.range_.size());
+				os << size << var.range_;
+
+				return os;
+			}
+		};
+	}
+
+	template<typename SizeType, class Range>
+	detail::variable_len_range_impl<SizeType, std::string>	variable_len_range(Range & range)
+	{
+		return detail::variable_len_range_impl<SizeType, Range>(range);
+	}
 
 } }
 

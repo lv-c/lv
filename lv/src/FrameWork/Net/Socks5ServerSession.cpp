@@ -3,6 +3,7 @@
 #include <lv/FrameWork/Net/Socks5.hpp>
 #include <lv/BinaryStream/BinaryIStream.hpp>
 #include <lv/BinaryStream/Manipulators.hpp>
+#include <lv/BinaryStream/String.hpp>
 #include <lv/BinaryStream/Vector.hpp>
 #include <lv/BinaryStream/Array.hpp>
 #include <lv/Stream/IBufferStream.hpp>
@@ -113,8 +114,8 @@ namespace lv { namespace net {
 		uint8 ver;
 		Socks5Auth auth;
 
-		bis >> ver >> bstream::variable_len_str<uint8>(auth.user)
-			>> bstream::variable_len_str<uint8>(auth.password);
+		bis >> ver >> bstream::variable_len_range<uint8>(auth.user)
+			>> bstream::variable_len_range<uint8>(auth.password);
 
 		// BOOST_ASSERT(ver == Socks5::Version);
 
@@ -157,7 +158,7 @@ namespace lv { namespace net {
 			}
 
 		case Socks5::DomainName:
-			bis >> bstream::variable_len_str<uint8>(host);
+			bis >> bstream::variable_len_range<uint8>(host);
 			break;
 
 		default:
