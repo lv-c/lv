@@ -218,7 +218,7 @@ namespace lv { namespace bstream {
 	}
 
 	template<typename SizeType, class Range>
-	detail::variable_len_range_impl<SizeType, std::string>	variable_len_range(Range & range)
+	detail::variable_len_range_impl<SizeType, Range>	variable_len_range(Range & range)
 	{
 		return detail::variable_len_range_impl<SizeType, Range>(range);
 	}
