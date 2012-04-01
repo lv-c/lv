@@ -24,13 +24,8 @@ namespace lv { namespace net {
 
 	public:
 
-		SSLContext(BufferManagerPtr buf_manager, service_ptr service)
-			: Context(buf_manager, service)
-		{
-		}
-
-		SSLContext(BufferManagerPtr buf_manager, strand_ptr strand)
-			: Context(buf_manager, strand)
+		SSLContext(BufferManagerPtr buf_manager, ServiceWrapper const & service_wrapper)
+			: Context(buf_manager, service_wrapper)
 		{
 		}
 

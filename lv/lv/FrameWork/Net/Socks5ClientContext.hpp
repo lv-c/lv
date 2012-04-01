@@ -27,9 +27,8 @@ namespace lv { namespace net {
 
 	public:
 
-		/// use only strand
-		Socks5ClientContext(BufferManagerPtr buf_manager, strand_ptr strand)
-			: Context(buf_manager, strand)
+		Socks5ClientContext(BufferManagerPtr buf_manager, ServiceWrapper const & service_wrapper)
+			: Context(buf_manager, service_wrapper)
 		{
 		}
 

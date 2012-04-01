@@ -14,11 +14,13 @@
 #include <lv/FrameWork/Net/Fwd.hpp>
 #include <lv/FrameWork/Net/Context.hpp>
 
-
-#include <boost/asio.hpp>
+#include <boost/asio/ip/tcp.hpp>
+#include <boost/asio/write.hpp>
+#include <boost/asio/placeholders.hpp>
 #include <boost/bind.hpp>
 #include <boost/enable_shared_from_this.hpp>
 #include <boost/signals2.hpp>
+
 
 namespace lv { namespace net {
 
@@ -133,9 +135,9 @@ namespace lv { namespace net {
 
 			buf->resize(buf->capacity());
 
-			if(context_->strand())
+			if(context_->has_strand())
 			{
-				socket().async_read_some(asio::buffer(*buf), context_->strand()->wrap(
+				socket().async_read_some(asio::buffer(*buf), context_->strand().wrap(
 					boost::bind(&SessionBase::handle_read, shared_from_this(), buf,
 					asio::placeholders::bytes_transferred, asio::placeholders::error)));
 			}
@@ -150,9 +152,9 @@ namespace lv { namespace net {
 
 		virtual	void	start_write(BufferPtr buf)
 		{
-			if(context_->strand())
+			if(context_->has_strand())
 			{
-				boost::asio::async_write(socket(), asio::buffer(*buf), context_->strand()->wrap(
+				boost::asio::async_write(socket(), asio::buffer(*buf), context_->strand().wrap(
 					boost::bind(&SessionBase::handle_write, shared_from_this(), 
 					buf, asio::placeholders::error)));
 			}

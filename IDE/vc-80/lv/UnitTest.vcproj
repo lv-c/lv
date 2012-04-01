@@ -263,6 +263,10 @@
 				RelativePath="..\..\..\UnitTest\Vector.cpp"
 				>
 			</File>
+			<File
+				RelativePath="..\..\..\UnitTest\ZeroMQ.cpp"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>

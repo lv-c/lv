@@ -12,6 +12,7 @@
 #define LV_NET_CONTEX_HPP
 
 #include <lv/FrameWork/Net/Fwd.hpp>
+#include <lv/ServiceWrapper.hpp>
 
 #include <lv/IBufferManager.hpp>
 
@@ -26,23 +27,13 @@ namespace lv { namespace net {
 
 		BufferManagerPtr	buf_manager_;
 
-		typedef boost::shared_ptr<asio::io_service>	service_ptr;
-		service_ptr	service_;
-
-		typedef boost::shared_ptr<asio::io_service::strand>	strand_ptr;
-		strand_ptr	strand_;
+		ServiceWrapper		service_wrapper_;
 
 	public:
 
-		Context(BufferManagerPtr buf_manager, service_ptr service)
+		Context(BufferManagerPtr buf_manager, ServiceWrapper const & service_wrapper)
 			: buf_manager_(buf_manager)
-			, service_(service)
-		{
-		}
-
-		Context(BufferManagerPtr buf_manager, strand_ptr strand)
-			: buf_manager_(buf_manager)
-			, strand_(strand)
+			, service_wrapper_(service_wrapper)
 		{
 		}
 
@@ -51,31 +42,29 @@ namespace lv { namespace net {
 		}
 
 		
-		BufferPtr	buffer()
+		BufferPtr	buffer() const
 		{
 			return buf_manager_->get();
 		}
 
-		BufferManagerPtr buffer_manager() const
+		BufferManagerPtr	buffer_manager() const
 		{
 			return buf_manager_;
 		}
 
-		asio::io_service & service() const
+		asio::io_service &	service() const
 		{
-			if(strand_)
-			{
-				return strand_->io_service();
-			}
-			else
-			{
-				return *service_;
-			}
+			return service_wrapper_.service();
 		}
 
-		strand_ptr strand() const
+		bool	has_strand() const
 		{
-			return strand_;
+			return service_wrapper_.has_strand();
+		}
+
+		boost::asio::strand &	strand() const
+		{
+			return service_wrapper_.strand();
 		}
 	};
 

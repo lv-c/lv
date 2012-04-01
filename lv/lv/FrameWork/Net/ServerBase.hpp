@@ -14,7 +14,7 @@
 #include <lv/FrameWork/Net/Fwd.hpp>
 #include <lv/FrameWork/Net/Context.hpp>
 
-#include <boost/asio.hpp>
+#include <boost/asio/ip/tcp.hpp>
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
 #include <boost/scoped_ptr.hpp>

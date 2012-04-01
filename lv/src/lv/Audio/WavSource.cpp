@@ -2,6 +2,7 @@
 #include <lv/BinaryStream/BinaryIStream.hpp>
 #include <lv/BinaryStream/Manipulators.hpp>
 #include <lv/FourCC.hpp>
+
 #include <boost/assert.hpp>
 
 namespace lv

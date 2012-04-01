@@ -242,6 +242,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\ServiceWrapper.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\SharedPtr.hpp"
 					>
 				</File>
@@ -1133,6 +1137,54 @@
 				</File>
 				<File
 					RelativePath="..\..\..\lv\lv\LuaArchive\Vector.hpp"
+					>
+				</File>
+			</Filter>
+		</Filter>
+		<Filter
+			Name="ZeroMQ"
+			>
+			<Filter
+				Name="Header Files"
+				>
+				<File
+					RelativePath="..\..\..\lv\lv\ZeroMQ\BasicSocket.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\ZeroMQ\Device.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\ZeroMQ\Dup.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\ZeroMQ\Fwd.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\ZeroMQ\SinkSocket.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\ZeroMQ\SourceSocket.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\ZeroMQ.hpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Source Files"
+				>
+				<File
+					RelativePath="..\..\..\lv\src\lv\ZeroMQ\BasicSocket.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\src\lv\ZeroMQ\Device.cpp"
 					>
 				</File>
 			</Filter>

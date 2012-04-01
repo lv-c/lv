@@ -41,9 +41,8 @@ namespace lv { namespace net {
 
 	public:
 
-		/// use only strand
-		ISocks5ServerContext(BufferManagerPtr buf_manager, strand_ptr strand)
-			: Context(buf_manager, strand)
+		ISocks5ServerContext(BufferManagerPtr buf_manager, ServiceWrapper const & service_wrapper)
+			: Context(buf_manager, service_wrapper)
 		{
 		}
 
@@ -70,8 +69,8 @@ namespace lv { namespace net {
 
 	public:
 
-		Socks5ServerContext(BufferManagerPtr buf_manager, strand_ptr strand)
-			: ISocks5ServerContext(buf_manager, strand)
+		Socks5ServerContext(BufferManagerPtr buf_manager, ServiceWrapper const & service_wrapper)
+			: ISocks5ServerContext(buf_manager, service_wrapper)
 		{
 		}
 

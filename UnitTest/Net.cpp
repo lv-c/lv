@@ -114,8 +114,8 @@ void test_net_impl()
 	asio::io_service service;
 
 	// 
-	boost::shared_ptr<SSLContext> server_context(new SSLContext(BufferManagerPtr(new SimpleBufferManager(1024)), lv::shared_from_object(service)));
-	boost::shared_ptr<SSLContext> client_context(new SSLContext(BufferManagerPtr(new SimpleBufferManager(1024)), lv::shared_from_object(service)));
+	boost::shared_ptr<SSLContext> server_context(new SSLContext(BufferManagerPtr(new SimpleBufferManager(1024)), service));
+	boost::shared_ptr<SSLContext> client_context(new SSLContext(BufferManagerPtr(new SimpleBufferManager(1024)), service));
 
 	if(boost::is_same<client_session_type, ClientSession<SSLSession> >::value)
 	{

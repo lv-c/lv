@@ -62,10 +62,10 @@ namespace lv { namespace net {
 				socket().bind(boost::asio::ip::tcp::endpoint(to_bind, 0));
 			}
 
-			if(context_->strand())
+			if(context_->has_strand())
 			{
 				socket().async_connect(*resolver.resolve(query), 
-					context_->strand()->wrap(
+					context_->strand().wrap(
 					boost::bind(&CsSession::handle_connect, 
 					boost::shared_dynamic_cast<CsSession>(shared_from_this()),
 					asio::placeholders::error)));
