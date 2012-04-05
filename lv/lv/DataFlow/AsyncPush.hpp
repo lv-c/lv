@@ -29,14 +29,19 @@ namespace lv { namespace flow {
 
 	public:
 
-		AsyncPush(ServiceWrapper const & service_wrapper)
-			: service_wrapper_(service_wrapper)
+		AsyncPush(boost::asio::io_service & service)
+			: service_wrapper_(service)
+		{
+		}
+
+		AsyncPush(boost::asio::strand & strand)
+			: service_wrapper_(strand)
 		{
 		}
 
 		void operator () (T const & t)
 		{
-			service_wrapper_->post(boost::bind(callback_, t));
+			service_wrapper_.post(boost::bind(callback_, t));
 		}
 	};
 
