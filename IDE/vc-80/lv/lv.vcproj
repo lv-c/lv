@@ -798,18 +798,6 @@
 			</Filter>
 		</Filter>
 		<Filter
-			Name="Lab"
-			>
-			<File
-				RelativePath="..\..\..\lv\lv\Lab\note.txt"
-				>
-			</File>
-			<Filter
-				Name="Header Files"
-				>
-			</Filter>
-		</Filter>
-		<Filter
 			Name="DataFlow"
 			>
 			<Filter
@@ -881,6 +869,10 @@
 				</File>
 				<File
 					RelativePath="..\..\..\lv\lv\DataFlow.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\ZeroMQ.hpp"
 					>
 				</File>
 			</Filter>
@@ -1169,10 +1161,6 @@
 				</File>
 				<File
 					RelativePath="..\..\..\lv\lv\ZeroMQ\SourceSocket.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\lv\lv\ZeroMQ.hpp"
 					>
 				</File>
 			</Filter>

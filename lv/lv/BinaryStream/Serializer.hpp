@@ -98,12 +98,12 @@ namespace lv { namespace bstream {
 
 				if(os.switch_endian() && value_size != 1)
 				{
-					os.write(reinterpret_cast<char const*>(&*boost::begin(t)), static_cast<std::streamsize>(
-						boost::size(t) * value_size));
+					Serializer<T, range_tag>::write(os, t);
 				}
 				else
 				{
-					Serializer<T, range_tag>::write(os, t);
+					os.write(reinterpret_cast<char const*>(&*boost::begin(t)), static_cast<std::streamsize>(
+						boost::size(t) * value_size));
 				}
 			}
 		}
@@ -117,12 +117,12 @@ namespace lv { namespace bstream {
 
 				if(is.switch_endian() && value_size != 1)
 				{
-					is.read(reinterpret_cast<char*>(&*boost::begin(t)), static_cast<std::streamsize>(
-						boost::size(t) * sizeof(typename boost::range_value<T>::type)));
+					Serializer<T, range_tag>::read(is, t);
 				}
 				else
 				{
-					Serializer<T, range_tag>::read(is, t);
+					is.read(reinterpret_cast<char*>(&*boost::begin(t)), static_cast<std::streamsize>(
+						boost::size(t) * sizeof(typename boost::range_value<T>::type)));
 				}
 			}
 		}

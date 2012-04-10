@@ -13,9 +13,7 @@
 #define LV_ASYNFILEIO_HPP
 
 #include <lv/FileSystem/IFileIO.hpp>
-
-#include <boost/asio/io_service.hpp>
-#include <boost/asio/strand.hpp>
+#include <lv/ServiceWrapper.hpp>
 
 namespace lv
 {
@@ -28,26 +26,16 @@ namespace lv
 
 		synio_ptr	syn_filio_;
 
-		boost::asio::io_service * service_;
-
-		boost::asio::strand * strand_;
+		ServiceWrapper	service_wrapper_;
 
 	public:
 		
-		AsynFileIO(synio_ptr synio, boost::asio::io_service & service)
+		AsynFileIO(synio_ptr synio, ServiceWrapper const & service_wrapper)
 			: syn_filio_(synio)
-			, service_(&service)
-			, strand_(NULL)
+			, service_wrapper_(service_wrapper)
 		{
 		}
 
-		AsynFileIO(synio_ptr synio, boost::asio::strand & strand)
-			: syn_filio_(synio)
-			, service_(NULL)
-			, strand_(&strand)
-		{
-		}
-		
 		/**
 		 * get the underlying synchronous file io
 		 */
@@ -82,16 +70,9 @@ namespace lv
 		virtual	IOFuture add_task(std::string const & file, BufferPtr buffer)
 		{
 			IOTask task(file, buffer, syn_filio_);
-			
-			if(service_ != NULL)
-			{
-				service_->post(task);
-			}
-			else
-			{
-				strand_->post(task);
-			}
 
+			service_wrapper_.post(task);
+			
 			return IOFuture(task);
 		}
 	};
