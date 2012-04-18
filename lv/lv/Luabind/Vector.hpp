@@ -11,6 +11,8 @@
 #ifndef LV_LUABIND_VECTOR_HPP
 #define LV_LUABIND_VECTOR_HPP
 
+#include <lv/Luabind/Utility.hpp>
+
 #include <vector>
 
 #include <boost/type_traits/has_trivial_constructor.hpp>
@@ -56,16 +58,21 @@ namespace lv { namespace lua {
 			.def("clear", &type::clear)
 			.def("capacity", &type::capacity)
 			.def("reserve", &type::reserve)
-			.def("at", (type::reference(type::*)(type::size_type))&type::at)
 			.def("at", (type::const_reference(type::*)(type::size_type) const)&type::at)
-			.def("front", (type::reference(type::*)())&type::front)
 			.def("front", (type::const_reference(type::*)() const)&type::front)
-			.def("back", (type::reference(type::*)())&type::back)
 			.def("back", (type::const_reference(type::*)() const)&type::back)
 			.def("push_back", &type::push_back)
 			.def("pop_back", &type::pop_back)
 		;
 
+		if(! is_primitive<T>::value)
+		{
+			vec
+				.def("at", (type::reference(type::*)(type::size_type))&type::at)
+				.def("front", (type::reference(type::*)())&type::front)
+				.def("back", (type::reference(type::*)())&type::back)
+			;
+		}
 		
 		detail::bind_vector_constructor<type, boost::has_trivial_constructor<T>::value>::bind(vec);
 

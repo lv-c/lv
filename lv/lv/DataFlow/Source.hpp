@@ -64,12 +64,12 @@ namespace lv { namespace flow {
 		{
 		}
 
-		void enable(bool enabled)
+		void	enable(bool enabled)
 		{
 			this->enabled_ = enabled;
 		}
 
-		bool enabled() const
+		bool	enabled() const
 		{
 			return enabled_;
 		}
@@ -134,7 +134,7 @@ namespace lv { namespace flow {
 		};
 
 		template<class Tuple>
-		void call_impl(key_type const & key, Tuple const & args)
+		void	call_impl(key_type const & key, Tuple const & args)
 		{
 			BufferPtr buf = buf_manager_->get();
 
@@ -150,7 +150,7 @@ namespace lv { namespace flow {
 
 		template<class, class> friend class detail::StreamProxyImpl;
 
-		void push(BufferPtr buf)
+		void	push(BufferPtr buf)
 		{
 			callback_(buf);
 		}

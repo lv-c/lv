@@ -28,8 +28,6 @@
 
 namespace lv { namespace flow {
 
-	DEFINE_EXCEPTION_MSG(InvalidKey, std::runtime_error);
-
 	class SerializationError : public boost::archive::archive_exception
 	{
 		typedef boost::archive::archive_exception	base_type;
@@ -71,7 +69,7 @@ namespace lv { namespace flow {
 			 * @exception std::runtime_error if @a key has already been used
 			 */
 			template<class Signature, class F>
-			void reg(Key const & key, F f)
+			void	reg(Key const & key, F f)
 			{
 				// a write lock
 				boost::unique_lock<boost::shared_mutex> lock(shared_mutex_);
@@ -86,7 +84,7 @@ namespace lv { namespace flow {
 			}
 
 
-			void clear()
+			void	clear()
 			{
 				// a write lock
 				boost::unique_lock<boost::shared_mutex> lock(shared_mutex_);
@@ -97,7 +95,7 @@ namespace lv { namespace flow {
 
 			/**
 			 * @exception SerializationError  ( public boost::archive::archive_exception)
-			 * @exception exceptions thrown by the target function
+			 * @exception runtime_error exceptions thrown by the target function
 			 */
 			void	invoke(IArchive & ia)
 			{
@@ -117,16 +115,15 @@ namespace lv { namespace flow {
 				{
 					it->second(ia);
 				}
-				catch (boost::archive::archive_exception const & ex)
+				catch(boost::archive::archive_exception const & ex)
 				{
 					throw SerializationError(ex.code, std::string(".error calling function:") + boost::lexical_cast<std::string>(key));
 				}
-				catch(...)
+				catch(std::exception const & ex)
 				{
-					throw;
+					throw std::runtime_error(ex.what() + std::string(".error calling function:") + boost::lexical_cast<std::string>(key));
 				}
 			}
-
 
 		};
 	}

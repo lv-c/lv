@@ -77,7 +77,7 @@ namespace lv { namespace flow {
 		 *	a smart pointer.
 		 */
 		template<class MemFn, class T>
-		Sink & reg_mem_fn(key_type const & key, MemFn f, T t)
+		Sink &	reg_mem_fn(key_type const & key, MemFn f, T t)
 		{
 			return reg<typename BindMemFnSignature<MemFn>::type>(key, bind_mem_fn(f, t));
 		}
@@ -87,7 +87,7 @@ namespace lv { namespace flow {
 		 * @exception std::runtime_error if @a key has already been used
 		 */
 		template<class F>
-		Sink & reg(key_type const & key, F f)
+		Sink &	reg(key_type const & key, F f)
 		{
 			return reg<typename Signature<F>::type, F>(key, f);
 		}
@@ -98,7 +98,7 @@ namespace lv { namespace flow {
 		 * @exception std::runtime_error if @a key has already been used
 		 */
 		template<class Signature, class F>
-		Sink & reg(key_type const & key, F f)
+		Sink &	reg(key_type const & key, F f)
 		{
 			registery_.reg<Signature>(key, f);
 			return *this;
@@ -106,7 +106,7 @@ namespace lv { namespace flow {
 
 
 		/// clear all the registered functions
-		void clear()
+		void	clear()
 		{
 			registery_.clear();
 		}

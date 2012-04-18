@@ -1032,6 +1032,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\Luabind\Utility.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\Luabind\Vector.hpp"
 					>
 				</File>

@@ -98,10 +98,6 @@ void proxy_push(lv::flow::slot_type const & slot, lv::BufferPtr buf)
 	{
 		std::cout << "flow::SerializationError: " << ex.what() << std::endl;
 	}
-	catch(lv::flow::InvalidKey const & ex)
-	{
-		std::cout << "flow::InvalidKey: " << ex.what() << std::endl;
-	}
 }
 
 BOOST_AUTO_TEST_CASE(test_dataflow)

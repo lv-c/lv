@@ -11,6 +11,8 @@
 #ifndef LV_LUABIND_ARRAY_HPP
 #define LV_LUABIND_ARRAY_HPP
 
+#include <lv/Luabind/Utility.hpp>
+
 #include <boost/array.hpp>
 
 #include <luabind/class.hpp>
@@ -23,17 +25,28 @@ namespace lv { namespace lua {
 		typedef boost::array<T, N>	type;
 		using namespace luabind;
 
+		class_<type> arr(name);
+
+		arr
+			.def("assign", &type::assign)
+			.def("size", &type::size)
+			.def("at", (type::const_reference(type::*)(type::size_type) const)&type::at)
+			.def("front", (type::const_reference(type::*)() const)&type::front)
+			.def("back", (type::const_reference(type::*)() const)&type::back)
+		;
+
+		if(! is_primitive<T>::value)
+		{
+			arr
+				.def("at", (type::reference(type::*)(type::size_type))&type::at)
+				.def("front", (type::reference(type::*)())&type::front)
+				.def("back", (type::reference(type::*)())&type::back)
+			;
+		}
+
 		module(state)
 		[
-			class_<type>(name)
-				.def("assign", &type::assign)
-				.def("size", &type::size)
-				.def("at", (type::reference(type::*)(type::size_type))&type::at)
-				.def("at", (type::const_reference(type::*)(type::size_type) const)&type::at)
-				.def("front", (type::reference(type::*)())&type::front)
-				.def("front", (type::const_reference(type::*)() const)&type::front)
-				.def("back", (type::reference(type::*)())&type::back)
-				.def("back", (type::const_reference(type::*)() const)&type::back)
+			arr
 		];
 	}
 } }
