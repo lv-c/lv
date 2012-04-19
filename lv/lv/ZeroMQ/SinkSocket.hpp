@@ -38,7 +38,7 @@ namespace lv { namespace zeromq {
 
 			if(socket().recv(&msg))
 			{
-				this->push_impl(ConstBufferRef(static_cast<char const*>(msg.data()), msg.size()));
+				this->push(ConstBufferRef(static_cast<char const*>(msg.data()), msg.size()));
 			}
 		}
 	};

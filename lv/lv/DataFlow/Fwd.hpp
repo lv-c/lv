@@ -38,7 +38,7 @@ namespace lv { namespace flow {
 	template<class T>
 	class ThreadedPush;
 
-	typedef boost::function<void(BufferPtr)>	slot_type;
+	typedef boost::function<void(ConstBufferRef)>	slot_type;
 	
 
 } }

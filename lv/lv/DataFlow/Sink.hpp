@@ -25,7 +25,7 @@
 
 namespace lv { namespace flow {
 
-	typedef boost::function<void(slot_type const &, BufferPtr)> proxy_push_type;
+	typedef boost::function<void(slot_type const &, ConstBufferRef const &)> proxy_push_type;
 
 	/// thread-safe
 	template<template<class> class PushPolicy, class Key, class IArchive>
@@ -36,7 +36,7 @@ namespace lv { namespace flow {
 		typedef typename Key		key_type;
 		typedef typename IArchive	iarchive_type;
 
-		typedef PushPolicy<BufferPtr> push_policy_type;
+		typedef PushPolicy<ConstBufferRef> push_policy_type;
 
 	private:
 
@@ -66,7 +66,7 @@ namespace lv { namespace flow {
 			}
 		}
 
-		void	push(BufferPtr buf)
+		void	push(ConstBufferRef const & buf)
 		{
 			push_policy_(buf);
 		}
@@ -111,7 +111,7 @@ namespace lv { namespace flow {
 			registery_.clear();
 		}
 
-	protected:
+	private:
 
 		void	push_impl(ConstBufferRef const & buf)
 		{

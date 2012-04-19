@@ -88,7 +88,7 @@ struct TestMemFn
 
 
 // handle some exceptions
-void proxy_push(lv::flow::slot_type const & slot, lv::BufferPtr buf)
+void proxy_push(lv::flow::slot_type const & slot, lv::ConstBufferRef const & buf)
 {
 	try
 	{
