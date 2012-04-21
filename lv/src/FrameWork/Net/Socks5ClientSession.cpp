@@ -41,19 +41,27 @@ namespace lv { namespace net {
 			base_type::start(socks_ip, socks_port, to_bind);
 		}
 		else
+		{
 			base_type::start(ip, port, to_bind);
+		}
 	}
 
 	void Socks5ClientSession::handle_connect(boost::system::error_code const & error)
 	{
 		if(! use_proxy_)
+		{
 			base_type::handle_connect(error);
+		}
 		else
 		{
 			if(error)
+			{
 				on_error_internal(ErrorHandshake, error);
+			}
 			else
+			{
 				on_connected_internal();
+			}
 		}
 	}
 
@@ -103,8 +111,7 @@ namespace lv { namespace net {
 		}
 
 
-		IBufferStream raw_is(buf);
-		BinaryIStream bis(raw_is);
+		BinaryIStream bis(buf);
 
 		try
 		{
@@ -154,7 +161,9 @@ namespace lv { namespace net {
 				<< bstream::variable_len_range<uint8>(password);
 		}
 		else
+		{
 			send_request();
+		}
 	}
 
 	void Socks5ClientSession::handle_auth_response(BinaryIStream & bis)
@@ -274,9 +283,13 @@ namespace lv { namespace net {
 	void Socks5ClientSession::handle_write(BufferPtr buf, boost::system::error_code const & error)
 	{
 		if(status_ == Established)
+		{
 			base_type::handle_write(buf, error);
+		}
 		else if(error)
+		{
 			on_error_internal(ErrorHandshake, error);
+		}
 	}
 
 	void Socks5ClientSession::send_request()

@@ -24,6 +24,24 @@ namespace lv
 
 		IBufferStream *	lv_ios_;
 
+	protected:
+
+		// delayed initialization
+
+		IStreamProxy()
+			: std_ios_(NULL)
+			, lv_ios_(NULL)
+		{
+		}
+
+		void	set(std::istream * std_ios, IBufferStream * lv_ios)
+		{
+			StreamProxyBase::set(std_ios, lv_ios);
+
+			this->std_ios_ = std_ios;
+			this->lv_ios_ = lv_ios;
+		}
+
 	public:
 
 		IStreamProxy(std::istream & ios)

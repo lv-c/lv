@@ -74,7 +74,9 @@ namespace lv { namespace net {
 			{
 				BufferPtr new_buf = splitter_.get();
 				if(! new_buf)
+				{
 					break;
+				}
 
 				try
 				{

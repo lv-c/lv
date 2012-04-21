@@ -38,8 +38,7 @@ namespace lv { namespace net {
 			buf = cache_;
 		}
 
-		IBufferStream raw_is(buf);
-		BinaryIStream bis(raw_is);
+		BinaryIStream bis(buf);
 
 		try
 		{
@@ -124,9 +123,13 @@ namespace lv { namespace net {
 		send() << uint8(1) << uint8(valid ? 0 : 1);
 
 		if(valid)
+		{
 			status_ = Request;
+		}
 		else
+		{
 			exit();
+		}
 	}
 
 	void Socks5ServerSession::handle_request(BinaryIStream & bis)
@@ -166,7 +169,9 @@ namespace lv { namespace net {
 		}
 
 		if(cmd != 1)	// CONNECT
+		{
 			error = boost::asio::error::make_error_code(boost::asio::error::operation_not_supported);
+		}
 
 		if(error)
 		{
@@ -227,7 +232,9 @@ namespace lv { namespace net {
 			uint8 low_byte = port & 0xFF;
 
 			if(addr.is_v4())
+			{
 				proxy << Socks5::IPV4 << addr.to_v4().to_bytes();
+			}
 			else
 			{
 				BOOST_ASSERT(addr.is_v6());
@@ -249,7 +256,9 @@ namespace lv { namespace net {
 	uint8 Socks5ServerSession::error_to_rep(boost::system::error_code const & error)
 	{
 		if(! error)
+		{
 			return 0;
+		}
 
 		if(error.category() == boost::asio::error::get_system_category())
 		{
@@ -287,12 +296,18 @@ namespace lv { namespace net {
 	void Socks5ServerSession::dest_on_error(ErrorType type, boost::system::error_code const & error)
 	{
 		if(status_ == Ended)
+		{
 			return;
+		}
 
 		if(type == ErrorConnect)
+		{
 			send_request_response(error);
+		}
 		else
+		{
 			exit();
+		}
 	}
 
 	void Socks5ServerSession::dest_on_receive(BufferPtr buf)
@@ -314,7 +329,9 @@ namespace lv { namespace net {
 	void Socks5ServerSession::exit()
 	{
 		if(status_ == Ended)
+		{
 			return;
+		}
 
 		status_ = Ended;
 

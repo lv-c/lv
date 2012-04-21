@@ -19,11 +19,15 @@
 #include <lv/Stream/IStreamProxy.hpp>
 
 #include <boost/mpl/bool.hpp>
+#include <boost/optional.hpp>
 
 namespace lv
 {
 	class BinaryIStream : public BinaryStreamBase, public IStreamProxy
 	{
+
+		boost::optional<IBufferStream>	raw_is_;
+
 	public:
 		
 		typedef boost::mpl::true_	is_loading;
@@ -38,15 +42,16 @@ namespace lv
 		explicit BinaryIStream(std::istream & is)
 			: IStreamProxy(is)
 		{
-			exceptions(std::ios_base::badbit | std::ios_base::failbit);
+			set_exceptions();
 		}
 
-		explicit BinaryIStream(IBufferStream & is)
-			: IStreamProxy(is)
+		explicit BinaryIStream(ConstBufferRef const & buf)
+			: raw_is_(buf)
 		{
-			exceptions(std::ios_base::badbit | std::ios_base::failbit);
-		}
+			IStreamProxy::set(NULL, raw_is_.get_ptr());
 
+			set_exceptions();
+		}
 
 		/**
 		 * @exception std::ios_base::failure
@@ -62,6 +67,13 @@ namespace lv
 		BinaryIStream & operator & (T & val)
 		{
 			return *this >> val;
+		}
+
+	private:
+
+		void	set_exceptions()
+		{
+			exceptions(std::ios_base::badbit | std::ios_base::failbit);
 		}
 
 	};

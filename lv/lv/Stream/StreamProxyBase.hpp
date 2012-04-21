@@ -16,6 +16,8 @@
 
 #include <ios>
 
+#include <boost/assert.hpp>
+
 
 namespace lv
 {
@@ -46,9 +48,12 @@ namespace lv
 		{
 		}
 
-		void	set(StreamBase & ios)
+		void	set(std::ios_base * std_ios, StreamBase * lv_ios)
 		{
-			lv_ios_ = &ios;
+			BOOST_ASSERT(std_ios == NULL || lv_ios == NULL);
+
+			this->std_ios_ = std_ios;
+			this->lv_ios_ = lv_ios;
 		}
 
 	public:

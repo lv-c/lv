@@ -33,9 +33,7 @@ struct Test
 void test_binary_stream_impl(bool switch_endian)
 {
 	Buffer buf;
-	OBufferStream os(buf);
-
-	BinaryOStream bos(os);
+	BinaryOStream bos(buf);
 	
 	bos.switch_endian(switch_endian);
 
@@ -45,8 +43,7 @@ void test_binary_stream_impl(bool switch_endian)
 
 	//
 
-	IBufferStream is(buf);
-	BinaryIStream bis(is);
+	BinaryIStream bis(buf);
 
 	bis.switch_endian(switch_endian);
 

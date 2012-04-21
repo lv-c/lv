@@ -25,7 +25,7 @@ namespace lv
 
 	public:
 
-		IBufferStream(ConstBufferRef buf)
+		IBufferStream(ConstBufferRef const & buf)
 			: buf_(buf)
 			, gpos_(0)
 		{

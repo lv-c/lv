@@ -23,9 +23,6 @@ namespace lv { namespace net {
 
 	class PacketProxy
 	{
-		// raw_os_ should be declared before bos_
-
-		OBufferStream	raw_os_;
 		BinaryOStream	bos_;
 
 		bool	valid_;

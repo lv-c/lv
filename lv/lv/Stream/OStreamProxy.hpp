@@ -24,6 +24,24 @@ namespace lv
 
 		OBufferStream *	lv_ios_;
 
+	protected:
+
+		// delayed initialization
+
+		OStreamProxy()
+			: std_ios_(NULL)
+			, lv_ios_(NULL)
+		{
+		}
+
+		void	set(std::ostream * std_ios, OBufferStream * lv_ios)
+		{
+			StreamProxyBase::set(std_ios, lv_ios);
+
+			this->std_ios_ = std_ios;
+			this->lv_ios_ = lv_ios;
+		}
+
 	public:
 
 		OStreamProxy(std::ostream & ios)

@@ -28,9 +28,13 @@ namespace lv { namespace net {
 		bool operator < (Socks5Auth const & rhs) const
 		{
 			if(user == rhs.user)
+			{
 				return password < rhs.password;
+			}
 			else
+			{
 				return user < rhs.user;
+			}
 		}
 	};
 
@@ -84,9 +88,13 @@ namespace lv { namespace net {
 			uint8 m = (auth_.empty() ? Socks5::NoAuth : Socks5::UserPassword);
 
 			if(std::find(methods.begin(), methods.end(), m) == methods.end())
+			{
 				return Socks5::NoAcceptable;
+			}
 			else
+			{
 				return m;
+			}
 		}
 
 		virtual	bool	verify(Socks5Auth const & auth)

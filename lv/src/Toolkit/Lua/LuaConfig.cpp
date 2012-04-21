@@ -13,7 +13,9 @@ namespace lv { namespace lua {
 		: file_loader_(file_loader)
 	{
 		if(! this->file_loader_)
+		{
 			this->file_loader_.reset(new RawFileReader());
+		}
 
 		state_ = init_lua();
 

@@ -16,11 +16,16 @@
 #include <lv/Stream/OStreamProxy.hpp>
 
 #include <boost/mpl/bool.hpp>
+#include <boost/optional.hpp>
+#include <boost/ref.hpp>
 
 namespace lv
 {
 	class BinaryOStream : public BinaryStreamBase, public OStreamProxy
 	{
+
+		boost::optional<OBufferStream>	raw_os_;
+
 	public:
 
 		typedef boost::mpl::true_	is_saving;
@@ -35,13 +40,33 @@ namespace lv
 		explicit BinaryOStream(std::ostream & os)
 			: OStreamProxy(os)
 		{
-			exceptions(std::ios_base::badbit | std::ios_base::failbit);
+			set_exceptions();
 		}
 
-		explicit BinaryOStream(OBufferStream & os)
-			: OStreamProxy(os)
+		explicit BinaryOStream(Buffer & buf)
+			: raw_os_(boost::ref(buf))
 		{
-			exceptions(std::ios_base::badbit | std::ios_base::failbit);
+			OStreamProxy::set(NULL, raw_os_.get_ptr());
+
+			set_exceptions();
+		}
+
+		explicit BinaryOStream(BufferPtr buf)
+			: raw_os_(buf)
+		{
+			OStreamProxy::set(NULL, raw_os_.get_ptr());
+
+			set_exceptions();
+		}
+
+		Buffer &	buffer()
+		{
+			return raw_os_->buffer();
+		}
+
+		BufferPtr	buffer_ptr()
+		{
+			return raw_os_->buffer_ptr();
 		}
 
 		/**
@@ -58,6 +83,13 @@ namespace lv
 		BinaryOStream & operator & (T const & val)
 		{
 			return *this << val;
+		}
+
+	private:
+
+		void	set_exceptions()
+		{
+			exceptions(std::ios_base::badbit | std::ios_base::failbit);
 		}
 
 	};
