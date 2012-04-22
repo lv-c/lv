@@ -15,7 +15,9 @@ namespace lv { namespace net {
 
 	struct Socks5
 	{
-		static uint8 const	Version	= 0x05;
+		static uint8 const	Version		= 0x05;
+
+		static uint8 const	AuthVersion	= 0x01;
 
 		enum Method : uint8
 		{

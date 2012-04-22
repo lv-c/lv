@@ -157,7 +157,7 @@ namespace lv { namespace net {
 			s5_context->get_auth(user, password);
 
 			status_ = Auth;
-			socks_send() << Socks5::Version << bstream::variable_len_range<uint8>(user)
+			socks_send() << Socks5::AuthVersion << bstream::variable_len_range<uint8>(user)
 				<< bstream::variable_len_range<uint8>(password);
 		}
 		else
