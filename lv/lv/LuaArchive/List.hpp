@@ -14,6 +14,7 @@
 #include <list>
 
 #include <lv/LuaArchive/Tags.hpp>
+#include <lv/ContainerAdaptor/List.hpp>
 
 namespace lv { namespace lua { namespace archive {
 

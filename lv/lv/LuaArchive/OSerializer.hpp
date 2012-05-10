@@ -219,12 +219,6 @@ namespace lv { namespace lua { namespace archive {
 			save_range(os, boost::begin(t), boost::end(t), level);
 		}
 
-		template<typename T>
-		void	save_impl(std::ostream & os, T const & t, size_t level, unordered_tag)
-		{
-			save_range(os, boost::begin(t), boost::end(t), level);
-		}
-
 		// utility
 		template<typename K, typename V>
 		void	save_key_value(std::ostream & os, K const & key, V const & value, size_t level)

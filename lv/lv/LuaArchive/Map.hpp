@@ -20,7 +20,7 @@ namespace lv { namespace lua { namespace archive {
 
 	template<typename K, typename V, typename Pr, typename Ax>
 	struct object_tag<std::map<K, V, Pr, Ax> >
-		: unordered_tag
+		: sequence_tag
 	{
 	};
 

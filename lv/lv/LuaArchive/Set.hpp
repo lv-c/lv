@@ -19,7 +19,7 @@ namespace lv { namespace lua { namespace archive {
 
 	template<typename T, typename Pr, typename Ax>
 	struct object_tag<std::set<T, Pr, Ax> >
-		: unordered_tag
+		: sequence_tag
 	{
 	};
 

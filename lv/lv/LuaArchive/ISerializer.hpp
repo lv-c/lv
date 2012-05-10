@@ -13,6 +13,7 @@
 
 #include <lv/LuaArchive/Tags.hpp>
 #include <lv/LuaArchive/Common.hpp>
+#include <lv/ContainerAdaptor/Adaptor.hpp>
 
 #include <luabind/object.hpp>
 
@@ -21,6 +22,7 @@
 #include <boost/serialization/version.hpp>
 #include <boost/logic/tribool.hpp>
 #include <boost/noncopyable.hpp>
+#include <boost/range/value_type.hpp>
 
 #include <stdexcept>
 
@@ -193,33 +195,15 @@ namespace lv { namespace lua { namespace archive {
 		{
 			expect_obj_type(obj, LUA_TTABLE);
 
-			t.clear();
+			lv::clear(t);
 			for(luabind::iterator it(obj), end; it != end; ++it)
 			{
 				BOOST_ASSERT(! is_version_key(it.key()) && "you shouldn't place a version key here");
 
-				typename T::value_type item;
+				typename boost::range_value<T>::type item;
 
 				load_item(it, item);
-				t.push_back(item);
-			}
-		}
-
-		// unordered_tag
-		template<typename T>
-		void	load_impl(luabind::object const & obj, T & t, unordered_tag)
-		{
-			expect_obj_type(obj, LUA_TTABLE);
-
-			t.clear();
-			for(luabind::iterator it(obj), end; it != end; ++it)
-			{
-				BOOST_ASSERT(! is_version_key(it.key()) && "you shouldn't place a version key here");
-
-				typename T::value_type item;
-
-				load_item(it, item);
-				t.insert(item);
+				lv::insert(t, item);
 			}
 		}
 

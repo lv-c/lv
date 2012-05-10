@@ -14,6 +14,7 @@
 #include <vector>
 
 #include <lv/LuaArchive/Tags.hpp>
+#include <lv/ContainerAdaptor/Vector.hpp>
 
 namespace lv { namespace lua { namespace archive {
 
