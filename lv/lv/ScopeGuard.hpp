@@ -13,7 +13,6 @@
 #ifndef LV_SCOPEGUARD_HPP
 #define LV_SCOPEGUARD_HPP
 
-#include <boost/scoped_ptr.hpp>
 namespace lv
 {
 
