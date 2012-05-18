@@ -12,21 +12,17 @@
 #define LV_DBGPRINT_HPP
 
 
-#ifndef LOG_DBG_LOGGER
-#define LOG_DBG_LOGGER	LogManager::instance().logger()
-#endif
-
 #ifdef _DEBUG
-#define DbgPrint(exp)	LOG_DBG_LOGGER(lv::debug) << exp
+#define DbgPrint(log, exp)	log(lv::debug) << exp
 #else
-#define DbgPrint(exp)	((void)0)
+#define DbgPrint(log, exp)	((void)0)
 #endif
 
 #ifdef LOG_ENABLE_WEAK_PRINT
 #ifdef _DEBUG
-#define WeakPrint(exp)	LOG_DBG_LOGGER(lv::debug - 1) << exp
+#define WeakPrint(log, exp)	log(lv::debug - 1) << exp
 #else
-#define WeakPrint(exp)	((void)0)
+#define WeakPrint(log, exp)	((void)0)
 #endif
 #endif
 
