@@ -1,25 +1,25 @@
 // *********************************************************************
-//  String   version:  1.0   ¡¤  date: 10/28/2008
+//  String   version:  1.0   ¡¤  date: 2012/05/20
 //  --------------------------------------------------------------------
 //  
 //  --------------------------------------------------------------------
-//  Copyright (C) jcfly(lv.jcfly@gmail.com) 2008 - All Rights Reserved
+//  Copyright (C) jcfly(lv.jcfly@gmail.com) 2012 - All Rights Reserved
 // *********************************************************************
 // 
 // *********************************************************************
 
-#ifndef LV_BINARYSTREAM_STRING_HPP
-#define LV_BINARYSTREAM_STRING_HPP
+#ifndef LV_BINARYSTREAM_INTERPROCESS_STRING_HPP
+#define LV_BINARYSTREAM_INTERPROCESS_STRING_HPP
 
-#include <string>
+#include <boost/interprocess/containers/string.hpp>
 
 #include <lv/BinaryStream/Serializer.hpp>
 
 namespace lv { namespace bstream {
 
 	template<class C, class Tr, class Ax>
-	struct object_tag<std::basic_string<C, Tr, Ax> > : primitive_buffer_tag {};
+	struct object_tag<boost::interprocess::basic_string<C, Tr, Ax> > : primitive_buffer_tag {};
 
 } }
 
-#endif // LV_BINARYSTREAM_STRING_HPP
+#endif

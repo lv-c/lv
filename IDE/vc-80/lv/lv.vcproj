@@ -732,6 +732,18 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="Interprocess"
+				>
+				<Filter
+					Name="Header Files"
+					>
+					<File
+						RelativePath="..\..\..\lv\lv\BinaryStream\Interprocess\String.hpp"
+						>
+					</File>
+				</Filter>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="UI"
@@ -956,6 +968,22 @@
 					</File>
 					<File
 						RelativePath="..\..\..\lv\lv\Serialization\Graphics\Vector.hpp"
+						>
+					</File>
+				</Filter>
+			</Filter>
+			<Filter
+				Name="Interprocess"
+				>
+				<Filter
+					Name="Header Files"
+					>
+					<File
+						RelativePath="..\..\..\lv\lv\Serialization\Interprocess\String.hpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\lv\lv\Serialization\Interprocess\Vector.hpp"
 						>
 					</File>
 				</Filter>
