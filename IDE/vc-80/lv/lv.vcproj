@@ -1160,6 +1160,22 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="Interprocess"
+				>
+				<Filter
+					Name="Header Files"
+					>
+					<File
+						RelativePath="..\..\..\lv\lv\LuaArchive\Interprocess\Map.hpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\lv\lv\LuaArchive\Interprocess\Vector.hpp"
+						>
+					</File>
+				</Filter>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="ZeroMQ"
@@ -1223,6 +1239,18 @@
 					RelativePath="..\..\..\lv\lv\ContainerAdaptor\Vector.hpp"
 					>
 				</File>
+			</Filter>
+			<Filter
+				Name="Interprocess"
+				>
+				<Filter
+					Name="Header Files"
+					>
+					<File
+						RelativePath="..\..\..\lv\lv\ContainerAdaptor\Interprocess\Vector.hpp"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 	</Files>
