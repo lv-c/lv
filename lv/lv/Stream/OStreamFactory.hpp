@@ -14,6 +14,7 @@
 
 #include <lv/Stream/StreamFactory.hpp>
 #include <lv/StreamPtr.hpp>
+#include <lv/Buffer.hpp>
 
 #include <boost/iostreams/stream.hpp>
 #include <boost/iostreams/device/back_inserter.hpp>
