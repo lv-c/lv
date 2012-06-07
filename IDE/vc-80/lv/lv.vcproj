@@ -1136,6 +1136,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\LuaArchive\Optional.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\LuaArchive\OSerializer.hpp"
 					>
 				</File>

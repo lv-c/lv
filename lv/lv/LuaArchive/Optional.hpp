@@ -22,9 +22,13 @@ namespace lv { namespace lua { namespace archive {
 	void	save(std::ostream & os, boost::optional<T> const & t, size_t level)
 	{
 		if(t)
+		{
 			save(os, *t, level);
+		}
 		else
+		{
 			os << "nil";
+		}
 	}
 
 
@@ -32,9 +36,17 @@ namespace lv { namespace lua { namespace archive {
 	void	load(luabind::object const & obj, boost::optional<T> & t)
 	{
 		if(luabind::type(obj) == LUA_TNIL)
+		{
 			t.reset();
+		}
 		else
+		{
+			if(! t)
+			{
+				t = T();
+			}
 			load(obj, *t);
+		}
 	}
 
 } } }
