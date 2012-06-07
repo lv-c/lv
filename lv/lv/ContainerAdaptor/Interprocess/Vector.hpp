@@ -23,7 +23,7 @@ namespace lv
 		t.push_back(v);
 	}
 
-	template<class T>
+	template<class T, class Ax>
 	void	reserve(boost::interprocess::vector<T, Ax> & t, size_t size)
 	{
 		t.reserve(size);
