@@ -16,8 +16,6 @@
 
 #include <boost/shared_ptr.hpp>
 
-#include <lv/Log/Level.hpp>
-
 namespace lv 
 {
 	namespace log 
@@ -62,11 +60,6 @@ namespace lv
 	
 	using log::LogManager;
 
-	using log::debug;
-	using log::info;
-	using log::warning;
-	using log::error;
-	using log::fatal;
 }
 
 

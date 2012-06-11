@@ -11,17 +11,53 @@
 #ifndef LV_LEVEL_HPP
 #define LV_LEVEL_HPP
 
+#include <lv/Log/Fwd.hpp>
 
-namespace lv { namespace log {
+#include <boost/lexical_cast.hpp>
 
-	enum level {
-		debug	= 10,
-		info	= 20,
-		warning	= 30,
-		error	= 40,
-		fatal	= 50
-	};
+namespace lv 
+{ 
+	namespace log
+	{
 
-} }
+		enum level {
+			debug	= 10,
+			info	= 20,
+			warning	= 30,
+			error	= 40,
+			fatal	= 50
+		};
+
+		inline string_type	level_str(int lvl)
+		{
+			switch(lvl)
+			{
+			case debug:
+				return L_TEXT("debug");
+
+			case info:
+				return L_TEXT("info");
+
+			case warning:
+				return L_TEXT("warning");
+
+			case error:
+				return L_TEXT("error");
+
+			case fatal:
+				return L_TEXT("fatal");
+
+			default:
+				return boost::lexical_cast<string_type>(lvl);
+			}
+		}
+	}
+
+	using log::debug;
+	using log::info;
+	using log::warning;
+	using log::error;
+	using log::fatal;
+}
 
 #endif // LV_LEVEL_HPP

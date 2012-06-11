@@ -71,35 +71,7 @@ namespace lv { namespace log {
 	{
 		void operator () (ostream_type & os, int lvl) const
 		{
-			static string_type const tags [] = {
-				L_TEXT("[debug]"), L_TEXT("[info]"), L_TEXT("[warning]"), L_TEXT("[error]"),
-				L_TEXT("[fatal]")
-			};
-
-			int index = -1;
-			switch(lvl)
-			{
-			case debug:
-				index = 0;
-				break;
-			case info:
-				index = 1;
-				break;
-			case warning:
-				index = 2;
-				break;
-			case error:
-				index = 3;
-				break;
-			case fatal:
-				index = 4;
-				break;
-			}
-
-			if(index >= 0)
-			{
-				os << format_type(L_TEXT("%1%%|10t|")) % tags[index];
-			}
+			os << format_type(L_TEXT("[%1%]%|10t|")) % level_str(lvl);
 		}
 	};
 
