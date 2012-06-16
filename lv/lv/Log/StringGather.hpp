@@ -45,15 +45,21 @@ namespace lv { namespace log {
 		{
 			end_record(lvl);
 
-			if(receiver_)
-			{
-				receiver_(oss_.str(), lvl);
-			}
+			on_receive(oss_.str(), lvl);
+
 			// empty the stringstream
 			oss_.str(log::string_type());
 
 			// unlock
 			mutex_.unlock();
+		}
+
+		virtual	void on_receive(string_type const & str, int lvl)
+		{
+			if(receiver_)
+			{
+				receiver_(str, lvl);
+			}
 		}
 	};
 } }
