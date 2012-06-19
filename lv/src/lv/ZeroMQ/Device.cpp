@@ -29,10 +29,10 @@ namespace lv { namespace zeromq {
 		while(true)
 		{
 			zmq::message_t msg;
-			sockets_[index]->socket().recv(&msg);
+			sockets_[index]->recv(&msg);
 			
 			int more = sockets_[index]->getsockopt<int>(ZMQ_RCVMORE);
-			sockets_[1 - index]->socket().send(msg, more ? ZMQ_SNDMORE : 0);
+			sockets_[1 - index]->send(msg, more ? ZMQ_SNDMORE : 0);
 
 			if(! more)
 			{

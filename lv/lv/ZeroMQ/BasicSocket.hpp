@@ -37,7 +37,7 @@ namespace lv { namespace zeromq {
 
 		asio_socket_ptr	asio_socket_;
 
-		typedef boost::function<void(zmq::socket_t &)>	readable_callback;
+		typedef boost::function<void(BasicSocket &)>	readable_callback;
 		readable_callback	readable_callback_;
 
 	public:
@@ -52,13 +52,33 @@ namespace lv { namespace zeromq {
 
 		virtual	void	close();
 
-		bool			closed();
+		bool			closed() const;
 
 		virtual	void	recreate();
 
-		zmq::socket_t &	socket();
+		int				type() const;
 
-		int				type();
+
+		virtual	size_t	send(void const * buf, size_t len, int flags = 0)
+		{
+			return zmq_socket_->send(buf, len, flags);
+		}
+
+		virtual	bool	send(zmq::message_t & msg, int flags = 0)
+		{
+			return zmq_socket_->send(msg, flags);
+		}
+
+		virtual	size_t	recv(void * buf, size_t len, int flags = 0)
+		{
+			return zmq_socket_->recv(buf, len, flags);
+		}
+
+		virtual	bool	recv(zmq::message_t * msg, int flags = 0)
+		{
+			return zmq_socket_->recv(msg, flags);
+		}
+
 
 		// If you set a callback, on_socket_readable will never be called.
 		void	set_readable_callback(readable_callback const & callback);
@@ -79,7 +99,11 @@ namespace lv { namespace zeromq {
 
 	protected:
 
+		ServiceWrapper const &	service_wrapper() const;
+
 		virtual	void	config_socket();
+
+		virtual	void	on_socket_readable_internal();
 
 		virtual	void	on_socket_readable() {}
 

@@ -72,7 +72,7 @@ namespace lv { namespace zeromq {
 		asio_socket_.reset();
 	}
 
-	bool BasicSocket::closed()
+	bool BasicSocket::closed() const
 	{
 		return zmq_socket_;
 	}
@@ -83,14 +83,14 @@ namespace lv { namespace zeromq {
 		zmq_socket_.reset(new zmq::socket_t(context_, type_));
 	}
 
-	zmq::socket_t & BasicSocket::socket()
-	{
-		return *zmq_socket_;
-	}
-
-	int BasicSocket::type()
+	int BasicSocket::type() const
 	{
 		return type_;
+	}
+
+	ServiceWrapper const & BasicSocket::service_wrapper() const
+	{
+		return service_wrapper_;
 	}
 
 	void BasicSocket::set_readable_callback(readable_callback const & callback)
@@ -135,14 +135,7 @@ namespace lv { namespace zeromq {
 
 				if(events & ZMQ_POLLIN)
 				{
-					if(readable_callback_)
-					{
-						readable_callback_(*zmq_socket_);
-					}
-					else
-					{
-						on_socket_readable();
-					}
+					on_socket_readable_internal();
 				}
 				else
 				{
@@ -160,6 +153,18 @@ namespace lv { namespace zeromq {
 				asio_socket_->async_read_some(boost::asio::null_buffers(), boost::bind(
 					&BasicSocket::handle_receive, this, weak_zmq_sock, boost::asio::placeholders::error));
 			}
+		}
+	}
+
+	void BasicSocket::on_socket_readable_internal()
+	{
+		if(readable_callback_)
+		{
+			readable_callback_(*this);
+		}
+		else
+		{
+			on_socket_readable();
 		}
 	}
 

@@ -41,7 +41,7 @@ namespace lv { namespace zeromq {
 			zmq::message_t msg(buf->size());
 			std::memcpy(msg.data(), buffer::data(buf), buf->size());
 
-			socket().send(msg);
+			send(msg);
 		}
 	};
 
