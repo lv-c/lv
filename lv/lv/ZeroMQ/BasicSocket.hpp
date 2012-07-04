@@ -80,7 +80,7 @@ namespace lv { namespace zeromq {
 		}
 
 
-		// If you set a callback, on_socket_readable will never be called.
+		// If you set a callback, on_socket_readable will not be called.
 		void	set_readable_callback(readable_callback const & callback);
 
 		template<typename T>
@@ -95,6 +95,11 @@ namespace lv { namespace zeromq {
 			BOOST_ASSERT(size == sizeof(val));
 
 			return val;
+		}
+
+		virtual	void	setsockopt(int option, void const * optval, size_t optvallen)
+		{
+			zmq_socket_->setsockopt(option, optval, optvallen);
 		}
 
 	protected:

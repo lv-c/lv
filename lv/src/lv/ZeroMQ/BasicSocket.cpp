@@ -123,6 +123,11 @@ namespace lv { namespace zeromq {
 	{
 		if(boost::shared_ptr<zmq::socket_t> zmq_sock = weak_zmq_sock.lock())
 		{
+			if(zmq_sock != this->zmq_socket_)
+			{
+				return;
+			}
+
 			if(error)
 			{
 				on_error(error);
