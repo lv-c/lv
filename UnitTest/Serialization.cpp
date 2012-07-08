@@ -12,6 +12,7 @@
 
 #include <lv/Serialization/OArchive.hpp>
 #include <lv/Serialization/IArchive.hpp>
+#include <lv/Serialization/Interprocess/String.hpp>
 
 #include <boost/array.hpp>
 #include <boost/serialization/vector.hpp>
@@ -82,8 +83,9 @@ BOOST_AUTO_TEST_CASE(test_serialization)
 	boost::array<int, 10> int_arr;
 	int_arr.assign(20);
 	CheckVersion ver;
+	boost::interprocess::string	inter_str("inter");
 
-	oa << int(10) << str_vec << int_vec << obj << int_arr << ver;
+	oa << int(10) << str_vec << int_vec << obj << int_arr << ver << inter_str;
 
 	IBufferStream is(buf);
 	IArchive ia(is);
@@ -94,14 +96,16 @@ BOOST_AUTO_TEST_CASE(test_serialization)
 	Test new_obj;
 	boost::array<int, 10> new_int_arr;
 	CheckVersion new_ver;
+	boost::interprocess::string new_inter_str;
 
-	ia >> i >> new_str_vec >> new_int_vec >> new_obj >> new_int_arr >> new_ver;
+	ia >> i >> new_str_vec >> new_int_vec >> new_obj >> new_int_arr >> new_ver >> new_inter_str;
 
 	BOOST_CHECK_EQUAL(i, 10);
 	BOOST_CHECK(str_vec == new_str_vec);
 	BOOST_CHECK(int_vec == new_int_vec);
 	BOOST_CHECK(obj == new_obj);
 	BOOST_CHECK(int_arr == new_int_arr);
+	BOOST_CHECK(inter_str == new_inter_str);
 
 	// end of the buffer
 	BOOST_CHECK_EQUAL(static_cast<size_t>(is.tellg()), buf.size());

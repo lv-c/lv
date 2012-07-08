@@ -25,6 +25,30 @@ namespace boost { namespace serialization {
 		boost::serialization::stl::save_collection(ar, t);
 	}
 
+	namespace stl
+	{
+		template<class Archive, class C, class Tr, class Ax>
+		struct archive_input_seq<Archive, interprocess::basic_string<C, Tr, Ax> >
+		{
+			typedef interprocess::basic_string<C, Tr, Ax>	container_type;
+			typedef typename container_type::iterator		iterator;
+
+			inline iterator operator()(Archive & ar, container_type & s, unsigned int v, iterator hint)
+			{
+				typedef typename container_type::value_type type;
+
+				detail::stack_construct<Archive, type> t(ar, v);
+				ar >> boost::serialization::make_nvp("item", t.reference());
+				s.push_back(t.reference());
+
+				// ar.reset_object_address(& s.back() , & t.reference());	// removed. interprocess.string has not 'back' method
+
+				return hint;
+			}
+		};
+	}
+	
+
 	template<class Archive, class C, class Tr, class Ax>
 	void load(Archive & ar, interprocess::basic_string<C, Tr, Ax> & t, unsigned int)
 	{
