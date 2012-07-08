@@ -29,6 +29,12 @@ namespace boost { namespace serialization {
 		{
 			return v.empty() ? 0 : &(v[0]);
 		}
+
+		template<class T, class Ax>
+		T const * get_data(interprocess::vector<T, Ax> const & v)
+		{
+			return v.empty() ? 0 : &(v[0]);
+		}
 	}
 
 	// the default versions
