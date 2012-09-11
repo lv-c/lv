@@ -18,7 +18,7 @@
 #else
 #pragma comment(lib, "libluabind.lib")
 #endif
-#pragma comment(lib, "lua.lib")
+#pragma comment(lib, "liblua.lib")
 
 
 #include <vector>
@@ -152,16 +152,9 @@ int main(int argc, char **argv)
 {
 	log::add_stdio_gather(log_);
 
-	vector<string>	ip;
-	DWORD ret = enumerate_ip(ip);
-
-	if(ret != 0)
-	{
-		log_(lv::error) << "enumerate_ip failed:" << ret;
-		return ret;
-	}
-
 	uint16 port;
+	bool all_ip;
+
 	set<Socks5Auth>	auth;
 
 	try
@@ -169,7 +162,7 @@ int main(int argc, char **argv)
 		LuaConfig cfg;
 		cfg.load_file("config.lua");
 
-		cfg ("start_port", port) ("auth", auth);
+		cfg ("start_port", port) ("all_ip", all_ip) ("auth", auth);
 	}
 	catch (std::exception const & ex)
 	{
@@ -177,6 +170,23 @@ int main(int argc, char **argv)
 		return 1;
 	}
 	
+	vector<string>	ip;
+
+	if(all_ip)
+	{
+		DWORD ret = enumerate_ip(ip);
+
+		if(ret != 0)
+		{
+			log_(lv::error) << "enumerate_ip failed:" << ret;
+			return ret;
+		}
+	}
+	else
+	{
+		ip.push_back(string());
+	}
+
 
 	boost::asio::io_service io;
 
@@ -190,7 +200,12 @@ int main(int argc, char **argv)
 		foreach(string const & v, ip)
 		{
 			boost::shared_ptr<Socks5ServerContext> context(new Socks5ServerContext(buf_manager, io));
-			context->address_to_bind(boost::asio::ip::address::from_string(v));
+
+			if(! v.empty())
+			{
+				context->address_to_bind(boost::asio::ip::address::from_string(v));
+			}
+
 			context->set_auth(auth);
 
 			server_ptr server(new server_type(context));

@@ -66,6 +66,11 @@ namespace lv { namespace net {
 		{
 			return service_wrapper_.strand();
 		}
+
+		ServiceWrapper const &	service_wrapper() const
+		{
+			return service_wrapper_;
+		}
 	};
 
 } }

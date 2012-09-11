@@ -184,7 +184,7 @@ namespace lv { namespace net {
 
 		uint16 port = (high_byte << 8) | low_byte;
 
-		ContextPtr context(new Context(context_->buffer_manager(), context_->strand()));
+		ContextPtr context(new Context(context_->buffer_manager(), context_->service_wrapper()));
 
 		dest_session_.reset(new DestSession(context));
 
