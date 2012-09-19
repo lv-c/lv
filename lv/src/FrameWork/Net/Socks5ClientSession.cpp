@@ -8,6 +8,7 @@
 #include <lv/Stream/IBufferStream.hpp>
 
 #include <boost/bind.hpp>
+#include <boost/lexical_cast.hpp>
 
 namespace lv { namespace net {
 
@@ -27,6 +28,9 @@ namespace lv { namespace net {
 		status_ = None;
 		cache_.reset();
 
+		ip_ = ip;
+		port_ = port;
+
 		std::string socks_ip, socks_port;
 		boost::shared_dynamic_cast<Socks5ClientContext>(context_)->get_proxy(socks_ip, socks_port);
 
@@ -34,10 +38,6 @@ namespace lv { namespace net {
 
 		if(use_proxy_)
 		{
-			boost::asio::ip::tcp::resolver resolver(context_->service());
-			boost::asio::ip::tcp::resolver::query query(ip, port);
-			endpoint_ = *resolver.resolve(query);
-
 			base_type::start(socks_ip, socks_port, to_bind);
 		}
 		else
@@ -296,20 +296,46 @@ namespace lv { namespace net {
 	{
 		status_ = Request;
 
+		boost::asio::ip::tcp::resolver resolver(context_->service());
+		boost::asio::ip::tcp::resolver::query query(ip_, port_);
+
+		boost::system::error_code err;
+		boost::asio::ip::tcp::resolver::iterator it = resolver.resolve(query, err);
+
+		if(err && err.value() != boost::asio::error::host_not_found)
+		{
+			on_error_internal(ErrorHandshake, err);
+			return;
+		}
+
 		uint8 const cmd = 1;	// CONNECT
 		PacketProxy proxy = socks_send() << Socks5::Version << cmd << uint8(0);
 
-		if(endpoint_.protocol() == boost::asio::ip::tcp::v4())
+		unsigned short port = 0;
+
+		if(err)
 		{
-			proxy << Socks5::IPV4 << endpoint_.address().to_v4().to_bytes();
+			port = boost::lexical_cast<unsigned short>(port_);
+
+			proxy << Socks5::DomainName << bstream::variable_len_range<uint8>(ip_);
 		}
 		else
 		{
-			BOOST_ASSERT(endpoint_.protocol() == boost::asio::ip::tcp::v6());
-			proxy << Socks5::IPV6 << endpoint_.address().to_v6().to_bytes();
+			boost::asio::ip::tcp::endpoint endpoint = *it;
+
+			port = endpoint.port();
+
+			if(endpoint.protocol() == boost::asio::ip::tcp::v4())
+			{
+				proxy << Socks5::IPV4 << endpoint.address().to_v4().to_bytes();
+			}
+			else
+			{
+				BOOST_ASSERT(endpoint.protocol() == boost::asio::ip::tcp::v6());
+				proxy << Socks5::IPV6 << endpoint.address().to_v6().to_bytes();
+			}
 		}
 
-		unsigned short port = endpoint_.port();
 		uint8 high_byte = (port >> 8) & 0xFF;
 		uint8 low_byte = port & 0xFF;
 

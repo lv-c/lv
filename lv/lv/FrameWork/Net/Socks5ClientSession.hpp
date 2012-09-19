@@ -37,7 +37,9 @@ namespace lv { namespace net {
 
 		BufferPtr	cache_;
 
-		boost::asio::ip::tcp::endpoint	endpoint_;
+		std::string	ip_;
+
+		std::string	port_;
 
 		volatile bool	first_error_;
 
