@@ -899,6 +899,10 @@
 					RelativePath="..\..\..\lv\lv\Lua\Exec.hpp"
 					>
 				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Lua\Extract.hpp"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Source Files"
