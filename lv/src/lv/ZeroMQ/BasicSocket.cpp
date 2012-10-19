@@ -22,6 +22,10 @@ namespace lv { namespace zeromq {
 		recreate();
 	}
 
+	BasicSocket::~BasicSocket()
+	{
+	}
+
 	void BasicSocket::bind(std::string const & addr)
 	{
 		zmq_socket_->bind(addr.c_str());

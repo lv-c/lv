@@ -35,6 +35,10 @@ namespace lv
 
 		std::string	postfix_;
 
+		bool	in_memory_;
+
+		IFileIOPtr	raw_file_reader_;
+
 		typedef boost::mutex::scoped_lock	scoped_lock;
 		boost::mutex	mutex_;
 
@@ -42,8 +46,9 @@ namespace lv
 
 		/**
 		 * @password password for all the packet files
+		 * @in_memory load all the packet files into memory
 		 */
-		MyZipReader(std::string const & password, std::string const & path, std::string const & postfix);
+		MyZipReader(std::string const & password, std::string const & path, std::string const & postfix, bool in_memory = false);
 
 		~MyZipReader();
 
@@ -53,8 +58,7 @@ namespace lv
 		virtual void	fulfill(std::string const & file, BufferPtr buf);
 
 
-		// close all the zip files (automatically reopen them when they are needed)
-		void	close();
+		virtual	void	reset();
 
 	private:
 

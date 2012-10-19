@@ -22,6 +22,8 @@ namespace lv
 	{
 	public:
 
+		virtual ~IFileIO() {}
+
 		/**
 		 * Synchronous operation. 
 		 * @exception lv::file_io_error on failure
@@ -34,6 +36,12 @@ namespace lv
 		 * the default behavior.
 		 */
 		virtual	IOFuture	add_task(std::string const & file, BufferPtr buf);
+
+
+		/**
+		 * Reset the loader
+		 */
+		virtual	void	reset() {}
 
 	protected:
 

@@ -1,4 +1,5 @@
 #include <lv/FileSystem/MyZipReader.hpp>
+#include <lv/FileSystem/RawFileReader.hpp>
 
 #include <lv/Foreach.hpp>
 #include <lv/MyZip.hpp>
@@ -8,10 +9,11 @@
 
 namespace lv
 {
-	MyZipReader::MyZipReader(std::string const & password, std::string const & path, std::string const & postfix)
+	MyZipReader::MyZipReader(std::string const & password, std::string const & path, std::string const & postfix, bool in_memory /* = false */)
 		: path_(path)
 		, postfix_(postfix)
 		, password_(password)
+		, in_memory_(in_memory)
 	{
 		// appends '/' to path_ if necessary
 		if(! path_.empty())
@@ -26,10 +28,10 @@ namespace lv
 
 	MyZipReader::~MyZipReader()
 	{
-		close();
+		reset();
 	}
 
-	void MyZipReader::close()
+	void MyZipReader::reset()
 	{
 		scoped_lock lock(mutex_);
 
@@ -60,7 +62,25 @@ namespace lv
 			uz.reset(new MyUnzip());
 
 			std::string zip_path = path_ + zip_file + postfix_;
-			ZRESULT ret = uz->open(zip_path, password_);
+			ZRESULT ret;
+
+			if(in_memory_)
+			{
+				if(! raw_file_reader_)
+				{
+					raw_file_reader_.reset(new RawFileReader());
+				}
+
+				BufferPtr file_buf(new Buffer());
+				raw_file_reader_->fulfill(zip_path, file_buf);
+
+				ret = uz->open(file_buf, password_);
+			}
+			else
+			{
+				ret = uz->open(zip_path, password_);
+			}
+
 			if(ret != ZR_OK)
 			{
 				throw file_io_error("error opening zip file:" + zip_path);

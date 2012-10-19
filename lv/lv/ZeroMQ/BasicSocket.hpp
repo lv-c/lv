@@ -46,6 +46,8 @@ namespace lv { namespace zeromq {
 
 		BasicSocket(zmq::context_t & context, int type, ServiceWrapper const & service_wrapper);
 
+		virtual ~BasicSocket();
+
 		virtual	void	bind(std::string const & addr);
 
 		virtual	void	connect(std::string const & addr);
