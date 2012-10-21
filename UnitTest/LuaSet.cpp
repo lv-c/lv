@@ -45,9 +45,11 @@ BOOST_AUTO_TEST_CASE(test_luaset)
 		"s = IntSet()\n"
 		"assert(s:empty())\n"
 		"assert(s:count(10) == 0)\n"
+		"assert(s:find(10) == s:_end())\n"
 		"assert(s:insert(10).second)\n"
 		"assert(not s:insert(10).second)\n"
 		"assert(s:count(10) == 1)\n"
+		"assert(s:find(10) ~= s:_end())\n"
 		"print('luaset test done!')\n"
 	);
 

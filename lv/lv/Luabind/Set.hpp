@@ -32,8 +32,11 @@ namespace lv { namespace lua {
 				.def("empty", &type::empty)
 				.def("clear", &type::clear)
 				.def("count", &type::count)
+				.def("begin", (type::iterator(type::*)()) &type::begin)
+				.def("_end", (type::iterator(type::*)()) &type::end)
 				.def("insert", (std::pair<type::iterator, bool>(type::*)(T const &)) &type::insert)
 				.def("erase", (type::size_type(type::*)(T const &)) &type::erase)
+				.def("find", (type::iterator(type::*)(type::key_type const &)) &type::find)
 				.scope
 				[
 					class_<type::iterator>((std::string(name) + "_it").c_str())
