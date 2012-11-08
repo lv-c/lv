@@ -23,6 +23,10 @@ namespace lv { namespace lua {
 	void bind_array(lua_State* state, char const* name)
 	{
 		typedef boost::array<T, N>	type;
+		typedef typename type::const_reference	const_reference;
+		typedef typename type::reference		reference;
+		typedef typename type::size_type		size_type;
+
 		using namespace luabind;
 
 		class_<type> arr(name);
@@ -30,17 +34,17 @@ namespace lv { namespace lua {
 		arr
 			.def("assign", &type::assign)
 			.def("size", &type::size)
-			.def("at", (type::const_reference(type::*)(type::size_type) const)&type::at)
-			.def("front", (type::const_reference(type::*)() const)&type::front)
-			.def("back", (type::const_reference(type::*)() const)&type::back)
+			.def("at", (const_reference(type::*)(size_type) const)&type::at)
+			.def("front", (const_reference(type::*)() const)&type::front)
+			.def("back", (const_reference(type::*)() const)&type::back)
 		;
 
 		if(! is_primitive<T>::value)
 		{
 			arr
-				.def("at", (type::reference(type::*)(type::size_type))&type::at)
-				.def("front", (type::reference(type::*)())&type::front)
-				.def("back", (type::reference(type::*)())&type::back)
+				.def("at", (reference(type::*)(size_type))&type::at)
+				.def("front", (reference(type::*)())&type::front)
+				.def("back", (reference(type::*)())&type::back)
 			;
 		}
 

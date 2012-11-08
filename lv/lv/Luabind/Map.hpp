@@ -1,29 +1,29 @@
 // *********************************************************************
-//  Set   version:  1.0   ¡¤  date: 07/20/2010
+//  Map   version:  1.0   ¡¤  date: 2012/11/05
 //  --------------------------------------------------------------------
 //  
 //  --------------------------------------------------------------------
-//  Copyright (C) jcfly(lv.jcfly@gmail.com) 2010 - All Rights Reserved
+//  Copyright (C) jcfly(lv.jcfly@gmail.com) 2012 - All Rights Reserved
 // *********************************************************************
 // 
 // *********************************************************************
 
-#ifndef LV_LUABIND_SET_HPP
-#define LV_LUABIND_SET_HPP
+#ifndef LV_LUABIND_MAP_HPP
+#define LV_LUABIND_MAP_HPP
 
 #include <lv/Luabind/Pair.hpp>
 
-#include <set>
-#include <string>
+#include <map>
 
 namespace lv { namespace lua {
 
-	template<typename T>
-	void bind_set(lua_State * state, char const * name)
+	template<typename K, typename V>
+	void bind_map(lua_State * state, char const * name)
 	{
-		typedef std::set<T>	type;
+		typedef std::map<K, V>	type;
 		typedef typename type::key_type		key_type;
 		typedef typename type::value_type	value_type;
+		typedef typename type::mapped_type	mapped_type;
 		typedef typename type::iterator		iterator;
 		typedef typename type::size_type	size_type;
 
@@ -44,14 +44,18 @@ namespace lv { namespace lua {
 				.def("find", (iterator(type::*)(key_type const &)) &type::find)
 				.scope
 				[
-					class_<iterator>((std::string(name) + "_it").c_str())
+					class_<type::iterator>((std::string(name) + "_it").c_str())
 						.def(self == iterator())
+					,
+					class_<value_type>("pair")
+						.def(constructor<key_type const &, mapped_type const &>())
 				]
 		];
 
 		// used by type::insert
 		bind_pair<iterator, bool>(state, (std::string(name) + "_ib_pair").c_str());
 	}
+
 } }
 
 #endif

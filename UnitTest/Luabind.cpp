@@ -49,5 +49,8 @@ BOOST_AUTO_TEST_CASE(test_luabind)
 
 	BOOST_CHECK_EQUAL(lv::lua::extract<lv::Point>(global["pt"]), lv::Point(10, 20));
 
+	// release
+	global = luabind::object();
+
 	lua_close(state);
 }

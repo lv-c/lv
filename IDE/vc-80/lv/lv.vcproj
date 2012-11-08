@@ -1052,6 +1052,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\Luabind\Map.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\Luabind\Pair.hpp"
 					>
 				</File>

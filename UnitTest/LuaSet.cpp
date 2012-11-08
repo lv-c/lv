@@ -11,6 +11,7 @@
 #include "UnitTest.hpp"
 
 #include <lv/Luabind/Set.hpp>
+#include <lv/Luabind/Map.hpp>
 #include <lv/Lua/Exec.hpp>
 
 #include <lua.hpp>
@@ -40,6 +41,8 @@ BOOST_AUTO_TEST_CASE(test_luaset)
 	luabind::set_pcall_callback(error_handler);
 
 	lv::lua::bind_set<int>(state, "IntSet");
+	lv::lua::bind_map<std::string, int>(state, "StrIntMap");
+
 
 	lv::lua::dostr(state, 
 		"s = IntSet()\n"
@@ -50,6 +53,14 @@ BOOST_AUTO_TEST_CASE(test_luaset)
 		"assert(not s:insert(10).second)\n"
 		"assert(s:count(10) == 1)\n"
 		"assert(s:find(10) ~= s:_end())\n"
+
+		"m = StrIntMap()\n"
+		"assert(m:empty())\n"
+		"m:insert(StrIntMap.pair('a', 10))\n"
+		"assert(m:size() == 1)\n"
+		"assert(m:find('a') ~= m:_end())\n"
+		"assert(m:count('a') == 1)\n"
+
 		"print('luaset test done!')\n"
 	);
 
