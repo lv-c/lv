@@ -8,8 +8,8 @@
 // 
 // *********************************************************************
 
-#ifndef LV_FORMATTER_HPP
-#define LV_FORMATTER_HPP
+#ifndef LV_LOG_FORMATTER_HPP
+#define LV_LOG_FORMATTER_HPP
 
 #include <iostream>
 

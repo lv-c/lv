@@ -149,11 +149,11 @@ namespace lv { namespace lua { namespace archive {
 			os << (t ? "true" : "false");
 		}
 
-		inline void	save_primitive(std::ostream & os, std::string const & t)
+		inline void save_primitive(std::ostream & os, char const * t)
 		{
 			os << '\'';
 
-			if(t.find('\'') != std::string::npos)
+			if(std::strchr(t, '\'') != NULL)
 			{
 				std::string new_str(t);
 				boost::algorithm::replace_all(new_str, "\'", "\\\'");
@@ -165,6 +165,11 @@ namespace lv { namespace lua { namespace archive {
 			}
 
 			os << '\'';
+		}
+
+		inline void	save_primitive(std::ostream & os, std::string const & t)
+		{
+			save_primitive(os, t.c_str());
 		}
 
 		template<typename T>

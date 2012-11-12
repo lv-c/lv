@@ -8,8 +8,8 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LOGMANAGER_HPP
-#define LV_LOGMANAGER_HPP
+#ifndef LV_LOG_LOGMANAGER_HPP
+#define LV_LOG_LOGMANAGER_HPP
 
 #include <string>
 

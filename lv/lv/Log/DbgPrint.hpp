@@ -8,8 +8,8 @@
 // 
 // *********************************************************************
 
-#ifndef LV_DBGPRINT_HPP
-#define LV_DBGPRINT_HPP
+#ifndef LV_LOG_DBGPRINT_HPP
+#define LV_LOG_DBGPRINT_HPP
 
 
 #ifdef _DEBUG

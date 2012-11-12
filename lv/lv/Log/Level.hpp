@@ -8,8 +8,8 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LEVEL_HPP
-#define LV_LEVEL_HPP
+#ifndef LV_LOG_LEVEL_HPP
+#define LV_LOG_LEVEL_HPP
 
 #include <lv/Log/Fwd.hpp>
 

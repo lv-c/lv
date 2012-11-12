@@ -8,8 +8,8 @@
 // 
 // *********************************************************************
 
-#ifndef LV_STRINGGATHER_HPP
-#define LV_STRINGGATHER_HPP
+#ifndef LV_LOG_STRINGGATHER_HPP
+#define LV_LOG_STRINGGATHER_HPP
 
 #include <sstream>
 

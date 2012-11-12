@@ -256,6 +256,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\UnitTest\TableBuilder.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\UnitTest\Triangle.cpp"
 				>
 			</File>

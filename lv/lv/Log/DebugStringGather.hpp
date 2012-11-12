@@ -8,8 +8,8 @@
 // 
 // *********************************************************************
 
-#ifndef LV_DEBUGSTRINGGATHER_HPP
-#define LV_DEBUGSTRINGGATHER_HPP
+#ifndef LV_LOG_DEBUGSTRINGGATHER_HPP
+#define LV_LOG_DEBUGSTRINGGATHER_HPP
 
 #include <lv/Config.hpp>
 

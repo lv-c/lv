@@ -8,8 +8,8 @@
 // 
 // *********************************************************************
 
-#ifndef LV_GATHER_HPP
-#define LV_GATHER_HPP
+#ifndef LV_LOG_GATHER_HPP
+#define LV_LOG_GATHER_HPP
 
 #include <iostream>
 #include <list>
