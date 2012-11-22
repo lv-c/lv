@@ -1120,6 +1120,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\LuaArchive\Deque.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\LuaArchive\DSTree.hpp"
 					>
 				</File>
@@ -1245,6 +1249,10 @@
 				>
 				<File
 					RelativePath="..\..\..\lv\lv\ContainerAdaptor\Adaptor.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\ContainerAdaptor\Deque.hpp"
 					>
 				</File>
 				<File

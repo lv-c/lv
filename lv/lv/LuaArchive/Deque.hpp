@@ -1,5 +1,5 @@
 // *********************************************************************
-//  List   version:  1.0   ¡¤  date: 2012/05/10
+//  Deque   version:  1.0   ¡¤  date: 2012/11/22
 //  --------------------------------------------------------------------
 //  
 //  --------------------------------------------------------------------
@@ -8,20 +8,25 @@
 // 
 // *********************************************************************
 
-#ifndef LV_CONTAINERADAPTOR_LIST_HPP
-#define LV_CONTAINERADAPTOR_LIST_HPP
+#ifndef LV_LUAARCHIVE_DEQUE_HPP
+#define LV_LUAARCHIVE_DEQUE_HPP
 
-#include <lv/ContainerAdaptor/Adaptor.hpp>
+#include <deque>
 
-#include <list>
+#include <lv/LuaArchive/Tags.hpp>
+#include <lv/ContainerAdaptor/Deque.hpp>
 
-namespace lv
-{
-	template<class T, class Ax, class V>
-	void	insert(std::list<T, Ax> & t, V const & v)
+namespace lv { namespace lua { namespace archive {
+
+
+	template<typename T, typename Ax>
+	struct object_tag<std::deque<T, Ax> >
+		: sequence_tag
 	{
-		t.push_back(v);
-	}
-}
+	};
+
+
+} } }
+
 
 #endif

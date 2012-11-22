@@ -1,5 +1,5 @@
 // *********************************************************************
-//  List   version:  1.0   ¡¤  date: 2012/05/10
+//  Deque   version:  1.0   ¡¤  date: 2012/11/22
 //  --------------------------------------------------------------------
 //  
 //  --------------------------------------------------------------------
@@ -8,17 +8,17 @@
 // 
 // *********************************************************************
 
-#ifndef LV_CONTAINERADAPTOR_LIST_HPP
-#define LV_CONTAINERADAPTOR_LIST_HPP
+#ifndef LV_CONTAINERADAPTOR_DEQUE_HPP
+#define LV_CONTAINERADAPTOR_DEQUE_HPP
 
 #include <lv/ContainerAdaptor/Adaptor.hpp>
 
-#include <list>
+#include <deque>
 
 namespace lv
 {
 	template<class T, class Ax, class V>
-	void	insert(std::list<T, Ax> & t, V const & v)
+	void	insert(std::deque<T, Ax> & t, V const & v)
 	{
 		t.push_back(v);
 	}
