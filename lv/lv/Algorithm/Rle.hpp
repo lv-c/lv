@@ -18,7 +18,7 @@
 namespace lv { namespace rle {
 
 	
-	size_t encode_bound(size_t src_len)
+	inline size_t encode_bound(size_t src_len)
 	{
 		return src_len + (src_len >> 6) + 1;
 	}
