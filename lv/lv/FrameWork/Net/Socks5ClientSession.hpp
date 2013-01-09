@@ -18,9 +18,9 @@
 
 namespace lv { namespace net {
 
-	class Socks5ClientSession : public TcpSession<ClientSide>
+	class Socks5ClientSession : public TcpSession
 	{
-		typedef public TcpSession<ClientSide>	base_type;
+		typedef public TcpSession	base_type;
 
 		bool	use_proxy_;
 
@@ -48,7 +48,7 @@ namespace lv { namespace net {
 		explicit Socks5ClientSession(ContextPtr context);
 
 		/// @exception runtime_error
-		virtual	void	start(std::string const & ip, std::string const & port,
+		virtual	void	connect(std::string const & ip, std::string const & port,
 			boost::asio::ip::address const & to_bind = boost::asio::ip::address());
 
 	protected:

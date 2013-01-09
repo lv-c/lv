@@ -155,10 +155,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\lv\lv\FrameWork\Net\CsSession.hpp"
-					>
-				</File>
-				<File
 					RelativePath="..\..\..\lv\lv\FrameWork\Net\FlowSession.hpp"
 					>
 				</File>

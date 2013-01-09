@@ -22,13 +22,6 @@ namespace lv { namespace net {
 
 	class SessionBase;
 
-	struct ServerSide;
-	struct ClientSide;
-
-	template<typename Side>
-	class CsSession;
-
-	template<typename Side>
 	class TcpSession;
 
 	template<typename Key, class S>
@@ -37,7 +30,6 @@ namespace lv { namespace net {
 	template<class S>
 	class ServerBase;
 
-	template<typename Side>
 	class SSLSession;
 	
 	template<class S>

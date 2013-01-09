@@ -11,15 +11,14 @@
 #ifndef LV_NET_TCPSESSION_HPP
 #define LV_NET_TCPSESSION_HPP
 
-#include <lv/FrameWork/Net/CsSession.hpp>
+#include <lv/FrameWork/Net/SessionBase.hpp>
 
 namespace lv { namespace net {
 
-	template<typename Side>
-	class TcpSession : public CsSession<Side>
+	class TcpSession : public SessionBase
 	{
 
-		typedef CsSession<Side>	base_type;
+		typedef SessionBase	base_type;
 		
 		asio::ip::tcp::socket	socket_;
 

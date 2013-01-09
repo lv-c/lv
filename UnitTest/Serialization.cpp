@@ -13,6 +13,7 @@
 #include <lv/Serialization/OArchive.hpp>
 #include <lv/Serialization/IArchive.hpp>
 #include <lv/Serialization/Interprocess/String.hpp>
+#include <lv/Serialization/SharedPtr.hpp>
 
 #include <boost/array.hpp>
 #include <boost/serialization/vector.hpp>
@@ -84,8 +85,11 @@ BOOST_AUTO_TEST_CASE(test_serialization)
 	int_arr.assign(20);
 	CheckVersion ver;
 	boost::interprocess::string	inter_str("inter");
+	boost::shared_ptr<int> empty_shared_ptr;
+	boost::shared_ptr<string> str_shared_ptr(new string("hello"));
 
-	oa << int(10) << str_vec << int_vec << obj << int_arr << ver << inter_str;
+	oa << int(10) << str_vec << int_vec << obj << int_arr << ver << inter_str
+		<< empty_shared_ptr << str_shared_ptr;
 
 	IBufferStream is(buf);
 	IArchive ia(is);
@@ -97,8 +101,11 @@ BOOST_AUTO_TEST_CASE(test_serialization)
 	boost::array<int, 10> new_int_arr;
 	CheckVersion new_ver;
 	boost::interprocess::string new_inter_str;
+	boost::shared_ptr<int> new_empty_shared_ptr;
+	boost::shared_ptr<string> new_str_shared_ptr(new string("hello"));
 
-	ia >> i >> new_str_vec >> new_int_vec >> new_obj >> new_int_arr >> new_ver >> new_inter_str;
+	ia >> i >> new_str_vec >> new_int_vec >> new_obj >> new_int_arr >> new_ver >> new_inter_str
+		>> new_empty_shared_ptr >> new_str_shared_ptr;
 
 	BOOST_CHECK_EQUAL(i, 10);
 	BOOST_CHECK(str_vec == new_str_vec);
@@ -106,6 +113,8 @@ BOOST_AUTO_TEST_CASE(test_serialization)
 	BOOST_CHECK(obj == new_obj);
 	BOOST_CHECK(int_arr == new_int_arr);
 	BOOST_CHECK(inter_str == new_inter_str);
+	BOOST_CHECK(! new_empty_shared_ptr);
+	BOOST_CHECK_EQUAL(*str_shared_ptr, *new_str_shared_ptr);
 
 	// end of the buffer
 	BOOST_CHECK_EQUAL(static_cast<size_t>(is.tellg()), buf.size());

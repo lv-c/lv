@@ -11,17 +11,16 @@
 #ifndef LV_NET_SSLSESSION_HPP
 #define LV_NET_SSLSESSION_HPP
 
-#include <lv/FrameWork/Net/CsSession.hpp>
+#include <lv/FrameWork/Net/SessionBase.hpp>
 #include <lv/FrameWork/Net/SSLContext.hpp>
 
 #include <boost/asio/ssl.hpp>
 
 namespace lv { namespace net {
 
-	template<typename Side>
-	class SSLSession : public CsSession<Side>
+	class SSLSession : public SessionBase
 	{
-		typedef CsSession<Side>	base_type;
+		typedef SessionBase	base_type;
 
 		typedef asio::ssl::stream<asio::ip::tcp::socket> ssl_socket;
 
@@ -41,22 +40,16 @@ namespace lv { namespace net {
 			return socket_.next_layer();
 		}
 
+		//
+		virtual	void	server_side_start()
+		{
+			handshake(asio::ssl::stream_base::server);
+		}
+
 	protected:
 
 		virtual	void	on_connected_internal()
 		{
-			asio::ssl::stream_base::handshake_type type;
-			if(boost::is_same<Side, ClientSide>::value)
-			{
-				type = asio::ssl::stream_base::client;
-			}
-			else
-			{
-				type = asio::ssl::stream_base::server;
-			}
-
-			socket_.async_handshake(type, boost::bind(&SSLSession::handle_handshake, 
-				boost::shared_static_cast<SSLSession>(shared_from_this()), asio::placeholders::error));
 		}
 
 		virtual void	handle_handshake(boost::system::error_code const & error)
@@ -69,6 +62,26 @@ namespace lv { namespace net {
 			{
 				on_error(ErrorHandshake, error);
 			}
+		}
+
+		virtual	void	handle_connect(boost::system::error_code const & error)
+		{
+			if(! error)
+			{
+				handshake(asio::ssl::stream_base::client);
+			}
+			else
+			{
+				base_type::handle_connect(error);
+			}
+		}
+
+	private:
+
+		void	handshake(asio::ssl::stream_base::handshake_type type)
+		{
+			socket_.async_handshake(type, boost::bind(&SSLSession::handle_handshake, 
+				boost::shared_static_cast<SSLSession>(shared_from_this()), asio::placeholders::error));
 		}
 
 	};

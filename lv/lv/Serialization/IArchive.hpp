@@ -130,7 +130,7 @@ namespace lv
 			bool success = true;
 			try
 			{
-				istream_.read(static_cast<char *>(address), count);
+				istream_.read(static_cast<char *>(address), static_cast<std::streamsize>(count));
 			}
 			catch(std::ios_base::failure const &)
 			{

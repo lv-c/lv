@@ -18,9 +18,9 @@
 
 namespace lv { namespace net {
 
-	class Socks5ServerSession : public TcpSession<ServerSide>
+	class Socks5ServerSession : public TcpSession
 	{
-		typedef TcpSession<ServerSide>	base_type;
+		typedef TcpSession	base_type;
 
 		BufferPtr	cache_;
 
@@ -35,7 +35,7 @@ namespace lv { namespace net {
 
 		volatile Status	status_;
 
-		typedef TcpSession<ClientSide>	DestSession;
+		typedef TcpSession	DestSession;
 		boost::shared_ptr<DestSession>	dest_session_;
 
 		std::vector<boost::signals2::connection>	connections_;

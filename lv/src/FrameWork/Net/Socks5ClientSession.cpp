@@ -21,7 +21,7 @@ namespace lv { namespace net {
 		BOOST_ASSERT(boost::shared_dynamic_cast<Socks5ClientContext>(context));
 	}
 
-	void Socks5ClientSession::start(std::string const & ip, std::string const & port,
+	void Socks5ClientSession::connect(std::string const & ip, std::string const & port,
 		boost::asio::ip::address const & to_bind /* = boost::asio::ip::address */)
 	{
 		first_error_ = true;
@@ -38,11 +38,11 @@ namespace lv { namespace net {
 
 		if(use_proxy_)
 		{
-			base_type::start(socks_ip, socks_port, to_bind);
+			base_type::connect(socks_ip, socks_port, to_bind);
 		}
 		else
 		{
-			base_type::start(ip, port, to_bind);
+			base_type::connect(ip, port, to_bind);
 		}
 	}
 

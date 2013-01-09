@@ -41,12 +41,17 @@ namespace lv { namespace net {
 
 		NewSessionEvent	new_session_event_;
 
+		typedef boost::function<session_ptr(ContextPtr)>	creator_type;
+		creator_type	session_creator_;
+
 	public:
 
 		/// you can either pass in a session_creator function or overload create_session
 		///		to create a new session
-		ServerBase(ContextPtr context)
+		ServerBase(ContextPtr context, creator_type session_creator = &ServerBase::default_creator)
 			: context_(context)
+			, session_creator_(session_creator)
+
 		{
 		}
 
@@ -82,7 +87,7 @@ namespace lv { namespace net {
 			if(! error)
 			{
 				on_new_session(session);
-				session->start();
+				session->server_side_start();
 
 				start_accept();
 			}
@@ -99,7 +104,13 @@ namespace lv { namespace net {
 
 		virtual	session_ptr	create_session()
 		{
-			return session_ptr(new session_type(context_));
+			if(session_creator_)
+			{
+				return session_creator_(context_);
+			}
+
+			BOOST_ASSERT(false);
+			return session_ptr();
 		}
 
 		virtual	void	on_new_session(session_ptr session)
@@ -107,6 +118,12 @@ namespace lv { namespace net {
 			new_session_event_(session);
 		}
 
+	private:
+
+		static session_ptr	default_creator(ContextPtr context)
+		{
+			return session_ptr(new session_type(context));
+		}
 	};
 
 } }

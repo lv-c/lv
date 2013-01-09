@@ -128,6 +128,30 @@ namespace lv { namespace net {
 			socket().close(error);
 		}
 
+		/// @exception runtime_error
+		virtual	void	connect(std::string const & ip, std::string const & port,
+			boost::asio::ip::address const & to_bind = boost::asio::ip::address())
+		{
+			asio::ip::tcp::resolver::query query(ip, port);
+			asio::ip::tcp::resolver resolver(context_->service());
+
+			if(to_bind != boost::asio::ip::address())
+			{
+				socket().open(to_bind.is_v4() ? boost::asio::ip::tcp::v4() : boost::asio::ip::tcp::v6());
+				socket().bind(boost::asio::ip::tcp::endpoint(to_bind, 0));
+			}
+
+			if(context_->has_strand())
+			{
+				socket().async_connect(*resolver.resolve(query), 
+					context_->strand().wrap(boost::bind(&SessionBase::handle_connect, shared_from_this(), asio::placeholders::error)));
+			}
+			else
+			{
+				socket().async_connect(*resolver.resolve(query), 
+					boost::bind(&SessionBase::handle_connect, shared_from_this(), asio::placeholders::error));
+			}
+		}
 
 		virtual void	start_read()
 		{
@@ -147,7 +171,6 @@ namespace lv { namespace net {
 					boost::bind(&SessionBase::handle_read, shared_from_this(), buf,
 					asio::placeholders::bytes_transferred, asio::placeholders::error));
 			}
-
 		}
 
 		virtual	void	start_write(BufferPtr buf)
@@ -164,9 +187,13 @@ namespace lv { namespace net {
 					boost::bind(&SessionBase::handle_write, shared_from_this(), 
 					buf, asio::placeholders::error));
 			}
-
 		}
 
+		// For internal use. You should use on_connected instead.
+		virtual	void	server_side_start()
+		{
+			on_connected_internal();
+		}
 
 	protected:
 
@@ -190,6 +217,7 @@ namespace lv { namespace net {
 		{
 			receive_event_(buf);
 		}
+
 		virtual	void	on_write(BufferPtr buf)
 		{
 			write_event_(buf);
@@ -210,7 +238,6 @@ namespace lv { namespace net {
 			}
 		}
 
-
 		virtual	void	handle_write(BufferPtr buf, boost::system::error_code const & error)
 		{
 			if(error)
@@ -220,6 +247,18 @@ namespace lv { namespace net {
 			else
 			{
 				on_write(buf);
+			}
+		}
+
+		virtual	void	handle_connect(boost::system::error_code const & error)
+		{
+			if(! error)
+			{
+				on_connected_internal();
+			}
+			else
+			{
+				on_error(ErrorConnect, error);
 			}
 		}
 	};

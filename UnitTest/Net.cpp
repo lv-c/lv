@@ -37,10 +37,10 @@ namespace asio = boost::asio;
 boost::condition g_condition_called;
 boost::mutex	g_mutex;
 
-template<template <class> class LowerSession>
-class ClientSession : public FlowSession<string, LowerSession<ClientSide> >
+template<class LowerSession>
+class ClientSession : public FlowSession<string, LowerSession>
 {
-	typedef FlowSession<string, LowerSession<ClientSide> > base_type;
+	typedef FlowSession<string, LowerSession> base_type;
 
 	string	text_;
 
@@ -73,10 +73,10 @@ private:
 
 };
 
-template<template <class> class LowerSession>
-class ServerSession : public FlowSession<string, LowerSession<ServerSide> >
+template<class LowerSession>
+class ServerSession : public FlowSession<string, LowerSession>
 {
-	typedef FlowSession<string, LowerSession<ServerSide> > base_type;
+	typedef FlowSession<string, LowerSession> base_type;
 
 public:
 	ServerSession(ContextPtr context)
@@ -103,7 +103,7 @@ boost::shared_ptr<SessionType> create_session(Context const & context)
 	return boost::shared_ptr<SessionType>(new SessionType (context));
 }
 
-template<template<class> class Server, template<class> class LowerSession>
+template<template<class> class Server, class LowerSession>
 void test_net_impl()
 {
 	typedef ServerSession<LowerSession>	server_session_type;
@@ -129,7 +129,7 @@ void test_net_impl()
 
 	// client. We must use shared_ptr here.
 	boost::shared_ptr<client_session_type> client(new client_session_type(client_context));
-	client->start("127.0.0.1", "5555");
+	client->connect("127.0.0.1", "5555");
 
 	boost::mutex::scoped_lock lock(g_mutex);
 

@@ -198,7 +198,7 @@ namespace lv { namespace net {
 
 		try
 		{
-			dest_session_->start(host, boost::lexical_cast<std::string>(port), to_bind);
+			dest_session_->connect(host, boost::lexical_cast<std::string>(port), to_bind);
 		}
 		catch (boost::system::system_error const & err)
 		{

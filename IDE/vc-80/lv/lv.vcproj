@@ -948,6 +948,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\Serialization\SharedPtr.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\Serialization\Tuple.hpp"
 					>
 				</File>

@@ -35,7 +35,9 @@ namespace lv
 
 		size_t				max_count_;		// maximum number of tasks
 		size_t				consumers_to_interrupt_;
+
 	public:
+
 		typedef Task	value_type;
 
 
