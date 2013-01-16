@@ -10,9 +10,11 @@
 #ifndef LV_COLOR_HPP
 #define LV_COLOR_HPP
 
+#include <lv/IntType.hpp>
+#include <lv/lvlib2.hpp>
+
 #include <boost/operators.hpp>
 #include <boost/assert.hpp>
-#include <lv/IntType.hpp>
 
 namespace lv
 {
