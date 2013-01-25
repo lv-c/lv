@@ -14,6 +14,7 @@
 #include <lv/FrameWork/Net/TcpSession.hpp>
 #include <lv/FrameWork/Net/SSLServer.hpp>
 #include <lv/FrameWork/Net/SSLSession.hpp>
+#include <lv/FrameWork/Net/SSLContext.hpp>
 
 #include <lv/SharedPtr.hpp>
 #include <lv/SimpleBufferManager.hpp>
@@ -96,20 +97,13 @@ public:
 	}
 };
 
-
-template<class SessionType>
-boost::shared_ptr<SessionType> create_session(Context const & context)
-{
-	return boost::shared_ptr<SessionType>(new SessionType (context));
-}
-
-template<template<class> class Server, class LowerSession>
+template<class Server, class LowerSession>
 void test_net_impl()
 {
 	typedef ServerSession<LowerSession>	server_session_type;
 	typedef ClientSession<LowerSession> client_session_type;
 
-	typedef Server<server_session_type>	server_type;
+	typedef Server	server_type;
 
 	asio::io_service service;
 
@@ -123,7 +117,7 @@ void test_net_impl()
 	}
 
 	// server
-	server_type server(server_context);
+	server_type server(server_context, SessionCreator<server_session_type>());
 
 	server.start(5555);
 

@@ -1,6 +1,7 @@
 #include <lv/FrameWork/Net/Socks5ServerSession.hpp>
 #include <lv/FrameWork/Net/Socks5ServerContext.hpp>
 #include <lv/FrameWork/Net/Socks5.hpp>
+#include <lv/FrameWork/Net/SocketHolder.hpp>
 #include <lv/BinaryStream/BinaryIStream.hpp>
 #include <lv/BinaryStream/Manipulators.hpp>
 #include <lv/BinaryStream/String.hpp>
@@ -9,6 +10,8 @@
 #include <lv/Stream/IBufferStream.hpp>
 
 #include <boost/lexical_cast.hpp>
+#include <boost/asio/ip/tcp.hpp>
+
 
 namespace lv { namespace net {
 
@@ -146,17 +149,17 @@ namespace lv { namespace net {
 		{
 		case Socks5::IPV4:
 			{
-				boost::asio::ip::address_v4::bytes_type bytes;
+				asio::ip::address_v4::bytes_type bytes;
 				bis >> bytes;
-				host = boost::asio::ip::address_v4(bytes).to_string(error);
+				host = asio::ip::address_v4(bytes).to_string(error);
 				break;
 			}
 
 		case Socks5::IPV6:
 			{
-				boost::asio::ip::address_v6::bytes_type bytes;
+				asio::ip::address_v6::bytes_type bytes;
 				bis >> bytes;
-				host = boost::asio::ip::address_v6(bytes).to_string(error);
+				host = asio::ip::address_v6(bytes).to_string(error);
 				break;
 			}
 
@@ -165,12 +168,12 @@ namespace lv { namespace net {
 			break;
 
 		default:
-			error = boost::asio::error::make_error_code(boost::asio::error::operation_not_supported);
+			error = asio::error::make_error_code(asio::error::operation_not_supported);
 		}
 
 		if(cmd != 1)	// CONNECT
 		{
-			error = boost::asio::error::make_error_code(boost::asio::error::operation_not_supported);
+			error = asio::error::make_error_code(asio::error::operation_not_supported);
 		}
 
 		if(error)
@@ -194,7 +197,7 @@ namespace lv { namespace net {
 		connections_.push_back(dest_session_->error_event().connect(boost::bind(&Socks5ServerSession::dest_on_error, this, _1, _2)));
 		connections_.push_back(dest_session_->receive_event().connect(boost::bind(&Socks5ServerSession::dest_on_receive, this, _1)));
 
-		boost::asio::ip::address to_bind = boost::shared_dynamic_cast<ISocks5ServerContext>(context_)->address_to_bind();
+		std::string to_bind = boost::shared_dynamic_cast<ISocks5ServerContext>(context_)->address_to_bind();
 
 		try
 		{
@@ -209,12 +212,12 @@ namespace lv { namespace net {
 
 	void Socks5ServerSession::send_request_response(boost::system::error_code error)
 	{
-		boost::asio::ip::address addr;
+		asio::ip::address addr;
 		unsigned short port = 0;
 
 		if(! error)
 		{
-			boost::asio::ip::tcp::endpoint endpoint = dest_session_->socket().local_endpoint(error);
+			asio::ip::tcp::endpoint endpoint = dest_session_->socket()->get().local_endpoint(error);
 			if(! error)
 			{
 				addr = endpoint.address();
@@ -247,7 +250,7 @@ namespace lv { namespace net {
 		}
 		else
 		{
-			proxy << Socks5::IPV4 << boost::asio::ip::address_v4::bytes_type() << uint16(0);
+			proxy << Socks5::IPV4 << asio::ip::address_v4::bytes_type() << uint16(0);
 
 			exit();
 		}
@@ -260,26 +263,26 @@ namespace lv { namespace net {
 			return 0;
 		}
 
-		if(error.category() == boost::asio::error::get_system_category())
+		if(error.category() == asio::error::get_system_category())
 		{
 			switch(error.value())
 			{
-			case boost::asio::error::network_unreachable:
+			case asio::error::network_unreachable:
 				return 3;		// Network unreachable
 				
-			case boost::asio::error::host_unreachable:
+			case asio::error::host_unreachable:
 				return 4;		// Host unreachable
 
-			case boost::asio::error::connection_refused:
+			case asio::error::connection_refused:
 				return 5;		// Connection refused
 
-			case boost::asio::error::timed_out:
+			case asio::error::timed_out:
 				return 6;		// TTL expired
 
-			case boost::asio::error::operation_not_supported:
+			case asio::error::operation_not_supported:
 				return 7;		// Command not supported
 
-			case boost::asio::error::address_family_not_supported:
+			case asio::error::address_family_not_supported:
 				return 8;		// Address type not supported
 
 			}

@@ -22,10 +22,6 @@ namespace lv
 	template <typename Task, template <typename> class QueuePolicy = FIFOQueue>
 	class TaskQueue;
 
-	template<
-		typename Task = boost::function<void()>, 
-		template<typename> class SchedulingPolicy = FIFOQueue
-	>
 	class ThreadPool;
 }
 

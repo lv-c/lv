@@ -1,9 +1,12 @@
 #include <lv/Console.hpp>
 
 #ifdef LV_PLATFORM_WINDOWS
+
 #include <Windows.h>
 #include <fcntl.h>
 #include <io.h>
+
+#include <ios>
 
 
 namespace lv
@@ -15,7 +18,7 @@ namespace lv
 	}  
 
 
-	bool	create_console(std::string const & title, bool std_io /* = true */)
+	bool	create_console(char const * title, bool std_io /* = true */)
 	{
 		if (! AllocConsole())
 		{
@@ -28,7 +31,7 @@ namespace lv
 			return false;
 		}
 
-		SetConsoleTitleA(title.c_str());
+		SetConsoleTitleA(title);
 		long lStdHandle = (long)GetStdHandle(STD_ERROR_HANDLE);
 		int hConHandle = _open_osfhandle(lStdHandle, _O_TEXT);       
 		FILE* fp = _fdopen(hConHandle,"w");

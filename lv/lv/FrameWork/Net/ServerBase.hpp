@@ -11,119 +11,66 @@
 #ifndef LV_NET_SERVERBASE_HPP
 #define LV_NET_SERVERBASE_HPP
 
+#include <lv/lvlib2.hpp>
 #include <lv/FrameWork/Net/Fwd.hpp>
-#include <lv/FrameWork/Net/Context.hpp>
 
-#include <boost/asio/ip/tcp.hpp>
-#include <boost/bind.hpp>
-#include <boost/function.hpp>
 #include <boost/scoped_ptr.hpp>
 #include <boost/signals2.hpp>
+#include <boost/noncopyable.hpp>
+#include <boost/system/error_code.hpp>
 
 namespace lv { namespace net {
 
+	class AcceptorHolder;
 
-	template<class S>
+	template<class SessionType>
+	struct SessionCreator
+	{
+		SessionPtr	operator() (ContextPtr context) const
+		{
+			return SessionPtr(new SessionType(context));
+		}
+	};
+
 	class ServerBase : boost::noncopyable
 	{
-	public:
 
-		typedef	S	session_type;
-		typedef boost::shared_ptr<session_type>	session_ptr;
+		typedef boost::signals2::signal<void(SessionPtr)>	NewSessionEvent;
 
-		typedef boost::signals2::signal<void(session_ptr)>	NewSessionEvent;
-
-	protected:
-
-		boost::scoped_ptr<asio::ip::tcp::acceptor>	acceptor_;
-
-		ContextPtr	context_;
+		boost::scoped_ptr<AcceptorHolder>	acceptor_;
 
 		NewSessionEvent	new_session_event_;
 
-		typedef boost::function<session_ptr(ContextPtr)>	creator_type;
+	protected:
+
+		ContextPtr	context_;
+
+		typedef boost::function<SessionPtr(ContextPtr)>	creator_type;
 		creator_type	session_creator_;
 
 	public:
 
 		/// you can either pass in a session_creator function or overload create_session
 		///		to create a new session
-		ServerBase(ContextPtr context, creator_type session_creator = &ServerBase::default_creator)
-			: context_(context)
-			, session_creator_(session_creator)
+		ServerBase(ContextPtr context, creator_type session_creator = creator_type());
 
-		{
-		}
+		virtual	~ServerBase();
 
-		virtual	~ServerBase()
-		{
-		}
+		virtual	void	start(unsigned short port, std::string const & to_bind = std::string());
 
-		virtual	void	start(unsigned short port, 
-			boost::asio::ip::address const & to_bind = boost::asio::ip::address())
-		{
-			acceptor_.reset(new asio::ip::tcp::acceptor(context_->service(), 
-				asio::ip::tcp::endpoint(to_bind, port)));
+		virtual	void	close();
 
-			start_accept();
-		}
-
-		virtual	void	close()
-		{
-			boost::system::error_code error;
-			acceptor_->close(error);
-			acceptor_.reset();
-		}
-
-		NewSessionEvent &	new_session_event()
-		{
-			return new_session_event_;
-		}
+		NewSessionEvent &	new_session_event();
 
 	protected:
 
-		virtual	void	handle_accept(session_ptr session, boost::system::error_code const & error)
-		{
-			if(! error)
-			{
-				on_new_session(session);
-				session->server_side_start();
+		virtual	void	handle_accept(SessionPtr session, boost::system::error_code const & error);
 
-				start_accept();
-			}
-		}
+		virtual	void	start_accept();
 
-		virtual	void	start_accept()
-		{
-			session_ptr	session = create_session();
+		virtual	SessionPtr	create_session();
 
-			acceptor_->async_accept(session->socket(), 
-				boost::bind(&ServerBase::handle_accept, this, session,
-				asio::placeholders::error));
-		}
-
-		virtual	session_ptr	create_session()
-		{
-			if(session_creator_)
-			{
-				return session_creator_(context_);
-			}
-
-			BOOST_ASSERT(false);
-			return session_ptr();
-		}
-
-		virtual	void	on_new_session(session_ptr session)
-		{
-			new_session_event_(session);
-		}
-
-	private:
-
-		static session_ptr	default_creator(ContextPtr context)
-		{
-			return session_ptr(new session_type(context));
-		}
+		virtual	void	on_new_session(SessionPtr session);
 	};
 
 } }

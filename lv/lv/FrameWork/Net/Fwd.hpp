@@ -20,19 +20,21 @@ namespace lv { namespace net {
 	class Context;
 	typedef boost::shared_ptr<Context>	ContextPtr;
 
+	class SocketHolder;
+	typedef boost::shared_ptr<SocketHolder>	SocketHolderPtr;
+
 	class SessionBase;
+	typedef boost::shared_ptr<SessionBase>	SessionPtr;
 
 	class TcpSession;
 
 	template<typename Key, class S>
 	class FlowSession;
 
-	template<class S>
 	class ServerBase;
 
 	class SSLSession;
 	
-	template<class S>
 	class SSLServer;
 
 	namespace asio = boost::asio;

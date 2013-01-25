@@ -16,9 +16,6 @@
 
 #include <lv/IBufferManager.hpp>
 
-#include <boost/asio/io_service.hpp>
-#include <boost/asio/strand.hpp>
-
 namespace lv { namespace net {
 
 	class Context
@@ -62,7 +59,7 @@ namespace lv { namespace net {
 			return service_wrapper_.has_strand();
 		}
 
-		boost::asio::strand &	strand() const
+		asio::strand &	strand() const
 		{
 			return service_wrapper_.strand();
 		}

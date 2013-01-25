@@ -14,6 +14,7 @@
 #include <lv/FrameWork/Net/Fwd.hpp>
 #include <lv/FrameWork/Net/PacketBufferManager.hpp>
 #include <lv/FrameWork/Net/PacketSplitter.hpp>
+#include <lv/FrameWork/Net/Context.hpp>
 
 #include <lv/DataFlow.hpp>
 

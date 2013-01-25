@@ -640,7 +640,23 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\Concurrent\ThreadName.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\Concurrent\ThreadPool.hpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Source Files"
+				>
+				<File
+					RelativePath="..\..\..\lv\src\Concurrent\ThreadName.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\src\Concurrent\ThreadPool.cpp"
 					>
 				</File>
 			</Filter>

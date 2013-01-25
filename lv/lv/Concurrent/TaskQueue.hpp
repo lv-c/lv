@@ -9,8 +9,8 @@
 // 
 // *********************************************************************
 
-#ifndef LV_TASKQUEUE_HPP
-#define LV_TASKQUEUE_HPP
+#ifndef LV_CONCURRENT_TASKQUEUE_HPP
+#define LV_CONCURRENT_TASKQUEUE_HPP
 
 #include <limits>
 #include <boost/thread/mutex.hpp>
@@ -176,4 +176,4 @@ namespace lv
 }
 
 
-#endif // LV_TASKQUEUE_HPP
+#endif

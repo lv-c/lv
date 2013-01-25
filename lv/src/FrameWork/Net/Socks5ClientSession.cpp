@@ -9,6 +9,8 @@
 
 #include <boost/bind.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/asio/ip/tcp.hpp>
+
 
 namespace lv { namespace net {
 
@@ -22,7 +24,7 @@ namespace lv { namespace net {
 	}
 
 	void Socks5ClientSession::connect(std::string const & ip, std::string const & port,
-		boost::asio::ip::address const & to_bind /* = boost::asio::ip::address */)
+		std::string const & to_bind /* = std::string */)
 	{
 		first_error_ = true;
 		status_ = None;
@@ -145,7 +147,7 @@ namespace lv { namespace net {
 		bis >> ver >> method;
 		if(ver != Socks5::Version || (method != Socks5::NoAuth && method != Socks5::UserPassword))
 		{
-			on_error_internal(ErrorHandshake, boost::asio::error::make_error_code(boost::asio::error::operation_not_supported));
+			on_error_internal(ErrorHandshake, asio::error::make_error_code(asio::error::operation_not_supported));
 			close();
 			return;
 		}
@@ -172,7 +174,7 @@ namespace lv { namespace net {
 		bis >> ver >> ret;
 		if(ret != 0)
 		{
-			on_error_internal(ErrorHandshake, boost::asio::error::make_error_code(boost::asio::error::no_permission));
+			on_error_internal(ErrorHandshake, asio::error::make_error_code(asio::error::no_permission));
 			close();
 			return;
 		}
@@ -228,56 +230,56 @@ namespace lv { namespace net {
 
 	void Socks5ClientSession::gen_request_error(uint8 rep, ErrorType & err_type, boost::system::error_code & error)
 	{
-		boost::asio::error::basic_errors asio_err;
+		asio::error::basic_errors asio_err;
 
 		switch(rep)
 		{
 		case 1:		// general SOCKS server failure
-			asio_err = boost::asio::error::connection_refused;	// .....
+			asio_err = asio::error::connection_refused;	// .....
 			err_type = ErrorConnect;
 			break;
 
 		case 2:		// connection not allowed by ruleset
-			asio_err = boost::asio::error::access_denied;
+			asio_err = asio::error::access_denied;
 			err_type = ErrorHandshake;
 			break;
 
 		case 3:		// Network unreachable
-			asio_err = boost::asio::error::network_unreachable;
+			asio_err = asio::error::network_unreachable;
 			err_type = ErrorConnect;
 			break;
 
 		case 4:		// Host unreachable
-			asio_err = boost::asio::error::host_unreachable;
+			asio_err = asio::error::host_unreachable;
 			err_type = ErrorConnect;
 			break;
 
 		case 5:		// Connection refused
-			asio_err = boost::asio::error::connection_refused;
+			asio_err = asio::error::connection_refused;
 			err_type = ErrorConnect;
 			break;
 
 		case 6:		// TTL expired
-			asio_err = boost::asio::error::timed_out;
+			asio_err = asio::error::timed_out;
 			err_type = ErrorConnect;
 			break;
 
 		case 7:		// Command not supported
-			asio_err = boost::asio::error::operation_not_supported;
+			asio_err = asio::error::operation_not_supported;
 			err_type = ErrorHandshake;
 			break;
 
 		case 8:		// Address type not supported
-			asio_err = boost::asio::error::address_family_not_supported;
+			asio_err = asio::error::address_family_not_supported;
 			err_type = ErrorHandshake;
 			break;
 
 		default:
-			asio_err = boost::asio::error::connection_refused;	// .....
+			asio_err = asio::error::connection_refused;	// .....
 			err_type = ErrorHandshake;
 		}
 
-		error = boost::asio::error::make_error_code(asio_err);
+		error = asio::error::make_error_code(asio_err);
 	}
 
 	void Socks5ClientSession::handle_write(BufferPtr buf, boost::system::error_code const & error)
@@ -296,13 +298,13 @@ namespace lv { namespace net {
 	{
 		status_ = Request;
 
-		boost::asio::ip::tcp::resolver resolver(context_->service());
-		boost::asio::ip::tcp::resolver::query query(ip_, port_);
+		asio::ip::tcp::resolver resolver(context_->service());
+		asio::ip::tcp::resolver::query query(ip_, port_);
 
 		boost::system::error_code err;
-		boost::asio::ip::tcp::resolver::iterator it = resolver.resolve(query, err);
+		asio::ip::tcp::resolver::iterator it = resolver.resolve(query, err);
 
-		if(err && err.value() != boost::asio::error::host_not_found)
+		if(err && err.value() != asio::error::host_not_found)
 		{
 			on_error_internal(ErrorHandshake, err);
 			return;
@@ -321,17 +323,17 @@ namespace lv { namespace net {
 		}
 		else
 		{
-			boost::asio::ip::tcp::endpoint endpoint = *it;
+			asio::ip::tcp::endpoint endpoint = *it;
 
 			port = endpoint.port();
 
-			if(endpoint.protocol() == boost::asio::ip::tcp::v4())
+			if(endpoint.protocol() == asio::ip::tcp::v4())
 			{
 				proxy << Socks5::IPV4 << endpoint.address().to_v4().to_bytes();
 			}
 			else
 			{
-				BOOST_ASSERT(endpoint.protocol() == boost::asio::ip::tcp::v6());
+				BOOST_ASSERT(endpoint.protocol() == asio::ip::tcp::v6());
 				proxy << Socks5::IPV6 << endpoint.address().to_v6().to_bytes();
 			}
 		}

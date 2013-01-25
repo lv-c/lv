@@ -8,8 +8,8 @@
 // 
 // *********************************************************************
 
-#ifndef LV_FIFOQUEUE_HPP
-#define LV_FIFOQUEUE_HPP
+#ifndef LV_CONCURRENT_FIFOQUEUE_HPP
+#define LV_CONCURRENT_FIFOQUEUE_HPP
 
 #include <deque>
 
@@ -59,4 +59,4 @@ namespace lv
 	};
 }
 
-#endif // LV_FIFOQUEUE_HPP
+#endif

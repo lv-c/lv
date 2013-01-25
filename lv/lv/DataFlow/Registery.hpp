@@ -64,7 +64,6 @@ namespace lv { namespace flow {
 
 		public:
 
-
 			/**
 			 * @exception std::runtime_error if @a key has already been used
 			 */
@@ -81,15 +80,6 @@ namespace lv { namespace flow {
 				}
 
 				invokers_.insert(std::make_pair(key, detail::Invoker<Signature, IArchive>(f)));
-			}
-
-
-			void	clear()
-			{
-				// a write lock
-				boost::unique_lock<boost::shared_mutex> lock(shared_mutex_);
-
-				invokers_.clear();
 			}
 
 

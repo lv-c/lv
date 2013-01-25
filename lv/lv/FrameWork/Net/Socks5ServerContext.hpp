@@ -41,7 +41,7 @@ namespace lv { namespace net {
 
 	class ISocks5ServerContext : public Context
 	{
-		boost::asio::ip::address	address_to_bind_;
+		std::string	address_to_bind_;
 
 	public:
 
@@ -50,12 +50,12 @@ namespace lv { namespace net {
 		{
 		}
 
-		void	address_to_bind(boost::asio::ip::address const & addr)
+		void	address_to_bind(std::string const & addr)
 		{
 			address_to_bind_ = addr;
 		}
 
-		boost::asio::ip::address const & address_to_bind() const
+		std::string const & address_to_bind() const
 		{
 			return address_to_bind_;
 		}

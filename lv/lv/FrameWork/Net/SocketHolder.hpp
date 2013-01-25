@@ -1,29 +1,30 @@
 // *********************************************************************
-//  TcpSession   version:  1.0   ¡¤  date: 01/03/2010
+//  SocketHolder   version:  1.0   ¡¤  date: 2013/01/23
 //  --------------------------------------------------------------------
 //  
 //  --------------------------------------------------------------------
-//  Copyright (C) jcfly(lv.jcfly@gmail.com) 2010 - All Rights Reserved
+//  Copyright (C) jcfly(lv.jcfly@gmail.com) 2013 - All Rights Reserved
 // *********************************************************************
 // 
 // *********************************************************************
 
-#ifndef LV_NET_TCPSESSION_HPP
-#define LV_NET_TCPSESSION_HPP
+#ifndef LV_NET_SOCKETHOLDER_HPP
+#define LV_NET_SOCKETHOLDER_HPP
 
-#include <lv/FrameWork/Net/SessionBase.hpp>
+#include <lv/FrameWork/Net/Fwd.hpp>
+
+#include <boost/asio/ip/tcp.hpp>
 
 namespace lv { namespace net {
 
-	class TcpSession : public SessionBase
+	class SocketHolder
 	{
-		typedef SessionBase	base_type;
-
 	public:
 
-		explicit TcpSession(ContextPtr context);
+		virtual asio::ip::tcp::socket & get() = 0;
 	};
 
 } }
+
 
 #endif

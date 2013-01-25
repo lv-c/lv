@@ -12,64 +12,33 @@
 #define LV_NET_SSLSERVER_HPP
 
 #include <lv/FrameWork/Net/ServerBase.hpp>
-#include <lv/FrameWork/Net/SSLContext.hpp>
-#include <lv/SharedPtr.hpp>
-
-#include <boost/asio/ssl.hpp>
 
 namespace lv { namespace net {
 
 
-	template<class S>
-	class SSLServer : public ServerBase<S>
+	class SSLContextHolder;
+
+	class SSLServer : public ServerBase
 	{
-		typedef ServerBase<S>	base_type;
+		typedef ServerBase	base_type;
 
-	protected:
-
-		asio::ssl::context	ssl_context_;
+		// using scoped_ptr here will lead to C2027 : use of undefined type 'lv::net::SSLContextHolder'. Don't know why
+		boost::shared_ptr<SSLContextHolder>	ssl_context_;
 		
 		std::string	password_;
 
 	public:
 
-		SSLServer(ContextPtr context, std::string const & password = "rswvfbuk")
-			: base_type(context)
-			, password_(password)
-			, ssl_context_(context->service(), asio::ssl::context::sslv23)
-		{
-			boost::dynamic_pointer_cast<SSLContext>(context_)->set_ssl_context(lv::shared_from_object(ssl_context_));
-		}
+		SSLServer(ContextPtr context, creator_type session_creator = creator_type(), std::string const & password = "rswvfbuk");
 
 		/// @exception boost::system::system_error
-		virtual	void	start(unsigned short port)
-		{
-			init_context();
-
-			base_type::start(port);
-		}
-
+		virtual	void	start(unsigned short port);
 
 	protected:
 
-		virtual	void	init_context()
-		{
-			ssl_context_.set_options(
-				asio::ssl::context::default_workarounds
-				| asio::ssl::context::no_sslv2
-				| asio::ssl::context::single_dh_use);
+		virtual	void	init_context();
 
-			ssl_context_.set_password_callback(boost::bind(&SSLServer::get_password, this));
-			ssl_context_.use_certificate_file("cert/rscert.pem", asio::ssl::context::pem);
-			ssl_context_.use_private_key_file("cert/rsprivkey.pem", asio::ssl::context::pem);
-			ssl_context_.use_tmp_dh_file("cert/dh256.pem");
-
-		}
-
-		virtual	std::string	get_password()
-		{
-			return password_;
-		}
+		virtual	std::string	get_password();
 	};
 
 } }

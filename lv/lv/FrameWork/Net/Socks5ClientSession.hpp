@@ -48,8 +48,7 @@ namespace lv { namespace net {
 		explicit Socks5ClientSession(ContextPtr context);
 
 		/// @exception runtime_error
-		virtual	void	connect(std::string const & ip, std::string const & port,
-			boost::asio::ip::address const & to_bind = boost::asio::ip::address());
+		virtual	void	connect(std::string const & ip, std::string const & port, std::string const & to_bind = std::string());
 
 	protected:
 

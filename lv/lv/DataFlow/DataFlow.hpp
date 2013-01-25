@@ -81,6 +81,15 @@ namespace lv { namespace flow {
 			push_policy_(std::make_pair(port, buf));
 		}
 
+		// clear all the slots
+		void	clear()
+		{
+			// a write lock
+			boost::unique_lock<boost::shared_mutex> lock(shared_mutex_);
+
+			slots_.clear();
+		}
+
 	private:
 
 

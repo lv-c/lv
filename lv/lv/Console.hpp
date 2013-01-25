@@ -17,11 +17,9 @@
 
 #include <lv/lvlib2.hpp>
 
-#include <string>
-
 namespace lv
 {
-	bool	create_console(std::string const & title, bool std_io = true);
+	bool	create_console(char const * title, bool std_io = true);
 }
 
 #endif // LV_PLATFORM_WINDOWS

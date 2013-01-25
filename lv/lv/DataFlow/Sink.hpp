@@ -44,7 +44,10 @@ namespace lv { namespace flow {
 
 		push_policy_type	push_policy_;
 
-		IStreamFactory	istream_factory_;
+		typedef boost::shared_ptr<IStreamFactory>	IStreamFactoryPtr;
+		typedef boost::weak_ptr<IStreamFactory>		WeakIStreamFactoryPtr;
+
+		IStreamFactoryPtr	istream_factory_;
 
 	public:
 
@@ -53,8 +56,9 @@ namespace lv { namespace flow {
 		 */
 		Sink(proxy_push_type const & proxy_push = proxy_push_type(), push_policy_type const & policy = push_policy_type())
 			: push_policy_(policy)
+			, istream_factory_(new IStreamFactory())
 		{
-			slot_type slot = boost::bind(&Sink::push_impl, this, _1);
+			slot_type slot = boost::bind(&Sink::push_impl, this, _1, WeakIStreamFactoryPtr(istream_factory_));
 
 			if(proxy_push)
 			{
@@ -104,21 +108,22 @@ namespace lv { namespace flow {
 			return *this;
 		}
 
-
-		/// clear all the registered functions
-		void	clear()
+		void	stop()
 		{
-			registery_.clear();
+			istream_factory_.reset();
 		}
 
 	private:
 
-		void	push_impl(ConstBufferRef const & buf)
+		void	push_impl(ConstBufferRef const & buf, WeakIStreamFactoryPtr weak_isteram_factory)
 		{
-			IStreamPtr raw_is = istream_factory_.open(buf);
-			iarchive_type ia(*raw_is);
+			if(IStreamFactoryPtr factory = weak_isteram_factory.lock())
+			{
+				IStreamPtr raw_is = factory->open(buf);
+				iarchive_type ia(*raw_is);
 
-			registery_.invoke(ia);
+				registery_.invoke(ia);
+			}
 		}
 	};
 
