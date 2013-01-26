@@ -33,6 +33,7 @@ namespace lv { namespace net {
 	SessionBase::SessionBase(ContextPtr context, SocketHolderPtr socket)
 		: context_(context)
 		, socket_(socket)
+		, closed_(false)
 	{
 	}
 
@@ -87,8 +88,15 @@ namespace lv { namespace net {
 
 	void SessionBase::close()
 	{
+		closed_ = true;
+
 		boost::system::error_code error;
 		socket_->get().close(error);
+	}
+
+	bool SessionBase::closed()
+	{
+		return closed_;
 	}
 
 	void SessionBase::connect(std::string const & ip, std::string const & port, std::string const & to_bind /* = std::string */)
@@ -186,6 +194,11 @@ namespace lv { namespace net {
 
 	void SessionBase::handle_read(BufferPtr buf, size_t bytes_transferred, boost::system::error_code const & error)
 	{
+		if(closed_)
+		{
+			return;
+		}
+
 		if(error)
 		{
 			on_error(ErrorRead, error);
@@ -201,6 +214,11 @@ namespace lv { namespace net {
 
 	void SessionBase::handle_write(BufferPtr buf, boost::system::error_code const & error)
 	{
+		if(closed_)
+		{
+			return;
+		}
+
 		if(error)
 		{
 			on_error(ErrorWrite, error);
@@ -213,6 +231,11 @@ namespace lv { namespace net {
 
 	void SessionBase::handle_connect(boost::system::error_code const & error)
 	{
+		if(closed_)
+		{
+			return;
+		}
+
 		if(! error)
 		{
 			on_connected_internal();

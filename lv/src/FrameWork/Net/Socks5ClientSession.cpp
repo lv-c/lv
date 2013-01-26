@@ -50,6 +50,11 @@ namespace lv { namespace net {
 
 	void Socks5ClientSession::handle_connect(boost::system::error_code const & error)
 	{
+		if(closed())
+		{
+			return;
+		}
+
 		if(! use_proxy_)
 		{
 			base_type::handle_connect(error);
@@ -88,6 +93,11 @@ namespace lv { namespace net {
 
 	void Socks5ClientSession::handle_read(BufferPtr buf, size_t bytes_transferred, boost::system::error_code const & error)
 	{
+		if(closed())
+		{
+			return;
+		}
+
 		if(status_ == Established)
 		{
 			base_type::handle_read(buf, bytes_transferred, error);
@@ -284,6 +294,11 @@ namespace lv { namespace net {
 
 	void Socks5ClientSession::handle_write(BufferPtr buf, boost::system::error_code const & error)
 	{
+		if(closed())
+		{
+			return;
+		}
+
 		if(status_ == Established)
 		{
 			base_type::handle_write(buf, error);

@@ -140,4 +140,5 @@ BOOST_AUTO_TEST_CASE(test_net)
 	test_net_impl<ServerBase, TcpSession>();
 	test_net_impl<SSLServer, SSLSession>();
 
+	// ENGINE_cleanup();
 }

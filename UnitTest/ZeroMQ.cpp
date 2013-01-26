@@ -27,7 +27,7 @@
 #endif
 
 zmq::context_t context(1);
-bool	hello_called = false;
+volatile bool	hello_called = false;
 boost::condition	source_init;
 boost::asio::io_service	service;
 
@@ -54,10 +54,10 @@ void	source_proc()
 	source_init.notify_all();
 
 
-	for(size_t i = 0; i < 2; ++i)
+	// for(size_t i = 0; i < 2; ++i)
 	{
-		boost::this_thread::sleep(boost::posix_time::millisec(200));
 		source.call("hello_world");
+		boost::this_thread::sleep(boost::posix_time::millisec(200));
 	}
 }
 

@@ -51,6 +51,13 @@ namespace lv { namespace net {
 				BufferManagerPtr(new PacketBufferManager(1024))));
 		}
 
+		virtual	void	close()
+		{
+			base_type::close();
+
+			sink_.stop();
+		}
+
 	protected:
 
 		void	push(BufferPtr buf)

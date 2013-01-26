@@ -50,6 +50,8 @@ namespace lv { namespace net {
 
 		SocketHolderPtr	socket_;
 
+		volatile bool	closed_;
+
 	protected:
 
 		ContextPtr	context_;
@@ -72,6 +74,9 @@ namespace lv { namespace net {
 		virtual	void	shutdown();
 
 		virtual	void	close();
+
+		// whether @close has been called
+		bool			closed();
 
 		/// @exception runtime_error
 		virtual	void	connect(std::string const & ip, std::string const & port, std::string const & to_bind = std::string());
