@@ -11,7 +11,6 @@
 #ifndef LV_NET_SOCKS5CLIENTSESSION_HPP
 #define LV_NET_SOCKS5CLIENTSESSION_HPP
 
-#include <lv/FrameWork/AutoLink.hpp>
 #include <lv/FrameWork/Net/TcpSession.hpp>
 #include <lv/FrameWork/Net/PacketProxy.hpp>
 #include <lv/BinaryStream/Fwd.hpp>

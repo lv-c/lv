@@ -11,7 +11,7 @@
 #ifndef LV_NET_SESSIONBASE_HPP
 #define LV_NET_SESSIONBASE_HPP
 
-#include <lv/lvlib2.hpp>
+#include <lv/FrameWork/AutoLink.hpp>
 #include <lv/FrameWork/Net/Fwd.hpp>
 #include <lv/Buffer.hpp>
 
