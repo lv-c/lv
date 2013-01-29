@@ -6,8 +6,9 @@
 
 namespace lv
 {
-	ThreadPool::ThreadPool(bool enable_thread_name /* = true */)
+	ThreadPool::ThreadPool(bool enable_thread_name /* = true */, ExceptionHandler const & handler /* = ExceptionHandler */)
 		: thread_name_enabled_(enable_thread_name)
+		, exception_handler_(handler)
 		, threads_(new boost::thread_group())
 	{
 	}
@@ -25,7 +26,8 @@ namespace lv
 
 		for(size_t i = 0; i < thread_num; ++i)
 		{
-			boost::thread * thread = threads_->create_thread(boost::bind(&ThreadPool::run, name, WeakServicePtr(service)));
+			boost::thread * thread = threads_->create_thread(boost::bind(&ThreadPool::run, name, WeakServicePtr(service),
+				exception_handler_));
 		}
 
 		return service;
@@ -36,31 +38,45 @@ namespace lv
 		threads_->join_all();
 	}
 
-	void ThreadPool::run(std::string name, WeakServicePtr weak_service)
+	void ThreadPool::run(std::string name, WeakServicePtr weak_service, ExceptionHandler handler)
 	{
 		if(! name.empty())
 		{
 			lv::set_current_thread_name(name.c_str());
 		}
 
-		while(true)
+		try
 		{
-			ServicePtr service = weak_service.lock();
-
-			if(! service)
+			while(true)
 			{
-				break;
+				ServicePtr service = weak_service.lock();
+
+				if(! service)
+				{
+					break;
+				}
+
+				boost::system::error_code err;
+				service->run(err);
+
+				if(err)
+				{
+					break;
+				}
+
+				boost::this_thread::sleep(boost::posix_time::millisec(10));
 			}
-
-			boost::system::error_code err;
-			service->run(err);
-
-			if(err)
+		}
+		catch(std::exception const & ex)
+		{
+			if(handler)
 			{
-				break;
+				handler(name, ex);
 			}
-
-			boost::this_thread::sleep(boost::posix_time::millisec(10));
+			else
+			{
+				throw;
+			}
 		}
 	}
 }

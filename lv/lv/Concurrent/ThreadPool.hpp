@@ -17,6 +17,7 @@
 
 #include <boost/asio/io_service.hpp>
 #include <boost/shared_ptr.hpp>
+#include <boost/function.hpp>
 
 #include <string>
 
@@ -32,7 +33,9 @@ namespace lv
 	{
 	public:
 
-		typedef boost::shared_ptr<boost::asio::io_service>	ServicePtr;
+		typedef boost::shared_ptr<boost::asio::io_service>		ServicePtr;
+
+		typedef boost::function<void(std::string const &, std::exception const &)>	ExceptionHandler;
 
 	private:
 
@@ -42,10 +45,12 @@ namespace lv
 
 		bool	thread_name_enabled_;
 
+		ExceptionHandler	exception_handler_;
+
 	public:
 
 		// for security reason, you may not want to show the thread names in release version
-		ThreadPool(bool enable_thread_name = true);
+		ThreadPool(bool enable_thread_name = true, ExceptionHandler const & handler = ExceptionHandler());
 
 		// As long as the returned pointer is not released, the thread will
 		// not stop. You should hold the pointer, or the thread will stop 
@@ -56,7 +61,7 @@ namespace lv
 
 	private:
 
-		static	void	run(std::string name, WeakServicePtr weak_service);
+		static	void	run(std::string name, WeakServicePtr weak_service, ExceptionHandler handler);
 	};
 }
 
