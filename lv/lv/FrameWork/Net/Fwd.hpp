@@ -17,6 +17,14 @@ namespace boost { namespace asio {} }
 
 namespace lv { namespace net {
 
+	enum ErrorType
+	{
+		ErrorConnect,
+		ErrorHandshake,
+		ErrorRead,
+		ErrorWrite
+	};
+
 	class Context;
 	typedef boost::shared_ptr<Context>	ContextPtr;
 

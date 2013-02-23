@@ -22,14 +22,6 @@
 
 namespace lv { namespace net {
 
-	enum ErrorType
-	{
-		ErrorConnect,
-		ErrorHandshake,
-		ErrorRead,
-		ErrorWrite
-	};
-
 	char const *	error_string(ErrorType type);
 
 	class SessionBase : public boost::enable_shared_from_this<SessionBase>
