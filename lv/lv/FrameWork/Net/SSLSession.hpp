@@ -34,8 +34,6 @@ namespace lv { namespace net {
 
 	protected:
 
-		virtual	void	on_connected_internal();
-
 		virtual void	handle_handshake(boost::system::error_code const & error);
 
 		virtual	void	handle_connect(boost::system::error_code const & error);

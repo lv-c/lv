@@ -17,6 +17,7 @@
 #include <lv/LuaArchive/Map.hpp>
 #include <lv/LuaArchive/DSTree.hpp>
 #include <lv/LuaArchive/Deque.hpp>
+#include <lv/LuaArchive/Mapping.hpp>
 #include <lv/Lua/Exec.hpp>
 
 #include <boost/assign.hpp>
@@ -179,6 +180,8 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 	DSTree<string, string>	tree2;
 	deque<int>	que;
 	que.push_back(1);
+	Mapping<string, int> mapping;
+	mapping.insert(std::make_pair("hello", 1));
 
 	boost::assign::push_back(vertex.points) (10, 20) (50, 60);
 	boost::assign::insert(vertex.int_map) (Point(5, 6), 2) (Point(8, 9), 3);
@@ -202,7 +205,8 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 		<< boost::serialization::make_nvp("mode", mode)
 		<< boost::serialization::make_nvp("tree", tree)
 		<< boost::serialization::make_nvp("tree2", tree2)
-		<< boost::serialization::make_nvp("que", que);
+		<< boost::serialization::make_nvp("que", que)
+		<< boost::serialization::make_nvp("mapping", mapping);
 
 	cout << oss.str();
 
@@ -267,13 +271,15 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 		DSTree<char, int> new_tree;
 		DSTree<string, string> new_tree2;
 		deque<int> new_que;
+		Mapping<string, int> new_mapping;
 
 		ia >> boost::serialization::make_nvp("vertex", new_vertex) 
 			>> boost::serialization::make_nvp("number", new_num)
 			>> boost::serialization::make_nvp("mode", new_mode)
 			>> boost::serialization::make_nvp("tree", new_tree)
 			>> boost::serialization::make_nvp("tree2", new_tree2)
-			>> boost::serialization::make_nvp("que", new_que);
+			>> boost::serialization::make_nvp("que", new_que)
+			>> boost::serialization::make_nvp("mapping", new_mapping);
 
 		BOOST_CHECK(vertex == new_vertex);
 		BOOST_CHECK_EQUAL(num, new_num);
@@ -281,6 +287,8 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 		BOOST_CHECK(tree == new_tree);
 		BOOST_CHECK(tree2 == new_tree2);
 		BOOST_CHECK(que == new_que);
+		BOOST_CHECK_EQUAL(new_mapping.size(), 1);
+		BOOST_CHECK_EQUAL(new_mapping.get_left("hello"), 1);
 	}
 	
 

@@ -134,6 +134,12 @@ namespace lv
 			return list_.empty();
 		}
 
+		void	clear()
+		{
+			bimap_.clear();
+			list_.clear();
+		}
+
 		iterator	begin()
 		{
 			return list_.begin();

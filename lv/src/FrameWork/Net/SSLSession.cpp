@@ -48,16 +48,16 @@ namespace lv { namespace net {
 		handshake(ServerHandshake);
 	}
 
-
-	void SSLSession::on_connected_internal()
-	{
-	}
-
 	void SSLSession::handle_handshake(boost::system::error_code const & error)
 	{
+		if(closed())
+		{
+			return;
+		}
+
 		if(! error)
 		{
-			base_type::on_connected_internal();
+			on_connected_internal();
 		}
 		else
 		{
@@ -67,13 +67,18 @@ namespace lv { namespace net {
 
 	void SSLSession::handle_connect(boost::system::error_code const & error)
 	{
+		if(closed())
+		{
+			return;
+		}
+
 		if(! error)
 		{
 			handshake(ClientHandshake);
 		}
 		else
 		{
-			base_type::handle_connect(error);
+			on_error(ErrorConnect, error);
 		}
 	}
 

@@ -1172,6 +1172,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\LuaArchive\Mapping.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\LuaArchive\Optional.hpp"
 					>
 				</File>

@@ -13,9 +13,20 @@
 
 #include <utility>
 
+#include <boost/type_traits/remove_const.hpp>
+
 #include <luabind/object.hpp>
 
 namespace lv { namespace lua { namespace archive {
+
+	namespace detail
+	{
+		template<typename T>
+		typename boost::remove_const<T>::type &	remove_const(T & v)
+		{
+			return const_cast<boost::remove_const<T>::type &>(v);
+		}
+	}
 
 	template<typename F, typename S>
 	void	save(std::ostream & os, std::pair<F, S> const & v, size_t level)
@@ -26,13 +37,8 @@ namespace lv { namespace lua { namespace archive {
 	template<typename F, typename S>
 	void	load_item(luabind::iterator const & it, std::pair<F, S> & v)
 	{
-		detail::load_key_value(it, v.first, v.second);
-	}
-
-	template<typename F, typename S>
-	void	load_item(luabind::iterator const & it, std::pair<F const, S> & v)
-	{
-		detail::load_key_value(it, const_cast<F &>(v.first), v.second);
+		// in bimap, F and S are both const
+		detail::load_key_value(it, detail::remove_const(v.first), detail::remove_const(v.second));
 	}
 
 } } }
