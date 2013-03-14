@@ -110,4 +110,4 @@ namespace lv
 	typedef PointT<int32>	Point;
 }
 
-#endif // LV_POINT_HPP
+#endif

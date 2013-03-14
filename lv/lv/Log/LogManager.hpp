@@ -74,4 +74,4 @@ namespace lv { namespace log {
 	};
 } }
 
-#endif // LV_LOGMANAGER_HPP
+#endif

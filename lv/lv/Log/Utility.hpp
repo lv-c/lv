@@ -116,7 +116,7 @@ namespace lv { namespace log {
 		return gather;
 	}
 
-#endif // LV_PLATFORM_WINDOWS
+#endif
 
 } }
 

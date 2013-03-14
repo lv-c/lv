@@ -155,4 +155,4 @@ namespace lv { namespace log {
 	};
 } }
 
-#endif // LV_GATHER_HPP
+#endif

@@ -226,4 +226,4 @@ namespace lv { namespace bstream {
 } }
 
 
-#endif // LV_BINARYSTREAM_MANIPULATORS_HPP
+#endif

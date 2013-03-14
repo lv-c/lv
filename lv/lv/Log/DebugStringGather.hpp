@@ -45,6 +45,6 @@ namespace lv { namespace log {
 	};
 } }
 
-#endif // LV_PLATFORM_WINDOWS
+#endif
 
-#endif // LV_DEBUGSTRINGGATHER_HPP
+#endif

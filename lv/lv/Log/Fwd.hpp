@@ -64,4 +64,4 @@ namespace lv
 }
 
 
-#endif // LV_LOG_FWD_HPP
+#endif

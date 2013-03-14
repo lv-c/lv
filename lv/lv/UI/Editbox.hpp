@@ -80,4 +80,4 @@ namespace lv
 	};
 }
 
-#endif // LV_EDIT_HPP
+#endif

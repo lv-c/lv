@@ -1,15 +1,15 @@
 #include <lv/Concurrent/ThreadPool.hpp>
 #include <lv/Concurrent/ThreadName.hpp>
+#include <lv/Concurrent/ThreadGroup.hpp>
 
 #include <boost/weak_ptr.hpp>
-#include <boost/thread/thread.hpp>
 
 namespace lv
 {
 	ThreadPool::ThreadPool(bool enable_thread_name /* = true */, ExceptionHandler const & handler /* = ExceptionHandler */)
 		: thread_name_enabled_(enable_thread_name)
 		, exception_handler_(handler)
-		, threads_(new boost::thread_group())
+		, threads_(new ThreadGroup())
 	{
 	}
 
@@ -33,7 +33,7 @@ namespace lv
 		return service;
 	}
 
-	void ThreadPool::join()
+	void ThreadPool::join_all()
 	{
 		threads_->join_all();
 	}

@@ -26,4 +26,4 @@ namespace lv
 	};
 }
 
-#endif // LV_RAWFILEREADER_HPP
+#endif

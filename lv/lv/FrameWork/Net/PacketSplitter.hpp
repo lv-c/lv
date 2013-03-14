@@ -11,7 +11,7 @@
 #ifndef LV_NET_PACKETSPLITTER_HPP
 #define LV_NET_PACKETSPLITTER_HPP
 
-#include <lv/Buffer.hpp>
+#include <lv/IBufferManager.hpp>
 
 #include <deque>
 
@@ -47,7 +47,7 @@ namespace lv { namespace net {
 
 			if(header_size < cache_.size())
 			{
-				SizeType size;
+				SizeType size;	// includes the size of the header
 				std::copy(cache_.begin(), cache_.begin() + header_size, reinterpret_cast<char*>(&size));
 
 				if(size <= cache_.size())

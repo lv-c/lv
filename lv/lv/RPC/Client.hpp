@@ -13,84 +13,66 @@
 #ifndef LV_RPC_CLIENT_HPP
 #define LV_RPC_CLIENT_HPP
 
+#include <lv/Config.hpp>
+#include <lv/Exception.hpp>
+
+#include <lv/RPC/Config.hpp>
+#include <lv/RPC/RpcBase.hpp>
+#include <lv/RPC/Future.hpp>
+#include <lv/RPC/Protocol.hpp>
+#include <lv/RPC/Common.hpp>
+
 #include <boost/preprocessor/iteration/iterate.hpp>
 #include <boost/preprocessor/repetition/enum.hpp>
 #include <boost/preprocessor/repetition/enum_params.hpp>
 #include <boost/preprocessor/punctuation/comma_if.hpp>
-
-#include <boost/iostreams/filtering_stream.hpp>
-#include <boost/iostreams/device/back_inserter.hpp>
 
 #include <boost/tuple/tuple.hpp>
 #include <boost/fusion/algorithm/iteration/for_each.hpp>
 #include <boost/fusion/adapted/boost_tuple.hpp>
 
 #include <boost/assert.hpp>
-#include <boost/unordered_map.hpp>
-#include <boost/pool/pool_alloc.hpp>
 #include <boost/scope_exit.hpp>
 
-#include <lv/IntType.hpp>
-#include <lv/Exception.hpp>
-#include <lv/ScopeGuard.hpp>
+#include <map>
 
+#ifdef LV_PLATFORM_WINDOWS
+#include <Windows.h>
+#endif
 
-#include <lv/rpc/Config.hpp>
-#include <lv/rpc/Fwd.hpp>
-
-#include <lv/rpc/RpcBase.hpp>
-#include <lv/rpc/Future.hpp>
-#include <lv/rpc/PacketArchive.hpp>
-#include <lv/rpc/Protocol.hpp>
-#include <lv/rpc/Exceptions.hpp>
 
 namespace lv { namespace rpc {
 
-
-	struct PacketArchive;
-	struct Protocol;
-
 	DEFINE_EXCEPTION_MSG(InvalidRequestID, std::runtime_error);
-
-	// exception hash seed from the remote server is not the same as the local one.
-	// (maybe the client is an older version and the user should update it)
-	DEFINE_EXCEPTION_MSG(UnmatchedExceptSeed, std::runtime_error);
 
 	/**
 	 * thread-safe (as long as BufferManager and Socket passed in are thread-safe)
 	 */
-	template<typename Id, class ArchivePair, class Pro>
+	template<class Id, class ArchivePair>
 	class Client : public RpcBase
 	{
+	public:
+
+		typedef boost::function<void(BufferPtr)>	callback_type;
+
+	private:
 
 		typedef typename ArchivePair::iarchive_type	iarchive_type;
 		typedef typename ArchivePair::oarchive_type	oarchive_type;
 
-		SocketPtr	socket_;
+		volatile long	next_request_id_;
 
-		typedef typename Pro::request_id_type request_id_type;
-		request_id_type		next_request_id_;
+		typedef typename Protocol::request_id_type request_id_type;
 
+		typedef boost::shared_ptr<detail::PromiseBase<ArchivePair> >	PromiseBasePtr;
+		typedef std::map<request_id_type, PromiseBasePtr>	promise_map;
 
-		typedef boost::function<void(iarchive_type &)>	promise_base;
-		typedef boost::unordered_map<request_id_type, 
-			promise_base, 
-			boost::hash<request_id_type>, 
-			std::equal_to<request_id_type>, 
-			boost::pool_allocator<std::pair<request_id_type, promise_base> >
-		>	promise_map;
-
-		promise_map	promises_;
-
-		typedef boost::shared_ptr<Exceptions<ArchivePair, Pro> > except_ptr;
-		except_ptr except_;
+		promise_map		promises_;
 
 		typedef boost::mutex::scoped_lock scoped_lock;
 		boost::mutex	mutex_;
 
-		uint32	func_seed_;
-
-		bool	ready_;
+		callback_type	callback_;
 
 		template<typename Ret>
 		class PrivateHandler
@@ -104,6 +86,7 @@ namespace lv { namespace rpc {
 			bool	sent_;
 
 		public:
+
 			PrivateHandler(Client & client, request_id_type request_id, BufferPtr buf)
 				: client_(client)
 				, request_id_(request_id)
@@ -127,7 +110,7 @@ namespace lv { namespace rpc {
 			{
 				if(! sent_)
 				{
-					client_.send(buffer_, request_id_, Pro::options::none);
+					client_.send(buffer_, request_id_, Protocol::options::none);
 				}
 			}
 
@@ -137,40 +120,40 @@ namespace lv { namespace rpc {
 				
 				// if we call @a send first, @a on_receive might be called before 
 				// @a add_promise is called and InvalidRequestID may be thrown
-				detail::AchnowPromise<ArchivePair, Pro> promise(*client_.except_);
+				boost::shared_ptr<detail::AchnowPromise<ArchivePair> > promise(new detail::AchnowPromise<ArchivePair>());
 				client_.add_promise(request_id_, promise);
 
 				try
 				{
-					client_.send(buffer_, request_id_, Pro::options::ack);
+					client_.send(buffer_, request_id_, Protocol::options::ack);
 				}
-				catch (...)
+				catch(...)
 				{
 					client_.remove_promise(request_id_);
 					throw;
 				}
 
-				return Acknowledgment(promise);		
+				return Acknowledgment(promise->get_future());		
 			}
 
 			operator ReturningHandler<Ret> ()
 			{
 				sent_ = true;
 				//
-				detail::ReturnPromise<Ret, ArchivePair, Pro> promise(*client_.except_);
+				boost::shared_ptr<detail::ReturnPromise<Ret, ArchivePair> > promise(new detail::ReturnPromise<Ret, ArchivePair>());
 				client_.add_promise(request_id_, promise);
 
 				try
 				{
-					client_.send(buffer_, request_id_, Pro::options::ret);
+					client_.send(buffer_, request_id_, Protocol::options::ret);
 				}
-				catch (...)
+				catch(...)
 				{
 					client_.remove_promise(request_id_);
 					throw;
 				}
 
-				return ReturningHandler<Ret>(promise);
+				return ReturningHandler<Ret>(promise->get_future());
 			}
 
 			/**
@@ -179,39 +162,38 @@ namespace lv { namespace rpc {
 			 */
 			operator Ret()
 			{
-				return ReturningHandler<Ret>(*this);
+				return ReturningHandler<Ret>(*this).get();
 			}
 		};
 
 	public:
 
-		Client(SocketPtr socket, BufferManagerPtr buf_manager, except_ptr except)
+		Client(callback_type const & callback, BufferManagerPtr buf_manager)
 			: RpcBase(buf_manager)
-			, socket_(socket)
-			, except_(except)
+			, callback_(callback)
 			, next_request_id_(1)
-			, ready_(false)
+		{
+		}
+
+		virtual ~Client()
 		{
 		}
 
 
 		/**
 		 * @exception InvalidRequestID
-		 * @exception InvalidExceptionID
-		 * @exception UnmatchedExceptSeed
 		 * @exception InvalidProtocolValue
 		 * @exception boost::archive::archive_exception
 		 */
-		template<class Range>
-		void	on_receive(Range const & buf)
+		void	on_receive(ConstBufferRef const & buf)
 		{
-			boost::iostreams::filtering_istream raw_is(boost::make_iterator_range(buf));
-			iarchive_type ia(raw_is);
+			IStreamPtr raw_is = istream_factory_.open(buf);
+			iarchive_type ia(*raw_is);
 
-			Pro::header::type header;
+			Protocol::header::type header;
 			ia >> header;
 			
-			if(header == Pro::header::reply)
+			if(header == Protocol::header::reply)
 			{
 				request_id_type id;
 				ia >> id;
@@ -232,69 +214,53 @@ namespace lv { namespace rpc {
 				} BOOST_SCOPE_EXIT_END
 
 				// the following code may throw exception
-				it->second(ia);
-			}
-			else if(header == Pro::header::confer)
-			{
-				scoped_lock lock(mutex_);
-
-				uint32 ex_seed;
-				ia >> ex_seed >> func_seed_;
-				if(ex_seed != except_->seed())
-				{
-					throw UnmatchedExceptSeed();
-				}
-
-				ready_ = true;
+				it->second->set(ia);
 			}
 			else
 			{
-				throw InvalidProtocolValue("invalid Pro::header value");
+				throw InvalidProtocolValue("invalid Protocol::header value");
 			}
 			
 		}
-		
-		/**
-		 * returns true when the exception seed and the function id seed are received from 
-		 *	the server or set by the user and you can invoke @call now.
-		 */
-		bool ready()
-		{
-			scoped_lock lock(mutex_);
-			return ready_;
-		}
 
 		/**
-		 * if you are quite sure what these seeds are, you can set it directly rather than 
-		 *	receiving them from the server
-		 * @exception UnmatchedExceptSeed
+		 * call
 		 */
-		void	set_seeds(uint32	ex_seed, uint32	func_seed)
-		{
-			scoped_lock lock(mutex_);
-
-			if(ex_seed != except_->seed())
-			{
-				throw UnmatchedExceptSeed();
-			}
-
-			this->func_seed_ = func_seed;
-			ready_ = true;
-		}
-
-		SocketPtr	socket() const
-		{
-			return socket_;
-		}
-
-
-		/**
-		 * calls a remote function. Only call this when ready() returns true
-		 * @exception std::runtime_error if ready() returns false
-		 */
-#		define BOOST_PP_ITERATION_PARAMS_1 (3, (0, LV_RPC_MAX_ARITY, <lv/rpc/Client.hpp>))
+#		define BOOST_PP_ITERATION_PARAMS_1 (3, (0, LV_RPC_MAX_ARITY, <lv/RPC/Client.hpp>))
 #		include BOOST_PP_ITERATE()
 
+
+		// 
+		void	set_exception(boost::exception_ptr ex)
+		{
+			scoped_lock lock(mutex_);
+
+			promise_map pro;
+			std::swap(pro, promises_);
+
+			foreach(promise_map::reference v, pro)
+			{
+				try
+				{
+					v.second->set_exception(ex);
+				}
+				catch(boost::promise_already_satisfied const &)
+				{
+					BOOST_ASSERT(false);
+				}
+				catch(boost::broken_promise const &)
+				{
+					BOOST_ASSERT(false);
+				}
+			}
+		}
+
+	protected:
+
+		virtual	void	send(BufferPtr buf)
+		{
+			callback_(buf);
+		}
 	
 	private:
 
@@ -315,45 +281,53 @@ namespace lv { namespace rpc {
 			}
 		};
 
+
+		request_id_type	next_request_id()
+		{
+#ifdef LV_PLATFORM_WINDOWS
+
+			return InterlockedIncrement(&next_request_id_);
+#endif
+		}
+
 		template<typename Ret, class Tuple>
 		PrivateHandler<Ret> call_impl(Id const & id, Tuple const & args)
 		{
 			BufferPtr buf = this->get_buffer();
 
-			namespace io = boost::iostreams;
-			io::filtering_ostream raw_os(io::back_inserter(*buf));
-			oarchive_type oa(raw_os);
+			OStreamPtr raw_os = ostream_factory_.open(*buf);
+			oarchive_type oa(*raw_os);
 
-			oa << Pro::header::call << unique_hash::hash<typename Pro::id_key_type const>(func_seed_, id);
+			oa << Protocol::header::call << id;
 			boost::fusion::for_each(args, Serialize(oa));
 
-			return PrivateHandler<Ret>(*this, next_request_id_ ++, buf);
+			raw_os->flush();
+
+			return PrivateHandler<Ret>(*this, next_request_id(), buf);
 		}
 
 
-		void	send(BufferPtr & buf, request_id_type request_id, typename Pro::options::type call_option)
+		void	send(BufferPtr & buf, request_id_type request_id, typename Protocol::options::type call_option)
 		{
-			namespace io = boost::iostreams;
-
-			io::filtering_ostream raw_os(io::back_inserter(*buf));
-			oarchive_type oa(raw_os);
+			OStreamPtr raw_os = ostream_factory_.open(*buf);
+			oarchive_type oa(*raw_os);
 
 			oa << call_option;
 			// sends the request id only when an acknowledgment or a return value is required
-			if(call_option != Pro::options::none)
+			if(call_option != Protocol::options::none)
 			{
 				oa << request_id;
 			}
 
-			raw_os.flush();
+			raw_os->flush();
 
-			this->send_buffer(buf, socket_);
+			send(buf);
 		}
 
 		/**
 		 * @note the ownership of promise will be transfered to promises_
 		 */
-		void	add_promise(int request_id, promise_base promise)
+		void	add_promise(int request_id, PromiseBasePtr promise)
 		{
 			scoped_lock lock(mutex_);
 			promises_.insert(std::make_pair(request_id, promise));
@@ -367,11 +341,9 @@ namespace lv { namespace rpc {
 
 	};
 
-	
-
 } }
 
-#endif // LV_RPC_CLIENT_HPP
+#endif
 
 #else
 
@@ -383,11 +355,6 @@ namespace lv { namespace rpc {
 template<typename Ret BOOST_PP_COMMA_IF(n) BOOST_PP_ENUM_PARAMS(n, typename T)>
 PrivateHandler<Ret>	call(Id const & id BOOST_PP_COMMA_IF(n) BOOST_PP_ENUM(n, LV_RPC_call_params, ~))
 {
-	if(! ready())
-	{
-		throw(std::runtime_error("It's not ready yet!"));
-	}
-
 	typedef boost::tuples::tuple<BOOST_PP_ENUM(n, LV_RPC_pointer_type, ~)> tuple_t;
 
 #if n == 0

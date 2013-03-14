@@ -26,13 +26,12 @@ namespace lv
 	typedef boost::shared_ptr<Buffer const>	ConstBufferPtr;
 
 
-	/// note : these two classes are compatible with boost.range and boost.foreach
+	/// these two classes are compatible with boost.range and boost.foreach
 	template <typename T> class ConstBufferRefT;
 	template <typename T> class BufferRefT;
 
 	typedef ConstBufferRefT<char>	ConstBufferRef;
 	typedef BufferRefT<char>	BufferRef;
-
 
 
 	template <typename T>
@@ -218,11 +217,18 @@ namespace lv
 
 	namespace buffer
 	{
+		// append
+
 		// Write to the end of the buffer . You'd better reserve enough space to prevent frequent
 		// memory allocation.
-		inline void append(Buffer & buf, void const* data, size_t size)
+		inline void append(Buffer & buf, void const * data, size_t size)
 		{
-			buf.insert(buf.end(), static_cast<char const*>(data), static_cast<char const*>(data) + size);
+			buf.insert(buf.end(), static_cast<char const *>(data), static_cast<char const *>(data) + size);
+		}
+
+		inline void	append(Buffer & buf, ConstBufferRef const & data)
+		{
+			buf.insert(buf.end(), data.begin(), data.end());
 		}
 
 		template<typename T>
@@ -232,8 +238,29 @@ namespace lv
 		}
 
 
+		// insert
+
+		inline void	insert(Buffer & buf, size_t pos, void const * data, size_t size)
+		{
+			if(pos > buf.size())
+			{
+				throw std::out_of_range("buffer::insert out of range");
+			}
+
+			buf.insert(buf.begin() + pos, static_cast<char const *>(data), static_cast<char const *>(data) + size);
+		}
+
+		template<typename T>
+		typename boost::enable_if<boost::is_arithmetic<T> >::type	insert(Buffer & buf, size_t pos, T t)
+		{
+			insert(buf, pos, &t, sizeof(t));
+		}
+
+
+		// write
+
 		/// @exception std::out_of_range
-		inline	void write(BufferRef buf, size_t pos, void const* data, size_t size)
+		inline	void write(BufferRef buf, size_t pos, void const * data, size_t size)
 		{
 			if(pos + size > buf.size())
 			{
@@ -248,6 +275,9 @@ namespace lv
 		{
 			write(buf, pos, &t, sizeof(t));
 		}
+
+
+		// read
 		
 		/// @exception std::out_of_range
 		inline	void read(ConstBufferRef const & buf, size_t pos, void * data, size_t size)
@@ -265,6 +295,9 @@ namespace lv
 		{
 			read(buf, pos, &t, sizeof(t));
 		}
+
+
+		//
 
 		inline char * data(Buffer & buf)
 		{
@@ -288,5 +321,4 @@ namespace lv
 	}
 }
 
-
-#endif // LV_BUFFER_HPP
+#endif

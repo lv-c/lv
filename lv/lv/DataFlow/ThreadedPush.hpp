@@ -62,7 +62,7 @@ namespace lv { namespace flow {
 					{
 						callback_(queue_.get());
 					}
-					catch (boost::thread_interrupted const &)
+					catch(boost::thread_interrupted const &)
 					{
 						break;
 					}

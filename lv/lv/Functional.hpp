@@ -87,4 +87,4 @@ namespace lv
 
 }
 
-#endif // LV_FUNCTIONAL_HPP
+#endif

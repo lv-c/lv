@@ -31,12 +31,11 @@ namespace lv { namespace zeromq {
 			: BasicSocket(context, type)
 			, source_type(source_type::callback_type(), BufferManagerPtr(new SimpleBufferManager(1024)))
 		{
-			source_type::set_callback(boost::bind(&SourceSocket::push, this, _1));
 		}
 
 	protected:
 
-		virtual	void	push(BufferPtr const & buf)
+		virtual	void	push(BufferPtr buf)
 		{
 			zmq::message_t msg(buf->size());
 			std::memcpy(msg.data(), buffer::data(buf), buf->size());

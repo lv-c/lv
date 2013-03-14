@@ -15,18 +15,4 @@
 #	define LV_RPC_MAX_ARITY	8
 #endif
 
-// debug support
-
-#ifndef LV_RPC_DEBUG
-#	ifdef _DEBUG
-#		define LV_RPC_DEBUG	1
-#	else
-#		define LV_RPC_DEBUG	0
-#	endif
 #endif
-
-
-
-
-
-#endif // LV_RPC_CONFIG_HPP

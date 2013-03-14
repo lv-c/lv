@@ -21,14 +21,8 @@
 
 #include <string>
 
-namespace boost
-{
-	class thread_group;
-}
-
 namespace lv
 {
-
 	class ThreadPool
 	{
 	public:
@@ -41,7 +35,7 @@ namespace lv
 
 		typedef boost::weak_ptr<boost::asio::io_service>	WeakServicePtr;
 
-		boost::scoped_ptr<boost::thread_group>	threads_;
+		boost::scoped_ptr<ThreadGroup>	threads_;
 
 		bool	thread_name_enabled_;
 
@@ -57,7 +51,13 @@ namespace lv
 		// because no task has been posted to the service at the beginning.
 		ServicePtr	create(std::string name = std::string(), size_t thread_num = 1);
 
-		void	join();
+		void	join_all();
+
+		template<typename TimeDuration>
+		inline bool	timed_join(TimeDuration const & rel_time)
+		{
+			return threads_->timed_join(rel_time);
+		}
 
 	private:
 

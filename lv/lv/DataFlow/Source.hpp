@@ -64,6 +64,10 @@ namespace lv { namespace flow {
 		{
 		}
 
+		virtual ~Source()
+		{
+		}
+
 		void	enable(bool enabled)
 		{
 			this->enabled_ = enabled;
@@ -104,15 +108,6 @@ namespace lv { namespace flow {
 			return proxy;
 		}
 
-	protected:
-
-		// If you inherit from this class and can't set the callback function on construction,
-		// you can call this function to set it latter. Note that this is NOT thread-safe.
-		void	set_callback(callback_type const & callback)
-		{
-			this->callback_ = callback;
-		}
-
 	private:
 
 		class Serialize
@@ -145,12 +140,12 @@ namespace lv { namespace flow {
 			boost::fusion::for_each(args, Serialize(oa));
 			raw_os->flush();
 
-			callback_(buf);
+			push(buf);
 		}
 
 		template<class, class> friend class detail::StreamProxyImpl;
 
-		void	push(BufferPtr buf)
+		virtual	void	push(BufferPtr buf)
 		{
 			callback_(buf);
 		}
@@ -159,7 +154,7 @@ namespace lv { namespace flow {
 
 } }
 
-#endif // LV_DATAFLOW_SOURCE_HPP
+#endif
 
 #else
 

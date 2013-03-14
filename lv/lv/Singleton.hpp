@@ -84,4 +84,4 @@ namespace lv
 
 }
 
-#endif // LV_SINGLETON_AHPP
+#endif

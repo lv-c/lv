@@ -100,4 +100,4 @@ namespace lv
 	typedef SizeT<int32>	Size;
 }
 
-#endif // LV_SIZE_HPP
+#endif

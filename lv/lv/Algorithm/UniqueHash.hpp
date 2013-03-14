@@ -165,4 +165,4 @@ namespace lv { namespace unique_hash {
 
 } }
 
-#endif // LV_UNIQUEHASH_HPP
+#endif

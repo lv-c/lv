@@ -60,4 +60,4 @@ namespace lv
 	using log::fatal;
 }
 
-#endif // LV_LEVEL_HPP
+#endif

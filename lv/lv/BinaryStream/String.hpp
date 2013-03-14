@@ -22,4 +22,4 @@ namespace lv { namespace bstream {
 
 } }
 
-#endif // LV_BINARYSTREAM_STRING_HPP
+#endif

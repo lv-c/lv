@@ -29,4 +29,4 @@ namespace lv
 
 }
 
-#endif // LV_IBUFFERMANAGER_HPP
+#endif

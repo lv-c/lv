@@ -149,4 +149,4 @@ namespace lv { namespace rle {
 
 } }
 
-#endif // LV_RLE_HPP
+#endif

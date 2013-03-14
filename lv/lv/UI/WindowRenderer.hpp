@@ -42,4 +42,4 @@ namespace lv
 	};
 }
 
-#endif // LV_WINDOWRENDERER_HPP
+#endif

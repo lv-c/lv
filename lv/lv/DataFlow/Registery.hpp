@@ -17,8 +17,6 @@
 #include <lv/DataFlow/Fwd.hpp>
 #include <lv/DataFlow/Invoker.hpp>
 
-
-#include <string>
 #include <map>
 
 #include <boost/noncopyable.hpp>
@@ -38,7 +36,7 @@ namespace lv { namespace flow {
 
 		SerializationError(boost::archive::archive_exception::exception_code code, std::string const & msg)
 			: boost::archive::archive_exception(code)
-			, msg_(std::string(base_type::what()) + msg)
+			, msg_(base_type::what() + msg)
 		{
 		}
 
@@ -58,9 +56,9 @@ namespace lv { namespace flow {
 
 			typedef std::map<Key, invoker_type>	invoker_map;
 
-			invoker_map	invokers_;
+			invoker_map		invokers_;
 
-			boost::shared_mutex shared_mutex_;
+			boost::shared_mutex	mutex_;
 
 		public:
 
@@ -70,8 +68,7 @@ namespace lv { namespace flow {
 			template<class Signature, class F>
 			void	reg(Key const & key, F f)
 			{
-				// a write lock
-				boost::unique_lock<boost::shared_mutex> lock(shared_mutex_);
+				boost::lock_guard<boost::shared_mutex> lock(mutex_);
 
 				if(invokers_.find(key) != invokers_.end())
 				{
@@ -92,13 +89,17 @@ namespace lv { namespace flow {
 				Key key;
 				ia >> key;
 
-				// a read lock
-				boost::shared_lock<boost::shared_mutex> lock(shared_mutex_);
+				invoker_map::iterator it;
 
-				invoker_map::iterator it = invokers_.find(key);
-				if(it == invokers_.end())
 				{
-					return;
+					// no deletion, so the iterator will be valid
+					boost::shared_lock<boost::shared_mutex> lock(mutex_);
+
+					it = invokers_.find(key);
+					if(it == invokers_.end())
+					{
+						return;
+					}
 				}
 
 				try

@@ -167,4 +167,4 @@ namespace lv { namespace log {
 	};
 } }
 
-#endif // LV_LOG_HPP
+#endif

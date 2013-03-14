@@ -27,4 +27,4 @@ namespace lv { namespace rpc {
 
 } }
 
-#endif // LV_RPC_COMMON_HPP
+#endif

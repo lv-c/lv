@@ -568,10 +568,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\lv\lv\RPC\Exceptions.hpp"
-					>
-				</File>
-				<File
 					RelativePath="..\..\..\lv\lv\RPC\Future.hpp"
 					>
 				</File>
@@ -584,19 +580,11 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\lv\lv\RPC\ISocket.hpp"
-					>
-				</File>
-				<File
 					RelativePath="..\..\..\lv\lv\RPC\PacketArchive.hpp"
 					>
 				</File>
 				<File
 					RelativePath="..\..\..\lv\lv\RPC\Protocol.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\lv\lv\RPC\RegisterExceptions.hpp"
 					>
 				</File>
 				<File
@@ -609,10 +597,6 @@
 				</File>
 				<File
 					RelativePath="..\..\..\lv\lv\RPC\Server.hpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\lv\lv\RPC\SingletonExtractor.hpp"
 					>
 				</File>
 			</Filter>
@@ -637,6 +621,10 @@
 				</File>
 				<File
 					RelativePath="..\..\..\lv\lv\Concurrent\TaskQueue.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Concurrent\ThreadGroup.hpp"
 					>
 				</File>
 				<File

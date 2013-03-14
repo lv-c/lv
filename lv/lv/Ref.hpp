@@ -86,4 +86,4 @@ namespace boost
 	};
 }
 
-#endif // LV_REF_HPP
+#endif

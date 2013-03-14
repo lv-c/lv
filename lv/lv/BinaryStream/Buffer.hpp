@@ -46,4 +46,4 @@ namespace lv { namespace bstream {
 
 } }
 
-#endif // LV_BINARYSTREAM_BUFFER_HPP
+#endif

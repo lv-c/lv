@@ -17,40 +17,20 @@
 
 namespace lv { namespace rpc {
 
-	struct Protocol;
 	struct PacketArchive;
 	
-	class ISocket;
-	typedef boost::shared_ptr<ISocket> SocketPtr;
-
 	template<
-		typename Id = std::string, 
-		class ArchivePair = PacketArchive, 
-		class Pro = Protocol
+		class Id = std::string, 
+		class ArchivePair = PacketArchive
 	>
 	class Client;
 
 	template<
-		class ParamExtractors = boost::fusion::map<>, 
-		typename Id = std::string, 
-		class ArchivePair = PacketArchive, 
-		class Pro = Protocol
+		class Id = std::string, 
+		class ArchivePair = PacketArchive
 	>
-	class Registery;
-
-	template<class Reg = Registery<> >
 	class Server;
 
-
-	template<
-		class ArchivePair = PacketArchive, 
-		class Pro = Protocol
-	>
-	class Exceptions;
-
-	template<class T>
-	struct SingletonExtractor;
-	
 } }
 
-#endif // LV_RPC_FWD_HPP
+#endif

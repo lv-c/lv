@@ -22,6 +22,8 @@ namespace lv
 	template <typename Task, template <typename> class QueuePolicy = FIFOQueue>
 	class TaskQueue;
 
+	class ThreadGroup;
+
 	class ThreadPool;
 }
 

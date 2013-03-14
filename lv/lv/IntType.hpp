@@ -110,4 +110,4 @@ namespace lv
 }
 
 
-#endif // LV_INTTYPE_HPP
+#endif

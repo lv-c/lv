@@ -16,7 +16,7 @@
 #include <lv/Serialization/IArchive.hpp>
 #include <lv/Serialization/OArchive.hpp>
 
-#include <lv/rpc/ArchiveBase.hpp>
+#include <lv/RPC/ArchiveBase.hpp>
 
 namespace lv { namespace rpc {
 
@@ -27,4 +27,4 @@ namespace lv { namespace rpc {
 } }
 
 
-#endif // LV_RPC_PACKETARCHIVE_HPP
+#endif

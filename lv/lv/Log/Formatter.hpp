@@ -77,4 +77,4 @@ namespace lv { namespace log {
 
 } }
 
-#endif // LV_FORMATTER_HPP
+#endif

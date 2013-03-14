@@ -22,6 +22,6 @@ namespace lv
 	bool	create_console(char const * title, bool std_io = true);
 }
 
-#endif // LV_PLATFORM_WINDOWS
+#endif
 
-#endif // LV_CONSOLE_HPP
+#endif

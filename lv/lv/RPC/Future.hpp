@@ -11,129 +11,82 @@
 #ifndef LV_RPC_FUTURE_HPP
 #define LV_RPC_FUTURE_HPP
 
-#include <boost/future.hpp>
-
-#include <lv/Exception.hpp>
-#include <lv/rpc/Exceptions.hpp>
-#include <lv/rpc/Common.hpp>
+#include <boost/thread/future.hpp>
 
 namespace lv { namespace rpc {
-
 	
-	// fwd
-	template<typename> class ReturningHandler;
-	class Acknowledgment;
-
 	// Not intended to be used by the user.
 	namespace detail
 	{
-		template<class ArchivePair, class Pro>
-		class AchnowPromise
+		template<class ArchivePair>
+		class PromiseBase
+		{
+		public:
+
+			virtual	void	set(typename ArchivePair::iarchive_type & ia) = 0;
+
+			virtual	void	set_exception(boost::exception_ptr ex) = 0;
+		};
+
+		template<class ArchivePair>
+		class AchnowPromise : public PromiseBase<ArchivePair>
 		{
 			boost::promise<void> promise_;
 
-			Exceptions<ArchivePair, Pro> &	exceptions_;
-		
-		private:
-			friend class Acknowledgment;
-
-			boost::promise<void> const & get() const
-			{
-				return promise_;
-			}
-
 		public:
 
-			AchnowPromise(Exceptions<ArchivePair, Pro> & except)
-				: exceptions_(except)
+			boost::shared_future<void>	get_future()
 			{
+				return boost::move(promise_.get_future());
 			}
 
-			/**
-			 * @exception boost::archive::archive_exception ?
-			 * @exception InvalidProtocolValue
-			 * @exception InvalidExceptionID
-			 */
-			void operator () (typename ArchivePair::iarchive_type & ia) 
+			virtual void	set(typename ArchivePair::iarchive_type & ia) 
 			{
-				Pro::except::type ex;
-				ia >> ex;
-				if(ex == Pro::except::has_ex)
-				{
-					Pro::except_key_type key;
-					ia >> key;
-					promise_.set_exception(exceptions_.get(key, ia));
-				}
-				else if(ex == Pro::except::no_ex)
-				{
-					promise_.set();
-				}
-				else
-				{
-					throw InvalidProtocolValue("invalid Pro::except value");
-				}
+				promise_.set();
+			}
+
+			virtual	void	set_exception(boost::exception_ptr ex)
+			{
+				promise_.set_exception(ex);
 			}
 		};
 
-		template<typename Ret, class ArchivePair, class Pro>
-		class ReturnPromise
+		template<typename Ret, class ArchivePair>
+		class ReturnPromise : public PromiseBase<ArchivePair>
 		{
 			boost::promise<Ret>	promise_;
 
-			Exceptions<ArchivePair, Pro> & exceptions_;
-
-		private:
-			friend class ReturningHandler<Ret>;
-
-			boost::promise<Ret> const & get() const
-			{
-				return promise_;
-			}
-
 		public:
 
-			ReturnPromise(Exceptions<ArchivePair, Pro> & except)
-				: exceptions_(except)
+			boost::shared_future<Ret>	get_future()
 			{
+				return boost::move(promise_.get_future());
 			}
 
 			/**
 			 * @exception boost::archive::archive_exception ?
-			 * @exception InvalidProtocolValue
-			 * @exception InvalidExceptionID
 			 */
-			void operator () (typename ArchivePair::iarchive_type & ia)
+			virtual void	set(typename ArchivePair::iarchive_type & ia)
 			{
-				Pro::except::type ex;
-				ia >> ex;
-				if(ex == Pro::except::has_ex)
-				{
-					Pro::except_key_type key;
-					ia >> key;
-					promise_.set_exception(exceptions_.get(key, ia));
-				}
-				else if(ex == Pro::except::no_ex)
-				{
-					Ret ret;
-					ia >> ret;
-					promise_.set(ret);
-				}
-				else
-				{
-					throw InvalidProtocolValue("invalid Pro::except value");
-				}
+				Ret ret;
+				ia >> ret;
+				promise_.set_value(ret);
+			}
+
+			virtual	void	set_exception(boost::exception_ptr ex)
+			{
+				promise_.set_exception(ex);
 			}
 		};
 	}
 	
 
-	class Acknowledgment : public boost::future<void>
+	class Acknowledgment : public boost::shared_future<void>
 	{
-		template<typename, class, class> friend class Client;
+		template<typename, class> friend class Client;
 		
-		template<class ArchivePair, class Pro>
-		Acknowledgment(detail::AchnowPromise<ArchivePair, Pro> const & promise)
-			: boost::future<void>(promise.get())
+		Acknowledgment(boost::shared_future<void> const & future)
+			: boost::shared_future<void>(future)
 		{
 		}
 
@@ -145,13 +98,12 @@ namespace lv { namespace rpc {
 
 
 	template<typename Ret>
-	class ReturningHandler : public boost::future<Ret>
+	class ReturningHandler : public boost::shared_future<Ret>
 	{
-		template<typename, class, class> friend class Client;
+		template<typename, class> friend class Client;
 
-		template<class ArchivePair, class Pro>
-		ReturningHandler(detail::ReturnPromise<Ret, ArchivePair, Pro> const & promise)
-			: boost::future<Ret>(promise.get())
+		ReturningHandler(boost::shared_future<Ret> const & future)
+			: boost::shared_future<Ret>(future)
 		{
 		}
 
@@ -161,9 +113,6 @@ namespace lv { namespace rpc {
 		ReturningHandler() {}
 	};
 
-
-
 } }
 
-
-#endif // LV_RPC_FUTURE_HPP
+#endif

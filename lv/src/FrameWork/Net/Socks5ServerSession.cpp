@@ -37,8 +37,10 @@ namespace lv { namespace net {
 
 		if(cache_)
 		{
-			cache_->insert(cache_->end(), buf->begin(), buf->end());
+			buffer::append(*cache_, buf);
 			buf = cache_;
+
+			cache_.reset();
 		}
 
 		BinaryIStream bis(buf);

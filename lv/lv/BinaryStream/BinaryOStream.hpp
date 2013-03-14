@@ -95,4 +95,4 @@ namespace lv
 	};
 }
 
-#endif // LV_BINARYOSTREAM_HPP
+#endif

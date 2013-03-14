@@ -54,4 +54,4 @@ namespace lv
 	}
 }
 
-#endif // LV_PLATFORM_WINDOWS
+#endif

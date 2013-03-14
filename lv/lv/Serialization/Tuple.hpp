@@ -51,7 +51,7 @@ namespace boost { namespace serialization {
 } }
 
 
-#endif // LV_PACKET_TUPLE_HPP
+#endif
 
 #else
 

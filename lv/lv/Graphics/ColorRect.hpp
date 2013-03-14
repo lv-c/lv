@@ -130,4 +130,4 @@ namespace lv
 }
 
 
-#endif // LV_COLORRECT_HPP
+#endif

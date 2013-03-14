@@ -40,6 +40,6 @@ namespace detail
 
 #define DX_VERIFY(expr) BOOST_VERIFY(SUCCEEDED(expr))
 
-#endif	// LV_PLATFORM_WINDOWS
+#endif
 
-#endif // LV_DXERR_HPP
+#endif

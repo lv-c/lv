@@ -32,4 +32,4 @@ namespace lv { namespace bstream {
 } }
 
 
-#endif // LV_BINARYSTREAM_ARRAY_HPP
+#endif

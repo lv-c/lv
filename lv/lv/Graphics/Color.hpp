@@ -187,4 +187,4 @@ namespace lv
 	};
 }
 
-#endif // LV_COLOR_HPP
+#endif

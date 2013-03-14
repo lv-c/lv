@@ -43,4 +43,4 @@ namespace lv
 	class MusicBuffer : public AudioBuffer {};
 }
 
-#endif // LV_AUDIOBUFFER_HPP
+#endif

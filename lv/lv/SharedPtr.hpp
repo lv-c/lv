@@ -33,4 +33,4 @@ namespace lv
 	}
 }
 
-#endif // LV_SHAREDPTR_HPP
+#endif

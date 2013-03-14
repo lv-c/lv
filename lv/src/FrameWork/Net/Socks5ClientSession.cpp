@@ -116,10 +116,14 @@ namespace lv { namespace net {
 			return;
 		}
 
+		buf->resize(bytes_transferred);
+
 		if(cache_)
 		{
-			cache_->insert(cache_->end(), buf->begin(), buf->end());
+			buffer::append(*cache_, buf);
 			buf = cache_;
+
+			cache_.reset();
 		}
 
 

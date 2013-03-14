@@ -64,4 +64,4 @@ namespace lv { namespace log {
 	};
 } }
 
-#endif // LV_STRINGGATHER_HPP
+#endif

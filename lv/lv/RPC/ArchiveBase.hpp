@@ -23,4 +23,4 @@ namespace lv { namespace rpc {
 
 } }
 
-#endif // LV_RPC_ARCHIVEBASE_HPP
+#endif

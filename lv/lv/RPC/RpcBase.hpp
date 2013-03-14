@@ -11,28 +11,26 @@
 #ifndef LV_RPCBASE_HPP
 #define LV_RPCBASE_HPP
 
-#include <boost/noncopyable.hpp>
-#include <boost/function.hpp>
-#include <boost/thread/mutex.hpp>
+
+#include <lv/RPC/Fwd.hpp>
 
 #include <lv/IBufferManager.hpp>
+#include <lv/Stream/IStreamFactory.hpp>
+#include <lv/Stream/OStreamFactory.hpp>
 
-#include <lv/rpc/Fwd.hpp>
-#include <lv/rpc/ISocket.hpp>
+#include <boost/noncopyable.hpp>
 
 namespace lv { namespace rpc {
 
-	typedef boost::function<void(BufferPtr)>	BufProcessor;
-
 	class RpcBase : boost::noncopyable
 	{
-		typedef boost::mutex::scoped_lock	scoped_lock;
-		boost::mutex	mutex_;		// private. for processors
-
 		BufferManagerPtr	buf_manager_;
 
-		BufProcessor		prepro_;
-		BufProcessor		postpro_;
+	protected:
+
+		OStreamFactory	ostream_factory_;
+
+		IStreamFactory	istream_factory_;
 
 	protected:
 
@@ -43,28 +41,7 @@ namespace lv { namespace rpc {
 
 		BufferPtr	get_buffer()
 		{
-			BufferPtr buf = buf_manager_->get();
-
-			scoped_lock lock(mutex_);
-			if(prepro_)
-			{
-				prepro_(buf);
-			}
-
-			return buf;
-		}
-
-		void	send_buffer(BufferPtr buf, SocketPtr sock)
-		{
-			{
-				scoped_lock lock(mutex_);
-				if(postpro_)
-				{
-					postpro_(buf);
-				}
-			}
-			
-			sock->send(buf);
+			return buf_manager_->get();
 		}
 
 	public:
@@ -73,20 +50,8 @@ namespace lv { namespace rpc {
 		{
 			return buf_manager_;
 		}
-
-		void	set_buf_preprocessor(BufProcessor pro)
-		{
-			scoped_lock lock(mutex_);
-			this->prepro_ = pro;
-		}
-
-		void	set_buf_postprocessor(BufProcessor pro)
-		{
-			scoped_lock lock(mutex_);
-			this->postpro_ = pro;
-		}
 	};
 
 } }
 
-#endif // LV_RPCBASE_HPP
+#endif

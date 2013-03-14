@@ -64,7 +64,7 @@ namespace lv
 }
 
 
-#endif // LV_MEMFN_HPP
+#endif
 
 #else
 

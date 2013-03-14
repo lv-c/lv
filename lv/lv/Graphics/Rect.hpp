@@ -170,4 +170,4 @@ namespace lv
 }
 
 
-#endif // LV_RECT_HPP
+#endif

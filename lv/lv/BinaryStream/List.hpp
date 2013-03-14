@@ -26,4 +26,4 @@ namespace lv { namespace bstream {
 
 } }
 
-#endif // LV_BINARYSTREAM_LIST_HPP
+#endif

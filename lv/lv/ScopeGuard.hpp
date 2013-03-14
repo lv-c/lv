@@ -81,4 +81,4 @@ namespace lv
 
 }
 
-#endif // LV_SCOPEGUARD_HPP
+#endif
