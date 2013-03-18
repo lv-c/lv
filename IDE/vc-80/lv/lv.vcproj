@@ -312,7 +312,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\lv\lv\Graphics\ImageSet.hpp"
+					RelativePath="..\..\..\lv\lv\Graphics\Graphics.hpp"
 					>
 				</File>
 				<File

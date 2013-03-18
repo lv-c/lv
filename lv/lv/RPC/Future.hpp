@@ -109,6 +109,8 @@ namespace lv { namespace rpc {
 
 	public:
 
+		typedef Ret	value_type;
+
 		/// creates an empty returning handler
 		ReturningHandler() {}
 	};
