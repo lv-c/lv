@@ -111,11 +111,6 @@ void test_net_impl()
 	boost::shared_ptr<SSLContext> server_context(new SSLContext(BufferManagerPtr(new SimpleBufferManager(1024)), service));
 	boost::shared_ptr<SSLContext> client_context(new SSLContext(BufferManagerPtr(new SimpleBufferManager(1024)), service));
 
-	if(boost::is_same<client_session_type, ClientSession<SSLSession> >::value)
-	{
-		client_context->create_ssl_context();
-	}
-
 	// server
 	server_type server(server_context, SessionCreator<server_session_type>());
 

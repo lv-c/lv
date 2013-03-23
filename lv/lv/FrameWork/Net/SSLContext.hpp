@@ -24,31 +24,17 @@ namespace lv { namespace net {
 
 	public:
 
-		SSLContext(BufferManagerPtr buf_manager, ServiceWrapper const & service_wrapper)
+		SSLContext(BufferManagerPtr buf_manager, ServiceWrapper const & service_wrapper,
+				asio::ssl::context::method method = asio::ssl::context::sslv23)
 			: Context(buf_manager, service_wrapper)
+			, ssl_context_(new asio::ssl::context(service_wrapper.service(), method))
 		{
 		}
 
-		void	set_ssl_context(ssl_context_ptr ssl_context)
-		{
-			BOOST_ASSERT(! ssl_context_);
-
-			this->ssl_context_ = ssl_context;
-		}
-
-		ssl_context_ptr	create_ssl_context(asio::ssl::context::method method = asio::ssl::context::sslv23)
-		{
-			BOOST_ASSERT(! ssl_context_);
-
-			ssl_context_.reset(new asio::ssl::context(service(), method));
-			return ssl_context_;
-		}
-
-		ssl_context_ptr	get_ssl_context() const
+		ssl_context_ptr	ssl_context() const
 		{
 			return ssl_context_;
 		}
-
 	};
 
 } }

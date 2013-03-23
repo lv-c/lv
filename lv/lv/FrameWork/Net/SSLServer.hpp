@@ -15,16 +15,10 @@
 
 namespace lv { namespace net {
 
-
-	class SSLContextHolder;
-
 	class SSLServer : public ServerBase
 	{
 		typedef ServerBase	base_type;
 
-		// using scoped_ptr here will lead to C2027 : use of undefined type 'lv::net::SSLContextHolder'. Don't know why
-		boost::shared_ptr<SSLContextHolder>	ssl_context_;
-		
 		std::string	password_;
 
 	public:
