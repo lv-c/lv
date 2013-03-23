@@ -21,7 +21,7 @@ namespace lv { namespace net {
 	public:
 
 		SSLSocketHolder(ContextPtr context)
-			: socket_(context->service(), *boost::dynamic_pointer_cast<SSLContext>(context)->get_ssl_context())
+			: socket_(context->service(), *boost::dynamic_pointer_cast<SSLContext>(context)->ssl_context())
 		{
 		}
 

@@ -7,30 +7,11 @@
 
 namespace lv { namespace net {
 
-	class SSLContextHolder
-	{
-		asio::ssl::context	ssl_context_;
-
-	public:
-
-		SSLContextHolder(ContextPtr context)
-			: ssl_context_(context->service(), asio::ssl::context::sslv23)
-		{
-		}
-
-		asio::ssl::context &	get()
-		{
-			return ssl_context_;
-		}
-	};
-
 	SSLServer::SSLServer(ContextPtr context, creator_type session_creator /* = creator_type */,
 			std::string const & password /* = "rswvfbuk" */)
 		: base_type(context, session_creator)
-		, ssl_context_(new SSLContextHolder(context))
 		, password_(password)
 	{
-		boost::dynamic_pointer_cast<SSLContext>(context_)->set_ssl_context(lv::shared_from_object(ssl_context_->get()));
 	}
 
 	/// @exception boost::system::system_error
@@ -43,7 +24,7 @@ namespace lv { namespace net {
 
 	void SSLServer::init_context()
 	{
-		asio::ssl::context & ctx = ssl_context_->get();
+		asio::ssl::context & ctx = * boost::shared_dynamic_cast<SSLContext>(context_)->ssl_context();
 
 		ctx.set_options(
 			asio::ssl::context::default_workarounds
