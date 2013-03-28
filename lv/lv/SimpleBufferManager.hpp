@@ -19,6 +19,33 @@ namespace lv
 
 	class SimpleBufferManager : public IBufferManager
 	{
+		class BufferFactory : public Factory<Buffer>
+		{
+			typedef Factory<Buffer>	base_type;
+
+			size_t	max_capacity_;
+
+		public:
+
+			BufferFactory(size_t max_capacity)
+				: max_capacity_(max_capacity)
+			{
+			}
+
+		private:
+
+			virtual void	release(Buffer * obj)
+			{
+				if(obj->capacity() > max_capacity_)
+				{
+					delete obj;
+				}
+				else
+				{
+					base_type::release(obj);
+				}
+			}
+		};
 
 		size_t	init_capacity_;
 
@@ -27,10 +54,9 @@ namespace lv
 
 	public:
 
-		explicit SimpleBufferManager(size_t init_capacity, 
-			boost::shared_ptr<factory_type> factory = boost::shared_ptr<factory_type>(new factory_type()))
+		explicit SimpleBufferManager(size_t init_capacity)
 			: init_capacity_(init_capacity)
-			, factory_(factory)
+			, factory_(new BufferFactory(init_capacity * 2))
 		{
 		}
 

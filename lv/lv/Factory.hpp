@@ -50,8 +50,11 @@ namespace lv
 
 		typedef boost::function<T*()>	creator_type;
 		creator_type	creator_;
-	
 
+		static volatile long	total_num_;
+
+		static volatile long	current_num_;
+	
 	public:
 
 		explicit Factory(creator_type const & creator = NewCreator<T>())
@@ -70,10 +73,14 @@ namespace lv
 			{
 				obj = objects_.back();
 				objects_.pop_back();
+
+				::InterlockedDecrement(& current_num_);
 			}
 			else
 			{
 				obj = creator_();
+
+				::InterlockedIncrement(& total_num_);
 			}
 
 			post_process(*obj);
@@ -94,6 +101,17 @@ namespace lv
 			objects_.clear();
 		}
 
+
+		static	long	current_num()
+		{
+			return current_num_;
+		}
+
+		static	long	total_num()
+		{
+			return total_num_;
+		}
+
 	protected:
 
 		virtual	void	post_process(T & obj)
@@ -105,8 +123,16 @@ namespace lv
 			scoped_lock	lock(mutex_);
 
 			objects_.push_back(obj);
+
+			::InterlockedIncrement(& current_num_);
 		}
 	};
+
+	template<typename T>
+	volatile long Factory<T>::total_num_ = 0;
+
+	template<typename T>
+	volatile long Factory<T>::current_num_ = 0;
 }
 
 #endif
