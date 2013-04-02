@@ -39,7 +39,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/D &quot;NOMINMAX&quot;  /D &quot;_CRT_SECURE_NO_WARNINGS&quot;"
+				AdditionalOptions="/D &quot;NOMINMAX&quot;  /D &quot;_CRT_SECURE_NO_WARNINGS&quot; /D &quot;_WIN32_WINNT=0x0501&quot;"
 				Optimization="0"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
@@ -120,7 +120,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/D &quot;NOMINMAX&quot; /D &quot;_CRT_SECURE_NO_WARNINGS&quot;"
+				AdditionalOptions="/D &quot;NOMINMAX&quot; /D &quot;_CRT_SECURE_NO_WARNINGS&quot; /D &quot;_WIN32_WINNT=0x0501&quot;"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"

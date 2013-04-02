@@ -45,6 +45,8 @@ namespace lv { namespace net {
 	
 	class SSLServer;
 
+	class SSLContext;
+
 	namespace asio = boost::asio;
 
 } }

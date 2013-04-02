@@ -23,7 +23,7 @@ namespace lv { namespace net {
 
 	public:
 
-		SSLServer(ContextPtr context, creator_type session_creator = creator_type(), std::string const & password = "rswvfbuk");
+		SSLServer(ContextPtr context, creator_type session_creator = creator_type(), std::string const & password = "m2lvxu");
 
 		/// @exception boost::system::system_error
 		virtual	void	start(unsigned short port);

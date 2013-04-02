@@ -8,7 +8,7 @@
 namespace lv { namespace net {
 
 	SSLServer::SSLServer(ContextPtr context, creator_type session_creator /* = creator_type */,
-			std::string const & password /* = "rswvfbuk" */)
+			std::string const & password /* = "m2lvxu" */)
 		: base_type(context, session_creator)
 		, password_(password)
 	{
@@ -32,8 +32,8 @@ namespace lv { namespace net {
 			| asio::ssl::context::single_dh_use);
 
 		ctx.set_password_callback(boost::bind(&SSLServer::get_password, this));
-		ctx.use_certificate_file("cert/rscert.pem", asio::ssl::context::pem);
-		ctx.use_private_key_file("cert/rsprivkey.pem", asio::ssl::context::pem);
+		ctx.use_certificate_file("cert/m2cert.crt", asio::ssl::context::pem);
+		ctx.use_private_key_file("cert/m2server.pem", asio::ssl::context::pem);
 		ctx.use_tmp_dh_file("cert/dh256.pem");
 	}
 
