@@ -273,6 +273,10 @@
 					RelativePath="..\..\..\lv\src\lv\Console.cpp"
 					>
 				</File>
+				<File
+					RelativePath="..\..\..\lv\src\lv\Timer.cpp"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="detail"

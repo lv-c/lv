@@ -11,25 +11,15 @@
 #ifndef LV_TIMER_HPP
 #define LV_TIMER_HPP
 
-#include <lv/Config.hpp>
+#include <lv/lvlib2.hpp>
+#include <lv/IntType.hpp>
 
 #include <boost/operators.hpp>
 
-#ifdef LV_PLATFORM_WINDOWS
-#	include <Windows.h>
-#else
-#	include <ctime>
-#endif
-
 namespace lv
 {
-	/// fwd.  You should use Timer rather than TimerT
-	template<class>	class TimerT;
-	typedef TimerT<void> Timer;
-
 	class TimeSpan : public boost::additive<TimeSpan>
 	{
-
 		double	seconds_;
 
 	public:
@@ -83,40 +73,22 @@ namespace lv
 			seconds_ -= rhs.seconds_;
 			return *this;
 		}
-		
 	};
 
-
-	/**
-	 * use template to make it a header-only class
-	 */
-	template<class Dummy = void>	
-	class TimerT
+	class Timer
 	{
+		double	start_time_;		
+
+		static	uint64	cps_;
+
 	public:
 		// start the timer
-		TimerT()
-		{
-			if(cps_ == 0)
-			{
-#ifdef LV_PLATFORM_WINDOWS
-				LARGE_INTEGER frequency;
-				QueryPerformanceFrequency(&frequency);
-				cps_ = static_cast<uint64>(frequency.QuadPart);
-#else
-				cps_ = CLOCKS_PER_SEC;
-#endif
-			}
-
-			restart();
-		}
-
+		Timer();
 
 		inline void	restart() 
 		{
 			start_time_ = cur_time();
 		}
-
 		
 		// return the seconds that has elapsed
 		inline TimeSpan	elapsed() const
@@ -126,27 +98,8 @@ namespace lv
 
 	private:
 
-		inline double	cur_time() const			// return the current time
-		{
-#ifdef LV_PLATFORM_WINDOWS
-			LARGE_INTEGER count;
-			QueryPerformanceCounter(&count);
-			return static_cast<double>(count.QuadPart) / cps_;
-#else
-			return static_cast<double>(std::clock()) / cps_;
-#endif
-		}
-
-	private:
-
-		double	start_time_;		
-
-		static	uint64	cps_;
+		inline double	cur_time() const;			// return the current time
 	};
-
-	template<class T>
-	uint64 TimerT<T>::cps_ = 0;
-
 }
 
 
