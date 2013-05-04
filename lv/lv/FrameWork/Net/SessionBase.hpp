@@ -85,6 +85,7 @@ namespace lv { namespace net {
 		virtual	void	on_error(ErrorType type, boost::system::error_code const & error);
 
 		virtual	void	on_connected_internal();
+		virtual	void	on_receive_internal(BufferPtr buf);
 
 		virtual	void	on_connected();
 		virtual	void	on_receive(BufferPtr buf);

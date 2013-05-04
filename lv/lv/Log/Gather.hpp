@@ -119,10 +119,19 @@ namespace lv { namespace log {
 
 
 		template <typename T>
-		void log(T const & t)
+		void	log(T const & t)
 		{
 			*os_ << t;
 		}
+
+#ifdef LV_UNICODE_LOG
+
+		void	log(std::string const & t)
+		{
+			std::copy(t.begin(), t.end(), std::ostream_iterator<char, char_type>(*os_));
+		}
+
+#endif
 
 
 		virtual void on_record_begin(int lvl)

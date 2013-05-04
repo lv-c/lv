@@ -177,6 +177,11 @@ namespace lv { namespace net {
 		on_connected();
 	}
 
+	void SessionBase::on_receive_internal(BufferPtr buf)
+	{
+		on_receive(buf);
+	}
+
 	void SessionBase::on_connected()
 	{
 		connect_event_();
@@ -206,7 +211,7 @@ namespace lv { namespace net {
 		else
 		{
 			buf->resize(bytes_transferred);
-			on_receive(buf);
+			on_receive_internal(buf);
 
 			start_read();
 		}
