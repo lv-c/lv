@@ -11,7 +11,7 @@
 #include "UnitTest.hpp"
 using namespace boost::unit_test;
 
-#include <vld.h>
+// #include <vld.h>
 
 
 test_suite * init_unit_test_suite( int, char* [] )

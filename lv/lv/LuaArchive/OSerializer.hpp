@@ -22,7 +22,7 @@
 #include <boost/range.hpp>
 #include <boost/type_traits/is_integral.hpp>
 #include <boost/type_traits/is_float.hpp>
-#include <boost/algorithm/string/replace.hpp>
+
 
 namespace lv { namespace lua { namespace archive {
 
@@ -153,15 +153,29 @@ namespace lv { namespace lua { namespace archive {
 		{
 			os << '\'';
 
-			if(std::strchr(t, '\'') != NULL)
+			for(; *t != '\0'; ++t)
 			{
-				std::string new_str(t);
-				boost::algorithm::replace_all(new_str, "\'", "\\\'");
-				os << new_str;
-			}
-			else
-			{
-				os << t;
+				switch(*t)
+				{
+				case '\\':
+					os << "\\\\";
+					break;
+
+				case '\'':
+					os << "\\'";
+					break;
+
+				case '\n':
+					os << "\\n";
+					break;
+
+				case '\r':
+					os << "\\r";
+					break;
+
+				default:
+					os << *t;
+				}
 			}
 
 			os << '\'';

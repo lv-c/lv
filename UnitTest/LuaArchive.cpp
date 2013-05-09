@@ -181,7 +181,8 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 	deque<int>	que;
 	que.push_back(1);
 	Mapping<string, int> mapping;
-	mapping.insert(std::make_pair("hello", 1));
+	string mapping_key = "\\h'e\r\nll\to";
+	mapping.insert(std::make_pair(mapping_key, 1));
 
 	boost::assign::push_back(vertex.points) (10, 20) (50, 60);
 	boost::assign::insert(vertex.int_map) (Point(5, 6), 2) (Point(8, 9), 3);
@@ -288,7 +289,7 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 		BOOST_CHECK(tree2 == new_tree2);
 		BOOST_CHECK(que == new_que);
 		BOOST_CHECK_EQUAL(new_mapping.size(), 1);
-		BOOST_CHECK_EQUAL(new_mapping.get_left("hello"), 1);
+		BOOST_CHECK_EQUAL(new_mapping.get_left(mapping_key), 1);
 	}
 	
 
