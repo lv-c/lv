@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="8.00"
-	Name="Socks5Server"
-	ProjectGUID="{586F6876-EBDB-4432-908D-E62836E98A73}"
-	RootNamespace="Socks5Server"
+	Name="Repeater"
+	ProjectGUID="{05A18959-D378-4176-9FF5-0CEE26D93A26}"
+	RootNamespace="Repeater"
 	Keyword="Win32Proj"
 	>
 	<Platforms>
@@ -44,7 +44,7 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				UsePrecompiledHeader="0"
+				UsePrecompiledHeader="2"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="4"
@@ -62,7 +62,6 @@
 				Name="VCLinkerTool"
 				OutputFile="$(OutDir)\$(ProjectName)D.exe"
 				LinkIncremental="2"
-				IgnoreDefaultLibraryNames="MSVCRT"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				TargetMachine="1"
@@ -177,7 +176,37 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\..\Tools\Socks5Server\Socks5Server.cpp"
+				RelativePath="..\..\..\Tools\Repeater\Repeater.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\Tools\Repeater\RepeaterSession.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\Tools\Repeater\stdafx.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
+			</File>
+		</Filter>
+		<Filter
+			Name="Í·ÎÄ¼þ"
+			Filter="h;hpp;hxx;hm;inl;inc;xsd"
+			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
+			>
+			<File
+				RelativePath="..\..\..\Tools\Repeater\RepeaterSession.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\Tools\Repeater\stdafx.h"
 				>
 			</File>
 		</Filter>

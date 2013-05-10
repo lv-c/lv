@@ -96,56 +96,15 @@ void on_error(ErrorType type, boost::system::error_code const & error)
 	log_(lv::error) << net::error_string(type) << " : " << error.message();
 }
 
-typedef ServerBase<Socks5ServerSession>	server_type;
+typedef ServerBase	server_type;
 typedef boost::shared_ptr<server_type>	server_ptr;
 
-void on_new_session(server_type::session_ptr session)
+void on_new_session(SessionPtr session)
 {
 	log_() << "new connection:" << session->remote_ip();
 
 	session->error_event().connect(on_error);
 }
-
-class MyBufferFactory : public Factory<Buffer>
-{
-	typedef public Factory<Buffer>	base_type;
-
-	size_t	count_;
-
-	size_t	max_count_;
-
-public:
-
-	MyBufferFactory(creator_type const & creator = NewCreator<Buffer>())
-		: base_type(creator)
-		, count_(0)
-		, max_count_(0)
-	{
-	}
-
-	virtual	shared_pointer	get()
-	{
-		++count_;
-
-		if(count_ > max_count_)
-		{
-			max_count_ = count_;
-			log_() << "current count:" << count_;
-		}
-
-		return base_type::get();
-	}
-
-private:
-
-	virtual void	release(Buffer * obj)
-	{
-		--count_;
-
-		base_type::release(obj);
-	}
-
-};
 
 
 int main(int argc, char **argv)
@@ -190,8 +149,7 @@ int main(int argc, char **argv)
 
 	boost::asio::io_service io;
 
-	boost::shared_ptr<MyBufferFactory> factory(new MyBufferFactory());
-	BufferManagerPtr buf_manager(new SimpleBufferManager(1024, factory));
+	BufferManagerPtr buf_manager(new SimpleBufferManager(1024));
 
 	vector<server_ptr>	servers;
 
@@ -203,12 +161,12 @@ int main(int argc, char **argv)
 
 			if(! v.empty())
 			{
-				context->address_to_bind(boost::asio::ip::address::from_string(v));
+				context->address_to_bind(v);
 			}
 
 			context->set_auth(auth);
 
-			server_ptr server(new server_type(context));
+			server_ptr server(new server_type(context, SessionCreator<Socks5ServerSession>()));
 
 			log_() << "start server:" << v << " port:" << port;
 

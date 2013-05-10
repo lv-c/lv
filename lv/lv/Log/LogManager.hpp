@@ -37,7 +37,7 @@ namespace lv { namespace log {
 		 */
 		Log & logger()
 		{
-			scoped_lock lock(mutex_);
+			// scoped_lock lock(mutex_);
 
 			static Log log;		// not thread-safe until C++0x ?
 			return log;
