@@ -23,4 +23,4 @@ using namespace std;
 #else
 #pragma comment(lib, "libluabind.lib")
 #endif
-#pragma comment(lib, "lua.lib")
+#pragma comment(lib, "liblua.lib")
