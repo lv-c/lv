@@ -11,17 +11,9 @@
 #ifndef LV_FRAMEWORK_AUTOLINK_HPP
 #define LV_FRAMEWORK_AUTOLINK_HPP
 
-#include <lv/Config.hpp>
 
-#ifdef LV_PLATFORM_WINDOWS
-
-#	ifdef _DEBUG
-#		pragma comment(lib, "FrameworkD.lib")
-#	else
-#		pragma comment(lib, "Framework.lib")
-#	endif
-
-#endif
+#define LV_LIB_NAME "Framework"
+#include <lv/AutoLink.hpp>
 
 
 #endif

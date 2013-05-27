@@ -11,16 +11,9 @@
 #ifndef LV_LVLIB2_HPP
 #define LV_LVLIB2_HPP
 
-#include <lv/Config.hpp>
 
-#ifdef LV_PLATFORM_WINDOWS
+#define LV_LIB_NAME "lv2"
+#include <lv/AutoLink.hpp>
 
-#	ifdef _DEBUG
-#		pragma comment(lib, "lv2d.lib")
-#	else
-#		pragma comment(lib, "lv2.lib")
-#	endif
-
-#endif
 
 #endif

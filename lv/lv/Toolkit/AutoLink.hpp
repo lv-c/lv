@@ -11,17 +11,9 @@
 #ifndef LV_TOOLKIT_AUTOLINK_HPP
 #define LV_TOOLKIT_AUTOLINK_HPP
 
-#include <lv/Config.hpp>
 
-#ifdef LV_PLATFORM_WINDOWS
-
-#	ifdef _DEBUG
-#		pragma comment(lib, "ToolkitD.lib")
-#	else
-#		pragma comment(lib, "Toolkit.lib")
-#	endif
-
-#endif
+#define LV_LIB_NAME "Toolkit"
+#include <lv/AutoLink.hpp>
 
 
 #endif
