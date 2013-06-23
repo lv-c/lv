@@ -296,6 +296,14 @@ namespace lv
 			read(buf, pos, &t, sizeof(t));
 		}
 
+		template<typename T>
+		T	read(ConstBufferRef const & buf, size_t pos)
+		{
+			T t;
+			read(buf, pos, t);
+
+			return t;
+		}
 
 		//
 

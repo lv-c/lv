@@ -113,6 +113,13 @@ int main(int argc, char **argv)
 
 	uint16 port;
 	bool all_ip;
+	bool emulate = false;
+
+	if(argc >= 2 && argv[1] == string("-e"))
+	{
+		emulate = true;
+		log_() << "emulate.";
+	}
 
 	set<Socks5Auth>	auth;
 
@@ -166,15 +173,18 @@ int main(int argc, char **argv)
 
 			context->set_auth(auth);
 
-			server_ptr server(new server_type(context, SessionCreator<Socks5ServerSession>()));
-
 			log_() << "start server:" << v << " port:" << port;
 
-			server->new_session_event().connect(on_new_session);
+			if(! emulate)
+			{
+				server_ptr server(new server_type(context, SessionCreator<Socks5ServerSession>()));
 
-			server->start(port);
+				server->new_session_event().connect(on_new_session);
 
-			servers.push_back(server);
+				server->start(port);
+
+				servers.push_back(server);
+			}
 
 			port++;
 		}
