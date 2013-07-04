@@ -79,7 +79,14 @@ void RepeaterSession::dest_on_receive(BufferPtr buf)
 
 void RepeaterSession::dest_on_error(ErrorType type, boost::system::error_code const & error)
 {
-	LOG() << "dest session disconnected:" << remote_ip();
+	if(type == ErrorConnect)
+	{
+		LOG(lv::error) << "error connecting to dest:" << dest_ip_ << " port:" << dest_port_;
+	}
+	else
+	{
+		LOG() << "dest session disconnected:" << remote_ip();
+	}
 
 	shutdown();
 	close();

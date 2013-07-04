@@ -44,6 +44,8 @@ public:
 	}
 };
 
+// TODO : refuse a connection if we can't connect to the destination. WSAAccept ?
+
 
 int main(int argc, char **argv)
 {
