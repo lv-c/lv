@@ -42,7 +42,7 @@ namespace lv { namespace rpc {
 
 			virtual void	set(typename ArchivePair::iarchive_type & ia) 
 			{
-				promise_.set();
+				promise_.set_value();
 			}
 
 			virtual	void	set_exception(boost::exception_ptr ex)
