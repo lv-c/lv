@@ -26,9 +26,9 @@ namespace lv
 	}
 
 	template<class T>
-	void	reserve(T & /* t */, size_t /* size */)
+	void	reserve(T & t, size_t size)
 	{
-		// do nothing
+		t.reserve(size);
 	}
 }
 

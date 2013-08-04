@@ -41,14 +41,11 @@ namespace lv
 		}
 
 		/**
-		 * Brings the item associated with iterator @i to the front of the list and
-		 * returns the new iterator for this item.
+		 * Brings the item associated with iterator @i to the front of the list.
 		 */
-		iterator	touch(iterator const & i)
+		void	touch(iterator const & i)
 		{
 			list_.splice(list_.begin(), list_, i);
-
-			return list_.begin();
 		}
 
 		void	erase(iterator const & i)

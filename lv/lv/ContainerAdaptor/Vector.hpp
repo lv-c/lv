@@ -22,12 +22,6 @@ namespace lv
 	{
 		t.push_back(v);
 	}
-
-	template<class T, class Ax>
-	void	reserve(std::vector<T, Ax> & t, size_t size)
-	{
-		t.reserve(size);
-	}
 }
 
 #endif

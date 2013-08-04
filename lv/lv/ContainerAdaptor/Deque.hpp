@@ -22,6 +22,11 @@ namespace lv
 	{
 		t.push_back(v);
 	}
+
+	template<class T, class Ax, class V>
+	void	reserve(std::deque<T, Ax> & /* t */, size_t /* size */)
+	{
+	}
 }
 
 #endif

@@ -64,6 +64,13 @@ namespace lv
 		{
 		}
 
+		template<size_t N>
+		BufferRefT(T (&buf)[N])
+			: data_(buf)
+			, size_(N)
+		{
+		}
+
 		BufferRefT(std::vector<T> & buf)
 			: data_(buf.empty() ? NULL : &buf[0])
 			, size_(buf.size())
@@ -158,6 +165,13 @@ namespace lv
 		ConstBufferRefT(T const * data, size_t size)
 			: data_(data)
 			, size_(size)
+		{
+		}
+
+		template<size_t N>
+		ConstBufferRefT(T const (&buf)[N])
+			: data_(buf)
+			, size_(N)
 		{
 		}
 

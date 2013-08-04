@@ -90,26 +90,25 @@ namespace lv
 		/**
 		 * return false if the key already exists
 		 */
-		bool	insert(key_type const & key, data_type const & data)
+		pair<iterator, bool>	insert(key_type const & key, data_type const & data)
 		{
 			map_type::iterator map_it = map_.find(key);
 
 			if(map_it != map_.end())
 			{
-				return false;
+				return std::make_pair(map_it->second, false);
 			}
 
 			list_type::iterator list_it = list_.insert(std::make_pair(key, data));
 			map_.insert(std::make_pair(key, list_it));
 
-			if(map_.size() > max_size_)
+			if(map_.size() > max_size_ && map_.size() > 1)
 			{
-				remove(list_.last().first);
+				erase(list_.last().first);
 			}
 
-			return true;
+			return std::make_pair(list_it, true);
 		}
-
 		
 		iterator	find(key_type const & key, bool touch = true)
 		{
@@ -118,7 +117,7 @@ namespace lv
 			{
 				if(touch)
 				{
-					map_it->second = list_.touch(map_it->second);
+					list_.touch(map_it->second);
 				}
 
 				return map_it->second;
@@ -127,18 +126,28 @@ namespace lv
 			return end();
 		}
 
-		
-		
+		data_type & operator [] (key_type const & key)
+		{
+			iterator it = find(key);	// find and touch
+
+			if(it == end())
+			{
+				it = insert(key, data_type()).first;
+			}
+
+			return it->second;
+		}
+
 		void	touch(key_type const & key)
 		{
 			map_type::iterator map_it = map_.find(key);
 			if(map_it != map_.end())
 			{
-				map_it->second = list_.touch(it->second);
+				list_.touch(it->second);
 			}
 		}
 
-		void	remove(key_type const & key)
+		void	erase(key_type const & key)
 		{
 			map_type::iterator map_it = map_.find(key);
 			if(map_it != map_.end())

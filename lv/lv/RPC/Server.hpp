@@ -96,6 +96,8 @@ namespace lv { namespace rpc {
 
 			register_type::ResultHolder result;
 
+			// TODO : call_option and id are better in the front, or they may be serialized as parameters
+
 			Protocol::header::type header;
 			ia >> header;
 
