@@ -55,15 +55,12 @@ namespace lv { namespace lua {
 		Buffer buf;
 		file_loader_->fulfill(file, lv::shared_from_object(buf));
 
-		BOOST_ASSERT(buf.capacity() >= buf.size() + 1);
-		buf.push_back('\0');
-
-		load_str(buffer::data(buf));
+		load_str(buffer::data(buf), buf.size());
 	}
 
-	void LuaConfig::load_str(char const * str)
+	void LuaConfig::load_str(char const * str, size_t size)
 	{
-		lua::dostr(state_, str);
+		lua::dostr(state_, str, size);
 	}
 
 } }

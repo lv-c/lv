@@ -14,6 +14,7 @@
 #include <lv/LuaArchive/Tags.hpp>
 #include <lv/LuaArchive/Common.hpp>
 #include <lv/IntType.hpp>
+#include <lv/StreamHelper.hpp>
 
 #include <boost/noncopyable.hpp>
 #include <boost/serialization/nvp.hpp>
@@ -28,26 +29,6 @@ namespace lv { namespace lua { namespace archive {
 
 	namespace detail
 	{
-		class write_tabs
-		{
-			size_t	count_;
-		public:
-			explicit write_tabs(size_t count)
-				: count_(count)
-			{
-			}
-
-			friend std::ostream & operator << (std::ostream & os, write_tabs tabs)
-			{
-				for(size_t i = 0; i < tabs.count_; ++i)
-				{
-					os << '\t';
-				}
-
-				return os;
-			}
-		};
-
 		// unknown_tag
 		class OArchiveProxy : boost::noncopyable
 		{

@@ -44,7 +44,7 @@ BOOST_AUTO_TEST_CASE(test_luaset)
 	lv::lua::bind_map<std::string, int>(state, "StrIntMap");
 
 
-	lv::lua::dostr(state, 
+	char const * str =
 		"s = IntSet()\n"
 		"assert(s:empty())\n"
 		"assert(s:count(10) == 0)\n"
@@ -62,7 +62,10 @@ BOOST_AUTO_TEST_CASE(test_luaset)
 		"assert(m:count('a') == 1)\n"
 
 		"print('luaset test done!')\n"
-	);
+	;
+
+	lv::lua::dostr(state, str, strlen(str));
+
 
 	lua_close(state);
 }

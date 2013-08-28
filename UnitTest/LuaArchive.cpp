@@ -261,7 +261,7 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 	luabind::open(state);
 	luabind::set_pcall_callback(err_handler);
 
-	lv::lua::dostr(state, ret.c_str());
+	lv::lua::dostr(state, ret.c_str(), ret.size());
 
 	{
 		LuaIArchive ia(luabind::globals(state));

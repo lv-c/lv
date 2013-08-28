@@ -8,11 +8,11 @@
 
 namespace lv { namespace lua {
 
-	void dostr(lua_State * L, char const * str, pcall_handler h /* = default_pcall_handler */)
+	void dostr(lua_State * L, char const * str, size_t size, pcall_handler h /* = default_pcall_handler */)
 	{
 		lua_pushcclosure(L, h, 0);
 
-		if (luaL_loadbuffer(L, str, std::strlen(str), str))
+		if (luaL_loadbuffer(L, str, size, str))
 		{
 			std::runtime_error err(lua_tostring(L, -1));
 			lua_pop(L, 2);

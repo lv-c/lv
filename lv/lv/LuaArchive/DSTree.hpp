@@ -136,7 +136,7 @@ namespace lv { namespace lua { namespace archive {
 		bool first_time = true;
 		detail::save_dstree(os, tree, level + 1, first_time);
 
-		os << std::endl << detail::write_tabs(level) << '}';
+		os << std::endl << write_tabs(level) << '}';
 	}
 
 

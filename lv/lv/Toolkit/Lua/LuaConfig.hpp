@@ -43,7 +43,7 @@ namespace lv { namespace lua {
 		void	load_file(std::string const & file);
 
 		/// @exception runtime_error
-		void	load_str(char const * str);
+		void	load_str(char const * str, size_t size);
 
 		LuaIArchive	const &	archive() const;
 

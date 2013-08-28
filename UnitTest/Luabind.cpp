@@ -36,7 +36,7 @@ BOOST_AUTO_TEST_CASE(test_luabind)
 		"pt = { 10, 20 }\n"
 		;
 
-	lv::lua::dostr(state, script);
+	lv::lua::dostr(state, script, strlen(script));
 
 	luabind::object global = luabind::globals(state);
 

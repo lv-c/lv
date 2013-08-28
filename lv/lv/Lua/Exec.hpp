@@ -26,7 +26,7 @@ namespace lv { namespace lua {
 
 
 	/// @exception runtime_error
-	void dostr(lua_State * L, char const * str, pcall_handler h = default_pcall_handler);
+	void dostr(lua_State * L, char const * str, size_t size, pcall_handler h = default_pcall_handler);
 
 
 } }
