@@ -323,17 +323,17 @@ namespace lv
 
 		inline char * data(Buffer & buf)
 		{
-			return &buf[0];
+			return buf.empty() ? NULL : &buf[0];
 		}
 
 		inline char const * data(Buffer const & buf)
 		{
-			return &buf[0];
+			return buf.empty() ? NULL : &buf[0];
 		}
 
 		inline char * data(BufferPtr const & buf)
 		{
-			return &(*buf)[0];
+			return buf->empty() ? NULL : &(*buf)[0];
 		}
 
 		inline std::string	to_string(ConstBufferRef const & buf)
