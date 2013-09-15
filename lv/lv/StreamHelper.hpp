@@ -35,7 +35,8 @@ namespace lv
 
 			hex_impl(T t) : t_(t) {}
 
-			friend std::ostream & operator << (std::ostream & os, hex_impl const & h)
+			template<typename C, typename Tr>
+			friend std::basic_ostream<C, Tr> & operator << (std::basic_ostream<C, Tr> & os, hex_impl const & h)
 			{
 				boost::io::ios_flags_saver ias(os);
 
@@ -65,20 +66,34 @@ namespace lv
 
 	class write_tabs
 	{
-		size_t	count_;
+		int	count_;
+
+		bool	expand_;
 
 	public:
 
-		explicit write_tabs(size_t count)
+		explicit write_tabs(int count, bool expand = false)
 			: count_(count)
+			, expand_(expand)
 		{
 		}
 
-		friend std::ostream & operator << (std::ostream & os, write_tabs tabs)
+		template<typename C, typename Tr>
+		friend std::basic_ostream<C, Tr> & operator << (std::basic_ostream<C, Tr> & os, write_tabs tabs)
 		{
-			for(size_t i = 0; i < tabs.count_; ++i)
+			if(tabs.expand_)
 			{
-				os << '\t';
+				for(int i = 0; i < tabs.count_ * 4; ++i)
+				{
+					os << ' ';
+				}
+			}
+			else
+			{
+				for(int i = 0; i < tabs.count_; ++i)
+				{
+					os << '\t';
+				}
 			}
 
 			return os;
@@ -89,8 +104,8 @@ namespace lv
 
 	namespace detail
 	{
-		template<typename T>
-		typename boost::enable_if<boost::is_arithmetic<T> >::type	write(std::ostream & os, T const & t, bool use_hex, int setw)
+		template<typename T, typename C, typename Tr>
+		typename boost::enable_if<boost::is_arithmetic<T> >::type	write(std::basic_ostream<C, Tr> & os, T const & t, bool use_hex, int setw)
 		{
 			if(setw != -1)
 			{
@@ -107,8 +122,8 @@ namespace lv
 			}
 		}
 
-		template<typename T>
-		typename boost::disable_if<boost::is_arithmetic<T> >::type	write(std::ostream & os, T const & t, bool use_hex, int setw)
+		template<typename T, typename C, typename Tr>
+		typename boost::disable_if<boost::is_arithmetic<T> >::type	write(std::basic_ostream<C, Tr> & os, T const & t, bool use_hex, int setw)
 		{
 			os << t;
 		}
@@ -135,7 +150,8 @@ namespace lv
 			{
 			}
 
-			friend std::ostream & operator << (std::ostream & os, write_range_impl const & r)
+			template<typename C, typename Tr>
+			friend std::basic_ostream<C, Tr> & operator << (std::basic_ostream<C, Tr> & os, write_range_impl const & r)
 			{
 				typedef boost::range_value<Range>::type	type;
 
