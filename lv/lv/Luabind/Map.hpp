@@ -18,7 +18,7 @@
 namespace lv { namespace lua {
 
 	template<typename K, typename V>
-	void bind_map(lua_State * state, char const * name)
+	void bind_map(lua_State * L, char const * name)
 	{
 		typedef std::map<K, V>	type;
 		typedef typename type::key_type		key_type;
@@ -29,7 +29,7 @@ namespace lv { namespace lua {
 
 		using namespace luabind;
 
-		module(state)
+		module(L)
 		[
 			class_<type>(name)
 				.def(constructor<>())
@@ -53,7 +53,7 @@ namespace lv { namespace lua {
 		];
 
 		// used by type::insert
-		bind_pair<iterator, bool>(state, (std::string(name) + "_ib_pair").c_str());
+		bind_pair<iterator, bool>(L, (std::string(name) + "_ib_pair").c_str());
 	}
 
 } }

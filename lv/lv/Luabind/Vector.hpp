@@ -44,7 +44,7 @@ namespace lv { namespace lua {
 
 
 	template<class T>
-	void bind_vector(lua_State* state, char const* name)
+	void bind_vector(lua_State * L, char const* name)
 	{
 		typedef std::vector<T>	type;
 		typedef typename type::const_reference	const_reference;
@@ -79,7 +79,7 @@ namespace lv { namespace lua {
 		
 		detail::bind_vector_constructor<type, boost::has_trivial_constructor<T>::value>::bind(vec);
 
-		module(state)
+		module(L)
 		[
 			vec
 		];

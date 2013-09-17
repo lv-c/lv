@@ -17,15 +17,15 @@ namespace lv { namespace lua {
 			this->file_loader_.reset(new RawFileReader());
 		}
 
-		state_ = init_lua();
+		L_ = init_lua();
 
-		ia_.reset(new LuaIArchive(luabind::globals(state_)));
+		ia_.reset(new LuaIArchive(luabind::globals(L_)));
 	}
 
 	LuaConfig::~LuaConfig()
 	{
 		ia_.reset();
-		lua_close(state_);
+		lua_close(L_);
 	}
 
 	lua_State * LuaConfig::init_lua()
@@ -47,7 +47,7 @@ namespace lv { namespace lua {
 
 	lua_State * LuaConfig::lua_state()
 	{
-		return state_;
+		return L_;
 	}
 
 	void LuaConfig::load_file(std::string const & file)
@@ -60,7 +60,7 @@ namespace lv { namespace lua {
 
 	void LuaConfig::load_str(char const * str, size_t size)
 	{
-		lua::dostr(state_, str, size);
+		lua::dostr(L_, str, size);
 	}
 
 } }

@@ -20,7 +20,7 @@
 namespace lv { namespace lua {
 
 	template<class T, size_t N>
-	void bind_array(lua_State* state, char const* name)
+	void bind_array(lua_State * L, char const* name)
 	{
 		typedef boost::array<T, N>	type;
 		typedef typename type::const_reference	const_reference;
@@ -48,7 +48,7 @@ namespace lv { namespace lua {
 			;
 		}
 
-		module(state)
+		module(L)
 		[
 			arr
 		];

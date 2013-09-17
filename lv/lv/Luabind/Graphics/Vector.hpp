@@ -21,12 +21,12 @@
 namespace lv { namespace lua { namespace graphics {
 
 	template<typename T>
-	void	bind_vector(lua_State * state, char const * name)
+	void	bind_vector(lua_State * L, char const * name)
 	{
 		typedef VectorT<T> type;
 		using namespace luabind;
 
-		module(state)
+		module(L)
 		[
 			class_<type>(name)
 				.def(constructor<>())

@@ -20,7 +20,7 @@
 namespace lv { namespace lua { namespace graphics {
 
 	template<typename T>
-	void	bind_rect(lua_State* state, char const * name)
+	void	bind_rect(lua_State * L, char const * name)
 	{
 		typedef RectT<T> type;
 		typedef PointT<T> point_type;
@@ -28,7 +28,7 @@ namespace lv { namespace lua { namespace graphics {
 
 		using namespace luabind;
 
-		module(state)
+		module(L)
 		[
 			class_<type>(name)
 				.def(constructor<>())

@@ -1,4 +1,5 @@
 #include <lv/Lua/Exec.hpp>
+#include <lv/Lua/StackBalance.hpp>
 
 #include <cstring>
 #include <stdexcept>
@@ -15,23 +16,21 @@ namespace lv { namespace lua {
 			name = str;
 		}
 
+		StackBalance balance(L);
+
 		lua_pushcclosure(L, h, 0);
 
 		if (luaL_loadbuffer(L, str, size, name))
 		{
 			std::runtime_error err(lua_tostring(L, -1));
-			lua_pop(L, 2);
 			throw err;
 		}
 
 		if (lua_pcall(L, 0, 0, -2))
 		{
 			std::runtime_error err(lua_tostring(L, -1));
-			lua_pop(L, 2);
 			throw err;
 		}
-
-		lua_pop(L, 1);
 	}
 
 } }

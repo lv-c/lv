@@ -26,7 +26,7 @@ namespace lv { namespace lua {
 
 	class LuaConfig
 	{
-		lua_State *	state_;
+		lua_State *	L_;
 
 		IFileIOPtr	file_loader_;
 

@@ -19,12 +19,12 @@
 namespace lv { namespace lua {
 
 	template<typename T1, typename T2>
-	void bind_pair(lua_State * state, char const * name)
+	void bind_pair(lua_State * L, char const * name)
 	{
 		typedef std::pair<T1, T2>	type;
 		using namespace luabind;
 
-		module(state)
+		module(L)
 		[
 			class_<type>(name)
 				.def(constructor<>())
