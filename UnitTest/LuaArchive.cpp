@@ -160,9 +160,9 @@ enum Mode
 BOOST_CLASS_VERSION(Color, 1)
 BOOST_CLASS_VERSION(Vertex, 2)
 
-int err_handler(lua_State* state)
+int err_handler(lua_State * L)
 {
-	std::cerr << lua_tostring(state, -1);
+	std::cerr << lua_tostring(L, -1);
 	return 1;
 }
 
@@ -255,16 +255,16 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 	*/
 
 	// 
-	lua_State * state = lua_open();
+	lua_State * L = lua_open();
 
-	luaopen_base(state);
-	luabind::open(state);
+	luaopen_base(L);
+	luabind::open(L);
 	luabind::set_pcall_callback(err_handler);
 
-	lv::lua::dostr(state, ret.c_str(), ret.size());
+	lv::lua::dostr(L, ret.c_str(), ret.size());
 
 	{
-		LuaIArchive ia(luabind::globals(state));
+		LuaIArchive ia(luabind::globals(L));
 
 		Vertex new_vertex;
 		int new_num;
@@ -293,5 +293,5 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 	}
 	
 
-	lua_close(state);
+	lua_close(L);
 }

@@ -996,6 +996,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\Lua\StackBalance.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\Lua\TableBuilder.hpp"
 					>
 				</File>
@@ -1005,6 +1009,10 @@
 				>
 				<File
 					RelativePath="..\..\..\lv\src\lv\Lua\Exec.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\src\lv\Lua\StackBalance.cpp"
 					>
 				</File>
 			</Filter>
