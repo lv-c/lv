@@ -30,7 +30,7 @@ namespace lv { namespace lua {
 
 	lua_State * LuaConfig::init_lua()
 	{
-		lua_State * state = lua_open();
+		lua_State * state = luaL_newstate();
 
 		luaopen_base(state);
 		luaL_openlibs(state);

@@ -255,9 +255,10 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 	*/
 
 	// 
-	lua_State * L = lua_open();
+	lua_State * L = luaL_newstate();
 
-	luaopen_base(L);
+	luaL_openlibs(L);
+
 	luabind::open(L);
 	luabind::set_pcall_callback(err_handler);
 

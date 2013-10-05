@@ -21,9 +21,9 @@
 
 BOOST_AUTO_TEST_CASE(test_luabind)
 {
-	lua_State * state = lua_open();
+	lua_State * state = luaL_newstate();
 
-	luaopen_base(state);
+	luaL_openlibs(state);
 	luabind::open(state);
 
 	lv::lua::bind_vector<int>(state, "IntVec");

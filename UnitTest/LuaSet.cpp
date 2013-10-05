@@ -20,10 +20,11 @@
 
 #ifdef _DEBUG
 #pragma comment(lib, "libluabindd.lib")
+#pragma comment(lib, "libluad.lib")
 #else
 #pragma comment(lib, "libluabind.lib")
+#pragma comment(lib, "liblua.lib")
 #endif
-#pragma comment(lib, "lua.lib")
 
 int error_handler(lua_State* state)
 {
@@ -34,9 +35,9 @@ int error_handler(lua_State* state)
 
 BOOST_AUTO_TEST_CASE(test_luaset)
 {
-	lua_State * state = lua_open();
+	lua_State * state = luaL_newstate();
 
-	luaopen_base(state);
+	luaL_openlibs(state);
 	luabind::open(state);
 	luabind::set_pcall_callback(error_handler);
 
