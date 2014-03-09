@@ -1036,6 +1036,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\Serialization\NonintrusiveOptional.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\Serialization\NvpHelper.hpp"
 					>
 				</File>
@@ -1257,6 +1261,10 @@
 				</File>
 				<File
 					RelativePath="..\..\..\lv\lv\LuaArchive\Mapping.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\LuaArchive\NonintrusiveOptional.hpp"
 					>
 				</File>
 				<File

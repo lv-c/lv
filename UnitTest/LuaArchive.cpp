@@ -18,6 +18,7 @@
 #include <lv/LuaArchive/DSTree.hpp>
 #include <lv/LuaArchive/Deque.hpp>
 #include <lv/LuaArchive/Mapping.hpp>
+#include <lv/LuaArchive/NonintrusiveOptional.hpp>
 #include <lv/Lua/Exec.hpp>
 
 #include <boost/assign.hpp>
@@ -281,7 +282,7 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 			>> boost::serialization::make_nvp("tree", new_tree)
 			>> boost::serialization::make_nvp("tree2", new_tree2)
 			>> boost::serialization::make_nvp("que", new_que)
-			>> boost::serialization::make_nvp("mapping", new_mapping);
+			>> boost::serialization::make_nvp("mapping", lv::serialization::make_optional(new_mapping));
 
 		BOOST_CHECK(vertex == new_vertex);
 		BOOST_CHECK_EQUAL(num, new_num);
