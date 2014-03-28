@@ -57,6 +57,8 @@ namespace lv
 		 */
 		virtual void	fulfill(std::string const & file, BufferPtr buf);
 
+		virtual	bool	exist(std::string const & file);
+
 
 		virtual	void	reset();
 
@@ -67,6 +69,9 @@ namespace lv
 		 * @return returns "" to indicate an error
 		 */
 		std::string	get_zip_file(std::string const & file);
+
+
+		UnzipPtr	get_unzip(std::string const & file, std::string & inner_path);
 	};
 }
 

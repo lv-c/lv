@@ -23,6 +23,8 @@ namespace lv
 		 * @see IFileIO::fulfill
 		 */
 		virtual void	fulfill(std::string const & file, BufferPtr buf);
+
+		virtual	bool	exist(std::string const & file);
 	};
 }
 

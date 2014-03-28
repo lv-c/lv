@@ -47,6 +47,29 @@ namespace lv
 	{
 		scoped_lock lock(mutex_);
 
+		std::string inner_path;
+		UnzipPtr uz = get_unzip(file, inner_path);
+
+		//
+		int index;
+		ZIPENTRY entry;
+		ZRESULT	ret = uz->find_item(inner_path, &index, &entry);
+
+		if(ret == ZR_OK && entry.unc_size > 0)
+		{
+			init_buffer(*buf, static_cast<size_t>(entry.unc_size));
+			ret = uz->unzip(index, *buf);
+		}		
+
+		// sometimes returns ZR_MORE while it's actually finished
+		if(ret != ZR_OK && ret != ZR_MORE)
+		{
+			throw file_io_error("error reading file:" + file);
+		}
+	}
+
+	MyZipReader::UnzipPtr MyZipReader::get_unzip(std::string const & file, std::string & inner_path)
+	{
 		std::string zip_file = get_zip_file(file);
 		if(zip_file.empty() || zip_file.size() + 1 >= file.size())	// + 1 : '\\' or '/'
 		{
@@ -54,8 +77,8 @@ namespace lv
 		}
 
 		UnzipMap::iterator it = unzip_.find(zip_file);
-
 		UnzipPtr uz;
+
 		if(it == unzip_.end())
 		{
 			// open the zip file
@@ -83,9 +106,9 @@ namespace lv
 
 			if(ret != ZR_OK)
 			{
-				throw file_io_error("error opening zip file:" + zip_path);
+				throw file_io_error("error opening pkt file:" + zip_path);
 			}
-			
+
 			unzip_.insert(std::make_pair(zip_file, uz));
 		}
 		else
@@ -93,24 +116,29 @@ namespace lv
 			uz = it->second;
 		}
 
-		//
-		int index;
-		ZIPENTRY entry;
-		ZRESULT	ret = uz->find_item(file.substr(zip_file.size() + 1), &index, &entry);
-
-		if(ret == ZR_OK && entry.unc_size > 0)
-		{
-			init_buffer(*buf, static_cast<size_t>(entry.unc_size));
-			ret = uz->unzip(index, *buf);
-		}		
-
-		// sometimes returns ZR_MORE while it's actually finished
-		if(ret != ZR_OK && ret != ZR_MORE)
-		{
-			throw file_io_error("error reading file:" + file);
-		}
+		inner_path = file.substr(zip_file.size() + 1);
+		return uz;
 	}
 
+	bool MyZipReader::exist(std::string const & file)
+	{
+		scoped_lock lock(mutex_);
+
+		try
+		{
+			std::string inner_path;
+			UnzipPtr uz = get_unzip(file, inner_path);
+
+			int index;
+			ZIPENTRY ze;
+
+			return (uz->find_item(inner_path, &index, &ze) == ZR_OK);
+		}
+		catch(std::exception const &)
+		{
+			return false;
+		}
+	}
 
 	std::string MyZipReader::get_zip_file(std::string const & file)
 	{

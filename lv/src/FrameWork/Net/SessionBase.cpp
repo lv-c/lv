@@ -59,22 +59,22 @@ namespace lv { namespace net {
 		return socket_;
 	}
 
-	SessionBase::ErrorEvent & SessionBase::error_event()
+	ErrorEvent & SessionBase::error_event()
 	{
 		return error_event_;
 	}
 
-	SessionBase::ConnectEvent & SessionBase::connect_event()
+	ConnectEvent & SessionBase::connect_event()
 	{
 		return connect_event_;
 	}
 
-	SessionBase::ReceiveEvent & SessionBase::receive_event()
+	ReceiveEvent & SessionBase::receive_event()
 	{
 		return receive_event_;
 	}
 
-	SessionBase::WriteEvent & SessionBase::write_event()
+	WriteEvent & SessionBase::write_event()
 	{
 		return write_event_;
 	}

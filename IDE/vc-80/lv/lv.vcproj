@@ -1116,6 +1116,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\Stream\Fwd.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\Stream\IBufferStream.hpp"
 					>
 				</File>

@@ -217,6 +217,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\FrameWork\Net\Event.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\FrameWork\Net\FlowSession.hpp"
 					>
 				</File>

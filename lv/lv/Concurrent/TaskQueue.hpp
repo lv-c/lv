@@ -33,8 +33,8 @@ namespace lv
 		boost::condition	empty_;
 		boost::condition	consumer_interruption_done_;
 
-		size_t				max_count_;		// maximum number of tasks
-		size_t				consumers_to_interrupt_;
+		volatile size_t		max_count_;		// maximum number of tasks
+		volatile size_t		consumers_to_interrupt_;
 
 	public:
 
@@ -159,7 +159,6 @@ namespace lv
 		 */
 		size_t	max_count() const
 		{
-			scoped_lock lock(mutex_);
 			return max_count_;
 		}
 
@@ -168,7 +167,6 @@ namespace lv
 		 */
 		void	max_count(size_t count)
 		{
-			scoped_lock lock(mutex_);
 			max_count_ = count;
 		}
 	};

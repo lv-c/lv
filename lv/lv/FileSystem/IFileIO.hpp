@@ -30,6 +30,8 @@ namespace lv
 		 */
 		virtual void	fulfill(std::string const & file, BufferPtr buf) = 0;
 
+		virtual	bool	exist(std::string const & file) = 0;
+
 		/**
 		 * This should perform an asynchronous operation if it's an asynchronous io class.
 		 * Otherwise it should call @a fulfill to perform a synchronous operation, which is

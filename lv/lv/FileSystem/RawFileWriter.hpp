@@ -18,8 +18,11 @@ namespace lv
 	class RawFileWriter : public IFileIO
 	{
 	public:
+
 		// throws file_io_error on failure
 		virtual void	fulfill(std::string const & file, BufferPtr buffer);
+
+		virtual	bool	exist(std::string const & file);
 	};
 }
 

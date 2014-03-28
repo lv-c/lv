@@ -1,6 +1,9 @@
 #include <lv/FileSystem/RawFileWriter.hpp>
-#include <fstream>
 #include <lv/Exception.hpp>
+
+#include <fstream>
+
+#include <boost/filesystem/operations.hpp>
 
 namespace lv
 {
@@ -22,5 +25,10 @@ namespace lv
 		{
 			throw(file_io_error("error writing file: " + file));
 		}
+	}
+
+	bool RawFileWriter::exist(std::string const & file)
+	{
+		return boost::filesystem::exists(file);
 	}
 }

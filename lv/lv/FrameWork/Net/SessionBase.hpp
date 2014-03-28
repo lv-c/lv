@@ -13,11 +13,9 @@
 
 #include <lv/FrameWork/AutoLink.hpp>
 #include <lv/FrameWork/Net/Fwd.hpp>
-#include <lv/Buffer.hpp>
+#include <lv/FrameWork/Net/Event.hpp>
 
 #include <boost/enable_shared_from_this.hpp>
-#include <boost/signals2.hpp>
-#include <boost/system/system_error.hpp>
 
 
 namespace lv { namespace net {
@@ -26,15 +24,6 @@ namespace lv { namespace net {
 
 	class SessionBase : public boost::enable_shared_from_this<SessionBase>
 	{
-	public:
-
-		typedef boost::signals2::signal<void(ErrorType, boost::system::error_code const &)>	ErrorEvent;
-		typedef boost::signals2::signal<void()>				ConnectEvent;
-		typedef boost::signals2::signal<void(BufferPtr)>	ReceiveEvent;
-		typedef boost::signals2::signal<void(BufferPtr)>	WriteEvent;
-
-	private:
-
 		ErrorEvent		error_event_;
 		ConnectEvent	connect_event_;
 		ReceiveEvent	receive_event_;
