@@ -54,7 +54,7 @@ namespace lv { namespace lua { namespace archive {
 		while(! parser.read_if('}'))
 		{
 			LV_ENSURE(index < N, ArraySizeTooShort());
-			load(v[index++]);
+			parser >> v[index++];
 		}
 	}
 

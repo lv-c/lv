@@ -13,8 +13,30 @@
 
 // TODO : make it better
 
+#include <string>
+#include <stdexcept>
+
+namespace lv { namespace detail {
+
+	inline void	ensure_throw(char const * msg)
+	{
+		throw std::runtime_error(msg);
+	}
+
+	inline void	ensure_throw(std::string const & msg)
+	{
+		throw std::runtime_error(msg);
+	}
+
+	inline void	ensure_throw(std::exception const & ex)
+	{
+		throw ex;
+	}
+	
+} }
+
 #define LV_ENSURE(check, msg)	\
-	if(! (check)) throw std::runtime_error(msg);
+	if(! (check)) lv::detail::ensure_throw(msg);
 
 
 #endif
