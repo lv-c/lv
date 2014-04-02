@@ -11,7 +11,7 @@
 #ifndef LV_LUAARCHIVE_SHAREDPTR_HPP
 #define LV_LUAARCHIVE_SHAREDPTR_HPP
 
-#include <luabind/object.hpp>
+#include <lv/LuaArchive/Fwd.hpp>
 
 #include <boost/shared_ptr.hpp>
 

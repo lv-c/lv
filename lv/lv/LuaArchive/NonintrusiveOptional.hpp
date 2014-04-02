@@ -11,6 +11,7 @@
 #ifndef LV_LUAARCHIVE_NONINTRUSIVE_OPTIONAL_HPP
 #define LV_LUAARCHIVE_NONINTRUSIVE_OPTIONAL_HPP
 
+#include <lv/LuaArchive/Fwd.hpp>
 #include <lv/Serialization/NonintrusiveOptional.hpp>
 
 namespace lv { namespace lua { namespace archive {
@@ -25,8 +26,6 @@ namespace lv { namespace lua { namespace archive {
 		}
 	}
 
-
-	class Parser;
 
 	template<typename T>
 	void	load(Parser & parser, lv::serialization::NonintrusiveOptional<T> & t)

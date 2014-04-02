@@ -35,7 +35,7 @@ namespace lv
 		template<typename T>
 		LuaIArchive const & operator >> (T & t) const
 		{
-			archive::load(table_, t);
+			lua::archive::load(table_, t);
 			return *this;
 		}
 

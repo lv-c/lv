@@ -11,12 +11,14 @@
 #ifndef LV_LUAARCHIVE_PAIR_HPP
 #define LV_LUAARCHIVE_PAIR_HPP
 
-#include <utility>
+#include <lv/LuaArchive/Fwd.hpp>
 
 #include <boost/type_traits/remove_const.hpp>
 #include <boost/type_traits/is_arithmetic.hpp>
 
 #include <luabind/object.hpp>
+
+#include <utility>
 
 namespace lv { namespace lua { namespace archive {
 
@@ -43,9 +45,7 @@ namespace lv { namespace lua { namespace archive {
 	}
 
 	//
-
-	class Parser;
-
+	
 	namespace detail
 	{
 		template<typename F, typename S>

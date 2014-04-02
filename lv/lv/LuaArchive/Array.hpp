@@ -11,7 +11,9 @@
 #ifndef LV_LUAARCHIVE_ARRAY_HPP
 #define LV_LUAARCHIVE_ARRAY_HPP
 
+#include <lv/LuaArchive/Fwd.hpp>
 #include <lv/Exception.hpp>
+#include <lv/Ensure.hpp>
 
 #include <boost/array.hpp>
 
@@ -34,14 +36,25 @@ namespace lv { namespace lua { namespace archive {
 		size_t index(0);
 		for(luabind::iterator it(obj), end; it != end; ++it, ++index)
 		{
-			if(index >= N)
-			{
-				throw ArraySizeTooShort();
-			}
+			LV_ENSURE(index < N, ArraySizeTooShort());
 
 			BOOST_ASSERT(! detail::is_version_key(it.key()) && "you shouldn't place a version key here");
 
 			load_item(it, v[index]);
+		}
+	}
+
+	template<typename T, size_t N>
+	void	load(Parser & parser, boost::array<T, N> & v)
+	{
+		parser >> detail::symbol('{');
+
+		int index = 0;
+
+		while(! parser.read_if('}'))
+		{
+			LV_ENSURE(index < N, ArraySizeTooShort());
+			load(v[index++]);
 		}
 	}
 

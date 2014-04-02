@@ -13,16 +13,28 @@
 
 namespace lv
 { 
+
+	class LuaIArchive;
+	class LuaOArchive;
+
 	namespace lua { namespace archive {
 
-		class LuaIArchive;
-		class LuaOArchive;
+		class PlainLuaIArchive;
+
+		class Parser;
 
 	} }
 
+}
 
-	using lua::archive::LuaIArchive;
-	using lua::archive::LuaOArchive;
+namespace luabind
+{
+	namespace adl
+	{
+		class object;
+	}
+
+	using adl::object;
 }
 
 #endif

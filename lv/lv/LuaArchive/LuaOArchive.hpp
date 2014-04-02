@@ -36,7 +36,7 @@ namespace lv
 		template<typename T>
 		LuaOArchive & operator << (T const & t)
 		{
-			archive::save(os_, t, 0);
+			lua::archive::save(os_, t, 0);
 			os_ << std::endl << std::endl;
 
 			return *this;
