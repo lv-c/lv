@@ -91,8 +91,8 @@ namespace lv { namespace rpc {
 		 */
 		void	on_receive(ConstBufferRef const & data, callback_type const & callback)
 		{
-			IStreamPtr raw_is = istream_factory_.open(data);
-			iarchive_type ia(*raw_is);
+			IArchiveCreator<iarchive_type> creator(istream_factory_, data);
+			iarchive_type & ia = creator.archive();
 
 			register_type::ResultHolder result;
 

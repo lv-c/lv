@@ -146,12 +146,32 @@ namespace lv { namespace lua { namespace archive {
 					os << "\\'";
 					break;
 
+				case '\a':
+					os << "\\a";
+					break;
+
+				case '\b':
+					os << "\\b";
+					break;
+
+				case '\f':
+					os << "\\f";
+					break;
+
 				case '\n':
 					os << "\\n";
 					break;
 
 				case '\r':
 					os << "\\r";
+					break;
+
+				case '\t':
+					os << "\\t";
+					break;
+
+				case '\v':
+					os << "\\v";
 					break;
 
 				default:

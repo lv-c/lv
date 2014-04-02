@@ -47,6 +47,23 @@ namespace lv { namespace lua { namespace archive {
 		}
 	}
 
+	template<typename T>
+	void	load(Parser & parser, boost::shared_ptr<T> & v)
+	{
+		if(parser.read_if("nil"))
+		{
+			v.reset();
+		}
+		else
+		{
+			if(! v)
+			{
+				v.reset(new T());
+			}
+			parser >> *v;
+		}
+	}
+
 } } }
 
 #endif

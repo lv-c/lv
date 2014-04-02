@@ -58,7 +58,7 @@ namespace lv
 		{
 		}
 
-		OStreamProxy & put(char c)
+		OStreamProxy &	put(char c)
 		{
 			LV_STREAMPROXY_FW_CALL_1(put, c, (void));
 			return *this;
@@ -70,7 +70,7 @@ namespace lv
 			return *this;
 		}
 
-		OStreamProxy & flush()
+		OStreamProxy &	flush()
 		{
 			LV_STREAMPROXY_FW_CALL_0(flush, (void));
 			return *this;

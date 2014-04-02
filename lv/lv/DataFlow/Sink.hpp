@@ -13,7 +13,7 @@
 
 #include <lv/Buffer.hpp>
 #include <lv/MemFn.hpp>
-#include <lv/Stream/IStreamFactory.hpp>
+#include <lv/Serialization/IArchiveCreator.hpp>
 
 #include <lv/DataFlow/Fwd.hpp>
 #include <lv/DataFlow/Registery.hpp>
@@ -119,10 +119,8 @@ namespace lv { namespace flow {
 		{
 			if(IStreamFactoryPtr factory = weak_isteram_factory.lock())
 			{
-				IStreamPtr raw_is = factory->open(buf);
-				iarchive_type ia(*raw_is);
-
-				registery_.invoke(ia);
+				IArchiveCreator<IArchive> creator(*factory, buf);
+				registery_.invoke(creator.archive());
 			}
 		}
 	};

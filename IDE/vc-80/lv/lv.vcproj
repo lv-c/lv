@@ -254,6 +254,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\Ensure.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\Exception.hpp"
 					>
 				</File>
@@ -1036,6 +1040,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\Serialization\IArchiveCreator.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\Serialization\NonintrusiveOptional.hpp"
 					>
 				</File>
@@ -1284,6 +1292,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\LuaArchive\PlainISerializer.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\LuaArchive\PlainLuaIArchive.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\LuaArchive\Set.hpp"
 					>
 				</File>
@@ -1315,6 +1331,14 @@
 						>
 					</File>
 				</Filter>
+			</Filter>
+			<Filter
+				Name="Source Files"
+				>
+				<File
+					RelativePath="..\..\..\lv\src\LuaArchive\PlainISerializer.cpp"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter

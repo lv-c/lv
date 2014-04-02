@@ -187,8 +187,8 @@ namespace lv { namespace rpc {
 		 */
 		void	on_receive(ConstBufferRef const & buf)
 		{
-			IStreamPtr raw_is = istream_factory_.open(buf);
-			iarchive_type ia(*raw_is);
+			IArchiveCreator<iarchive_type> creator(istream_factory_, buf);
+			iarchive_type & ia = creator.archive();
 
 			Protocol::header::type header;
 			ia >> header;

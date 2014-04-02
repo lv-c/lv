@@ -14,6 +14,7 @@
 #include <utility>
 
 #include <boost/type_traits/remove_const.hpp>
+#include <boost/type_traits/is_arithmetic.hpp>
 
 #include <luabind/object.hpp>
 
@@ -39,6 +40,42 @@ namespace lv { namespace lua { namespace archive {
 	{
 		// in bimap, F and S are both const
 		detail::load_key_value(it, detail::remove_const(v.first), detail::remove_const(v.second));
+	}
+
+	//
+
+	class Parser;
+
+	namespace detail
+	{
+		template<typename F, typename S>
+		void	load_impl(Parser & parser, int index, std::pair<F, S> & v, boost::mpl::true_)
+		{
+			Token token = parser.next_token();
+			parser.rollback(token);
+
+			if(! token.is_key)
+			{
+				detail::remove_const(v.first) = static_cast<F>(index);
+				parser >> detail::remove_const(v.second);
+			}
+			else
+			{
+				load_impl(parser, index, v, boost::mpl::false_());
+			}
+		}
+
+		template<typename F, typename S>
+		void	load_impl(Parser & parser, int index, std::pair<F, S> & v, boost::mpl::false_)
+		{
+			parser >> detail::remove_const(v.first) >> detail::symbol('=') >> detail::remove_const(v.second);
+		}
+	}
+
+	template<typename F, typename S>
+	void	load_item(Parser & parser, int index, std::pair<F, S> & v)
+	{
+		detail::load_impl(parser, index, v, boost::mpl::bool_<boost::is_arithmetic<F>::value>());
 	}
 
 } } }
