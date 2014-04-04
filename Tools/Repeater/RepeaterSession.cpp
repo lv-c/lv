@@ -1,13 +1,19 @@
 #include "stdafx.h"
 #include "RepeaterSession.hpp"
+#include "Monitor.hpp"
+#include "Config.hpp"
 
 #include <lv/Log/DbgPrint.hpp>
 
-RepeaterSession::RepeaterSession(ContextPtr context, string const & dest_ip, string const & dest_port)
+#include <boost/asio/ip/address_v4.hpp>
+
+RepeaterSession::RepeaterSession(ContextPtr context, string const & dest_ip, string const & dest_port, Monitor & monitor)
 	: base_type(context)
 	, dest_ip_(dest_ip)
 	, dest_port_(dest_port)
+	, monitor_(monitor)
 	, dest_connected_(false)
+	, remote_ip_(0)
 {
 }
 
@@ -18,6 +24,18 @@ RepeaterSession::~RepeaterSession()
 
 void RepeaterSession::on_connected()
 {
+	string ip = remote_ip();
+
+	if(! ip.empty())
+	{
+		boost::asio::ip::address_v4 addr = boost::asio::ip::address_v4::from_string(ip);
+		remote_ip_ = (addr.to_ulong());
+	}
+
+
+	//
+	monitor_.increase(remote_ip_, IPStat::Connection, 1);
+
 	dest_session_.reset(new TcpSession(context_));
 
 	dest_session_->connect_event().connect(boost::bind(&RepeaterSession::dest_on_connected, this));
@@ -31,6 +49,10 @@ void RepeaterSession::on_connected()
 
 void RepeaterSession::on_receive(BufferPtr buf)
 {
+	monitor_.increase(remote_ip_, IPStat::SendCount, 1);
+	monitor_.increase(remote_ip_, IPStat::SendData, buf->size());
+
+
 	if(dest_connected_)
 	{
 		dest_session_->start_write(buf);
@@ -63,6 +85,9 @@ void RepeaterSession::on_error(ErrorType type, boost::system::error_code const &
 
 void RepeaterSession::dest_on_connected()
 {
+	monitor_.increase(remote_ip_, IPStat::DestConnectied, 1);
+
+	//
 	dest_connected_ = true;
 
 	if(cache_)
@@ -74,6 +99,9 @@ void RepeaterSession::dest_on_connected()
 
 void RepeaterSession::dest_on_receive(BufferPtr buf)
 {
+	monitor_.increase(remote_ip_, IPStat::RecvCount, 1);
+	monitor_.increase(remote_ip_, IPStat::RecvData, buf->size());
+
 	start_write(buf);
 }
 

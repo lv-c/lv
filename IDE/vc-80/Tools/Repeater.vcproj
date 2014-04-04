@@ -46,7 +46,7 @@
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="2"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="true"
+				Detect64BitPortabilityProblems="false"
 				DebugInformationFormat="4"
 			/>
 			<Tool
@@ -120,7 +120,7 @@
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="true"
+				Detect64BitPortabilityProblems="false"
 				DebugInformationFormat="3"
 			/>
 			<Tool
@@ -176,6 +176,10 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath="..\..\..\Tools\Repeater\Monitor.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\Tools\Repeater\Repeater.cpp"
 				>
 			</File>
@@ -201,6 +205,14 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath="..\..\..\Tools\Repeater\Config.hpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\Tools\Repeater\Monitor.hpp"
+				>
+			</File>
 			<File
 				RelativePath="..\..\..\Tools\Repeater\RepeaterSession.hpp"
 				>

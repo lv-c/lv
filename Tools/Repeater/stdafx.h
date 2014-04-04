@@ -17,10 +17,14 @@ using namespace lv;
 
 using namespace std;
 
+#include <boost/array.hpp>
+#include <boost/asio/deadline_timer.hpp>
+
 
 #ifdef _DEBUG
 #pragma comment(lib, "libluabindd.lib")
+#pragma comment(lib, "libluad.lib")
 #else
 #pragma comment(lib, "libluabind.lib")
-#endif
 #pragma comment(lib, "liblua.lib")
+#endif

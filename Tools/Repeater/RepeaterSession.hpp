@@ -14,6 +14,7 @@
 
 using namespace lv::net;
 
+class Monitor;
 
 class RepeaterSession : public TcpSession
 {
@@ -29,9 +30,13 @@ class RepeaterSession : public TcpSession
 
 	BufferPtr	cache_;
 
+	Monitor &	monitor_;
+
+	uint32	remote_ip_;
+
 public:
 
-	RepeaterSession(ContextPtr context, string const & dest_ip, string const & dest_port);
+	RepeaterSession(ContextPtr context, string const & dest_ip, string const & dest_port, Monitor & monitor);
 
 	virtual ~RepeaterSession();
 

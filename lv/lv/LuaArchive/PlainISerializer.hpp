@@ -198,7 +198,7 @@ namespace lv { namespace lua { namespace archive {
 				Token token = parser.next_token();
 				expect(token, Token::Literal);
 
-				LV_ENSURE(token == lit.lit_, std::runtime_error(std::string("literal expected:") + lit.lit_));
+				LV_ENSURE(token == lit.lit_, std::string("literal expected:") + lit.lit_);
 
 				return parser;
 			}

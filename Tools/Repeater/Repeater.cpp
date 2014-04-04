@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "RepeaterSession.hpp"
+#include "Monitor.hpp"
+#include "Config.hpp"
 
 #include <lv/FrameWork/Net/ServerBase.hpp>
 #include <lv/FrameWork/Net/Context.hpp>
@@ -12,17 +14,6 @@
 #include <boost/asio/io_service.hpp>
 
 
-struct Address
-{
-	string	ip;
-	uint16	port;
-
-	template<class Archive>
-	void	serialize(Archive & ar, unsigned int)
-	{
-		ar & ip & port;
-	}
-};
 
 class RepeaterSessionCreater
 {
@@ -30,17 +21,20 @@ class RepeaterSessionCreater
 
 	string	port_;
 
+	Monitor &	monitor_;
+
 public:
 
-	RepeaterSessionCreater(string const & ip, string const & port)
+	RepeaterSessionCreater(string const & ip, string const & port, Monitor & monitor)
 		: ip_(ip)
 		, port_(port)
+		, monitor_(monitor)
 	{
 	}
 
 	SessionPtr operator () (ContextPtr context) const
 	{
-		return SessionPtr(new RepeaterSession(context, ip_, port_));
+		return SessionPtr(new RepeaterSession(context, ip_, port_, monitor_));
 	}
 };
 
@@ -52,15 +46,14 @@ int main(int argc, char **argv)
 	lv::log::add_stdio_gather(LOG);
 
 	// config
-	typedef map<uint16, Address> AddressMap;
-	AddressMap mapping;
+	Config cfg;
 
 	try
 	{
-		LuaConfig cfg;
-		cfg.load_file("config.lua");
+		LuaConfig lua_cfg;
+		lua_cfg.load_file("config.lua");
 
-		cfg ("mapping", mapping);
+		lua_cfg (cfg);
 	}
 	catch(exception const & ex)
 	{
@@ -79,9 +72,11 @@ int main(int argc, char **argv)
 
 	vector<ServerPtr> servers;
 
-	foreach(AddressMap::const_reference v, mapping)
+	Monitor stat(service);
+
+	foreach(Config::AddressMap::const_reference v, cfg.mapping)
 	{
-		RepeaterSessionCreater creater(v.second.ip, boost::lexical_cast<string>(v.second.port));
+		RepeaterSessionCreater creater(v.second.ip, boost::lexical_cast<string>(v.second.port), stat);
 		ServerPtr server(new ServerBase(context, creater));
 
 		server->start(v.first);

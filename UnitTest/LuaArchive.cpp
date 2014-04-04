@@ -19,6 +19,7 @@
 #include <lv/LuaArchive/DSTree.hpp>
 #include <lv/LuaArchive/Deque.hpp>
 #include <lv/LuaArchive/Mapping.hpp>
+#include <lv/LuaArchive/Array.hpp>
 #include <lv/LuaArchive/NonintrusiveOptional.hpp>
 #include <lv/Lua/Exec.hpp>
 
@@ -169,35 +170,6 @@ int err_handler(lua_State * L)
 	return 1;
 }
 
-template<typename IArchive>
-void	test_lua_iarchive(IArchive & ia)
-{
-	Vertex new_vertex;
-	int new_num;
-	Mode new_mode;
-	DSTree<char, int> new_tree;
-	DSTree<string, string> new_tree2;
-	deque<int> new_que;
-	Mapping<string, int> new_mapping;
-
-	ia >> boost::serialization::make_nvp("vertex", new_vertex) 
-		>> boost::serialization::make_nvp("number", new_num)
-		>> boost::serialization::make_nvp("mode", new_mode)
-		>> boost::serialization::make_nvp("tree", new_tree)
-		>> boost::serialization::make_nvp("tree2", new_tree2)
-		>> boost::serialization::make_nvp("que", new_que)
-		>> boost::serialization::make_nvp("mapping", lv::serialization::make_optional(new_mapping));
-
-	BOOST_CHECK(vertex == new_vertex);
-	BOOST_CHECK_EQUAL(num, new_num);
-	BOOST_CHECK_EQUAL(mode, new_mode);
-	BOOST_CHECK(tree == new_tree);
-	BOOST_CHECK(tree2 == new_tree2);
-	BOOST_CHECK(que == new_que);
-	BOOST_CHECK_EQUAL(new_mapping.size(), 1);
-	BOOST_CHECK_EQUAL(new_mapping.get_left(mapping_key), 1);
-};
-
 BOOST_AUTO_TEST_CASE(test_lua_archive)
 {
 	ostringstream oss;
@@ -213,6 +185,8 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 	Mapping<string, int> mapping;
 	string mapping_key = "\\h'e\r\nll\to";
 	mapping.insert(std::make_pair(mapping_key, 1));
+
+	boost::array<string, 3> arr = { "a", "bc" };
 
 	boost::assign::push_back(vertex.points) (10, 20) (50, 60);
 	boost::assign::insert(vertex.int_map) (Point(5, 6), 2) (Point(8, 9), 3);
@@ -237,6 +211,7 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 		<< boost::serialization::make_nvp("que", que)
 		<< boost::serialization::make_nvp("que_to_map", que)
 		<< boost::serialization::make_nvp("mapping", mapping)
+		<< boost::serialization::make_nvp("arr", arr)
 		<< boost::serialization::make_nvp("tree", tree)
 		<< boost::serialization::make_nvp("tree2", tree2)
 	;
@@ -306,6 +281,7 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 		DSTree<char, int> new_tree;
 		DSTree<string, string> new_tree2;
 		deque<int> new_que;
+		boost::array<string, 3> new_arr;
 		map<int, int> que_to_map;
 		Mapping<string, int> new_mapping;
 
@@ -315,6 +291,7 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 			>> boost::serialization::make_nvp("que", new_que)
 			>> boost::serialization::make_nvp("que_to_map", que_to_map)
 			>> boost::serialization::make_nvp("mapping", lv::serialization::make_optional(new_mapping))
+			>> boost::serialization::make_nvp("arr", new_arr)
 			>> boost::serialization::make_nvp("tree", new_tree)
 			>> boost::serialization::make_nvp("tree2", new_tree2)
 		;
@@ -325,6 +302,7 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 		BOOST_CHECK(tree == new_tree);
 		BOOST_CHECK(tree2 == new_tree2);
 		BOOST_CHECK(que == new_que);
+		BOOST_CHECK(arr == new_arr);
 		BOOST_CHECK_EQUAL(que_to_map[1], que[0]);
 		BOOST_CHECK_EQUAL(new_mapping.size(), 1);
 		BOOST_CHECK_EQUAL(new_mapping.get_left(mapping_key), 1);
@@ -341,6 +319,7 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 		deque<int> new_que;
 		map<int, int> que_to_map;
 		Mapping<string, int> new_mapping;
+		boost::array<string, 3> new_arr;
 
 		ia >> boost::serialization::make_nvp("vertex", new_vertex) 
 			>> boost::serialization::make_nvp("number", new_num)
@@ -348,6 +327,7 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 			>> boost::serialization::make_nvp("que", new_que)
 			>> boost::serialization::make_nvp("que_to_map", que_to_map)
 			>> boost::serialization::make_nvp("mapping", lv::serialization::make_optional(new_mapping))
+			>> boost::serialization::make_nvp("arr", new_arr)
 			// >> boost::serialization::make_nvp("tree", new_tree)
 			// >> boost::serialization::make_nvp("tree2", new_tree2)
 		;
@@ -359,6 +339,7 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 		BOOST_CHECK_EQUAL(que_to_map[1], que[0]);
 		BOOST_CHECK_EQUAL(new_mapping.size(), 1);
 		BOOST_CHECK_EQUAL(new_mapping.get_left(mapping_key), 1);
+		BOOST_CHECK(arr == new_arr);
 		// BOOST_CHECK(tree == new_tree);
 		// BOOST_CHECK(tree2 == new_tree2);
 	}
