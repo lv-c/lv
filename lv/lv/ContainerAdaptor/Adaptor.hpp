@@ -25,6 +25,24 @@ namespace lv
 		t.insert(v);
 	}
 
+	template<class T, class V>
+	void	push_back(T & t, V const & v)
+	{
+		t.push_back(v);
+	}
+
+	template<class T, class V>
+	void	push_front(T & t, V const & v)
+	{
+		t.push_front(v);
+	}
+
+	template<class T, class I>
+	void	assign(T & t, I const & begin, I const & end)
+	{
+		t.assign(begin, end);
+	}
+
 	template<class T>
 	void	reserve(T & t, size_t size)
 	{
