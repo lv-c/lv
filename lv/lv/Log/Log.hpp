@@ -37,8 +37,10 @@ namespace lv { namespace log {
 		typedef boost::mutex::scoped_lock	scoped_lock;	
 		boost::mutex	mutex_;
 
+		bool	enabled_;
+
 	
-		int	lvl_;	// level of the current record
+		int		lvl_;	// level of the current record
 
 
 		class Proxy : boost::noncopyable
@@ -91,6 +93,11 @@ namespace lv { namespace log {
 
 	public:
 
+		Log()
+			: enabled_(true)
+		{
+		}
+
 		/**
 		 * the default parameter will make your life easier if you just want a simple
 		 *	logger
@@ -119,17 +126,26 @@ namespace lv { namespace log {
 			gathers_.erase(gather);
 		}
 		
+		void	enable(bool enabled = true)
+		{
+			scoped_lock lock(mutex_);
+
+			enabled_ = enabled;
+		}
 
 	private:
 		
 		template <typename T>
 		void log(T const & t)
 		{
-			foreach(gather_ptr & gather, this->gathers_)
+			if(enabled_)
 			{
-				if(gather->output(lvl_))
+				foreach(gather_ptr & gather, this->gathers_)
 				{
-					gather->log(t);
+					if(gather->output(lvl_))
+					{
+						gather->log(t);
+					}
 				}
 			}
 		}
@@ -141,22 +157,28 @@ namespace lv { namespace log {
 
 			this->lvl_ = lvl;
 
-			foreach(gather_ptr & gather, this->gathers_)
+			if(enabled_)
 			{
-				if(gather->output(lvl_))
+				foreach(gather_ptr & gather, this->gathers_)
 				{
-					gather->on_record_begin(lvl_);
+					if(gather->output(lvl_))
+					{
+						gather->on_record_begin(lvl_);
+					}
 				}
 			}
 		}
 
 		void on_record_end()
 		{
-			foreach(gather_ptr & gather, this->gathers_)
+			if(enabled_)
 			{
-				if(gather->output(lvl_))
+				foreach(gather_ptr & gather, this->gathers_)
 				{
-					gather->on_record_end(lvl_);
+					if(gather->output(lvl_))
+					{
+						gather->on_record_end(lvl_);
+					}
 				}
 			}
 

@@ -17,9 +17,9 @@ namespace lv
 	class LuaIArchive;
 	class LuaOArchive;
 
-	namespace lua { namespace archive {
+	class PlainLuaIArchive;
 
-		class PlainLuaIArchive;
+	namespace lua { namespace archive {
 
 		class Parser;
 

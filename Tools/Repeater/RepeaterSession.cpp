@@ -109,11 +109,11 @@ void RepeaterSession::dest_on_error(ErrorType type, boost::system::error_code co
 {
 	if(type == ErrorConnect)
 	{
-		LOG(lv::error) << "error connecting to dest:" << dest_ip_ << " port:" << dest_port_;
+		LOG(lv::error) << "error connecting to dest:" << dest_ip_ << " port:" << dest_port_ << " msg:" << error.message();
 	}
 	else
 	{
-		LOG() << "dest session disconnected:" << remote_ip();
+		LOG() << "dest session disconnected:" << remote_ip() << " msg:" << error.message();
 	}
 
 	shutdown();
