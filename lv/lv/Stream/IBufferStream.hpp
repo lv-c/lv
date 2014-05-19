@@ -46,10 +46,10 @@ namespace lv
 
 			if(to_read != size)
 			{
-				state |= std::ios_base::eofbit | std::ios_base::failbit;
+				state |= std::ios_base::failbit;
 			}
 
-			setstate(state);
+			inner_setstate(state);
 			return *this;
 		}
 
@@ -97,7 +97,7 @@ namespace lv
 				}
 			}
 
-			setstate(state);
+			inner_setstate(state);
 			return *this;
 		}
 
@@ -111,7 +111,6 @@ namespace lv
 			{
 				if(pos >= size)
 				{
-					state = std::ios_base::eofbit;
 					break;
 				}
 
@@ -124,16 +123,26 @@ namespace lv
 
 			gpos_ = pos;
 
-			setstate(state);
+			inner_setstate(state);
 			return *this;
 		}
 
-		private:
+	private:
 
-			streamsize	stream_size() const
+		streamsize	stream_size() const
+		{
+			return static_cast<streamsize>(buf_.size());
+		}
+
+		void	inner_setstate(iostate state)
+		{
+			if(gpos_ >= (streamsize) buf_.size())
 			{
-				return static_cast<streamsize>(buf_.size());
+				state |= std::ios_base::eofbit;
 			}
+
+			setstate(state);
+		}
 	};
 
 }
