@@ -33,6 +33,8 @@ struct Config : public Singleton<Config>
 
 	uint32	stat_minutes;
 
+	uint32	no_data_disconnect_seconds;
+
 	uint32	sub_ip_to_ban;
 
 	uint32	connections_to_ban;
@@ -44,7 +46,8 @@ struct Config : public Singleton<Config>
 			& BOOST_SERIALIZATION_NVP(mask)
 			& BOOST_SERIALIZATION_NVP(stat_minutes)
 			& BOOST_SERIALIZATION_NVP(sub_ip_to_ban)
-			& BOOST_SERIALIZATION_NVP(connections_to_ban);
+			& BOOST_SERIALIZATION_NVP(connections_to_ban)
+			& BOOST_SERIALIZATION_NVP(no_data_disconnect_seconds);
 	}
 
 };

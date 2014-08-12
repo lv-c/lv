@@ -35,7 +35,7 @@ namespace lv { namespace lua {
 	public:
 
 		/// If you don't specify a file loader, RawFileReader will be used
-		explicit LuaConfig(IFileIOPtr file_loader = IFileIOPtr());
+		explicit LuaConfig(std::string const & file = std::string(), IFileIOPtr file_loader = IFileIOPtr());
 
 		virtual ~LuaConfig();
 

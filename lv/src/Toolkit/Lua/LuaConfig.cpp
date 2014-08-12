@@ -9,7 +9,7 @@
 
 namespace lv { namespace lua {
 
-	LuaConfig::LuaConfig(IFileIOPtr file_loader /* = IFileIOPtr */)
+	LuaConfig::LuaConfig(std::string const & file /* = std::string() */, IFileIOPtr file_loader /* = IFileIOPtr */)
 		: file_loader_(file_loader)
 	{
 		if(! this->file_loader_)
@@ -20,6 +20,12 @@ namespace lv { namespace lua {
 		L_ = init_lua();
 
 		ia_.reset(new LuaIArchive(luabind::globals(L_)));
+
+		//
+		if(! file.empty())
+		{
+			load_file(file);
+		}
 	}
 
 	LuaConfig::~LuaConfig()

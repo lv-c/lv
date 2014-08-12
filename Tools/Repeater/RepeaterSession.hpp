@@ -11,6 +11,7 @@
 #pragma once
 
 #include <lv/FrameWork/Net/TcpSession.hpp>
+#include <lv/Timer.hpp>
 
 using namespace lv::net;
 
@@ -34,6 +35,10 @@ class RepeaterSession : public TcpSession
 
 	uint32	remote_ip_;
 
+	Timer	active_timer_;
+
+	boost::asio::deadline_timer	timer_;
+
 public:
 
 	RepeaterSession(ContextPtr context, string const & dest_ip, string const & dest_port, Monitor & monitor);
@@ -41,6 +46,12 @@ public:
 	virtual ~RepeaterSession();
 
 private:
+
+	void	start_timer();
+
+	void	on_timer(boost::system::error_code const & error);
+
+	void	exit();
 
 	virtual	void	on_connected();
 	virtual	void	on_receive(BufferPtr buf);

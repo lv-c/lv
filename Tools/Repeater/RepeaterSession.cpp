@@ -4,6 +4,7 @@
 #include "Config.hpp"
 
 #include <lv/Log/DbgPrint.hpp>
+#include <lv/FrameWork/Net/Context.hpp>
 
 #include <boost/asio/ip/address_v4.hpp>
 
@@ -14,6 +15,7 @@ RepeaterSession::RepeaterSession(ContextPtr context, string const & dest_ip, str
 	, monitor_(monitor)
 	, dest_connected_(false)
 	, remote_ip_(0)
+	, timer_(context->service())
 {
 }
 
@@ -44,11 +46,15 @@ void RepeaterSession::on_connected()
 
 	dest_session_->connect(dest_ip_, dest_port_);
 
+	start_timer();
+
 	LOG() << "new sesssion:" << remote_ip();
 }
 
 void RepeaterSession::on_receive(BufferPtr buf)
 {
+	active_timer_.restart();
+
 	monitor_.increase(remote_ip_, IPStat::SendCount, 1);
 	monitor_.increase(remote_ip_, IPStat::SendData, buf->size());
 
@@ -70,17 +76,48 @@ void RepeaterSession::on_receive(BufferPtr buf)
 	}
 }
 
-void RepeaterSession::on_error(ErrorType type, boost::system::error_code const & error)
+void RepeaterSession::on_timer(boost::system::error_code const & error)
 {
-	LOG() << "on error:" << remote_ip();
+	if(! error && ! closed())
+	{
+		int sec = Config::instance().no_data_disconnect_seconds;
 
+		if(sec != 0 && active_timer_.elapsed().seconds() >= sec)
+		{
+			LOG() << "close inactive session:" << remote_ip();
+
+			exit();
+			return;
+		}
+
+		start_timer();
+	}
+}
+
+void RepeaterSession::start_timer()
+{
+	timer_.expires_from_now(boost::posix_time::seconds(1));
+	timer_.async_wait(boost::bind(&RepeaterSession::on_timer, 
+		boost::shared_dynamic_cast<RepeaterSession>(shared_from_this()), _1));
+}
+
+void RepeaterSession::exit()
+{
 	if(dest_session_)
 	{
 		dest_session_->shutdown();
 		dest_session_->close();
 	}
 
+	shutdown();
 	close();
+}
+
+void RepeaterSession::on_error(ErrorType type, boost::system::error_code const & error)
+{
+	LOG() << "on error:" << remote_ip();
+
+	exit();
 }
 
 void RepeaterSession::dest_on_connected()
@@ -99,6 +136,8 @@ void RepeaterSession::dest_on_connected()
 
 void RepeaterSession::dest_on_receive(BufferPtr buf)
 {
+	active_timer_.restart();
+
 	monitor_.increase(remote_ip_, IPStat::RecvCount, 1);
 	monitor_.increase(remote_ip_, IPStat::RecvData, buf->size());
 
@@ -116,8 +155,5 @@ void RepeaterSession::dest_on_error(ErrorType type, boost::system::error_code co
 		LOG() << "dest session disconnected:" << remote_ip() << " msg:" << error.message();
 	}
 
-	shutdown();
-	close();
-
-	dest_session_->close();
+	exit();
 }

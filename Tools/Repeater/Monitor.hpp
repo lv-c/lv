@@ -47,6 +47,16 @@ class Monitor : boost::noncopyable
 
 	uint32	ip_mask_;
 
+	string	mask_bits_;
+
+	enum OSVerion
+	{
+		Win2008,
+		WinOthers
+	};
+
+	OSVerion	os_version_;
+
 public:
 
 	Monitor(boost::asio::io_service & service);

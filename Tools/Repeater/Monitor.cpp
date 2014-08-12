@@ -12,15 +12,48 @@
 Monitor::Monitor(boost::asio::io_service & service)
 	: timer_(service)
 	, ip_mask_(0)
+	, os_version_(WinOthers)
 {
+	OSVERSIONINFOEXA os;
+	os.dwOSVersionInfoSize = sizeof(os);
+	
+	if(GetVersionExA((LPOSVERSIONINFOA) &os))
+	{
+		switch(os.dwMajorVersion)
+		{
+		case 6:
+			os_version_ = Win2008;
+			break;
+
+		default:
+			break;
+		}
+	}
+
+	LOG() << "os version:" << os_version_;
+
 	boost::asio::ip::address_v4 mask = boost::asio::ip::address_v4::from_string(Config::instance().mask);
 	ip_mask_ = mask.to_ulong();
+
+	int bits = 0;
+	for(int i = 0; i < sizeof(ip_mask_) * 8; ++i)
+	{
+		if(ip_mask_ & (1 << i))
+		{
+			bits ++;
+		}
+	}
+
+	mask_bits_ = boost::lexical_cast<string>(bits);
 
 	//
 	log::add_debug_string_gather(log_);
 	start_timer();
 
-	ipsec("add mmpolicy name=lv_mmpolicy");
+	if(os_version_ == WinOthers)
+	{
+		ipsec("add mmpolicy name=lv_mmpolicy");	
+	}
 
 	/*
 	ipsec("add policy name=lv_policy");
@@ -79,10 +112,20 @@ void Monitor::hack_scan()
 				addr.to_string() % cfg.mask).str();
 			*/
 
-			string str = (boost::format("add rule mmpolicy=lv_mmpolicy srcaddr=%s srcmask=%s dstaddr=Me actioninbound=block actionoutbound=block") %
-				addr.to_string() % cfg.mask).str();
+			if(os_version_ == WinOthers)
+			{
+				string str = (boost::format("add rule mmpolicy=lv_mmpolicy srcaddr=%s srcmask=%s dstaddr=Me actioninbound=block actionoutbound=block") %
+					addr.to_string() % cfg.mask).str();
 				
-			ipsec(str);
+				ipsec(str);
+			}
+			else if(os_version_ == Win2008)
+			{
+				string str = "netsh advfirewall firewall add rule name=lv_repeater dir=in action=block remoteip=" + addr.to_string()
+					+ "/" + mask_bits_;
+
+				system(str.c_str());
+			}
 
 			log_() << "block ip:" << addr.to_string() << " connection:" << info.value[IPStat::Connection]
 				<< " sub_ip:" << info.sub_ip.size();
