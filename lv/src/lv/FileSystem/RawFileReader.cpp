@@ -31,7 +31,7 @@ namespace lv
 			buf->clear();
 		}
 
-		if(! infile.good())
+		if(! infile)
 		{
 			throw(file_io_error("error reading file : " + file));
 		}

@@ -21,7 +21,7 @@ namespace lv
 			ofile.write(buffer::data(buf), buf->size());	// write the whole file
 		}
 
-		if(! ofile.good())
+		if(! ofile)
 		{
 			throw(file_io_error("error writing file: " + file));
 		}

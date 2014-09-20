@@ -118,7 +118,7 @@ namespace lv
 				success = false;
 			}
 
-			if(! ostream_.good() || ! success)
+			if(! ostream_ || ! success)
 			{
 				throw boost::archive::archive_exception(boost::archive::archive_exception::output_stream_error);
 			}

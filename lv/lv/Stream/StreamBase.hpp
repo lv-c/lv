@@ -103,6 +103,10 @@ namespace lv
 			return ((rdstate() & std::ios_base::badbit) != 0);
 		}
 
+		bool	operator ! () const
+		{
+			return fail();
+		}
 
 
 	private:
