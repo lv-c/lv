@@ -19,6 +19,8 @@
 #include <lv/SharedPtr.hpp>
 #include <lv/SimpleBufferManager.hpp>
 
+#include <boost/thread/thread.hpp>
+
 
 #pragma comment(lib, "libeay32.lib")
 #pragma comment(lib, "ssleay32.lib")

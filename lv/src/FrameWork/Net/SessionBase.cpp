@@ -101,6 +101,8 @@ namespace lv { namespace net {
 
 	void SessionBase::connect(std::string const & ip, std::string const & port, std::string const & to_bind /* = std::string */)
 	{
+		closed_ = false;
+
 		asio::ip::tcp::resolver::query query(ip, port);
 		asio::ip::tcp::resolver resolver(context_->service());
 
@@ -171,6 +173,15 @@ namespace lv { namespace net {
 		error_event_(type, error);
 	}
 
+	void SessionBase::on_error_internal(ErrorType type, boost::system::error_code const & error)
+	{
+		if(! closed_)
+		{
+			close();
+			on_error(type, error);
+		}
+	}
+
 	void SessionBase::on_connected_internal()
 	{
 		start_read();
@@ -206,7 +217,7 @@ namespace lv { namespace net {
 
 		if(error)
 		{
-			on_error(ErrorRead, error);
+			on_error_internal(ErrorRead, error);
 		}
 		else
 		{
@@ -226,7 +237,7 @@ namespace lv { namespace net {
 
 		if(error)
 		{
-			on_error(ErrorWrite, error);
+			on_error_internal(ErrorWrite, error);
 		}
 		else
 		{
@@ -247,7 +258,7 @@ namespace lv { namespace net {
 		}
 		else
 		{
-			on_error(ErrorConnect, error);
+			on_error_internal(ErrorConnect, error);
 		}
 	}
 

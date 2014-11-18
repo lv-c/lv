@@ -58,7 +58,7 @@ namespace lv
 			}
 			else
 			{
-				return strand_->io_service();
+				return strand_->get_io_service();
 			}
 		}
 

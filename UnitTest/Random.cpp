@@ -12,6 +12,8 @@
 
 #include <lv/Random.hpp>
 
+#include <iostream>
+
 using namespace lv;
 using namespace std;
 

@@ -3,7 +3,7 @@
 #include <lv/FrameWork/Net/SocketHolder.hpp>
 
 #include <boost/asio/ssl.hpp>
-
+#include <boost/asio/placeholders.hpp>
 
 namespace lv { namespace net {
 
@@ -61,7 +61,7 @@ namespace lv { namespace net {
 		}
 		else
 		{
-			on_error(ErrorHandshake, error);
+			on_error_internal(ErrorHandshake, error);
 		}
 	}
 
@@ -78,7 +78,7 @@ namespace lv { namespace net {
 		}
 		else
 		{
-			on_error(ErrorConnect, error);
+			on_error_internal(ErrorConnect, error);
 		}
 	}
 
@@ -101,10 +101,10 @@ namespace lv { namespace net {
 		}
 
 
-		SSLSocketHolder::socket_type & sock = boost::shared_dynamic_cast<SSLSocketHolder>(socket())->real_socket();
+		SSLSocketHolder::socket_type & sock = boost::dynamic_pointer_cast<SSLSocketHolder>(socket())->real_socket();
 
 		sock.async_handshake(true_type, boost::bind(&SSLSession::handle_handshake, 
-			boost::shared_static_cast<SSLSession>(shared_from_this()), asio::placeholders::error));
+			boost::dynamic_pointer_cast<SSLSession>(shared_from_this()), asio::placeholders::error));
 	}
 
 } }

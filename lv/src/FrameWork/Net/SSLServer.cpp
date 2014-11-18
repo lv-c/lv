@@ -24,7 +24,7 @@ namespace lv { namespace net {
 
 	void SSLServer::init_context()
 	{
-		asio::ssl::context & ctx = * boost::shared_dynamic_cast<SSLContext>(context_)->ssl_context();
+		asio::ssl::context & ctx = * boost::dynamic_pointer_cast<SSLContext>(context_)->ssl_context();
 
 		ctx.set_options(
 			asio::ssl::context::default_workarounds

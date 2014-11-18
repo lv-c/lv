@@ -47,6 +47,14 @@ namespace lv { namespace net {
 
 	class SSLContext;
 
+	class Socks5ClientSession;
+
+	class Socks5ClientContext;
+
+	class Socks5ServerSession;
+
+	class Socks5ClientContext;
+
 	namespace asio = boost::asio;
 
 } }

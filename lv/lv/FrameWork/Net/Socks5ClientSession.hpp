@@ -19,7 +19,7 @@ namespace lv { namespace net {
 
 	class Socks5ClientSession : public TcpSession
 	{
-		typedef public TcpSession	base_type;
+		typedef TcpSession	base_type;
 
 		bool	use_proxy_;
 
@@ -39,8 +39,6 @@ namespace lv { namespace net {
 		std::string	ip_;
 
 		std::string	port_;
-
-		volatile bool	first_error_;
 
 	public:
 		
@@ -66,9 +64,6 @@ namespace lv { namespace net {
 		PacketProxy		socks_send();
 
 		void	send_request();
-
-		void	on_error_internal(ErrorType type, boost::system::error_code const & error);
-
 
 		/// @exception std::ios_base::failure
 

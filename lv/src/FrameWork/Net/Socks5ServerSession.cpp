@@ -20,7 +20,7 @@ namespace lv { namespace net {
 		, status_(MethodSelect)
 		, closed_(false)
 	{
-		BOOST_ASSERT(boost::shared_dynamic_cast<ISocks5ServerContext>(context));
+		BOOST_ASSERT(boost::dynamic_pointer_cast<ISocks5ServerContext>(context));
 	}
 
 	void Socks5ServerSession::on_receive(BufferPtr buf)
@@ -89,7 +89,7 @@ namespace lv { namespace net {
 		std::vector<uint8> methods(methods_num);
 		bis >> methods;
 
-		uint8 m = boost::shared_dynamic_cast<ISocks5ServerContext>(context_)->select_method(methods);
+		uint8 m = boost::dynamic_pointer_cast<ISocks5ServerContext>(context_)->select_method(methods);
 
 		send() << Socks5::Version << m;
 
@@ -123,7 +123,7 @@ namespace lv { namespace net {
 
 		BOOST_ASSERT(ver == Socks5::AuthVersion);
 
-		bool valid = boost::shared_dynamic_cast<ISocks5ServerContext>(context_)->verify(auth);
+		bool valid = boost::dynamic_pointer_cast<ISocks5ServerContext>(context_)->verify(auth);
 
 		send() << Socks5::AuthVersion << uint8(valid ? 0 : 1);
 
@@ -199,7 +199,7 @@ namespace lv { namespace net {
 		connections_.push_back(dest_session_->error_event().connect(boost::bind(&Socks5ServerSession::dest_on_error, this, _1, _2)));
 		connections_.push_back(dest_session_->receive_event().connect(boost::bind(&Socks5ServerSession::dest_on_receive, this, _1)));
 
-		std::string to_bind = boost::shared_dynamic_cast<ISocks5ServerContext>(context_)->address_to_bind();
+		std::string to_bind = boost::dynamic_pointer_cast<ISocks5ServerContext>(context_)->address_to_bind();
 
 		try
 		{

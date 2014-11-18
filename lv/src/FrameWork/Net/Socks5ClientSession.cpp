@@ -18,15 +18,13 @@ namespace lv { namespace net {
 		: base_type(context)
 		, use_proxy_(false)
 		, status_(None)
-		, first_error_(true)
 	{
-		BOOST_ASSERT(boost::shared_dynamic_cast<Socks5ClientContext>(context));
+		BOOST_ASSERT(boost::dynamic_pointer_cast<Socks5ClientContext>(context));
 	}
 
 	void Socks5ClientSession::connect(std::string const & ip, std::string const & port,
 		std::string const & to_bind /* = std::string */)
 	{
-		first_error_ = true;
 		status_ = None;
 		cache_.reset();
 
@@ -34,7 +32,7 @@ namespace lv { namespace net {
 		port_ = port;
 
 		std::string socks_ip, socks_port;
-		boost::shared_dynamic_cast<Socks5ClientContext>(context_)->get_proxy(socks_ip, socks_port);
+		boost::dynamic_pointer_cast<Socks5ClientContext>(context_)->get_proxy(socks_ip, socks_port);
 
 		use_proxy_ = (! socks_ip.empty());
 
@@ -81,7 +79,7 @@ namespace lv { namespace net {
 		}
 		else
 		{
-			bool auth = boost::shared_dynamic_cast<Socks5ClientContext>(context_)->has_auth();
+			bool auth = boost::dynamic_pointer_cast<Socks5ClientContext>(context_)->has_auth();
 			uint8 const methods_num = 1;
 
 			status_ = MethodSelect;
@@ -168,7 +166,7 @@ namespace lv { namespace net {
 
 		if(method == Socks5::UserPassword)
 		{
-			boost::shared_ptr<Socks5ClientContext> s5_context = boost::shared_dynamic_cast<Socks5ClientContext>(context_);
+			boost::shared_ptr<Socks5ClientContext> s5_context = boost::dynamic_pointer_cast<Socks5ClientContext>(context_);
 			std::string user, password;
 			s5_context->get_auth(user, password);
 
@@ -366,16 +364,6 @@ namespace lv { namespace net {
 	PacketProxy Socks5ClientSession::socks_send()
 	{
 		return PacketProxy(context_->buffer(), boost::bind(&Socks5ClientSession::start_write, this, _1));
-	}
-
-	void Socks5ClientSession::on_error_internal(ErrorType type, boost::system::error_code const & error)
-	{
-		// TODO : not thread-safe?
-		if(first_error_)
-		{
-			first_error_ = false;
-			on_error(type, error);
-		}
 	}
 
 } }
