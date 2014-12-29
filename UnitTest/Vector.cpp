@@ -41,7 +41,7 @@ BOOST_AUTO_TEST_CASE(test_vector)
 	{
 		Vector3f vec;
 		float f = 2.0f;
-		foreach(float & e, vec)
+		BOOST_FOREACH(float & e, vec)
 		{
 			e = f;
 			f += 1.0f;
@@ -51,7 +51,7 @@ BOOST_AUTO_TEST_CASE(test_vector)
 		BOOST_CHECK_EQUAL(vec[0], 2.0f);
 
 		Vector3f const & vec_ref = vec;
-		foreach(float e, vec_ref)
+		BOOST_FOREACH(float e, vec_ref)
 		{
 			e = 0;
 		}

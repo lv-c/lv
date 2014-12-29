@@ -70,7 +70,7 @@ namespace lv
 
 		bool operator () (wchar_t c, Editbox const & edit)
 		{
-			foreach(Editbox::filter_type & f, filters_)
+			BOOST_FOREACH(Editbox::filter_type & f, filters_)
 			{
 				if(! f(c, edit))
 				{

@@ -26,7 +26,7 @@ namespace lv
 	typedef boost::shared_ptr<Buffer const>	ConstBufferPtr;
 
 
-	/// these two classes are compatible with boost.range and boost.foreach
+	/// these two classes are compatible with boost.range and boost.BOOST_FOREACH
 	template <typename T> class ConstBufferRefT;
 	template <typename T> class BufferRefT;
 

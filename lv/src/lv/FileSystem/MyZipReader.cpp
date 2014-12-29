@@ -35,7 +35,7 @@ namespace lv
 	{
 		scoped_lock lock(mutex_);
 
-		foreach(UnzipMap::value_type const & it, unzip_)
+		BOOST_FOREACH(UnzipMap::value_type const & it, unzip_)
 		{
 			ZRESULT ret = it.second->close();
 			BOOST_ASSERT(ret == ZR_OK);

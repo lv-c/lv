@@ -106,7 +106,7 @@ namespace lv
 
 	void FreeTypeFont::update_cache(std::wstring const & txt)
 	{
-		foreach(wchar_t c, txt)
+		BOOST_FOREACH(wchar_t c, txt)
 		{
 			update_cache(c);
 		}

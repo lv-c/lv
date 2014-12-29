@@ -132,7 +132,7 @@ namespace lv { namespace unique_hash {
 		{
 			map_t map;
 			bool ok = true;
-			foreach(value_t const & v, values)
+			BOOST_FOREACH(value_t const & v, values)
 			{
 				Key key = hash<Key>(i, v);
 				map_t::iterator it = map.find(key);

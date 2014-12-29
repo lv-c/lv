@@ -93,7 +93,7 @@ namespace lv
 		{
 			scoped_lock lock(mutex_);
 
-			foreach(T * t, objects_)
+			BOOST_FOREACH(T * t, objects_)
 			{
 				delete t;
 			}

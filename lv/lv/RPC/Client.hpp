@@ -238,7 +238,7 @@ namespace lv { namespace rpc {
 			promise_map pro;
 			std::swap(pro, promises_);
 
-			foreach(promise_map::reference v, pro)
+			BOOST_FOREACH(promise_map::reference v, pro)
 			{
 				try
 				{

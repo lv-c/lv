@@ -22,7 +22,7 @@ typedef lv::DSTree<char, int>	dstree_type;
 
 void verify_dstree(dstree_type const & tree)
 {
-	foreach(dstree_type const & v, tree)
+	BOOST_FOREACH(dstree_type const & v, tree)
 	{
 		BOOST_CHECK(v.parent() == &tree);
 

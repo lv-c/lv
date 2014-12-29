@@ -109,7 +109,7 @@ namespace lv
 
 				children_ = rhs.children_;
 
-				foreach(value_type & v, children_)
+				BOOST_FOREACH(value_type & v, children_)
 				{
 					v.parent_ = this;
 				}
@@ -207,7 +207,7 @@ namespace lv
 		void	insert(KeyRange const & seq, data_pointer data)
 		{
 			DSTree * tree = this;
-			foreach(key_type const & key, seq)
+			BOOST_FOREACH(key_type const & key, seq)
 			{
 				iterator it = tree->find_child(key);
 
@@ -235,7 +235,7 @@ namespace lv
 		DSTree * sub_tree(KeyRange const & seq)
 		{
 			DSTree * tree = this;
-			foreach(boost::range_value<KeyRange>::type const & key, seq)
+			BOOST_FOREACH(boost::range_value<KeyRange>::type const & key, seq)
 			{
 				iterator it = tree->find_child(key);
 				if(it == tree->end())
@@ -274,7 +274,7 @@ namespace lv
 			size_t len = 0;
 
 			DSTree * tree = this;
-			foreach(key_type const & key, seq)
+			BOOST_FOREACH(key_type const & key, seq)
 			{
 				len ++;
 

@@ -157,7 +157,7 @@ namespace lv
 
 				bool first = true;
 
-				foreach(type const & v, r.range_)
+				BOOST_FOREACH(type const & v, r.range_)
 				{
 					if(! first)
 					{

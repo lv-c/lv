@@ -139,7 +139,7 @@ namespace lv { namespace log {
 			// lock
 			mutex_.lock();
 
-			foreach(formatter_type & fmt, headers_)
+			BOOST_FOREACH(formatter_type & fmt, headers_)
 			{
 				fmt(*os_, lvl);
 			}
@@ -156,7 +156,7 @@ namespace lv { namespace log {
 
 		void	end_record(int lvl)
 		{
-			foreach(formatter_type & fmt, tailers_)
+			BOOST_FOREACH(formatter_type & fmt, tailers_)
 			{
 				fmt(*os_, lvl);
 			}

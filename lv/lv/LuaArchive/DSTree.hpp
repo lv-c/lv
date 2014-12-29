@@ -91,7 +91,7 @@ namespace lv { namespace lua { namespace archive {
 		{
 			typedef DSTree<Key, Data, Pred> tree_type;
 
-			foreach(tree_type::value_type const & v, tree)
+			BOOST_FOREACH(tree_type::value_type const & v, tree)
 			{
 				if(v.empty() || v.data())
 				{

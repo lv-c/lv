@@ -48,7 +48,7 @@ namespace lv
 		{
 			boost::shared_lock<boost::shared_mutex> lock(mutex_);
 
-			foreach(ThreadPtr v, threads_)
+			BOOST_FOREACH(ThreadPtr v, threads_)
 			{
 				v->join();
 			}
@@ -61,7 +61,7 @@ namespace lv
 
 			boost::shared_lock<boost::shared_mutex> lock(mutex_);
 
-			foreach(ThreadPtr v, threads_)
+			BOOST_FOREACH(ThreadPtr v, threads_)
 			{
 				if(! v->timed_join(end_time))
 				{
