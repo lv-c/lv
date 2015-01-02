@@ -92,6 +92,8 @@ namespace lv { namespace rpc {
 
 	public:
 
+		typedef void	value_type;
+
 		/// creates an empty acknowledgment
 		Acknowledgment() {}
 	};

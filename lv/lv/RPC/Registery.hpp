@@ -24,7 +24,6 @@
 #include <boost/archive/archive_exception.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/thread/shared_mutex.hpp>
-#include <boost/thread/lock_guard.hpp>
 
 #include <map>
 
