@@ -15,6 +15,8 @@
 #include <lv/BinaryStream/BinaryOStream.hpp>
 #include <lv/Exception.hpp>
 
+#include <boost/serialization/split_member.hpp>
+
 namespace lv { namespace bstream {
 
 
@@ -77,7 +79,7 @@ namespace lv { namespace bstream {
 
 	public:
 		
-		forward(std::streamoff off) : off_(off) {}
+		explicit forward(std::streamoff off) : off_(off) {}
 
 		friend inline BinaryIStream & operator >> (BinaryIStream & is, forward const & fwd)
 		{
@@ -126,6 +128,36 @@ namespace lv { namespace bstream {
 
 	//
 
+	class blank
+	{
+		std::size_t	size_;
+
+	public:
+
+		explicit blank(std::size_t size)
+			: size_(size)
+		{
+		}
+
+		template<class Archive>
+		void	serialize(Archive & ar, unsigned int version)
+		{
+			boost::serialization::split_member(ar, *this, version);
+		}
+
+		void	load(BinaryIStream & is, unsigned int)
+		{
+			is >> forward(size_);
+		}
+
+		void	save(BinaryOStream & os, unsigned int) const
+		{
+			os << fill_n(size_, '\0');
+		}
+	};
+
+	//
+
 	class fixed_len_str
 	{
 		std::string	&	str_;
@@ -140,43 +172,44 @@ namespace lv { namespace bstream {
 		{
 		}
 
-		friend BinaryIStream & operator >> (BinaryIStream & is, fixed_len_str const & fixed)
+		template<class Archive>
+		void	serialize(Archive & ar, unsigned int version)
 		{
-			std::string & str = fixed.str_;
-			std::size_t size = fixed.size_;
+			boost::serialization::split_member(ar, *this, version);
+		}
 
-			str.resize(size);
+		void	load(BinaryIStream & is, unsigned int)
+		{
+			str_.resize(size_);
 
-			if(size > 0)
+			if(size_ > 0)
 			{
-				is.read(&str[0], static_cast<std::streamsize>(size));
+				is.read(&str_[0], static_cast<std::streamsize>(size_));
 
-				for(size_t i = 0; i < size; ++i)
+				for(size_t i = 0; i < size_; ++i)
 				{
-					if(str[i] == '\0')
+					if(str_[i] == '\0')
 					{
-						str.resize(i);
+						str_.resize(i);
 						break;
 					}
 				}
 			}
-
-			return is;
 		}
 
-		friend BinaryOStream & operator << (BinaryOStream & os, fixed_len_str const & fixed)
+		void	save(BinaryOStream & os, unsigned int) const
 		{
-			BOOST_ASSERT(fixed.str_.size() <= fixed.size_);
+			BOOST_ASSERT(str_.size() <= size_);
 
-			std::size_t size = std::min(fixed.str_.size(), fixed.size_);
-			if(size > 0)
+			std::size_t sz = std::min(str_.size(), size_);
+			if(sz > 0)
 			{
-				os.write(&fixed.str_[0], static_cast<std::streamsize>(size));
+				os.write(&str_[0], static_cast<std::streamsize>(sz));
 			}
 
-			if(size < fixed.size_)
+			if(sz < size_)
 			{
-				os << fill_n(fixed.size_ - size, '\0');
+				os << fill_n(size_ - sz, '\0');
 			}
 		}
 	};
@@ -196,23 +229,25 @@ namespace lv { namespace bstream {
 			{
 			}
 
-			friend BinaryIStream & operator >> (BinaryIStream & is, variable_len_range_impl const & var)
+			template<class Archive>
+			void	serialize(Archive & ar, unsigned int version)
+			{
+				boost::serialization::split_member(ar, *this, version);
+			}
+
+			void	load(BinaryIStream & is, unsigned int)
 			{
 				SizeType size;
 				is >> size;
 
-				var.range_.resize(size);
-				is >> var.range_;
-
-				return is;
+				range_.resize(size);
+				is >> range_;
 			}
 
-			friend BinaryOStream & operator << (BinaryOStream & os, variable_len_range_impl const & var)
+			void	save(BinaryOStream & os, unsigned int) const
 			{
-				SizeType size = static_cast<SizeType>(var.range_.size());
-				os << size << var.range_;
-
-				return os;
+				SizeType size = static_cast<SizeType>(range_.size());
+				os << size << range_;
 			}
 		};
 	}

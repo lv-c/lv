@@ -22,6 +22,12 @@
 #include <boost/type_traits/is_integral.hpp>
 #include <boost/type_traits/is_float.hpp>
 
+#include <ctime>
+
+#ifdef LV_PLATFORM_WINDOWS
+#include <Windows.h>
+#endif
+
 
 namespace lv
 {
@@ -56,17 +62,23 @@ namespace lv
 	template<typename T = int, typename Traits = RandomTraits<T> >
 	class Random
 	{
-		boost::variate_generator<typename Traits::generator_type, 
-			typename Traits::distribution_type> die_;
+		typedef typename Traits::generator_type		engine_type;
+		typedef typename Traits::distribution_type	distribution_type;
+
+		boost::variate_generator<engine_type, distribution_type> die_;
 
 	public:
 
 		typedef T result_type;
 
-		Random(uint32 seed = 5489, T min = std::numeric_limits<T>::min(), 
-			T max = std::numeric_limits<T>::max())
-			: die_(Traits::generator_type(seed), Traits::distribution_type(min, max))
+		Random(T min = std::numeric_limits<T>::min(), T max = std::numeric_limits<T>::max())
+			: die_(engine_type(), distribution_type(min, max))
 		{
+#ifdef LV_PLATFORM_WINDOWS
+			seed(clock() * rand() * GetTickCount());	// WINDOWS
+#else
+			seed(clock() * rand() * uint32(this));
+#endif
 		}
 
 		void	seed(uint32 value)
@@ -77,6 +89,17 @@ namespace lv
 		result_type	operator() ()
 		{
 			return die_();
+		}
+
+		result_type	operator () (T min, T max)
+		{
+			distribution_type distri(min, max);
+			return distri(die_.engine());
+		}
+
+		engine_type &	engine()
+		{
+			return die_.engine();
 		}
 
 		result_type	min() const
