@@ -11,10 +11,13 @@
 #ifndef LV_ENSURE_HPP
 #define LV_ENSURE_HPP
 
-// TODO : make it better
+// TODO : make it better. LV_ENSURE(check, msg) (v0) (v1) ?
 
 #include <string>
 #include <stdexcept>
+
+#include <boost/utility/enable_if.hpp>
+#include <boost/type_traits/is_base_and_derived.hpp>
 
 namespace lv { namespace detail {
 
@@ -28,7 +31,10 @@ namespace lv { namespace detail {
 		throw std::runtime_error(msg);
 	}
 
-	inline void	ensure_throw(std::exception const & ex)
+	// we can't do it like this: void ensure_throw(std::exception const & ex) { throw ex; }
+	// ex will be copied so we must known the real type
+	template<typename T>
+	typename boost::enable_if<boost::is_base_and_derived<std::exception, T> >::type	ensure_throw(T const & ex)
 	{
 		throw ex;
 	}

@@ -44,6 +44,7 @@ namespace lv { namespace net {
 		virtual	~SessionBase();
 
 		std::string		remote_ip();
+		std::string		local_ip();
 
 		SocketHolderPtr	socket();
 
@@ -86,6 +87,11 @@ namespace lv { namespace net {
 		virtual	void	handle_write(BufferPtr buf, boost::system::error_code const & error);
 
 		virtual	void	handle_connect(boost::system::error_code const & error);
+
+	private:
+
+		std::string		get_ip(bool remote);
+
 	};
 
 } }

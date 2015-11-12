@@ -43,8 +43,19 @@ namespace lv { namespace net {
 
 	std::string SessionBase::remote_ip()
 	{
+		return get_ip(true);
+	}
+
+	std::string SessionBase::local_ip()
+	{
+		return get_ip(false);
+	}
+
+	std::string SessionBase::get_ip(bool remote)
+	{
 		boost::system::error_code error;
-		asio::ip::tcp::endpoint endpoint = socket_->get().remote_endpoint(error);
+		asio::ip::tcp::endpoint endpoint = remote ?
+			socket_->get().remote_endpoint(error) : socket_->get().local_endpoint(error);
 
 		if(! error)
 		{
