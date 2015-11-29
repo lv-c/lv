@@ -11,7 +11,12 @@
 #ifndef LV_RPC_FUTURE_HPP
 #define LV_RPC_FUTURE_HPP
 
+#include <lv/RPC/Future.hpp>
+#include <lv/LazyInit.hpp>
+
 #include <boost/thread/future.hpp>
+#include <boost/signals2/signal.hpp>
+
 
 namespace lv { namespace rpc {
 	
@@ -19,7 +24,7 @@ namespace lv { namespace rpc {
 	namespace detail
 	{
 		template<class ArchivePair>
-		class PromiseBase
+		class IPromise
 		{
 		public:
 
@@ -28,39 +33,82 @@ namespace lv { namespace rpc {
 			virtual	void	set_exception(boost::exception_ptr ex) = 0;
 		};
 
-		template<class ArchivePair>
-		class AchnowPromise : public PromiseBase<ArchivePair>
+		template<typename Ret>
+		class PromiseSignal
 		{
-			boost::promise<void> promise_;
+			typedef boost::signals2::signal<void(boost::shared_future<Ret>)>	signal_type;
+
+			LazeInit<signal_type>	signal_;
 
 		public:
 
-			boost::shared_future<void>	get_future()
+			boost::signals2::connection	connect(typename signal_type::slot_type const & slot)
 			{
-				return boost::move(promise_.get_future());
+				return signal_.get().connect(slot);
 			}
 
-			virtual void	set(typename ArchivePair::iarchive_type & ia) 
-			{
-				promise_.set_value();
-			}
+		protected:
 
-			virtual	void	set_exception(boost::exception_ptr ex)
+			void	signal(boost::shared_future<Ret> future)
 			{
-				promise_.set_exception(ex);
+				if(signal_)
+				{
+					signal_.get() (future);
+				}
 			}
 		};
 
 		template<typename Ret, class ArchivePair>
-		class ReturnPromise : public PromiseBase<ArchivePair>
+		struct ValueWrapper
 		{
-			boost::promise<Ret>	promise_;
+			Ret		value;
+
+			void	load(typename ArchivePair::iarchive_type & ia, boost::promise<Ret> & promise)
+			{
+				ia >> value;
+				promise.set_value(value);
+			}
+
+			Ret *	pointer()
+			{
+				return &value;
+			}
+		};
+
+		template<class ArchivePair>
+		struct ValueWrapper<void, ArchivePair>
+		{
+			void	load(typename ArchivePair::iarchive_type & ia, boost::promise<void> & promise)
+			{
+				promise.set_value();
+			}
+
+			void *	pointer()
+			{
+				return NULL;
+			}
+		};
+
+		template<typename Ret, class ArchivePair>
+		class ReturnPromise : public IPromise<ArchivePair>, public PromiseSignal<Ret>
+		{
+			boost::promise<Ret> promise_;
+
+			boost::shared_future<Ret>	future_;
 
 		public:
 
+			ReturnPromise()
+			{
+				// promise_.get_future can only be called once
+				future_ = promise_.get_future();
+			}
+
+			typedef Ret	value_type;
+
 			boost::shared_future<Ret>	get_future()
 			{
-				return boost::move(promise_.get_future());
+				return future_;
 			}
 
 			/**
@@ -68,44 +116,31 @@ namespace lv { namespace rpc {
 			 */
 			virtual void	set(typename ArchivePair::iarchive_type & ia)
 			{
-				Ret ret;
-				ia >> ret;
-				promise_.set_value(ret);
+				ValueWrapper<Ret, ArchivePair> val;
+				val.load(ia, promise_);
+
+				signal(future_);
 			}
 
 			virtual	void	set_exception(boost::exception_ptr ex)
 			{
 				promise_.set_exception(ex);
+				signal(future_);
 			}
 		};
 	}
-	
-
-	class Acknowledgment : public boost::shared_future<void>
-	{
-		template<typename, class> friend class Client;
-		
-		Acknowledgment(boost::shared_future<void> const & future)
-			: boost::shared_future<void>(future)
-		{
-		}
-
-	public:
-
-		typedef void	value_type;
-
-		/// creates an empty acknowledgment
-		Acknowledgment() {}
-	};
 
 
 	template<typename Ret>
 	class ReturningHandler : public boost::shared_future<Ret>
 	{
+		boost::weak_ptr<detail::PromiseSignal<Ret> >	signal_;
+
 		template<typename, class> friend class Client;
 
-		ReturningHandler(boost::shared_future<Ret> const & future)
+		ReturningHandler(boost::shared_future<Ret> future, boost::shared_ptr<detail::PromiseSignal<Ret> > signal)
 			: boost::shared_future<Ret>(future)
+			, signal_(signal)
 		{
 		}
 
@@ -115,7 +150,26 @@ namespace lv { namespace rpc {
 
 		/// creates an empty returning handler
 		ReturningHandler() {}
+
+		// this callback function will be invoked within the same thread of Client::on_receive
+		template<typename Slot>
+		boost::signals2::connection	connect(Slot const & slot)
+		{
+			BOOST_AUTO(s, signal_.lock());
+
+			if(s)
+			{
+				return s->connect(slot);
+			}
+			else
+			{
+				throw boost::broken_promise();
+			}
+		}
 	};
+
+
+	typedef ReturningHandler<void>	Acknowledgment;
 
 } }
 

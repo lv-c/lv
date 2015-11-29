@@ -7,9 +7,16 @@
 
 namespace lv
 {
+	RawFileWriter::RawFileWriter(std::string const & working_dir /* = std::string() */)
+		: IFileIO(working_dir)
+	{
+	}
+
 	void RawFileWriter::fulfill(std::string const & file, BufferPtr buf)
 	{
-		std::ofstream ofile(file.c_str(), std::ios_base::out | std::ios_base::binary | std::ios_base::trunc);
+		std::string path = resolve(file);
+
+		std::ofstream ofile(path.c_str(), std::ios_base::out | std::ios_base::binary | std::ios_base::trunc);
 		if(! ofile)
 		{
 			throw(file_io_error("error opening file: " + file));
@@ -29,6 +36,6 @@ namespace lv
 
 	bool RawFileWriter::exist(std::string const & file)
 	{
-		return boost::filesystem::exists(file);
+		return boost::filesystem::exists(resolve(file));
 	}
 }

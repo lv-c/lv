@@ -319,6 +319,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\UnitTest\MessageQueue.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\UnitTest\Net.cpp"
 				>
 			</File>
@@ -352,10 +356,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\UnitTest\Vector.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\UnitTest\ZeroMQ.cpp"
 				>
 			</File>
 		</Filter>

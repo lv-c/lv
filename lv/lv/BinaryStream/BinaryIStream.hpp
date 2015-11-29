@@ -53,6 +53,17 @@ namespace lv
 			set_exceptions();
 		}
 
+		streamsize	bytes_left()
+		{
+			streampos pos = tellg();
+			seekg(0, std::ios_base::end);
+
+			streamsize bytes = tellg() - pos;
+			seekg(pos);
+
+			return bytes;
+		}
+
 		/**
 		 * @exception std::ios_base::failure
 		 */

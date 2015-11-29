@@ -126,13 +126,21 @@ struct Multiply
 	}
 };
 
-struct ClientReceiver
+typedef Server<> server_t;
+
+struct Tunnel
 {
 	Client<> *	client;
 
+	server_t *	server;
+
 	void operator ()(BufferPtr buf)
 	{
-		client->on_receive(buf);
+		BufferPtr reply = server->on_receive(buf);
+		if(reply)
+		{
+			client->on_receive(reply);
+		}
 	}
 };
 
@@ -142,7 +150,6 @@ RPC_REGISTER_CLASS(NonCopyable)
 
 BOOST_AUTO_TEST_CASE(test_rpc)
 {
-	typedef Server<> server_t;
 	server_t server(BufferManagerPtr(new MyBufferManager()));
 
 	Multiply multiply;
@@ -160,10 +167,15 @@ BOOST_AUTO_TEST_CASE(test_rpc)
 	;
 
 
-	ClientReceiver receiver;
-	Client<>	client(boost::bind(&server_t::on_receive, &server, _1, boost::ref(receiver)), BufferManagerPtr(new SimpleBufferManager(100)));
+	Tunnel tunnel;
+	Client<> client(boost::ref(tunnel), BufferManagerPtr(new SimpleBufferManager(100)));
 
-	receiver.client = &client;
+	tunnel.client = &client;
+	tunnel.server = &server;
+
+	// void
+	Acknowledgment ack = client.call<void>("add", 0, 1);
+	ack.get();
 
 	// free function
 	ReturningHandler<int> ret = client.call<int>("add", 1, 2);

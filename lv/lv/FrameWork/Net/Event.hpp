@@ -13,7 +13,7 @@
 
 #include <lv/Buffer.hpp>
 
-#include <boost/signals2.hpp>
+#include <boost/signals2/signal.hpp>
 #include <boost/system/system_error.hpp>
 
 namespace lv { namespace net {

@@ -240,7 +240,8 @@ namespace lv { namespace lua { namespace archive {
 			LV_ENSURE(token.size() < size, "too long number:" + token.str());
 
 			char buf[size];
-			strncpy(buf, token.begin, token.size());
+			memcpy(buf, token.begin, token.size());
+			buf[token.size()] = '\0';
 
 			char * end = NULL;
 			double val = strtod(buf, &end);

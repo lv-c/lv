@@ -31,7 +31,12 @@ namespace lv
 		typedef boost::mpl::false_	is_loading;
 
 
-		explicit OArchive(OStreamProxy const & os)
+		explicit OArchive(std::ostream & os)
+			: ostream_(os)
+		{
+		}
+
+		explicit OArchive(OBufferStream & os)
 			: ostream_(os)
 		{
 		}

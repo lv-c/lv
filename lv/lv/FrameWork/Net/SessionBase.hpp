@@ -16,6 +16,9 @@
 #include <lv/FrameWork/Net/Event.hpp>
 
 #include <boost/enable_shared_from_this.hpp>
+#include <boost/thread/mutex.hpp>
+
+#include <list>
 
 
 namespace lv { namespace net {
@@ -32,6 +35,14 @@ namespace lv { namespace net {
 		SocketHolderPtr	socket_;
 
 		volatile bool	closed_;
+
+		//
+
+		std::list<BufferPtr>	write_queue_;
+
+		bool	writing_;
+
+		boost::mutex	write_mutex_;
 
 	protected:
 
@@ -63,14 +74,17 @@ namespace lv { namespace net {
 		/// @exception runtime_error
 		virtual	void	connect(std::string const & ip, std::string const & port, std::string const & to_bind = std::string());
 
-		virtual void	start_read();
-
+		// thread-safe
 		virtual	void	start_write(BufferPtr buf);
 
 		// For internal use. You should use on_connected instead.
 		virtual	void	server_side_start();
 
 	protected:
+
+		virtual	void	write_impl(BufferPtr buf);
+
+		virtual void	start_read();
 
 		virtual	void	on_error(ErrorType type, boost::system::error_code const & error);
 

@@ -20,7 +20,12 @@ namespace lv
 {
 	class IFileIO : public boost::enable_shared_from_this<IFileIO>
 	{
+
+		std::string		working_dir_;
+
 	public:
+
+		explicit IFileIO(std::string const & working_dir);
 
 		virtual ~IFileIO() {}
 
@@ -49,6 +54,9 @@ namespace lv
 
 		// post condition: buf.size() == len, buf.capacity() > buf.size(), buf[len] = '\0'
 		static void	init_buffer(Buffer & buf, size_t len);
+
+		std::string	resolve(std::string const & file);
+
 	};
 }
 

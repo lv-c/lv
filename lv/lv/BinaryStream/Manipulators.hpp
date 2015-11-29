@@ -16,6 +16,7 @@
 #include <lv/Exception.hpp>
 
 #include <boost/serialization/split_member.hpp>
+#include <boost/type_traits/is_pod.hpp>
 
 namespace lv { namespace bstream {
 
@@ -256,6 +257,46 @@ namespace lv { namespace bstream {
 	detail::variable_len_range_impl<SizeType, Range>	variable_len_range(Range & range)
 	{
 		return detail::variable_len_range_impl<SizeType, Range>(range);
+	}
+
+	//
+
+	namespace detail
+	{
+		template<typename T>
+		class pod_impl
+		{
+			T &		t_;
+
+		public:
+
+			explicit pod_impl(T & t)
+				: t_(t)
+			{
+			}
+
+			template<class Archive>
+			void	serialize(Archive & ar, unsigned int version)
+			{
+				boost::serialization::split_member(ar, *this, version);
+			}
+
+			void	load(BinaryIStream & is, unsigned int)
+			{
+				is.read(reinterpret_cast<char *>(&t_), sizeof(t_));
+			}
+
+			void	save(BinaryOStream & os, unsigned int) const
+			{
+				os.write(reinterpret_cast<char const *>(&t_), sizeof(t_));
+			}
+		};
+	}
+
+	template<typename T>
+	typename boost::enable_if<boost::is_pod<T>, detail::pod_impl<T> >::type	pod(T & t)
+	{
+		return detail::pod_impl<T>(t);
 	}
 
 } }

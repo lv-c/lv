@@ -19,6 +19,8 @@ namespace lv
 	{
 	public:
 
+		RawFileReader(std::string const & working_dir = std::string());
+
 		/** 
 		 * @see IFileIO::fulfill
 		 */

@@ -64,7 +64,7 @@ namespace lv
 			return *this;
 		}
 
-		std::streampos	tellg() const
+		streampos		tellg() const
 		{
 			LV_STREAMPROXY_FW_CALL_0(tellg, return);
 		}

@@ -39,6 +39,9 @@ namespace lv { namespace net {
 	template<typename Key, class S>
 	class FlowSession;
 
+	class ISender;
+	typedef boost::shared_ptr<ISender>	ISenderPtr;
+
 	class ServerBase;
 
 	class SSLSession;
@@ -54,6 +57,10 @@ namespace lv { namespace net {
 	class Socks5ServerSession;
 
 	class Socks5ClientContext;
+
+	class MessageQueue;
+
+	class DeadlineTimer;
 
 	namespace asio = boost::asio;
 

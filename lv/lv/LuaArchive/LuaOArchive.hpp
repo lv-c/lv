@@ -23,22 +23,35 @@ namespace lv
 	{
 		std::ostream &	os_;
 
+		std::string		spliter_;
+
+		bool	first_time_;
+
 	public:
 
 		typedef boost::mpl::true_	is_saving;
 		typedef boost::mpl::false_	is_loading;
 
-		explicit LuaOArchive(std::ostream & os)
+		LuaOArchive(std::ostream & os, std::string const & spliter = ", ")
 			: os_(os)
+			, spliter_(spliter)
+			, first_time_(true)
 		{
 		}
 
 		template<typename T>
 		LuaOArchive & operator << (T const & t)
 		{
-			lua::archive::save(os_, t, 0);
-			os_ << std::endl << std::endl;
+			if(! first_time_)
+			{
+				os_ << spliter_;
+			}
+			else
+			{
+				first_time_ = false;
+			}
 
+			lua::archive::save(os_, t, 0);
 			return *this;
 		}
 

@@ -34,6 +34,7 @@ namespace lv { namespace net {
 		: context_(context)
 		, socket_(socket)
 		, closed_(false)
+		, writing_(false)
 	{
 	}
 
@@ -113,6 +114,7 @@ namespace lv { namespace net {
 	void SessionBase::connect(std::string const & ip, std::string const & port, std::string const & to_bind /* = std::string */)
 	{
 		closed_ = false;
+		writing_ = false;
 
 		asio::ip::tcp::resolver::query query(ip, port);
 		asio::ip::tcp::resolver resolver(context_->service());
@@ -159,6 +161,35 @@ namespace lv { namespace net {
 
 	void SessionBase::start_write(BufferPtr buf)
 	{
+		if(! closed_)
+		{
+			/*
+			async_write
+
+			This operation is implemented in terms of zero or more calls to the stream's async_write_some function, 
+			and is known as a composed operation. The program must ensure that the stream performs no other write
+			operations (such as async_write, the stream's async_write_some function, or any other composed operations
+			that perform writes) until this operation completes.
+			*/
+
+			boost::unique_lock<boost::mutex> lock(write_mutex_);
+
+			if(writing_)
+			{
+				write_queue_.push_back(buf);
+			}
+			else
+			{
+				write_impl(buf);
+			}
+		}
+	}
+
+	void SessionBase::write_impl(BufferPtr buf)
+	{
+		BOOST_ASSERT(! writing_);
+		writing_ = true;
+
 		if(context_->has_strand())
 		{
 			asio::async_write(socket_->get(), asio::buffer(*buf), context_->strand().wrap(
@@ -241,6 +272,9 @@ namespace lv { namespace net {
 
 	void SessionBase::handle_write(BufferPtr buf, boost::system::error_code const & error)
 	{
+		writing_ = false;
+		
+		//
 		if(closed_)
 		{
 			return;
@@ -252,6 +286,18 @@ namespace lv { namespace net {
 		}
 		else
 		{
+			{
+				boost::unique_lock<boost::mutex> lock(write_mutex_);
+
+				if(! writing_ && ! write_queue_.empty())
+				{
+					BufferPtr new_buf = write_queue_.front();
+					write_queue_.pop_front();
+
+					write_impl(new_buf);
+				}
+			}
+
 			on_write(buf);
 		}
 	}

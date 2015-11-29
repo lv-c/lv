@@ -65,80 +65,11 @@ namespace lv { namespace lua { namespace archive {
 
 
 	namespace detail
-	{		
-		// unknown_tag
-		class IArchiveProxy : boost::noncopyable
-		{
-			luabind::object const & obj_;
-
-			size_t	index_;
-
-			boost::tribool	nvp_;
-
-		public:
-
-			typedef boost::mpl::true_	is_loading;
-			typedef boost::mpl::false_	is_saving;
-
-			IArchiveProxy(luabind::object const & obj)
-				: obj_(obj)
-				, index_(1)
-				, nvp_(boost::indeterminate)
-			{
-				expect_obj_type(obj, LUA_TTABLE);
-			}
-
-
-			template<typename T>
-			IArchiveProxy & operator >> (T & t)
-			{
-				this->load(t);
-
-				return *this;
-			}
-
-			template<typename T>	
-			IArchiveProxy & operator & (T & t)
-			{
-				return *this >> t;
-			}
-
-		private:
-
-			template<typename T>
-			void	load(T & t)
-			{
-				check_nvp(false);
-
-				archive::load(obj_[index_], t);
-				index_++;
-			}
-
-			template<typename T>
-			void	load(boost::serialization::nvp<T> const & t)
-			{
-				check_nvp(true);
-
-				archive::load(obj_, t);
-			}
-
-
-			void	check_nvp(bool is_nvp)
-			{
-				if(! boost::indeterminate(nvp_))
-				{
-					BOOST_ASSERT(((bool)nvp_ == is_nvp) && "you are trying to mix nvp with non-nvp");
-				}
-
-				nvp_ = is_nvp;
-			}
-		};
-
-
+	{
 		template<typename T>
 		void	load_impl(luabind::object const & obj, T & t, unknown_tag)
 		{
-			IArchiveProxy proxy(obj);
+			LuaIArchive ia(obj);
 			unsigned int version = DefaultVersion;
 
 			luabind::object version_obj = obj[VersionKey];
@@ -147,7 +78,7 @@ namespace lv { namespace lua { namespace archive {
 				version = luabind::object_cast<unsigned int>(version_obj);
 			}
 
-			boost::serialization::serialize(proxy, t, version);
+			boost::serialization::serialize(ia, t, version);
 		}
 
 		// primitive_tag

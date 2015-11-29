@@ -18,6 +18,7 @@
 #include <lv/RPC/Common.hpp>
 #include <lv/RPC/RpcBase.hpp>
 #include <lv/RPC/Protocol.hpp>
+#include <lv/Ensure.hpp>
 
 namespace lv { namespace rpc {
 
@@ -27,12 +28,6 @@ namespace lv { namespace rpc {
 	template<class Id, class ArchivePair>
 	class Server : public RpcBase
 	{
-	public:
-
-		typedef boost::function<void(BufferPtr)>	callback_type;
-
-	private:
-
 		typedef typename ArchivePair::iarchive_type	iarchive_type;
 		typedef typename ArchivePair::oarchive_type	oarchive_type;
 
@@ -84,12 +79,12 @@ namespace lv { namespace rpc {
 
 
 		/**
-		 * @param sock sock.send() should be thread-safe
+		 * @return returns the reply buffer if there's
 		 * @exception InvalidFunctionID
 		 * @exception InvalidProtocolValue
 		 * @exception boost::archive::archive_exception
 		 */
-		void	on_receive(ConstBufferRef const & data, callback_type const & callback)
+		BufferPtr	on_receive(ConstBufferRef const & data)
 		{
 			IArchiveCreator<iarchive_type> creator(istream_factory_, data);
 			iarchive_type & ia = creator.archive();
@@ -101,10 +96,7 @@ namespace lv { namespace rpc {
 			Protocol::header::type header;
 			ia >> header;
 
-			if(header != Protocol::header::call)
-			{
-				throw InvalidProtocolValue("invalid Pro::header value");
-			}
+			LV_ENSURE(header == Protocol::header::call, InvalidProtocolValue("invalid Pro::header value"));
 
 			result = registery_.invoke(ia);
 
@@ -113,12 +105,11 @@ namespace lv { namespace rpc {
 
 			if(call_option == Protocol::options::none)
 			{
-				return;
+				return BufferPtr();
 			}
-			else if(call_option != Protocol::options::ret && call_option != Protocol::options::ack)
-			{
-				throw InvalidProtocolValue("invalid Pro::options value");
-			}
+
+			LV_ENSURE(call_option == Protocol::options::ret || call_option == Protocol::options::ack,
+				InvalidProtocolValue("invalid Pro::options value"));
 
 			// send back the result
 			Protocol::request_id_type id;
@@ -138,7 +129,7 @@ namespace lv { namespace rpc {
 
 			raw_os->flush();
 
-			callback(buf);
+			return buf;
 		}
 
 	};

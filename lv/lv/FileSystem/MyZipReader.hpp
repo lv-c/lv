@@ -29,8 +29,6 @@ namespace lv
 
 		UnzipMap	unzip_;
 
-		std::string	path_;
-
 		std::string	password_;
 
 		std::string	postfix_;
@@ -48,7 +46,7 @@ namespace lv
 		 * @password password for all the packet files
 		 * @in_memory load all the packet files into memory
 		 */
-		MyZipReader(std::string const & password, std::string const & path, std::string const & postfix, bool in_memory = false);
+		MyZipReader(std::string const & password, std::string const & working_dir, std::string const & postfix, bool in_memory = false);
 
 		~MyZipReader();
 

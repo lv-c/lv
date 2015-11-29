@@ -29,8 +29,12 @@ namespace lv
 		typedef boost::mpl::true_	is_loading;
 		typedef boost::mpl::false_	is_saving;
 
+		explicit IArchive(std::istream & is)
+			: istream_(is)
+		{
+		}
 
-		explicit IArchive(IStreamProxy const & is)
+		explicit IArchive(IBufferStream & is)
 			: istream_(is)
 		{
 		}

@@ -2,9 +2,15 @@
 #include <lv/FileSystem/IOTask.hpp>
 #include <lv/SharedPtr.hpp>
 
+#include <boost/filesystem/path.hpp>
 
 namespace lv
 {
+	IFileIO::IFileIO(std::string const & working_dir)
+		: working_dir_(working_dir)
+	{
+	}
+
 	IOFuture IFileIO::add_task(std::string const & file, BufferPtr buf)
 	{
 		IOTask task(shared_from_object(const_cast<std::string &>(file)), buf, this->shared_from_this());
@@ -18,5 +24,17 @@ namespace lv
 		buf.resize(len + 1);
 		buf[len] = '\0';
 		buf.resize(len);
+	}
+
+	std::string IFileIO::resolve(std::string const & file)
+	{
+		boost::filesystem::path path(file);
+
+		if(! path.has_root_directory())
+		{
+			path = working_dir_ / path;
+		}
+
+		return path.string();
 	}
 }

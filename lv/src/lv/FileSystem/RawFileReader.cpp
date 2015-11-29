@@ -7,9 +7,17 @@
 
 namespace lv
 {
+
+	RawFileReader::RawFileReader(std::string const & working_dir /* = std::string() */)
+		: IFileIO(working_dir)
+	{
+	}
+
 	void RawFileReader::fulfill(std::string const & file, BufferPtr buf)
 	{
-		std::ifstream infile(file.c_str(), std::ios_base::binary);
+		std::string path = resolve(file);
+
+		std::ifstream infile(path.c_str(), std::ios_base::binary);
 		if(! infile)
 		{
 			throw(file_io_error("error opening file: " + file));
@@ -39,6 +47,6 @@ namespace lv
 
 	bool RawFileReader::exist(std::string const & file)
 	{
-		return boost::filesystem::exists(file);
+		return boost::filesystem::exists(resolve(file));
 	}
 }

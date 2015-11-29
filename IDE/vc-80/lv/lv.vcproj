@@ -290,6 +290,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\LazyInit.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\lvlib2.hpp"
 					>
 				</File>
@@ -303,6 +307,10 @@
 				</File>
 				<File
 					RelativePath="..\..\..\lv\lv\NullMutex.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\Pool.hpp"
 					>
 				</File>
 				<File

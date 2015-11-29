@@ -173,7 +173,7 @@ int err_handler(lua_State * L)
 BOOST_AUTO_TEST_CASE(test_lua_archive)
 {
 	ostringstream oss;
-	LuaOArchive oa(oss);
+	LuaOArchive oa(oss, "\n\n");
 
 	Vertex vertex;
 	int num(100);
@@ -244,8 +244,7 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 		"\n"
 		"number = 100\n"
 		"\n"
-		"mode = -2\n"
-		"\n"
+		"mode = -2"
 	;
 
 

@@ -9,21 +9,12 @@
 
 namespace lv
 {
-	MyZipReader::MyZipReader(std::string const & password, std::string const & path, std::string const & postfix, bool in_memory /* = false */)
-		: path_(path)
+	MyZipReader::MyZipReader(std::string const & password, std::string const & working_dir, std::string const & postfix, bool in_memory /* = false */)
+		: IFileIO(working_dir)
 		, postfix_(postfix)
 		, password_(password)
 		, in_memory_(in_memory)
 	{
-		// appends '/' to path_ if necessary
-		if(! path_.empty())
-		{
-			char last = path_[path_.size() - 1];
-			if(last != '/' && last != '\\')
-			{
-				path_.push_back('/');
-			}
-		}
 	}
 
 	MyZipReader::~MyZipReader()
@@ -84,7 +75,7 @@ namespace lv
 			// open the zip file
 			uz.reset(new MyUnzip());
 
-			std::string zip_path = path_ + zip_file + postfix_;
+			std::string zip_path = resolve(zip_file + postfix_);
 			ZRESULT ret;
 
 			if(in_memory_)

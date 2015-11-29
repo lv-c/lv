@@ -59,7 +59,7 @@ namespace lv { namespace lua {
 		template<typename T>
 		LuaConfig const & operator () (T & t) const
 		{
-			*ia_ & t;
+			archive::load(luabind::globals(L_), t);
 			return *this;
 		}
 

@@ -217,6 +217,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\FrameWork\Net\DeadlineTimer.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\FrameWork\Net\Event.hpp"
 					>
 				</File>
@@ -226,6 +230,14 @@
 				</File>
 				<File
 					RelativePath="..\..\..\lv\lv\FrameWork\Net\Fwd.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\FrameWork\Net\MessageQueue.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\lv\FrameWork\Net\MessageQueueContext.hpp"
 					>
 				</File>
 				<File
@@ -296,6 +308,14 @@
 			<Filter
 				Name="Source Files"
 				>
+				<File
+					RelativePath="..\..\..\lv\src\FrameWork\Net\DeadlineTimer.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\lv\src\FrameWork\Net\MessageQueue.cpp"
+					>
+				</File>
 				<File
 					RelativePath="..\..\..\lv\src\FrameWork\Net\PacketProxy.cpp"
 					>

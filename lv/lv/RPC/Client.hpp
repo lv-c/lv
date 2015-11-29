@@ -15,6 +15,8 @@
 
 #include <lv/Config.hpp>
 #include <lv/Exception.hpp>
+#include <lv/Ensure.hpp>
+#include <lv/Pool.hpp>
 
 #include <lv/RPC/Config.hpp>
 #include <lv/RPC/RpcBase.hpp>
@@ -64,7 +66,7 @@ namespace lv { namespace rpc {
 
 		typedef typename Protocol::request_id_type request_id_type;
 
-		typedef boost::shared_ptr<detail::PromiseBase<ArchivePair> >	PromiseBasePtr;
+		typedef boost::shared_ptr<detail::IPromise<ArchivePair> >	PromiseBasePtr;
 		typedef std::map<request_id_type, PromiseBasePtr>	promise_map;
 
 		promise_map		promises_;
@@ -83,14 +85,20 @@ namespace lv { namespace rpc {
 
 			BufferPtr	buffer_;
 
+			boost::shared_ptr<oarchive_type>	oa_;
+
+			OStreamPtr	raw_os_;
+
 			bool	sent_;
 
 		public:
 
-			PrivateHandler(Client & client, request_id_type request_id, BufferPtr buf)
+			PrivateHandler(Client & client, BufferPtr buf, boost::shared_ptr<oarchive_type> oa, OStreamPtr raw_os, request_id_type request_id)
 				: client_(client)
-				, request_id_(request_id)
 				, buffer_(buf)
+				, oa_(oa)
+				, raw_os_(raw_os)
+				, request_id_(request_id)
 				, sent_(false)
 			{
 			}
@@ -98,8 +106,10 @@ namespace lv { namespace rpc {
 			/// copy constructor
 			PrivateHandler(PrivateHandler & rhs)
 				: client_(rhs.client_)
-				, request_id_(rhs.request_id_)
 				, buffer_(rhs.buffer_)
+				, oa_(rhs.oa_)
+				, raw_os_(rhs.raw_os_)
+				, request_id_(rhs.request_id_)
 				, sent_(false)
 			{
 				BOOST_ASSERT(! rhs.sent_);
@@ -110,42 +120,25 @@ namespace lv { namespace rpc {
 			{
 				if(! sent_)
 				{
-					client_.send(buffer_, request_id_, Protocol::options::none);
+					client_.send(buffer_, oa_, raw_os_, request_id_, Protocol::options::none);
 				}
-			}
-
-			operator Acknowledgment ()
-			{
-				sent_ = true;
-				
-				// if we call @a send first, @a on_receive might be called before 
-				// @a add_promise is called and InvalidRequestID may be thrown
-				boost::shared_ptr<detail::AchnowPromise<ArchivePair> > promise(new detail::AchnowPromise<ArchivePair>());
-				client_.add_promise(request_id_, promise);
-
-				try
-				{
-					client_.send(buffer_, request_id_, Protocol::options::ack);
-				}
-				catch(...)
-				{
-					client_.remove_promise(request_id_);
-					throw;
-				}
-
-				return Acknowledgment(promise->get_future());		
 			}
 
 			operator ReturningHandler<Ret> ()
 			{
 				sent_ = true;
-				//
-				boost::shared_ptr<detail::ReturnPromise<Ret, ArchivePair> > promise(new detail::ReturnPromise<Ret, ArchivePair>());
+				
+				// if we call @a send first, @a on_receive might be called before 
+				// @a add_promise is called and InvalidRequestID may be thrown
+				typedef detail::ReturnPromise<Ret, ArchivePair>	promise_type;
+				BOOST_AUTO(promise, pool::alloc<promise_type>());
+
 				client_.add_promise(request_id_, promise);
 
 				try
 				{
-					client_.send(buffer_, request_id_, Protocol::options::ret);
+					Protocol::options::type option = (boost::is_same<Ret, void>::value ? Protocol::options::ack : Protocol::options::ret);
+					client_.send(buffer_, oa_, raw_os_, request_id_, option);
 				}
 				catch(...)
 				{
@@ -153,7 +146,7 @@ namespace lv { namespace rpc {
 					throw;
 				}
 
-				return ReturningHandler<Ret>(promise->get_future());
+				return ReturningHandler<Ret>(promise->get_future(), promise);
 			}
 
 			/**
@@ -193,34 +186,25 @@ namespace lv { namespace rpc {
 			Protocol::header::type header;
 			ia >> header;
 			
-			if(header == Protocol::header::reply)
-			{
-				request_id_type id;
-				ia >> id;
+			LV_ENSURE(header == Protocol::header::reply, InvalidProtocolValue("invalid Protocol::header value"));
 
-				// scoped lock
-				scoped_lock lock(mutex_);
-				
-				promise_map::iterator it = promises_.find(id);
-				if(it == promises_.end())
-				{
-					throw InvalidRequestID();
-				}
-				
-				// 
-				BOOST_SCOPE_EXIT((&promises_)(it))
-				{
-					promises_.erase(it);
-				} BOOST_SCOPE_EXIT_END
+			request_id_type id;
+			ia >> id;
 
-				// the following code may throw exception
-				it->second->set(ia);
-			}
-			else
-			{
-				throw InvalidProtocolValue("invalid Protocol::header value");
-			}
+			// scoped lock
+			scoped_lock lock(mutex_);
 			
+			promise_map::iterator it = promises_.find(id);
+			LV_ENSURE(it != promises_.end(), InvalidRequestID());
+			
+			// 
+			BOOST_SCOPE_EXIT((&promises_)(it))
+			{
+				promises_.erase(it);
+			} BOOST_SCOPE_EXIT_END
+
+			// the following code may throw exception
+			it->second->set(ia);
 		}
 
 		/**
@@ -257,7 +241,7 @@ namespace lv { namespace rpc {
 
 	protected:
 
-		virtual	void	send(BufferPtr buf)
+		virtual	void	send(BufferPtr buf, Protocol::options::type option)
 		{
 			callback_(buf);
 		}
@@ -296,32 +280,29 @@ namespace lv { namespace rpc {
 			BufferPtr buf = this->get_buffer();
 
 			OStreamPtr raw_os = ostream_factory_.open(*buf);
-			oarchive_type oa(*raw_os);
+			BOOST_AUTO(oa, pool::alloc<oarchive_type>(boost::ref(*raw_os)));
 
-			oa << Protocol::header::call << id;
-			boost::fusion::for_each(args, Serialize(oa));
+			(*oa) << Protocol::header::call << id;
+			boost::fusion::for_each(args, Serialize(*oa));
 
 			raw_os->flush();
 
-			return PrivateHandler<Ret>(*this, next_request_id(), buf);
+			return PrivateHandler<Ret>(*this, buf, oa, raw_os, next_request_id());
 		}
 
 
-		void	send(BufferPtr & buf, request_id_type request_id, typename Protocol::options::type call_option)
+		void	send(BufferPtr & buf, boost::shared_ptr<oarchive_type> oa, OStreamPtr raw_os, request_id_type request_id, Protocol::options::type option)
 		{
-			OStreamPtr raw_os = ostream_factory_.open(*buf);
-			oarchive_type oa(*raw_os);
-
-			oa << call_option;
+			(*oa) << option;
 			// sends the request id only when an acknowledgment or a return value is required
-			if(call_option != Protocol::options::none)
+			if(option != Protocol::options::none)
 			{
-				oa << request_id;
+				(*oa) << request_id;
 			}
 
 			raw_os->flush();
 
-			send(buf);
+			send(buf, option);
 		}
 
 		/**
