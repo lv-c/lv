@@ -11,7 +11,13 @@
 #ifndef LV_POOL_HPP
 #define LV_POOL_HPP
 
+#include <lv/Config.hpp>
 #include <lv/Ensure.hpp>
+
+// some of the following header files include Windows.h and haven't define WIN32_LEAN_AND_MEAN
+#ifdef LV_PLATFORM_WINDOWS
+#define WIN32_LEAN_AND_MEAN
+#endif
 
 #include <boost/pool/singleton_pool.hpp>
 #include <boost/utility/in_place_factory.hpp>

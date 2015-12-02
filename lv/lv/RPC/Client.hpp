@@ -16,7 +16,6 @@
 #include <lv/Config.hpp>
 #include <lv/Exception.hpp>
 #include <lv/Ensure.hpp>
-#include <lv/Pool.hpp>
 
 #include <lv/RPC/Config.hpp>
 #include <lv/RPC/RpcBase.hpp>
@@ -39,6 +38,7 @@
 #include <map>
 
 #ifdef LV_PLATFORM_WINDOWS
+#define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 #endif
 
@@ -124,7 +124,7 @@ namespace lv { namespace rpc {
 				}
 			}
 
-			operator ReturningHandler<Ret> ()
+			operator Future<Ret> ()
 			{
 				sent_ = true;
 				
@@ -146,7 +146,7 @@ namespace lv { namespace rpc {
 					throw;
 				}
 
-				return ReturningHandler<Ret>(promise->get_future(), promise);
+				return promise->get_future();
 			}
 
 			/**
@@ -155,7 +155,7 @@ namespace lv { namespace rpc {
 			 */
 			operator Ret()
 			{
-				return ReturningHandler<Ret>(*this).get();
+				return Future<Ret>(*this).get();
 			}
 		};
 

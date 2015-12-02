@@ -17,7 +17,6 @@
 
 #include <boost/asio/io_service.hpp>
 #include <boost/shared_ptr.hpp>
-#include <boost/scoped_ptr.hpp>
 #include <boost/function.hpp>
 
 #include <string>
@@ -36,7 +35,7 @@ namespace lv
 
 		typedef boost::weak_ptr<boost::asio::io_service>	WeakServicePtr;
 
-		boost::scoped_ptr<ThreadGroup>	threads_;
+		boost::shared_ptr<ThreadGroup>	threads_;
 
 		bool	thread_name_enabled_;
 
@@ -45,12 +44,12 @@ namespace lv
 	public:
 
 		// for security reason, you may not want to show the thread names in release version
-		ThreadPool(bool enable_thread_name = true, ExceptionHandler const & handler = ExceptionHandler());
+		ThreadPool(ExceptionHandler const & handler = ExceptionHandler(), bool enable_thread_name = true);
 
 		// As long as the returned pointer is not released, the thread will
 		// not stop. You should hold the pointer, or the thread will stop 
 		// because no task has been posted to the service at the beginning.
-		ServicePtr	create(std::string name = std::string(), size_t thread_num = 1);
+		ServicePtr	create(size_t thread_num = 1, std::string name = std::string());
 
 		void	join_all();
 

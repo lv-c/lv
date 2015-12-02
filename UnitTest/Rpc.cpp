@@ -178,7 +178,7 @@ BOOST_AUTO_TEST_CASE(test_rpc)
 	ack.get();
 
 	// free function
-	ReturningHandler<int> ret = client.call<int>("add", 1, 2);
+	Future<int> ret = client.call<int>("add", 1, 2);
 	BOOST_CHECK_EQUAL(ret.get(), 3);
 
 	// float
@@ -194,7 +194,7 @@ BOOST_AUTO_TEST_CASE(test_rpc)
 	BOOST_CHECK_EQUAL(int(client.call<int>("mul", 10000, 100000)), 1000000000);
 
 	// non-copyable parameter
-	ReturningHandler<string> s_ret = client.call<string>("echo", NonCopyable("hello world"));
+	Future<string> s_ret = client.call<string>("echo", NonCopyable("hello world"));
 	BOOST_CHECK_EQUAL(s_ret.get(), "hello world");
 
 	// not existed function 
@@ -213,7 +213,7 @@ BOOST_AUTO_TEST_CASE(test_rpc)
 	}
 
 	// 
-	BOOST_CHECK_THROW(ReturningHandler<string> wrong_returning_type = client.call<string>("add", 1, 2),
+	BOOST_CHECK_THROW(Future<string> wrong_returning_type = client.call<string>("add", 1, 2),
 		boost::archive::archive_exception);
 
 	// test std::pair type
@@ -229,7 +229,7 @@ BOOST_AUTO_TEST_CASE(test_rpc)
 	// test boost::fusion::vector type. fusion::vector is not supported. please use boost::tuple instead
 	/*
 	typedef boost::fusion::vector<int, string> fusion_vec_type;
-	ReturningHandler<fusion_vec_type> fv_ret = client.call<fusion_vec_type>("test_fusion_vector", boost::fusion::make_vector(5, string("ok")));
+	Future<fusion_vec_type> fv_ret = client.call<fusion_vec_type>("test_fusion_vector", boost::fusion::make_vector(5, string("ok")));
 
 	BOOST_CHECK(fv_ret() == boost::fusion::make_vector(5, string("ok")));
 	*/

@@ -6,14 +6,14 @@
 
 namespace lv
 {
-	ThreadPool::ThreadPool(bool enable_thread_name /* = true */, ExceptionHandler const & handler /* = ExceptionHandler */)
-		: thread_name_enabled_(enable_thread_name)
-		, exception_handler_(handler)
+	ThreadPool::ThreadPool(ExceptionHandler const & handler /* = ExceptionHandler() */, bool enable_thread_name /* = true */)
+		: exception_handler_(handler)
+		, thread_name_enabled_(enable_thread_name)
 		, threads_(new ThreadGroup())
 	{
 	}
 
-	ThreadPool::ServicePtr ThreadPool::create(std::string name /* = std::string */, size_t thread_num /* = 1 */)
+	ThreadPool::ServicePtr ThreadPool::create(size_t thread_num /* = 1 */, std::string name /* = std::string() */)
 	{
 		BOOST_ASSERT(thread_num > 0);
 

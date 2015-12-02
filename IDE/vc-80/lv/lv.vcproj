@@ -708,6 +708,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\lv\lv\Concurrent\Future.hpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\lv\lv\Concurrent\Fwd.hpp"
 					>
 				</File>
