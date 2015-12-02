@@ -33,7 +33,7 @@
 #include <boost/fusion/adapted/boost_tuple.hpp>
 
 #include <boost/assert.hpp>
-#include <boost/scope_exit.hpp>
+#include <boost/typeof/typeof.hpp>
 
 #include <map>
 
@@ -192,19 +192,20 @@ namespace lv { namespace rpc {
 			ia >> id;
 
 			// scoped lock
-			scoped_lock lock(mutex_);
-			
-			promise_map::iterator it = promises_.find(id);
-			LV_ENSURE(it != promises_.end(), InvalidRequestID());
-			
-			// 
-			BOOST_SCOPE_EXIT((&promises_)(it))
-			{
-				promises_.erase(it);
-			} BOOST_SCOPE_EXIT_END
+			PromiseBasePtr promise;
 
+			{
+				scoped_lock lock(mutex_);
+				
+				promise_map::iterator it = promises_.find(id);
+				LV_ENSURE(it != promises_.end(), InvalidRequestID());
+
+				promise = it->second;
+				promises_.erase(it);
+			}
+			
 			// the following code may throw exception
-			it->second->set(ia);
+			promise->set(ia);
 		}
 
 		/**
@@ -217,10 +218,12 @@ namespace lv { namespace rpc {
 		// 
 		void	set_exception(boost::exception_ptr ex)
 		{
-			scoped_lock lock(mutex_);
-
 			promise_map pro;
-			std::swap(pro, promises_);
+
+			{
+				scoped_lock lock(mutex_);
+				std::swap(pro, promises_);
+			}
 
 			BOOST_FOREACH(promise_map::reference v, pro)
 			{

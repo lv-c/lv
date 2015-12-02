@@ -63,6 +63,9 @@ namespace lv
 		}
 	};
 
+	typedef Future<void>	Acknowledgment;
+
+
 	namespace detail
 	{
 		inline void	promise_set_value(boost::promise<void> & p, void const *)

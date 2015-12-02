@@ -117,12 +117,12 @@ namespace lv { namespace lua {
 
 	namespace archive
 	{
-		void	save(std::ostream & os, TableBuilder const & t, size_t level)
+		inline void	save(std::ostream & os, TableBuilder const & t, size_t level)
 		{
 			os << t;
 		}
 
-		void	save(std::ostream & os, ArrayBuilder const & t, size_t level)
+		inline void	save(std::ostream & os, ArrayBuilder const & t, size_t level)
 		{
 			os << t;
 		}

@@ -81,9 +81,6 @@ namespace lv { namespace rpc {
 			}
 		};
 	}
-
-	typedef Future<void>	Acknowledgment;
-
 } }
 
 #endif
