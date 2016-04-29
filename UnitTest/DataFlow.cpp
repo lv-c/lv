@@ -48,13 +48,13 @@ void pass_iarchive_obj(iarchive_type ia)
 
 void echo(ParamType type, iarchive_type & ia)
 {
-	if(type == PT_Int)
+	if (type == PT_Int)
 	{
 		int i;
 		ia >> i;
 		std::cout << "echo.PT_Int:" << i << std::endl;
 	}
-	else if(type == PT_String)
+	else if (type == PT_String)
 	{
 		string s;
 		ia >> s;

@@ -43,7 +43,7 @@ namespace lv
 
 	public:
 
-		// for security reason, you may not want to show the thread names in release version
+		// for ( security reason, you may not want to show the thread names in release version
 		ThreadPool(ExceptionHandler const & handler = ExceptionHandler(), bool enable_thread_name = true);
 
 		// As long as the returned pointer is not released, the thread will

@@ -66,7 +66,7 @@ namespace lv { namespace log {
 
 			~Proxy()
 			{
-				if(active_)
+				if (active_)
 				{
 					log_.on_record_end();
 				}
@@ -138,11 +138,11 @@ namespace lv { namespace log {
 		template <typename T>
 		void log(T const & t)
 		{
-			if(enabled_)
+			if (enabled_)
 			{
 				BOOST_FOREACH(gather_ptr & gather, this->gathers_)
 				{
-					if(gather->output(lvl_))
+					if (gather->output(lvl_))
 					{
 						gather->log(t);
 					}
@@ -157,11 +157,11 @@ namespace lv { namespace log {
 
 			this->lvl_ = lvl;
 
-			if(enabled_)
+			if (enabled_)
 			{
 				BOOST_FOREACH(gather_ptr & gather, this->gathers_)
 				{
-					if(gather->output(lvl_))
+					if (gather->output(lvl_))
 					{
 						gather->on_record_begin(lvl_);
 					}
@@ -171,11 +171,11 @@ namespace lv { namespace log {
 
 		void on_record_end()
 		{
-			if(enabled_)
+			if (enabled_)
 			{
 				BOOST_FOREACH(gather_ptr & gather, this->gathers_)
 				{
-					if(gather->output(lvl_))
+					if (gather->output(lvl_))
 					{
 						gather->on_record_end(lvl_);
 					}

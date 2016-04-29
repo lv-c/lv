@@ -25,17 +25,17 @@ namespace lv { namespace net {
 
 	void Socks5ServerSession::on_receive(BufferPtr buf)
 	{
-		if(status_ == Established)
+		if (status_ == Established)
 		{
 			dest_session_->start_write(buf);
 			return;
 		}
-		else if(status_ == Ended)
+		else if (status_ == Ended)
 		{
 			return;
 		}
 
-		if(cache_)
+		if (cache_)
 		{
 			buffer::append(*cache_, buf);
 			buf = cache_;
@@ -71,7 +71,7 @@ namespace lv { namespace net {
 
 	void Socks5ServerSession::on_write(BufferPtr buf)
 	{
-		//if(status_ == Ended)
+		//if (status_ == Ended)
 		//	exit();
 	}
 
@@ -80,7 +80,7 @@ namespace lv { namespace net {
 		uint8 ver, methods_num;
 		bis >> ver >> methods_num;
 	
-		if(ver != Socks5::Version || methods_num == 0)
+		if (ver != Socks5::Version || methods_num == 0)
 		{
 			exit();
 			return;
@@ -127,7 +127,7 @@ namespace lv { namespace net {
 
 		send() << Socks5::AuthVersion << uint8(valid ? 0 : 1);
 
-		if(valid)
+		if (valid)
 		{
 			status_ = Request;
 		}
@@ -173,12 +173,12 @@ namespace lv { namespace net {
 			error = asio::error::make_error_code(asio::error::operation_not_supported);
 		}
 
-		if(cmd != 1)	// CONNECT
+		if (cmd != 1)	// CONNECT
 		{
 			error = asio::error::make_error_code(asio::error::operation_not_supported);
 		}
 
-		if(error)
+		if (error)
 		{
 			send_request_response(error);
 			return;
@@ -217,10 +217,10 @@ namespace lv { namespace net {
 		asio::ip::address addr;
 		unsigned short port = 0;
 
-		if(! error)
+		if (! error)
 		{
 			asio::ip::tcp::endpoint endpoint = dest_session_->socket()->get().local_endpoint(error);
-			if(! error)
+			if (! error)
 			{
 				addr = endpoint.address();
 				port = endpoint.port();
@@ -231,12 +231,12 @@ namespace lv { namespace net {
 
 		PacketProxy proxy = send() << Socks5::Version << rep << uint8(0);
 
-		if(! error)
+		if (! error)
 		{
 			uint8 high_byte = (port >> 8) & 0xFF;
 			uint8 low_byte = port & 0xFF;
 
-			if(addr.is_v4())
+			if (addr.is_v4())
 			{
 				proxy << Socks5::IPV4 << addr.to_v4().to_bytes();
 			}
@@ -260,12 +260,12 @@ namespace lv { namespace net {
 
 	uint8 Socks5ServerSession::error_to_rep(boost::system::error_code const & error)
 	{
-		if(! error)
+		if (! error)
 		{
 			return 0;
 		}
 
-		if(error.category() == asio::error::get_system_category())
+		if (error.category() == asio::error::get_system_category())
 		{
 			switch(error.value())
 			{
@@ -300,12 +300,12 @@ namespace lv { namespace net {
 
 	void Socks5ServerSession::dest_on_error(ErrorType type, boost::system::error_code const & error)
 	{
-		if(status_ == Ended)
+		if (status_ == Ended)
 		{
 			return;
 		}
 
-		if(type == ErrorConnect)
+		if (type == ErrorConnect)
 		{
 			send_request_response(error);
 		}
@@ -324,7 +324,7 @@ namespace lv { namespace net {
 	{
 		exit();
 
-		if(! closed_)
+		if (! closed_)
 		{
 			closed_ = true;
 			close();
@@ -333,14 +333,14 @@ namespace lv { namespace net {
 
 	void Socks5ServerSession::exit()
 	{
-		if(status_ == Ended)
+		if (status_ == Ended)
 		{
 			return;
 		}
 
 		status_ = Ended;
 
-		if(dest_session_)
+		if (dest_session_)
 		{
 			BOOST_FOREACH(boost::signals2::connection & conn, connections_)
 			{

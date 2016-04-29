@@ -256,7 +256,7 @@ namespace lv
 
 		inline void	insert(Buffer & buf, size_t pos, void const * data, size_t size)
 		{
-			if(pos > buf.size())
+			if (pos > buf.size())
 			{
 				throw std::out_of_range("buffer::insert out of range");
 			}
@@ -276,7 +276,7 @@ namespace lv
 		/// @exception std::out_of_range
 		inline	void write(BufferRef buf, size_t pos, void const * data, size_t size)
 		{
-			if(pos + size > buf.size())
+			if (pos + size > buf.size())
 			{
 				throw std::out_of_range("buffer::write out of range");
 			}
@@ -296,7 +296,7 @@ namespace lv
 		/// @exception std::out_of_range
 		inline	void read(ConstBufferRef const & buf, size_t pos, void * data, size_t size)
 		{
-			if(pos + size > buf.size())
+			if (pos + size > buf.size())
 			{
 				throw std::out_of_range("buffer::read out of range");
 			}

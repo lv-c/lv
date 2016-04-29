@@ -125,7 +125,7 @@ namespace lv { namespace lua { namespace archive {
 		template<typename T>
 		void	next(T)
 		{
-			while(cur_ != end_ && T::eval(*cur_))
+			while (cur_ != end_ && T::eval(*cur_))
 			{
 				cur_++;
 			}
@@ -214,7 +214,7 @@ namespace lv { namespace lua { namespace archive {
 
 			unsigned int ver = 0;
 
-			if(parser.read_if(VersionKey.c_str()))
+			if (parser.read_if(VersionKey.c_str()))
 			{
 				parser >> symbol('=') >> ver;
 			}
@@ -279,7 +279,7 @@ namespace lv { namespace lua { namespace archive {
 
 			int index = 1;
 
-			while(! parser.read_if('}'))
+			while (! parser.read_if('}'))
 			{
 				typename boost::range_value<T>::type item;
 

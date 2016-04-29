@@ -21,7 +21,7 @@ namespace lv { namespace serialization {
 		bool exist = t;
 		ar << exist;
 
-		if(exist)
+		if (exist)
 		{
 			ar << *t;
 		}
@@ -33,7 +33,7 @@ namespace lv { namespace serialization {
 		bool exist;
 		ar >> exist;
 
-		if(exist)
+		if (exist)
 		{
 			t.reset(new T());
 			ar >> *t;

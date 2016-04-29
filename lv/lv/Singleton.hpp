@@ -17,7 +17,7 @@
 
 #include <boost/assert.hpp>
 
-#include <lv/Config.hpp>	// for NULL ...
+#include <lv/Config.hpp>	// for ( NULL ...
 
 namespace lv
 {

@@ -42,7 +42,7 @@ namespace boost { namespace serialization {
 			bool has_data = v.data();
 			ar & v.key() & has_data;
 
-			if(has_data)
+			if (has_data)
 			{
 				ar & (*v.data());
 			}
@@ -65,7 +65,7 @@ namespace boost { namespace serialization {
 
 		tree.reserve(size);
 
-		for(tree_type::size_type i = 0; i < size; ++i)
+		for (tree_type::size_type i = 0; i < size; ++i)
 		{
 			Key key[1];
 			tree_type::data_pointer data;
@@ -75,7 +75,7 @@ namespace boost { namespace serialization {
 			bool has_data;
 			ar & has_data;
 
-			if(has_data)
+			if (has_data)
 			{
 				data.reset(new tree_type::data_type());
 				ar & (*data);

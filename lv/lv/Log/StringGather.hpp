@@ -56,7 +56,7 @@ namespace lv { namespace log {
 
 		virtual	void on_receive(string_type const & str, int lvl)
 		{
-			if(receiver_)
+			if (receiver_)
 			{
 				receiver_(str, lvl);
 			}

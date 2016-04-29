@@ -62,7 +62,7 @@ namespace lv { namespace net {
 
 		void	push(BufferPtr buf)
 		{
-			if(buf->size() > 2)
+			if (buf->size() > 2)
 			{
 				buffer::write(buf, 0, uint16(buf->size()));
 
@@ -78,10 +78,10 @@ namespace lv { namespace net {
 		{
 			splitter_.push(buf);
 
-			while(true)
+			while (true)
 			{
 				BufferPtr new_buf = splitter_.get();
-				if(! new_buf)
+				if (! new_buf)
 				{
 					break;
 				}

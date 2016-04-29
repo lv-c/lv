@@ -36,7 +36,7 @@ namespace lv { namespace net {
 
 		use_proxy_ = (! socks_ip.empty());
 
-		if(use_proxy_)
+		if (use_proxy_)
 		{
 			base_type::connect(socks_ip, socks_port, to_bind);
 		}
@@ -48,18 +48,18 @@ namespace lv { namespace net {
 
 	void Socks5ClientSession::handle_connect(boost::system::error_code const & error)
 	{
-		if(closed())
+		if (closed())
 		{
 			return;
 		}
 
-		if(! use_proxy_)
+		if (! use_proxy_)
 		{
 			base_type::handle_connect(error);
 		}
 		else
 		{
-			if(error)
+			if (error)
 			{
 				on_error_internal(ErrorHandshake, error);
 			}
@@ -72,7 +72,7 @@ namespace lv { namespace net {
 
 	void Socks5ClientSession::on_connected_internal()
 	{
-		if(! use_proxy_)
+		if (! use_proxy_)
 		{
 			status_ = Established;
 			base_type::on_connected_internal();
@@ -91,24 +91,24 @@ namespace lv { namespace net {
 
 	void Socks5ClientSession::handle_read(BufferPtr buf, size_t bytes_transferred, boost::system::error_code const & error)
 	{
-		if(closed())
+		if (closed())
 		{
 			return;
 		}
 
-		if(status_ == Established)
+		if (status_ == Established)
 		{
 			base_type::handle_read(buf, bytes_transferred, error);
 			return;
 		}
 
-		if(error)
+		if (error)
 		{
 			on_error_internal(ErrorHandshake, error);
 			return;
 		}
 
-		if(status_ == None)
+		if (status_ == None)
 		{
 			BOOST_ASSERT(false);
 			return;
@@ -116,7 +116,7 @@ namespace lv { namespace net {
 
 		buf->resize(bytes_transferred);
 
-		if(cache_)
+		if (cache_)
 		{
 			buffer::append(*cache_, buf);
 			buf = cache_;
@@ -157,14 +157,14 @@ namespace lv { namespace net {
 	{
 		uint8 ver, method;
 		bis >> ver >> method;
-		if(ver != Socks5::Version || (method != Socks5::NoAuth && method != Socks5::UserPassword))
+		if (ver != Socks5::Version || (method != Socks5::NoAuth && method != Socks5::UserPassword))
 		{
 			on_error_internal(ErrorHandshake, asio::error::make_error_code(asio::error::operation_not_supported));
 			close();
 			return;
 		}
 
-		if(method == Socks5::UserPassword)
+		if (method == Socks5::UserPassword)
 		{
 			boost::shared_ptr<Socks5ClientContext> s5_context = boost::dynamic_pointer_cast<Socks5ClientContext>(context_);
 			std::string user, password;
@@ -184,7 +184,7 @@ namespace lv { namespace net {
 	{
 		uint8 ver, ret;
 		bis >> ver >> ret;
-		if(ret != 0)
+		if (ret != 0)
 		{
 			on_error_internal(ErrorHandshake, asio::error::make_error_code(asio::error::no_permission));
 			close();
@@ -224,7 +224,7 @@ namespace lv { namespace net {
 		bis >> bstream::forward(2);		// port
 
 		//
-		if(rep == 0)
+		if (rep == 0)
 		{
 			status_ = Established;
 			on_connected();
@@ -296,16 +296,16 @@ namespace lv { namespace net {
 
 	void Socks5ClientSession::handle_write(BufferPtr buf, boost::system::error_code const & error)
 	{
-		if(closed())
+		if (closed())
 		{
 			return;
 		}
 
-		if(status_ == Established)
+		if (status_ == Established)
 		{
 			base_type::handle_write(buf, error);
 		}
-		else if(error)
+		else if (error)
 		{
 			on_error_internal(ErrorHandshake, error);
 		}
@@ -321,7 +321,7 @@ namespace lv { namespace net {
 		boost::system::error_code err;
 		asio::ip::tcp::resolver::iterator it = resolver.resolve(query, err);
 
-		if(err && err.value() != asio::error::host_not_found)
+		if (err && err.value() != asio::error::host_not_found)
 		{
 			on_error_internal(ErrorHandshake, err);
 			return;
@@ -332,7 +332,7 @@ namespace lv { namespace net {
 
 		unsigned short port = 0;
 
-		if(err)
+		if (err)
 		{
 			port = boost::lexical_cast<unsigned short>(port_);
 
@@ -344,7 +344,7 @@ namespace lv { namespace net {
 
 			port = endpoint.port();
 
-			if(endpoint.protocol() == asio::ip::tcp::v4())
+			if (endpoint.protocol() == asio::ip::tcp::v4())
 			{
 				proxy << Socks5::IPV4 << endpoint.address().to_v4().to_bytes();
 			}

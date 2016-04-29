@@ -93,12 +93,12 @@ namespace lv
 
 		DSTree const & operator = (DSTree const & rhs)
 		{
-			if(this != &rhs)
+			if (this != &rhs)
 			{
 				key_ = rhs.key_;
 				pred_ = rhs.pred_;
 
-				if(rhs.data_)
+				if (rhs.data_)
 				{
 					data_.reset(new data_type(*rhs.data_));
 				}
@@ -192,7 +192,7 @@ namespace lv
 		bool erase(key_type const & key)
 		{
 			iterator it = find_child(key);
-			if(it != end())
+			if (it != end())
 			{
 				erase(it);
 				return true;
@@ -211,7 +211,7 @@ namespace lv
 			{
 				iterator it = tree->find_child(key);
 
-				if(it == tree->end())
+				if (it == tree->end())
 				{
 					DSTree * new_node = new DSTree(key, tree, pred_);
 					it = tree->children_.insert(std::lower_bound(tree->begin(), tree->end(), key,
@@ -238,7 +238,7 @@ namespace lv
 			BOOST_FOREACH(boost::range_value<KeyRange>::type const & key, seq)
 			{
 				iterator it = tree->find_child(key);
-				if(it == tree->end())
+				if (it == tree->end())
 				{
 					return NULL;
 				}
@@ -256,7 +256,7 @@ namespace lv
 		{
 			DSTree * tree = sub_tree(seq);
 
-			if(tree == NULL)
+			if (tree == NULL)
 			{
 				return data_pointer();
 			}
@@ -279,13 +279,13 @@ namespace lv
 				len ++;
 
 				iterator it = tree->find_child(key);
-				if(it == tree->end())
+				if (it == tree->end())
 				{
 					return data_pointer();
 				}
-				else if(it->data_)
+				else if (it->data_)
 				{
-					if(size != NULL)
+					if (size != NULL)
 					{
 						*size = len;
 					}
@@ -308,35 +308,35 @@ namespace lv
 
 		bool operator == (DSTree const & rhs) const
 		{
-			if(size() != rhs.size())
+			if (size() != rhs.size())
 			{
 				return false;
 			}
 
-			if(parent_ == NULL)
+			if (parent_ == NULL)
 			{
-				if(rhs.parent_ != NULL)
+				if (rhs.parent_ != NULL)
 				{
 					return false;
 				}
 			}
 			else
 			{
-				if(key_ != rhs.key_)
+				if (key_ != rhs.key_)
 				{
 					return false;
 				}
 
-				 if(data_ && rhs.data_)
+				 if (data_ && rhs.data_)
 				 {
-					 if(*data_ != *rhs.data_)
+					 if (*data_ != *rhs.data_)
 					 {
 						 return false;
 					 }
 				 }
 				 else
 				 {
-					 if(bool(data_) != bool(rhs.data_))
+					 if (bool(data_) != bool(rhs.data_))
 					 {
 						 return false;
 					 }

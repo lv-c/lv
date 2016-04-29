@@ -34,7 +34,7 @@ namespace lv { namespace lua { namespace archive {
 		expect_obj_type(obj, LUA_TTABLE);
 
 		size_t index(0);
-		for(luabind::iterator it(obj), end; it != end; ++it, ++index)
+		for (luabind::iterator it(obj), end; it != end; ++it, ++index)
 		{
 			LV_ENSURE(index < N, ArraySizeTooShort());
 
@@ -51,7 +51,7 @@ namespace lv { namespace lua { namespace archive {
 
 		int index = 0;
 
-		while(! parser.read_if('}'))
+		while (! parser.read_if('}'))
 		{
 			LV_ENSURE(index < N, ArraySizeTooShort());
 			parser >> v[index++];

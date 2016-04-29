@@ -49,7 +49,7 @@ namespace lv { namespace bstream {
 			{
 				T val;
 				is >> val;
-				if(val != ce.t_)
+				if (val != ce.t_)
 				{
 					throw ce.ex_;
 				}
@@ -114,7 +114,7 @@ namespace lv { namespace bstream {
 
 			std::size_t left = fill.size_;
 
-			while(left > 0)
+			while (left > 0)
 			{
 				std::size_t sz = std::min(left, buf_size);
 
@@ -183,13 +183,13 @@ namespace lv { namespace bstream {
 		{
 			str_.resize(size_);
 
-			if(size_ > 0)
+			if (size_ > 0)
 			{
 				is.read(&str_[0], static_cast<std::streamsize>(size_));
 
-				for(size_t i = 0; i < size_; ++i)
+				for (size_t i = 0; i < size_; ++i)
 				{
-					if(str_[i] == '\0')
+					if (str_[i] == '\0')
 					{
 						str_.resize(i);
 						break;
@@ -203,12 +203,12 @@ namespace lv { namespace bstream {
 			BOOST_ASSERT(str_.size() <= size_);
 
 			std::size_t sz = std::min(str_.size(), size_);
-			if(sz > 0)
+			if (sz > 0)
 			{
 				os.write(&str_[0], static_cast<std::streamsize>(sz));
 			}
 
-			if(sz < size_)
+			if (sz < size_)
 			{
 				os << fill_n(size_ - sz, '\0');
 			}

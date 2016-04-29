@@ -13,7 +13,7 @@ namespace lv
 
 	Timer::Timer()
 	{
-		if(cps_ == 0)
+		if (cps_ == 0)
 		{
 #ifdef LV_PLATFORM_WINDOWS
 			LARGE_INTEGER frequency;

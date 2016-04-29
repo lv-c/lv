@@ -20,7 +20,7 @@ namespace lv { namespace lua { namespace archive {
 	template<typename T>
 	void	save(std::ostream & os, boost::shared_ptr<T> const & v, size_t level)
 	{
-		if(v)
+		if (v)
 		{
 			save(os, *v, level);
 		}
@@ -33,13 +33,13 @@ namespace lv { namespace lua { namespace archive {
 	template<typename T>
 	void	load(luabind::object const & obj, boost::shared_ptr<T> & v)
 	{
-		if(luabind::type(obj) == LUA_TNIL)
+		if (luabind::type(obj) == LUA_TNIL)
 		{
 			v.reset();
 		}
 		else
 		{
-			if(! v)
+			if (! v)
 			{
 				v.reset(new T());
 			}
@@ -50,13 +50,13 @@ namespace lv { namespace lua { namespace archive {
 	template<typename T>
 	void	load(Parser & parser, boost::shared_ptr<T> & v)
 	{
-		if(parser.read_if("nil"))
+		if (parser.read_if("nil"))
 		{
 			v.reset();
 		}
 		else
 		{
-			if(! v)
+			if (! v)
 			{
 				v.reset(new T());
 			}

@@ -48,7 +48,7 @@ namespace lv { namespace lua { namespace archive {
 	inline void	expect_obj_type(luabind::object const & obj, int expected)
 	{
 		int given = luabind::type(obj);
-		if(given != expected)
+		if (given != expected)
 		{
 			throw UnmatchedLuaType(given, expected);
 		}
@@ -73,7 +73,7 @@ namespace lv { namespace lua { namespace archive {
 			unsigned int version = DefaultVersion;
 
 			luabind::object version_obj = obj[VersionKey];
-			if(version_obj)
+			if (version_obj)
 			{
 				version = luabind::object_cast<unsigned int>(version_obj);
 			}
@@ -113,7 +113,7 @@ namespace lv { namespace lua { namespace archive {
 		// sequence_tag
 		inline bool	is_version_key(luabind::object const & obj)
 		{
-			if(obj && luabind::type(obj) == LUA_TSTRING)
+			if (obj && luabind::type(obj) == LUA_TSTRING)
 			{
 				return (luabind::object_cast<std::string>(obj) == VersionKey);
 			}
@@ -127,7 +127,7 @@ namespace lv { namespace lua { namespace archive {
 			expect_obj_type(obj, LUA_TTABLE);
 
 			lv::clear(t);
-			for(luabind::iterator it(obj), end; it != end; ++it)
+			for (luabind::iterator it(obj), end; it != end; ++it)
 			{
 				BOOST_ASSERT(! is_version_key(it.key()) && "you shouldn't place a version key here");
 

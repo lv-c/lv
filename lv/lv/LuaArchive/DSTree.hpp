@@ -42,7 +42,7 @@ namespace lv { namespace lua { namespace archive {
 			std::deque<Key> keys;
 			tree_type const * root = &tree;
 
-			while(root->parent() != NULL)
+			while (root->parent() != NULL)
 			{
 				keys.push_front(root->key());
 				root = root->parent();
@@ -52,7 +52,7 @@ namespace lv { namespace lua { namespace archive {
 
 			bool primitive = true;
 			
-			if(! is_primitive<Key>::value)
+			if (! is_primitive<Key>::value)
 			{
 				primitive = false;
 				os << std::endl << write_tabs(level + 1);
@@ -62,9 +62,9 @@ namespace lv { namespace lua { namespace archive {
 
 			os << ", ";
 
-			if(tree.data())
+			if (tree.data())
 			{
-				if(! is_primitive<Data>::value)
+				if (! is_primitive<Data>::value)
 				{
 					primitive = false;
 					os << std::endl << write_tabs(level + 1);
@@ -78,7 +78,7 @@ namespace lv { namespace lua { namespace archive {
 			}
 
 
-			if(! primitive)
+			if (! primitive)
 			{
 				os << std::endl << write_tabs(level);
 			}
@@ -93,9 +93,9 @@ namespace lv { namespace lua { namespace archive {
 
 			BOOST_FOREACH(tree_type::value_type const & v, tree)
 			{
-				if(v.empty() || v.data())
+				if (v.empty() || v.data())
 				{
-					if(! first_time)
+					if (! first_time)
 					{
 						os << ", ";
 					}
@@ -150,11 +150,11 @@ namespace lv { namespace lua { namespace archive {
 		std::vector<Key> keys;
 		std::string str;
 
-		for(luabind::iterator it(obj), end; it != end; ++it)
+		for (luabind::iterator it(obj), end; it != end; ++it)
 		{
 			luabind::iterator v_it(*it);
 
-			if(boost::is_same<Key, char>::value)
+			if (boost::is_same<Key, char>::value)
 			{
 				load(*v_it, str);
 			}
@@ -167,7 +167,7 @@ namespace lv { namespace lua { namespace archive {
 
 			tree_type::data_pointer data;
 
-			if(v_it != end && luabind::type(*v_it) != LUA_TNIL)
+			if (v_it != end && luabind::type(*v_it) != LUA_TNIL)
 			{
 				data.reset(new tree_type::data_type());
 				load(*v_it, *data);

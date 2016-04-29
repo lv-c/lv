@@ -118,7 +118,7 @@ namespace lv { namespace rpc {
 
 			~PrivateHandler()
 			{
-				if(! sent_)
+				if (! sent_)
 				{
 					client_.send(buffer_, oa_, raw_os_, request_id_, Protocol::options::none);
 				}
@@ -298,7 +298,7 @@ namespace lv { namespace rpc {
 		{
 			(*oa) << option;
 			// sends the request id only when an acknowledgment or a return value is required
-			if(option != Protocol::options::none)
+			if (option != Protocol::options::none)
 			{
 				(*oa) << request_id;
 			}

@@ -54,7 +54,7 @@ namespace lv { namespace lua { namespace archive {
 			Token token = parser.next_token();
 			parser.rollback(token);
 
-			if(! token.is_key)
+			if (! token.is_key)
 			{
 				detail::remove_const(v.first) = static_cast<F>(index);
 				parser >> detail::remove_const(v.second);

@@ -56,12 +56,12 @@ namespace lv
 		{
 			scoped_lock lock(mutex_);
 
-			while(queue_.size() >= max_count_)
+			while (queue_.size() >= max_count_)
 			{
 				full_.wait(lock);
 			}
 
-			if(queue_.empty())
+			if (queue_.empty())
 			{
 				empty_.notify_one();
 			}
@@ -81,13 +81,13 @@ namespace lv
 		{
 			scoped_lock lock(mutex_);
 
-			while(true)
+			while (true)
 			{
-				if(consumers_to_interrupt_ > 0)
+				if (consumers_to_interrupt_ > 0)
 				{
 					consumers_to_interrupt_ --;
 
-					if(consumers_to_interrupt_ == 0)
+					if (consumers_to_interrupt_ == 0)
 					{
 						consumer_interruption_done_.notify_all();
 					}
@@ -95,7 +95,7 @@ namespace lv
 					throw boost::thread_interrupted();
 				}
 
-				if(! queue_.empty())
+				if (! queue_.empty())
 				{
 					break;
 				}
@@ -104,7 +104,7 @@ namespace lv
 			}
 
 			//
-			if(queue_.size() == max_count_)
+			if (queue_.size() == max_count_)
 			{
 				full_.notify_all();
 			}
@@ -136,10 +136,10 @@ namespace lv
 
 
 		/**
-		 * Interrupt num consumers that are currently waiting for tasks and that will call 'get' method later.
+		 * Interrupt num consumers that are currently waiting for ( tasks and that will call 'get' method later.
 		 * The number of consumers to interrupt will be accumulated.
 		 * @param num number of consumers to interrupt.
-		 * @param wait wait for the job done or not
+		 * @param wait wait for ( the job done or not
 		 */
 		void	interrupt_consumers(size_t num, bool wait = false)
 		{
@@ -148,7 +148,7 @@ namespace lv
 			
 			empty_.notify_all();
 
-			if(wait)
+			if (wait)
 			{
 				consumer_interruption_done_.wait(lock);
 			}

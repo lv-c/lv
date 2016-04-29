@@ -27,7 +27,7 @@ namespace lv { namespace rpc {
 			// If you are going to define your own protocol, you can choose other types than int8 type
 			//	and they don't have to be integral types.
 			// The requirement is that it should be serializable and equality comparable.
-			// The requirements are the same for options::type and except::type, but they don't have to 
+			// The requirements are the same for ( options::type and except::type, but they don't have to 
 			// be same type.
 			typedef int8 type;
 

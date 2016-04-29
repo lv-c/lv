@@ -79,9 +79,9 @@ namespace lv { namespace net {
 
 			BOOST_FOREACH(Message & msg, messages_)
 			{
-				if(msg.buf)
+				if (msg.buf)
 				{
-					if(msg.send_time == 0 || msg.send_time + resend_interval < timer_.elapsed())
+					if (msg.send_time == 0 || msg.send_time + resend_interval < timer_.elapsed())
 					{
 						msg.send_time = timer_.elapsed();
 						return msg.buf;
@@ -96,13 +96,13 @@ namespace lv { namespace net {
 		{
 			int32 index = id - id_base_;
 
-			if(index >= 0)
+			if (index >= 0)
 			{
 				LV_ENSURE(uint32(index) < messages_.size(), "invalid reply id");
 
 				messages_[index].buf.reset();
 
-				while(! messages_.empty() && ! messages_.front().buf)
+				while (! messages_.empty() && ! messages_.front().buf)
 				{
 					messages_.pop_front();
 					id_base_ ++;
@@ -161,16 +161,16 @@ namespace lv { namespace net {
 
 			int32 index = header.id - id_base_;
 
-			if(index >= 0)
+			if (index >= 0)
 			{
-				if(messages_.size() <= uint32(index))
+				if (messages_.size() <= uint32(index))
 				{
 					messages_.insert(messages_.end(), index - messages_.size() + 1, Message());
 				}
 
 				Message & msg = messages_[index];
 
-				if(! msg.received)
+				if (! msg.received)
 				{
 					buf->erase(buf->begin(), buf->begin() + sizeof(Header));
 
@@ -189,19 +189,19 @@ namespace lv { namespace net {
 
 			BOOST_FOREACH(Message & msg, messages_)
 			{
-				if(msg.buf)
+				if (msg.buf)
 				{
 					std::swap(ret, msg.buf);
 					break;
 				}
-				else if(preserve_order)
+				else if (preserve_order)
 				{
 					// check only the first buffer
 					break;
 				}
 			}
 
-			while(! messages_.empty() && messages_.front().received && ! messages_.front().buf)
+			while (! messages_.empty() && messages_.front().received && ! messages_.front().buf)
 			{
 				messages_.pop_front();
 				id_base_++;
@@ -272,24 +272,24 @@ namespace lv { namespace net {
 			uint8 tp;
 			bis >> tp;
 
-			if(tp == PacketType)
+			if (tp == PacketType)
 			{
 				uint32 id = receive_queue_->add(buf);
 				need_reply_.push_back(id);
 
-				while(BufferPtr p = receive_queue_->msg_to_receive())
+				while (BufferPtr p = receive_queue_->msg_to_receive())
 				{
 					receiver_(p);
 				}
 
 				break;
 			}
-			else if(tp == ReplayType)
+			else if (tp == ReplayType)
 			{
 				uint32 num;
 				bis >> num;
 
-				for(uint32 i = 0; i < num; ++i)
+				for (uint32 i = 0; i < num; ++i)
 				{
 					uint32 id;
 					bis >> id;
@@ -304,14 +304,14 @@ namespace lv { namespace net {
 				LV_ENSURE(false, "unknown header type");
 			}
 
-		} while(! buf->empty());
+		} while (! buf->empty());
 	}
 
 	void MessageQueue::on_timer()
 	{
 		check_send();
 
-		if(! need_reply_.empty() && sender_->sendable() && last_reply_time_ + 0.5 < timer_.elapsed())
+		if (! need_reply_.empty() && sender_->sendable() && last_reply_time_ + 0.5 < timer_.elapsed())
 		{
 			BufferPtr buf = context_->buffer();
 			fill_replies(*buf);
@@ -322,17 +322,17 @@ namespace lv { namespace net {
 
 	void MessageQueue::check_send()
 	{
-		if(! sender_->sendable())
+		if (! sender_->sendable())
 		{
 			return;
 		}
 
-		while(BufferPtr buf = send_queue_->msg_to_send())
+		while (BufferPtr buf = send_queue_->msg_to_send())
 		{
 			// make a copy of the data, because the sender may modify it.
 			BufferPtr new_buf = context_->buffer();
 
-			if(! need_reply_.empty())
+			if (! need_reply_.empty())
 			{
 				fill_replies(*new_buf);
 			}
@@ -344,7 +344,7 @@ namespace lv { namespace net {
 
 	void MessageQueue::fill_replies(Buffer & buf)
 	{
-		if(! need_reply_.empty())
+		if (! need_reply_.empty())
 		{
 			BinaryOStream(buf) << ReplayType << bstream::variable_len_range<uint32>(need_reply_);
 

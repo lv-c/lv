@@ -58,7 +58,7 @@ namespace lv { namespace net {
 		asio::ip::tcp::endpoint endpoint = remote ?
 			socket_->get().remote_endpoint(error) : socket_->get().local_endpoint(error);
 
-		if(! error)
+		if (! error)
 		{
 			return endpoint.address().to_string(error);
 		}
@@ -119,7 +119,7 @@ namespace lv { namespace net {
 		asio::ip::tcp::resolver::query query(ip, port);
 		asio::ip::tcp::resolver resolver(context_->service());
 
-		if(! to_bind.empty())
+		if (! to_bind.empty())
 		{
 			asio::ip::address bind_addr = asio::ip::address::from_string(to_bind);
 
@@ -127,7 +127,7 @@ namespace lv { namespace net {
 			socket_->get().bind(asio::ip::tcp::endpoint(bind_addr, 0));
 		}
 
-		if(context_->has_strand())
+		if (context_->has_strand())
 		{
 			socket_->get().async_connect(*resolver.resolve(query), 
 				context_->strand().wrap(boost::bind(&SessionBase::handle_connect, shared_from_this(), asio::placeholders::error)));
@@ -145,7 +145,7 @@ namespace lv { namespace net {
 
 		buf->resize(buf->capacity());
 
-		if(context_->has_strand())
+		if (context_->has_strand())
 		{
 			socket_->get().async_read_some(asio::buffer(*buf), context_->strand().wrap(
 				boost::bind(&SessionBase::handle_read, shared_from_this(), buf,
@@ -161,7 +161,7 @@ namespace lv { namespace net {
 
 	void SessionBase::start_write(BufferPtr buf)
 	{
-		if(! closed_)
+		if (! closed_)
 		{
 			/*
 			async_write
@@ -174,7 +174,7 @@ namespace lv { namespace net {
 
 			boost::unique_lock<boost::mutex> lock(write_mutex_);
 
-			if(writing_)
+			if (writing_)
 			{
 				write_queue_.push_back(buf);
 			}
@@ -190,7 +190,7 @@ namespace lv { namespace net {
 		BOOST_ASSERT(! writing_);
 		writing_ = true;
 
-		if(context_->has_strand())
+		if (context_->has_strand())
 		{
 			asio::async_write(socket_->get(), asio::buffer(*buf), context_->strand().wrap(
 				boost::bind(&SessionBase::handle_write, shared_from_this(), 
@@ -217,7 +217,7 @@ namespace lv { namespace net {
 
 	void SessionBase::on_error_internal(ErrorType type, boost::system::error_code const & error)
 	{
-		if(! closed_)
+		if (! closed_)
 		{
 			close();
 			on_error(type, error);
@@ -252,12 +252,12 @@ namespace lv { namespace net {
 
 	void SessionBase::handle_read(BufferPtr buf, size_t bytes_transferred, boost::system::error_code const & error)
 	{
-		if(closed_)
+		if (closed_)
 		{
 			return;
 		}
 
-		if(error)
+		if (error)
 		{
 			on_error_internal(ErrorRead, error);
 		}
@@ -275,12 +275,12 @@ namespace lv { namespace net {
 		writing_ = false;
 		
 		//
-		if(closed_)
+		if (closed_)
 		{
 			return;
 		}
 
-		if(error)
+		if (error)
 		{
 			on_error_internal(ErrorWrite, error);
 		}
@@ -289,7 +289,7 @@ namespace lv { namespace net {
 			{
 				boost::unique_lock<boost::mutex> lock(write_mutex_);
 
-				if(! writing_ && ! write_queue_.empty())
+				if (! writing_ && ! write_queue_.empty())
 				{
 					BufferPtr new_buf = write_queue_.front();
 					write_queue_.pop_front();
@@ -304,12 +304,12 @@ namespace lv { namespace net {
 
 	void SessionBase::handle_connect(boost::system::error_code const & error)
 	{
-		if(closed_)
+		if (closed_)
 		{
 			return;
 		}
 
-		if(! error)
+		if (! error)
 		{
 			on_connected_internal();
 		}

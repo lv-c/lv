@@ -63,7 +63,7 @@ namespace lv { namespace log {
 			scoped_lock lock(mutex_);
 
 			logger_map::iterator it = loggers_.find(name);
-			if(it == loggers_.end())
+			if (it == loggers_.end())
 			{
 				throw std::runtime_error(std::string("logger not exist : ") + name);
 			}

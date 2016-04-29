@@ -94,7 +94,7 @@ namespace lv
 		{
 			map_type::iterator map_it = map_.find(key);
 
-			if(map_it != map_.end())
+			if (map_it != map_.end())
 			{
 				return std::make_pair(map_it->second, false);
 			}
@@ -102,7 +102,7 @@ namespace lv
 			list_type::iterator list_it = list_.insert(std::make_pair(key, data));
 			map_.insert(std::make_pair(key, list_it));
 
-			if(map_.size() > max_size_ && map_.size() > 1)
+			if (map_.size() > max_size_ && map_.size() > 1)
 			{
 				erase(list_.last().first);
 			}
@@ -113,9 +113,9 @@ namespace lv
 		iterator	find(key_type const & key, bool touch = true)
 		{
 			map_type::iterator map_it = map_.find(key);
-			if(map_it != map_.end())
+			if (map_it != map_.end())
 			{
-				if(touch)
+				if (touch)
 				{
 					list_.touch(map_it->second);
 				}
@@ -130,7 +130,7 @@ namespace lv
 		{
 			iterator it = find(key);	// find and touch
 
-			if(it == end())
+			if (it == end())
 			{
 				it = insert(key, data_type()).first;
 			}
@@ -141,7 +141,7 @@ namespace lv
 		void	touch(key_type const & key)
 		{
 			map_type::iterator map_it = map_.find(key);
-			if(map_it != map_.end())
+			if (map_it != map_.end())
 			{
 				list_.touch(it->second);
 			}
@@ -150,14 +150,14 @@ namespace lv
 		void	erase(key_type const & key)
 		{
 			map_type::iterator map_it = map_.find(key);
-			if(map_it != map_.end())
+			if (map_it != map_.end())
 			{
 				data_type data = map_it->second->second;
 
 				list_.erase(map_it->second);
 				map_.erase(map_it);
 
-				if(callback_)
+				if (callback_)
 				{
 					callback_(key, data);
 				}

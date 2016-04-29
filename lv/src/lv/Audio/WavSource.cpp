@@ -25,7 +25,7 @@ namespace lv
 			bin_is >> check_equal(riff_id) >> forward(4) >> check_equal(wave_id);
 
 
-			while(true)
+			while (true)
 			{
 				uint32	chunk_id, chunk_size;
 
@@ -35,7 +35,7 @@ namespace lv
 				}
 				catch(std::ios_base::failure const &)
 				{
-					if(data_offset_ == 0)
+					if (data_offset_ == 0)
 					{
 						throw InvalidAudioData();
 					}

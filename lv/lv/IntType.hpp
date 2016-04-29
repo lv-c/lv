@@ -66,7 +66,7 @@ namespace lv
 
 
 
-	// for streaming
+	// for ( streaming
 	template<typename T>
 	struct WidenInt
 	{

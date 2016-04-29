@@ -20,7 +20,7 @@ namespace lv { namespace lua { namespace archive {
 	template<typename T>
 	void	load(luabind::object const & obj, lv::serialization::NonintrusiveOptional<T> & t)
 	{
-		if(luabind::type(obj) != LUA_TNIL)
+		if (luabind::type(obj) != LUA_TNIL)
 		{
 			load(obj, t.value());
 		}
@@ -30,7 +30,7 @@ namespace lv { namespace lua { namespace archive {
 	template<typename T>
 	void	load(Parser & parser, lv::serialization::NonintrusiveOptional<T> & t)
 	{
-		if(! parser.read_if("nil"))
+		if (! parser.read_if("nil"))
 		{
 			parser >> t.value();
 		}

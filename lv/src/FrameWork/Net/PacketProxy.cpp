@@ -20,7 +20,7 @@ namespace lv { namespace net {
 
 	PacketProxy::~PacketProxy()
 	{
-		if(valid_)
+		if (valid_)
 		{
 			callback_(bos_.buffer_ptr());
 		}

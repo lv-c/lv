@@ -65,7 +65,7 @@ namespace lv
 
 			virtual	~ScopeGuarDerived()
 			{
-				if(enabled_)
+				if (enabled_)
 				{
 					t_();
 				}

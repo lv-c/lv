@@ -34,7 +34,7 @@ namespace lv { namespace flow {
 
 			ThreadedPushImpl(size_t thread_num)
 			{
-				for(size_t i = 0; i < thread_num; ++i)
+				for (size_t i = 0; i < thread_num; ++i)
 				{
 					threads_.create_thread(boost::bind(&ThreadedPushImpl::run, this));
 				}
@@ -56,7 +56,7 @@ namespace lv { namespace flow {
 
 			void	run()
 			{
-				while(true)
+				while (true)
 				{
 					try
 					{

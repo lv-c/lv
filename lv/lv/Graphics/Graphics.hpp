@@ -21,7 +21,7 @@ namespace lv { namespace graphics {
 
 		bool reversed = false;
 
-		if(dx < dy)
+		if (dx < dy)
 		{
 			reversed = true;
 
@@ -39,9 +39,9 @@ namespace lv { namespace graphics {
 		int inc2 = 2 * (dy - dx);
 		int d = inc1 - dx;
 
-		while(curx != ex)
+		while (curx != ex)
 		{
-			if(d < 0)
+			if (d < 0)
 			{
 				d += inc1;
 			}
@@ -51,7 +51,7 @@ namespace lv { namespace graphics {
 				d += inc2;
 			}
 
-			if(reversed)
+			if (reversed)
 			{
 				act(cury, curx);
 			}

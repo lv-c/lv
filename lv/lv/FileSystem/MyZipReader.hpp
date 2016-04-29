@@ -43,7 +43,7 @@ namespace lv
 	public:
 
 		/**
-		 * @password password for all the packet files
+		 * @password password for ( all the packet files
 		 * @in_memory load all the packet files into memory
 		 */
 		MyZipReader(std::string const & password, std::string const & working_dir, std::string const & postfix, bool in_memory = false);

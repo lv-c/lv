@@ -68,7 +68,7 @@ struct Point
 
 	bool operator < (Point const & rhs) const
 	{
-		if(y == rhs.y)
+		if (y == rhs.y)
 			return x < rhs.x;
 		else
 			return y < rhs.y;
@@ -253,7 +253,7 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 	// 便于找出哪里开始不同
 	/*
 	size_t size = std::min(ret.size(), expected.size());
-	for(size_t i = 0; i < size; ++i)
+	for (size_t i = 0; i < size; ++i)
 	{
 		BOOST_CHECK_EQUAL(ret[i], expected[i]);
 	}

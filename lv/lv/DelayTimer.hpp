@@ -43,9 +43,9 @@ namespace lv
 			LARGE_INTEGER due_time;
 			due_time.QuadPart = - ms * 10000;
 
-			if(timer_ != NULL && SetWaitableTimer(timer_, &due_time, 0, NULL, NULL, 0))
+			if (timer_ != NULL && SetWaitableTimer(timer_, &due_time, 0, NULL, NULL, 0))
 			{
-				if(WaitForSingleObject(timer_, INFINITE) == WAIT_OBJECT_0)
+				if (WaitForSingleObject(timer_, INFINITE) == WAIT_OBJECT_0)
 				{
 					return;
 				}

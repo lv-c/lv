@@ -36,7 +36,7 @@ namespace detail
 }
 
 // DirectX. throw if failed
-#define DX_TIF(expr) { HRESULT _hr = expr; if(FAILED(_hr)) { throw std::runtime_error(detail::file_line_hr(__FILE__, __LINE__, _hr));} }
+#define DX_TIF(expr) { HRESULT _hr = expr; if (FAILED(_hr)) { throw std::runtime_error(detail::file_line_hr(__FILE__, __LINE__, _hr));} }
 
 #define DX_VERIFY(expr) BOOST_VERIFY(SUCCEEDED(expr))
 

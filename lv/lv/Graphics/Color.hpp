@@ -151,7 +151,7 @@ namespace lv
 
 		Color & operator += (Color const & clr)
 		{
-			for(size_t i = 0; i < ele_num; ++i)
+			for (size_t i = 0; i < ele_num; ++i)
 			{
 				color_[i] = std::min(color_[i] + clr.color_[i], 255);
 			}
@@ -160,7 +160,7 @@ namespace lv
 
 		Color & operator *= (Color const & clr)
 		{
-			for(size_t i = 0; i < ele_num; ++i)
+			for (size_t i = 0; i < ele_num; ++i)
 			{
 				color_[i] = color_[i] * clr.color_[i] / (255 * 255);
 			}
@@ -169,9 +169,9 @@ namespace lv
 
 		friend bool operator == (Color const & lhs, Color const & rhs)
 		{
-			for(size_t i = 0; i < ele_num; ++i)
+			for (size_t i = 0; i < ele_num; ++i)
 			{
-				if(lhs.color_[i] != rhs.color_[i])
+				if (lhs.color_[i] != rhs.color_[i])
 				{
 					return false;
 				}

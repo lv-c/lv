@@ -17,7 +17,7 @@ namespace lv { namespace net {
 	{
 		timer_->expires_from_now(duration_);
 
-		if(service_wrapper_.has_strand())
+		if (service_wrapper_.has_strand())
 		{
 			timer_->async_wait(service_wrapper_.strand().wrap(boost::bind(&DeadlineTimer::on_timer, this, WeakTimerPtr(timer_), _1)));
 		}
@@ -29,12 +29,12 @@ namespace lv { namespace net {
 
 	void DeadlineTimer::on_timer(WeakTimerPtr weak_timer, boost::system::error_code const & error)
 	{
-		if(error)
+		if (error)
 		{
 			return;
 		}
 
-		if(TimerPtr timer = weak_timer.lock())
+		if (TimerPtr timer = weak_timer.lock())
 		{
 			start();
 			callback_();

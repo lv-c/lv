@@ -103,7 +103,7 @@ namespace lv { namespace rpc {
 			Protocol::options::type	call_option;
 			ia >> call_option;
 
-			if(call_option == Protocol::options::none)
+			if (call_option == Protocol::options::none)
 			{
 				return BufferPtr();
 			}
@@ -122,7 +122,7 @@ namespace lv { namespace rpc {
 
 			oa << Protocol::header::reply << id;
 			
-			if(call_option == Protocol::options::ret)
+			if (call_option == Protocol::options::ret)
 			{
 				result(oa);	// write the result
 			}

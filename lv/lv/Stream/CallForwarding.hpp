@@ -15,7 +15,7 @@ namespace lv
 {
 
 #define LV_STREAMPROXY_FW_CALL_0(call, ret)	\
-	if(std_ios_ != NULL)		\
+	if (std_ios_ != NULL)		\
 	{							\
 		ret std_ios_->call();	\
 	}							\
@@ -26,7 +26,7 @@ namespace lv
 
 
 #define LV_STREAMPROXY_FW_CALL_1(call, arg0, ret)	\
-	if(std_ios_ != NULL)			\
+	if (std_ios_ != NULL)			\
 	{								\
 		ret std_ios_->call(arg0);	\
 	}								\
@@ -37,7 +37,7 @@ namespace lv
 
 
 #define LV_STREAMPROXY_FW_CALL_2(call, arg0, arg1, ret)	\
-	if(std_ios_ != NULL)				\
+	if (std_ios_ != NULL)				\
 	{									\
 		ret std_ios_->call(arg0, arg1);	\
 	}									\

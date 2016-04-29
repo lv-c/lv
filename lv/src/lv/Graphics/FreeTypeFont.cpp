@@ -22,7 +22,7 @@ namespace lv
 		, face_(NULL)
 		, anti_aliased_(anti_aliased)
 	{
-		if(ft_ref_count_ ++ == 0)	
+		if (ft_ref_count_ ++ == 0)	
 		{
 			FT_Init_FreeType(&ft_lib_);
 		}
@@ -32,7 +32,7 @@ namespace lv
 	{
 		clear();
 
-		if(--ft_ref_count_ == 0)
+		if (--ft_ref_count_ == 0)
 		{
 			FT_Done_FreeType(ft_lib_);
 		}
@@ -40,7 +40,7 @@ namespace lv
 
 	void FreeTypeFont::clear()
 	{
-		if(face_ != NULL)
+		if (face_ != NULL)
 		{
 			FT_Done_Face(face_);
 			face_ = NULL;
@@ -71,7 +71,7 @@ namespace lv
 
 		//
 		int ret = 0;
-		if(buffer)
+		if (buffer)
 		{
 			ret = FT_New_Memory_Face(ft_lib_, reinterpret_cast<FT_Byte*>(&(*buffer)[0]), buffer->size(), 0, &face_);
 		}
@@ -84,7 +84,7 @@ namespace lv
 		
 
 		// check the character map
-		if(face_->charmap == NULL)
+		if (face_->charmap == NULL)
 		{
 			FT_Done_Face(face_);
 			face_ = NULL;
@@ -95,7 +95,7 @@ namespace lv
 		Size sz = Renderer::instance().max_texture_size();
 		tex_size_.set(std::min(sz.cx, tex_size_.cx), std::min(sz.cy, tex_size_.cy));
 		texture_ = RenderFactory::instance().create_texture(tex_size_, PF_L8);
-		if(! texture_)
+		if (! texture_)
 		{
 			throw std::runtime_error(std::string("FreeTypeFont::load Error creating texture : ") + name());
 		}
@@ -118,7 +118,7 @@ namespace lv
 		size_t capacity = cache_capacity();
 
 		glyph_map::iterator it = glyphs_.find(c);
-		if(it != glyphs_.end())
+		if (it != glyphs_.end())
 		{
 			it->second.lru_it = lru_glyphs_.touch(it->second.lru_it);
 			return;
@@ -128,7 +128,7 @@ namespace lv
 		Point pt_glyph;
 		bool clear = false;	// need to clear the old glyph first
 
-		if(glyphs_.size() >= capacity)	// there's no free space in the texture
+		if (glyphs_.size() >= capacity)	// there's no free space in the texture
 		{
 			wchar_t lru_c = lru_glyphs_.erase_last();
 
@@ -150,7 +150,7 @@ namespace lv
 		int const format = PF_L8;
 		Texture::ViewPtrT<format>::type view_ptr = texture_->map<format>(clip);
 
-		if(clear)
+		if (clear)
 		{
 			boost::gil::fill_pixels(*view_ptr, GIL::PixelT<format>::type(0));
 		}
@@ -158,7 +158,7 @@ namespace lv
 		// render the glyph
 		Glyph glyph;
 		Size sz_glyph;
-		if(FT_Load_Char(face_, c, FT_LOAD_RENDER | (anti_aliased_ ? FT_LOAD_TARGET_NORMAL :
+		if (FT_Load_Char(face_, c, FT_LOAD_RENDER | (anti_aliased_ ? FT_LOAD_TARGET_NORMAL :
 			FT_LOAD_TARGET_MONO)) != 0)
 		{
 			glyph.rect = Rect(pt_glyph, Size(1));
@@ -183,7 +183,7 @@ namespace lv
 		update_cache(c);
 		glyph_map::iterator it = glyphs_.find(c);
 
-		if(it != glyphs_.end())
+		if (it != glyphs_.end())
 		{
 			return it->second.advance;
 		}
@@ -218,7 +218,7 @@ namespace lv
 		Size sz_slot(slot_size());
 		Size sz_draw(std::min<int32>(sz_slot.cx, bmp.width), std::min<int32>(sz_slot.cy, bmp.rows));
 
-		for(int i = 0; i < bmp.rows; ++i)
+		for (int i = 0; i < bmp.rows; ++i)
 		{
 			unsigned char * src = bmp.buffer + i * bmp.pitch;
 			
@@ -230,7 +230,7 @@ namespace lv
 				std::copy(src, src + sz_draw.cx, dest_it);
 				break;
 			case FT_PIXEL_MODE_MONO:
-				for(int j = 0; j < sz_draw.cx; ++j)
+				for (int j = 0; j < sz_draw.cx; ++j)
 					*dest_it ++ = (src [j / 8] & (0x80 >> (j & 7))) ? 255 : 0;
 				break;
 			default:

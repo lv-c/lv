@@ -141,7 +141,7 @@ namespace lv
 				success = false;
 			}
 
-			if(! istream_ || ! success)
+			if (! istream_ || ! success)
 			{
 				throw boost::archive::archive_exception(boost::archive::archive_exception::input_stream_error);
 			}

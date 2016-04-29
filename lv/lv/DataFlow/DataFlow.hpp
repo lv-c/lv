@@ -101,7 +101,7 @@ namespace lv { namespace flow {
 			std::pair<slots_map_type::iterator, slots_map_type::iterator> ret;
 			ret = slots_.equal_range(port_buf.first);
 
-			for(slots_map_type::iterator it = ret .first; it != ret .second; ++it)
+			for (slots_map_type::iterator it = ret .first; it != ret .second; ++it)
 			{
 				it->second.slot(port_buf.second);
 			}

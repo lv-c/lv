@@ -26,7 +26,7 @@ namespace lv { namespace detail {
 			obj->close();
 
 			// patch. some bugs in boost.iostreams?
-			if(obj->is_open())
+			if (obj->is_open())
 			{
 				delete obj;
 				return;

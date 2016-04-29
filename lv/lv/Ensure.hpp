@@ -42,7 +42,7 @@ namespace lv { namespace detail {
 } }
 
 #define LV_ENSURE(check, msg)	\
-	if(! (check)) lv::detail::ensure_throw(msg);
+	if (! (check)) lv::detail::ensure_throw(msg);
 
 
 #endif

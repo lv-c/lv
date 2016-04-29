@@ -45,12 +45,12 @@ namespace lv { namespace net {
 		{
 			size_t const header_size = sizeof(SizeType);
 
-			if(header_size <= cache_.size())
+			if (header_size <= cache_.size())
 			{
 				SizeType size;	// includes the size of the header
 				std::copy(cache_.begin(), cache_.begin() + header_size, reinterpret_cast<char*>(&size));
 
-				if(size <= cache_.size())
+				if (size <= cache_.size())
 				{
 					BufferPtr buf = buf_manager_->get();
 					buf->assign(cache_.begin() + header_size, cache_.begin() + size);

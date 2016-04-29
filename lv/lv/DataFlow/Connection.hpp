@@ -64,7 +64,7 @@ namespace lv { namespace flow {
 		void	disconnect()
 		{
 			boost::shared_ptr<detail::ConnectionImpl> p = impl_.lock();
-			if(p)
+			if (p)
 			{
 				p->disconnect();
 			}

@@ -52,7 +52,7 @@ namespace lv
 		{
 			BOOST_AUTO(p, promise_.lock());
 
-			if(p)
+			if (p)
 			{
 				return p->connect(slot);
 			}
@@ -121,7 +121,7 @@ namespace lv
 
 		void	signal()
 		{
-			if(signal_)
+			if (signal_)
 			{
 				signal_.get() (get_future());
 			}

@@ -42,7 +42,7 @@ namespace lv
 		template<typename T>
 		LuaOArchive & operator << (T const & t)
 		{
-			if(! first_time_)
+			if (! first_time_)
 			{
 				os_ << spliter_;
 			}

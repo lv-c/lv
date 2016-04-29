@@ -65,7 +65,7 @@ namespace lv { namespace bstream {
 		template<class OStream>
 		static void write(OStream & os, T t)
 		{
-			if(os.switch_endian())
+			if (os.switch_endian())
 			{
 				t = lv::endian_switch(t);
 			}
@@ -78,7 +78,7 @@ namespace lv { namespace bstream {
 		{
 			is.read(reinterpret_cast<char*>(&t), sizeof(T));
 
-			if(is.switch_endian())
+			if (is.switch_endian())
 			{
 				t = lv::endian_switch(t);
 			}
@@ -92,11 +92,11 @@ namespace lv { namespace bstream {
 		template<class OStream>
 		static void write(OStream & os, T const & t)
 		{
-			if(! boost::empty(t))
+			if (! boost::empty(t))
 			{
 				size_t const value_size = sizeof(typename boost::range_value<T>::type);
 
-				if(os.switch_endian() && value_size != 1)
+				if (os.switch_endian() && value_size != 1)
 				{
 					Serializer<T, range_tag>::write(os, t);
 				}
@@ -111,11 +111,11 @@ namespace lv { namespace bstream {
 		template<class IStream>
 		static void read(IStream & is, T & t)
 		{
-			if(! boost::empty(t))
+			if (! boost::empty(t))
 			{
 				size_t const value_size = sizeof(typename boost::range_value<T>::type);
 
-				if(is.switch_endian() && value_size != 1)
+				if (is.switch_endian() && value_size != 1)
 				{
 					Serializer<T, range_tag>::read(is, t);
 				}

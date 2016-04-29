@@ -23,7 +23,7 @@ namespace lv { namespace lua { namespace archive {
 
 		inline bool is_number::eval(char c)
 		{
-			if('0' <= c && c <= '9')
+			if ('0' <= c && c <= '9')
 			{
 				return true;
 			}
@@ -60,7 +60,7 @@ namespace lv { namespace lua { namespace archive {
 
 		uint8	hex_value(char c)
 		{
-			if(isdigit(c))
+			if (isdigit(c))
 			{
 				return c - '0';
 			}
@@ -74,7 +74,7 @@ namespace lv { namespace lua { namespace archive {
 		{
 			uint8 c = 0;
 
-			for(int i = 0; i < 2; ++i, ++p)
+			for (int i = 0; i < 2; ++i, ++p)
 			{
 				LV_ENSURE(p != end && isxdigit(*p), "hexadecimal digit expected");
 
@@ -89,7 +89,7 @@ namespace lv { namespace lua { namespace archive {
 			Token::iterator p = token.begin;
 			Token::iterator end = token.end;
 
-			if(*p == '[')
+			if (*p == '[')
 			{
 				p += 2;
 				end -= 2;
@@ -103,11 +103,11 @@ namespace lv { namespace lua { namespace archive {
 			t.clear();
 			t.reserve(end - p);
 
-			while(p != end)
+			while (p != end)
 			{
 				char c = *p;
 
-				if(*p == '\\')
+				if (*p == '\\')
 				{
 					switch(* ++p)
 					{
@@ -161,11 +161,11 @@ namespace lv { namespace lua { namespace archive {
 
 		void	assign(bool & t, Token const & token)
 		{
-			if(token == "true")
+			if (token == "true")
 			{
 				t = true;
 			}
-			else if(token == "false")
+			else if (token == "false")
 			{
 				t = false;
 			}
@@ -219,29 +219,29 @@ namespace lv { namespace lua { namespace archive {
 
 		char c = *cur_;
 
-		if(c == '\'' || c == '"' || (c == '[' && test_and_forward(cur_ + 1, '[')))
+		if (c == '\'' || c == '"' || (c == '[' && test_and_forward(cur_ + 1, '[')))
 		{
 			cur_++;
 
 			bool valid = false;
 
-			while(cur_ != end_)
+			while (cur_ != end_)
 			{
 				char new_c = *cur_++;
 
-				if(new_c == '\\')
+				if (new_c == '\\')
 				{
-					if(cur_ != end_)
+					if (cur_ != end_)
 					{
 						cur_++;
 					}
 				}
-				else if(new_c == c && c != '[')
+				else if (new_c == c && c != '[')
 				{
 					valid = true;
 					break;
 				}
-				else if(c == '[' && new_c == ']' && test_and_forward(cur_, ']'))
+				else if (c == '[' && new_c == ']' && test_and_forward(cur_, ']'))
 				{
 					valid = true;
 					break;
@@ -252,29 +252,29 @@ namespace lv { namespace lua { namespace archive {
 
 			type = Token::String;
 		}
-		else if(c == '[' || c == ']')
+		else if (c == '[' || c == ']')
 		{
 			cur_++;
 			Token token = next_token();
 
-			if(c == '[')
+			if (c == '[')
 			{
 				token.is_key = true;
 			}
 
 			return token;
 		}
-		else if(detail::is_symbol::eval(c))
+		else if (detail::is_symbol::eval(c))
 		{
 			cur_ ++;
 			type = Token::Symbol;
 		}
-		else if(detail::is_number::eval(c))
+		else if (detail::is_number::eval(c))
 		{
 			next(detail::is_number());
 			type = Token::Number;
 		}
-		else if(detail::is_word::eval(c))
+		else if (detail::is_word::eval(c))
 		{
 			next(detail::is_word());
 			type = Token::Literal;
@@ -290,7 +290,7 @@ namespace lv { namespace lua { namespace archive {
 
 	bool Parser::test_and_forward(iterator it, char test)
 	{
-		if(it != end_ && *it == test)
+		if (it != end_ && *it == test)
 		{
 			cur_++;
 			return true;
@@ -303,7 +303,7 @@ namespace lv { namespace lua { namespace archive {
 	{
 		next(detail::is_space());
 
-		if(cur_ != end_ && *cur_ == c)
+		if (cur_ != end_ && *cur_ == c)
 		{
 			cur_++;
 			return true;
@@ -322,7 +322,7 @@ namespace lv { namespace lua { namespace archive {
 		{
 			Token token = next_token();
 
-			if(token.type == Token::Literal && token == lit)
+			if (token.type == Token::Literal && token == lit)
 			{
 				return true;
 			}

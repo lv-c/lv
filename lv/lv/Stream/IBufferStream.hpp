@@ -36,7 +36,7 @@ namespace lv
 			iostate	state = std::ios_base::goodbit;
 
 			streamsize to_read = 0;
-			if(size >= 0)
+			if (size >= 0)
 			{
 				to_read = std::min<streamsize>(size, stream_size() - gpos_);
 				std::copy(buf_.begin() + gpos_, buf_.begin() + gpos_ + to_read, data);
@@ -44,7 +44,7 @@ namespace lv
 				gpos_ += to_read;
 			}
 
-			if(to_read != size)
+			if (to_read != size)
 			{
 				state |= std::ios_base::failbit;
 			}
@@ -85,9 +85,9 @@ namespace lv
 				break;
 			}
 
-			if(state == std::ios_base::goodbit)
+			if (state == std::ios_base::goodbit)
 			{
-				if(off >= 0 && off <= stream_size())
+				if (off >= 0 && off <= stream_size())
 				{
 					gpos_ = off;
 				}
@@ -107,15 +107,15 @@ namespace lv
 			streampos pos = gpos_;
 			streamsize size = stream_size();
 
-			for(streamsize i = 0; i < n; ++i, pos += 1)
+			for (streamsize i = 0; i < n; ++i, pos += 1)
 			{
-				if(pos >= size)
+				if (pos >= size)
 				{
 					break;
 				}
 
 				unsigned char c = buf_[pos];
-				if(static_cast<int>(c) == delim)
+				if (static_cast<int>(c) == delim)
 				{
 					break;
 				}
@@ -136,7 +136,7 @@ namespace lv
 
 		void	inner_setstate(iostate state)
 		{
-			if(gpos_ >= (streamsize) buf_.size())
+			if (gpos_ >= (streamsize) buf_.size())
 			{
 				state |= std::ios_base::eofbit;
 			}

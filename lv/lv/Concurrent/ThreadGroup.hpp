@@ -63,7 +63,7 @@ namespace lv
 
 			BOOST_FOREACH(ThreadPtr v, threads_)
 			{
-				if(! v->timed_join(end_time))
+				if (! v->timed_join(end_time))
 				{
 					return false;
 				}

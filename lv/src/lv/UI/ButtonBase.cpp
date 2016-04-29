@@ -20,7 +20,7 @@ namespace lv
 
 	void ButtonBase::on_button_down(MouseEvent & e)
 	{
-		if(e.button() == Mouse::Left)
+		if (e.button() == Mouse::Left)
 		{
 			capture_input();
 			pushed_ = true;
@@ -31,7 +31,7 @@ namespace lv
 
 	void ButtonBase::on_button_up(MouseEvent & e)
 	{
-		if(e.button() == Mouse::Left)
+		if (e.button() == Mouse::Left)
 		{
 			release_input();
 			pushed_ = false;

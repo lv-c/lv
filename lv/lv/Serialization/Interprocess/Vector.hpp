@@ -66,7 +66,7 @@ namespace boost { namespace serialization {
 		collection_size_type const count(t.size());
 		ar << BOOST_SERIALIZATION_NVP(count);
 
-		if(! t.empty())
+		if (! t.empty())
 		{
 			ar << make_array(detail::get_data(t), t.size());
 		}
@@ -80,7 +80,7 @@ namespace boost { namespace serialization {
 
 		t.resize(count);
 
-		if(! t.empty())
+		if (! t.empty())
 		{
 			ar >> make_array(detail::get_data(t), t.size());
 		}

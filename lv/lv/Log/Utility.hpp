@@ -47,7 +47,7 @@ namespace lv { namespace log {
 
 		gather_ptr operator () (gather_ptr gather) const
 		{
-			if(use_clock_)
+			if (use_clock_)
 			{
 				gather->add_header(Clock());
 			}
@@ -58,7 +58,7 @@ namespace lv { namespace log {
 
 			gather->add_header(Tag());
 			
-			if(line_break_)
+			if (line_break_)
 			{
 				gather->add_tailer(LineBreak());
 			}
@@ -85,7 +85,7 @@ namespace lv { namespace log {
 	inline gather_ptr	add_file_gather(Log & log, char const * file, bool append = false, FormmatterSet formatters = CommonFormatters())
 	{
 		ostream_ptr ofile(new std::basic_ofstream<char_type>(file, append ? std::ios_base::app : std::ios_base::trunc));
-		if(! (*ofile))
+		if (! (*ofile))
 		{
 			throw file_io_error(std::string("error opening file:") + file);
 		}

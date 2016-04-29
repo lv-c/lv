@@ -26,7 +26,7 @@ MemoryAnalyser::~MemoryAnalyser()
 
 void MemoryAnalyser::attach()
 {
-	if(! attached_)
+	if (! attached_)
 	{
 		DetourTransactionBegin();
 		DetourUpdateThread(GetCurrentThread());
@@ -42,7 +42,7 @@ void MemoryAnalyser::attach()
 
 void MemoryAnalyser::detach()
 {
-	if(attached_)
+	if (attached_)
 	{
 		DetourTransactionBegin();
 		DetourUpdateThread(GetCurrentThread());
@@ -60,7 +60,7 @@ void * MemoryAnalyser::my_malloc(size_t size)
 
 	// avoid recursion
 	static bool local_alloc = false;
-	if(local_alloc)
+	if (local_alloc)
 		return addr;
 
 	local_alloc = true;
@@ -75,7 +75,7 @@ void MemoryAnalyser::my_free(void * addr)
 	true_free(addr);
 
 	static bool local_free = false;
-	if(local_free)
+	if (local_free)
 		return;
 
 	local_free = true;
@@ -88,7 +88,7 @@ void MemoryAnalyser::begin_analyse()
 {
 	assert(attached_);
 
-	if(begun_)
+	if (begun_)
 		throw std::logic_error("You have already begun the analysis");
 
 	cur_memory_ = max_memory_ = 0;
@@ -101,7 +101,7 @@ void MemoryAnalyser::begin_analyse()
 
 uint64 MemoryAnalyser::end_analyse(int & counter)
 {
-	if(! begun_)
+	if (! begun_)
 		throw std::logic_error("You haven't begun the analysis");
 
 	begun_ = false;
@@ -114,7 +114,7 @@ uint64 MemoryAnalyser::end_analyse(int & counter)
 
 void MemoryAnalyser::add(void const * addr, size_t size)
 {
-	if(addr != NULL)
+	if (addr != NULL)
 	{
 		counter_ ++;
 
@@ -129,7 +129,7 @@ void MemoryAnalyser::remove(void const * addr)
 {
 	allocated_map::iterator it = allocated_.find(addr);
 
-	if(it != allocated_.end())
+	if (it != allocated_.end())
 	{
 		assert(cur_memory_ >= it->second);
 		cur_memory_ = (cur_memory_ > it->second ? cur_memory_ - it->second : 0);

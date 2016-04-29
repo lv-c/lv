@@ -40,7 +40,7 @@ namespace lv
 			{
 				boost::io::ios_flags_saver ias(os);
 
-				if((os.flags() & std::ios_base::showbase) && os.fill() == '0')
+				if ((os.flags() & std::ios_base::showbase) && os.fill() == '0')
 				{
 					// std::showbase do not cooperate good with std::setw 
 
@@ -81,16 +81,16 @@ namespace lv
 		template<typename C, typename Tr>
 		friend std::basic_ostream<C, Tr> & operator << (std::basic_ostream<C, Tr> & os, write_tabs tabs)
 		{
-			if(tabs.expand_)
+			if (tabs.expand_)
 			{
-				for(int i = 0; i < tabs.count_ * 4; ++i)
+				for (int i = 0; i < tabs.count_ * 4; ++i)
 				{
 					os << ' ';
 				}
 			}
 			else
 			{
-				for(int i = 0; i < tabs.count_; ++i)
+				for (int i = 0; i < tabs.count_; ++i)
 				{
 					os << '\t';
 				}
@@ -107,12 +107,12 @@ namespace lv
 		template<typename T, typename C, typename Tr>
 		typename boost::enable_if<boost::is_arithmetic<T> >::type	write(std::basic_ostream<C, Tr> & os, T const & t, bool use_hex, int setw)
 		{
-			if(setw != -1)
+			if (setw != -1)
 			{
 				os << std::setw(setw);
 			}
 
-			if(use_hex)
+			if (use_hex)
 			{
 				os << hex(t);
 			}
@@ -159,7 +159,7 @@ namespace lv
 
 				BOOST_FOREACH(type const & v, r.range_)
 				{
-					if(! first)
+					if (! first)
 					{
 						os << r.delimiter_;
 					}

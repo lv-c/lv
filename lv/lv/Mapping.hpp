@@ -49,7 +49,7 @@ namespace lv
 		std::pair<iterator, bool> insert(value_type const & v)
 		{
 			std::pair<left_map::iterator, bool> ret = bimap_.left.insert(v);
-			if(ret.second)
+			if (ret.second)
 			{
 				return std::make_pair(list_.insert(list_.end(), v), true);
 			}
@@ -62,7 +62,7 @@ namespace lv
 		/// @exception mapping_key_not_found
 		Y	get_left(X const & x) const
 		{
-			if(boost::optional<Y> o = get_left_optional(x))
+			if (boost::optional<Y> o = get_left_optional(x))
 			{
 				return *o;
 			}
@@ -73,7 +73,7 @@ namespace lv
 		/// @exception mapping_key_not_found
 		X	get_right(Y const & y) const
 		{
-			if(boost::optional<X> o = get_right_optional(y))
+			if (boost::optional<X> o = get_right_optional(y))
 			{
 				return *o;
 			}
@@ -95,7 +95,7 @@ namespace lv
 		boost::optional<Y>	get_left_optional(X const & x) const
 		{
 			bimap_type::left_map::const_iterator it = bimap_.left.find(x);
-			if(it != bimap_.left.end())
+			if (it != bimap_.left.end())
 			{
 				return it->second;
 			}
@@ -106,7 +106,7 @@ namespace lv
 		boost::optional<X>	get_right_optional(Y const & y) const
 		{
 			bimap_type::right_map::const_iterator it = bimap_.right.find(y);
-			if(it != bimap_.right.end())
+			if (it != bimap_.right.end())
 			{
 				return it->second;
 			}

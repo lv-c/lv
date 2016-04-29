@@ -53,11 +53,11 @@ namespace lv
 
 		value_type &	get()
 		{
-			if(! init_)
+			if (! init_)
 			{
 				boost::unique_lock<boost::mutex> lock(mutex_);
 
-				if(! init_)
+				if (! init_)
 				{
 					value_ = expr_;
 					init_ = true;

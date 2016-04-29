@@ -16,7 +16,7 @@ namespace lv
 
 	void Editbox::on_button_down(MouseEvent & e)
 	{
-		if(e.button() == Mouse::Left)
+		if (e.button() == Mouse::Left)
 		{
 			capture_input();
 
@@ -29,7 +29,7 @@ namespace lv
 		switch(e.key())
 		{
 		case Key::ArrowLeft:
-			if(caret_index_ > 0)
+			if (caret_index_ > 0)
 			{
 				set_caret_index(caret_index_ - 1);
 			}
@@ -40,7 +40,7 @@ namespace lv
 			break;
 		
 		case Key::Backslash:
-			if(caret_index_ > 0)
+			if (caret_index_ > 0)
 			{
 				set_caret_index(caret_index_ - 1);
 				text_.erase(caret_index_, 1);
@@ -66,7 +66,7 @@ namespace lv
 
 	void Editbox::on_char(KeyEvent & e)
 	{
-		if(filter_(e.character(), *this) && text_.size() < max_char_num_)
+		if (filter_(e.character(), *this) && text_.size() < max_char_num_)
 		{
 			text_.push_back(e.character());
 			set_caret_index(caret_index_ + 1);
@@ -84,7 +84,7 @@ namespace lv
 	{
 		max_char_num_ = num;
 
-		if(text_.size() > num)
+		if (text_.size() > num)
 		{
 			text_.resize(num);
 

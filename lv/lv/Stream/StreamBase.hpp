@@ -56,7 +56,7 @@ namespace lv
 		void	setstate(iostate state)
 		{
 			// merge in state argument
-			if(state != std::ios_base::goodbit)
+			if (state != std::ios_base::goodbit)
 			{
 				clear(rdstate() | state);
 			}
@@ -66,14 +66,14 @@ namespace lv
 		{
 			this->state_ = state;
 
-			if((state_ & except_) == 0)
+			if ((state_ & except_) == 0)
 			{
 			}
-			else if(state_ & except_ & std::ios_base::badbit)
+			else if (state_ & except_ & std::ios_base::badbit)
 			{
 				throw(failure("ios_base::badbit set"));
 			}
-			else if(state_ & except_ & std::ios_base::failbit)
+			else if (state_ & except_ & std::ios_base::failbit)
 			{
 				throw(failure("ios_base::failbit set"));
 			}

@@ -52,7 +52,7 @@ namespace lv { namespace lua { namespace archive {
 				, first_time_(true)
 			{
 				os_ << '{';
-				if(version != DefaultVersion)
+				if (version != DefaultVersion)
 				{
 					*this << boost::serialization::make_nvp(VersionKey.c_str(), version);
 				}
@@ -60,7 +60,7 @@ namespace lv { namespace lua { namespace archive {
 
 			~OArchiveProxy()
 			{
-				if(! primitive_)
+				if (! primitive_)
 				{
 					os_ << std::endl << write_tabs(level_ - 1);
 				}
@@ -86,14 +86,14 @@ namespace lv { namespace lua { namespace archive {
 			template<typename T>
 			void	save(T const & t)
 			{
-				if(! first_time_)
+				if (! first_time_)
 				{
 					os_ << ", ";
 				}
 
 				first_time_ = false;
 
-				if(! is_primitive<T>::value)
+				if (! is_primitive<T>::value)
 				{
 					os_ << std::endl << write_tabs(level_);
 					primitive_ = false;
@@ -134,7 +134,7 @@ namespace lv { namespace lua { namespace archive {
 		{
 			os << '\'';
 
-			for(; *t != '\0'; ++t)
+			for (; *t != '\0'; ++t)
 			{
 				switch(*t)
 				{
@@ -209,9 +209,9 @@ namespace lv { namespace lua { namespace archive {
 
 			bool is_primitive_item = is_primitive<typename std::iterator_traits<Iter>::value_type>::value;
 
-			for(Iter it = begin; it != end; ++it)
+			for (Iter it = begin; it != end; ++it)
 			{
-				if(! is_primitive_item)
+				if (! is_primitive_item)
 				{
 					os << std::endl << write_tabs(level + 1);
 				}
@@ -219,13 +219,13 @@ namespace lv { namespace lua { namespace archive {
 				archive::save(os, *it, level + 1);
 
 				Iter next = it;
-				if(++next != end)
+				if (++next != end)
 				{
 					os << ", ";
 				}
 			}
 
-			if(! is_primitive_item)
+			if (! is_primitive_item)
 			{
 				os << std::endl << write_tabs(level);
 			}

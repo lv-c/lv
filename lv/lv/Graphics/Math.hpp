@@ -104,7 +104,7 @@ namespace lv { namespace math {
 	bool	intersect(VectorT<T> const & v0, VectorT<T> const & v1, VectorT<T> const & v2,
 		VectorT<T> const & orig, VectorT<T> const & dir, VectorT<T> & ret)
 	{
-		// find vectors for two edges sharing vert0
+		// find vectors for ( two edges sharing vert0
 		VectorT<T> edge1 = v1 - v0;
 		VectorT<T> edge2 = v2 - v0;
 
@@ -113,7 +113,7 @@ namespace lv { namespace math {
 
 		// if determinant is near zero, ray lies in plane of triangle
 		T det = dot(edge1, pvec);
-		if(det <= std::numeric_limits<T>::epsilon())
+		if (det <= std::numeric_limits<T>::epsilon())
 		{
 			return false;
 		}
@@ -123,7 +123,7 @@ namespace lv { namespace math {
 
 		//calculate U parameter and test bounds
 		T u = dot(tvec, pvec);
-		if(u < T(0) || u > det)
+		if (u < T(0) || u > det)
 		{
 			return false;
 		}
@@ -133,7 +133,7 @@ namespace lv { namespace math {
 
 		// calculate V parameter and test bounds
 		T v = dot(dir, qvec);
-		if(v < T(0) || u + v > det)
+		if (v < T(0) || u + v > det)
 		{
 			return false;
 		}

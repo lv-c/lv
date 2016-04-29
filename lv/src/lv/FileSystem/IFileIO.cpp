@@ -30,7 +30,7 @@ namespace lv
 	{
 		boost::filesystem::path path(file);
 
-		if(! path.has_root_directory())
+		if (! path.has_root_directory())
 		{
 			path = working_dir_ / path;
 		}

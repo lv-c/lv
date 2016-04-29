@@ -96,7 +96,7 @@ namespace lv
 
 		ColorRect & operator += (ColorRect const & cr)
 		{
-			for(size_t i = 0; i < ele_num; ++i)
+			for (size_t i = 0; i < ele_num; ++i)
 			{
 				(*this)[i] += cr[i];
 			}
@@ -104,7 +104,7 @@ namespace lv
 
 		ColorRect & operator *= (ColorRect const & cr)
 		{
-			for(size_t i = 0; i < ele_num; ++i)
+			for (size_t i = 0; i < ele_num; ++i)
 			{
 				(*this)[i] *= cr[i];
 			}
@@ -112,9 +112,9 @@ namespace lv
 
 		friend bool operator == (ColorRect const & lhs, ColorRect const & rhs)
 		{
-			for(size_t i = 0; i < ele_num; ++i)
+			for (size_t i = 0; i < ele_num; ++i)
 			{
-				if(lhs[i] != rhs[i])
+				if (lhs[i] != rhs[i])
 				{
 					return false;
 				}

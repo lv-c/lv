@@ -32,7 +32,7 @@ namespace lv { namespace rle {
 		BOOST_ASSERT(src != dest && dest_size >= encode_bound(src_size));
 		BOOST_ASSERT(src_size % EleSize == 0);
 
-		if(dest_size < encode_bound(src_size))
+		if (dest_size < encode_bound(src_size))
 		{
 			throw std::invalid_argument("the destination buffer is too small");
 		}
@@ -46,7 +46,7 @@ namespace lv { namespace rle {
 		size_t const max_len = 127;
 
 		size_t cur = 0;
-		while(cur < ele_num)
+		while (cur < ele_num)
 		{
 			// (以下相同的指相同的数量　n 满足 (n - 1) * EleSize > 2 ，否则就是不相同的)
 			// 每一轮为找到　max_len 个不相同的，或者 m 个不同的以及 n 个相同的 (m < max_len, n <= max_len)
@@ -54,13 +54,13 @@ namespace lv { namespace rle {
 			size_t diff_num = 0;
 			size_t round_start = cur;
 
-			while(diff_num < max_len && cur < ele_num)
+			while (diff_num < max_len && cur < ele_num)
 			{
 				size_t same_start = cur;
 				size_t same_num = 1;
 
 
-				while(cur < ele_num - 1 && src_ele[cur + 1] == src_ele[cur] && same_num < max_len)
+				while (cur < ele_num - 1 && src_ele[cur + 1] == src_ele[cur] && same_num < max_len)
 				{
 					same_num ++;
 					cur ++;
@@ -68,9 +68,9 @@ namespace lv { namespace rle {
 				cur ++;
 
 
-				if((same_num - 1) * EleSize > 2)	// A B B C  --  此时　B　B　不放一起比放一起压缩得更好
+				if ((same_num - 1) * EleSize > 2)	// A B B C  --  此时　B　B　不放一起比放一起压缩得更好
 				{
-					if(diff_num > 0)
+					if (diff_num > 0)
 					{
 						*dest_pt++ = diff_num;
 						memcpy(dest_pt, &src_ele[round_start], diff_num * EleSize);
@@ -90,9 +90,9 @@ namespace lv { namespace rle {
 					diff_num += same_num;
 			}
 
-			if(diff_num > 0)		// 没有相同的
+			if (diff_num > 0)		// 没有相同的
 			{
-				if(diff_num > max_len)
+				if (diff_num > max_len)
 				{
 					cur -= diff_num - max_len;
 					diff_num = max_len;
@@ -120,11 +120,11 @@ namespace lv { namespace rle {
 		element * dest_ele = reinterpret_cast<element*>(dest);
 		size_t index = 0;
 		
-		while(index < src_size)
+		while (index < src_size)
 		{
 			unsigned char flag = src[index];
 			index ++;
-			if(flag & 0x80)		// sequence of the same elements
+			if (flag & 0x80)		// sequence of the same elements
 			{
 				size_t num = flag & 0x7F;
 				std::fill(dest_ele, dest_ele + num, *reinterpret_cast<element const*>(&src[index]));

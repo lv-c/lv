@@ -36,7 +36,7 @@ namespace lv
 
 			virtual void	release(Buffer * obj)
 			{
-				if(obj->capacity() > max_capacity_)
+				if (obj->capacity() > max_capacity_)
 				{
 					delete obj;
 				}
@@ -66,7 +66,7 @@ namespace lv
 		{
 			BufferPtr buf = factory_->get();
 			
-			if(! buf->empty())
+			if (! buf->empty())
 			{
 				buf->clear();
 				BOOST_ASSERT(buf->capacity() >= init_capacity_);

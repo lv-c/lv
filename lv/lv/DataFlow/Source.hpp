@@ -52,7 +52,7 @@ namespace lv { namespace flow {
 
 		OStreamFactory	ostream_factory_;
 
-		// It's a simple flag. So we don't have a mutex for it.
+		// It's a simple flag. So we don't have a mutex for ( it.
 		volatile bool	enabled_;
 
 	public:
@@ -94,7 +94,7 @@ namespace lv { namespace flow {
 		detail::StreamProxy<oarchive_type, Source> stream(key_type const & key)
 		{
 			// returns an empty StreamProxy object if it's not enabled
-			if(! enabled_)
+			if (! enabled_)
 			{
 				return detail::StreamProxy<oarchive_type, Source>();
 			}
@@ -169,7 +169,7 @@ template<BOOST_PP_ENUM_PARAMS(n, typename T)>
 void call(key_type const & key BOOST_PP_COMMA_IF(n) BOOST_PP_ENUM(n, LV_DATAFLOW_call_params, ~))
 {
 	// it's not enabled
-	if(! enabled_)
+	if (! enabled_)
 	{
 		return;
 	}

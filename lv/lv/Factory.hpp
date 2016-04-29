@@ -69,7 +69,7 @@ namespace lv
 			scoped_lock lock(mutex_);
 
 			T *	obj = NULL;
-			if(! objects_.empty())
+			if (! objects_.empty())
 			{
 				obj = objects_.back();
 				objects_.pop_back();

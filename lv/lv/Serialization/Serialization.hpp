@@ -77,7 +77,7 @@ namespace lv { namespace serialization {
 				boost::serialization::collection_size_type count;
 				ar >> count;
 
-				if(static_cast<std::size_t>(count) > current_count)
+				if (static_cast<std::size_t>(count) > current_count)
 				{
 					throw boost::archive::archive_exception(boost::archive::archive_exception::array_size_too_short);
 				}
@@ -107,7 +107,7 @@ namespace lv { namespace serialization {
 				boost::archive::version_type file_ver;
 				ar >> file_ver;
 
-				if(file_ver > boost::archive::version_type(boost::serialization::version<T>::value))
+				if (file_ver > boost::archive::version_type(boost::serialization::version<T>::value))
 				{
 					throw boost::archive::archive_exception(boost::archive::archive_exception::unsupported_class_version);
 				}

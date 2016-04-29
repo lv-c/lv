@@ -70,7 +70,7 @@ namespace lv { namespace flow {
 			{
 				boost::lock_guard<boost::shared_mutex> lock(mutex_);
 
-				if(invokers_.find(key) != invokers_.end())
+				if (invokers_.find(key) != invokers_.end())
 				{
 					throw std::runtime_error(std::string("The key has already been used:") + 
 						boost::lexical_cast<std::string>(key));
@@ -96,7 +96,7 @@ namespace lv { namespace flow {
 					boost::shared_lock<boost::shared_mutex> lock(mutex_);
 
 					it = invokers_.find(key);
-					if(it == invokers_.end())
+					if (it == invokers_.end())
 					{
 						return;
 					}

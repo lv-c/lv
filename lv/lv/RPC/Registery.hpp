@@ -86,7 +86,7 @@ namespace lv { namespace rpc {
 			{
 				boost::lock_guard<boost::shared_mutex> lock(mutex_);
 
-				if(invokers_.find(id) != invokers_.end())
+				if (invokers_.find(id) != invokers_.end())
 				{
 					throw std::runtime_error("The id has already been used");
 				}
@@ -113,7 +113,7 @@ namespace lv { namespace rpc {
 					boost::shared_lock<boost::shared_mutex> lock(mutex_);
 				
 					it = invokers_.find(id);
-					if(it == invokers_.end())
+					if (it == invokers_.end())
 					{
 						throw InvalidFunctionID("invalid function id: " + boost::lexical_cast<std::string>(id));
 					}

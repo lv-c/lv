@@ -18,7 +18,7 @@ namespace lv
 		std::string path = resolve(file);
 
 		std::ifstream infile(path.c_str(), std::ios_base::binary);
-		if(! infile)
+		if (! infile)
 		{
 			throw(file_io_error("error opening file: " + file));
 		}
@@ -26,7 +26,7 @@ namespace lv
 		// get the size of the file
 		infile.seekg(0, std::ios_base::end);
 		std::streamsize len = infile.tellg();
-		if(len != 0)
+		if (len != 0)
 		{
 			// read the whole file
 			infile.seekg(0, std::ios_base::beg);
@@ -39,7 +39,7 @@ namespace lv
 			buf->clear();
 		}
 
-		if(! infile)
+		if (! infile)
 		{
 			throw(file_io_error("error reading file : " + file));
 		}

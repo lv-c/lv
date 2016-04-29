@@ -5,7 +5,7 @@ namespace lv
 
 	void Button::on_button_up(MouseEvent & e)
 	{
-		if(e.button() == Mouse::Left && pushed())
+		if (e.button() == Mouse::Left && pushed())
 		{
 			WindowEvent args(this);
 			on_clicked(args);

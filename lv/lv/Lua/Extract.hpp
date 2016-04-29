@@ -20,7 +20,7 @@ namespace lv { namespace lua {
 	template<class T>
 	T	extract(luabind::object const & obj)
 	{
-		if(luabind::type(obj) != LUA_TTABLE)
+		if (luabind::type(obj) != LUA_TTABLE)
 		{
 			return luabind::object_cast<T>(obj);
 		}

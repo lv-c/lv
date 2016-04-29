@@ -12,12 +12,12 @@ namespace lv
 	
 	void Window::render()
 	{
-		if(! visible())
+		if (! visible())
 		{
 			return;
 		}
 
-		if(renderer_.get() != NULL)
+		if (renderer_.get() != NULL)
 		{
 			renderer_->render();
 		}

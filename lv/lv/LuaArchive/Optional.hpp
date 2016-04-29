@@ -21,7 +21,7 @@ namespace lv { namespace lua { namespace archive {
 	template<typename T>
 	void	save(std::ostream & os, boost::optional<T> const & t, size_t level)
 	{
-		if(t)
+		if (t)
 		{
 			save(os, *t, level);
 		}
@@ -35,13 +35,13 @@ namespace lv { namespace lua { namespace archive {
 	template<typename T>
 	void	load(luabind::object const & obj, boost::optional<T> & t)
 	{
-		if(luabind::type(obj) == LUA_TNIL)
+		if (luabind::type(obj) == LUA_TNIL)
 		{
 			t.reset();
 		}
 		else
 		{
-			if(! t)
+			if (! t)
 			{
 				t = T();
 			}
@@ -52,13 +52,13 @@ namespace lv { namespace lua { namespace archive {
 	template<typename T>
 	void	load(Parser & parser, boost::optional<T> & t)
 	{
-		if(parser.read_if("nil"))
+		if (parser.read_if("nil"))
 		{
 			t.reset();
 		}
 		else
 		{
-			if(! t)
+			if (! t)
 			{
 				t = T();
 			}

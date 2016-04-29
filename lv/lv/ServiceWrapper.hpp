@@ -52,7 +52,7 @@ namespace lv
 
 		boost::asio::io_service &	service() const
 		{
-			if(service_ != NULL)
+			if (service_ != NULL)
 			{
 				return *service_;
 			}
@@ -78,7 +78,7 @@ namespace lv
 		{
 			BOOST_ASSERT(*this);
 
-			if(service_ != NULL)
+			if (service_ != NULL)
 			{
 				service_->post(handler);
 			}

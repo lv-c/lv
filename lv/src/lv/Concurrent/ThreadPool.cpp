@@ -19,12 +19,12 @@ namespace lv
 
 		ServicePtr service(new boost::asio::io_service());
 
-		if(! thread_name_enabled_)
+		if (! thread_name_enabled_)
 		{
 			name.clear();
 		}
 
-		for(size_t i = 0; i < thread_num; ++i)
+		for (size_t i = 0; i < thread_num; ++i)
 		{
 			boost::thread * thread = threads_->create_thread(boost::bind(&ThreadPool::run, name, WeakServicePtr(service),
 				exception_handler_));
@@ -40,18 +40,18 @@ namespace lv
 
 	void ThreadPool::run(std::string name, WeakServicePtr weak_service, ExceptionHandler handler)
 	{
-		if(! name.empty())
+		if (! name.empty())
 		{
 			lv::set_current_thread_name(name.c_str());
 		}
 
 		try
 		{
-			while(true)
+			while (true)
 			{
 				ServicePtr service = weak_service.lock();
 
-				if(! service)
+				if (! service)
 				{
 					break;
 				}
@@ -59,7 +59,7 @@ namespace lv
 				boost::system::error_code err;
 				service->run(err);
 
-				if(err)
+				if (err)
 				{
 					break;
 				}
@@ -69,7 +69,7 @@ namespace lv
 		}
 		catch(std::exception const & ex)
 		{
-			if(handler)
+			if (handler)
 			{
 				handler(name, ex);
 			}

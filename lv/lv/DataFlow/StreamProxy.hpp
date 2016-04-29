@@ -74,7 +74,7 @@ namespace lv { namespace flow { namespace detail {
 		template<typename T>
 		StreamProxy & operator << (T const & t)
 		{
-			if(impl_.get() != NULL)
+			if (impl_.get() != NULL)
 			{
 				(*impl_) << t;
 			}

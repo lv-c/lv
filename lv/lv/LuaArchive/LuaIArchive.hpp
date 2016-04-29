@@ -44,7 +44,7 @@ namespace lv
 		{
 			this->table_ = table;
 
-			if(table.is_valid())
+			if (table.is_valid())
 			{
 				lua::archive::expect_obj_type(table_, LUA_TTABLE);
 			}
@@ -84,7 +84,7 @@ namespace lv
 
 		void	check_nvp(bool is_nvp)
 		{
-			if(! boost::indeterminate(nvp_))
+			if (! boost::indeterminate(nvp_))
 			{
 				BOOST_ASSERT(((bool)nvp_ == is_nvp) && "you are trying to mix nvp with non-nvp");
 			}

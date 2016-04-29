@@ -28,7 +28,7 @@ namespace lv
 	{
 		BOOST_MPL_ASSERT((boost::mpl::or_<boost::is_arithmetic<T>, boost::is_enum<T> >));
 
-		if(sizeof(t) == 1 || ! s)
+		if (sizeof(t) == 1 || ! s)
 		{
 			return t;
 		}

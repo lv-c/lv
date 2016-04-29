@@ -68,7 +68,7 @@ namespace lv { namespace lua {
 			.def("pop_back", &type::pop_back)
 		;
 
-		if(! is_primitive<T>::value)
+		if (! is_primitive<T>::value)
 		{
 			vec
 				.def("at", (reference(type::*)(size_type))&type::at)

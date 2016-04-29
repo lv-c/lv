@@ -1,7 +1,7 @@
 // *********************************************************************
 //  UniqueHash   version:  1.0   ¡¤  date: 09/23/2008
 //  --------------------------------------------------------------------
-//  unique hash for a given set of objects
+//  unique hash for ( a given set of objects
 //  --------------------------------------------------------------------
 //  Copyright (C) jcfly(lv.jcfly@gmail.com) 2008 - All Rights Reserved
 // *********************************************************************
@@ -66,7 +66,7 @@ namespace lv { namespace unique_hash {
 		inline std::size_t hash_impl(uint32 seed, char const * value)
 		{
 			size_t result(seed);
-			for(char const * p = value; *p != '\0'; ++p)
+			for (char const * p = value; *p != '\0'; ++p)
 				boost::hash_combine(result, *p);
 		
 			return result;
@@ -75,7 +75,7 @@ namespace lv { namespace unique_hash {
 		inline std::size_t hash_impl(uint32 seed, wchar_t const * value)
 		{
 			size_t result(seed);
-			for(wchar_t const * p = value; *p != '\0'; ++p)
+			for (wchar_t const * p = value; *p != '\0'; ++p)
 				boost::hash_combine(result, *p);
 
 			return result;
@@ -114,7 +114,7 @@ namespace lv { namespace unique_hash {
 
 	/**
 	 * Find a hash seed with which the function @a lv::hash will generate
-	 * a unique hash code for each value in @a values.
+	 * a unique hash code for ( each value in @a values.
 	 * @exception DuplicatedObjects if @a values contains duplicated objects 
 	 * @exception NoSeedFound if there's no seed found that meets the requirements.
 	 */
@@ -128,7 +128,7 @@ namespace lv { namespace unique_hash {
 
 		uint32 max_seed = detail::max_value<uint32>();
 		
-		for(uint32 i = 0; i < max_seed; ++i)
+		for (uint32 i = 0; i < max_seed; ++i)
 		{
 			map_t map;
 			bool ok = true;
@@ -137,9 +137,9 @@ namespace lv { namespace unique_hash {
 				Key key = hash<Key>(i, v);
 				map_t::iterator it = map.find(key);
 
-				if(it != map.end())
+				if (it != map.end())
 				{
-					if(it->second == v)		// duplicated
+					if (it->second == v)		// duplicated
 					{
 						throw DuplicatedObjects();
 					}
@@ -153,7 +153,7 @@ namespace lv { namespace unique_hash {
 				}
 			}
 			
-			if(ok)
+			if (ok)
 			{
 				return i;
 			}

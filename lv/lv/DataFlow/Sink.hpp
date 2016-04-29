@@ -60,7 +60,7 @@ namespace lv { namespace flow {
 		{
 			slot_type slot = boost::bind(&Sink::push_impl, this, _1, WeakIStreamFactoryPtr(istream_factory_));
 
-			if(proxy_push)
+			if (proxy_push)
 			{
 				push_policy_.set_callback(boost::bind(proxy_push, slot, _1));
 			}
@@ -117,7 +117,7 @@ namespace lv { namespace flow {
 
 		void	push_impl(ConstBufferRef const & buf, WeakIStreamFactoryPtr weak_isteram_factory)
 		{
-			if(IStreamFactoryPtr factory = weak_isteram_factory.lock())
+			if (IStreamFactoryPtr factory = weak_isteram_factory.lock())
 			{
 				IArchiveCreator<IArchive> creator(*factory, buf);
 				registery_.invoke(creator.archive());

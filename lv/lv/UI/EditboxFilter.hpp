@@ -72,7 +72,7 @@ namespace lv
 		{
 			BOOST_FOREACH(Editbox::filter_type & f, filters_)
 			{
-				if(! f(c, edit))
+				if (! f(c, edit))
 				{
 					return false;
 				}

@@ -26,7 +26,7 @@ namespace lv
 		}
 
 		BOOL   bOK   =   SetConsoleCtrlHandler((PHANDLER_ROUTINE)console_handler, TRUE);
-		if(! bOK)
+		if (! bOK)
 		{
 			return false;
 		}
@@ -35,12 +35,12 @@ namespace lv
 		long lStdHandle = (long)GetStdHandle(STD_ERROR_HANDLE);
 		int hConHandle = _open_osfhandle(lStdHandle, _O_TEXT);       
 		FILE* fp = _fdopen(hConHandle,"w");
-		if(fp == NULL)
+		if (fp == NULL)
 		{
 			return false;
 		}
 
-		if(std_io)
+		if (std_io)
 		{
 			setvbuf(fp, NULL, _IONBF, 0);
 
