@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Net">
+      <UniqueIdentifier>{e358940e-af3d-4bee-b364-d42966eb32c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Net\Header Files">
+      <UniqueIdentifier>{fd877916-43c0-496c-8678-7b09318df46d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Net\Source Files">
+      <UniqueIdentifier>{e084f2b7-788f-40ff-8cf9-52612449b03d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{fc8a4db5-7bec-4e0c-94ef-63096802743d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\Context.hpp">
+      <Filter>Net\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\Event.hpp">
+      <Filter>Net\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\FlowSession.hpp">
+      <Filter>Net\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\Fwd.hpp">
+      <Filter>Net\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net.hpp">
+      <Filter>Net\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\PacketBufferManager.hpp">
+      <Filter>Net\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\PacketProxy.hpp">
+      <Filter>Net\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\PacketSplitter.hpp">
+      <Filter>Net\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\ServerBase.hpp">
+      <Filter>Net\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\SessionBase.hpp">
+      <Filter>Net\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\SocketHolder.hpp">
+      <Filter>Net\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\Socks5.hpp">
+      <Filter>Net\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\Socks5ClientContext.hpp">
+      <Filter>Net\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\Socks5ClientSession.hpp">
+      <Filter>Net\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\Socks5ServerContext.hpp">
+      <Filter>Net\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\Socks5ServerSession.hpp">
+      <Filter>Net\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\SSLContext.hpp">
+      <Filter>Net\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\SSLServer.hpp">
+      <Filter>Net\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\SSLSession.hpp">
+      <Filter>Net\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\TcpSession.hpp">
+      <Filter>Net\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\AutoLink.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\DeadlineTimer.hpp">
+      <Filter>Net\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\MessageQueue.hpp">
+      <Filter>Net\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\MessageQueueContext.hpp">
+      <Filter>Net\Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\lv\src\FrameWork\Net\PacketProxy.cpp">
+      <Filter>Net\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lv\src\FrameWork\Net\ServerBase.cpp">
+      <Filter>Net\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lv\src\FrameWork\Net\SessionBase.cpp">
+      <Filter>Net\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lv\src\FrameWork\Net\Socks5ClientSession.cpp">
+      <Filter>Net\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lv\src\FrameWork\Net\Socks5ServerSession.cpp">
+      <Filter>Net\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lv\src\FrameWork\Net\SSLServer.cpp">
+      <Filter>Net\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lv\src\FrameWork\Net\SSLSession.cpp">
+      <Filter>Net\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lv\src\FrameWork\Net\TcpSession.cpp">
+      <Filter>Net\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lv\src\FrameWork\Net\DeadlineTimer.cpp">
+      <Filter>Net\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lv\src\FrameWork\Net\MessageQueue.cpp">
+      <Filter>Net\Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

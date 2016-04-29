@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseRuntimeStatic|Win32">
+      <Configuration>ReleaseRuntimeStatic</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{51098B53-78E6-4FD6-AF7E-D4D0668618BD}</ProjectGuid>
+    <RootNamespace>Framework</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseRuntimeStatic|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseRuntimeStatic|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>14.0.23107.0</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>..\..\..\bin\lv\</OutDir>
+    <IntDir>..\..\..\build\Framework\msvc-14.0\debug\link-static\</IntDir>
+    <TargetName>$(ProjectName)D</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>..\..\..\bin\lv\</OutDir>
+    <IntDir>..\..\..\build\$(ProjectName)\msvc-14.0\release\link-static\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseRuntimeStatic|Win32'">
+    <OutDir>..\..\..\bin\lv\</OutDir>
+    <IntDir>..\..\..\build\$(ProjectName)\msvc-8.0\release\runtime-static\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/D "_SCL_SECURE_NO_WARNINGS" /D "_WIN32_WINNT=0x0501" %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <OutputFile>$(OutDir)$(ProjectName)D.lib</OutputFile>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/D "_SCL_SECURE_NO_WARNINGS" /D "_CRT_SECURE_NO_WARNINGS" /D "_WIN32_WINNT=0x0501" %(AdditionalOptions)</AdditionalOptions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseRuntimeStatic|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/D "_SCL_SECURE_NO_WARNINGS" /D "_CRT_SECURE_NO_WARNINGS" /D "_WIN32_WINNT=0x0501" %(AdditionalOptions)</AdditionalOptions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <OutputFile>$(OutDir)$(ProjectName)S.lib</OutputFile>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\AutoLink.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\Context.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\DeadlineTimer.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\Event.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\FlowSession.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\Fwd.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\MessageQueue.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\MessageQueueContext.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\PacketBufferManager.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\PacketProxy.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\PacketSplitter.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\ServerBase.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\SessionBase.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\SocketHolder.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\Socks5.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\Socks5ClientContext.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\Socks5ClientSession.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\Socks5ServerContext.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\Socks5ServerSession.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\SSLContext.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\SSLServer.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\SSLSession.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\TcpSession.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\lv\src\FrameWork\Net\DeadlineTimer.cpp" />
+    <ClCompile Include="..\..\..\lv\src\FrameWork\Net\MessageQueue.cpp" />
+    <ClCompile Include="..\..\..\lv\src\FrameWork\Net\PacketProxy.cpp" />
+    <ClCompile Include="..\..\..\lv\src\FrameWork\Net\ServerBase.cpp" />
+    <ClCompile Include="..\..\..\lv\src\FrameWork\Net\SessionBase.cpp" />
+    <ClCompile Include="..\..\..\lv\src\FrameWork\Net\Socks5ClientSession.cpp" />
+    <ClCompile Include="..\..\..\lv\src\FrameWork\Net\Socks5ServerSession.cpp" />
+    <ClCompile Include="..\..\..\lv\src\FrameWork\Net\SSLServer.cpp" />
+    <ClCompile Include="..\..\..\lv\src\FrameWork\Net\SSLSession.cpp" />
+    <ClCompile Include="..\..\..\lv\src\FrameWork\Net\TcpSession.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\lv\lv.vcxproj">
+      <Project>{472407c2-8b6a-49aa-8b94-23a9b089b055}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,880 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Utility">
+      <UniqueIdentifier>{4bf0ae8a-5eac-47a8-beca-fa8389a0690e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility\Header Files">
+      <UniqueIdentifier>{4129cc87-3168-4512-8596-7d1c75ede689}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility\Source Files">
+      <UniqueIdentifier>{b9464d2a-6b62-4c48-93cc-d47a04df98b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility\detail">
+      <UniqueIdentifier>{f6e80eef-6fd4-4757-a10d-ceb0f0d4a157}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics">
+      <UniqueIdentifier>{0beccce6-3084-48d9-8ee1-289d4d1bfc01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Graphics\Source Files">
+      <UniqueIdentifier>{4e94c7f6-4041-4777-a4b7-669ad098bcc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Stream">
+      <UniqueIdentifier>{244316fd-d600-42e0-a3d9-d5a81c130af3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Stream\Header Fiels">
+      <UniqueIdentifier>{82abd1e6-c6fe-49c8-b525-63b817dac9d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FileSystem">
+      <UniqueIdentifier>{147990e6-2702-4392-86a7-b2eab12de2bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FileSystem\Header Files">
+      <UniqueIdentifier>{9fb295e4-da54-4003-9e7d-cbeffd96c125}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FileSystem\Source Files">
+      <UniqueIdentifier>{17403a29-67f0-40fb-9a61-7ba597113248}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Algorithm">
+      <UniqueIdentifier>{4876c3d3-7185-44c2-a4d2-f818a23be228}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Algorithm\Header Files">
+      <UniqueIdentifier>{a3615da8-4450-4fd5-a27a-8fec43481a94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Log">
+      <UniqueIdentifier>{9e3330e8-5f6c-437d-8440-7cbd2e1753ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Log\Header Files">
+      <UniqueIdentifier>{998bb4d1-a9c7-4f74-88b5-9ec4edfae4fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RPC">
+      <UniqueIdentifier>{cc8f082a-403c-48a8-916d-a27cd688174b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RPC\Header Files">
+      <UniqueIdentifier>{d5cd28ab-d7c2-4778-8756-b3d030ec3be4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Concurrent">
+      <UniqueIdentifier>{2d562955-0f02-4414-94ec-fe84d44f2188}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Concurrent\Header Files">
+      <UniqueIdentifier>{594c94e0-207e-48e8-a36f-80a1e4ac63ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Concurrent\Source Files">
+      <UniqueIdentifier>{a1fc6641-205f-45f9-b553-69e0d88513d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Audio">
+      <UniqueIdentifier>{605e8d6b-7d60-46c2-8e0f-541bbe28ae65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Audio\Header Files">
+      <UniqueIdentifier>{227704e9-7085-4138-b4af-dcbef774fdff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Audio\Source Files">
+      <UniqueIdentifier>{7b3b38cd-c76d-4d4e-9751-2258662d8819}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BinaryStream">
+      <UniqueIdentifier>{d864018b-6bad-4171-9dde-52c9eb7d21c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BinaryStream\Header Files">
+      <UniqueIdentifier>{c1fbe201-9274-4fce-a7bd-86e2b2fa67bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BinaryStream\Interprocess">
+      <UniqueIdentifier>{f71fd209-0741-410d-8d7d-728169f3b9a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BinaryStream\Interprocess\Header Files">
+      <UniqueIdentifier>{7c4d64a7-0fe8-4570-9d68-25bcc396c13f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{edfcb7f8-fc63-4678-9763-e80c582e3527}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\Header Files">
+      <UniqueIdentifier>{6776c0b3-9a1b-419f-aa50-5fab19427335}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\Source Files">
+      <UniqueIdentifier>{8aa408fb-c24e-4350-bc80-04d53886061b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DataFlow">
+      <UniqueIdentifier>{027d58ae-c272-4eb4-91fe-1d8685eb7aad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DataFlow\Header Files">
+      <UniqueIdentifier>{2716a058-0a6b-4360-a3a2-505e68ad0fde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include">
+      <UniqueIdentifier>{3957ad3e-3b1a-48c8-a8c6-f2c1018639e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Header Files">
+      <UniqueIdentifier>{3eb566d2-a944-4b7e-bbce-bef3fe50a4c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua">
+      <UniqueIdentifier>{5debcab2-3603-4f2b-9968-ea8a3efe641a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua\Header Files">
+      <UniqueIdentifier>{c3dc2517-d2a3-4cc7-8e92-1fdfe125193d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua\Source Files">
+      <UniqueIdentifier>{bfaa4514-012e-4320-aca7-1c144cc60923}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Serialization">
+      <UniqueIdentifier>{288ae9af-0c2e-401c-b0c6-7bed925393a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Serialization\Header Files">
+      <UniqueIdentifier>{17e15d6d-8f2d-4f7a-888d-fef7af4f9536}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Serialization\Graphics">
+      <UniqueIdentifier>{61537877-ae7d-4e66-a800-aacdef7f2278}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Serialization\Graphics\Header Files">
+      <UniqueIdentifier>{396fe1bb-4a68-4398-9109-20841a01fcd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Serialization\Interprocess">
+      <UniqueIdentifier>{4d8de837-b98b-4e06-b135-9fa700c28608}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Serialization\Interprocess\Header Files">
+      <UniqueIdentifier>{7ca5eb39-1130-40dc-9047-5a3426ecbad6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Stream">
+      <UniqueIdentifier>{5142d517-9096-4842-bf27-648ffc99903e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Stream\Header Files">
+      <UniqueIdentifier>{19a822f3-3fa2-470c-8b58-8a7e3a044d65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Luabind">
+      <UniqueIdentifier>{4564ad69-2831-4d74-8ba8-e318dc44b344}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Luabind\Header Files">
+      <UniqueIdentifier>{dee57a6d-402e-40b4-b992-7e2bb3ece274}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Luabind\Graphics">
+      <UniqueIdentifier>{34b12c0a-f9ab-4e1a-8dfd-2902938317d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Luabind\Graphics\Header Files">
+      <UniqueIdentifier>{4544f834-028e-4dfa-9394-f6622a5eff4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LuaArchive">
+      <UniqueIdentifier>{9ec9b168-031f-4210-879c-16f5cde3d3e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LuaArchive\Header Files">
+      <UniqueIdentifier>{59e147a7-8c05-4138-9c46-ae256ee341d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LuaArchive\Interprocess">
+      <UniqueIdentifier>{ed0d56bb-34b1-42e9-895c-2e9b5eeed50c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LuaArchive\Interprocess\Header Files">
+      <UniqueIdentifier>{d2f1796f-13f6-4d41-9fba-aad4259a4938}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LuaArchive\Source Files">
+      <UniqueIdentifier>{07dde5a8-dd00-47d5-89f1-f951b0f4b04a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContainerAdaptor">
+      <UniqueIdentifier>{b4ea19fe-3afe-451f-9498-a4b103db2c34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContainerAdaptor\Header Files">
+      <UniqueIdentifier>{4171e4f7-31a8-4cb0-957e-15a9e6cbd5a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContainerAdaptor\Interprocess">
+      <UniqueIdentifier>{d5dfcd45-b519-468f-b312-31305960ae3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContainerAdaptor\Interprocess\Header Files">
+      <UniqueIdentifier>{787b5bf2-2981-44c6-a7bb-ee249ded55aa}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\lv\lv\Align.hpp">
+      <Filter>Utility\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\AutoLink.hpp">
+      <Filter>Utility\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Buffer.hpp">
+      <Filter>Utility\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\ComPtr.hpp">
+      <Filter>Utility\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Config.hpp">
+      <Filter>Utility\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Console.hpp">
+      <Filter>Utility\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\DelayTimer.hpp">
+      <Filter>Utility\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\DXErr.hpp">
+      <Filter>Utility\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Endian.hpp">
+      <Filter>Utility\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Ensure.hpp">
+      <Filter>Utility\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Exception.hpp">
+      <Filter>Utility\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Factory.hpp">
+      <Filter>Utility\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\FourCC.hpp">
+      <Filter>Utility\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Functional.hpp">
+      <Filter>Utility\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Fusion.hpp">
+      <Filter>Utility\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\IBufferManager.hpp">
+      <Filter>Utility\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\IntType.hpp">
+      <Filter>Utility\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\lvlib2.hpp">
+      <Filter>Utility\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Mapping.hpp">
+      <Filter>Utility\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\MemFn.hpp">
+      <Filter>Utility\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\NullMutex.hpp">
+      <Filter>Utility\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Random.hpp">
+      <Filter>Utility\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Ref.hpp">
+      <Filter>Utility\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\ScopeGuard.hpp">
+      <Filter>Utility\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\ServiceWrapper.hpp">
+      <Filter>Utility\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\SharedPtr.hpp">
+      <Filter>Utility\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\SimpleBufferManager.hpp">
+      <Filter>Utility\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Singleton.hpp">
+      <Filter>Utility\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\StreamHelper.hpp">
+      <Filter>Utility\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\StreamPtr.hpp">
+      <Filter>Utility\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Timer.hpp">
+      <Filter>Utility\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\detail\RemoveSecond.hpp">
+      <Filter>Utility\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\graphics\Color.hpp">
+      <Filter>Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Graphics\ColorRect.hpp">
+      <Filter>Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Graphics\ContainerBase.hpp">
+      <Filter>Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Graphics\Font.hpp">
+      <Filter>Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Graphics\FreeTypeFont.hpp">
+      <Filter>Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Graphics\Graphics.hpp">
+      <Filter>Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Graphics\Math.hpp">
+      <Filter>Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Graphics\PixelFormat.hpp">
+      <Filter>Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\graphics\Point.hpp">
+      <Filter>Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\graphics\Rect.hpp">
+      <Filter>Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\graphics\Renderer.hpp">
+      <Filter>Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Graphics\RenderFactory.hpp">
+      <Filter>Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Graphics\RenderFwd.hpp">
+      <Filter>Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\graphics\Size.hpp">
+      <Filter>Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\graphics\Texture.hpp">
+      <Filter>Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Graphics\Triangle.hpp">
+      <Filter>Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Graphics\Vector.hpp">
+      <Filter>Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Graphics\Stream\Point.hpp">
+      <Filter>Graphics\Stream\Header Fiels</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Graphics\Stream\Rect.hpp">
+      <Filter>Graphics\Stream\Header Fiels</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Graphics\Stream\Size.hpp">
+      <Filter>Graphics\Stream\Header Fiels</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Graphics\Stream\Vector.hpp">
+      <Filter>Graphics\Stream\Header Fiels</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\FileSystem\AsynFileIO.hpp">
+      <Filter>FileSystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\FileSystem\Fwd.hpp">
+      <Filter>FileSystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\FileSystem\IFileIO.hpp">
+      <Filter>FileSystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\FileSystem\IOFuture.hpp">
+      <Filter>FileSystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\FileSystem\IOTask.hpp">
+      <Filter>FileSystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\FileSystem\MyZipReader.hpp">
+      <Filter>FileSystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\FileSystem\RawFileReader.hpp">
+      <Filter>FileSystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\FileSystem\RawFileWriter.hpp">
+      <Filter>FileSystem\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Algorithm\DSTree.hpp">
+      <Filter>Algorithm\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Algorithm\LRUCache.hpp">
+      <Filter>Algorithm\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Algorithm\LRUList.hpp">
+      <Filter>Algorithm\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Algorithm\Rle.hpp">
+      <Filter>Algorithm\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Algorithm\Set.hpp">
+      <Filter>Algorithm\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Algorithm\UniqueHash.hpp">
+      <Filter>Algorithm\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Log\DbgPrint.hpp">
+      <Filter>Log\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Log\DebugStringGather.hpp">
+      <Filter>Log\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Log\Formatter.hpp">
+      <Filter>Log\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Log\Fwd.hpp">
+      <Filter>Log\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Log\Gather.hpp">
+      <Filter>Log\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Log\Level.hpp">
+      <Filter>Log\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Log\Log.hpp">
+      <Filter>Log\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Log\LogManager.hpp">
+      <Filter>Log\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Log\Manipulators.hpp">
+      <Filter>Log\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Log\StringGather.hpp">
+      <Filter>Log\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Log\Utility.hpp">
+      <Filter>Log\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\RPC\ArchiveBase.hpp">
+      <Filter>RPC\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\RPC\Client.hpp">
+      <Filter>RPC\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\RPC\Common.hpp">
+      <Filter>RPC\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\RPC\Config.hpp">
+      <Filter>RPC\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\RPC\Future.hpp">
+      <Filter>RPC\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\RPC\Fwd.hpp">
+      <Filter>RPC\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\RPC\Invoker.hpp">
+      <Filter>RPC\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\RPC\PacketArchive.hpp">
+      <Filter>RPC\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\RPC\Protocol.hpp">
+      <Filter>RPC\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\RPC\Registery.hpp">
+      <Filter>RPC\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\RPC\RpcBase.hpp">
+      <Filter>RPC\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\RPC\Server.hpp">
+      <Filter>RPC\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Concurrent\FIFOQueue.hpp">
+      <Filter>Concurrent\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Concurrent\Fwd.hpp">
+      <Filter>Concurrent\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Concurrent\PriorityQueue.hpp">
+      <Filter>Concurrent\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Concurrent\TaskQueue.hpp">
+      <Filter>Concurrent\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Concurrent\ThreadGroup.hpp">
+      <Filter>Concurrent\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Concurrent\ThreadName.hpp">
+      <Filter>Concurrent\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Concurrent\ThreadPool.hpp">
+      <Filter>Concurrent\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Audio\AudioBuffer.hpp">
+      <Filter>Audio\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Audio\AudioDataSource.hpp">
+      <Filter>Audio\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Audio\AudioEngine.hpp">
+      <Filter>Audio\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Audio\WavSource.hpp">
+      <Filter>Audio\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\BinaryStream\Array.hpp">
+      <Filter>BinaryStream\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\BinaryStream\BinaryIStream.hpp">
+      <Filter>BinaryStream\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\BinaryStream\BinaryOStream.hpp">
+      <Filter>BinaryStream\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\BinaryStream\BinaryStreamBase.hpp">
+      <Filter>BinaryStream\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\BinaryStream\Buffer.hpp">
+      <Filter>BinaryStream\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\BinaryStream\Fwd.hpp">
+      <Filter>BinaryStream\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\BinaryStream\List.hpp">
+      <Filter>BinaryStream\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\BinaryStream\Manipulators.hpp">
+      <Filter>BinaryStream\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\BinaryStream\Serializer.hpp">
+      <Filter>BinaryStream\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\BinaryStream\String.hpp">
+      <Filter>BinaryStream\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\BinaryStream\Tags.hpp">
+      <Filter>BinaryStream\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\BinaryStream\Vector.hpp">
+      <Filter>BinaryStream\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\BinaryStream\Interprocess\String.hpp">
+      <Filter>BinaryStream\Interprocess\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\UI\Button.hpp">
+      <Filter>UI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\UI\ButtonBase.hpp">
+      <Filter>UI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\UI\Dialog.hpp">
+      <Filter>UI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\UI\Editbox.hpp">
+      <Filter>UI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\UI\EditboxFilter.hpp">
+      <Filter>UI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\UI\EventArgs.hpp">
+      <Filter>UI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\UI\Progress.hpp">
+      <Filter>UI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\UI\Window.hpp">
+      <Filter>UI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\UI\WindowRenderer.hpp">
+      <Filter>UI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\DataFlow\AsyncPush.hpp">
+      <Filter>DataFlow\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\DataFlow\Config.hpp">
+      <Filter>DataFlow\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\DataFlow\Connection.hpp">
+      <Filter>DataFlow\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\DataFlow\DataFlow.hpp">
+      <Filter>DataFlow\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\DataFlow\Fwd.hpp">
+      <Filter>DataFlow\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\DataFlow\Invoker.hpp">
+      <Filter>DataFlow\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\DataFlow\PushPolicyBase.hpp">
+      <Filter>DataFlow\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\DataFlow\Registery.hpp">
+      <Filter>DataFlow\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\DataFlow\Sink.hpp">
+      <Filter>DataFlow\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\DataFlow\Source.hpp">
+      <Filter>DataFlow\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\DataFlow\StreamProxy.hpp">
+      <Filter>DataFlow\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\DataFlow\SyncPush.hpp">
+      <Filter>DataFlow\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\DataFlow\ThreadedPush.hpp">
+      <Filter>DataFlow\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\BinaryStream.hpp">
+      <Filter>Include\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\DataFlow.hpp">
+      <Filter>Include\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\ZeroMQ.hpp">
+      <Filter>Include\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Lua\CallProxy.hpp">
+      <Filter>Lua\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Lua\Exec.hpp">
+      <Filter>Lua\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Lua\Extract.hpp">
+      <Filter>Lua\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Lua\StackBalance.hpp">
+      <Filter>Lua\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Lua\TableBuilder.hpp">
+      <Filter>Lua\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Serialization\DSTree.hpp">
+      <Filter>Serialization\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Serialization\Fwd.hpp">
+      <Filter>Serialization\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Serialization\IArchive.hpp">
+      <Filter>Serialization\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Serialization\IArchiveCreator.hpp">
+      <Filter>Serialization\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Serialization\NonintrusiveOptional.hpp">
+      <Filter>Serialization\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Serialization\NvpHelper.hpp">
+      <Filter>Serialization\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Serialization\OArchive.hpp">
+      <Filter>Serialization\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Serialization\Serialization.hpp">
+      <Filter>Serialization\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Serialization\SharedPtr.hpp">
+      <Filter>Serialization\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Serialization\Tuple.hpp">
+      <Filter>Serialization\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Serialization\Graphics\Point.hpp">
+      <Filter>Serialization\Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Serialization\Graphics\Rect.hpp">
+      <Filter>Serialization\Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Serialization\Graphics\Size.hpp">
+      <Filter>Serialization\Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Serialization\Graphics\Triangle.hpp">
+      <Filter>Serialization\Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Serialization\Graphics\Vector.hpp">
+      <Filter>Serialization\Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Serialization\Interprocess\String.hpp">
+      <Filter>Serialization\Interprocess\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Serialization\Interprocess\Vector.hpp">
+      <Filter>Serialization\Interprocess\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Stream\CallForwarding.hpp">
+      <Filter>Stream\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Stream\Fwd.hpp">
+      <Filter>Stream\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Stream\IBufferStream.hpp">
+      <Filter>Stream\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Stream\IStreamFactory.hpp">
+      <Filter>Stream\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Stream\IStreamProxy.hpp">
+      <Filter>Stream\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Stream\OBufferStream.hpp">
+      <Filter>Stream\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Stream\OStreamFactory.hpp">
+      <Filter>Stream\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Stream\OStreamProxy.hpp">
+      <Filter>Stream\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Stream\StreamBase.hpp">
+      <Filter>Stream\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Stream\StreamFactory.hpp">
+      <Filter>Stream\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Stream\StreamProxyBase.hpp">
+      <Filter>Stream\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Luabind\Array.hpp">
+      <Filter>Luabind\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Luabind\Map.hpp">
+      <Filter>Luabind\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Luabind\Pair.hpp">
+      <Filter>Luabind\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Luabind\Reg.hpp">
+      <Filter>Luabind\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Luabind\Set.hpp">
+      <Filter>Luabind\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Luabind\Utility.hpp">
+      <Filter>Luabind\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Luabind\Vector.hpp">
+      <Filter>Luabind\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Luabind\Graphics\Point.hpp">
+      <Filter>Luabind\Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Luabind\Graphics\Rect.hpp">
+      <Filter>Luabind\Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Luabind\Graphics\Size.hpp">
+      <Filter>Luabind\Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Luabind\Graphics\Vector.hpp">
+      <Filter>Luabind\Graphics\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\LuaArchive\Array.hpp">
+      <Filter>LuaArchive\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\LuaArchive\Common.hpp">
+      <Filter>LuaArchive\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\LuaArchive\Deque.hpp">
+      <Filter>LuaArchive\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\LuaArchive\DSTree.hpp">
+      <Filter>LuaArchive\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\LuaArchive\Fwd.hpp">
+      <Filter>LuaArchive\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\LuaArchive\ISerializer.hpp">
+      <Filter>LuaArchive\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\LuaArchive\List.hpp">
+      <Filter>LuaArchive\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\LuaArchive\LuaIArchive.hpp">
+      <Filter>LuaArchive\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\LuaArchive\LuaOArchive.hpp">
+      <Filter>LuaArchive\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\LuaArchive\Map.hpp">
+      <Filter>LuaArchive\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\LuaArchive\Mapping.hpp">
+      <Filter>LuaArchive\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\LuaArchive\NonintrusiveOptional.hpp">
+      <Filter>LuaArchive\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\LuaArchive\Optional.hpp">
+      <Filter>LuaArchive\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\LuaArchive\OSerializer.hpp">
+      <Filter>LuaArchive\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\LuaArchive\Pair.hpp">
+      <Filter>LuaArchive\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\LuaArchive\PlainISerializer.hpp">
+      <Filter>LuaArchive\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\LuaArchive\PlainLuaIArchive.hpp">
+      <Filter>LuaArchive\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\LuaArchive\Set.hpp">
+      <Filter>LuaArchive\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\LuaArchive\SharedPtr.hpp">
+      <Filter>LuaArchive\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\LuaArchive\Tags.hpp">
+      <Filter>LuaArchive\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\LuaArchive\Vector.hpp">
+      <Filter>LuaArchive\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\LuaArchive\Interprocess\Map.hpp">
+      <Filter>LuaArchive\Interprocess\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\LuaArchive\Interprocess\Vector.hpp">
+      <Filter>LuaArchive\Interprocess\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\ContainerAdaptor\Adaptor.hpp">
+      <Filter>ContainerAdaptor\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\ContainerAdaptor\Deque.hpp">
+      <Filter>ContainerAdaptor\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\ContainerAdaptor\List.hpp">
+      <Filter>ContainerAdaptor\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\ContainerAdaptor\Vector.hpp">
+      <Filter>ContainerAdaptor\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\ContainerAdaptor\Interprocess\Vector.hpp">
+      <Filter>ContainerAdaptor\Interprocess\Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\lv\src\lv\Console.cpp">
+      <Filter>Utility\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lv\src\lv\Timer.cpp">
+      <Filter>Utility\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lv\src\lv\Graphics\Color.cpp">
+      <Filter>Graphics\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lv\src\lv\Graphics\Font.cpp">
+      <Filter>Graphics\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lv\src\lv\Graphics\FreeTypeFont.cpp">
+      <Filter>Graphics\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lv\src\lv\FileSystem\IFileIO.cpp">
+      <Filter>FileSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lv\src\lv\FileSystem\IOTask.cpp">
+      <Filter>FileSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lv\src\lv\FileSystem\MyZipReader.cpp">
+      <Filter>FileSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lv\src\lv\FileSystem\RawFileReader.cpp">
+      <Filter>FileSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lv\src\lv\FileSystem\RawFileWriter.cpp">
+      <Filter>FileSystem\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lv\src\lv\Concurrent\ThreadName.cpp">
+      <Filter>Concurrent\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lv\src\lv\Concurrent\ThreadPool.cpp">
+      <Filter>Concurrent\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lv\src\lv\Audio\WavSource.cpp">
+      <Filter>Audio\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lv\src\lv\UI\Button.cpp">
+      <Filter>UI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lv\src\lv\UI\ButtonBase.cpp">
+      <Filter>UI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lv\src\lv\UI\Editbox.cpp">
+      <Filter>UI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lv\src\lv\UI\Window.cpp">
+      <Filter>UI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lv\src\lv\Lua\Exec.cpp">
+      <Filter>Lua\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lv\src\lv\Lua\StackBalance.cpp">
+      <Filter>Lua\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lv\src\LuaArchive\PlainISerializer.cpp">
+      <Filter>LuaArchive\Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

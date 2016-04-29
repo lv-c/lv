@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Lua">
+      <UniqueIdentifier>{aa564f56-f348-4613-8e46-d8088d6127db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua\Header Files">
+      <UniqueIdentifier>{dc9cf454-d846-4666-80ec-d869f05f3e68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua\Source Files">
+      <UniqueIdentifier>{cecea8c4-bcef-47fc-a4c5-22f9f3ec4a3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{7a7cd65b-a7ee-44b7-af63-2fbe0a7c01bf}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\lv\lv\Toolkit\Lua\Fwd.hpp">
+      <Filter>Lua\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Toolkit\Lua\LuaConfig.hpp">
+      <Filter>Lua\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Toolkit\AutoLink.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\lv\src\Toolkit\Lua\LuaConfig.cpp">
+      <Filter>Lua\Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\..\lv\lv\Toolkit\note.txt" />
+  </ItemGroup>
+</Project>
