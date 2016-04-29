@@ -90,7 +90,7 @@ namespace lv
 
 		bool	eof() const
 		{
-			return (rdstate() & std::ios_base::eofbit);
+			return ((rdstate() & std::ios_base::eofbit) != 0);
 		}
 
 		bool	fail() const

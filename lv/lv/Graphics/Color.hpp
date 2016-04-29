@@ -16,6 +16,8 @@
 #include <boost/operators.hpp>
 #include <boost/assert.hpp>
 
+#include <algorithm>
+
 namespace lv
 {
 
