@@ -115,6 +115,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <TargetMachine>MachineX86</TargetMachine>
+      <IgnoreSpecificDefaultLibraries>libcmt</IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
       <Command>"$(TargetDir)\$(TargetName).exe" --result_code=no --report_level=no</Command>
@@ -161,6 +162,7 @@
     <ClCompile Include="..\..\..\UnitTest\Mapping.cpp" />
     <ClCompile Include="..\..\..\UnitTest\MemFn.cpp" />
     <ClCompile Include="..\..\..\UnitTest\MemoryAnalyser.cpp" />
+    <ClCompile Include="..\..\..\UnitTest\MessageQueue.cpp" />
     <ClCompile Include="..\..\..\UnitTest\Net.cpp" />
     <ClCompile Include="..\..\..\UnitTest\Random.cpp" />
     <ClCompile Include="..\..\..\UnitTest\Rpc.cpp" />

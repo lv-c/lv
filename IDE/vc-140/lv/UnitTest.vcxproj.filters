@@ -74,5 +74,8 @@
     <ClCompile Include="..\..\..\UnitTest\Vector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\UnitTest\MessageQueue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

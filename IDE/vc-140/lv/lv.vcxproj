@@ -146,6 +146,7 @@
     <ClInclude Include="..\..\..\lv\lv\Buffer.hpp" />
     <ClInclude Include="..\..\..\lv\lv\ComPtr.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Concurrent\FIFOQueue.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\Concurrent\Future.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Concurrent\Fwd.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Concurrent\PriorityQueue.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Concurrent\TaskQueue.hpp" />
@@ -268,6 +269,7 @@
     <ClInclude Include="..\..\..\lv\lv\Mapping.hpp" />
     <ClInclude Include="..\..\..\lv\lv\MemFn.hpp" />
     <ClInclude Include="..\..\..\lv\lv\NullMutex.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\Pool.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Random.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Ref.hpp" />
     <ClInclude Include="..\..\..\lv\lv\RPC\ArchiveBase.hpp" />

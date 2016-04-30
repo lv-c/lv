@@ -814,6 +814,12 @@
     <ClInclude Include="..\..\..\lv\lv\ContainerAdaptor\Interprocess\Vector.hpp">
       <Filter>ContainerAdaptor\Interprocess\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Pool.hpp">
+      <Filter>Utility\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Concurrent\Future.hpp">
+      <Filter>Concurrent\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\lv\src\lv\Console.cpp">
