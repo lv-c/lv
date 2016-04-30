@@ -52,7 +52,7 @@ namespace lv { namespace rpc {
 		template<typename Ret, class ArchivePair>
 		class ReturnPromise : public IPromise<ArchivePair>
 		{
-			boost::shared_ptr<Promise<Ret> > promise_;
+			std::shared_ptr<Promise<Ret> > promise_;
 
 		public:
 

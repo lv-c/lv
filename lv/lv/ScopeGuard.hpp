@@ -2,7 +2,7 @@
 //  ScopeGuard   version:  1.0   ¡¤  date: 09/13/2008
 //  --------------------------------------------------------------------
 //  A zero overhead implementation of general scope guard.
-//	Another way is using boost::shared_ptr which may lead to memory
+//	Another way is using std::shared_ptr which may lead to memory
 //	allocation on the heap
 //  --------------------------------------------------------------------
 //  Copyright (C) jcfly(lv.jcfly@gmail.com) 2008 - All Rights Reserved

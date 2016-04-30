@@ -25,13 +25,13 @@ namespace lv
 	{
 		typedef	boost::shared_future<Ret>	base_type;
 
-		boost::weak_ptr<Promise<Ret> >	promise_;
+		std::weak_ptr<Promise<Ret> >	promise_;
 
 	private:
 
 		template<typename> friend class Promise;
 
-		Future(boost::shared_future<Ret> future, boost::shared_ptr<Promise<Ret> > promise)
+		Future(boost::shared_future<Ret> future, std::shared_ptr<Promise<Ret> > promise)
 			: base_type(future)
 			, promise_(promise)
 		{
@@ -82,7 +82,7 @@ namespace lv
 
 
 	template<typename Ret>
-	class Promise : public boost::enable_shared_from_this<Promise<Ret> >
+	class Promise : public std::enable_shared_from_this<Promise<Ret> >
 	{
 		boost::promise<Ret>	promise_;
 

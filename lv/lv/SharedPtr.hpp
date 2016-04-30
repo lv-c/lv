@@ -13,7 +13,8 @@
 
 #include <lv/Config.hpp>
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
+
 
 namespace lv
 {
@@ -27,9 +28,9 @@ namespace lv
 
 	/// shared_from_object
 	template<class T>
-	boost::shared_ptr<T> shared_from_object(T & t)
+	std::shared_ptr<T> shared_from_object(T & t)
 	{
-		return boost::shared_ptr<T>(&t, NullDeleter());
+		return std::shared_ptr<T>(&t, NullDeleter());
 	}
 }
 

@@ -11,11 +11,12 @@
 #ifndef LV_LOG_FWD_HPP
 #define LV_LOG_FWD_HPP
 
+#include <boost/function.hpp>
+
 #include <iostream>
 #include <string>
+#include <memory>
 
-#include <boost/shared_ptr.hpp>
-#include <boost/function.hpp>
 
 namespace lv 
 {
@@ -40,7 +41,7 @@ namespace lv
 		typedef std::basic_string<char_type>	string_type;
 		typedef std::basic_ostream<char_type>	ostream_type;
 		
-		typedef boost::shared_ptr<ostream_type>	ostream_ptr;
+		typedef std::shared_ptr<ostream_type>	ostream_ptr;
 
 		typedef boost::function<void (log::ostream_type &, int)> formatter_type;
 
@@ -49,7 +50,7 @@ namespace lv
 
 
 		class Gather;
-		typedef boost::shared_ptr<Gather>	gather_ptr;
+		typedef std::shared_ptr<Gather>	gather_ptr;
 
 		class Log;
 

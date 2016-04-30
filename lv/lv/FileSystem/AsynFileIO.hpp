@@ -20,7 +20,7 @@ namespace lv
 	class AsynFileIO : public IFileIO
 	{
 	public:
-		typedef boost::shared_ptr<IFileIO>	synio_ptr;
+		typedef std::shared_ptr<IFileIO>	synio_ptr;
 
 	private:
 

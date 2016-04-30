@@ -11,18 +11,19 @@
 #ifndef LV_RENDERFWD_HPP
 #define LV_RENDERFWD_HPP
 
-#include <boost/shared_ptr.hpp>
-
 #include <lv/IntType.hpp>
+
+#include <memory>
+
 
 namespace lv
 {
 	class Texture;
-	typedef boost::shared_ptr<Texture>	TexturePtr;
+	typedef std::shared_ptr<Texture>	TexturePtr;
 
 
 	class Font;
-	typedef boost::shared_ptr<Font>	FontPtr;
+	typedef std::shared_ptr<Font>	FontPtr;
 
 	template<typename>	class PointT;
 	typedef PointT<int32>	Point;

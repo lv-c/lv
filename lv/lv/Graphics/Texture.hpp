@@ -12,11 +12,13 @@
 #define LV_TEXTURE_HPP
 
 #include <boost/assert.hpp>
-#include <boost/shared_ptr.hpp>
 
 #include <lv/Buffer.hpp>
 #include <lv/Graphics/Rect.hpp>
 #include <lv/Graphics/PixelFormat.hpp>
+
+#include <memory>
+
 
 namespace lv
 {
@@ -69,7 +71,7 @@ namespace lv
 		template <int PF>
 		struct ViewPtrT
 		{
-			typedef boost::shared_ptr<typename GIL::ViewT<PF>::type>	type;
+			typedef std::shared_ptr<typename GIL::ViewT<PF>::type>	type;
 		};
 
 		/**

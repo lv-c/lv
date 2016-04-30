@@ -15,6 +15,7 @@
 
 #include <boost/asio/deadline_timer.hpp>
 #include <boost/function.hpp>
+#include <boost/weak_ptr.hpp>
 
 namespace lv { namespace net {
 
@@ -22,8 +23,8 @@ namespace lv { namespace net {
 	{
 		ServiceWrapper	service_wrapper_;
 
-		typedef boost::shared_ptr<boost::asio::deadline_timer>	TimerPtr;
-		typedef boost::weak_ptr<boost::asio::deadline_timer>	WeakTimerPtr;
+		typedef std::shared_ptr<boost::asio::deadline_timer>	TimerPtr;
+		typedef std::weak_ptr<boost::asio::deadline_timer>	WeakTimerPtr;
 
 		TimerPtr	timer_;
 

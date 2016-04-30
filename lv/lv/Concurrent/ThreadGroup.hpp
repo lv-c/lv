@@ -13,10 +13,10 @@
 
 #include <lv/Foreach.hpp>
 
-#include <boost/shared_ptr.hpp>
 #include <boost/thread/thread.hpp>
 #include <boost/thread/shared_mutex.hpp>
 
+#include <memory>
 #include <list>
 
 // boost.thread_group has no timed join
@@ -25,7 +25,7 @@ namespace lv
 {
 	class ThreadGroup
 	{
-		typedef boost::shared_ptr<boost::thread>	ThreadPtr;
+		typedef std::shared_ptr<boost::thread>	ThreadPtr;
 
 		std::list<ThreadPtr>	threads_;
 

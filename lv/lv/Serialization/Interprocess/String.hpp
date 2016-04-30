@@ -22,49 +22,29 @@ namespace boost { namespace serialization {
 	template<class Archive, class C, class Tr, class Ax>
 	void save(Archive & ar, interprocess::basic_string<C, Tr, Ax> const & t, unsigned int)
 	{
-		boost::serialization::stl::save_collection(ar, t);
-	}
+		collection_size_type const count(t.size());
+		ar << BOOST_SERIALIZATION_NVP(count);
 
-	namespace stl
-	{
-		template<class Archive, class C, class Tr, class Ax>
-		struct archive_input_seq<Archive, interprocess::basic_string<C, Tr, Ax> >
+		if (! t.empty())
 		{
-			typedef interprocess::basic_string<C, Tr, Ax>	container_type;
-			typedef typename container_type::iterator		iterator;
-
-			inline iterator operator()(Archive & ar, container_type & s, unsigned int v, iterator hint)
-			{
-				typedef typename container_type::value_type type;
-
-				detail::stack_construct<Archive, type> t(ar, v);
-				ar >> boost::serialization::make_nvp("item", t.reference());
-				s.push_back(t.reference());
-
-				// ar.reset_object_address(& s.back() , & t.reference());	// removed. interprocess.string has not 'back' method
-
-				return hint;
-			}
-		};
+			ar << make_array(t.data(), t.size());
+		}
 	}
-	
 
 	template<class Archive, class C, class Tr, class Ax>
 	void load(Archive & ar, interprocess::basic_string<C, Tr, Ax> & t, unsigned int)
 	{
-		boost::serialization::stl::load_collection<
-			Archive,
-			interprocess::basic_string<C, Tr, Ax>,
-			boost::serialization::stl::archive_input_seq<
-				Archive,
-				interprocess::basic_string<C, Tr, Ax>
-			>,
-			boost::serialization::stl::reserve_imp<
-				interprocess::basic_string<C, Tr, Ax>
-			>
-		>(ar, t);
-	}
+		collection_size_type count(t.size());
+		ar >> BOOST_SERIALIZATION_NVP(count);
+		t.resize(count);
 
+		if (! t.empty())
+		{
+			// TODO: t.data(): <b>Requires< / b>: The program shall not alter any of the values stored in the character array.
+			// So it may be wrong here.
+			ar >> make_array(const_cast<C *>(t.data()), t.size());
+		}
+	}
 
 	template<class Archive, class C, class Tr, class Ax>
 	void serialize(Archive & ar, interprocess::basic_string<C, Tr, Ax> & t, unsigned int version)

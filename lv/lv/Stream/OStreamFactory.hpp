@@ -26,7 +26,7 @@ namespace lv
 		typedef boost::iostreams::stream<boost::iostreams::back_insert_device<Buffer> > ostream_type;
 		typedef detail::StreamFactory<ostream_type>	factory_type;
 
-		boost::shared_ptr<factory_type>	factory_;
+		std::shared_ptr<factory_type>	factory_;
 
 	public:
 
@@ -38,7 +38,7 @@ namespace lv
 
 		OStreamPtr	open(Buffer & buf, std::ios_base::iostate except = std::ios_base::badbit | std::ios_base::failbit)
 		{
-			boost::shared_ptr<ostream_type> os = factory_->get();
+			std::shared_ptr<ostream_type> os = factory_->get();
 
 			os->open(boost::iostreams::back_inserter(buf));
 			os->exceptions(except);

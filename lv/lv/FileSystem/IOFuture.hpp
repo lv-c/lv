@@ -17,7 +17,7 @@ namespace lv
 {
 	class IOFuture : public boost::unique_future<void>, boost::equality_comparable<IOFuture>
 	{
-		boost::shared_ptr<std::string const>	file_;
+		std::shared_ptr<std::string const>	file_;
 		BufferPtr	buffer_;
 
 	public:

@@ -16,10 +16,11 @@
 #include <lv/Concurrent/Fwd.hpp>
 
 #include <boost/asio/io_service.hpp>
-#include <boost/shared_ptr.hpp>
 #include <boost/function.hpp>
 
 #include <string>
+#include <memory>
+
 
 namespace lv
 {
@@ -27,15 +28,15 @@ namespace lv
 	{
 	public:
 
-		typedef boost::shared_ptr<boost::asio::io_service>		ServicePtr;
+		typedef std::shared_ptr<boost::asio::io_service>		ServicePtr;
 
 		typedef boost::function<void(std::string const &, std::exception const &)>	ExceptionHandler;
 
 	private:
 
-		typedef boost::weak_ptr<boost::asio::io_service>	WeakServicePtr;
+		typedef std::weak_ptr<boost::asio::io_service>	WeakServicePtr;
 
-		boost::shared_ptr<ThreadGroup>	threads_;
+		std::shared_ptr<ThreadGroup>	threads_;
 
 		bool	thread_name_enabled_;
 

@@ -13,12 +13,13 @@
 
 #include <lv/LuaArchive/Fwd.hpp>
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
+
 
 namespace lv { namespace lua { namespace archive {
 
 	template<typename T>
-	void	save(std::ostream & os, boost::shared_ptr<T> const & v, size_t level)
+	void	save(std::ostream & os, std::shared_ptr<T> const & v, size_t level)
 	{
 		if (v)
 		{
@@ -31,7 +32,7 @@ namespace lv { namespace lua { namespace archive {
 	}
 
 	template<typename T>
-	void	load(luabind::object const & obj, boost::shared_ptr<T> & v)
+	void	load(luabind::object const & obj, std::shared_ptr<T> & v)
 	{
 		if (luabind::type(obj) == LUA_TNIL)
 		{
@@ -48,7 +49,7 @@ namespace lv { namespace lua { namespace archive {
 	}
 
 	template<typename T>
-	void	load(Parser & parser, boost::shared_ptr<T> & v)
+	void	load(Parser & parser, std::shared_ptr<T> & v)
 	{
 		if (parser.read_if("nil"))
 		{

@@ -19,7 +19,7 @@ namespace lv { namespace net {
 		, use_proxy_(false)
 		, status_(None)
 	{
-		BOOST_ASSERT(boost::dynamic_pointer_cast<Socks5ClientContext>(context));
+		BOOST_ASSERT(std::dynamic_pointer_cast<Socks5ClientContext>(context));
 	}
 
 	void Socks5ClientSession::connect(std::string const & ip, std::string const & port,
@@ -32,7 +32,7 @@ namespace lv { namespace net {
 		port_ = port;
 
 		std::string socks_ip, socks_port;
-		boost::dynamic_pointer_cast<Socks5ClientContext>(context_)->get_proxy(socks_ip, socks_port);
+		std::dynamic_pointer_cast<Socks5ClientContext>(context_)->get_proxy(socks_ip, socks_port);
 
 		use_proxy_ = (! socks_ip.empty());
 
@@ -79,7 +79,7 @@ namespace lv { namespace net {
 		}
 		else
 		{
-			bool auth = boost::dynamic_pointer_cast<Socks5ClientContext>(context_)->has_auth();
+			bool auth = std::dynamic_pointer_cast<Socks5ClientContext>(context_)->has_auth();
 			uint8 const methods_num = 1;
 
 			status_ = MethodSelect;
@@ -166,7 +166,7 @@ namespace lv { namespace net {
 
 		if (method == Socks5::UserPassword)
 		{
-			boost::shared_ptr<Socks5ClientContext> s5_context = boost::dynamic_pointer_cast<Socks5ClientContext>(context_);
+			std::shared_ptr<Socks5ClientContext> s5_context = std::dynamic_pointer_cast<Socks5ClientContext>(context_);
 			std::string user, password;
 			s5_context->get_auth(user, password);
 

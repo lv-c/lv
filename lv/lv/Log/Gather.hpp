@@ -11,16 +11,17 @@
 #ifndef LV_LOG_GATHER_HPP
 #define LV_LOG_GATHER_HPP
 
-#include <iostream>
-#include <list>
-
-#include <boost/function.hpp>
-#include <boost/shared_ptr.hpp>
-#include <boost/thread/mutex.hpp>
-
 #include <lv/Log/Fwd.hpp>
 #include <lv/Log/Level.hpp>
 #include <lv/Foreach.hpp>
+
+#include <boost/function.hpp>
+#include <boost/thread/mutex.hpp>
+
+#include <iostream>
+#include <list>
+#include <memory>
+
 
 namespace lv { namespace log {
 

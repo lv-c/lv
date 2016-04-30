@@ -49,7 +49,7 @@ namespace lv { namespace flow {
 
 	class Connection	
 	{
-		boost::weak_ptr<detail::ConnectionImpl>	impl_;
+		std::weak_ptr<detail::ConnectionImpl>	impl_;
 
 	public:
 
@@ -63,7 +63,7 @@ namespace lv { namespace flow {
 		 */
 		void	disconnect()
 		{
-			boost::shared_ptr<detail::ConnectionImpl> p = impl_.lock();
+			std::shared_ptr<detail::ConnectionImpl> p = impl_.lock();
 			if (p)
 			{
 				p->disconnect();
@@ -72,14 +72,14 @@ namespace lv { namespace flow {
 
 		bool	connected()
 		{
-			return impl_.lock();
+			return bool(impl_.lock());
 		}
 
 	private:
 
 		template<template<class> class, class, class> friend class DataFlow;
 
-		Connection(boost::shared_ptr<detail::ConnectionImpl> impl)
+		Connection(std::shared_ptr<detail::ConnectionImpl> impl)
 			: impl_(impl)
 		{
 		}

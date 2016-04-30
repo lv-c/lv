@@ -186,7 +186,7 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 	string mapping_key = "\\h'e\r\nll\to";
 	mapping.insert(std::make_pair(mapping_key, 1));
 
-	boost::array<string, 3> arr = { "a", "bc" };
+	array<string, 3> arr = { "a", "bc" };
 
 	boost::assign::push_back(vertex.points) (10, 20) (50, 60);
 	boost::assign::insert(vertex.int_map) (Point(5, 6), 2) (Point(8, 9), 3);
@@ -203,7 +203,7 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 
 	tree2.insert(str1, "hex");
 	tree2.insert(str2, "xyy");
-	tree2.insert(str3, boost::shared_ptr<string>());
+	tree2.insert(str3, shared_ptr<string>());
 
 	oa << boost::serialization::make_nvp("vertex", vertex) 
 		<< boost::serialization::make_nvp("number", num)
@@ -280,7 +280,7 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 		DSTree<char, int> new_tree;
 		DSTree<string, string> new_tree2;
 		deque<int> new_que;
-		boost::array<string, 3> new_arr;
+		array<string, 3> new_arr;
 		map<int, int> que_to_map;
 		Mapping<string, int> new_mapping;
 
@@ -318,7 +318,7 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 		deque<int> new_que;
 		map<int, int> que_to_map;
 		Mapping<string, int> new_mapping;
-		boost::array<string, 3> new_arr;
+		array<string, 3> new_arr;
 
 		ia >> boost::serialization::make_nvp("vertex", new_vertex) 
 			>> boost::serialization::make_nvp("number", new_num)

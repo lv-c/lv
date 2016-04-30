@@ -18,11 +18,11 @@
 #include <lv/Foreach.hpp>
 
 #include <boost/thread/mutex.hpp>
-#include <boost/enable_shared_from_this.hpp>
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
 
 #include <vector>
+#include <atomic>
 
 
 namespace lv
@@ -39,7 +39,7 @@ namespace lv
 
 
 	template<typename T>
-	class Factory : public boost::enable_shared_from_this<Factory<T> >
+	class Factory : public std::enable_shared_from_this<Factory<T> >
 	{
 	protected:
 
@@ -51,9 +51,9 @@ namespace lv
 		typedef boost::function<T*()>	creator_type;
 		creator_type	creator_;
 
-		static volatile long	total_num_;
+		static std::atomic<int>	total_num_;
 
-		static volatile long	current_num_;
+		static std::atomic<int>	current_num_;
 	
 	public:
 
@@ -62,7 +62,7 @@ namespace lv
 		{
 		}
 
-		typedef boost::shared_ptr<T>	shared_pointer;
+		typedef std::shared_ptr<T>	shared_pointer;
 
 		virtual	shared_pointer	get()
 		{
@@ -74,13 +74,13 @@ namespace lv
 				obj = objects_.back();
 				objects_.pop_back();
 
-				::InterlockedDecrement(& current_num_);
+				current_num_--;
 			}
 			else
 			{
 				obj = creator_();
 
-				::InterlockedIncrement(& total_num_);
+				total_num_++;
 			}
 
 			post_process(*obj);
@@ -124,15 +124,15 @@ namespace lv
 
 			objects_.push_back(obj);
 
-			::InterlockedIncrement(& current_num_);
+			current_num_++;
 		}
 	};
 
 	template<typename T>
-	volatile long Factory<T>::total_num_ = 0;
+	std::atomic<int> Factory<T>::total_num_ = 0;
 
 	template<typename T>
-	volatile long Factory<T>::current_num_ = 0;
+	std::atomic<int> Factory<T>::current_num_ = 0;
 }
 
 #endif

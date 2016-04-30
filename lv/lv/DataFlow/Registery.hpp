@@ -40,7 +40,7 @@ namespace lv { namespace flow {
 		{
 		}
 
-		virtual char const * what() const
+		virtual char const * what() const noexcept
 		{
 			return msg_.c_str();
 		}

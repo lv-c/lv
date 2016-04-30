@@ -110,8 +110,8 @@ void test_net_impl()
 	asio::io_service service;
 
 	// 
-	boost::shared_ptr<SSLContext> server_context(new SSLContext(BufferManagerPtr(new SimpleBufferManager(1024)), service));
-	boost::shared_ptr<SSLContext> client_context(new SSLContext(BufferManagerPtr(new SimpleBufferManager(1024)), service));
+	shared_ptr<SSLContext> server_context(new SSLContext(BufferManagerPtr(new SimpleBufferManager(1024)), service));
+	shared_ptr<SSLContext> client_context(new SSLContext(BufferManagerPtr(new SimpleBufferManager(1024)), service));
 
 	// server
 	server_type server(server_context, SessionCreator<server_session_type>());
@@ -119,7 +119,7 @@ void test_net_impl()
 	server.start(5555);
 
 	// client. We must use shared_ptr here.
-	boost::shared_ptr<client_session_type> client(new client_session_type(client_context));
+	shared_ptr<client_session_type> client(new client_session_type(client_context));
 	client->connect("127.0.0.1", "5555");
 
 	boost::mutex::scoped_lock lock(g_mutex);

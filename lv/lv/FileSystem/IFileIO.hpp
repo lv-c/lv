@@ -14,11 +14,10 @@
 #include <lv/FileSystem/Fwd.hpp>
 #include <lv/FileSystem/IOFuture.hpp>
 
-#include <boost/enable_shared_from_this.hpp>
 
 namespace lv
 {
-	class IFileIO : public boost::enable_shared_from_this<IFileIO>
+	class IFileIO : public std::enable_shared_from_this<IFileIO>
 	{
 
 		std::string		working_dir_;

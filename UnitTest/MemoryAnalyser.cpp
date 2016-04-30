@@ -1,5 +1,6 @@
 #include "MemoryAnalyser.h"
 #include <cassert>
+#include <algorithm>
 
 #include <Windows.h>
 #include "detours.h"

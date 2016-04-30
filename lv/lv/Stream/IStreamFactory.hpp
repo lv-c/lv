@@ -25,7 +25,7 @@ namespace lv
 		typedef boost::iostreams::stream<boost::iostreams::array_source> istream_type;
 		typedef detail::StreamFactory<istream_type>	factory_type;
 
-		boost::shared_ptr<factory_type>	factory_;
+		std::shared_ptr<factory_type>	factory_;
 
 	public:
 
@@ -37,7 +37,7 @@ namespace lv
 
 		IStreamPtr	open(ConstBufferRef buf, std::ios_base::iostate except = std::ios_base::badbit | std::ios_base::failbit)
 		{
-			boost::shared_ptr<istream_type> is = factory_->get();
+			std::shared_ptr<istream_type> is = factory_->get();
 
 			is->open(buf.data(), buf.size());
 			is->exceptions(except);

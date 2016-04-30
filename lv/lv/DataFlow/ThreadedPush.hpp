@@ -76,7 +76,7 @@ namespace lv { namespace flow {
 	class ThreadedPush : public PushPolicyBase<T>
 	{
 		// Make this class copyable
-		boost::shared_ptr<detail::ThreadedPushImpl<T> > impl_;
+		std::shared_ptr<detail::ThreadedPushImpl<T> > impl_;
 
 	public:
 

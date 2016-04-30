@@ -39,7 +39,7 @@ namespace boost { namespace serialization {
 
 		BOOST_FOREACH(tree_type::value_type const & v, tree)
 		{
-			bool has_data = v.data();
+			bool has_data(v.data());
 			ar & v.key() & has_data;
 
 			if (has_data)

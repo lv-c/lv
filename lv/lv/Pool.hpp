@@ -22,7 +22,9 @@
 #include <boost/pool/singleton_pool.hpp>
 #include <boost/utility/in_place_factory.hpp>
 #include <boost/utility/typed_in_place_factory.hpp>
-#include <boost/shared_ptr.hpp>
+
+#include <memory>
+
 
 namespace lv { namespace pool {
 
@@ -59,7 +61,7 @@ namespace lv { namespace pool {
 
 	// use boost::ref if the constructor needs a non-const reference argument
 	template<typename T, typename Expr>
-	boost::shared_ptr<T>	alloc(Expr const & expr)
+	std::shared_ptr<T>	alloc(Expr const & expr)
 	{
 		typedef boost::singleton_pool<PoolTag, sizeof(T)>	pool_type;
 
@@ -76,11 +78,11 @@ namespace lv { namespace pool {
 			throw;
 		}
 
-		return boost::shared_ptr<T>(addr, &detail::dealloc<T>);
+		return std::shared_ptr<T>(addr, &detail::dealloc<T>);
 	}
 
 	template<typename T>
-	boost::shared_ptr<T>	alloc()
+	std::shared_ptr<T>	alloc()
 	{
 		return alloc<T>(boost::in_place_factory0());
 	}

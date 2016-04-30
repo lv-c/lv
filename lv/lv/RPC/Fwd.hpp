@@ -12,7 +12,8 @@
 #define LV_RPC_FWD_HPP
 
 #include <boost/fusion/include/map_fwd.hpp>
-#include <boost/shared_ptr.hpp>
+
+#include <memory>
 
 
 namespace lv { namespace rpc {

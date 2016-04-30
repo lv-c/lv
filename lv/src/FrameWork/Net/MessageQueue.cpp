@@ -75,7 +75,7 @@ namespace lv { namespace net {
 
 		BufferPtr	msg_to_send()
 		{
-			double resend_interval = boost::dynamic_pointer_cast<MessageQueueContext>(context_)->resend_time();
+			double resend_interval = std::dynamic_pointer_cast<MessageQueueContext>(context_)->resend_time();
 
 			BOOST_FOREACH(Message & msg, messages_)
 			{
@@ -185,7 +185,7 @@ namespace lv { namespace net {
 		BufferPtr	msg_to_receive()
 		{
 			BufferPtr ret;
-			bool preserve_order = boost::dynamic_pointer_cast<MessageQueueContext>(context_)->preserve_order();
+			bool preserve_order = std::dynamic_pointer_cast<MessageQueueContext>(context_)->preserve_order();
 
 			BOOST_FOREACH(Message & msg, messages_)
 			{

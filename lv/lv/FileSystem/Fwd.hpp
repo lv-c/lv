@@ -11,12 +11,13 @@
 #ifndef LV_FILESYSTEM_HPP
 #define LV_FILESYSTEM_HPP
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
+
 
 namespace lv
 {
 	class IFileIO;
-	typedef boost::shared_ptr<IFileIO>	IFileIOPtr;
+	typedef std::shared_ptr<IFileIO>	IFileIOPtr;
 
 	class RawFileReader;
 	class RawFileWriter;

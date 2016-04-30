@@ -47,6 +47,7 @@ namespace lv { namespace lua {
 	void bind_vector(lua_State * L, char const* name)
 	{
 		typedef std::vector<T>	type;
+		typedef typename type::value_type		value_type;
 		typedef typename type::const_reference	const_reference;
 		typedef typename type::reference		reference;
 		typedef typename type::size_type		size_type;
@@ -64,7 +65,7 @@ namespace lv { namespace lua {
 			.def("at", (const_reference(type::*)(size_type) const)&type::at)
 			.def("front", (const_reference(type::*)() const)&type::front)
 			.def("back", (const_reference(type::*)() const)&type::back)
-			.def("push_back", &type::push_back)
+			.def("push_back", (void(type::*)(value_type const &))&type::push_back)
 			.def("pop_back", &type::pop_back)
 		;
 

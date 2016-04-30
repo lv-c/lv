@@ -52,7 +52,7 @@ public:
 		BOOST_CHECK(sendable_);
 
 		// unstable network
-		if(die_(0, 100) < 50)
+		if (die_(0, 100) < 50)
 		{
 			// make a copy because buf will be modified.
 			callback_(BufferPtr(new Buffer(*buf)));
@@ -85,7 +85,7 @@ public:
 	{
 		buffers_.push_back(buf);
 
-		if(buffers_.size() >= num_to_receive_)
+		if (buffers_.size() >= num_to_receive_)
 		{
 			throw TaskFinished();
 		}
@@ -115,7 +115,7 @@ BOOST_AUTO_TEST_CASE(test_message_queue)
 
 	Sender client_sender, server_sender;
 
-	boost::shared_ptr<MessageQueueContext> ctx(new MessageQueueContext(BufferManagerPtr(new SimpleBufferManager(1024)), service, true));
+	std::shared_ptr<MessageQueueContext> ctx(new MessageQueueContext(BufferManagerPtr(new SimpleBufferManager(1024)), service, true));
 	ctx->set_resend_time(0.02);
 
 	MessageQueue client(ctx, lv::shared_from_object(client_sender), MessageQueue::Receiver());
@@ -140,7 +140,7 @@ BOOST_AUTO_TEST_CASE(test_message_queue)
 
 	BOOST_CHECK_EQUAL(to_send.size(), received.size());
 
-	for(size_t i = 0; i < to_send.size(); ++i)
+	for (size_t i = 0; i < to_send.size(); ++i)
 	{
 		BOOST_CHECK_EQUAL(to_send[i]->size(), received[i]->size());
 		BOOST_CHECK(std::equal(to_send[i]->begin(), to_send[i]->end(), received[i]->begin()));

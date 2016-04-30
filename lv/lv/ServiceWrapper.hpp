@@ -15,7 +15,8 @@
 #include <boost/asio/io_service.hpp>
 #include <boost/asio/strand.hpp>
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
+
 
 namespace lv
 {

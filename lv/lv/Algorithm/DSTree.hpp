@@ -14,17 +14,17 @@
 #include <lv/Foreach.hpp>
 
 #include <boost/ptr_container/ptr_vector.hpp>
-#include <boost/shared_ptr.hpp>
 #include <boost/operators.hpp>
 
 #include <functional>
+#include <memory>
 
 namespace lv
 {
 	template<class Key, class Data, class Pred = std::less<Key> >
 	class DSTree : boost::equality_comparable<DSTree<Key, Data, Pred> >
 	{
-		typedef boost::shared_ptr<Data>	DataPtr;
+		typedef std::shared_ptr<Data>	DataPtr;
 
 		Key			key_;
 		DataPtr		data_;
@@ -76,8 +76,8 @@ namespace lv
 
 		typedef typename children_type::size_type	size_type;
 
-		typedef boost::shared_ptr<Data>			data_pointer;
-		typedef boost::shared_ptr<Data const>	const_data_pointer;
+		typedef std::shared_ptr<Data>			data_pointer;
+		typedef std::shared_ptr<Data const>	const_data_pointer;
 
 
 		explicit DSTree(Pred const & pred = Pred())

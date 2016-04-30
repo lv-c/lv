@@ -50,7 +50,7 @@ namespace lv
 		size_t	init_capacity_;
 
 		typedef Factory<Buffer>	factory_type;
-		boost::shared_ptr<factory_type>	factory_;
+		std::shared_ptr<factory_type>	factory_;
 
 	public:
 

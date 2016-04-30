@@ -24,7 +24,7 @@ namespace lv
 
 	class MyZipReader : public IFileIO
 	{
-		typedef boost::shared_ptr<MyUnzip>	UnzipPtr;
+		typedef std::shared_ptr<MyUnzip>	UnzipPtr;
 		typedef std::map<std::string, UnzipPtr>	UnzipMap;
 
 		UnzipMap	unzip_;

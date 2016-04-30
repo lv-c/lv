@@ -13,16 +13,16 @@
 
 #include <lv/Luabind/Utility.hpp>
 
-#include <boost/array.hpp>
-
 #include <luabind/class.hpp>
+
+#include <array>
 
 namespace lv { namespace lua {
 
 	template<class T, size_t N>
 	void bind_array(lua_State * L, char const* name)
 	{
-		typedef boost::array<T, N>	type;
+		typedef std::array<T, N>	type;
 		typedef typename type::const_reference	const_reference;
 		typedef typename type::reference		reference;
 		typedef typename type::size_type		size_type;

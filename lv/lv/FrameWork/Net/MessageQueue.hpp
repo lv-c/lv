@@ -43,8 +43,8 @@ namespace lv { namespace net {
 
 	private:
 
-		boost::shared_ptr<SendQueue>	send_queue_;
-		boost::shared_ptr<ReceiveQueue>	receive_queue_;
+		std::shared_ptr<SendQueue>	send_queue_;
+		std::shared_ptr<ReceiveQueue>	receive_queue_;
 
 		ContextPtr	context_;
 
@@ -57,7 +57,7 @@ namespace lv { namespace net {
 
 		Timer	timer_;
 
-		boost::shared_ptr<DeadlineTimer>	deadline_timer_;
+		std::shared_ptr<DeadlineTimer>	deadline_timer_;
 
 	public:
 

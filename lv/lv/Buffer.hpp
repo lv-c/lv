@@ -11,19 +11,20 @@
 #ifndef LV_BUFFER_HPP
 #define LV_BUFFER_HPP
 
-#include <vector>
-
-#include <boost/shared_ptr.hpp>
 #include <boost/assert.hpp>
 #include <boost/range.hpp>
 #include <boost/type_traits/is_arithmetic.hpp>
 #include <boost/utility/enable_if.hpp>
 
+#include <vector>
+#include <memory>
+
+
 namespace lv
 {
 	typedef std::vector<char>	Buffer;
-	typedef boost::shared_ptr<Buffer>	BufferPtr;
-	typedef boost::shared_ptr<Buffer const>	ConstBufferPtr;
+	typedef std::shared_ptr<Buffer>	BufferPtr;
+	typedef std::shared_ptr<Buffer const>	ConstBufferPtr;
 
 
 	/// these two classes are compatible with boost.range and boost.BOOST_FOREACH
@@ -42,7 +43,7 @@ namespace lv
 
 		template<typename> friend class ConstBufferRefT;
 
-		boost::shared_ptr<std::vector<T> >	holder_;
+		std::shared_ptr<std::vector<T> >	holder_;
 
 	public:
 
@@ -77,7 +78,7 @@ namespace lv
 		{
 		}
 
-		BufferRefT(boost::shared_ptr<std::vector<T> > & buf_ptr)
+		BufferRefT(std::shared_ptr<std::vector<T> > & buf_ptr)
 			: holder_(buf_ptr)
 			, data_(buf_ptr->empty() ? NULL : &(*buf_ptr)[0])
 			, size_(buf_ptr->size())
@@ -146,7 +147,7 @@ namespace lv
 		T const * data_;
 		size_t	size_;
 
-		boost::shared_ptr<std::vector<T> >	holder_;
+		std::shared_ptr<std::vector<T> >	holder_;
 
 	public:
 		typedef T const & const_reference;
@@ -181,7 +182,7 @@ namespace lv
 		{
 		}
 
-		ConstBufferRefT(boost::shared_ptr<std::vector<T> > const & buf_ptr)
+		ConstBufferRefT(std::shared_ptr<std::vector<T> > const & buf_ptr)
 			: holder_(buf_ptr)
 			, data_(buf_ptr->empty() ? NULL : &(*buf_ptr)[0])
 			, size_(buf_ptr->size())

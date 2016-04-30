@@ -15,7 +15,6 @@
 #include <lv/FrameWork/Net/Fwd.hpp>
 #include <lv/FrameWork/Net/Event.hpp>
 
-#include <boost/enable_shared_from_this.hpp>
 #include <boost/thread/mutex.hpp>
 
 #include <list>
@@ -25,7 +24,7 @@ namespace lv { namespace net {
 
 	char const *	error_string(ErrorType type);
 
-	class SessionBase : public boost::enable_shared_from_this<SessionBase>
+	class SessionBase : public std::enable_shared_from_this<SessionBase>
 	{
 		ErrorEvent		error_event_;
 		ConnectEvent	connect_event_;

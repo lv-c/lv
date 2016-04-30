@@ -41,7 +41,7 @@ namespace lv { namespace flow {
 
 		struct ConnectionSlotPair
 		{
-			boost::shared_ptr<detail::ConnectionImpl>	conn;
+			std::shared_ptr<detail::ConnectionImpl>	conn;
 			slot_type	slot;
 		};
 

@@ -32,9 +32,9 @@ namespace lv
 
 	/// com_ptr (windows only)
 	template<typename T>
-	boost::shared_ptr<T>	com_ptr(T * p)
+	std::shared_ptr<T>	com_ptr(T * p)
 	{
-		return boost::shared_ptr<T>(p, boost::mem_fn(&T::Release));
+		return std::shared_ptr<T>(p, boost::mem_fn(&T::Release));
 	}
 }
 

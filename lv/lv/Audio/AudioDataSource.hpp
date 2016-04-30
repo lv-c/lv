@@ -11,11 +11,12 @@
 #ifndef LV_AUDIODATASOURCE_HPP
 #define LV_AUDIODATASOURCE_HPP
 
-#include <boost/shared_ptr.hpp>
-
 #include <lv/IntType.hpp>
 #include <lv/Buffer.hpp>
 #include <lv/Exception.hpp>
+
+#include <memory>
+
 
 namespace lv
 {
@@ -25,7 +26,7 @@ namespace lv
 
 	// fwd
 	class AudioDataSource;
-	typedef boost::shared_ptr<AudioDataSource>	AudioDataSourcePtr;
+	typedef std::shared_ptr<AudioDataSource>	AudioDataSourcePtr;
 
 	class AudioDataSource
 	{

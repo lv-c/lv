@@ -11,14 +11,14 @@
 #ifndef LV_SERIALIZATION_SHAREDPTR_HPP
 #define LV_SERIALIZATION_SHAREDPTR_HPP
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 
 namespace lv { namespace serialization {
 
 	template<class Archive, typename T>
-	void	save(Archive & ar, boost::shared_ptr<T> const & t)
+	void	save(Archive & ar, std::shared_ptr<T> const & t)
 	{
-		bool exist = t;
+		bool exist(t);
 		ar << exist;
 
 		if (exist)
@@ -28,7 +28,7 @@ namespace lv { namespace serialization {
 	}
 
 	template<class Archive, typename T>
-	void	load(Archive & ar, boost::shared_ptr<T> & t)
+	void	load(Archive & ar, std::shared_ptr<T> & t)
 	{
 		bool exist;
 		ar >> exist;

@@ -13,6 +13,7 @@
 
 #include <boost/optional/optional.hpp>
 #include <boost/thread/mutex.hpp>
+#include <boost/utility/in_place_factory.hpp>
 
 namespace lv
 {

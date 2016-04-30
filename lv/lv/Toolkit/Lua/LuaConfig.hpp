@@ -30,7 +30,7 @@ namespace lv { namespace lua {
 
 		IFileIOPtr	file_loader_;
 
-		boost::shared_ptr<LuaIArchive>	ia_;
+		std::shared_ptr<LuaIArchive>	ia_;
 
 	public:
 

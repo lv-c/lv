@@ -38,7 +38,7 @@ namespace lv { namespace net {
 		sink_type	sink_;
 
 		typedef flow::Source<key_type>	source_type;
-		boost::shared_ptr<source_type>	source_;
+		std::shared_ptr<source_type>	source_;
 
 	public:
 

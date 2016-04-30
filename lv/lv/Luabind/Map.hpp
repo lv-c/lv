@@ -36,7 +36,7 @@ namespace lv { namespace lua {
 				.def("size", &type::size)
 				.def("empty", &type::empty)
 				.def("clear", &type::clear)
-				.def("count", &type::count)
+				.def("count", (size_type(type::*)(key_type const &) const) &type::count)
 				.def("begin", (iterator(type::*)()) &type::begin)
 				.def("_end", (iterator(type::*)()) &type::end)
 				.def("insert", (std::pair<iterator, bool>(type::*)(value_type const &)) &type::insert)

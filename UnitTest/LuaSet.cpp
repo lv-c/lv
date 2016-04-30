@@ -20,11 +20,11 @@
 
 #ifdef _DEBUG
 #pragma comment(lib, "libluabindd.lib")
-#pragma comment(lib, "libluad.lib")
 #else
 #pragma comment(lib, "libluabind.lib")
-#pragma comment(lib, "liblua.lib")
 #endif
+
+#pragma comment(lib, "liblua.lib")
 
 int error_handler(lua_State* state)
 {

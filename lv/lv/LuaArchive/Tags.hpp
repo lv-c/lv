@@ -49,6 +49,11 @@ namespace lv { namespace lua { namespace archive {
 	};
 
 	template<int N>
+	struct is_primitive<char[N]> : boost::mpl::true_
+	{
+	};
+
+	template<int N>
 	struct is_primitive<char const [N]> : boost::mpl::true_
 	{
 	};

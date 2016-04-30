@@ -11,15 +11,15 @@
 #ifndef LV_LOG_HPP
 #define LV_LOG_HPP
 
-#include <set>
-#include <iostream>
-
-#include <boost/thread/mutex.hpp>
-#include <boost/shared_ptr.hpp>
-#include <boost/noncopyable.hpp>
-
 #include <lv/Log/Gather.hpp>
 #include <lv/Log/Formatter.hpp>
+
+#include <boost/thread/mutex.hpp>
+#include <boost/noncopyable.hpp>
+
+#include <set>
+#include <iostream>
+#include <memory>
 
 
 namespace lv { namespace log {
@@ -140,7 +140,7 @@ namespace lv { namespace log {
 		{
 			if (enabled_)
 			{
-				BOOST_FOREACH(gather_ptr & gather, this->gathers_)
+				BOOST_FOREACH(gather_ptr gather, this->gathers_)
 				{
 					if (gather->output(lvl_))
 					{
@@ -159,7 +159,7 @@ namespace lv { namespace log {
 
 			if (enabled_)
 			{
-				BOOST_FOREACH(gather_ptr & gather, this->gathers_)
+				BOOST_FOREACH(gather_ptr gather, this->gathers_)
 				{
 					if (gather->output(lvl_))
 					{
@@ -173,7 +173,7 @@ namespace lv { namespace log {
 		{
 			if (enabled_)
 			{
-				BOOST_FOREACH(gather_ptr & gather, this->gathers_)
+				BOOST_FOREACH(gather_ptr gather, this->gathers_)
 				{
 					if (gather->output(lvl_))
 					{

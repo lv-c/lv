@@ -44,8 +44,8 @@ namespace lv { namespace flow {
 
 		push_policy_type	push_policy_;
 
-		typedef boost::shared_ptr<IStreamFactory>	IStreamFactoryPtr;
-		typedef boost::weak_ptr<IStreamFactory>		WeakIStreamFactoryPtr;
+		typedef std::shared_ptr<IStreamFactory>	IStreamFactoryPtr;
+		typedef std::weak_ptr<IStreamFactory>		WeakIStreamFactoryPtr;
 
 		IStreamFactoryPtr	istream_factory_;
 

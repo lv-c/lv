@@ -66,7 +66,7 @@ namespace lv { namespace rpc {
 
 		typedef typename Protocol::request_id_type request_id_type;
 
-		typedef boost::shared_ptr<detail::IPromise<ArchivePair> >	PromiseBasePtr;
+		typedef std::shared_ptr<detail::IPromise<ArchivePair> >	PromiseBasePtr;
 		typedef std::map<request_id_type, PromiseBasePtr>	promise_map;
 
 		promise_map		promises_;
@@ -85,7 +85,7 @@ namespace lv { namespace rpc {
 
 			BufferPtr	buffer_;
 
-			boost::shared_ptr<oarchive_type>	oa_;
+			std::shared_ptr<oarchive_type>	oa_;
 
 			OStreamPtr	raw_os_;
 
@@ -93,7 +93,7 @@ namespace lv { namespace rpc {
 
 		public:
 
-			PrivateHandler(Client & client, BufferPtr buf, boost::shared_ptr<oarchive_type> oa, OStreamPtr raw_os, request_id_type request_id)
+			PrivateHandler(Client & client, BufferPtr buf, std::shared_ptr<oarchive_type> oa, OStreamPtr raw_os, request_id_type request_id)
 				: client_(client)
 				, buffer_(buf)
 				, oa_(oa)
@@ -294,7 +294,7 @@ namespace lv { namespace rpc {
 		}
 
 
-		void	send(BufferPtr & buf, boost::shared_ptr<oarchive_type> oa, OStreamPtr raw_os, request_id_type request_id, Protocol::options::type option)
+		void	send(BufferPtr & buf, std::shared_ptr<oarchive_type> oa, OStreamPtr raw_os, request_id_type request_id, Protocol::options::type option)
 		{
 			(*oa) << option;
 			// sends the request id only when an acknowledgment or a return value is required

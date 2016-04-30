@@ -26,13 +26,13 @@ namespace lv { namespace net {
 	};
 
 	class Context;
-	typedef boost::shared_ptr<Context>	ContextPtr;
+	typedef std::shared_ptr<Context>	ContextPtr;
 
 	class SocketHolder;
-	typedef boost::shared_ptr<SocketHolder>	SocketHolderPtr;
+	typedef std::shared_ptr<SocketHolder>	SocketHolderPtr;
 
 	class SessionBase;
-	typedef boost::shared_ptr<SessionBase>	SessionPtr;
+	typedef std::shared_ptr<SessionBase>	SessionPtr;
 
 	class TcpSession;
 
@@ -40,7 +40,7 @@ namespace lv { namespace net {
 	class FlowSession;
 
 	class ISender;
-	typedef boost::shared_ptr<ISender>	ISenderPtr;
+	typedef std::shared_ptr<ISender>	ISenderPtr;
 
 	class ServerBase;
 

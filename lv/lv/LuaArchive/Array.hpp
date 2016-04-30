@@ -15,21 +15,21 @@
 #include <lv/Exception.hpp>
 #include <lv/Ensure.hpp>
 
-#include <boost/array.hpp>
+#include <array>
 
 namespace lv { namespace lua { namespace archive {
 
 	DEFINE_EXCEPTION_MSG(ArraySizeTooShort, std::out_of_range)
 
 	template<typename T, size_t N>
-	void	save(std::ostream & os, boost::array<T, N> const & v, size_t level)
+	void	save(std::ostream & os, std::array<T, N> const & v, size_t level)
 	{
 		detail::save_range(os, v.begin(), v.end(), level);
 	}
 
 	/// @exception ArraySizeTooShort
 	template<typename T, size_t N>
-	void	load(luabind::object const & obj, boost::array<T, N> & v)
+	void	load(luabind::object const & obj, std::array<T, N> & v)
 	{
 		expect_obj_type(obj, LUA_TTABLE);
 
@@ -45,7 +45,7 @@ namespace lv { namespace lua { namespace archive {
 	}
 
 	template<typename T, size_t N>
-	void	load(Parser & parser, boost::array<T, N> & v)
+	void	load(Parser & parser, std::array<T, N> & v)
 	{
 		parser >> detail::symbol('{');
 

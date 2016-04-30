@@ -15,12 +15,12 @@
 #include <lv/Serialization/Interprocess/String.hpp>
 #include <lv/Serialization/SharedPtr.hpp>
 
-#include <boost/array.hpp>
 #include <boost/serialization/vector.hpp>
 #include <boost/serialization/string.hpp>
 
 #include <vector>
 #include <string>
+#include <array>
 
 using namespace std;
 using namespace lv;
@@ -81,12 +81,12 @@ BOOST_AUTO_TEST_CASE(test_serialization)
 
 	vector<int> int_vec(10, 20);
 	Test obj(20, "hh");
-	boost::array<int, 10> int_arr;
+	array<int, 10> int_arr;
 	int_arr.assign(20);
 	CheckVersion ver;
 	boost::interprocess::string	inter_str("inter");
-	boost::shared_ptr<int> empty_shared_ptr;
-	boost::shared_ptr<string> str_shared_ptr(new string("hello"));
+	shared_ptr<int> empty_shared_ptr;
+	shared_ptr<string> str_shared_ptr(new string("hello"));
 
 	oa << int(10) << str_vec << int_vec << obj << int_arr << ver << inter_str
 		<< empty_shared_ptr << str_shared_ptr;
@@ -98,11 +98,11 @@ BOOST_AUTO_TEST_CASE(test_serialization)
 	vector<string> new_str_vec;
 	vector<int> new_int_vec;
 	Test new_obj;
-	boost::array<int, 10> new_int_arr;
+	array<int, 10> new_int_arr;
 	CheckVersion new_ver;
 	boost::interprocess::string new_inter_str;
-	boost::shared_ptr<int> new_empty_shared_ptr;
-	boost::shared_ptr<string> new_str_shared_ptr(new string("hello"));
+	shared_ptr<int> new_empty_shared_ptr;
+	shared_ptr<string> new_str_shared_ptr(new string("hello"));
 
 	ia >> i >> new_str_vec >> new_int_vec >> new_obj >> new_int_arr >> new_ver >> new_inter_str
 		>> new_empty_shared_ptr >> new_str_shared_ptr;
