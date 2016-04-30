@@ -63,6 +63,7 @@
     <OutDir>..\..\..\bin\lv\</OutDir>
     <IntDir>..\..\..\build\UnitTest\msvc-14.0\release\</IntDir>
     <LinkIncremental>false</LinkIncremental>
+    <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseRuntimeStatic|Win32'">
     <OutDir>..\..\..\bin\lv\</OutDir>
@@ -115,10 +116,11 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <TargetMachine>MachineX86</TargetMachine>
-      <IgnoreSpecificDefaultLibraries>libcmt</IgnoreSpecificDefaultLibraries>
+      <IgnoreSpecificDefaultLibraries>libcmt.lib</IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>"$(TargetDir)\$(TargetName).exe" --result_code=no --report_level=no</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseRuntimeStatic|Win32'">

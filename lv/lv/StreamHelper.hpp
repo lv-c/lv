@@ -44,7 +44,7 @@ namespace lv
 				{
 					// std::showbase do not cooperate good with std::setw 
 
-					int width = os.width();
+					int width = static_cast<int>(os.width());
 
 					os << std::setw(0) << "0x" << std::setw(std::max(0, width - 2)) << std::noshowbase;
 				}

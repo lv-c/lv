@@ -11,7 +11,8 @@
 #ifndef LV_NET_FWD_HPP
 #define LV_NET_FWD_HPP
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
+
 
 namespace boost { namespace asio {} }
 
