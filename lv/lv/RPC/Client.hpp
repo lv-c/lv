@@ -33,7 +33,6 @@
 #include <boost/fusion/adapted/boost_tuple.hpp>
 
 #include <boost/assert.hpp>
-#include <boost/typeof/typeof.hpp>
 
 #include <map>
 
@@ -131,7 +130,7 @@ namespace lv { namespace rpc {
 				// if we call @a send first, @a on_receive might be called before 
 				// @a add_promise is called and InvalidRequestID may be thrown
 				typedef detail::ReturnPromise<Ret, ArchivePair>	promise_type;
-				BOOST_AUTO(promise, pool::alloc<promise_type>());
+				auto promise = pool::alloc<promise_type>();
 
 				client_.add_promise(request_id_, promise);
 
@@ -283,7 +282,7 @@ namespace lv { namespace rpc {
 			BufferPtr buf = this->get_buffer();
 
 			OStreamPtr raw_os = ostream_factory_.open(*buf);
-			BOOST_AUTO(oa, pool::alloc<oarchive_type>(boost::ref(*raw_os)));
+			auto oa = pool::alloc<oarchive_type>(boost::ref(*raw_os));
 
 			(*oa) << Protocol::header::call << id;
 			boost::fusion::for_each(args, Serialize(*oa));

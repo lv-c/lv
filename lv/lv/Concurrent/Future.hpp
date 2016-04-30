@@ -50,7 +50,7 @@ namespace lv
 		template<typename Slot>
 		boost::signals2::connection	connect(Slot const & slot)
 		{
-			BOOST_AUTO(p, promise_.lock());
+			auto p = promise_.lock();
 
 			if (p)
 			{

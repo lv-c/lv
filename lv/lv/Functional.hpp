@@ -23,7 +23,7 @@
 #include <boost/type_traits/remove_pointer.hpp>
 
 #include <boost/utility/enable_if.hpp>
-#include <boost/typeof/typeof.hpp>
+
 
 namespace lv
 {
@@ -59,7 +59,7 @@ namespace lv
 			typedef typename ft::function_type<
 				typename detail::RemoveSecond<
 					typename ft::components<
-						typename BOOST_TYPEOF(&T::operator ())
+						typename decltype(&T::operator ())
 					>::type
 				>::type
 			>::type type;
