@@ -153,11 +153,9 @@ namespace lv
 			template<typename C, typename Tr>
 			friend std::basic_ostream<C, Tr> & operator << (std::basic_ostream<C, Tr> & os, write_range_impl const & r)
 			{
-				typedef boost::range_value<Range>::type	type;
-
 				bool first = true;
 
-				BOOST_FOREACH(type const & v, r.range_)
+				for (auto const & v : r.range_)
 				{
 					if (! first)
 					{

@@ -342,7 +342,7 @@ namespace lv { namespace net {
 
 		if (dest_session_)
 		{
-			BOOST_FOREACH(boost::signals2::connection & conn, connections_)
+			for (auto & conn : connections_)
 			{
 				conn.disconnect();
 			}

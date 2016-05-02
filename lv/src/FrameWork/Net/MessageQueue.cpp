@@ -77,7 +77,7 @@ namespace lv { namespace net {
 		{
 			double resend_interval = std::dynamic_pointer_cast<MessageQueueContext>(context_)->resend_time();
 
-			BOOST_FOREACH(Message & msg, messages_)
+			for (Message & msg : messages_)
 			{
 				if (msg.buf)
 				{
@@ -115,7 +115,7 @@ namespace lv { namespace net {
 			next_id_ -= id_base_;
 			id_base_ = 0;
 
-			BOOST_FOREACH(Message & msg, messages_)
+			for (Message & msg : messages_)
 			{
 				msg.send_time = 0;
 			}
@@ -187,7 +187,7 @@ namespace lv { namespace net {
 			BufferPtr ret;
 			bool preserve_order = std::dynamic_pointer_cast<MessageQueueContext>(context_)->preserve_order();
 
-			BOOST_FOREACH(Message & msg, messages_)
+			for (Message & msg : messages_)
 			{
 				if (msg.buf)
 				{

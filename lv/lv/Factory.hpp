@@ -15,8 +15,6 @@
 /// hint : define BOOST_SP_USE_QUICK_ALLOCATOR in your program to increase the 
 ///		performance and make this class more valuable.
 
-#include <lv/Foreach.hpp>
-
 #include <boost/thread/mutex.hpp>
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
@@ -93,7 +91,7 @@ namespace lv
 		{
 			scoped_lock lock(mutex_);
 
-			BOOST_FOREACH(T * t, objects_)
+			for (T * t : objects_)
 			{
 				delete t;
 			}

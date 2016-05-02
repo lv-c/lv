@@ -1,7 +1,6 @@
 #include <lv/FileSystem/MyZipReader.hpp>
 #include <lv/FileSystem/RawFileReader.hpp>
 
-#include <lv/Foreach.hpp>
 #include <lv/MyZip.hpp>
 #include <lv/lvlib.hpp>
 
@@ -26,9 +25,9 @@ namespace lv
 	{
 		scoped_lock lock(mutex_);
 
-		BOOST_FOREACH(UnzipMap::value_type const & it, unzip_)
+		for (auto const & v : unzip_)
 		{
-			ZRESULT ret = it.second->close();
+			ZRESULT ret = v.second->close();
 			BOOST_ASSERT(ret == ZR_OK);
 		}
 		unzip_.clear();

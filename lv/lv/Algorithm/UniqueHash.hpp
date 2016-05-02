@@ -24,7 +24,6 @@
 #include <boost/utility/enable_if.hpp>
 
 #include <lv/IntType.hpp>
-#include <lv/Foreach.hpp>
 #include <lv/Exception.hpp>
 
 namespace lv { namespace unique_hash {
@@ -132,7 +131,7 @@ namespace lv { namespace unique_hash {
 		{
 			map_t map;
 			bool ok = true;
-			BOOST_FOREACH(value_t const & v, values)
+			for (value_t const & v : values)
 			{
 				Key key = hash<Key>(i, v);
 				map_t::iterator it = map.find(key);

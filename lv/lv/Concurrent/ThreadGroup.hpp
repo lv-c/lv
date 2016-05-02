@@ -11,8 +11,6 @@
 #ifndef LV_CONCURRENT_THREADGROUP_HPP
 #define LV_CONCURRENT_THREADGROUP_HPP
 
-#include <lv/Foreach.hpp>
-
 #include <boost/thread/thread.hpp>
 #include <boost/thread/shared_mutex.hpp>
 
@@ -48,7 +46,7 @@ namespace lv
 		{
 			boost::shared_lock<boost::shared_mutex> lock(mutex_);
 
-			BOOST_FOREACH(ThreadPtr v, threads_)
+			for (ThreadPtr v : threads_)
 			{
 				v->join();
 			}
@@ -61,7 +59,7 @@ namespace lv
 
 			boost::shared_lock<boost::shared_mutex> lock(mutex_);
 
-			BOOST_FOREACH(ThreadPtr v, threads_)
+			for (ThreadPtr v : threads_)
 			{
 				if (! v->timed_join(end_time))
 				{

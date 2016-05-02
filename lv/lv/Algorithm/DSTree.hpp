@@ -11,10 +11,9 @@
 #ifndef LV_DSTREE_HPP
 #define LV_DSTREE_HPP
 
-#include <lv/Foreach.hpp>
-
 #include <boost/ptr_container/ptr_vector.hpp>
 #include <boost/operators.hpp>
+#include <boost/range/as_literal.hpp>
 
 #include <functional>
 #include <memory>
@@ -109,7 +108,7 @@ namespace lv
 
 				children_ = rhs.children_;
 
-				BOOST_FOREACH(value_type & v, children_)
+				for (value_type & v : children_)
 				{
 					v.parent_ = this;
 				}
@@ -207,7 +206,7 @@ namespace lv
 		void	insert(KeyRange const & seq, data_pointer data)
 		{
 			DSTree * tree = this;
-			BOOST_FOREACH(key_type const & key, seq)
+			for (key_type const & key : seq)
 			{
 				iterator it = tree->find_child(key);
 
@@ -224,6 +223,16 @@ namespace lv
 			tree->data_ = data;
 		}
 
+		void	insert(char const * seq, data_pointer data)
+		{
+			insert(boost::as_literal(seq), data);
+		}
+
+		void	insert(wchar_t const * seq, data_pointer data)
+		{
+			insert(boost::as_literal(seq), data);
+		}
+
 		template<class KeyRange>
 		void	insert(KeyRange const & seq, data_type const & data)
 		{
@@ -235,7 +244,7 @@ namespace lv
 		DSTree * sub_tree(KeyRange const & seq)
 		{
 			DSTree * tree = this;
-			BOOST_FOREACH(boost::range_value<KeyRange>::type const & key, seq)
+			for (auto const & key : seq)
 			{
 				iterator it = tree->find_child(key);
 				if (it == tree->end())
@@ -274,7 +283,7 @@ namespace lv
 			size_t len = 0;
 
 			DSTree * tree = this;
-			BOOST_FOREACH(key_type const & key, seq)
+			for (key_type const & key : seq)
 			{
 				len ++;
 

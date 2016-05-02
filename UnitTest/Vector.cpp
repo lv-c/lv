@@ -13,8 +13,9 @@
 #include <lv/Graphics/Vector.hpp>
 #include <lv/Graphics/Math.hpp>
 #include <lv/IntType.hpp>
-#include <lv/Foreach.hpp>
+
 using namespace lv;
+
 
 BOOST_AUTO_TEST_CASE(test_vector)
 {
@@ -41,7 +42,7 @@ BOOST_AUTO_TEST_CASE(test_vector)
 	{
 		Vector3f vec;
 		float f = 2.0f;
-		BOOST_FOREACH(float & e, vec)
+		for (float & e : vec)
 		{
 			e = f;
 			f += 1.0f;
@@ -51,7 +52,7 @@ BOOST_AUTO_TEST_CASE(test_vector)
 		BOOST_CHECK_EQUAL(vec[0], 2.0f);
 
 		Vector3f const & vec_ref = vec;
-		BOOST_FOREACH(float e, vec_ref)
+		for (float e : vec_ref)
 		{
 			e = 0;
 		}

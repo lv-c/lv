@@ -17,8 +17,6 @@
 #include <lv/Exception.hpp>
 #include <lv/SharedPtr.hpp>
 
-#include <boost/foreach.hpp>
-
 using namespace lv;
 using namespace lv::net;
 using namespace std;
@@ -99,11 +97,11 @@ BOOST_AUTO_TEST_CASE(test_message_queue)
 	vector<BufferPtr> received;
 
 	// random data
-	BOOST_FOREACH(BufferPtr & buf, to_send)
+	for (BufferPtr & buf : to_send)
 	{
 		buf.reset(new Buffer(die(0, 100)));
 
-		BOOST_FOREACH(char & c, *buf)
+		for (char & c : *buf)
 		{
 			c = uint8(die(0, 0xFF));
 		}
@@ -124,7 +122,7 @@ BOOST_AUTO_TEST_CASE(test_message_queue)
 	client_sender.set_callback(boost::bind(&MessageQueue::on_receive, &server, _1));
 	server_sender.set_callback(boost::bind(&MessageQueue::on_receive, &client, _1));
 
-	BOOST_FOREACH(BufferPtr buf, to_send)
+	for (BufferPtr buf : to_send)
 	{
 		// will be modified. make a copy
 		client.send(BufferPtr(new Buffer(*buf)));

@@ -15,7 +15,6 @@
 #include <lv/RPC/Invoker.hpp>
 
 #include <lv/Functional.hpp>
-#include <lv/Foreach.hpp>
 #include <lv/Exception.hpp>
 
 #include <boost/fusion/container/map.hpp>

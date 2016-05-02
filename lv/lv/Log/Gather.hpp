@@ -13,7 +13,6 @@
 
 #include <lv/Log/Fwd.hpp>
 #include <lv/Log/Level.hpp>
-#include <lv/Foreach.hpp>
 
 #include <boost/function.hpp>
 #include <boost/thread/mutex.hpp>
@@ -140,7 +139,7 @@ namespace lv { namespace log {
 			// lock
 			mutex_.lock();
 
-			BOOST_FOREACH(formatter_type & fmt, headers_)
+			for (formatter_type & fmt : headers_)
 			{
 				fmt(*os_, lvl);
 			}
@@ -157,7 +156,7 @@ namespace lv { namespace log {
 
 		void	end_record(int lvl)
 		{
-			BOOST_FOREACH(formatter_type & fmt, tailers_)
+			for (formatter_type & fmt : tailers_)
 			{
 				fmt(*os_, lvl);
 			}

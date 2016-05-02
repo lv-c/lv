@@ -140,7 +140,7 @@ namespace lv { namespace log {
 		{
 			if (enabled_)
 			{
-				BOOST_FOREACH(gather_ptr gather, this->gathers_)
+				for (gather_ptr gather : this->gathers_)
 				{
 					if (gather->output(lvl_))
 					{
@@ -159,7 +159,7 @@ namespace lv { namespace log {
 
 			if (enabled_)
 			{
-				BOOST_FOREACH(gather_ptr gather, this->gathers_)
+				for (gather_ptr gather : this->gathers_)
 				{
 					if (gather->output(lvl_))
 					{
@@ -173,7 +173,7 @@ namespace lv { namespace log {
 		{
 			if (enabled_)
 			{
-				BOOST_FOREACH(gather_ptr gather, this->gathers_)
+				for (gather_ptr gather : this->gathers_)
 				{
 					if (gather->output(lvl_))
 					{

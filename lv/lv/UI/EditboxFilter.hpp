@@ -14,9 +14,8 @@
 #include <list>
 #include <locale>
 
-#include <lv/Foreach.hpp>
 #include <lv/UI/Editbox.hpp>
-#include <lv/Foreach.hpp>
+
 
 namespace lv
 {
@@ -70,7 +69,7 @@ namespace lv
 
 		bool operator () (wchar_t c, Editbox const & edit)
 		{
-			BOOST_FOREACH(Editbox::filter_type & f, filters_)
+			for (Editbox::filter_type & f : filters_)
 			{
 				if (! f(c, edit))
 				{

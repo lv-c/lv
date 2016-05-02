@@ -89,9 +89,7 @@ namespace lv { namespace lua { namespace archive {
 		template<typename Key, typename Data, typename Pred>
 		void	save_dstree(std::ostream & os, DSTree<Key, Data, Pred> const & tree, size_t level, bool & first_time)
 		{
-			typedef DSTree<Key, Data, Pred> tree_type;
-
-			BOOST_FOREACH(tree_type::value_type const & v, tree)
+			for (auto const & v : tree)
 			{
 				if (v.empty() || v.data())
 				{

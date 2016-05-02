@@ -11,12 +11,10 @@
 #ifndef LV_BINARYSTREAM_SERIALIZER_HPP
 #define LV_BINARYSTREAM_SERIALIZER_HPP
 
-#include <lv/Foreach.hpp>
 #include <lv/Endian.hpp>
 #include <lv/BinaryStream/Tags.hpp>
 
 #include <boost/utility/enable_if.hpp>
-#include <boost/range.hpp>
 #include <boost/call_traits.hpp>
 #include <boost/serialization/serialization.hpp>
 
@@ -135,7 +133,7 @@ namespace lv { namespace bstream {
 		template<class OStream>
 		static void write(OStream & os, T const & t)
 		{
-			BOOST_FOREACH(typename boost::range_value<T>::type const & item, t)
+			for (auto const & item : t)
 			{
 				os << item;
 			}
@@ -144,7 +142,7 @@ namespace lv { namespace bstream {
 		template<class IStream>
 		static void read(IStream & is, T & t)
 		{
-			BOOST_FOREACH(typename boost::range_value<T>::type & item, t)
+			for (auto & item : t)
 			{
 				is >> item;
 			}

@@ -4,8 +4,9 @@
 #include <lv/Graphics/FreeTypeFont.hpp>
 #include <lv/Graphics/RenderFactory.hpp>
 #include <lv/Graphics/Renderer.hpp>
+
 #include <boost/assert.hpp>
-#include <lv/Foreach.hpp>
+
 
 namespace lv
 {
@@ -106,7 +107,7 @@ namespace lv
 
 	void FreeTypeFont::update_cache(std::wstring const & txt)
 	{
-		BOOST_FOREACH(wchar_t c, txt)
+		for (wchar_t c : txt)
 		{
 			update_cache(c);
 		}

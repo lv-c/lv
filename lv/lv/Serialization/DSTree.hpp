@@ -12,7 +12,6 @@
 #define LV_SERIALIZATION_DSTREE_HPP
 
 #include <lv/Algorithm/DSTree.hpp>
-#include <lv/Foreach.hpp>
 
 #include <boost/serialization/serialization.hpp>
 #include <boost/serialization/split_free.hpp>
@@ -37,7 +36,7 @@ namespace boost { namespace serialization {
 		tree_type::size_type size = tree.size();
 		ar & size;
 
-		BOOST_FOREACH(tree_type::value_type const & v, tree)
+		for (tree_type::value_type const & v : tree)
 		{
 			bool has_data(v.data());
 			ar & v.key() & has_data;
