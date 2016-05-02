@@ -34,7 +34,7 @@ namespace lv { namespace net {
 		ctx.set_password_callback(boost::bind(&SSLServer::get_password, this));
 		ctx.use_certificate_file("cert/m2cert.crt", asio::ssl::context::pem);
 		ctx.use_private_key_file("cert/m2server.pem", asio::ssl::context::pem);
-		ctx.use_tmp_dh_file("cert/dh256.pem");
+		ctx.use_tmp_dh_file("cert/dh2048.pem");
 	}
 
 	std::string SSLServer::get_password()

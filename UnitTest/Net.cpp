@@ -64,6 +64,11 @@ private:
 		source_->call("echo", text_);
 	}
 
+	virtual	void	on_error(ErrorType type, boost::system::error_code const & error)
+	{
+		std::cout << "client err:" << error.message() << std::endl;
+	}
+
 	void	notify(string const & str)
 	{
 		BOOST_CHECK_EQUAL(str, text_);
@@ -96,6 +101,13 @@ public:
 
 		// call the notify function of the client session
 		source_->call("notify", str);		
+	}
+
+private:
+
+	virtual	void	on_error(ErrorType type, boost::system::error_code const & error)
+	{
+		std::cout << "server err:" << error.message() << std::endl;
 	}
 };
 
