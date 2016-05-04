@@ -13,7 +13,6 @@
 
 #include <boost/gil/typedefs.hpp>
 #include <boost/gil/image.hpp>
-#include <boost/static_assert.hpp>
 #include <boost/mpl/size_t.hpp>
 
 namespace lv

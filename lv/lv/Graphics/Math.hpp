@@ -14,7 +14,6 @@
 #include <lv/Graphics/Point.hpp>
 #include <lv/Graphics/Vector.hpp>
 
-#include <boost/static_assert.hpp>
 #include <boost/type_traits/is_float.hpp>
 #include <boost/utility/enable_if.hpp>
 
@@ -56,7 +55,7 @@ namespace lv { namespace math {
 
 	inline __declspec(naked) float	rsqrt(float v)
 	{
-		BOOST_STATIC_ASSERT((sizeof(float) == 4));
+		static_assert(sizeof(float) == 4, "32bit only");
 
 		__asm{
 			rsqrtss xmm0, dword ptr [esp + 4]

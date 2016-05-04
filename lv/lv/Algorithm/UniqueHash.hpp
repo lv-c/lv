@@ -98,10 +98,10 @@ namespace lv { namespace unique_hash {
 	template<typename Key, typename Value>
 	Key hash(uint32 seed, Value const & value)
 	{
-		BOOST_STATIC_ASSERT(boost::is_arithmetic<Key>::value);
+		static_assert(boost::is_arithmetic<Key>::value, "value type should be arithmetic");
 		// boost::hash_range may return different values on platforms where size_t has different sizes.
 		// if this assertion fails, we may have to implement our own hash functions.
-		BOOST_STATIC_ASSERT(sizeof(std::size_t) == 4);		
+		static_assert(sizeof(std::size_t) == 4, "currently support 32bit platform only");
 
 		return detail::hash_impl(seed, value) % detail::max_value<Key>();
 	}
