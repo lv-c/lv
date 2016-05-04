@@ -14,12 +14,12 @@
 #include <lv/Log/Gather.hpp>
 #include <lv/Log/Formatter.hpp>
 
-#include <boost/thread/mutex.hpp>
 #include <boost/noncopyable.hpp>
 
 #include <set>
 #include <iostream>
 #include <memory>
+#include <mutex>
 
 
 namespace lv { namespace log {
@@ -34,8 +34,9 @@ namespace lv { namespace log {
 		typedef std::set<gather_ptr>	gather_set;
 		gather_set gathers_;
 
-		typedef boost::mutex::scoped_lock	scoped_lock;	
-		boost::mutex	mutex_;
+		typedef std::lock_guard<std::mutex>	lock_guard;
+
+		std::mutex	mutex_;
 
 		bool	enabled_;
 
@@ -114,21 +115,21 @@ namespace lv { namespace log {
 
 		void	add_gather(gather_ptr gather)
 		{
-			scoped_lock lock(mutex_);
+			lock_guard lock(mutex_);
 
 			this->gathers_.insert(gather);
 		}
 
 		void	remove_gather(gather_ptr gather)
 		{
-			scoped_lock lock(mutex_);
+			lock_guard lock(mutex_);
 
 			gathers_.erase(gather);
 		}
 		
 		void	enable(bool enabled = true)
 		{
-			scoped_lock lock(mutex_);
+			lock_guard lock(mutex_);
 
 			enabled_ = enabled;
 		}

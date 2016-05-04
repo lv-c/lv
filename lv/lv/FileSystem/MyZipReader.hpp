@@ -13,10 +13,10 @@
 
 #include <lv/FileSystem/IFileIO.hpp>
 
-#include <boost/thread/mutex.hpp>
-
 #include <string>
 #include <map>
+#include <mutex>
+
 
 namespace lv
 {
@@ -37,8 +37,9 @@ namespace lv
 
 		IFileIOPtr	raw_file_reader_;
 
-		typedef boost::mutex::scoped_lock	scoped_lock;
-		boost::mutex	mutex_;
+		typedef std::lock_guard<std::mutex>	lock_guard;
+
+		std::mutex	mutex_;
 
 	public:
 

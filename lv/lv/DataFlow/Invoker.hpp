@@ -86,7 +86,7 @@ namespace lv { namespace flow { namespace detail {
 	class Invoker
 	{
 
-		typedef boost::function<Signature>	function_type;
+		typedef std::function<Signature>	function_type;
 		function_type f_;
 	
 		typedef typename boost::function_types::parameter_types<Signature>::type parameter_types;

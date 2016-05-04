@@ -14,8 +14,6 @@
 #include <lv/Fusion.hpp>
 #include <lv/Ref.hpp>
 
-#include <boost/function.hpp>
-
 #include <boost/fusion/include/for_each.hpp>
 #include <boost/fusion/include/invoke.hpp>
 
@@ -27,6 +25,9 @@
 
 #include <boost/mpl/transform.hpp>
 #include <boost/mpl/assert.hpp>
+
+#include <functional>
+
 
 namespace lv { namespace rpc { namespace detail {
 
@@ -93,7 +94,7 @@ namespace lv { namespace rpc { namespace detail {
 
 	public:
 
-		typedef boost::function<void(oarchive_type &)>		ResultHolder;
+		typedef std::function<void(oarchive_type &)>		ResultHolder;
 
 	};
 
@@ -101,21 +102,19 @@ namespace lv { namespace rpc { namespace detail {
 	template<class Signature, class ArchivePair>
 	class Invoker : public InvokerBase<ArchivePair>
 	{
-		typedef boost::function<Signature>	function_type;
+		typedef std::function<Signature>	function_type;
 		function_type	f_;
 
 		// result type of the function
 		typedef typename function_type::result_type result_type;
 		typedef typename boost::function_types::parameter_types<Signature>::type param_type;
 
-		static unsigned const arity = function_type::arity;
-
 		// The result type shouldn't be a pointer type
 		BOOST_MPL_ASSERT_NOT((boost::is_pointer<result_type>));
 
 	public:
 		
-		Invoker(boost::function<Signature> f)
+		Invoker(std::function<Signature> f)
 			: f_(f)
 		{
 		}

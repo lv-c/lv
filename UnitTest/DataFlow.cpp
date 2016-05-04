@@ -111,7 +111,7 @@ BOOST_AUTO_TEST_CASE(test_dataflow)
 	dataflow_type dataflow(5);	// number of threads
 
 	typedef lv::flow::Source<key_type> source_type;
-	source_type source(boost::bind(&dataflow_type::push, &dataflow, port_type(), _1), buf_manager);
+	source_type source(std::bind(&dataflow_type::push, &dataflow, port_type(), std::placeholders::_1), buf_manager);
 
 	typedef lv::flow::Sink<lv::flow::SyncPush, key_type> sink_type;
 	sink_type sink(&proxy_push);
@@ -120,7 +120,7 @@ BOOST_AUTO_TEST_CASE(test_dataflow)
 		.reg("hello", &hello)
 		.reg("sum", &sum)
 		.reg("echo", &echo)
-		.reg<void(float)>("sum_5", boost::bind(&sum, 5, _1))	// boost::bind
+		.reg<void(float)>("sum_5", std::bind(&sum, 5, std::placeholders::_1))	// std::bind
 		.reg_mem_fn("mem_fn", &TestMemFn::test, TestMemFn())
 		.reg_mem_fn("const_mem_fn", &TestMemFn::test_const, TestMemFn())
 		//.reg("pass_iarchive_obj", &pass_iarchive_obj)  // won't compile and shouldn't compile
@@ -128,7 +128,7 @@ BOOST_AUTO_TEST_CASE(test_dataflow)
 
 	
 
-	lv::flow::Connection conn = dataflow.connect(port_type(), boost::bind(&sink_type::push, &sink, _1));
+	lv::flow::Connection conn = dataflow.connect(port_type(), std::bind(&sink_type::push, &sink, std::placeholders::_1));
 
 	source.call("hello");
 	source.stream("hello");

@@ -13,8 +13,7 @@
 
 #include <lv/Algorithm/LRUList.hpp>
 
-#include <boost/function.hpp>
-
+#include <functional>
 #include <map>
 
 namespace lv
@@ -37,7 +36,7 @@ namespace lv
 		typedef typename list_type::const_iterator	const_iterator;
 		typedef typename list_type::size_type	size_type;
 
-		typedef boost::function<void(key_type const &, data_type const &)>	removal_callback;
+		typedef std::function<void(key_type const &, data_type const &)>	removal_callback;
 
 	private:
 

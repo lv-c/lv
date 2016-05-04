@@ -45,7 +45,7 @@ namespace lv { namespace net {
 
 		ContextPtr	context_;
 
-		typedef boost::function<SessionPtr(ContextPtr)>	creator_type;
+		typedef std::function<SessionPtr(ContextPtr)>	creator_type;
 		creator_type	session_creator_;
 
 	public:

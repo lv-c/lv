@@ -16,13 +16,12 @@
 #include <lv/DataFlow/Fwd.hpp>
 #include <lv/DataFlow/Connection.hpp>
 
-#include <map>
-
-#include <boost/bind.hpp>
-#include <boost/function.hpp>
 #include <boost/noncopyable.hpp>
 
-#include <boost/thread/shared_mutex.hpp>
+#include <map>
+#include <functional>
+#include <shared_mutex>
+
 
 namespace lv { namespace flow {
 
@@ -51,14 +50,14 @@ namespace lv { namespace flow {
 		
 		push_policy_type	push_policy_;
 
-		boost::shared_mutex shared_mutex_;
+		std::shared_timed_mutex shared_mutex_;
 
 	public:
 
 		DataFlow(push_policy_type const & policy = push_policy_type())
 			: push_policy_(policy)
 		{
-			push_policy_.set_callback(boost::bind(&DataFlow::push_impl, this, _1));
+			push_policy_.set_callback(std::bind(&DataFlow::push_impl, this, std::placeholders::_1));
 		}
 
 
@@ -68,7 +67,7 @@ namespace lv { namespace flow {
 			connection_slot.slot = slot;
 
 			// a write lock
-			boost::unique_lock<boost::shared_mutex> lock(shared_mutex_);
+			std::lock_guard<std::shared_timed_mutex> lock(shared_mutex_);
 
 			slots_map_type::iterator it = slots_.insert(std::make_pair(port, connection_slot));
 			it->second.conn.reset(new detail::ConnectionImpl(this, &DataFlow::disconnect_fun, it));
@@ -85,7 +84,7 @@ namespace lv { namespace flow {
 		void	clear()
 		{
 			// a write lock
-			boost::unique_lock<boost::shared_mutex> lock(shared_mutex_);
+			std::lock_guard<std::shared_timed_mutex> lock(shared_mutex_);
 
 			slots_.clear();
 		}
@@ -96,10 +95,9 @@ namespace lv { namespace flow {
 		void	push_impl(port_buffer_pair const & port_buf)
 		{
 			// a read lock
-			boost::shared_lock<boost::shared_mutex> lock(shared_mutex_);
+			std::shared_lock<std::shared_timed_mutex> lock(shared_mutex_);
 
-			std::pair<slots_map_type::iterator, slots_map_type::iterator> ret;
-			ret = slots_.equal_range(port_buf.first);
+			auto ret = slots_.equal_range(port_buf.first);
 
 			for (slots_map_type::iterator it = ret .first; it != ret .second; ++it)
 			{
@@ -115,7 +113,7 @@ namespace lv { namespace flow {
 			slots_map_type::iterator it = boost::any_cast<slots_map_type::iterator>(iter);
 			
 			// a write lock
-			boost::unique_lock<boost::shared_mutex> lock(dataflow->shared_mutex_);
+			std::lock_guard<std::shared_timed_mutex> lock(dataflow->shared_mutex_);
 
 			dataflow->slots_.erase(it);
 		}

@@ -2,7 +2,7 @@
 //  Functional   version:  1.0   ¡¤  date: 11/25/2008
 //  --------------------------------------------------------------------
 //  deduce the Signature of all function objects that can be used with 
-//	the boost::function template
+//	the std::function template
 //  --------------------------------------------------------------------
 //  Copyright (C) jcfly(lv.jcfly@gmail.com) 2008 - All Rights Reserved
 // *********************************************************************
@@ -71,7 +71,7 @@ namespace lv
 	template<typename F>
 	void reg(F f)	// F can be a function type, a member function pointer type or a class type function object type
 	{
-		boost::function<typename SignatureImpl<F>::type> fun = f;
+		std::function<typename SignatureImpl<F>::type> fun = f;
 	}
 	*/
 

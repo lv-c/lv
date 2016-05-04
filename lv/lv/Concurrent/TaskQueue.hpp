@@ -12,26 +12,31 @@
 #ifndef LV_CONCURRENT_TASKQUEUE_HPP
 #define LV_CONCURRENT_TASKQUEUE_HPP
 
-#include <limits>
-#include <boost/thread/mutex.hpp>
-#include <boost/thread/condition.hpp>
-
 #include <lv/Concurrent/Fwd.hpp>
+#include <lv/Exception.hpp>
+
+#include <limits>
+#include <thread>
+#include <condition_variable>
+
 
 namespace lv
 {
+	DEFINE_EXCEPTION_MSG(ThreadInterrupted, std::runtime_error);
+
+
 	template <typename Task, template <typename> class QueuePolicy>
 	class TaskQueue
 	{
 		QueuePolicy<Task>	queue_;
 
+		typedef std::lock_guard<std::mutex>	lock_guard;
 
-		typedef boost::mutex::scoped_lock	scoped_lock;
-		mutable boost::mutex	mutex_;
+		std::mutex	mutex_;
 
-		boost::condition	full_;
-		boost::condition	empty_;
-		boost::condition	consumer_interruption_done_;
+		std::condition_variable	full_;
+		std::condition_variable	empty_;
+		std::condition_variable	consumer_interruption_done_;
 
 		volatile size_t		max_count_;		// maximum number of tasks
 		volatile size_t		consumers_to_interrupt_;
@@ -54,7 +59,7 @@ namespace lv
 		 */
 		void	put(value_type const & task)
 		{
-			scoped_lock lock(mutex_);
+			std::unique_lock<std::mutex> lock(mutex_);
 
 			while (queue_.size() >= max_count_)
 			{
@@ -79,7 +84,7 @@ namespace lv
 		 */
 		value_type get() // throw(boost::thread_interrupted)
 		{
-			scoped_lock lock(mutex_);
+			std::unique_lock<std::mutex> lock(mutex_);
 
 			while (true)
 			{
@@ -92,7 +97,7 @@ namespace lv
 						consumer_interruption_done_.notify_all();
 					}
 
-					throw boost::thread_interrupted();
+					throw ThreadInterrupted();
 				}
 
 				if (! queue_.empty())
@@ -118,19 +123,19 @@ namespace lv
 		
 		void	clear()
 		{
-			scoped_lock lock(mutex_);
+			lock_guard lock(mutex_);
 			queue_.clear();
 		}
 
 		size_t	size() const
 		{
-			scoped_lock	lock(mutex_);
+			lock_guard lock(mutex_);
 			return queue_.size();
 		}
 
 		bool	empty() const
 		{
-			scoped_lock lock(mutex_);
+			lock_guard lock(mutex_);
 			return queue_.empty();
 		}
 
@@ -143,7 +148,7 @@ namespace lv
 		 */
 		void	interrupt_consumers(size_t num, bool wait = false)
 		{
-			scoped_lock	lock(mutex_);
+			std::unique_lock<std::mutex> lock(mutex_);
 			consumers_to_interrupt_ += num;
 			
 			empty_.notify_all();

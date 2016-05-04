@@ -15,11 +15,12 @@
 #include <lv/Stream/OBufferStream.hpp>
 #include <lv/BinaryStream/BinaryOStream.hpp>
 
-#include <boost/function.hpp>
+#include <functional>
+
 
 namespace lv { namespace net {
 
-	typedef boost::function<void(BufferPtr)> PacketProxyCallback;
+	typedef std::function<void(BufferPtr)> PacketProxyCallback;
 
 	class PacketProxy
 	{

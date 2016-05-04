@@ -54,7 +54,7 @@ namespace lv { namespace rpc {
 	{
 	public:
 
-		typedef boost::function<void(BufferPtr)>	callback_type;
+		typedef std::function<void(BufferPtr)>	callback_type;
 
 	private:
 
@@ -70,8 +70,9 @@ namespace lv { namespace rpc {
 
 		promise_map		promises_;
 
-		typedef boost::mutex::scoped_lock scoped_lock;
-		boost::mutex	mutex_;
+		typedef std::lock_guard<std::mutex>	lock_guard;
+
+		std::mutex	mutex_;
 
 		callback_type	callback_;
 
@@ -194,7 +195,7 @@ namespace lv { namespace rpc {
 			PromiseBasePtr promise;
 
 			{
-				scoped_lock lock(mutex_);
+				lock_guard lock(mutex_);
 				
 				promise_map::iterator it = promises_.find(id);
 				LV_ENSURE(it != promises_.end(), InvalidRequestID());
@@ -220,7 +221,7 @@ namespace lv { namespace rpc {
 			promise_map pro;
 
 			{
-				scoped_lock lock(mutex_);
+				lock_guard lock(mutex_);
 				std::swap(pro, promises_);
 			}
 
@@ -312,13 +313,13 @@ namespace lv { namespace rpc {
 		 */
 		void	add_promise(int request_id, PromiseBasePtr promise)
 		{
-			scoped_lock lock(mutex_);
+			lock_guard lock(mutex_);
 			promises_.insert(std::make_pair(request_id, promise));
 		}
 
 		void	remove_promise(int request_id)
 		{
-			scoped_lock lock(mutex_);
+			lock_guard lock(mutex_);
 			promises_.erase(request_id);
 		}
 

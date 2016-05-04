@@ -17,11 +17,12 @@
 #include <lv/Exception.hpp>
 
 #include <fstream>
-#include <boost/function.hpp>
+#include <functional>
+
 
 namespace lv { namespace log {
 
-	typedef boost::function<gather_ptr(gather_ptr)>	FormmatterSet;
+	typedef std::function<gather_ptr(gather_ptr)>	FormmatterSet;
 	
 
 	struct EmptyFormatters

@@ -11,9 +11,9 @@
 #ifndef LV_LUA_CALLPROXY_HPP
 #define LV_LUA_CALLPROXY_HPP
 
-#include <boost/function.hpp>
-
 #include <sstream>
+#include <functional>
+
 
 namespace lv { namespace lua {
 
@@ -25,7 +25,7 @@ namespace lv { namespace lua {
 
 		bool	finished_;
 
-		typedef boost::function<void(std::string const &)> Callback;
+		typedef std::function<void(std::string const &)> Callback;
 
 		Callback	callback_;
 

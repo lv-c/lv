@@ -14,12 +14,11 @@
 #include <lv/Log/Fwd.hpp>
 #include <lv/Log/Level.hpp>
 
-#include <boost/function.hpp>
-#include <boost/thread/mutex.hpp>
-
 #include <iostream>
 #include <list>
 #include <memory>
+#include <functional>
+#include <mutex>
 
 
 namespace lv { namespace log {
@@ -76,8 +75,7 @@ namespace lv { namespace log {
 
 		filter_type	filter_;
 
-		typedef boost::mutex::scoped_lock	scoped_lock;
-		boost::mutex	mutex_;
+		std::mutex	mutex_;
 
 	public:
 

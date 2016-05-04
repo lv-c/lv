@@ -18,15 +18,13 @@
 #define LV_NULLMUTEX_HPP
 
 #include <boost/noncopyable.hpp>
-#include <boost/thread/locks.hpp>
+
 
 namespace lv
 {
 	class NullMutex : boost::noncopyable
 	{
 	public:
-
-		typedef boost::unique_lock<NullMutex>	scoped_lock;
 
 		NullMutex()
 		{

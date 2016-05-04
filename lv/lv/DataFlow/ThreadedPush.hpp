@@ -13,11 +13,13 @@
 
 #include <lv/Concurrent/TaskQueue.hpp>
 #include <lv/Concurrent/FIFOQueue.hpp>
+#include <lv/Concurrent/ThreadGroup.hpp>
 
 #include <lv/DataFlow/PushPolicyBase.hpp>
 
-#include <boost/bind.hpp>
-#include <boost/thread/thread.hpp>
+#include <functional>
+#include <thread>
+
 
 namespace lv { namespace flow {
 
@@ -26,7 +28,7 @@ namespace lv { namespace flow {
 		template<class T>
 		class ThreadedPushImpl : public PushPolicyBase<T>
 		{
-			boost::thread_group threads_;
+			ThreadGroup threads_;
 
 			TaskQueue<T, FIFOQueue> queue_;
 
@@ -36,7 +38,7 @@ namespace lv { namespace flow {
 			{
 				for (size_t i = 0; i < thread_num; ++i)
 				{
-					threads_.create_thread(boost::bind(&ThreadedPushImpl::run, this));
+					threads_.create_thread(std::bind(&ThreadedPushImpl::run, this));
 				}
 			}
 
@@ -62,7 +64,7 @@ namespace lv { namespace flow {
 					{
 						callback_(queue_.get());
 					}
-					catch(boost::thread_interrupted const &)
+					catch(ThreadInterrupted const &)
 					{
 						break;
 					}

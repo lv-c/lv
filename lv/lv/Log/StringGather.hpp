@@ -23,7 +23,7 @@ namespace lv { namespace log {
 	{
 	public:
 		
-		typedef boost::function<void(log::string_type const &, int)> receiver_t;
+		typedef std::function<void(log::string_type const &, int)> receiver_t;
 
 	protected:
 

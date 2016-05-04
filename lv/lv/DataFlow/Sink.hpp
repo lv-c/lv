@@ -18,14 +18,15 @@
 #include <lv/DataFlow/Fwd.hpp>
 #include <lv/DataFlow/Registery.hpp>
 
-#include <memory>
-
-#include <boost/bind.hpp>
 #include <boost/noncopyable.hpp>
+
+#include <memory>
+#include <functional>
+
 
 namespace lv { namespace flow {
 
-	typedef boost::function<void(slot_type const &, ConstBufferRef const &)> proxy_push_type;
+	typedef std::function<void(slot_type const &, ConstBufferRef const &)> proxy_push_type;
 
 	/// thread-safe
 	template<template<class> class PushPolicy, class Key, class IArchive>
@@ -58,11 +59,11 @@ namespace lv { namespace flow {
 			: push_policy_(policy)
 			, istream_factory_(new IStreamFactory())
 		{
-			slot_type slot = boost::bind(&Sink::push_impl, this, _1, WeakIStreamFactoryPtr(istream_factory_));
+			slot_type slot = std::bind(&Sink::push_impl, this, std::placeholders::_1, WeakIStreamFactoryPtr(istream_factory_));
 
 			if (proxy_push)
 			{
-				push_policy_.set_callback(boost::bind(proxy_push, slot, _1));
+				push_policy_.set_callback(std::bind(proxy_push, slot, std::placeholders::_1));
 			}
 			else
 			{

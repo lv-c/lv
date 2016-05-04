@@ -7,9 +7,10 @@
 #include <lv/BinaryStream/Array.hpp>
 #include <lv/Stream/IBufferStream.hpp>
 
-#include <boost/bind.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/asio/ip/tcp.hpp>
+
+#include <functional>
 
 
 namespace lv { namespace net {
@@ -363,7 +364,7 @@ namespace lv { namespace net {
 
 	PacketProxy Socks5ClientSession::socks_send()
 	{
-		return PacketProxy(context_->buffer(), boost::bind(&Socks5ClientSession::start_write, this, _1));
+		return PacketProxy(context_->buffer(), std::bind(&Socks5ClientSession::start_write, this, std::placeholders::_1));
 	}
 
 } }

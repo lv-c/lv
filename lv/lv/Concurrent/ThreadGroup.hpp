@@ -11,11 +11,10 @@
 #ifndef LV_CONCURRENT_THREADGROUP_HPP
 #define LV_CONCURRENT_THREADGROUP_HPP
 
-#include <boost/thread/thread.hpp>
-#include <boost/thread/shared_mutex.hpp>
-
 #include <memory>
 #include <list>
+#include <thread>
+#include <shared_mutex>
 
 // boost.thread_group has no timed join
 
@@ -23,28 +22,34 @@ namespace lv
 {
 	class ThreadGroup
 	{
-		typedef std::shared_ptr<boost::thread>	ThreadPtr;
+		typedef std::shared_ptr<std::thread>	ThreadPtr;
 
 		std::list<ThreadPtr>	threads_;
 
-		boost::shared_mutex		mutex_;
+		std::shared_timed_mutex		mutex_;
 
 	public:
 
 		template<typename F>
-		boost::thread *	create_thread(F func)
+		std::thread *	create_thread(F func)
 		{
-			boost::lock_guard<boost::shared_mutex> lock(mutex_);
+			std::lock_guard<std::shared_timed_mutex> lock(mutex_);
 
-			ThreadPtr new_thread(new boost::thread(func));
+			ThreadPtr new_thread(new std::thread(func));
 			threads_.push_back(new_thread);
 
 			return new_thread.get();
 		}
 
+		size_t	size()
+		{
+			std::shared_lock<std::shared_timed_mutex> lock(mutex_);
+			return threads_.size();
+		}
+
 		void	join_all()
 		{
-			boost::shared_lock<boost::shared_mutex> lock(mutex_);
+			std::shared_lock<std::shared_timed_mutex> lock(mutex_);
 
 			for (ThreadPtr v : threads_)
 			{
@@ -57,7 +62,7 @@ namespace lv
 		{
 			boost::posix_time::ptime end_time = boost::get_system_time() + rel_time;
 
-			boost::shared_lock<boost::shared_mutex> lock(mutex_);
+			std::shared_lock<std::shared_timed_mutex> lock(mutex_);
 
 			for (ThreadPtr v : threads_)
 			{

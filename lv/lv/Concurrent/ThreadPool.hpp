@@ -16,10 +16,10 @@
 #include <lv/Concurrent/Fwd.hpp>
 
 #include <boost/asio/io_service.hpp>
-#include <boost/function.hpp>
 
 #include <string>
 #include <memory>
+#include <functional>
 
 
 namespace lv
@@ -30,7 +30,7 @@ namespace lv
 
 		typedef std::shared_ptr<boost::asio::io_service>		ServicePtr;
 
-		typedef boost::function<void(std::string const &, std::exception const &)>	ExceptionHandler;
+		typedef std::function<void(std::string const &, std::exception const &)>	ExceptionHandler;
 
 	private:
 

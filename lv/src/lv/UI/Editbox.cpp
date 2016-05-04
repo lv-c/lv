@@ -1,6 +1,8 @@
 #include <lv/UI/Editbox.hpp>
 #include <lv/UI/EditboxFilter.hpp>
+
 #include <climits>
+#include <algorithm>
 
 namespace lv
 {

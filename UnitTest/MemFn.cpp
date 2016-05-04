@@ -57,8 +57,8 @@ BOOST_AUTO_TEST_CASE(test_memfn)
 	test_bind(&Test::test_const, Test());
 
 	// ref
-	test_bind(&Test::test, boost::ref(t));
-	test_bind(&Test::test_const, boost::ref(t));
+	test_bind(&Test::test, std::ref(t));
+	test_bind(&Test::test_const, std::ref(t));
 
 	// shared_ptr
 	test_bind(&Test::test, lv::shared_from_object(t));

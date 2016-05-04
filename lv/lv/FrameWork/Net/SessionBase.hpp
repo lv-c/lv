@@ -15,9 +15,8 @@
 #include <lv/FrameWork/Net/Fwd.hpp>
 #include <lv/FrameWork/Net/Event.hpp>
 
-#include <boost/thread/mutex.hpp>
-
 #include <list>
+#include <mutex>
 
 
 namespace lv { namespace net {
@@ -41,7 +40,9 @@ namespace lv { namespace net {
 
 		bool	writing_;
 
-		boost::mutex	write_mutex_;
+		typedef std::lock_guard<std::mutex>	lock_guard;
+
+		std::mutex	write_mutex_;
 
 	protected:
 

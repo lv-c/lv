@@ -4,7 +4,9 @@
 
 #include <boost/asio/write.hpp>
 #include <boost/asio/placeholders.hpp>
-#include <boost/bind.hpp>
+
+#include <functional>
+
 
 namespace lv { namespace net {
 
@@ -130,12 +132,12 @@ namespace lv { namespace net {
 		if (context_->has_strand())
 		{
 			socket_->get().async_connect(*resolver.resolve(query), 
-				context_->strand().wrap(boost::bind(&SessionBase::handle_connect, shared_from_this(), asio::placeholders::error)));
+				context_->strand().wrap(std::bind(&SessionBase::handle_connect, shared_from_this(), std::placeholders::_1)));
 		}
 		else
 		{
 			socket_->get().async_connect(*resolver.resolve(query), 
-				boost::bind(&SessionBase::handle_connect, shared_from_this(), asio::placeholders::error));
+				std::bind(&SessionBase::handle_connect, shared_from_this(), std::placeholders::_1));
 		}
 	}
 
@@ -148,14 +150,14 @@ namespace lv { namespace net {
 		if (context_->has_strand())
 		{
 			socket_->get().async_read_some(asio::buffer(*buf), context_->strand().wrap(
-				boost::bind(&SessionBase::handle_read, shared_from_this(), buf,
-				asio::placeholders::bytes_transferred, asio::placeholders::error)));
+				std::bind(&SessionBase::handle_read, shared_from_this(), buf,
+				std::placeholders::_2, std::placeholders::_1)));
 		}
 		else
 		{
 			socket_->get().async_read_some(asio::buffer(*buf), 
-				boost::bind(&SessionBase::handle_read, shared_from_this(), buf,
-				asio::placeholders::bytes_transferred, asio::placeholders::error));
+				std::bind(&SessionBase::handle_read, shared_from_this(), buf,
+				std::placeholders::_2, std::placeholders::_1));
 		}
 	}
 
@@ -172,7 +174,7 @@ namespace lv { namespace net {
 			that perform writes) until this operation completes.
 			*/
 
-			boost::unique_lock<boost::mutex> lock(write_mutex_);
+			lock_guard lock(write_mutex_);
 
 			if (writing_)
 			{
@@ -193,14 +195,12 @@ namespace lv { namespace net {
 		if (context_->has_strand())
 		{
 			asio::async_write(socket_->get(), asio::buffer(*buf), context_->strand().wrap(
-				boost::bind(&SessionBase::handle_write, shared_from_this(), 
-				buf, asio::placeholders::error)));
+				std::bind(&SessionBase::handle_write, shared_from_this(), buf, std::placeholders::_1)));
 		}
 		else
 		{
 			asio::async_write(socket_->get(), asio::buffer(*buf), 
-				boost::bind(&SessionBase::handle_write, shared_from_this(), 
-				buf, asio::placeholders::error));
+				std::bind(&SessionBase::handle_write, shared_from_this(), buf, std::placeholders::_1));
 		}
 	}
 
@@ -287,7 +287,7 @@ namespace lv { namespace net {
 		else
 		{
 			{
-				boost::unique_lock<boost::mutex> lock(write_mutex_);
+				lock_guard lock(write_mutex_);
 
 				if (! writing_ && ! write_queue_.empty())
 				{

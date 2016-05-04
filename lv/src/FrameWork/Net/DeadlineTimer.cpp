@@ -1,6 +1,7 @@
 #include <lv/FrameWork/Net/DeadlineTimer.hpp>
 
-#include <boost/bind.hpp>
+#include <functional>
+
 
 namespace lv { namespace net {
 
@@ -19,11 +20,11 @@ namespace lv { namespace net {
 
 		if (service_wrapper_.has_strand())
 		{
-			timer_->async_wait(service_wrapper_.strand().wrap(boost::bind(&DeadlineTimer::on_timer, this, WeakTimerPtr(timer_), _1)));
+			timer_->async_wait(service_wrapper_.strand().wrap(std::bind(&DeadlineTimer::on_timer, this, WeakTimerPtr(timer_), std::placeholders::_1)));
 		}
 		else
 		{
-			timer_->async_wait(boost::bind(&DeadlineTimer::on_timer, this, WeakTimerPtr(timer_), _1));
+			timer_->async_wait(std::bind(&DeadlineTimer::on_timer, this, WeakTimerPtr(timer_), std::placeholders::_1));
 		}
 	}
 

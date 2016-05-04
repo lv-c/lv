@@ -23,7 +23,7 @@ namespace lv
 
 	void MyZipReader::reset()
 	{
-		scoped_lock lock(mutex_);
+		lock_guard lock(mutex_);
 
 		for (auto const & v : unzip_)
 		{
@@ -35,7 +35,7 @@ namespace lv
 
 	void MyZipReader::fulfill(std::string const & file, BufferPtr buf)
 	{
-		scoped_lock lock(mutex_);
+		lock_guard lock(mutex_);
 
 		std::string inner_path;
 		UnzipPtr uz = get_unzip(file, inner_path);
@@ -112,7 +112,7 @@ namespace lv
 
 	bool MyZipReader::exist(std::string const & file)
 	{
-		scoped_lock lock(mutex_);
+		lock_guard lock(mutex_);
 
 		try
 		{

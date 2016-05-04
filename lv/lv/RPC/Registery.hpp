@@ -22,10 +22,9 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/archive/archive_exception.hpp>
 #include <boost/noncopyable.hpp>
-#include <boost/thread/shared_mutex.hpp>
-#include <boost/thread/lock_guard.hpp>
 
 #include <map>
+#include <shared_mutex>
 
 
 namespace lv { namespace rpc {
@@ -70,12 +69,12 @@ namespace lv { namespace rpc {
 
 			typedef	Id				id_type;
 
-			typedef boost::function<ResultHolder(iarchive_type &)>	invoker_type;
+			typedef std::function<ResultHolder(iarchive_type &)>	invoker_type;
 
 			typedef std::map<id_type, invoker_type>	invoker_map;
 			invoker_map		invokers_;
 
-			boost::shared_mutex	mutex_;
+			std::shared_timed_mutex	mutex_;
 
 		public:
 
@@ -85,7 +84,7 @@ namespace lv { namespace rpc {
 			template<class Signature, class F>
 			Registery &	reg(Id const & id, F f)
 			{
-				boost::lock_guard<boost::shared_mutex> lock(mutex_);
+				std::lock_guard<std::shared_timed_mutex> lock(mutex_);
 
 				if (invokers_.find(id) != invokers_.end())
 				{
@@ -111,7 +110,7 @@ namespace lv { namespace rpc {
 				
 				{
 					// no deletion, so the iterator will be valid
-					boost::shared_lock<boost::shared_mutex> lock(mutex_);
+					std::shared_lock<std::shared_timed_mutex> lock(mutex_);
 				
 					it = invokers_.find(id);
 					if (it == invokers_.end())

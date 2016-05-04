@@ -17,7 +17,8 @@
 #include <lv/Buffer.hpp>
 #include <lv/Timer.hpp>
 
-#include <boost/function.hpp>
+#include <functional>
+
 
 namespace lv { namespace net {
 
@@ -39,7 +40,7 @@ namespace lv { namespace net {
 	{
 	public:
 
-		typedef boost::function<void(BufferPtr)>	Receiver;
+		typedef std::function<void(BufferPtr)>	Receiver;
 
 	private:
 

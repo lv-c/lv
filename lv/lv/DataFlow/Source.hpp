@@ -25,11 +25,12 @@
 #include <boost/preprocessor/repetition/enum_params.hpp>
 #include <boost/preprocessor/punctuation/comma_if.hpp>
 
-#include <boost/function.hpp>
-
 #include <boost/tuple/tuple.hpp>
 #include <boost/fusion/include/for_each.hpp>
 #include <boost/fusion/include/boost_tuple.hpp>
+
+#include <functional>
+
 
 namespace lv { namespace flow {
 
@@ -42,7 +43,7 @@ namespace lv { namespace flow {
 		typedef typename Key		key_type;
 		typedef typename OArchive	oarchive_type;
 
-		typedef boost::function<void(BufferPtr)>	callback_type;
+		typedef std::function<void(BufferPtr)>	callback_type;
 
 	private:
 

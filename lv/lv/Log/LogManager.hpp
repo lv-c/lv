@@ -14,17 +14,20 @@
 #include <string>
 
 #include <boost/ptr_container/ptr_map.hpp>
-#include <boost/thread/mutex.hpp>
 
 #include <lv/Singleton.hpp>
 #include <lv/Log/Log.hpp>
+
+#include <mutex>
+
 
 namespace lv { namespace log {
 	
 	class LogManager : public Singleton<LogManager, true>
 	{
-		typedef boost::mutex::scoped_lock	scoped_lock; 
-		boost::mutex mutex_;
+		typedef std::lock_guard<std::mutex>	lock_guard;
+
+		std::mutex mutex_;
 
 		/// note : Log is not copyable, so we can't use std::map here
 		typedef boost::ptr_map<std::string, Log>	logger_map;
@@ -37,7 +40,7 @@ namespace lv { namespace log {
 		 */
 		Log & logger()
 		{
-			// scoped_lock lock(mutex_);
+			// lock_guard lock(mutex_);
 
 			static Log log;		// not thread-safe until C++0x ?
 			return log;
@@ -49,7 +52,7 @@ namespace lv { namespace log {
 		 */
 		Log & create_logger(std::string const & name)
 		{
-			scoped_lock lock(mutex_);
+			lock_guard lock(mutex_);
 
 			return loggers_[name];
 		}
@@ -60,7 +63,7 @@ namespace lv { namespace log {
 		 */
 		Log & logger(std::string const & name)
 		{
-			scoped_lock lock(mutex_);
+			lock_guard lock(mutex_);
 
 			logger_map::iterator it = loggers_.find(name);
 			if (it == loggers_.end())

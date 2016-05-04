@@ -12,8 +12,8 @@
 #define LV_DATAFLOW_FWD_HPP
 
 #include <lv/Buffer.hpp>
+#include <functional>
 
-#include <boost/function.hpp>
 
 namespace lv { namespace flow {
 
@@ -38,7 +38,7 @@ namespace lv { namespace flow {
 	template<class T>
 	class ThreadedPush;
 
-	typedef boost::function<void(ConstBufferRef)>	slot_type;
+	typedef std::function<void(ConstBufferRef)>	slot_type;
 	
 
 } }

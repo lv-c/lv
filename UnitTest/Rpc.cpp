@@ -168,7 +168,7 @@ BOOST_AUTO_TEST_CASE(test_rpc)
 
 
 	Tunnel tunnel;
-	Client<> client(boost::ref(tunnel), BufferManagerPtr(new SimpleBufferManager(100)));
+	Client<> client(std::ref(tunnel), BufferManagerPtr(new SimpleBufferManager(100)));
 
 	tunnel.client = &client;
 	tunnel.server = &server;

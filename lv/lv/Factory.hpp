@@ -15,12 +15,10 @@
 /// hint : define BOOST_SP_USE_QUICK_ALLOCATOR in your program to increase the 
 ///		performance and make this class more valuable.
 
-#include <boost/thread/mutex.hpp>
-#include <boost/bind.hpp>
-#include <boost/function.hpp>
-
 #include <vector>
 #include <atomic>
+#include <functional>
+#include <mutex>
 
 
 namespace lv
@@ -41,12 +39,13 @@ namespace lv
 	{
 	protected:
 
-		typedef boost::mutex::scoped_lock	scoped_lock;
-		boost::mutex	mutex_;
+		typedef std::lock_guard<std::mutex>	lock_guard;
+
+		std::mutex	mutex_;
 
 		std::vector<T*>	objects_;
 
-		typedef boost::function<T*()>	creator_type;
+		typedef std::function<T*()>	creator_type;
 		creator_type	creator_;
 
 		static std::atomic<int>	total_num_;
@@ -64,7 +63,7 @@ namespace lv
 
 		virtual	shared_pointer	get()
 		{
-			scoped_lock lock(mutex_);
+			lock_guard lock(mutex_);
 
 			T *	obj = NULL;
 			if (! objects_.empty())
@@ -83,13 +82,13 @@ namespace lv
 
 			post_process(*obj);
 
-			return shared_pointer(obj, boost::bind(&Factory::release, shared_from_this(), _1));
+			return shared_pointer(obj, std::bind(&Factory::release, shared_from_this(), std::placeholders::_1));
 		}
 
 
 		virtual	~Factory()
 		{
-			scoped_lock lock(mutex_);
+			lock_guard lock(mutex_);
 
 			for (T * t : objects_)
 			{
@@ -118,7 +117,7 @@ namespace lv
 
 		virtual void	release(T * obj)
 		{
-			scoped_lock	lock(mutex_);
+			lock_guard lock(mutex_);
 
 			objects_.push_back(obj);
 

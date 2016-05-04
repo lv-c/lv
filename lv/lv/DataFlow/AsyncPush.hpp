@@ -17,7 +17,8 @@
 #include <boost/asio/io_service.hpp>
 #include <boost/asio/strand.hpp>
 
-#include <boost/bind.hpp>
+#include <functional>
+
 
 namespace lv { namespace flow {
 
@@ -41,7 +42,7 @@ namespace lv { namespace flow {
 
 		void operator () (T const & t)
 		{
-			service_wrapper_.post(boost::bind(callback_, t));
+			service_wrapper_.post(std::bind(callback_, t));
 		}
 	};
 

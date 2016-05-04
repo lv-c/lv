@@ -19,8 +19,9 @@
 #include <lv/SharedPtr.hpp>
 #include <lv/SimpleBufferManager.hpp>
 
-#include <boost/thread/thread.hpp>
-
+#include <mutex>
+#include <thread>
+#include <condition_variable>
 
 #pragma comment(lib, "libeay32.lib")
 #pragma comment(lib, "ssleay32.lib")
@@ -32,13 +33,11 @@ using namespace lv;
 #include <string>
 using namespace std;
 
-#include <boost/thread/condition.hpp>
-
 
 namespace asio = boost::asio;
 
-boost::condition g_condition_called;
-boost::mutex	g_mutex;
+condition_variable g_condition_called;
+mutex	g_mutex;
 
 template<class LowerSession>
 class ClientSession : public FlowSession<string, LowerSession>
@@ -75,7 +74,7 @@ private:
 
 		std::cout << "notify:" << str << std::endl;
 
-		boost::mutex::scoped_lock lock(g_mutex);
+		std::lock_guard<mutex> lock(g_mutex);
 		g_condition_called.notify_all();
 	}
 
@@ -134,9 +133,9 @@ void test_net_impl()
 	shared_ptr<client_session_type> client(new client_session_type(client_context));
 	client->connect("127.0.0.1", "5555");
 
-	boost::mutex::scoped_lock lock(g_mutex);
+	unique_lock<mutex> lock(g_mutex);
 
-	boost::thread thread(boost::bind(&asio::io_service::run, &service));
+	std::thread thread([&service]() { service.run(); });
 
 	// wait until it's finished
 	g_condition_called.wait(lock);

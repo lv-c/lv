@@ -16,9 +16,10 @@
 
 #ifdef LV_PLATFORM_WINDOWS
 
-#include <boost/thread/thread.hpp>
+#include <thread>
 
 #include <Windows.h>
+
 
 namespace lv
 {
@@ -26,7 +27,7 @@ namespace lv
 	// void	set_thread_name(DWORD thread_id, char const * name);
 
 	// GetThreadId does NOT exist in XP
-	// void	set_thread_name(boost::thread & thread, char const * name);
+	// void	set_thread_name(std::thread & thread, char const * name);
 
 	void	set_current_thread_name(char const * name);
 }

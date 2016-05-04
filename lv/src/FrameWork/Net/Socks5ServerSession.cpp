@@ -195,9 +195,9 @@ namespace lv { namespace net {
 
 		BOOST_ASSERT(connections_.empty());
 
-		connections_.push_back(dest_session_->connect_event().connect(boost::bind(&Socks5ServerSession::dest_on_connected, this)));
-		connections_.push_back(dest_session_->error_event().connect(boost::bind(&Socks5ServerSession::dest_on_error, this, _1, _2)));
-		connections_.push_back(dest_session_->receive_event().connect(boost::bind(&Socks5ServerSession::dest_on_receive, this, _1)));
+		connections_.push_back(dest_session_->connect_event().connect(std::bind(&Socks5ServerSession::dest_on_connected, this)));
+		connections_.push_back(dest_session_->error_event().connect(std::bind(&Socks5ServerSession::dest_on_error, this, std::placeholders::_1, std::placeholders::_2)));
+		connections_.push_back(dest_session_->receive_event().connect(std::bind(&Socks5ServerSession::dest_on_receive, this, std::placeholders::_1)));
 
 		std::string to_bind = std::dynamic_pointer_cast<ISocks5ServerContext>(context_)->address_to_bind();
 
@@ -357,7 +357,7 @@ namespace lv { namespace net {
 
 	PacketProxy Socks5ServerSession::send()
 	{
-		return PacketProxy(context_->buffer(), boost::bind(&Socks5ServerSession::start_write, this, _1));
+		return PacketProxy(context_->buffer(), std::bind(&Socks5ServerSession::start_write, this, std::placeholders::_1));
 	}
 
 } }

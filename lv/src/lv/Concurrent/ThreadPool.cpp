@@ -25,7 +25,7 @@ namespace lv
 
 		for (size_t i = 0; i < thread_num; ++i)
 		{
-			boost::thread * thread = threads_->create_thread(boost::bind(&ThreadPool::run, name, WeakServicePtr(service),
+			std::thread * thread = threads_->create_thread(std::bind(&ThreadPool::run, name, WeakServicePtr(service),
 				exception_handler_));
 		}
 
@@ -63,7 +63,7 @@ namespace lv
 					break;
 				}
 
-				boost::this_thread::sleep(boost::posix_time::millisec(10));
+				std::this_thread::sleep_for(std::chrono::milliseconds(10));
 			}
 		}
 		catch(std::exception const & ex)

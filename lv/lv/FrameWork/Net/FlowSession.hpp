@@ -47,7 +47,7 @@ namespace lv { namespace net {
 			: base_type(context)
 			, splitter_(context->buffer_manager())
 		{
-			source_.reset(new source_type(boost::bind(&FlowSession::push, this, _1), 
+			source_.reset(new source_type(std::bind(&FlowSession::push, this, std::placeholders::_1),
 				BufferManagerPtr(new PacketBufferManager(1024))));
 		}
 

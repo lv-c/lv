@@ -17,13 +17,12 @@
 #include <lv/DataFlow/Fwd.hpp>
 #include <lv/DataFlow/Invoker.hpp>
 
-#include <map>
-
 #include <boost/noncopyable.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/archive/archive_exception.hpp>
-#include <boost/thread/shared_mutex.hpp>
-#include <boost/thread/lock_guard.hpp>
+
+#include <map>
+#include <shared_mutex>
 
 
 namespace lv { namespace flow {
@@ -54,13 +53,13 @@ namespace lv { namespace flow {
 		class Registery : boost::noncopyable
 		{
 
-			typedef boost::function<void(IArchive &)>	invoker_type;
+			typedef std::function<void(IArchive &)>	invoker_type;
 
 			typedef std::map<Key, invoker_type>	invoker_map;
 
 			invoker_map		invokers_;
 
-			boost::shared_mutex	mutex_;
+			std::shared_timed_mutex	mutex_;
 
 		public:
 
@@ -70,7 +69,7 @@ namespace lv { namespace flow {
 			template<class Signature, class F>
 			void	reg(Key const & key, F f)
 			{
-				boost::lock_guard<boost::shared_mutex> lock(mutex_);
+				std::lock_guard<std::shared_timed_mutex> lock(mutex_);
 
 				if (invokers_.find(key) != invokers_.end())
 				{
@@ -95,7 +94,7 @@ namespace lv { namespace flow {
 
 				{
 					// no deletion, so the iterator will be valid
-					boost::shared_lock<boost::shared_mutex> lock(mutex_);
+					std::shared_lock<std::shared_timed_mutex> lock(mutex_);
 
 					it = invokers_.find(key);
 					if (it == invokers_.end())

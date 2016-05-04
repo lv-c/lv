@@ -5,9 +5,9 @@
 #include <lv/BinaryStream/Vector.hpp>
 #include <lv/Ensure.hpp>
 
-#include <boost/bind.hpp>
-
+#include <functional>
 #include <deque>
+
 
 namespace lv { namespace net {
 
@@ -231,7 +231,7 @@ namespace lv { namespace net {
 		receive_queue_.reset(new ReceiveQueue(context));
 
 		deadline_timer_.reset(new DeadlineTimer(context->service_wrapper(), boost::posix_time::millisec(200), 
-			boost::bind(&MessageQueue::on_timer, this)));
+			std::bind(&MessageQueue::on_timer, this)));
 	}
 
 	void MessageQueue::send(BufferPtr buf)

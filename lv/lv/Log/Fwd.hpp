@@ -11,11 +11,10 @@
 #ifndef LV_LOG_FWD_HPP
 #define LV_LOG_FWD_HPP
 
-#include <boost/function.hpp>
-
 #include <iostream>
 #include <string>
 #include <memory>
+#include <functional>
 
 
 namespace lv 
@@ -43,10 +42,10 @@ namespace lv
 		
 		typedef std::shared_ptr<ostream_type>	ostream_ptr;
 
-		typedef boost::function<void (log::ostream_type &, int)> formatter_type;
+		typedef std::function<void (log::ostream_type &, int)> formatter_type;
 
 		// returns true to output the record and false to suppress it
-		typedef boost::function<bool (int)>	filter_type;
+		typedef std::function<bool (int)>	filter_type;
 
 
 		class Gather;

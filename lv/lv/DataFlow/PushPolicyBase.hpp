@@ -11,7 +11,8 @@
 #ifndef LV_DATAFLOW_PUSHPOLICYBASE_HPP
 #define LV_DATAFLOW_PUSHPOLICYBASE_HPP
 
-#include <boost/function.hpp>
+#include <functional>
+
 
 namespace lv { namespace flow {
 
@@ -20,7 +21,7 @@ namespace lv { namespace flow {
 	{
 	protected:
 
-		typedef boost::function<void(T const &)>	Callback;
+		typedef std::function<void(T const &)>	Callback;
 
 		Callback	callback_;
 

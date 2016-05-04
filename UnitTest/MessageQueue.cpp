@@ -25,7 +25,7 @@ DEFINE_EXCEPTION_MSG(TaskFinished, runtime_error);
 
 class Sender : public ISender
 {
-	typedef boost::function<void(BufferPtr)>	Callback;
+	typedef std::function<void(BufferPtr)>	Callback;
 
 	Callback	callback_;
 
@@ -119,8 +119,8 @@ BOOST_AUTO_TEST_CASE(test_message_queue)
 	MessageQueue client(ctx, lv::shared_from_object(client_sender), MessageQueue::Receiver());
 	MessageQueue server(ctx, lv::shared_from_object(server_sender), BufferReceiver(received, to_send.size()));
 
-	client_sender.set_callback(boost::bind(&MessageQueue::on_receive, &server, _1));
-	server_sender.set_callback(boost::bind(&MessageQueue::on_receive, &client, _1));
+	client_sender.set_callback(std::bind(&MessageQueue::on_receive, &server, std::placeholders::_1));
+	server_sender.set_callback(std::bind(&MessageQueue::on_receive, &client, std::placeholders::_1));
 
 	for (BufferPtr buf : to_send)
 	{

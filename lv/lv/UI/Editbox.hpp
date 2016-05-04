@@ -11,16 +11,17 @@
 #ifndef LV_EDIT_HPP
 #define LV_EDIT_HPP
 
-#include <boost/function.hpp>
-
 #include <lv/UI/Window.hpp>
+
+#include <functional>
+
 
 namespace lv
 {
 	class Editbox : public Window
 	{
 	public:
-		typedef boost::function<bool (wchar_t, Editbox const &)>	filter_type;
+		typedef std::function<bool (wchar_t, Editbox const &)>	filter_type;
 
 	protected:
 		size_t	caret_index_;

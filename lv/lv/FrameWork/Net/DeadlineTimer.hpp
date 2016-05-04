@@ -14,7 +14,8 @@
 #include <lv/ServiceWrapper.hpp>
 
 #include <boost/asio/deadline_timer.hpp>
-#include <boost/function.hpp>
+
+#include <functional>
 
 
 namespace lv { namespace net {
@@ -30,7 +31,7 @@ namespace lv { namespace net {
 
 		boost::posix_time::time_duration	duration_;
 
-		typedef boost::function<void()>		Callback;
+		typedef std::function<void()>		Callback;
 		Callback	callback_;
 
 	public:
