@@ -11,9 +11,10 @@
 #ifndef LV_DATAFLOW_CONNECTION_HPP
 #define LV_DATAFLOW_CONNECTION_HPP
 
-
 #include <boost/any.hpp>
-#include <boost/weak_ptr.hpp>
+
+#include <memory>
+
 
 namespace lv { namespace flow {
 

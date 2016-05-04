@@ -2,7 +2,6 @@
 #include <lv/Concurrent/ThreadName.hpp>
 #include <lv/Concurrent/ThreadGroup.hpp>
 
-#include <boost/weak_ptr.hpp>
 
 namespace lv
 {

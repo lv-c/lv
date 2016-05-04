@@ -15,7 +15,7 @@
 
 #include <boost/asio/deadline_timer.hpp>
 #include <boost/function.hpp>
-#include <boost/weak_ptr.hpp>
+
 
 namespace lv { namespace net {
 
