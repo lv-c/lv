@@ -67,7 +67,7 @@ namespace lv
 		{
 			iostate	state = std::ios_base::goodbit;
 
-			switch(dir)
+			switch (dir)
 			{
 			case std::ios_base::beg:
 				break;

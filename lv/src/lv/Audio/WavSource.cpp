@@ -33,7 +33,7 @@ namespace lv
 				{
 					bin_is >> chunk_id >> chunk_size;
 				}
-				catch(std::ios_base::failure const &)
+				catch (std::ios_base::failure const &)
 				{
 					if (data_offset_ == 0)
 					{
@@ -45,7 +45,7 @@ namespace lv
 					return;
 				}
 
-				switch(chunk_id)
+				switch (chunk_id)
 				{
 				case fmt_id:
 					{
@@ -75,7 +75,7 @@ namespace lv
 				}
 			}
 		}
-		catch(CheckEqualError const &)
+		catch (CheckEqualError const &)
 		{
 			throw InvalidAudioData();
 		}
@@ -88,7 +88,7 @@ namespace lv
 		{
 			istream_->read(buf.data(), buf.size());
 		}
-		catch(std::ios_base::failure const &)
+		catch (std::ios_base::failure const &)
 		{
 			BOOST_ASSERT(false);
 		}

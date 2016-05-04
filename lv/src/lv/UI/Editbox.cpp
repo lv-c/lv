@@ -28,7 +28,7 @@ namespace lv
 
 	void Editbox::on_key_down(KeyEvent & e)
 	{
-		switch(e.key())
+		switch (e.key())
 		{
 		case Key::ArrowLeft:
 			if (caret_index_ > 0)

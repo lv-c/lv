@@ -123,11 +123,11 @@ namespace lv { namespace rpc {
 				{
 					return it->second(ia);
 				}
-				catch(boost::archive::archive_exception const & ex)
+				catch (boost::archive::archive_exception const & ex)
 				{
 					throw SerializationError(ex.code, ".error calling function:" + boost::lexical_cast<std::string>(id));
 				}
-				catch(...)
+				catch (...)
 				{
 					throw;
 				}

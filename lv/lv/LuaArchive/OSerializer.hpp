@@ -136,7 +136,7 @@ namespace lv { namespace lua { namespace archive {
 
 			for (; *t != '\0'; ++t)
 			{
-				switch(*t)
+				switch (*t)
 				{
 				case '\\':
 					os << "\\\\";

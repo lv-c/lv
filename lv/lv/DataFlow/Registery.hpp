@@ -107,11 +107,11 @@ namespace lv { namespace flow {
 				{
 					it->second(ia);
 				}
-				catch(boost::archive::archive_exception const & ex)
+				catch (boost::archive::archive_exception const & ex)
 				{
 					throw SerializationError(ex.code, std::string(".error calling function:") + boost::lexical_cast<std::string>(key));
 				}
-				catch(std::exception const & ex)
+				catch (std::exception const & ex)
 				{
 					throw std::runtime_error(ex.what() + std::string(".error calling function:") + boost::lexical_cast<std::string>(key));
 				}

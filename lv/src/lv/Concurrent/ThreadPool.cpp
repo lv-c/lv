@@ -66,7 +66,7 @@ namespace lv
 				std::this_thread::sleep_for(std::chrono::milliseconds(10));
 			}
 		}
-		catch(std::exception const & ex)
+		catch (std::exception const & ex)
 		{
 			if (handler)
 			{

@@ -86,7 +86,7 @@ namespace lv { namespace net {
 	{
 		asio::ssl::stream_base::handshake_type true_type;
 
-		switch(type)
+		switch (type)
 		{
 		case ClientHandshake:
 			true_type = asio::ssl::stream_base::client;

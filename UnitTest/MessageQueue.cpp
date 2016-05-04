@@ -132,7 +132,7 @@ BOOST_AUTO_TEST_CASE(test_message_queue)
 	{
 		service.run();
 	}
-	catch(TaskFinished const &)
+	catch (TaskFinished const &)
 	{
 	}
 

@@ -161,7 +161,7 @@ namespace lv { namespace lua { namespace archive {
 		{
 			load(obj[t.name()], t.value());
 		}
-		catch(UnmatchedLuaType const & ex)
+		catch (UnmatchedLuaType const & ex)
 		{
 			throw UnmatchedLuaType(t.name() + std::string(" -> ") + ex.what());
 		}

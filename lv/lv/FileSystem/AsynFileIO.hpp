@@ -61,7 +61,7 @@ namespace lv
 			{
 				future();
 			}
-			catch(std::runtime_error const & err)
+			catch (std::runtime_error const & err)
 			{
 				throw file_io_error(err.what());
 			}

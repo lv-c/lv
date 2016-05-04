@@ -12,7 +12,7 @@ namespace lv { namespace net {
 
 	char const * error_string(ErrorType type)
 	{
-		switch(type)
+		switch (type)
 		{
 		case ErrorConnect:
 			return "ErrorConnect";

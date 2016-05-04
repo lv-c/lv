@@ -225,7 +225,7 @@ namespace lv
 			
 			view_t::x_iterator dest_it = view.row_begin(i);
 
-			switch(bmp.pixel_mode)
+			switch (bmp.pixel_mode)
 			{
 			case FT_PIXEL_MODE_GRAY:
 				std::copy(src, src + sz_draw.cx, dest_it);

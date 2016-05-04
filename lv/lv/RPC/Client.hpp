@@ -140,7 +140,7 @@ namespace lv { namespace rpc {
 					Protocol::options::type option = (boost::is_same<Ret, void>::value ? Protocol::options::ack : Protocol::options::ret);
 					client_.send(buffer_, oa_, raw_os_, request_id_, option);
 				}
-				catch(...)
+				catch (...)
 				{
 					client_.remove_promise(request_id_);
 					throw;
@@ -231,11 +231,11 @@ namespace lv { namespace rpc {
 				{
 					v.second->set_exception(ex);
 				}
-				catch(boost::promise_already_satisfied const &)
+				catch (boost::promise_already_satisfied const &)
 				{
 					BOOST_ASSERT(false);
 				}
-				catch(boost::broken_promise const &)
+				catch (boost::broken_promise const &)
 				{
 					BOOST_ASSERT(false);
 				}

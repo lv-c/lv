@@ -124,7 +124,7 @@ namespace lv
 
 			return (uz->find_item(inner_path, &index, &ze) == ZR_OK);
 		}
-		catch(std::exception const &)
+		catch (std::exception const &)
 		{
 			return false;
 		}

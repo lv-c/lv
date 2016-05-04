@@ -130,7 +130,7 @@ namespace lv { namespace net {
 
 		try
 		{
-			switch(status_)
+			switch (status_)
 			{
 			case MethodSelect:
 				handle_method_select_response(bis);
@@ -201,7 +201,7 @@ namespace lv { namespace net {
 		bis >> ver >> rep >> bstream::forward(1) >> addr_type;
 
 		// we don't need the following data but we should still read them all
-		switch(addr_type)
+		switch (addr_type)
 		{
 		case Socks5::IPV4:
 			bis >> bstream::forward(4);
@@ -245,7 +245,7 @@ namespace lv { namespace net {
 	{
 		asio::error::basic_errors asio_err;
 
-		switch(rep)
+		switch (rep)
 		{
 		case 1:		// general SOCKS server failure
 			asio_err = asio::error::connection_refused;	// .....

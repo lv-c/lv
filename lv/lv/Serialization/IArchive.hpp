@@ -136,7 +136,7 @@ namespace lv
 			{
 				istream_.read(static_cast<char *>(address), static_cast<std::streamsize>(count));
 			}
-			catch(std::ios_base::failure const &)
+			catch (std::ios_base::failure const &)
 			{
 				success = false;
 			}

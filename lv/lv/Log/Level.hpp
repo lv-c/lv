@@ -30,7 +30,7 @@ namespace lv
 
 		inline string_type	level_str(int lvl)
 		{
-			switch(lvl)
+			switch (lvl)
 			{
 			case debug:
 				return L_TEXT("debug");

@@ -72,7 +72,7 @@ namespace lv { namespace pool {
 		{
 			detail::construct(addr, expr, boost::addressof(expr));
 		}
-		catch(...)
+		catch (...)
 		{
 			pool_type::free(addr);
 			throw;

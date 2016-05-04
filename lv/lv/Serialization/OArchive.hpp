@@ -118,7 +118,7 @@ namespace lv
 			{
 				ostream_.write(static_cast<char const*>(address), static_cast<std::streamsize>(count));
 			}
-			catch(std::ios_base::failure const &)
+			catch (std::ios_base::failure const &)
 			{
 				success = false;
 			}

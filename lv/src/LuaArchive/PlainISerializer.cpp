@@ -7,7 +7,7 @@ namespace lv { namespace lua { namespace archive {
 	{
 		inline bool is_space::eval(char c)
 		{
-			switch(c)
+			switch (c)
 			{
 			case ' ':
 			case '\t':
@@ -28,7 +28,7 @@ namespace lv { namespace lua { namespace archive {
 				return true;
 			}
 
-			switch(c)
+			switch (c)
 			{
 			case '-':
 			case '.':
@@ -46,7 +46,7 @@ namespace lv { namespace lua { namespace archive {
 
 		inline bool is_symbol::eval(char c)
 		{
-			switch(c)
+			switch (c)
 			{
 			case '{':
 			case '}':
@@ -109,7 +109,7 @@ namespace lv { namespace lua { namespace archive {
 
 				if (*p == '\\')
 				{
-					switch(* ++p)
+					switch (* ++p)
 					{
 					case '\\':
 					case '\'':
@@ -178,7 +178,7 @@ namespace lv { namespace lua { namespace archive {
 
 	char const * Token::name(Token::Type type)
 	{
-		switch(type)
+		switch (type)
 		{
 		case None:
 			return "None";
@@ -327,7 +327,7 @@ namespace lv { namespace lua { namespace archive {
 				return true;
 			}
 		}
-		catch(std::runtime_error const &)
+		catch (std::runtime_error const &)
 		{
 		}
 

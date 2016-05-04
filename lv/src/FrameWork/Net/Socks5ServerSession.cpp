@@ -47,7 +47,7 @@ namespace lv { namespace net {
 
 		try
 		{
-			switch(status_)
+			switch (status_)
 			{
 			case MethodSelect:
 				handle_method_select(bis);
@@ -93,7 +93,7 @@ namespace lv { namespace net {
 
 		send() << Socks5::Version << m;
 
-		switch(m)
+		switch (m)
 		{
 		case Socks5::NoAuth:
 			status_ = Request;
@@ -147,7 +147,7 @@ namespace lv { namespace net {
 
 		boost::system::error_code error;
 
-		switch(addr_type)
+		switch (addr_type)
 		{
 		case Socks5::IPV4:
 			{
@@ -267,7 +267,7 @@ namespace lv { namespace net {
 
 		if (error.category() == asio::error::get_system_category())
 		{
-			switch(error.value())
+			switch (error.value())
 			{
 			case asio::error::network_unreachable:
 				return 3;		// Network unreachable
