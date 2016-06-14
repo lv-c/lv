@@ -11,6 +11,7 @@
 #ifndef LV_GRAPHICS_MATH_HPP
 #define LV_GRAPHICS_MATH_HPP
 
+#include <lv/Config.hpp>
 #include <lv/Graphics/Point.hpp>
 #include <lv/Graphics/Vector.hpp>
 
@@ -53,6 +54,8 @@ namespace lv { namespace math {
 		return math::sqrt((lhs.x - rhs.x) * (lhs.x - rhs.x) + (lhs.y - rhs.y) * (lhs.y - rhs.y));
 	}
 
+#ifndef LV_X64
+
 	inline __declspec(naked) float	rsqrt(float v)
 	{
 		static_assert(sizeof(float) == 4, "32bit only");
@@ -64,6 +67,8 @@ namespace lv { namespace math {
 			retn
 		}
 	}
+
+#endif
 
 	template<typename T>
 	T	dot(VectorT<T> const & lhs, VectorT<T> const & rhs)
@@ -93,10 +98,14 @@ namespace lv { namespace math {
 		return math::sqrt(length_sq(v));
 	}
 
+#ifndef LV_X64
+
 	inline Vector3f	normalize(Vector3f const & v)
 	{
 		return v * rsqrt(length_sq(v));
 	}
+
+#endif
 
 
 	template<typename T>

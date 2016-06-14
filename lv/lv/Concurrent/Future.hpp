@@ -13,17 +13,19 @@
 
 #include <lv/LazyInit.hpp>
 
-#include <boost/thread/future.hpp>
 #include <boost/signals2/signal.hpp>
+
+#include <future>
+
 
 namespace lv
 {
 	template<typename Ret> class Promise;
 
 	template<typename Ret>
-	class Future : public boost::shared_future<Ret>
+	class Future : public std::shared_future<Ret>
 	{
-		typedef	boost::shared_future<Ret>	base_type;
+		typedef	std::shared_future<Ret>	base_type;
 
 		std::weak_ptr<Promise<Ret> >	promise_;
 
@@ -31,7 +33,7 @@ namespace lv
 
 		template<typename> friend class Promise;
 
-		Future(boost::shared_future<Ret> future, std::shared_ptr<Promise<Ret> > promise)
+		Future(std::shared_future<Ret> future, std::shared_ptr<Promise<Ret> > promise)
 			: base_type(future)
 			, promise_(promise)
 		{
@@ -68,13 +70,13 @@ namespace lv
 
 	namespace detail
 	{
-		inline void	promise_set_value(boost::promise<void> & p, void const *)
+		inline void	promise_set_value(std::promise<void> & p, void const *)
 		{
 			p.set_value();
 		}
 
 		template<typename T>
-		void	promise_set_value(boost::promise<T> & p, T const * val)
+		void	promise_set_value(std::promise<T> & p, T const * val)
 		{
 			p.set_value(*val);
 		}
@@ -84,10 +86,10 @@ namespace lv
 	template<typename Ret>
 	class Promise : public std::enable_shared_from_this<Promise<Ret> >
 	{
-		boost::promise<Ret>	promise_;
+		std::promise<Ret>	promise_;
 
 		// promise_.get_future can only be called once
-		boost::shared_future<Ret>	future_;
+		std::shared_future<Ret>	future_;
 
 		typedef boost::signals2::signal<void(Future<Ret>)>	signal_type;
 
@@ -111,7 +113,7 @@ namespace lv
 			signal();
 		}
 
-		void set_exception(boost::exception_ptr p)
+		void set_exception(std::exception_ptr p)
 		{
 			promise_.set_exception(p);
 			signal();

@@ -216,7 +216,7 @@ namespace lv { namespace rpc {
 
 
 		// 
-		void	set_exception(boost::exception_ptr ex)
+		void	set_exception(std::exception_ptr ex)
 		{
 			promise_map pro;
 

@@ -25,7 +25,7 @@ namespace lv { namespace rpc {
 
 			virtual	void	set(typename ArchivePair::iarchive_type & ia) = 0;
 
-			virtual	void	set_exception(boost::exception_ptr ex) = 0;
+			virtual	void	set_exception(std::exception_ptr ex) = 0;
 		};
 
 		template<typename Ret, class ArchivePair>
@@ -75,7 +75,7 @@ namespace lv { namespace rpc {
 				val.load(ia, *promise_);
 			}
 
-			virtual	void	set_exception(boost::exception_ptr ex)
+			virtual	void	set_exception(std::exception_ptr ex)
 			{
 				promise_->set_exception(ex);
 			}

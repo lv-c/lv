@@ -14,6 +14,8 @@
 
 #include <lv/FileSystem/IFileIO.hpp>
 #include <lv/ServiceWrapper.hpp>
+#include <lv/Exception.hpp>
+
 
 namespace lv
 {
@@ -44,6 +46,11 @@ namespace lv
 			return syn_filio_;
 		}
 
+		virtual	bool	exist(std::string const & file)
+		{
+			return syn_filio_->exist(file);
+		}
+
 
 		/** 
 		 * Add a task into the queue and block until it's finished.
@@ -59,7 +66,7 @@ namespace lv
 
 			try
 			{
-				future();
+				future.get();
 			}
 			catch (std::runtime_error const & err)
 			{

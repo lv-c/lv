@@ -6,14 +6,14 @@
 
 namespace lv
 {
-	IFileIO::IFileIO(std::string const & working_dir)
+	IFileIO::IFileIO(std::string const & working_dir /* = std::string() */)
 		: working_dir_(working_dir)
 	{
 	}
 
 	IOFuture IFileIO::add_task(std::string const & file, BufferPtr buf)
 	{
-		IOTask task(shared_from_object(const_cast<std::string &>(file)), buf, this->shared_from_this());
+		IOTask task(file, buf, this->shared_from_this());
 
 		task();
 		return IOFuture(task);

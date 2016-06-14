@@ -24,7 +24,7 @@ namespace lv
 
 	public:
 
-		explicit IFileIO(std::string const & working_dir);
+		explicit IFileIO(std::string const & working_dir = std::string());
 
 		virtual ~IFileIO() {}
 

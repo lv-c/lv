@@ -469,9 +469,6 @@
     <ClInclude Include="..\..\..\lv\lv\Concurrent\ThreadName.hpp">
       <Filter>Concurrent\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\lv\lv\Concurrent\ThreadPool.hpp">
-      <Filter>Concurrent\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\Audio\AudioBuffer.hpp">
       <Filter>Audio\Header Files</Filter>
     </ClInclude>
@@ -853,9 +850,6 @@
       <Filter>FileSystem\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\lv\src\lv\Concurrent\ThreadName.cpp">
-      <Filter>Concurrent\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\lv\src\lv\Concurrent\ThreadPool.cpp">
       <Filter>Concurrent\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\lv\src\lv\Audio\WavSource.cpp">

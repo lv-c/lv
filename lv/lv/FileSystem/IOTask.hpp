@@ -16,19 +16,21 @@
 #include <lv/Buffer.hpp>
 #include <lv/lvlib2.hpp>
 
-// the author forgot to include this in future.hpp ?
-#include <boost/thread/condition_variable.hpp>
-#include <boost/thread/future.hpp>
 #include <boost/operators.hpp>
 
+#include <future>
 #include <string>
 #include <memory>
 
 namespace lv
 {
-	class IOTask : public boost::promise<void>, boost::equality_comparable<IOTask>
+	class IOTask : boost::equality_comparable<IOTask>
 	{
 		friend class IOFuture;
+
+		typedef std::promise<void>	promise_type;
+
+		std::shared_ptr<promise_type>	promise_;
 
 		typedef std::shared_ptr<std::string> string_ptr;
 		string_ptr	file_;
@@ -38,19 +40,7 @@ namespace lv
 
 	public:
 
-		IOTask(std::string const & file, BufferPtr buffer, std::shared_ptr<IFileIO> file_io)
-			: file_(new std::string(file))
-			, buffer_(buffer)
-			, file_io_(file_io)
-		{
-		}
-
-		IOTask(string_ptr file, BufferPtr buffer, std::shared_ptr<IFileIO> file_io)
-			: file_(file)
-			, buffer_(buffer)
-			, file_io_(file_io)
-		{
-		}
+		IOTask(std::string const & file, BufferPtr buffer, std::shared_ptr<IFileIO> file_io);
 
 
 		/**
@@ -65,6 +55,11 @@ namespace lv
 		std::string	const & file() const
 		{
 			return *file_;
+		}
+
+		std::future<void>	get_future()
+		{
+			return std::move(promise_->get_future());
 		}
 
 

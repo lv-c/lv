@@ -19,6 +19,10 @@
 #elif defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
 #	define LV_PLATFORM_WINDOWS
 
+#	ifdef _WIN64
+#		define LV_X64
+#	endif
+
 #else
 #	error "Unknown platform"
 

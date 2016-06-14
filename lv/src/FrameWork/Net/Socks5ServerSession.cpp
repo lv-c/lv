@@ -9,7 +9,6 @@
 #include <lv/BinaryStream/Array.hpp>
 #include <lv/Stream/IBufferStream.hpp>
 
-#include <boost/lexical_cast.hpp>
 #include <boost/asio/ip/tcp.hpp>
 
 
@@ -203,7 +202,7 @@ namespace lv { namespace net {
 
 		try
 		{
-			dest_session_->connect(host, boost::lexical_cast<std::string>(port), to_bind);
+			dest_session_->connect(host, std::to_string(port), to_bind);
 		}
 		catch (boost::system::system_error const & err)
 		{

@@ -15,9 +15,10 @@
 
 namespace lv
 {
-	class IOFuture : public boost::unique_future<void>, boost::equality_comparable<IOFuture>
+	class IOFuture : public std::future<void>, boost::equality_comparable<IOFuture>
 	{
 		std::shared_ptr<std::string const>	file_;
+
 		BufferPtr	buffer_;
 
 	public:
@@ -25,7 +26,7 @@ namespace lv
 		IOFuture(IOTask & task)
 			: file_(task.file_)
 			, buffer_(task.buffer_)
-			, boost::unique_future<void>(task.get_future())
+			, std::future<void>(task.get_future())
 		{
 		}
 
