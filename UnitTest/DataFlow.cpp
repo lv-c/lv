@@ -131,10 +131,7 @@ BOOST_AUTO_TEST_CASE(test_dataflow)
 	lv::flow::Connection conn = dataflow.connect(port_type(), std::bind(&sink_type::push, &sink, std::placeholders::_1));
 
 	source.call("hello");
-	source.stream("hello");
-
-	// streaming
-	source.stream("sum") << 10 << 40.3f;
+	source.call("sum", 10, 40.3f);
 
 
 	MemoryAnalyser::instance().attach();

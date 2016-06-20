@@ -11,8 +11,6 @@
 #ifndef LV_SHAREDPTR_HPP
 #define LV_SHAREDPTR_HPP
 
-#include <lv/Config.hpp>
-
 #include <memory>
 
 

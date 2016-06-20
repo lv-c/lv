@@ -259,7 +259,6 @@
     <ClInclude Include="..\..\..\lv\lv\ContainerAdaptor\Vector.hpp" />
     <ClInclude Include="..\..\..\lv\lv\DataFlow.hpp" />
     <ClInclude Include="..\..\..\lv\lv\DataFlow\AsyncPush.hpp" />
-    <ClInclude Include="..\..\..\lv\lv\DataFlow\Config.hpp" />
     <ClInclude Include="..\..\..\lv\lv\DataFlow\Connection.hpp" />
     <ClInclude Include="..\..\..\lv\lv\DataFlow\DataFlow.hpp" />
     <ClInclude Include="..\..\..\lv\lv\DataFlow\Fwd.hpp" />
@@ -268,7 +267,6 @@
     <ClInclude Include="..\..\..\lv\lv\DataFlow\Registery.hpp" />
     <ClInclude Include="..\..\..\lv\lv\DataFlow\Sink.hpp" />
     <ClInclude Include="..\..\..\lv\lv\DataFlow\Source.hpp" />
-    <ClInclude Include="..\..\..\lv\lv\DataFlow\StreamProxy.hpp" />
     <ClInclude Include="..\..\..\lv\lv\DataFlow\SyncPush.hpp" />
     <ClInclude Include="..\..\..\lv\lv\DataFlow\ThreadedPush.hpp" />
     <ClInclude Include="..\..\..\lv\lv\DelayTimer.hpp" />
@@ -372,7 +370,6 @@
     <ClInclude Include="..\..\..\lv\lv\RPC\ArchiveBase.hpp" />
     <ClInclude Include="..\..\..\lv\lv\RPC\Client.hpp" />
     <ClInclude Include="..\..\..\lv\lv\RPC\Common.hpp" />
-    <ClInclude Include="..\..\..\lv\lv\RPC\Config.hpp" />
     <ClInclude Include="..\..\..\lv\lv\RPC\Future.hpp" />
     <ClInclude Include="..\..\..\lv\lv\RPC\Fwd.hpp" />
     <ClInclude Include="..\..\..\lv\lv\RPC\Invoker.hpp" />

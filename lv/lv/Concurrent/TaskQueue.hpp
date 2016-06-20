@@ -127,13 +127,13 @@ namespace lv
 			queue_.clear();
 		}
 
-		size_t	size() const
+		size_t	size()
 		{
 			lock_guard lock(mutex_);
 			return queue_.size();
 		}
 
-		bool	empty() const
+		bool	empty()
 		{
 			lock_guard lock(mutex_);
 			return queue_.empty();

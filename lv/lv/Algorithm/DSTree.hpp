@@ -51,12 +51,6 @@ namespace lv
 				return lhs.pred_(lhs.key_, key);
 			}
 
-			// Bug of vc2005?
-			bool operator () (Key const & key, DSTree const & rhs) const
-			{
-				return rhs.pred_(key, rhs.key_);
-			}
-
 			bool operator () (DSTree const & lhs, DSTree const & rhs) const
 			{
 				return lhs.pred_(lhs.key_, rhs.key_);

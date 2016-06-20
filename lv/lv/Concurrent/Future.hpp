@@ -60,7 +60,7 @@ namespace lv
 			}
 			else
 			{
-				throw boost::broken_promise();
+				throw std::future_error(std::make_error_code(std::future_errc::broken_promise));
 			}
 		}
 	};

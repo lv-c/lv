@@ -13,12 +13,12 @@
 
 #include <lv/MemFn.hpp>
 
-#include <lv/RPC/Config.hpp>
 #include <lv/RPC/Registery.hpp>
 #include <lv/RPC/Common.hpp>
 #include <lv/RPC/RpcBase.hpp>
 #include <lv/RPC/Protocol.hpp>
 #include <lv/Ensure.hpp>
+
 
 namespace lv { namespace rpc {
 

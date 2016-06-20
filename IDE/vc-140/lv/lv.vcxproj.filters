@@ -424,9 +424,6 @@
     <ClInclude Include="..\..\..\lv\lv\RPC\Common.hpp">
       <Filter>RPC\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\lv\lv\RPC\Config.hpp">
-      <Filter>RPC\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\RPC\Future.hpp">
       <Filter>RPC\Header Files</Filter>
     </ClInclude>
@@ -550,9 +547,6 @@
     <ClInclude Include="..\..\..\lv\lv\DataFlow\AsyncPush.hpp">
       <Filter>DataFlow\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\lv\lv\DataFlow\Config.hpp">
-      <Filter>DataFlow\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\DataFlow\Connection.hpp">
       <Filter>DataFlow\Header Files</Filter>
     </ClInclude>
@@ -575,9 +569,6 @@
       <Filter>DataFlow\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\DataFlow\Source.hpp">
-      <Filter>DataFlow\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\lv\lv\DataFlow\StreamProxy.hpp">
       <Filter>DataFlow\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\DataFlow\SyncPush.hpp">

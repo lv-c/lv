@@ -80,7 +80,7 @@ pair<string, int> test_pair(pair<string, int> const & p)
 	return p;
 }
 
-boost::tuple<string, int, bool> test_tuple(boost::tuple<string, int, bool> const & t)
+tuple<string, int, bool> test_tuple(tuple<string, int, bool> const & t)
 {
 	return t;
 }
@@ -221,12 +221,12 @@ BOOST_AUTO_TEST_CASE(test_rpc)
 	BOOST_CHECK(pair_type(client.call<pair_type>("test_pair", make_pair(string("hello"), 100))) 
 		== make_pair(string("hello"), 100));
 
-	// test boost::tuple type
-	typedef boost::tuple<string, int, bool> tuple_type;
-	BOOST_CHECK(tuple_type(client.call<tuple_type>("test_tuple", boost::make_tuple(string("what"), 3, true))) 
-		== boost::make_tuple(string("what"), 3, true));
+	// test std::tuple type
+	typedef tuple<string, int, bool> tuple_type;
+	BOOST_CHECK(tuple_type(client.call<tuple_type>("test_tuple", std::make_tuple(string("what"), 3, true))) 
+		== std::make_tuple(string("what"), 3, true));
 
-	// test boost::fusion::vector type. fusion::vector is not supported. please use boost::tuple instead
+	// test boost::fusion::vector type. fusion::vector is not supported. please use std::tuple instead
 	/*
 	typedef boost::fusion::vector<int, string> fusion_vec_type;
 	Future<fusion_vec_type> fv_ret = client.call<fusion_vec_type>("test_fusion_vector", boost::fusion::make_vector(5, string("ok")));

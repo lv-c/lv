@@ -8,38 +8,21 @@
 // 
 // *********************************************************************
 
-#if !BOOST_PP_IS_ITERATING
-
 #ifndef LV_RPC_CLIENT_HPP
 #define LV_RPC_CLIENT_HPP
 
-#include <lv/Config.hpp>
 #include <lv/Exception.hpp>
 #include <lv/Ensure.hpp>
 
-#include <lv/RPC/Config.hpp>
 #include <lv/RPC/RpcBase.hpp>
 #include <lv/RPC/Future.hpp>
 #include <lv/RPC/Protocol.hpp>
 #include <lv/RPC/Common.hpp>
 
-#include <boost/preprocessor/iteration/iterate.hpp>
-#include <boost/preprocessor/repetition/enum.hpp>
-#include <boost/preprocessor/repetition/enum_params.hpp>
-#include <boost/preprocessor/punctuation/comma_if.hpp>
-
-#include <boost/tuple/tuple.hpp>
-#include <boost/fusion/algorithm/iteration/for_each.hpp>
-#include <boost/fusion/adapted/boost_tuple.hpp>
-
 #include <boost/assert.hpp>
 
 #include <map>
-
-#ifdef LV_PLATFORM_WINDOWS
-#define WIN32_LEAN_AND_MEAN
-#include <Windows.h>
-#endif
+#include <atomic>
 
 
 namespace lv { namespace rpc {
@@ -61,9 +44,10 @@ namespace lv { namespace rpc {
 		typedef typename ArchivePair::iarchive_type	iarchive_type;
 		typedef typename ArchivePair::oarchive_type	oarchive_type;
 
-		volatile long	next_request_id_;
-
 		typedef typename Protocol::request_id_type request_id_type;
+
+		std::atomic<request_id_type>	next_request_id_;
+
 
 		typedef std::shared_ptr<detail::IPromise<ArchivePair> >	PromiseBasePtr;
 		typedef std::map<request_id_type, PromiseBasePtr>	promise_map;
@@ -208,11 +192,22 @@ namespace lv { namespace rpc {
 			promise->set(ia);
 		}
 
-		/**
-		 * call
-		 */
-#		define BOOST_PP_ITERATION_PARAMS_1 (3, (0, LV_RPC_MAX_ARITY, <lv/RPC/Client.hpp>))
-#		include BOOST_PP_ITERATE()
+
+		template<typename Ret, typename ...Types>
+		PrivateHandler<Ret> call(Id const & id, Types const &... args)
+		{
+			BufferPtr buf = this->get_buffer();
+
+			OStreamPtr raw_os = ostream_factory_.open(*buf);
+			auto oa = pool::alloc<oarchive_type>(boost::ref(*raw_os));
+
+			(*oa) << Protocol::header::call << id;
+			int dummy[] = { 0, ((*oa << args), 0)... };
+
+			raw_os->flush();
+
+			return PrivateHandler<Ret>(*this, buf, oa, raw_os, next_request_id_++);
+		}
 
 
 		// 
@@ -231,11 +226,7 @@ namespace lv { namespace rpc {
 				{
 					v.second->set_exception(ex);
 				}
-				catch (boost::promise_already_satisfied const &)
-				{
-					BOOST_ASSERT(false);
-				}
-				catch (boost::broken_promise const &)
+				catch (std::future_error const &)
 				{
 					BOOST_ASSERT(false);
 				}
@@ -250,49 +241,6 @@ namespace lv { namespace rpc {
 		}
 	
 	private:
-
-		class Serialize
-		{
-			oarchive_type & oa_;
-
-		public:
-			Serialize(oarchive_type & oa) : oa_(oa) {}
-
-			template<typename T>
-			void operator() (T const * t) const
-			{
-				// use RPC_REGISTER_CLASS to register your class
-				//BOOST_STATIC_ASSERT((boost::serialization::implementation_level<T>::value != 
-				//	boost::serialization::object_class_info));
-				oa_ << *t;
-			}
-		};
-
-
-		request_id_type	next_request_id()
-		{
-#ifdef LV_PLATFORM_WINDOWS
-
-			return InterlockedIncrement(&next_request_id_);
-#endif
-		}
-
-		template<typename Ret, class Tuple>
-		PrivateHandler<Ret> call_impl(Id const & id, Tuple const & args)
-		{
-			BufferPtr buf = this->get_buffer();
-
-			OStreamPtr raw_os = ostream_factory_.open(*buf);
-			auto oa = pool::alloc<oarchive_type>(boost::ref(*raw_os));
-
-			(*oa) << Protocol::header::call << id;
-			boost::fusion::for_each(args, Serialize(*oa));
-
-			raw_os->flush();
-
-			return PrivateHandler<Ret>(*this, buf, oa, raw_os, next_request_id());
-		}
-
 
 		void	send(BufferPtr & buf, std::shared_ptr<oarchive_type> oa, OStreamPtr raw_os, request_id_type request_id, Protocol::options::type option)
 		{
@@ -328,32 +276,3 @@ namespace lv { namespace rpc {
 } }
 
 #endif
-
-#else
-
-#define LV_RPC_call_params(z, n, data) T##n const & t##n
-#define LV_RPC_pointer_type(z, n, data) T##n const *
-
-#define n BOOST_PP_ITERATION()
-
-template<typename Ret BOOST_PP_COMMA_IF(n) BOOST_PP_ENUM_PARAMS(n, typename T)>
-PrivateHandler<Ret>	call(Id const & id BOOST_PP_COMMA_IF(n) BOOST_PP_ENUM(n, LV_RPC_call_params, ~))
-{
-	typedef boost::tuples::tuple<BOOST_PP_ENUM(n, LV_RPC_pointer_type, ~)> tuple_t;
-
-#if n == 0
-	tuple_t args;
-#else
-	tuple_t args(BOOST_PP_ENUM_PARAMS(n, &t));
-#endif
-
-	return this->call_impl<Ret>(id, args);
-}
-
-
-#undef LV_RPC_call_params
-#undef LV_RPC_pointer_type
-#undef n
-
-
-#endif 
