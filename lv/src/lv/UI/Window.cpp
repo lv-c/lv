@@ -5,7 +5,7 @@ namespace lv
 	Window::Window()
 		: visible_(true)
 		, enabled_(true)
-		, parent_(NULL)
+		, parent_(nullptr)
 	{
 	}
 
@@ -17,7 +17,7 @@ namespace lv
 			return;
 		}
 
-		if (renderer_.get() != NULL)
+		if (renderer_.get() != nullptr)
 		{
 			renderer_->render();
 		}

@@ -46,7 +46,7 @@ namespace lv
 		explicit BinaryOStream(Buffer & buf)
 			: raw_os_(boost::ref(buf))
 		{
-			OStreamProxy::set(NULL, raw_os_.get_ptr());
+			OStreamProxy::set(nullptr, raw_os_.get_ptr());
 
 			set_exceptions();
 		}
@@ -54,7 +54,7 @@ namespace lv
 		explicit BinaryOStream(BufferPtr buf)
 			: raw_os_(buf)
 		{
-			OStreamProxy::set(NULL, raw_os_.get_ptr());
+			OStreamProxy::set(nullptr, raw_os_.get_ptr());
 
 			set_exceptions();
 		}

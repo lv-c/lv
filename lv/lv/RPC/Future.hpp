@@ -45,7 +45,7 @@ namespace lv { namespace rpc {
 		{
 			void	load(typename ArchivePair::iarchive_type & ia, Promise<void> & promise)
 			{
-				promise.set_value(NULL);
+				promise.set_value(nullptr);
 			}
 		};
 

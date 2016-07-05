@@ -243,7 +243,7 @@ namespace lv { namespace lua { namespace archive {
 			memcpy(buf, token.begin, token.size());
 			buf[token.size()] = '\0';
 
-			char * end = NULL;
+			char * end = nullptr;
 			double val = strtod(buf, &end);
 
 			LV_ENSURE(buf + token.size() == end, "invalid number:" + token.str());

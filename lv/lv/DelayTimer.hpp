@@ -28,14 +28,14 @@ namespace lv
 
 		explicit DelayTimer(char const * name = "LvDelayTimer")
 		{
-			timer_ = CreateWaitableTimerA(NULL, TRUE, name);
-			BOOST_ASSERT(timer_ != NULL);
+			timer_ = CreateWaitableTimerA(nullptr, TRUE, name);
+			BOOST_ASSERT(timer_ != nullptr);
 		}
 
 		~DelayTimer()
 		{
 			CloseHandle(timer_);
-			timer_ = NULL;
+			timer_ = nullptr;
 		}
 
 		void	sleep(int ms) const
@@ -43,7 +43,7 @@ namespace lv
 			LARGE_INTEGER due_time;
 			due_time.QuadPart = - ms * 10000;
 
-			if (timer_ != NULL && SetWaitableTimer(timer_, &due_time, 0, NULL, NULL, 0))
+			if (timer_ != nullptr && SetWaitableTimer(timer_, &due_time, 0, nullptr, nullptr, 0))
 			{
 				if (WaitForSingleObject(timer_, INFINITE) == WAIT_OBJECT_0)
 				{

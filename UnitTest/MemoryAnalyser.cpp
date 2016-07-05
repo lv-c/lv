@@ -115,7 +115,7 @@ uint64 MemoryAnalyser::end_analyse(int & counter)
 
 void MemoryAnalyser::add(void const * addr, size_t size)
 {
-	if (addr != NULL)
+	if (addr != nullptr)
 	{
 		counter_ ++;
 

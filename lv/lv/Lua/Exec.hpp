@@ -26,8 +26,8 @@ namespace lv { namespace lua {
 
 
 	/// @exception runtime_error
-	/// @name set to str if name is NULL
-	void dostr(lua_State * L, char const * str, size_t size, char const * name = NULL, pcall_handler h = default_pcall_handler);
+	/// @name set to str if name is nullptr
+	void dostr(lua_State * L, char const * str, size_t size, char const * name = nullptr, pcall_handler h = default_pcall_handler);
 
 
 } }

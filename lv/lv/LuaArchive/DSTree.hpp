@@ -42,7 +42,7 @@ namespace lv { namespace lua { namespace archive {
 			std::deque<Key> keys;
 			tree_type const * root = &tree;
 
-			while (root->parent() != NULL)
+			while (root->parent() != nullptr)
 			{
 				keys.push_front(root->key());
 				root = root->parent();

@@ -65,7 +65,7 @@ namespace lv
 		{
 			lock_guard lock(mutex_);
 
-			T *	obj = NULL;
+			T *	obj = nullptr;
 			if (! objects_.empty())
 			{
 				obj = objects_.back();

@@ -35,14 +35,14 @@ namespace lv
 		long lStdHandle = (long)GetStdHandle(STD_ERROR_HANDLE);
 		int hConHandle = _open_osfhandle(lStdHandle, _O_TEXT);       
 		FILE* fp = _fdopen(hConHandle,"w");
-		if (fp == NULL)
+		if (fp == nullptr)
 		{
 			return false;
 		}
 
 		if (std_io)
 		{
-			setvbuf(fp, NULL, _IONBF, 0);
+			setvbuf(fp, nullptr, _IONBF, 0);
 
 			*stderr = *fp;
 			*stdout	= *fp;

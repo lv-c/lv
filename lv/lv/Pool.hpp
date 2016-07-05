@@ -11,17 +11,9 @@
 #ifndef LV_POOL_HPP
 #define LV_POOL_HPP
 
-#include <lv/Config.hpp>
 #include <lv/Ensure.hpp>
 
-// some of the following header files include Windows.h and haven't define WIN32_LEAN_AND_MEAN
-#ifdef LV_PLATFORM_WINDOWS
-#define WIN32_LEAN_AND_MEAN
-#endif
-
 #include <boost/pool/singleton_pool.hpp>
-#include <boost/utility/in_place_factory.hpp>
-#include <boost/utility/typed_in_place_factory.hpp>
 
 #include <memory>
 
@@ -38,39 +30,20 @@ namespace lv { namespace pool {
 			t->~T();
 			boost::singleton_pool<PoolTag, sizeof(T)>::free(t);
 		}
-
-		// thank boost::optional
-		template<typename T, typename Expr>
-		void	construct(T * addr, Expr const & expr, void const *)
-		{
-			new (addr) T(expr);
-		}
-
-		template<typename T, typename Expr>
-		void	construct(T * addr, Expr const & factory, boost::in_place_factory_base const *)
-		{
-			factory.template apply<T>(addr);
-		}
-
-		template<typename T, typename Expr>
-		void	construct(T * addr, Expr const & factory, boost::typed_in_place_factory_base const *)
-		{
-			factory.apply(addr);
-		}
 	}
 
 	// use boost::ref if the constructor needs a non-const reference argument
-	template<typename T, typename Expr>
-	std::shared_ptr<T>	alloc(Expr const & expr)
+	template<typename T, typename ...Types>
+	std::shared_ptr<T>	alloc(Types &&... args)
 	{
 		typedef boost::singleton_pool<PoolTag, sizeof(T)>	pool_type;
 
 		T * addr = static_cast<T *>(pool_type::malloc());
-		LV_ENSURE(addr != 0, std::bad_alloc());
+		LV_ENSURE(addr != nullptr, std::bad_alloc());
 
 		try
 		{
-			detail::construct(addr, expr, boost::addressof(expr));
+			new (addr) T(std::forward<Types>(args)...);
 		}
 		catch (...)
 		{
@@ -79,12 +52,6 @@ namespace lv { namespace pool {
 		}
 
 		return std::shared_ptr<T>(addr, &detail::dealloc<T>);
-	}
-
-	template<typename T>
-	std::shared_ptr<T>	alloc()
-	{
-		return alloc<T>(boost::in_place_factory0());
 	}
 
 } }

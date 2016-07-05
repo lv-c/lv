@@ -55,7 +55,7 @@ namespace lv
 		typedef T const * const_iterator;
 
 		BufferRefT()
-			: data_(NULL)
+			: data_(nullptr)
 			, size_(0)
 		{
 		}
@@ -74,14 +74,14 @@ namespace lv
 		}
 
 		BufferRefT(std::vector<T> & buf)
-			: data_(buf.empty() ? NULL : &buf[0])
+			: data_(buf.empty() ? nullptr : &buf[0])
 			, size_(buf.size())
 		{
 		}
 
 		BufferRefT(std::shared_ptr<std::vector<T> > & buf_ptr)
 			: holder_(buf_ptr)
-			, data_(buf_ptr->empty() ? NULL : &(*buf_ptr)[0])
+			, data_(buf_ptr->empty() ? nullptr : &(*buf_ptr)[0])
 			, size_(buf_ptr->size())
 		{
 		}
@@ -104,7 +104,7 @@ namespace lv
 
 		bool empty() const
 		{
-			return data_ == NULL || size_ == 0;
+			return data_ == nullptr || size_ == 0;
 		}
 
 		iterator begin()
@@ -128,14 +128,14 @@ namespace lv
 
 		reference operator [] (size_t index)
 		{
-			BOOST_ASSERT(data_ != NULL);
+			BOOST_ASSERT(data_ != nullptr);
 			BOOST_ASSERT(index < size_);
 			return data_[index];
 		}
 
 		const_reference operator[] (size_t index) const
 		{
-			BOOST_ASSERT(data_ != NULL);
+			BOOST_ASSERT(data_ != nullptr);
 			BOOST_ASSERT(index < size_);
 			return data_[index];
 		}
@@ -159,7 +159,7 @@ namespace lv
 
 
 		ConstBufferRefT()
-			: data_(NULL)
+			: data_(nullptr)
 			, size_(0)
 		{
 		}
@@ -178,14 +178,14 @@ namespace lv
 		}
 
 		ConstBufferRefT(std::vector<T> const & buf)
-			: data_(buf.empty() ? NULL : &buf[0])
+			: data_(buf.empty() ? nullptr : &buf[0])
 			, size_(buf.size())
 		{
 		}
 
 		ConstBufferRefT(std::shared_ptr<std::vector<T> > const & buf_ptr)
 			: holder_(buf_ptr)
-			, data_(buf_ptr->empty() ? NULL : &(*buf_ptr)[0])
+			, data_(buf_ptr->empty() ? nullptr : &(*buf_ptr)[0])
 			, size_(buf_ptr->size())
 		{
 		}
@@ -209,7 +209,7 @@ namespace lv
 
 		bool empty() const
 		{
-			return data_ == NULL || size_ == 0;
+			return data_ == nullptr || size_ == 0;
 		}
 
 		const_iterator begin() const
@@ -224,7 +224,7 @@ namespace lv
 
 		const_reference operator[] (size_t index) const
 		{
-			BOOST_ASSERT(data_ != NULL);
+			BOOST_ASSERT(data_ != nullptr);
 			BOOST_ASSERT(index < size_);
 			return data_[index];
 		}
@@ -327,17 +327,17 @@ namespace lv
 
 		inline char * data(Buffer & buf)
 		{
-			return buf.empty() ? NULL : &buf[0];
+			return buf.empty() ? nullptr : &buf[0];
 		}
 
 		inline char const * data(Buffer const & buf)
 		{
-			return buf.empty() ? NULL : &buf[0];
+			return buf.empty() ? nullptr : &buf[0];
 		}
 
 		inline char * data(BufferPtr const & buf)
 		{
-			return buf->empty() ? NULL : &(*buf)[0];
+			return buf->empty() ? nullptr : &(*buf)[0];
 		}
 
 		inline std::string	to_string(ConstBufferRef const & buf)

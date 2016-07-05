@@ -29,31 +29,31 @@ namespace lv
 	public:
 
 		ServiceWrapper()
-			: service_(NULL)
-			, strand_(NULL)
+			: service_(nullptr)
+			, strand_(nullptr)
 		{
 		}
 
 		ServiceWrapper(boost::asio::io_service & service)
 			: service_(&service)
-			, strand_(NULL)
+			, strand_(nullptr)
 		{
 		}
 
 		ServiceWrapper(boost::asio::strand & strand)
-			: service_(NULL)
+			: service_(nullptr)
 			, strand_(&strand)
 		{
 		}
 
 		operator bool() const
 		{
-			return (service_ != NULL || strand_ != NULL);
+			return (service_ != nullptr || strand_ != nullptr);
 		}
 
 		boost::asio::io_service &	service() const
 		{
-			if (service_ != NULL)
+			if (service_ != nullptr)
 			{
 				return *service_;
 			}
@@ -65,12 +65,12 @@ namespace lv
 
 		bool	has_strand() const
 		{
-			return (strand_ != NULL);
+			return (strand_ != nullptr);
 		}
 
 		boost::asio::strand &	strand() const
 		{
-			BOOST_ASSERT(strand_ != NULL);
+			BOOST_ASSERT(strand_ != nullptr);
 			return *strand_;
 		}
 
@@ -79,7 +79,7 @@ namespace lv
 		{
 			BOOST_ASSERT(*this);
 
-			if (service_ != NULL)
+			if (service_ != nullptr)
 			{
 				service_->post(handler);
 			}

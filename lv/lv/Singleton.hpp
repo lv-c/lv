@@ -17,7 +17,6 @@
 
 #include <boost/assert.hpp>
 
-#include <lv/Config.hpp>	// for ( NULL ...
 
 namespace lv
 {
@@ -37,7 +36,7 @@ namespace lv
 
 		static bool	initialized()
 		{
-			return instance_ != NULL;
+			return instance_ != nullptr;
 		}
 
 	private:
@@ -57,7 +56,7 @@ namespace lv
 		template <>
 		static T & instance_impl<false>()
 		{
-			BOOST_ASSERT(instance_ != NULL);
+			BOOST_ASSERT(instance_ != nullptr);
 			return *instance_;
 		}
 
@@ -65,12 +64,12 @@ namespace lv
 
 		Singleton()
 		{
-			BOOST_ASSERT(instance_ == NULL);
+			BOOST_ASSERT(instance_ == nullptr);
 			instance_ = static_cast<T*>(this);
 		}
 		virtual	~Singleton() 
 		{
-			instance_ = NULL;
+			instance_ = nullptr;
 		}
 
 
@@ -80,7 +79,7 @@ namespace lv
 	};
 
 	template <class T, bool StaticAlloc>
-	T* Singleton<T, StaticAlloc>::instance_ = NULL;
+	T* Singleton<T, StaticAlloc>::instance_ = nullptr;
 
 }
 

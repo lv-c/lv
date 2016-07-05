@@ -31,26 +31,26 @@ namespace lv
 	protected:
 
 		StreamProxyBase()
-			: std_ios_(NULL)
-			, lv_ios_(NULL)
+			: std_ios_(nullptr)
+			, lv_ios_(nullptr)
 		{
 		}
 
 		StreamProxyBase(std::ios_base & ios)
 			: std_ios_(&ios)
-			, lv_ios_(NULL)
+			, lv_ios_(nullptr)
 		{
 		}
 
 		StreamProxyBase(StreamBase & ios)
 			: lv_ios_(&ios)
-			, std_ios_(NULL)
+			, std_ios_(nullptr)
 		{
 		}
 
 		void	set(std::ios_base * std_ios, StreamBase * lv_ios)
 		{
-			BOOST_ASSERT(std_ios == NULL || lv_ios == NULL);
+			BOOST_ASSERT(std_ios == nullptr || lv_ios == nullptr);
 
 			this->std_ios_ = std_ios;
 			this->lv_ios_ = lv_ios;

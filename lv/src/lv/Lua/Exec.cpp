@@ -9,9 +9,9 @@
 
 namespace lv { namespace lua {
 
-	void dostr(lua_State * L, char const * str, size_t size, char const * name /* = NULL */, pcall_handler h /* = default_pcall_handler */)
+	void dostr(lua_State * L, char const * str, size_t size, char const * name /* = nullptr */, pcall_handler h /* = default_pcall_handler */)
 	{
-		if (name == NULL)
+		if (name == nullptr)
 		{
 			name = str;
 		}

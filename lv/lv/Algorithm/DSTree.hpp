@@ -75,7 +75,7 @@ namespace lv
 
 		explicit DSTree(Pred const & pred = Pred())
 			: pred_(pred)
-			, parent_(NULL)
+			, parent_(nullptr)
 		{
 		}
 
@@ -243,7 +243,7 @@ namespace lv
 				iterator it = tree->find_child(key);
 				if (it == tree->end())
 				{
-					return NULL;
+					return nullptr;
 				}
 
 				tree = &*it;
@@ -259,7 +259,7 @@ namespace lv
 		{
 			DSTree * tree = sub_tree(seq);
 
-			if (tree == NULL)
+			if (tree == nullptr)
 			{
 				return data_pointer();
 			}
@@ -272,7 +272,7 @@ namespace lv
 		 * @param size size of the matched sequence
 		 */
 		template<class KeyRange>
-		data_pointer first_match(KeyRange const & seq, size_t * size = NULL) const
+		data_pointer first_match(KeyRange const & seq, size_t * size = nullptr) const
 		{
 			size_t len = 0;
 
@@ -288,7 +288,7 @@ namespace lv
 				}
 				else if (it->data_)
 				{
-					if (size != NULL)
+					if (size != nullptr)
 					{
 						*size = len;
 					}
@@ -316,9 +316,9 @@ namespace lv
 				return false;
 			}
 
-			if (parent_ == NULL)
+			if (parent_ == nullptr)
 			{
-				if (rhs.parent_ != NULL)
+				if (rhs.parent_ != nullptr)
 				{
 					return false;
 				}

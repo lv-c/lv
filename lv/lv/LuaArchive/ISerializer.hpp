@@ -33,8 +33,8 @@ namespace lv { namespace lua { namespace archive {
 	public:
 		UnmatchedLuaType(int given, int expected)
 			: std::runtime_error(std::string("unmatched lua type:") +
-				lua_typename(NULL, expected) + " expected, " +
-				lua_typename(NULL, given) + " given.")
+				lua_typename(nullptr, expected) + " expected, " +
+				lua_typename(nullptr, given) + " given.")
 		{
 		}
 

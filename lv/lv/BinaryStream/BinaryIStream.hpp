@@ -48,7 +48,7 @@ namespace lv
 		explicit BinaryIStream(ConstBufferRef const & buf)
 			: raw_is_(buf)
 		{
-			IStreamProxy::set(NULL, raw_is_.get_ptr());
+			IStreamProxy::set(nullptr, raw_is_.get_ptr());
 
 			set_exceptions();
 		}

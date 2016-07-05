@@ -29,8 +29,8 @@ namespace lv
 		// delayed initialization
 
 		OStreamProxy()
-			: std_ios_(NULL)
-			, lv_ios_(NULL)
+			: std_ios_(nullptr)
+			, lv_ios_(nullptr)
 		{
 		}
 
@@ -47,14 +47,14 @@ namespace lv
 		OStreamProxy(std::ostream & ios)
 			: StreamProxyBase(ios)
 			, std_ios_(&ios)
-			, lv_ios_(NULL)
+			, lv_ios_(nullptr)
 		{
 		}
 
 		OStreamProxy(OBufferStream & ios)
 			: StreamProxyBase(ios)
 			, lv_ios_(&ios)
-			, std_ios_(NULL)
+			, std_ios_(nullptr)
 		{
 		}
 

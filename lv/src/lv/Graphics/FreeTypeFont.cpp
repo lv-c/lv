@@ -10,7 +10,7 @@
 
 namespace lv
 {
-	FT_Library FreeTypeFont::ft_lib_ = NULL;
+	FT_Library FreeTypeFont::ft_lib_ = nullptr;
 	int FreeTypeFont::ft_ref_count_ = 0;
 
 // number of pixels between glyphs
@@ -20,7 +20,7 @@ namespace lv
 	FreeTypeFont::FreeTypeFont(std::string const & name, size_t height, bool anti_aliased /* = true */, Size tex_size /* = Size */)
 		: Font(name, height)
 		, tex_size_(tex_size)
-		, face_(NULL)
+		, face_(nullptr)
 		, anti_aliased_(anti_aliased)
 	{
 		if (ft_ref_count_ ++ == 0)	
@@ -41,10 +41,10 @@ namespace lv
 
 	void FreeTypeFont::clear()
 	{
-		if (face_ != NULL)
+		if (face_ != nullptr)
 		{
 			FT_Done_Face(face_);
-			face_ = NULL;
+			face_ = nullptr;
 		}
 
 		texture_.reset();
@@ -85,10 +85,10 @@ namespace lv
 		
 
 		// check the character map
-		if (face_->charmap == NULL)
+		if (face_->charmap == nullptr)
 		{
 			FT_Done_Face(face_);
-			face_ = NULL;
+			face_ = nullptr;
 			throw std::runtime_error(std::string("FreeTypeFont::load The font contains no character map : ") + name());
 		}
 
@@ -197,7 +197,7 @@ namespace lv
 
 	bool FreeTypeFont::loaded() const
 	{
-		return face_ != NULL;
+		return face_ != nullptr;
 	}
 
 	size_t FreeTypeFont::cache_capacity() const
