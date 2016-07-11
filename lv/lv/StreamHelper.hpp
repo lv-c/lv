@@ -66,13 +66,13 @@ namespace lv
 
 	class write_tabs
 	{
-		int	count_;
+		size_t	count_;
 
 		bool	expand_;
 
 	public:
 
-		explicit write_tabs(int count, bool expand = false)
+		explicit write_tabs(size_t count, bool expand = false)
 			: count_(count)
 			, expand_(expand)
 		{
@@ -83,14 +83,14 @@ namespace lv
 		{
 			if (tabs.expand_)
 			{
-				for (int i = 0; i < tabs.count_ * 4; ++i)
+				for (size_t i = 0; i < tabs.count_ * 4; ++i)
 				{
 					os << ' ';
 				}
 			}
 			else
 			{
-				for (int i = 0; i < tabs.count_; ++i)
+				for (size_t i = 0; i < tabs.count_; ++i)
 				{
 					os << '\t';
 				}

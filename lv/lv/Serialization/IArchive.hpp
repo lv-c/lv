@@ -58,6 +58,24 @@ namespace lv
 			load_binary(a.address(), a.count() * sizeof(T));
 		}
 
+		void	load_binary(void * address, std::size_t count)
+		{
+			bool success = true;
+			try
+			{
+				istream_.read(static_cast<char *>(address), static_cast<std::streamsize>(count));
+			}
+			catch (std::ios_base::failure const &)
+			{
+				success = false;
+			}
+
+			if (!istream_ || !success)
+			{
+				throw boost::archive::archive_exception(boost::archive::archive_exception::input_stream_error);
+			}
+		}
+
 		unsigned int	get_library_version() const
 		{
 			return boost::archive::BOOST_ARCHIVE_VERSION();
@@ -125,26 +143,6 @@ namespace lv
 
 			wstr.resize(size);
 			load_binary(const_cast<wchar_t *>(wstr.data()), size * sizeof(wchar_t) / sizeof(char));
-		}
-
-
-
-		void	load_binary(void * address, std::size_t count)
-		{
-			bool success = true;
-			try
-			{
-				istream_.read(static_cast<char *>(address), static_cast<std::streamsize>(count));
-			}
-			catch (std::ios_base::failure const &)
-			{
-				success = false;
-			}
-
-			if (! istream_ || ! success)
-			{
-				throw boost::archive::archive_exception(boost::archive::archive_exception::input_stream_error);
-			}
 		}
 
 	};

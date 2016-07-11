@@ -20,7 +20,6 @@
 #include <boost/serialization/nvp.hpp>
 #include <boost/serialization/serialization.hpp>
 #include <boost/serialization/version.hpp>
-#include <boost/range.hpp>
 #include <boost/type_traits/is_integral.hpp>
 #include <boost/type_traits/is_float.hpp>
 
@@ -236,7 +235,7 @@ namespace lv { namespace lua { namespace archive {
 		template<typename T>
 		void	save_impl(std::ostream & os, T const & t, size_t level, sequence_tag)
 		{
-			save_range(os, boost::begin(t), boost::end(t), level);
+			save_range(os, std::begin(t), std::end(t), level);
 		}
 
 		// utility

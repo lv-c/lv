@@ -39,7 +39,7 @@ namespace lv
 			if (size >= 0)
 			{
 				to_read = std::min<streamsize>(size, stream_size() - gpos_);
-				std::copy(buf_.begin() + gpos_, buf_.begin() + gpos_ + to_read, data);
+				std::copy(buf_.begin() + static_cast<size_t>(gpos_), buf_.begin() + static_cast<size_t>(gpos_ + to_read), data);
 				
 				gpos_ += to_read;
 			}
@@ -114,7 +114,7 @@ namespace lv
 					break;
 				}
 
-				unsigned char c = buf_[pos];
+				unsigned char c = buf_[static_cast<size_t>(pos)];
 				if (static_cast<int>(c) == delim)
 				{
 					break;

@@ -18,7 +18,6 @@
 #include <boost/type_traits/make_unsigned.hpp>
 #include <boost/type_traits/is_integral.hpp>
 #include <boost/type_traits/remove_const.hpp>
-#include <boost/range.hpp>
 #include <boost/range/concepts.hpp>
 #include <boost/unordered_map.hpp>
 #include <boost/utility/enable_if.hpp>
@@ -57,7 +56,7 @@ namespace lv { namespace unique_hash {
 			BOOST_CONCEPT_ASSERT((boost::SinglePassRangeConcept<Value>));	// concept check
 
 			size_t result(seed);
-			boost::hash_range(result, boost::begin(value), boost::end(value));
+			boost::hash_range(result, std::begin(value), std::end(value));
 			return result;
 		}
 

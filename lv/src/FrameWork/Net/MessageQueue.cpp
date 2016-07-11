@@ -297,7 +297,7 @@ namespace lv { namespace net {
 					send_queue_->on_reply(id);
 				}
 
-				buf->erase(buf->begin(), buf->begin() + bis.tellg());
+				buf->erase(buf->begin(), buf->begin() + static_cast<size_t>(bis.tellg()));
 			}
 			else
 			{

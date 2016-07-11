@@ -11,6 +11,7 @@
 #ifndef LV_NET_DEADLINETIMER_HPP
 #define LV_NET_DEADLINETIMER_HPP
 
+#include <lv/FrameWork/AutoLink.hpp>
 #include <lv/ServiceWrapper.hpp>
 
 #include <boost/asio/deadline_timer.hpp>

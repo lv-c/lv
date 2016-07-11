@@ -61,6 +61,24 @@ namespace lv
 			save_binary(a.address(), a.count() * sizeof(T));
 		}
 
+		void	save_binary(void const * address, std::size_t count)
+		{
+			bool success = true;
+			try
+			{
+				ostream_.write(static_cast<char const*>(address), static_cast<std::streamsize>(count));
+			}
+			catch (std::ios_base::failure const &)
+			{
+				success = false;
+			}
+
+			if (!ostream_ || !success)
+			{
+				throw boost::archive::archive_exception(boost::archive::archive_exception::output_stream_error);
+			}
+		}
+
 		unsigned int	get_library_version() const
 		{
 			return boost::archive::BOOST_ARCHIVE_VERSION();
@@ -109,24 +127,6 @@ namespace lv
 			std::size_t size = wstr.size();
 			save(size);
 			save_binary(wstr.data(), size * sizeof(wchar_t) / sizeof(char));
-		}
-
-		void	save_binary(void const * address, std::size_t count)
-		{
-			bool success = true;
-			try
-			{
-				ostream_.write(static_cast<char const*>(address), static_cast<std::streamsize>(count));
-			}
-			catch (std::ios_base::failure const &)
-			{
-				success = false;
-			}
-
-			if (! ostream_ || ! success)
-			{
-				throw boost::archive::archive_exception(boost::archive::archive_exception::output_stream_error);
-			}
 		}
 
 	};

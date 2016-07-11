@@ -92,7 +92,8 @@ namespace lv
 		{
 			BOOST_ASSERT(false);
 		}
-		return istream_->gcount();
+
+		return static_cast<size_t>(istream_->gcount());
 	}
 
 	void	WavSource::reset()
