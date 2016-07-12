@@ -378,7 +378,7 @@
     <ClInclude Include="..\..\..\lv\lv\RPC\Registery.hpp" />
     <ClInclude Include="..\..\..\lv\lv\RPC\RpcBase.hpp" />
     <ClInclude Include="..\..\..\lv\lv\RPC\Server.hpp" />
-    <ClInclude Include="..\..\..\lv\lv\ScopeGuard.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\ScopeExit.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Serialization\DSTree.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Serialization\Fwd.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Serialization\Graphics\Point.hpp" />
