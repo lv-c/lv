@@ -13,11 +13,10 @@
 
 #include <lv/IntType.hpp>
 
-#include <boost/type_traits/is_arithmetic.hpp>
-#include <boost/utility/enable_if.hpp>
 #include <boost/io/ios_state.hpp>
 
 #include <ostream>
+
 
 namespace lv
 {
@@ -105,7 +104,7 @@ namespace lv
 	namespace detail
 	{
 		template<typename T, typename C, typename Tr>
-		typename boost::enable_if<boost::is_arithmetic<T> >::type	write(std::basic_ostream<C, Tr> & os, T const & t, bool use_hex, int setw)
+		typename std::enable_if<std::is_arithmetic<T>::value>::type	write(std::basic_ostream<C, Tr> & os, T const & t, bool use_hex, int setw)
 		{
 			if (setw != -1)
 			{
@@ -123,7 +122,7 @@ namespace lv
 		}
 
 		template<typename T, typename C, typename Tr>
-		typename boost::disable_if<boost::is_arithmetic<T> >::type	write(std::basic_ostream<C, Tr> & os, T const & t, bool use_hex, int setw)
+		typename std::enable_if<! std::is_arithmetic<T>::value>::type	write(std::basic_ostream<C, Tr> & os, T const & t, bool use_hex, int setw)
 		{
 			os << t;
 		}

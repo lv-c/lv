@@ -87,13 +87,13 @@ namespace lv
 	protected:
 
 		template<typename T>
-		typename boost::disable_if<boost::is_arithmetic<T> >::type	save(T const & t)
+		typename std::enable_if<! std::is_arithmetic<T>::value>::type	save(T const & t)
 		{
 			serialization::save(*this, t);
 		}
 
 		template<typename T>
-		typename boost::enable_if<boost::is_arithmetic<T> >::type	save(T t)
+		typename std::enable_if<std::is_arithmetic<T>::value>::type	save(T t)
 		{
 			save_binary(&t, sizeof(T));
 		}

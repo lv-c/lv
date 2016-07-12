@@ -111,13 +111,13 @@ namespace lv { namespace lua { namespace archive {
 		//
 
 		template<typename Tree, typename Key, typename Data>
-		void	dstree_insert(Tree & tree, std::vector<Key> const &, std::string const & str, Data const & data, boost::mpl::true_)
+		void	dstree_insert(Tree & tree, std::vector<Key> const &, std::string const & str, Data const & data, std::true_type)
 		{
 			tree.insert(str, data);
 		}
 
 		template<typename Tree, typename Key, typename Data>
-		void	dstree_insert(Tree & tree, std::vector<Key> const & keys, std::string const &, Data const & data, boost::mpl::false_)
+		void	dstree_insert(Tree & tree, std::vector<Key> const & keys, std::string const &, Data const & data, std::false_type)
 		{
 			tree.insert(keys, data);
 		}
@@ -152,7 +152,7 @@ namespace lv { namespace lua { namespace archive {
 		{
 			luabind::iterator v_it(*it);
 
-			if (boost::is_same<Key, char>::value)
+			if (std::is_same<Key, char>::value)
 			{
 				load(*v_it, str);
 			}
@@ -171,7 +171,7 @@ namespace lv { namespace lua { namespace archive {
 				load(*v_it, *data);
 			}
 
-			detail::dstree_insert(tree, keys, str, data, boost::is_same<Key, char>::type());
+			detail::dstree_insert(tree, keys, str, data, std::is_same<Key, char>());
 		}
 	}
 

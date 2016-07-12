@@ -11,13 +11,11 @@
 #ifndef LV_LUAARCHIVE_TAGS_HPP
 #define LV_LUAARCHIVE_TAGS_HPP
 
-#include <boost/type_traits/is_arithmetic.hpp>
-#include <boost/type_traits/is_enum.hpp>
 #include <boost/mpl/identity.hpp>
-#include <boost/mpl/bool.hpp>
-#include <boost/utility/enable_if.hpp>
 
 #include <string>
+#include <type_traits>
+
 
 namespace lv { namespace lua { namespace archive {
 
@@ -34,27 +32,27 @@ namespace lv { namespace lua { namespace archive {
 
 	// arithmetic type or enum type or string type
 	template<typename T>
-	struct is_primitive : boost::is_arithmetic<T>
+	struct is_primitive : std::is_arithmetic<T>
 	{
 	};
 
 	template<>
-	struct is_primitive<std::string> : boost::mpl::true_
+	struct is_primitive<std::string> : std::true_type
 	{
 	};
 
 	template<>
-	struct is_primitive<char const *> : boost::mpl::true_
+	struct is_primitive<char const *> : std::true_type
 	{
 	};
 
 	template<int N>
-	struct is_primitive<char[N]> : boost::mpl::true_
+	struct is_primitive<char[N]> : std::true_type
 	{
 	};
 
 	template<int N>
-	struct is_primitive<char const [N]> : boost::mpl::true_
+	struct is_primitive<char const [N]> : std::true_type
 	{
 	};
 
@@ -63,13 +61,13 @@ namespace lv { namespace lua { namespace archive {
 	struct object_tag : unknown_tag {};
 
 	template<typename T>
-	struct object_tag<T, typename boost::enable_if<is_primitive<T> >::type>
+	struct object_tag<T, typename std::enable_if<is_primitive<T>::value>::type>
 		: primitive_tag
 	{
 	};
 
 	template<typename T>
-	struct object_tag<T, typename boost::enable_if<boost::is_enum<T> >::type>
+	struct object_tag<T, typename std::enable_if<std::is_enum<T>::value>::type>
 		: enum_tag
 	{
 	};

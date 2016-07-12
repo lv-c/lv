@@ -11,19 +11,16 @@
 #ifndef LV_LUABIND_UTILITY_HPP
 #define LV_LUABIND_UTILITY_HPP
 
-#include <boost/type_traits/is_arithmetic.hpp>
-#include <boost/mpl/or.hpp>
-
 #include <string>
+#include <type_traits>
+
 
 namespace lv { namespace lua {
 
 	template<class T>
 	struct is_primitive
-		: boost::mpl::or_<
-			boost::is_arithmetic<T>,
-			boost::is_same<T, std::string>
-		>
+		: std::integral_constant<bool, 
+			std::is_arithmetic<T>::value || std::is_same<T, std::string>::value>
 	{
 	};
 

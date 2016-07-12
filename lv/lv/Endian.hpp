@@ -13,20 +13,18 @@
 
 #include <lv/IntType.hpp>
 
-#include <boost/mpl/assert.hpp>
-#include <boost/mpl/or.hpp>
-#include <boost/type_traits/is_arithmetic.hpp>
-#include <boost/type_traits/is_enum.hpp>
 #include <boost/detail/endian.hpp>
 
 #include <algorithm>
+#include <type_traits>
+
 
 namespace lv
 {
 	template<typename T>
 	T	endian_switch(T t, bool s = true)
 	{
-		BOOST_MPL_ASSERT((boost::mpl::or_<boost::is_arithmetic<T>, boost::is_enum<T> >));
+		static_assert(std::is_arithmetic<T>::value || std::is_enum<T>::value, "arithmetic or enum type only");
 
 		if (sizeof(t) == 1 || ! s)
 		{

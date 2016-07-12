@@ -11,9 +11,9 @@
 #define LV_INTTYPE_HPP
 
 #include <boost/cstdint.hpp>
-#include <boost/type_traits/make_unsigned.hpp>
-#include <boost/type_traits/is_integral.hpp>
-#include <boost/mpl/assert.hpp>
+
+#include <type_traits>
+
 
 namespace lv
 {
@@ -60,7 +60,7 @@ namespace lv
 
 
 	template<size_t size>
-	struct UIntType : boost::make_unsigned<typename IntType<size>::type>
+	struct UIntType : std::make_unsigned<typename IntType<size>::type>
 	{
 	};
 
@@ -70,7 +70,7 @@ namespace lv
 	template<typename T>
 	struct WidenInt
 	{
-		BOOST_MPL_ASSERT((boost::is_integral<T>));
+		static_assert(std::is_integral<T>::value, "integral type only");
 
 		typedef	typename T	type;
 	};

@@ -13,21 +13,20 @@
 
 #include <lv/LuaArchive/Fwd.hpp>
 
-#include <boost/type_traits/remove_const.hpp>
-#include <boost/type_traits/is_arithmetic.hpp>
-
 #include <luabind/object.hpp>
 
 #include <utility>
+#include <type_traits>
+
 
 namespace lv { namespace lua { namespace archive {
 
 	namespace detail
 	{
 		template<typename T>
-		typename boost::remove_const<T>::type &	remove_const(T & v)
+		typename std::remove_const<T>::type &	remove_const(T & v)
 		{
-			return const_cast<boost::remove_const<T>::type &>(v);
+			return const_cast<std::remove_const<T>::type &>(v);
 		}
 	}
 
@@ -49,7 +48,7 @@ namespace lv { namespace lua { namespace archive {
 	namespace detail
 	{
 		template<typename F, typename S>
-		void	load_impl(Parser & parser, int index, std::pair<F, S> & v, boost::mpl::true_)
+		void	load_impl(Parser & parser, int index, std::pair<F, S> & v, std::true_type)
 		{
 			Token token = parser.next_token();
 			parser.rollback(token);
@@ -61,12 +60,12 @@ namespace lv { namespace lua { namespace archive {
 			}
 			else
 			{
-				load_impl(parser, index, v, boost::mpl::false_());
+				load_impl(parser, index, v, std::false_type());
 			}
 		}
 
 		template<typename F, typename S>
-		void	load_impl(Parser & parser, int index, std::pair<F, S> & v, boost::mpl::false_)
+		void	load_impl(Parser & parser, int index, std::pair<F, S> & v, std::false_type)
 		{
 			parser >> detail::remove_const(v.first) >> detail::symbol('=') >> detail::remove_const(v.second);
 		}
@@ -75,7 +74,7 @@ namespace lv { namespace lua { namespace archive {
 	template<typename F, typename S>
 	void	load_item(Parser & parser, int index, std::pair<F, S> & v)
 	{
-		detail::load_impl(parser, index, v, boost::mpl::bool_<boost::is_arithmetic<F>::value>());
+		detail::load_impl(parser, index, v, std::is_arithmetic<F>());
 	}
 
 } } }

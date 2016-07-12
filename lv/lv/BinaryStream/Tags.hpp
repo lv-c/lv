@@ -11,11 +11,10 @@
 #ifndef LV_BINARYSTREAM_TAGS_HPP
 #define LV_BINARYSTREAM_TAGS_HPP
 
-#include <boost/type_traits/is_arithmetic.hpp>
-#include <boost/type_traits/is_enum.hpp>
-#include <boost/utility/enable_if.hpp>
 #include <boost/mpl/identity.hpp>
-#include <boost/mpl/or.hpp>
+
+#include <type_traits>
+
 
 namespace lv { namespace bstream {
 
@@ -23,7 +22,7 @@ namespace lv { namespace bstream {
 	// arithmetic type or enum type
 	template<typename T>
 	struct is_primitive 
-		: boost::mpl::or_<boost::is_arithmetic<T>, boost::is_enum<T> >
+		: std::integral_constant<bool, std::is_arithmetic<T>::value || std::is_enum<T>::value>
 	{
 	};
 
@@ -44,7 +43,7 @@ namespace lv { namespace bstream {
 	struct object_tag : unknown_tag {};
 
 	template<typename T>
-	struct object_tag<T, typename boost::enable_if<is_primitive<T> >::type>
+	struct object_tag<T, typename std::enable_if<is_primitive<T>::value>::type>
 		: primitive_tag
 	{
 	};

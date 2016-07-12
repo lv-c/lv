@@ -121,7 +121,7 @@ namespace lv { namespace rpc {
 
 				try
 				{
-					Protocol::options::type option = (boost::is_same<Ret, void>::value ? Protocol::options::ack : Protocol::options::ret);
+					Protocol::options::type option = (std::is_same<Ret, void>::value ? Protocol::options::ack : Protocol::options::ret);
 					client_.send(buffer_, oa_, raw_os_, request_id_, option);
 				}
 				catch (...)

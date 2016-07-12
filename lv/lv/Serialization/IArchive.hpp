@@ -90,14 +90,14 @@ namespace lv
 
 
 		template<typename T>
-		typename boost::disable_if<boost::is_arithmetic<T> >::type	load(T & t)
+		typename std::enable_if<! std::is_arithmetic<T>::value>::type	load(T & t)
 		{
 			serialization::load(*this, t);
 		}
 
 
 		template<typename T>
-		typename boost::enable_if<boost::is_arithmetic<T> >::type	load(T & t)
+		typename std::enable_if<std::is_arithmetic<T>::value>::type	load(T & t)
 		{
 			load_binary(&t, sizeof(T));
 		}

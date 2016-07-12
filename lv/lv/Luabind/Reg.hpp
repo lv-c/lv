@@ -11,8 +11,7 @@
 #ifndef LV_LUABIND_REG_HPP
 #define LV_LUABIND_REG_HPP
 
-#include <boost/utility/enable_if.hpp>
-#include <boost/type_traits/is_same.hpp>
+#include <type_traits>
 
 
 namespace lv { namespace lua {
@@ -20,12 +19,12 @@ namespace lv { namespace lua {
 	namespace detail
 	{
 		template<typename ret, typename wrap>
-		typename boost::enable_if<boost::is_same<ret, void>, ret>::type return_value(wrap v)
+		typename std::enable_if<std::is_same<ret, void>::value, ret>::type return_value(wrap v)
 		{
 		}
 
 		template<typename ret, typename wrap>
-		typename boost::disable_if<boost::is_same<ret, void>, ret>::type return_value(wrap v)
+		typename std::enable_if<! std::is_same<ret, void>::value, ret>::type return_value(wrap v)
 		{
 			return v;
 		}

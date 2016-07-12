@@ -23,7 +23,6 @@ namespace lv
 	template<class T>
 	struct MplToFusionCons
 	{
-		BOOST_MPL_ASSERT((boost::mpl::is_sequence<T>));
 		typedef typename boost::mpl::reverse_fold<T, boost::fusion::nil, 
 			boost::fusion::cons<boost::mpl::_2, boost::mpl::_1> >::type type;
 	};

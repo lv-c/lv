@@ -12,8 +12,10 @@
 #define LV_LAZYINIT_HPP
 
 #include <boost/optional/optional.hpp>
-#include <boost/thread/mutex.hpp>
 #include <boost/utility/in_place_factory.hpp>
+
+#include <mutex>
+
 
 namespace lv
 {
@@ -42,7 +44,7 @@ namespace lv
 
 		Expr			expr_;
 
-		boost::mutex	mutex_;
+		std::mutex	mutex_;
 
 	public:
 
@@ -56,7 +58,7 @@ namespace lv
 		{
 			if (! init_)
 			{
-				boost::unique_lock<boost::mutex> lock(mutex_);
+				std::unique_lock<std::mutex> lock(mutex_);
 
 				if (! init_)
 				{

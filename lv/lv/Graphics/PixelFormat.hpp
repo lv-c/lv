@@ -13,7 +13,9 @@
 
 #include <boost/gil/typedefs.hpp>
 #include <boost/gil/image.hpp>
-#include <boost/mpl/size_t.hpp>
+
+#include <type_traits>
+
 
 namespace lv
 {
@@ -29,17 +31,17 @@ namespace lv
 	struct PixelBytes;
 
 	template <>
-	struct PixelBytes<PF_RGB> : boost::mpl::size_t<3>
+	struct PixelBytes<PF_RGB> : std::integral_constant<size_t, 3>
 	{
 	};
 	
 	template <>
-	struct PixelBytes<PF_ARGB> : boost::mpl::size_t<4>
+	struct PixelBytes<PF_ARGB> : std::integral_constant<size_t, 4>
 	{
 	};
 	
 	template <>
-	struct PixelBytes<PF_L8> : boost::mpl::size_t<1>
+	struct PixelBytes<PF_L8> : std::integral_constant<size_t, 1>
 	{
 	};
 

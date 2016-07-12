@@ -24,9 +24,6 @@
 #include <boost/function_types/function_type.hpp>
 #include <boost/function_types/components.hpp>
 
-#include <boost/type_traits/is_member_function_pointer.hpp>
-#include <boost/mpl/assert.hpp>
-
 #include <functional>
 
 
@@ -35,7 +32,7 @@ namespace lv
 	template<typename MemFn>
 	struct BindMemFnSignature
 	{
-		BOOST_MPL_ASSERT((boost::is_member_function_pointer<MemFn>));
+		static_assert(std::is_member_function_pointer<MemFn>::value, "member function pointer");
 
 		typedef typename boost::function_types::function_type<
 			typename detail::RemoveSecond<

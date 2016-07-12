@@ -16,7 +16,9 @@
 #include <lv/Exception.hpp>
 
 #include <boost/serialization/split_member.hpp>
-#include <boost/type_traits/is_pod.hpp>
+
+#include <type_traits>
+
 
 namespace lv { namespace bstream {
 
@@ -294,7 +296,7 @@ namespace lv { namespace bstream {
 	}
 
 	template<typename T>
-	typename boost::enable_if<boost::is_pod<T>, detail::pod_impl<T> >::type	pod(T & t)
+	typename std::enable_if<std::is_pod<T>::value, detail::pod_impl<T> >::type	pod(T & t)
 	{
 		return detail::pod_impl<T>(t);
 	}

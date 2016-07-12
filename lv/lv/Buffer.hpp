@@ -13,12 +13,11 @@
 
 #include <boost/assert.hpp>
 #include <boost/range.hpp>
-#include <boost/type_traits/is_arithmetic.hpp>
-#include <boost/utility/enable_if.hpp>
 
 #include <vector>
 #include <memory>
 #include <iterator>
+#include <type_traits>
 
 
 namespace lv
@@ -248,7 +247,7 @@ namespace lv
 		}
 
 		template<typename T>
-		typename boost::enable_if<boost::is_arithmetic<T> >::type	append(Buffer & buf, T t)
+		typename std::enable_if<std::is_arithmetic<T>::value>::type	append(Buffer & buf, T t)
 		{
 			append(buf, &t, sizeof(t));
 		}
@@ -267,7 +266,7 @@ namespace lv
 		}
 
 		template<typename T>
-		typename boost::enable_if<boost::is_arithmetic<T> >::type	insert(Buffer & buf, size_t pos, T t)
+		typename std::enable_if<std::is_arithmetic<T>::value>::type	insert(Buffer & buf, size_t pos, T t)
 		{
 			insert(buf, pos, &t, sizeof(t));
 		}
@@ -288,7 +287,7 @@ namespace lv
 		}
 
 		template<typename T>
-		typename boost::enable_if<boost::is_arithmetic<T> >::type	write(BufferRef buf, size_t pos, T t)
+		typename std::enable_if<std::is_arithmetic<T>::value>::type	write(BufferRef buf, size_t pos, T t)
 		{
 			write(buf, pos, &t, sizeof(t));
 		}
@@ -309,7 +308,7 @@ namespace lv
 		}
 
 		template<typename T>
-		typename boost::enable_if<boost::is_arithmetic<T> >::type	read(ConstBufferRef const & buf, size_t pos, T & t)
+		typename std::enable_if<std::is_arithmetic<T>::value>::type	read(ConstBufferRef const & buf, size_t pos, T & t)
 		{
 			read(buf, pos, &t, sizeof(t));
 		}

@@ -18,13 +18,13 @@
 namespace lv { namespace bstream {
 
 	template<typename T, size_t N>
-	struct object_tag<std::array<T, N>, typename boost::enable_if<is_primitive<T> >::type>
+	struct object_tag<std::array<T, N>, typename std::enable_if<is_primitive<T>::value>::type>
 		: primitive_buffer_tag
 	{
 	};
 
 	template<typename T, size_t N>
-	struct object_tag<std::array<T, N>, typename boost::disable_if<is_primitive<T> >::type>
+	struct object_tag<std::array<T, N>, typename std::enable_if<! is_primitive<T>::value>::type>
 		: range_tag
 	{
 	};

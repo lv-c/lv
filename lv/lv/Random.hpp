@@ -19,8 +19,6 @@
 #include <boost/random/uniform_int.hpp>
 #include <boost/random/uniform_real.hpp>
 #include <boost/random/variate_generator.hpp>
-#include <boost/type_traits/is_integral.hpp>
-#include <boost/type_traits/is_float.hpp>
 
 #include <ctime>
 
@@ -42,7 +40,7 @@ namespace lv
 	struct RandomTraits;
 
 	template<typename T>
-	struct RandomTraits<T, typename boost::enable_if<boost::is_integral<T> >::type>
+	struct RandomTraits<T, typename std::enable_if<std::is_integral<T>::value>::type>
 	{
 		typedef boost::mt19937	generator_type;
 
@@ -51,7 +49,7 @@ namespace lv
 
 
 	template<typename T>
-	struct RandomTraits<T, typename boost::enable_if<boost::is_float<T> >::type>
+	struct RandomTraits<T, typename std::enable_if<std::is_floating_point<T>::value>::type>
 	{
 		typedef boost::mt19937	generator_type;
 

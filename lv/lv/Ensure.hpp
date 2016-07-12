@@ -15,9 +15,8 @@
 
 #include <string>
 #include <stdexcept>
+#include <type_traits>
 
-#include <boost/utility/enable_if.hpp>
-#include <boost/type_traits/is_base_and_derived.hpp>
 
 namespace lv { namespace detail {
 
@@ -34,7 +33,7 @@ namespace lv { namespace detail {
 	// we can't do it like this: void ensure_throw(std::exception const & ex) { throw ex; }
 	// ex will be copied so we must known the real type
 	template<typename T>
-	typename boost::enable_if<boost::is_base_and_derived<std::exception, T> >::type	ensure_throw(T const & ex)
+	typename std::enable_if<std::is_base_of<std::exception, T>::value>::type	ensure_throw(T const & ex)
 	{
 		throw ex;
 	}

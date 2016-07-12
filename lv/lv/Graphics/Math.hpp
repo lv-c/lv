@@ -15,11 +15,10 @@
 #include <lv/Graphics/Point.hpp>
 #include <lv/Graphics/Vector.hpp>
 
-#include <boost/type_traits/is_float.hpp>
-#include <boost/utility/enable_if.hpp>
-
 #include <cmath>
 #include <numeric>
+#include <type_traits>
+
 
 namespace lv { namespace math {
 
@@ -36,7 +35,7 @@ namespace lv { namespace math {
 	};
 
 	template<typename T>
-	struct FloatType<T, typename boost::enable_if<boost::is_float<T> >::type>
+	struct FloatType<T, typename std::enable_if<std::is_floating_point<T>::value>::type>
 		: boost::mpl::identity<T>
 	{
 	};

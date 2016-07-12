@@ -17,16 +17,12 @@
 #include <boost/fusion/include/for_each.hpp>
 #include <boost/fusion/include/invoke.hpp>
 
-#include <boost/type_traits/remove_reference.hpp>
-#include <boost/type_traits/remove_const.hpp>
-#include <boost/type_traits/is_pointer.hpp>
-
 #include <boost/function_types/parameter_types.hpp>
 
 #include <boost/mpl/transform.hpp>
-#include <boost/mpl/assert.hpp>
 
 #include <functional>
+#include <type_traits>
 
 
 namespace lv { namespace rpc { namespace detail {
@@ -34,12 +30,11 @@ namespace lv { namespace rpc { namespace detail {
 	template<class T>
 	struct ParamType
 	{
-		typedef typename boost::remove_const<
-			typename boost::remove_reference<T>::type
+		typedef typename std::remove_const<
+			typename std::remove_reference<T>::type
 		>::type type;
 
-		// parameter types of the registered functions can't be pointer types
-		BOOST_MPL_ASSERT_NOT((boost::is_pointer<type>));
+		static_assert(! std::is_pointer<type>::value, "parameter types of the registered functions can't be pointer types");
 	};
 
 	template<class T, class IArchive>
@@ -109,8 +104,7 @@ namespace lv { namespace rpc { namespace detail {
 		typedef typename function_type::result_type result_type;
 		typedef typename boost::function_types::parameter_types<Signature>::type param_type;
 
-		// The result type shouldn't be a pointer type
-		BOOST_MPL_ASSERT_NOT((boost::is_pointer<result_type>));
+		static_assert(! std::is_pointer<result_type>::value, "The result type shouldn't be a pointer type");
 
 	public:
 		
@@ -121,18 +115,18 @@ namespace lv { namespace rpc { namespace detail {
 
 		ResultHolder operator ()(iarchive_type & ia)
 		{
-			return invoke(ia, boost::mpl::bool_<boost::is_same<result_type, void>::value>());
+			return invoke(ia, std::is_same<result_type, void>());
 		}
 
 	private:
 
 		/// invokes the function and wraps the result.
-		ResultHolder	invoke(iarchive_type & ia, boost::mpl::false_ void_result)
+		ResultHolder	invoke(iarchive_type & ia, std::false_type void_result)
 		{
 			return ResultWrapper<result_type>(invoke_impl(ia));
 		}
 
-		ResultHolder	invoke(iarchive_type & ia, boost::mpl::true_ void_result)
+		ResultHolder	invoke(iarchive_type & ia, std::true_type void_result)
 		{
 			invoke_impl(ia);
 			return ResultHolder();

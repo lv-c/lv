@@ -202,9 +202,6 @@
     <ClInclude Include="..\..\..\lv\lv\DelayTimer.hpp">
       <Filter>Utility\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\lv\lv\DXErr.hpp">
-      <Filter>Utility\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\Endian.hpp">
       <Filter>Utility\Header Files</Filter>
     </ClInclude>
@@ -215,9 +212,6 @@
       <Filter>Utility\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\Factory.hpp">
-      <Filter>Utility\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\lv\lv\FourCC.hpp">
       <Filter>Utility\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\Functional.hpp">
@@ -239,9 +233,6 @@
       <Filter>Utility\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\MemFn.hpp">
-      <Filter>Utility\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\lv\lv\NullMutex.hpp">
       <Filter>Utility\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\Random.hpp">
@@ -374,9 +365,6 @@
       <Filter>Algorithm\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\Algorithm\Set.hpp">
-      <Filter>Algorithm\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\lv\lv\Algorithm\UniqueHash.hpp">
       <Filter>Algorithm\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\Log\DbgPrint.hpp">
@@ -806,6 +794,12 @@
       <Filter>Concurrent\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\ScopeExit.hpp">
+      <Filter>Utility\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\FourCC.hpp">
+      <Filter>Utility\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\LazyInit.hpp">
       <Filter>Utility\Header Files</Filter>
     </ClInclude>
   </ItemGroup>

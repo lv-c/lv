@@ -15,13 +15,11 @@
 #include <lv/Fusion.hpp>
 
 #include <boost/mpl/transform.hpp>
-#include <boost/mpl/assert.hpp>
-
-#include <boost/type_traits/is_pointer.hpp>
 
 #include <boost/function_types/parameter_types.hpp>
 #include <boost/fusion/include/for_each.hpp>
 #include <boost/fusion/include/invoke.hpp>
+
 
 namespace lv { namespace flow { namespace detail {
 
@@ -32,8 +30,7 @@ namespace lv { namespace flow { namespace detail {
 			typename boost::remove_reference<T>::type
 		>::type type;
 
-		// parameter types of the registered functions can't be pointer types
-		BOOST_MPL_ASSERT_NOT((boost::is_pointer<type>));
+		static_assert(! std::is_pointer<type>::value, "parameter types of the registered functions can't be pointer types");
 	};
 
 	template<class T>

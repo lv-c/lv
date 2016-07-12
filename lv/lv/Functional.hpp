@@ -17,12 +17,7 @@
 #include <boost/function_types/function_type.hpp>
 #include <boost/function_types/components.hpp>
 
-#include <boost/type_traits/is_function.hpp>
-#include <boost/type_traits/is_member_function_pointer.hpp>
-#include <boost/type_traits/is_class.hpp>
-#include <boost/type_traits/remove_pointer.hpp>
-
-#include <boost/utility/enable_if.hpp>
+#include <type_traits>
 
 
 namespace lv
@@ -36,7 +31,7 @@ namespace lv
 
 		// function
 		template<typename T, typename ClassTypeTransform>
-		struct SignatureImpl<T, ClassTypeTransform, typename boost::enable_if<boost::is_function<T> >::type>
+		struct SignatureImpl<T, ClassTypeTransform, typename std::enable_if<std::is_function<T>::value>::type>
 		{
 			typedef T	type;
 		};
@@ -46,7 +41,7 @@ namespace lv
 
 		// member function
 		template<typename T, typename ClassTypeTransform>
-		struct SignatureImpl<T, ClassTypeTransform, typename boost::enable_if<boost::is_member_function_pointer<T> >::type>
+		struct SignatureImpl<T, ClassTypeTransform, typename std::enable_if<std::is_member_function_pointer<T>::value>::type>
 		{
 			typedef typename ft::function_type<typename ft::components<T, ClassTypeTransform>::type>::type type;
 		};
@@ -54,7 +49,7 @@ namespace lv
 
 		// class type function object
 		template<typename T, typename ClassTypeTransform>
-		struct SignatureImpl<T, ClassTypeTransform, typename boost::enable_if<boost::is_class<T> >::type>
+		struct SignatureImpl<T, ClassTypeTransform, typename std::enable_if<std::is_class<T>::value>::type>
 		{
 			typedef typename ft::function_type<
 				typename detail::RemoveSecond<
@@ -81,7 +76,7 @@ namespace lv
 	 *	T is a member function pointer type
 	 */
 	template<typename T, typename ClassTypeTransform = boost::add_reference<boost::mpl::_> >
-	struct Signature : detail::SignatureImpl<typename boost::remove_pointer<T>::type, ClassTypeTransform>
+	struct Signature : detail::SignatureImpl<typename std::remove_pointer<T>::type, ClassTypeTransform>
 	{
 	};
 

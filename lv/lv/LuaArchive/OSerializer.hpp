@@ -20,8 +20,8 @@
 #include <boost/serialization/nvp.hpp>
 #include <boost/serialization/serialization.hpp>
 #include <boost/serialization/version.hpp>
-#include <boost/type_traits/is_integral.hpp>
-#include <boost/type_traits/is_float.hpp>
+
+#include <type_traits>
 
 
 namespace lv { namespace lua { namespace archive {
@@ -113,13 +113,13 @@ namespace lv { namespace lua { namespace archive {
 
 		// primitive_tag
 		template<typename T>
-		typename boost::enable_if<boost::is_integral<T> >::type	save_primitive(std::ostream & os, T t)
+		typename std::enable_if<std::is_integral<T>::value>::type	save_primitive(std::ostream & os, T t)
 		{
 			os << lv::widen_int(t);
 		}
 
 		template<typename T>
-		typename boost::enable_if<boost::is_float<T> >::type save_primitive(std::ostream & os, T t)
+		typename std::enable_if<std::is_floating_point<T>::value>::type save_primitive(std::ostream & os, T t)
 		{
 			os << t;
 		}

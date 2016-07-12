@@ -23,12 +23,10 @@
 #include <boost/archive/basic_archive.hpp>
 #include <boost/archive/detail/check.hpp>
 
-#include <boost/type_traits/remove_extent.hpp>
-#include <boost/type_traits/is_enum.hpp>
-#include <boost/type_traits/is_array.hpp>
-#include <boost/type_traits/is_arithmetic.hpp>
-
 #include <boost/mpl/eval_if.hpp>
+
+#include <type_traits>
+
 
 namespace lv { namespace serialization {
 
@@ -61,7 +59,7 @@ namespace lv { namespace serialization {
 			template<typename T>
 			static void save(Archive & ar, T const & t)
 			{
-				typedef typename boost::remove_extent<T>::type value_type;
+				typedef typename std::remove_extent<T>::type value_type;
 
 				boost::serialization::collection_size_type count(sizeof(t) / sizeof(value_type));
 				ar << count << boost::serialization::make_array(static_cast<value_type const*>(&t[0]), count);
@@ -123,11 +121,11 @@ namespace lv { namespace serialization {
 		struct serializer_type
 		{
 			typedef typename mpl::eval_if<
-				boost::is_enum<T>,
+				std::is_enum<T>,
 				mpl::identity<detail::serialize_enum_type<Archive> >,
 
 				typename mpl::eval_if<
-					boost::is_array<T>,
+					std::is_array<T>,
 					mpl::identity<detail::serialize_array_type<Archive> >,
 					mpl::identity<detail::serialize_default<Archive> >
 				>
@@ -158,14 +156,14 @@ namespace boost { namespace serialization {
 	struct use_array_optimization<lv::OArchive>
 	{
 		template<class T>
-		struct apply : boost::mpl::bool_<boost::is_arithmetic<T>::value> {};
+		struct apply : boost::mpl::bool_<std::is_arithmetic<T>::value> {};
 	};
 
 	template<>
 	struct use_array_optimization<lv::IArchive>
 	{
 		template<class T>
-		struct apply : boost::mpl::bool_<boost::is_arithmetic<T>::value> {};
+		struct apply : boost::mpl::bool_<std::is_arithmetic<T>::value> {};
 	};
 
 } }
