@@ -143,7 +143,7 @@ namespace lv { namespace log {
 			{
 				for (gather_ptr gather : this->gathers_)
 				{
-					if (gather->output(lvl_))
+					if (gather->filter(lvl_))
 					{
 						gather->log(t);
 					}
@@ -162,7 +162,7 @@ namespace lv { namespace log {
 			{
 				for (gather_ptr gather : this->gathers_)
 				{
-					if (gather->output(lvl_))
+					if (gather->filter(lvl_))
 					{
 						gather->on_record_begin(lvl_);
 					}
@@ -172,19 +172,18 @@ namespace lv { namespace log {
 
 		void on_record_end()
 		{
+			LV_SCOPE_EXIT([this] { mutex_.unlock(); });
+
 			if (enabled_)
 			{
 				for (gather_ptr gather : this->gathers_)
 				{
-					if (gather->output(lvl_))
+					if (gather->filter(lvl_))
 					{
 						gather->on_record_end(lvl_);
 					}
 				}
 			}
-
-			// unlock
-			mutex_.unlock();
 		}
 
 	};

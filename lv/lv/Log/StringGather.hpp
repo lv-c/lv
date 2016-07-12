@@ -43,15 +43,14 @@ namespace lv { namespace log {
 
 		virtual	void on_record_end(int lvl)
 		{
+			LV_SCOPE_EXIT([this] { mutex_.unlock(); });
+
 			end_record(lvl);
 
 			on_receive(oss_.str(), lvl);
 
 			// empty the stringstream
 			oss_.str(log::string_type());
-
-			// unlock
-			mutex_.unlock();
 		}
 
 		virtual	void on_receive(string_type const & str, int lvl)

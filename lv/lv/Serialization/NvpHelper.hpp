@@ -60,16 +60,14 @@ namespace lv
 	{
 		return NvpHelper<Archive>(ar);
 	}
+}
 
 #define _NVP_HELPER_A(x, ...) _NVP_HELPER_OP(B, x, __VA_ARGS__)
 #define _NVP_HELPER_B(x, ...) _NVP_HELPER_OP(A, x, __VA_ARGS__)
 #define _NVP_HELPER_OP(next, x, ...)	_NVP_HELPER_A->_serialize(#x, __VA_ARGS__, x)._NVP_HELPER_##next
 
-#define LV_NVP_HELPER(ar) make_nvp_helper(ar)._NVP_HELPER_A
+#define LV_NVP_HELPER(ar) lv::make_nvp_helper(ar)._NVP_HELPER_A
 
 // how to use : LV_NVP_HELPER(ar) (a) (b) ("my_own_name", c);
-
-}
-
 
 #endif

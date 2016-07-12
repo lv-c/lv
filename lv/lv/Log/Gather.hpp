@@ -13,6 +13,7 @@
 
 #include <lv/Log/Fwd.hpp>
 #include <lv/Log/Level.hpp>
+#include <lv/ScopeExit.hpp>
 
 #include <iostream>
 #include <list>
@@ -109,8 +110,7 @@ namespace lv { namespace log {
 
 	protected:
 
-		/// whether we should output the record with the given level
-		bool	output(int lvl)
+		bool	filter(int lvl)
 		{
 			return filter_ ? filter_(lvl) : true;
 		}
@@ -146,10 +146,9 @@ namespace lv { namespace log {
 		/// overloaded function should take care of the unlock
 		virtual void on_record_end(int lvl)
 		{
-			end_record(lvl);
+			LV_SCOPE_EXIT([this] { mutex_.unlock(); });
 
-			// unlock
-			mutex_.unlock();
+			end_record(lvl);
 		}
 
 		void	end_record(int lvl)
