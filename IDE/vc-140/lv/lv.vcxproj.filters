@@ -190,9 +190,6 @@
     <ClInclude Include="..\..\..\lv\lv\Buffer.hpp">
       <Filter>Utility\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\lv\lv\ComPtr.hpp">
-      <Filter>Utility\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\Config.hpp">
       <Filter>Utility\Header Files</Filter>
     </ClInclude>

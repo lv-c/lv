@@ -25,7 +25,7 @@ namespace lv
 	std::set<T, Pr, Ax> & operator -= (std::set<T, Pr, Ax> & lhs, std::set<T, Pr, Ax> const & rhs)
 	{
 		std::set<T, Pr, Ax> ret;
-		STD_SET_OPERATION(set_difference)
+		STD_SET_OPERATION(set_difference);
 
 		lhs.swap(ret);
 		return lhs;
@@ -35,7 +35,7 @@ namespace lv
 	std::set<T, Pr, Ax> operator - (std::set<T, Pr, Ax> const & lhs, std::set<T, Pr, Ax> const & rhs)
 	{
 		std::set<T, Pr, Ax> ret;
-		STD_SET_OPERATION(set_difference)
+		STD_SET_OPERATION(set_difference);
 
 		return ret;
 	}
