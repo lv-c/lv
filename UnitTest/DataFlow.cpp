@@ -102,7 +102,7 @@ void proxy_push(lv::flow::slot_type const & slot, lv::ConstBufferRef const & buf
 
 BOOST_AUTO_TEST_CASE(test_dataflow)
 {
-	lv::BufferManagerPtr buf_manager(new lv::SimpleBufferManager(1024));
+	lv::BufferManagerPtr buf_manager = std::make_shared<lv::SimpleBufferManager>(1024);
 
 	typedef std::string key_type;
 	typedef std::string port_type;

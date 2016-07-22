@@ -13,7 +13,7 @@ namespace lv { namespace net {
 
 	class AcceptorHolder
 	{
-		boost::scoped_ptr<asio::ip::tcp::acceptor>	acceptor_;
+		std::unique_ptr<asio::ip::tcp::acceptor>	acceptor_;
 
 	public:
 
@@ -26,8 +26,8 @@ namespace lv { namespace net {
 				bind_addr = asio::ip::address::from_string(to_bind);
 			}
 
-			acceptor_.reset(new asio::ip::tcp::acceptor(context->service(), 
-				asio::ip::tcp::endpoint(bind_addr, port)));
+			acceptor_ = std::make_unique<asio::ip::tcp::acceptor>(context->service(), 
+				asio::ip::tcp::endpoint(bind_addr, port));
 		}
 
 		asio::ip::tcp::acceptor &	get()
@@ -49,7 +49,7 @@ namespace lv { namespace net {
 
 	void ServerBase::start(unsigned short port, std::string const & to_bind /* = std::string */)
 	{
-		acceptor_.reset(new AcceptorHolder(context_, port, to_bind));
+		acceptor_ = std::make_unique<AcceptorHolder>(context_, port, to_bind);
 
 		start_accept();
 	}

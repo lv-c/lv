@@ -53,7 +53,7 @@ public:
 		if (die_(0, 100) < 50)
 		{
 			// make a copy because buf will be modified.
-			callback_(BufferPtr(new Buffer(*buf)));
+			callback_(std::make_shared<Buffer>(*buf));
 		}
 	}
 
@@ -99,7 +99,7 @@ BOOST_AUTO_TEST_CASE(test_message_queue)
 	// random data
 	for (BufferPtr & buf : to_send)
 	{
-		buf.reset(new Buffer(die(0, 100)));
+		buf = std::make_shared<Buffer>(die(0, 100));
 
 		for (char & c : *buf)
 		{
@@ -113,7 +113,7 @@ BOOST_AUTO_TEST_CASE(test_message_queue)
 
 	Sender client_sender, server_sender;
 
-	std::shared_ptr<MessageQueueContext> ctx(new MessageQueueContext(BufferManagerPtr(new SimpleBufferManager(1024)), service, true));
+	std::shared_ptr<MessageQueueContext> ctx = std::make_shared<MessageQueueContext>(std::make_shared<SimpleBufferManager>(1024), service, true);
 	ctx->set_resend_time(0.02);
 
 	MessageQueue client(ctx, lv::shared_from_object(client_sender), MessageQueue::Receiver());
@@ -125,7 +125,7 @@ BOOST_AUTO_TEST_CASE(test_message_queue)
 	for (BufferPtr buf : to_send)
 	{
 		// will be modified. make a copy
-		client.send(BufferPtr(new Buffer(*buf)));
+		client.send(std::make_shared<Buffer>(*buf));
 	}
 
 	try

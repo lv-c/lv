@@ -86,7 +86,7 @@ BOOST_AUTO_TEST_CASE(test_serialization)
 	CheckVersion ver;
 	boost::interprocess::string	inter_str("inter");
 	shared_ptr<int> empty_shared_ptr;
-	shared_ptr<string> str_shared_ptr(new string("hello"));
+	shared_ptr<string> str_shared_ptr = std::make_shared<string>("hello");
 
 	oa << int(10) << str_vec << int_vec << obj << int_arr << ver << inter_str
 		<< empty_shared_ptr << str_shared_ptr;
@@ -102,7 +102,7 @@ BOOST_AUTO_TEST_CASE(test_serialization)
 	CheckVersion new_ver;
 	boost::interprocess::string new_inter_str;
 	shared_ptr<int> new_empty_shared_ptr;
-	shared_ptr<string> new_str_shared_ptr(new string("hello"));
+	shared_ptr<string> new_str_shared_ptr = std::make_shared<string>("hello");
 
 	ia >> i >> new_str_vec >> new_int_vec >> new_obj >> new_int_arr >> new_ver >> new_inter_str
 		>> new_empty_shared_ptr >> new_str_shared_ptr;

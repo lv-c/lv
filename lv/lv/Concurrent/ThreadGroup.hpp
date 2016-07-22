@@ -35,7 +35,7 @@ namespace lv
 		{
 			std::lock_guard<std::shared_timed_mutex> lock(mutex_);
 
-			ThreadPtr new_thread(new std::thread(func));
+			ThreadPtr new_thread = std::make_shared<std::thread>(func);
 			threads_.push_back(new_thread);
 
 			return new_thread.get();
@@ -51,7 +51,7 @@ namespace lv
 		{
 			std::shared_lock<std::shared_timed_mutex> lock(mutex_);
 
-			for (ThreadPtr v : threads_)
+			for (ThreadPtr & v : threads_)
 			{
 				v->join();
 			}
@@ -64,7 +64,7 @@ namespace lv
 
 			std::shared_lock<std::shared_timed_mutex> lock(mutex_);
 
-			for (ThreadPtr v : threads_)
+			for (ThreadPtr & v : threads_)
 			{
 				if (! v->timed_join(end_time))
 				{

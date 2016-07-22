@@ -22,7 +22,7 @@ namespace lv { namespace net {
 	};
 
 	TcpSession::TcpSession(ContextPtr context)
-		: base_type(context, SocketHolderPtr(new TcpSocketHolder(context)))
+		: base_type(context, std::make_shared<TcpSocketHolder>(context))
 	{
 	}
 

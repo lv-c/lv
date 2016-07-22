@@ -93,7 +93,7 @@ namespace lv
 
 				if (rhs.data_)
 				{
-					data_.reset(new data_type(*rhs.data_));
+					data_ = std::make_shared<data_type>(*rhs.data_);
 				}
 				else
 				{
@@ -230,7 +230,7 @@ namespace lv
 		template<class KeyRange>
 		void	insert(KeyRange const & seq, data_type const & data)
 		{
-			insert(seq, data_pointer(new data_type(data)));
+			insert(seq, std::make_shared<data_type>(data));
 		}
 
 

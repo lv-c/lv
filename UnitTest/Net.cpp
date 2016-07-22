@@ -121,8 +121,8 @@ void test_net_impl()
 	asio::io_service service;
 
 	// 
-	shared_ptr<SSLContext> server_context(new SSLContext(BufferManagerPtr(new SimpleBufferManager(1024)), service));
-	shared_ptr<SSLContext> client_context(new SSLContext(BufferManagerPtr(new SimpleBufferManager(1024)), service));
+	shared_ptr<SSLContext> server_context = std::make_shared<SSLContext>(std::make_shared<SimpleBufferManager>(1024), service);
+	shared_ptr<SSLContext> client_context = std::make_shared<SSLContext>(std::make_shared<SimpleBufferManager>(1024), service);
 
 	// server
 	server_type server(server_context, SessionCreator<server_session_type>());
@@ -130,7 +130,7 @@ void test_net_impl()
 	server.start(5555);
 
 	// client. We must use shared_ptr here.
-	shared_ptr<client_session_type> client(new client_session_type(client_context));
+	shared_ptr<client_session_type> client = std::make_shared<client_session_type>(client_context);
 	client->connect("127.0.0.1", "5555");
 
 	unique_lock<mutex> lock(g_mutex);

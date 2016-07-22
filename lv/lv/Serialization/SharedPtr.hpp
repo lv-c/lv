@@ -35,7 +35,7 @@ namespace lv { namespace serialization {
 
 		if (exist)
 		{
-			t.reset(new T());
+			t = std::make_shared<T>();
 			ar >> *t;
 		}
 	}

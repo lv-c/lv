@@ -71,7 +71,7 @@ namespace lv { namespace log {
 
 	inline gather_ptr	add_gather(Log & log, ostream_ptr os, FormmatterSet formatters = CommonFormatters())
 	{
-		gather_ptr gather(new Gather(os));
+		gather_ptr gather = std::make_shared<Gather>(os);
 
 		log.add_gather(formatters(gather));
 
@@ -85,7 +85,7 @@ namespace lv { namespace log {
 	 */
 	inline gather_ptr	add_file_gather(Log & log, char const * file, bool append = false, FormmatterSet formatters = CommonFormatters())
 	{
-		ostream_ptr ofile(new std::basic_ofstream<char_type>(file, append ? std::ios_base::app : std::ios_base::trunc));
+		ostream_ptr ofile = std::make_shared<std::basic_ofstream<char_type> >(file, append ? std::ios_base::app : std::ios_base::trunc);
 		if (! (*ofile))
 		{
 			throw file_io_error(std::string("error opening file:") + file);
@@ -110,7 +110,7 @@ namespace lv { namespace log {
 
 	inline gather_ptr	add_debug_string_gather(Log & log, FormmatterSet formatters = CommonFormatters(true))
 	{
-		gather_ptr gather(new DebugStringGather());
+		gather_ptr gather = std::make_shared<DebugStringGather>();
 		
 		log.add_gather(formatters(gather));
 

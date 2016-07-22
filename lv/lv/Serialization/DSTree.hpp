@@ -76,7 +76,7 @@ namespace boost { namespace serialization {
 
 			if (has_data)
 			{
-				data.reset(new tree_type::data_type());
+				data = std::make_shared<tree_type::data_type>();
 				ar & (*data);
 			}
 

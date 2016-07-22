@@ -40,7 +40,7 @@ class MyBufferManager : public IBufferManager
 public:
 	virtual BufferPtr	get()
 	{
-		return BufferPtr(new Buffer());
+		return std::make_shared<Buffer>();
 	}
 };
 
@@ -150,7 +150,7 @@ RPC_REGISTER_CLASS(NonCopyable)
 
 BOOST_AUTO_TEST_CASE(test_rpc)
 {
-	server_t server(BufferManagerPtr(new MyBufferManager()));
+	server_t server(std::make_shared<MyBufferManager>());
 
 	Multiply multiply;
 
@@ -168,7 +168,7 @@ BOOST_AUTO_TEST_CASE(test_rpc)
 
 
 	Tunnel tunnel;
-	Client<> client(std::ref(tunnel), BufferManagerPtr(new SimpleBufferManager(100)));
+	Client<> client(std::ref(tunnel), std::make_shared<SimpleBufferManager>(100));
 
 	tunnel.client = &client;
 	tunnel.server = &server;

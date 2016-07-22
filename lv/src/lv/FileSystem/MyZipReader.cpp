@@ -72,7 +72,7 @@ namespace lv
 		if (it == unzip_.end())
 		{
 			// open the zip file
-			uz.reset(new MyUnzip());
+			uz = std::make_shared<MyUnzip>();
 
 			std::string zip_path = resolve(zip_file + postfix_);
 			ZRESULT ret;
@@ -81,10 +81,10 @@ namespace lv
 			{
 				if (! raw_file_reader_)
 				{
-					raw_file_reader_.reset(new RawFileReader());
+					raw_file_reader_ = std::make_shared<RawFileReader>();
 				}
 
-				BufferPtr file_buf(new Buffer());
+				BufferPtr file_buf = std::make_shared<Buffer>();
 				raw_file_reader_->fulfill(zip_path, file_buf);
 
 				ret = uz->open(file_buf, password_);

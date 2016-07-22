@@ -56,7 +56,7 @@ namespace lv
 
 		explicit SimpleBufferManager(size_t init_capacity)
 			: init_capacity_(init_capacity)
-			, factory_(new BufferFactory(init_capacity * 2))
+			, factory_(std::make_shared<BufferFactory>(init_capacity * 2))
 		{
 		}
 

@@ -42,7 +42,7 @@ namespace lv { namespace lua { namespace archive {
 		{
 			if (! v)
 			{
-				v.reset(new T());
+				v = std::make_shared<T>();
 			}
 			load(obj, *v);
 		}
@@ -59,7 +59,7 @@ namespace lv { namespace lua { namespace archive {
 		{
 			if (! v)
 			{
-				v.reset(new T());
+				v = std::make_shared<T>();
 			}
 			parser >> *v;
 		}

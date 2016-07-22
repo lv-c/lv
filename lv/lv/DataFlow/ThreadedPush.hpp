@@ -83,7 +83,7 @@ namespace lv { namespace flow {
 	public:
 
 		ThreadedPush(size_t thread_num = 1)
-			: impl_(new detail::ThreadedPushImpl<T>(thread_num))
+			: impl_(std::make_shared<detail::ThreadedPushImpl<T> >(thread_num))
 		{
 		}
 

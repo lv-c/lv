@@ -45,7 +45,7 @@ namespace lv { namespace flow {
 
 		push_policy_type	push_policy_;
 
-		typedef std::shared_ptr<IStreamFactory>	IStreamFactoryPtr;
+		typedef std::shared_ptr<IStreamFactory>		IStreamFactoryPtr;
 		typedef std::weak_ptr<IStreamFactory>		WeakIStreamFactoryPtr;
 
 		IStreamFactoryPtr	istream_factory_;
@@ -57,7 +57,7 @@ namespace lv { namespace flow {
 		 */
 		Sink(proxy_push_type const & proxy_push = proxy_push_type(), push_policy_type const & policy = push_policy_type())
 			: push_policy_(policy)
-			, istream_factory_(new IStreamFactory())
+			, istream_factory_(std::make_shared<IStreamFactory>())
 		{
 			slot_type slot = std::bind(&Sink::push_impl, this, std::placeholders::_1, WeakIStreamFactoryPtr(istream_factory_));
 

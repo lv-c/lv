@@ -14,12 +14,12 @@ namespace lv { namespace lua {
 	{
 		if (! this->file_loader_)
 		{
-			this->file_loader_.reset(new RawFileReader());
+			this->file_loader_ = std::make_shared<RawFileReader>();
 		}
 
 		L_ = init_lua();
 
-		ia_.reset(new LuaIArchive(luabind::globals(L_)));
+		ia_ = std::make_shared<LuaIArchive>(luabind::globals(L_));
 
 		//
 		if (! file.empty())

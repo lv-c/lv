@@ -38,7 +38,7 @@ namespace lv { namespace net {
 
 
 	SSLSession::SSLSession(ContextPtr context)
-		: base_type(context, SocketHolderPtr(new SSLSocketHolder(context)))
+		: base_type(context, std::make_shared<SSLSocketHolder>(context))
 	{
 	}
 

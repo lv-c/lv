@@ -27,7 +27,7 @@ namespace lv { namespace net {
 		SSLContext(BufferManagerPtr buf_manager, ServiceWrapper const & service_wrapper,
 				asio::ssl::context::method method = asio::ssl::context::sslv23)
 			: Context(buf_manager, service_wrapper)
-			, ssl_context_(new asio::ssl::context(service_wrapper.service(), method))
+			, ssl_context_(std::make_shared<asio::ssl::context>(service_wrapper.service(), method))
 		{
 		}
 

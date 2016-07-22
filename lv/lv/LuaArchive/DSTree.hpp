@@ -167,7 +167,7 @@ namespace lv { namespace lua { namespace archive {
 
 			if (v_it != end && luabind::type(*v_it) != LUA_TNIL)
 			{
-				data.reset(new tree_type::data_type());
+				data = std::make_shared<tree_type::data_type>();
 				load(*v_it, *data);
 			}
 

@@ -31,7 +31,7 @@ namespace lv
 	public:
 
 		OStreamFactory()
-			: factory_(new factory_type())
+			: factory_(std::make_shared<factory_type>())
 		{
 		}
 

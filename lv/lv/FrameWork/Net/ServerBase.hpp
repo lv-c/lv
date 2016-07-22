@@ -14,10 +14,12 @@
 #include <lv/FrameWork/AutoLink.hpp>
 #include <lv/FrameWork/Net/Fwd.hpp>
 
-#include <boost/scoped_ptr.hpp>
 #include <boost/signals2.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/system/error_code.hpp>
+
+#include <memory>
+
 
 namespace lv { namespace net {
 
@@ -28,7 +30,7 @@ namespace lv { namespace net {
 	{
 		SessionPtr	operator() (ContextPtr context) const
 		{
-			return SessionPtr(new SessionType(context));
+			return std::make_shared<SessionType>(context);
 		}
 	};
 
@@ -37,7 +39,7 @@ namespace lv { namespace net {
 
 		typedef boost::signals2::signal<void(SessionPtr)>	NewSessionEvent;
 
-		boost::scoped_ptr<AcceptorHolder>	acceptor_;
+		std::unique_ptr<AcceptorHolder>	acceptor_;
 
 		NewSessionEvent	new_session_event_;
 

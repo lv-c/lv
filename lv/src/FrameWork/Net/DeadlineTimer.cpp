@@ -7,7 +7,7 @@ namespace lv { namespace net {
 
 	DeadlineTimer::DeadlineTimer(ServiceWrapper const & service_wrapper, boost::posix_time::time_duration const & duration, Callback const & callback)
 		: service_wrapper_(service_wrapper)
-		, timer_(new boost::asio::deadline_timer(service_wrapper.service()))
+		, timer_(std::make_shared<boost::asio::deadline_timer>(service_wrapper.service()))
 		, duration_(duration)
 		, callback_(callback)
 	{

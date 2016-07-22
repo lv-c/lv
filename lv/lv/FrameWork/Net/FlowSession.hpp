@@ -47,8 +47,8 @@ namespace lv { namespace net {
 			: base_type(context)
 			, splitter_(context->buffer_manager())
 		{
-			source_.reset(new source_type(std::bind(&FlowSession::push, this, std::placeholders::_1),
-				BufferManagerPtr(new PacketBufferManager(1024))));
+			source_ = std::make_shared<source_type>(std::bind(&FlowSession::push, this, std::placeholders::_1),
+				std::make_shared<PacketBufferManager>(1024));
 		}
 
 		virtual	void	close()
