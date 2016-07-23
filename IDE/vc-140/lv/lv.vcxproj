@@ -361,7 +361,6 @@
     <ClInclude Include="..\..\..\lv\lv\lvlib2.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Mapping.hpp" />
     <ClInclude Include="..\..\..\lv\lv\MemFn.hpp" />
-    <ClInclude Include="..\..\..\lv\lv\Pool.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Random.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Ref.hpp" />
     <ClInclude Include="..\..\..\lv\lv\RPC\ArchiveBase.hpp" />
@@ -384,12 +383,13 @@
     <ClInclude Include="..\..\..\lv\lv\Serialization\Graphics\Triangle.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Serialization\Graphics\Vector.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Serialization\IArchive.hpp" />
-    <ClInclude Include="..\..\..\lv\lv\Serialization\IArchiveCreator.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\Serialization\IArchiveWrapper.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Serialization\Interprocess\String.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Serialization\Interprocess\Vector.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Serialization\NonintrusiveOptional.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Serialization\NvpHelper.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Serialization\OArchive.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\Serialization\OArchiveWrapper.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Serialization\Serialization.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Serialization\SharedPtr.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Serialization\Tuple.hpp" />
@@ -398,7 +398,6 @@
     <ClInclude Include="..\..\..\lv\lv\SimpleBufferManager.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Singleton.hpp" />
     <ClInclude Include="..\..\..\lv\lv\StreamHelper.hpp" />
-    <ClInclude Include="..\..\..\lv\lv\StreamPtr.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Stream\CallForwarding.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Stream\Fwd.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Stream\IBufferStream.hpp" />

@@ -253,9 +253,6 @@
     <ClInclude Include="..\..\..\lv\lv\StreamHelper.hpp">
       <Filter>Utility\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\lv\lv\StreamPtr.hpp">
-      <Filter>Utility\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\Timer.hpp">
       <Filter>Utility\Header Files</Filter>
     </ClInclude>
@@ -592,9 +589,6 @@
     <ClInclude Include="..\..\..\lv\lv\Serialization\IArchive.hpp">
       <Filter>Serialization\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\lv\lv\Serialization\IArchiveCreator.hpp">
-      <Filter>Serialization\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\Serialization\NonintrusiveOptional.hpp">
       <Filter>Serialization\Header Files</Filter>
     </ClInclude>
@@ -784,9 +778,6 @@
     <ClInclude Include="..\..\..\lv\lv\ContainerAdaptor\Interprocess\Vector.hpp">
       <Filter>ContainerAdaptor\Interprocess\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\lv\lv\Pool.hpp">
-      <Filter>Utility\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\Concurrent\Future.hpp">
       <Filter>Concurrent\Header Files</Filter>
     </ClInclude>
@@ -798,6 +789,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\LazyInit.hpp">
       <Filter>Utility\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Serialization\OArchiveWrapper.hpp">
+      <Filter>Serialization\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Serialization\IArchiveWrapper.hpp">
+      <Filter>Serialization\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

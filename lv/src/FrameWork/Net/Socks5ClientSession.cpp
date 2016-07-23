@@ -33,7 +33,7 @@ namespace lv { namespace net {
 		port_ = port;
 
 		std::string socks_ip, socks_port;
-		std::dynamic_pointer_cast<Socks5ClientContext>(context_)->get_proxy(socks_ip, socks_port);
+		dynamic_cast<Socks5ClientContext &>(*context_).get_proxy(socks_ip, socks_port);
 
 		use_proxy_ = (! socks_ip.empty());
 
@@ -80,7 +80,7 @@ namespace lv { namespace net {
 		}
 		else
 		{
-			bool auth = std::dynamic_pointer_cast<Socks5ClientContext>(context_)->has_auth();
+			bool auth = dynamic_cast<Socks5ClientContext &>(*context_).has_auth();
 			uint8 const methods_num = 1;
 
 			status_ = MethodSelect;
@@ -167,9 +167,9 @@ namespace lv { namespace net {
 
 		if (method == Socks5::UserPassword)
 		{
-			std::shared_ptr<Socks5ClientContext> s5_context = std::dynamic_pointer_cast<Socks5ClientContext>(context_);
+			Socks5ClientContext & s5_context = dynamic_cast<Socks5ClientContext &>(*context_);
 			std::string user, password;
-			s5_context->get_auth(user, password);
+			s5_context.get_auth(user, password);
 
 			status_ = Auth;
 			socks_send() << Socks5::AuthVersion << bstream::variable_len_range<uint8>(user)

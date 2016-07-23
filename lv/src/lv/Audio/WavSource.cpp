@@ -7,7 +7,7 @@
 
 namespace lv
 {
-	WavSource::WavSource(IStreamPtr is)
+	WavSource::WavSource(std::shared_ptr<std::istream> is)
 		: istream_(is)
 		, data_offset_(0)
 	{

@@ -55,7 +55,7 @@ namespace lv { namespace flow { namespace detail {
 	{
 		void operator () (IArchive & ia, RefWrapper<IArchive> & t) const
 		{
-			t = boost::ref(ia);
+			t = std::ref(ia);
 		}
 	};
 

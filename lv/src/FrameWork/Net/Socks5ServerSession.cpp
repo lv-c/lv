@@ -88,7 +88,7 @@ namespace lv { namespace net {
 		std::vector<uint8> methods(methods_num);
 		bis >> methods;
 
-		uint8 m = std::dynamic_pointer_cast<ISocks5ServerContext>(context_)->select_method(methods);
+		uint8 m = dynamic_cast<ISocks5ServerContext &>(*context_).select_method(methods);
 
 		send() << Socks5::Version << m;
 
@@ -122,7 +122,7 @@ namespace lv { namespace net {
 
 		BOOST_ASSERT(ver == Socks5::AuthVersion);
 
-		bool valid = std::dynamic_pointer_cast<ISocks5ServerContext>(context_)->verify(auth);
+		bool valid = dynamic_cast<ISocks5ServerContext &>(*context_).verify(auth);
 
 		send() << Socks5::AuthVersion << uint8(valid ? 0 : 1);
 
@@ -190,7 +190,7 @@ namespace lv { namespace net {
 
 		ContextPtr context = std::make_shared<Context>(context_->buffer_manager(), context_->service_wrapper());
 
-		dest_session_ = std::make_shared<DestSession>(context);
+		dest_session_ = std::make_unique<DestSession>(context);
 
 		BOOST_ASSERT(connections_.empty());
 
@@ -198,7 +198,7 @@ namespace lv { namespace net {
 		connections_.push_back(dest_session_->error_event().connect(std::bind(&Socks5ServerSession::dest_on_error, this, std::placeholders::_1, std::placeholders::_2)));
 		connections_.push_back(dest_session_->receive_event().connect(std::bind(&Socks5ServerSession::dest_on_receive, this, std::placeholders::_1)));
 
-		std::string to_bind = std::dynamic_pointer_cast<ISocks5ServerContext>(context_)->address_to_bind();
+		std::string to_bind = dynamic_cast<ISocks5ServerContext &>(*context_).address_to_bind();
 
 		try
 		{

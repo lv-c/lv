@@ -75,9 +75,9 @@ namespace lv { namespace flow {
 			return Connection(it->second.conn);
 		}
 
-		void	push(Port const & port, BufferPtr buf)
+		void	push(Port port, BufferPtr buf)
 		{
-			push_policy_(std::make_pair(port, buf));
+			push_policy_(std::make_pair(std::move(port), std::move(buf)));
 		}
 
 		// clear all the slots

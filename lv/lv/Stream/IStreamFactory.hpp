@@ -12,7 +12,6 @@
 #define LV_STREAM_ISTREAMFACTORY_HPP
 
 #include <lv/Stream/StreamFactory.hpp>
-#include <lv/StreamPtr.hpp>
 #include <lv/Buffer.hpp>
 
 #include <boost/iostreams/stream.hpp>
@@ -34,10 +33,12 @@ namespace lv
 		{
 		}
 
+		typedef	factory_type::unique_pointer	unique_pointer;
 
-		IStreamPtr	open(ConstBufferRef buf, std::ios_base::iostate except = std::ios_base::badbit | std::ios_base::failbit)
+		unique_pointer	open(ConstBufferRef buf, 
+			std::ios_base::iostate except = std::ios_base::badbit | std::ios_base::failbit)
 		{
-			std::shared_ptr<istream_type> is = factory_->get();
+			auto is = factory_->get();
 
 			is->open(buf.data(), buf.size());
 			is->exceptions(except);

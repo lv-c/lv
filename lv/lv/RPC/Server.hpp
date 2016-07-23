@@ -86,22 +86,21 @@ namespace lv { namespace rpc {
 		 */
 		BufferPtr	on_receive(ConstBufferRef const & data)
 		{
-			IArchiveCreator<iarchive_type> creator(istream_factory_, data);
-			iarchive_type & ia = creator.archive();
+			IArchiveWrapper<iarchive_type> ia(istream_factory_, data);
 
 			register_type::ResultHolder result;
 
 			// TODO : call_option and id are better in the front, or they may be serialized as parameters
 
 			Protocol::header::type header;
-			ia >> header;
+			ia.get() >> header;
 
 			LV_ENSURE(header == Protocol::header::call, InvalidProtocolValue("invalid Pro::header value"));
 
-			result = registery_.invoke(ia);
+			result = registery_.invoke(ia.get());
 
 			Protocol::options::type	call_option;
-			ia >> call_option;
+			ia.get() >> call_option;
 
 			if (call_option == Protocol::options::none)
 			{
@@ -113,21 +112,20 @@ namespace lv { namespace rpc {
 
 			// send back the result
 			Protocol::request_id_type id;
-			ia >> id;
-				
+			ia.get() >> id;
+
 			BufferPtr buf = this->get_buffer();
 
-			OStreamPtr raw_os = ostream_factory_.open(*buf);
-			oarchive_type oa(*raw_os);
+			OArchiveWrapper<oarchive_type> oa(ostream_factory_, *buf);
 
-			oa << Protocol::header::reply << id;
+			oa.get() << Protocol::header::reply << id;
 			
 			if (call_option == Protocol::options::ret)
 			{
-				result(oa);	// write the result
+				result(oa.get());	// write the result
 			}
 
-			raw_os->flush();
+			oa.flush();
 
 			return buf;
 		}

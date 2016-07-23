@@ -58,7 +58,7 @@ namespace lv { namespace net {
 
 		Timer	timer_;
 
-		std::shared_ptr<DeadlineTimer>	deadline_timer_;
+		std::unique_ptr<DeadlineTimer>	deadline_timer_;
 
 	public:
 

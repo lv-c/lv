@@ -44,6 +44,8 @@ namespace lv { namespace rpc {
 		typedef typename ArchivePair::iarchive_type	iarchive_type;
 		typedef typename ArchivePair::oarchive_type	oarchive_type;
 
+		typedef	OArchiveWrapper<oarchive_type>	oarchive_wrapper;
+
 		typedef typename Protocol::request_id_type request_id_type;
 
 		std::atomic<request_id_type>	next_request_id_;
@@ -69,19 +71,16 @@ namespace lv { namespace rpc {
 
 			BufferPtr	buffer_;
 
-			std::shared_ptr<oarchive_type>	oa_;
-
-			OStreamPtr	raw_os_;
+			std::unique_ptr<oarchive_wrapper>	oa_;
 
 			bool	sent_;
 
 		public:
 
-			PrivateHandler(Client & client, BufferPtr buf, std::shared_ptr<oarchive_type> oa, OStreamPtr raw_os, request_id_type request_id)
+			PrivateHandler(Client & client, BufferPtr buf, std::unique_ptr<oarchive_wrapper> && oa, request_id_type request_id)
 				: client_(client)
 				, buffer_(buf)
-				, oa_(oa)
-				, raw_os_(raw_os)
+				, oa_(std::move(oa))
 				, request_id_(request_id)
 				, sent_(false)
 			{
@@ -92,7 +91,6 @@ namespace lv { namespace rpc {
 				: client_(rhs.client_)
 				, buffer_(rhs.buffer_)
 				, oa_(rhs.oa_)
-				, raw_os_(rhs.raw_os_)
 				, request_id_(rhs.request_id_)
 				, sent_(false)
 			{
@@ -104,7 +102,7 @@ namespace lv { namespace rpc {
 			{
 				if (! sent_)
 				{
-					client_.send(buffer_, oa_, raw_os_, request_id_, Protocol::options::none);
+					client_.send(buffer_, *oa_, request_id_, Protocol::options::none);
 				}
 			}
 
@@ -115,14 +113,14 @@ namespace lv { namespace rpc {
 				// if we call @a send first, @a on_receive might be called before 
 				// @a add_promise is called and InvalidRequestID may be thrown
 				typedef detail::ReturnPromise<Ret, ArchivePair>	promise_type;
-				auto promise = pool::alloc<promise_type>();
+				auto promise = std::make_shared<promise_type>();
 
 				client_.add_promise(request_id_, promise);
 
 				try
 				{
 					Protocol::options::type option = (std::is_same<Ret, void>::value ? Protocol::options::ack : Protocol::options::ret);
-					client_.send(buffer_, oa_, raw_os_, request_id_, option);
+					client_.send(buffer_, *oa_, request_id_, option);
 				}
 				catch (...)
 				{
@@ -164,16 +162,15 @@ namespace lv { namespace rpc {
 		 */
 		void	on_receive(ConstBufferRef const & buf)
 		{
-			IArchiveCreator<iarchive_type> creator(istream_factory_, buf);
-			iarchive_type & ia = creator.archive();
+			IArchiveWrapper<iarchive_type> ia(istream_factory_, buf);
 
 			Protocol::header::type header;
-			ia >> header;
+			ia.get() >> header;
 			
 			LV_ENSURE(header == Protocol::header::reply, InvalidProtocolValue("invalid Protocol::header value"));
 
 			request_id_type id;
-			ia >> id;
+			ia.get() >> id;
 
 			// scoped lock
 			PromiseBasePtr promise;
@@ -189,7 +186,7 @@ namespace lv { namespace rpc {
 			}
 			
 			// the following code may throw exception
-			promise->set(ia);
+			promise->set(ia.get());
 		}
 
 
@@ -197,16 +194,12 @@ namespace lv { namespace rpc {
 		PrivateHandler<Ret> call(Id const & id, Types const &... args)
 		{
 			BufferPtr buf = this->get_buffer();
+			unique_ptr<oarchive_wrapper> oa = std::make_unique<oarchive_wrapper>(ostream_factory_, *buf);
 
-			OStreamPtr raw_os = ostream_factory_.open(*buf);
-			auto oa = pool::alloc<oarchive_type>(boost::ref(*raw_os));
+			oa->get() << Protocol::header::call << id;
+			int dummy[] = { 0, ((oa->get() << args), 0)... };
 
-			(*oa) << Protocol::header::call << id;
-			int dummy[] = { 0, ((*oa << args), 0)... };
-
-			raw_os->flush();
-
-			return PrivateHandler<Ret>(*this, buf, oa, raw_os, next_request_id_++);
+			return PrivateHandler<Ret>(*this, buf, std::move(oa), next_request_id_++);
 		}
 
 
@@ -242,16 +235,16 @@ namespace lv { namespace rpc {
 	
 	private:
 
-		void	send(BufferPtr & buf, std::shared_ptr<oarchive_type> oa, OStreamPtr raw_os, request_id_type request_id, Protocol::options::type option)
+		void	send(BufferPtr & buf, oarchive_wrapper & oa, request_id_type request_id, Protocol::options::type option)
 		{
-			(*oa) << option;
+			oa.get() << option;
 			// sends the request id only when an acknowledgment or a return value is required
 			if (option != Protocol::options::none)
 			{
-				(*oa) << request_id;
+				oa.get() << request_id;
 			}
 
-			raw_os->flush();
+			oa.flush();
 
 			send(buf, option);
 		}

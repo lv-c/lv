@@ -75,7 +75,7 @@ namespace lv { namespace net {
 
 		BufferPtr	msg_to_send()
 		{
-			double resend_interval = std::dynamic_pointer_cast<MessageQueueContext>(context_)->resend_time();
+			double resend_interval = dynamic_cast<MessageQueueContext &>(*context_).resend_time();
 
 			for (Message & msg : messages_)
 			{
@@ -185,7 +185,7 @@ namespace lv { namespace net {
 		BufferPtr	msg_to_receive()
 		{
 			BufferPtr ret;
-			bool preserve_order = std::dynamic_pointer_cast<MessageQueueContext>(context_)->preserve_order();
+			bool preserve_order = dynamic_cast<MessageQueueContext &>(*context_).preserve_order();
 
 			for (Message & msg : messages_)
 			{
@@ -230,7 +230,7 @@ namespace lv { namespace net {
 		send_queue_ = std::make_shared<SendQueue>(context, timer_);
 		receive_queue_ = std::make_shared<ReceiveQueue>(context);
 
-		deadline_timer_ = std::make_shared<DeadlineTimer>(context->service_wrapper(), boost::posix_time::millisec(200), 
+		deadline_timer_ = std::make_unique<DeadlineTimer>(context->service_wrapper(), boost::posix_time::millisec(200), 
 			std::bind(&MessageQueue::on_timer, this));
 	}
 

@@ -15,8 +15,6 @@
 
 #include <string>
 
-#include <boost/ref.hpp>
-
 
 struct Test
 {

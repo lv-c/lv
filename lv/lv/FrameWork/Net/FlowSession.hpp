@@ -38,7 +38,7 @@ namespace lv { namespace net {
 		sink_type	sink_;
 
 		typedef flow::Source<key_type>	source_type;
-		std::shared_ptr<source_type>	source_;
+		std::unique_ptr<source_type>	source_;
 
 	public:
 
@@ -47,7 +47,7 @@ namespace lv { namespace net {
 			: base_type(context)
 			, splitter_(context->buffer_manager())
 		{
-			source_ = std::make_shared<source_type>(std::bind(&FlowSession::push, this, std::placeholders::_1),
+			source_ = std::make_unique<source_type>(std::bind(&FlowSession::push, this, std::placeholders::_1),
 				std::make_shared<PacketBufferManager>(1024));
 		}
 

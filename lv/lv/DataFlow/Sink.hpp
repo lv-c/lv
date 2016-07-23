@@ -13,7 +13,7 @@
 
 #include <lv/Buffer.hpp>
 #include <lv/MemFn.hpp>
-#include <lv/Serialization/IArchiveCreator.hpp>
+#include <lv/Serialization/IArchiveWrapper.hpp>
 
 #include <lv/DataFlow/Fwd.hpp>
 #include <lv/DataFlow/Registery.hpp>
@@ -59,7 +59,7 @@ namespace lv { namespace flow {
 			: push_policy_(policy)
 			, istream_factory_(std::make_shared<IStreamFactory>())
 		{
-			slot_type slot = std::bind(&Sink::push_impl, this, std::placeholders::_1, WeakIStreamFactoryPtr(istream_factory_));
+			slot_type slot = [this](ConstBufferRef const & buf) { push_impl(buf, istream_factory_); };
 
 			if (proxy_push)
 			{
@@ -120,8 +120,8 @@ namespace lv { namespace flow {
 		{
 			if (IStreamFactoryPtr factory = weak_isteram_factory.lock())
 			{
-				IArchiveCreator<IArchive> creator(*factory, buf);
-				registery_.invoke(creator.archive());
+				IArchiveWrapper<IArchive> ia(*factory, buf);
+				registery_.invoke(ia.get());
 			}
 		}
 	};

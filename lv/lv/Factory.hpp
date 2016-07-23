@@ -11,10 +11,6 @@
 #ifndef LV_FACTORY_HPP
 #define LV_FACTORY_HPP
 
-
-/// hint : define BOOST_SP_USE_QUICK_ALLOCATOR in your program to increase the 
-///		performance and make this class more valuable.
-
 #include <vector>
 #include <atomic>
 #include <functional>
@@ -33,6 +29,7 @@ namespace lv
 		}
 	};
 
+	// for expensive objects
 
 	template<typename T>
 	class Factory : public std::enable_shared_from_this<Factory<T> >
@@ -48,6 +45,8 @@ namespace lv
 		typedef std::function<T*()>	creator_type;
 		creator_type	creator_;
 
+		typedef	std::function<void(T*)>	deleter_type;
+
 		static std::atomic<int>	total_num_;
 
 		static std::atomic<int>	current_num_;
@@ -59,30 +58,33 @@ namespace lv
 		{
 		}
 
-		typedef std::shared_ptr<T>	shared_pointer;
+		typedef std::unique_ptr<T, deleter_type>	unique_pointer;
 
-		virtual	shared_pointer	get()
+		virtual	unique_pointer	get()
 		{
-			lock_guard lock(mutex_);
-
 			T *	obj = nullptr;
-			if (! objects_.empty())
+
 			{
-				obj = objects_.back();
-				objects_.pop_back();
+				lock_guard lock(mutex_);
 
-				current_num_--;
+				if (!objects_.empty())
+				{
+					obj = objects_.back();
+					objects_.pop_back();
+
+					current_num_--;
+				}
+				else
+				{
+					obj = creator_();
+
+					total_num_++;
+				}
+
+				post_process(*obj);
 			}
-			else
-			{
-				obj = creator_();
 
-				total_num_++;
-			}
-
-			post_process(*obj);
-
-			return shared_pointer(obj, std::bind(&Factory::release, shared_from_this(), std::placeholders::_1));
+			return unique_pointer(obj, std::bind(&Factory::release, shared_from_this(), std::placeholders::_1));
 		}
 
 

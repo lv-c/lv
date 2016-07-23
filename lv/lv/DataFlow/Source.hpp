@@ -14,6 +14,7 @@
 #include <lv/DataFlow/Fwd.hpp>
 
 #include <lv/IBufferManager.hpp>
+#include <lv/Serialization/OArchiveWrapper.hpp>
 #include <lv/Stream/OStreamFactory.hpp>
 
 
@@ -78,22 +79,21 @@ namespace lv { namespace flow {
 			}
 
 			BufferPtr buf = buf_manager_->get();
+			OArchiveWrapper<oarchive_type> oa(ostream_factory_, *buf);
 
-			OStreamPtr raw_os = ostream_factory_.open(*buf);
-			oarchive_type oa(*raw_os);
+			oa.get() << key;
+			int dummy[] = { 0, ((oa.get() << args), 0)... };
 
-			oa << key;
-			int dummy[] = { 0, ((oa << args), 0)... };
+			oa.flush();
 
-			raw_os->flush();
-			push(buf);
+			push(std::move(buf));
 		}
 
 	protected:
 
 		virtual	void	push(BufferPtr buf)
 		{
-			callback_(buf);
+			callback_(std::move(buf));
 		}
 
 	};

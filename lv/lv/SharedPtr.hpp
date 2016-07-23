@@ -16,19 +16,12 @@
 
 namespace lv
 {
-	/// NullDeleter
-	struct NullDeleter
-	{
-		void	operator() (void const *) const 
-		{
-		}
-	};
-
 	/// shared_from_object
 	template<class T>
 	std::shared_ptr<T> shared_from_object(T & t)
 	{
-		return std::shared_ptr<T>(&t, NullDeleter());
+		// null deleter
+		return std::shared_ptr<T>(&t, [](void const *) {});
 	}
 }
 

@@ -12,7 +12,7 @@
 #define LV_RPC_FUTURE_HPP
 
 #include <lv/Concurrent/Future.hpp>
-#include <lv/Pool.hpp>
+
 
 namespace lv { namespace rpc {
 	
@@ -57,7 +57,7 @@ namespace lv { namespace rpc {
 		public:
 
 			ReturnPromise()
-				: promise_(pool::alloc<Promise<Ret> >())
+				: promise_(std::make_shared<Promise<Ret> >())
 			{
 			}
 

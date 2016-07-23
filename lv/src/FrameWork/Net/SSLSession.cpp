@@ -21,7 +21,7 @@ namespace lv { namespace net {
 	public:
 
 		SSLSocketHolder(ContextPtr context)
-			: socket_(context->service(), *std::dynamic_pointer_cast<SSLContext>(context)->ssl_context())
+			: socket_(context->service(), *dynamic_cast<SSLContext &>(*context).ssl_context())
 		{
 		}
 
@@ -101,7 +101,7 @@ namespace lv { namespace net {
 		}
 
 
-		SSLSocketHolder::socket_type & sock = std::dynamic_pointer_cast<SSLSocketHolder>(socket())->real_socket();
+		SSLSocketHolder::socket_type & sock = dynamic_cast<SSLSocketHolder &>(*socket()).real_socket();
 
 		sock.async_handshake(true_type, std::bind(&SSLSession::handle_handshake, 
 			std::dynamic_pointer_cast<SSLSession>(shared_from_this()), std::placeholders::_1));

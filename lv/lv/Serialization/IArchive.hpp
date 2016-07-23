@@ -146,6 +146,34 @@ namespace lv
 		}
 
 	};
+
+
+	//
+	class IStreamFactory;
+
+	template<typename Archive>
+	class IArchiveWrapper;
+
+	template<>
+	class IArchiveWrapper<IArchive>
+	{
+		IBufferStream	is_;
+
+		IArchive	ar_;
+
+	public:
+
+		IArchiveWrapper(IStreamFactory &, ConstBufferRef const & buf)
+			: is_(buf)
+			, ar_(is_)
+		{
+		}
+
+		IArchive &	get()
+		{
+			return ar_;
+		}
+	};
 }
 
 #endif

@@ -13,7 +13,6 @@
 
 
 #include <lv/Stream/StreamFactory.hpp>
-#include <lv/StreamPtr.hpp>
 #include <lv/Buffer.hpp>
 
 #include <boost/iostreams/stream.hpp>
@@ -35,10 +34,11 @@ namespace lv
 		{
 		}
 
+		typedef	factory_type::unique_pointer	unique_pointer;
 
-		OStreamPtr	open(Buffer & buf, std::ios_base::iostate except = std::ios_base::badbit | std::ios_base::failbit)
+		unique_pointer	open(Buffer & buf, std::ios_base::iostate except = std::ios_base::badbit | std::ios_base::failbit)
 		{
-			std::shared_ptr<ostream_type> os = factory_->get();
+			auto os = factory_->get();
 
 			os->open(boost::iostreams::back_inserter(buf));
 			os->exceptions(except);

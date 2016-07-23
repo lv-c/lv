@@ -130,6 +130,40 @@ namespace lv
 		}
 
 	};
+
+
+
+	//
+	class OStreamFactory;
+
+	template<typename Archive>
+	class OArchiveWrapper;
+
+	template<>
+	class OArchiveWrapper<OArchive>
+	{
+		OBufferStream	os_;
+
+		OArchive	ar_;
+
+	public:
+
+		OArchiveWrapper(OStreamFactory &, Buffer & buf)
+			: os_(buf)
+			, ar_(os_)
+		{
+		}
+
+		OArchive &	get()
+		{
+			return ar_;
+		}
+
+		void	flush()
+		{
+			os_.flush();
+		}
+	};
 }
 
 #endif

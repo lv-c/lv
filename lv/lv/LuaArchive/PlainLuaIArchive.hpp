@@ -47,24 +47,25 @@ namespace lv
 	class IStreamFactory;
 
 	template<typename Archive>
-	class IArchiveCreator;
+	class IArchiveWrapper;
 
 	template<>
-	class IArchiveCreator<PlainLuaIArchive>
+	class IArchiveWrapper<PlainLuaIArchive>
 	{
 		PlainLuaIArchive	ar_;
 
 	public:
 
-		IArchiveCreator(IStreamFactory & factory, ConstBufferRef const & buf)
+		IArchiveWrapper(IStreamFactory &, ConstBufferRef const & buf)
 			: ar_(buf)
 		{
 		}
 
-		PlainLuaIArchive &	archive()
+		PlainLuaIArchive &	get()
 		{
 			return ar_;
 		}
+
 	};
 }
 

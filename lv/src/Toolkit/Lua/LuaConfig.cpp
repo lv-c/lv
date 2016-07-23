@@ -19,7 +19,7 @@ namespace lv { namespace lua {
 
 		L_ = init_lua();
 
-		ia_ = std::make_shared<LuaIArchive>(luabind::globals(L_));
+		ia_ = std::make_unique<LuaIArchive>(luabind::globals(L_));
 
 		//
 		if (! file.empty())

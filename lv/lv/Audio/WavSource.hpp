@@ -12,14 +12,17 @@
 #define LV_WAVSOURCE_HPP
 
 #include <lv/Audio/AudioDataSource.hpp>
-#include <lv/StreamPtr.hpp>
+
+#include <istream>
+#include <memory>
+
 
 namespace lv
 {
 	class WavSource : public AudioDataSource
 	{
 
-		IStreamPtr	istream_;
+		std::shared_ptr<std::istream>	istream_;
 
 		std::streamoff	data_offset_;
 
@@ -29,7 +32,7 @@ namespace lv
 		 * @exception InvalidAudioData
 		 * @exception UnSupportedAudioFormat
 		 */
-		explicit WavSource(IStreamPtr is);
+		explicit WavSource(std::shared_ptr<std::istream> is);
 
 		virtual	size_t	read(BufferRef buf);
 

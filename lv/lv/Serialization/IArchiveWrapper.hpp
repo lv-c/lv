@@ -1,5 +1,5 @@
 // *********************************************************************
-//  IArchiveCreator   version:  1.0   ¡¤  date: 2014/04/01
+//  IArchiveWrapper   version:  1.0   ¡¤  date: 2014/04/01
 //  --------------------------------------------------------------------
 //  
 //  --------------------------------------------------------------------
@@ -13,24 +13,25 @@
 
 #include <lv/Stream/IStreamFactory.hpp>
 
+
 namespace lv
 {
 	template<typename Archive>
-	class IArchiveCreator
+	class IArchiveWrapper
 	{
-		IStreamPtr	raw_is_;
+		IStreamFactory::unique_pointer	raw_is_;
 
 		Archive	ar_;
 
 	public:
 
-		IArchiveCreator(IStreamFactory & factory, ConstBufferRef const & buf)
+		IArchiveWrapper(IStreamFactory & factory, ConstBufferRef const & buf)
 			: raw_is_(factory.open(buf))
 			, ar_(*raw_is_)
 		{
 		}
 
-		Archive &	archive()
+		Archive &	get()
 		{
 			return ar_;
 		}

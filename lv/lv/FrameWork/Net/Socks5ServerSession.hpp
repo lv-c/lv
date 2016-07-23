@@ -35,7 +35,7 @@ namespace lv { namespace net {
 		volatile Status	status_;
 
 		typedef TcpSession	DestSession;
-		std::shared_ptr<DestSession>	dest_session_;
+		std::unique_ptr<DestSession>	dest_session_;
 
 		std::vector<boost::signals2::connection>	connections_;
 

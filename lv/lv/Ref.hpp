@@ -11,8 +11,8 @@
 #ifndef LV_REF_HPP
 #define LV_REF_HPP
 
-#include <boost/mpl/if.hpp>
-#include <boost/ref.hpp>
+#include <functional>
+
 
 namespace lv
 {
@@ -25,15 +25,16 @@ namespace lv
 
 		typedef T type;
 
-		// here is the difference between this class and boost::reference_wrapper
-		RefWrapper() : t_(0) {}
+		// here is the difference between this class and std::reference_wrapper
+		RefWrapper() : t_(nullptr) {}
 
-		explicit RefWrapper(T& t): t_(boost::addressof(t)) {}
+		explicit RefWrapper(T& t): t_(std::addressof(t)) {}
 
-		RefWrapper(boost::reference_wrapper<T> const & r) : t_(r.get_pointer()) {}
-		RefWrapper const & operator = (boost::reference_wrapper<T> const & r) 
+		RefWrapper(std::reference_wrapper<T> const & r) : t_(&r.get()) {}
+
+		RefWrapper const & operator = (std::reference_wrapper<T> const & r) 
 		{
-			t_ = r.get_pointer();
+			t_ = &r.get();
 			return *this;
 		}
 
@@ -47,43 +48,8 @@ namespace lv
 			return *t_; 
 		}
 
-		T* get_pointer() const 
-		{ 
-			return t_; 
-		}
-
 	};
-
-
-	/// if T is a reference type, use RefWrapper instead
-	/*
-	template<typename T>
-	struct ChangeRefWrapper
-	{
-		typedef typename boost::mpl::if_<
-			boost::is_reference_wrapper<T>,
-			RefWrapper<typename boost::unwrap_reference<T>::type>,
-			T
-		>::type type;
-	};
-	*/
-	
-}
-
-namespace boost
-{
-	template<typename T>
-	class is_reference_wrapper<lv::RefWrapper<T> >
-		: public mpl::true_
-	{
-	};
-
-	template<typename T>
-	class unwrap_reference<lv::RefWrapper<T> >
-	{
-	public:
-		typedef T type;
-	};
+		
 }
 
 #endif

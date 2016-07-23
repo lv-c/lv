@@ -17,7 +17,9 @@
 
 #include <boost/mpl/bool.hpp>
 #include <boost/optional.hpp>
-#include <boost/ref.hpp>
+
+#include <functional>
+
 
 namespace lv
 {
@@ -44,7 +46,7 @@ namespace lv
 		}
 
 		explicit BinaryOStream(Buffer & buf)
-			: raw_os_(boost::ref(buf))
+			: raw_os_(std::ref(buf))
 		{
 			OStreamProxy::set(nullptr, raw_os_.get_ptr());
 

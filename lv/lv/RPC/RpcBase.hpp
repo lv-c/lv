@@ -17,7 +17,8 @@
 #include <lv/IBufferManager.hpp>
 #include <lv/Stream/IStreamFactory.hpp>
 #include <lv/Stream/OStreamFactory.hpp>
-#include <lv/Serialization/IArchiveCreator.hpp>
+#include <lv/Serialization/IArchiveWrapper.hpp>
+#include <lv/Serialization/OArchiveWrapper.hpp>
 
 #include <boost/noncopyable.hpp>
 
