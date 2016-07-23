@@ -227,12 +227,14 @@ namespace lv { namespace net {
 		, receiver_(receiver)
 		, last_reply_time_(0)
 	{
-		send_queue_ = std::make_shared<SendQueue>(context, timer_);
-		receive_queue_ = std::make_shared<ReceiveQueue>(context);
+		send_queue_ = std::make_unique<SendQueue>(context, timer_);
+		receive_queue_ = std::make_unique<ReceiveQueue>(context);
 
 		deadline_timer_ = std::make_unique<DeadlineTimer>(context->service_wrapper(), boost::posix_time::millisec(200), 
 			std::bind(&MessageQueue::on_timer, this));
 	}
+
+	MessageQueue::~MessageQueue() = default;
 
 	void MessageQueue::send(BufferPtr buf)
 	{

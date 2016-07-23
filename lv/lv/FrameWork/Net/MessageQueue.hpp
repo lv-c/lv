@@ -44,8 +44,8 @@ namespace lv { namespace net {
 
 	private:
 
-		std::shared_ptr<SendQueue>	send_queue_;
-		std::shared_ptr<ReceiveQueue>	receive_queue_;
+		std::unique_ptr<SendQueue>	send_queue_;
+		std::unique_ptr<ReceiveQueue>	receive_queue_;
 
 		ContextPtr	context_;
 
@@ -63,6 +63,8 @@ namespace lv { namespace net {
 	public:
 
 		MessageQueue(ContextPtr context, ISenderPtr sender, Receiver receiver);
+
+		~MessageQueue();
 
 		void	send(BufferPtr buf);
 
