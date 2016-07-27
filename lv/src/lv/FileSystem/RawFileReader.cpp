@@ -31,7 +31,7 @@ namespace lv
 			// read the whole file
 			infile.seekg(0, std::ios_base::beg);
 
-			init_buffer(*buf, len);
+			init_buffer(*buf, static_cast<size_t>(len));
 			infile.read(buffer::data(buf), len);
 		}
 		else

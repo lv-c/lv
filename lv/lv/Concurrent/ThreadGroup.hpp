@@ -31,11 +31,11 @@ namespace lv
 	public:
 
 		template<typename F>
-		std::thread *	create_thread(F func)
+		std::thread *	create_thread(F && func)
 		{
 			std::lock_guard<std::shared_timed_mutex> lock(mutex_);
 
-			ThreadPtr new_thread = std::make_shared<std::thread>(func);
+			ThreadPtr new_thread = std::make_shared<std::thread>(std::forward<F>(func));
 			threads_.push_back(new_thread);
 
 			return new_thread.get();

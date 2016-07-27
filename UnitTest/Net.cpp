@@ -141,6 +141,8 @@ void test_net_impl()
 	g_condition_called.wait(lock);
 
 	service.stop();
+
+	thread.join();
 }
 
 BOOST_AUTO_TEST_CASE(test_net)

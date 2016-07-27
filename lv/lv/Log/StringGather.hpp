@@ -23,7 +23,7 @@ namespace lv { namespace log {
 	{
 	public:
 		
-		typedef std::function<void(log::string_type const &, int)> receiver_t;
+		typedef std::function<void(log::string_type &&, int)> receiver_t;
 
 	protected:
 
@@ -53,11 +53,11 @@ namespace lv { namespace log {
 			oss_.str(log::string_type());
 		}
 
-		virtual	void on_receive(string_type const & str, int lvl)
+		virtual	void on_receive(string_type && str, int lvl)
 		{
 			if (receiver_)
 			{
-				receiver_(str, lvl);
+				receiver_(std::move(str), lvl);
 			}
 		}
 	};

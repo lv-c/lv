@@ -42,8 +42,8 @@ namespace lv
 	private:
 
 		// noncopyable
-		Singleton( const Singleton& );
-		Singleton const & operator = (Singleton const &);
+		Singleton(Singleton const &) = delete;
+		Singleton & operator = (Singleton const &) = delete;
 
 
 		template <bool StaticAlloc>

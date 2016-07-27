@@ -22,14 +22,13 @@
 
 namespace lv { namespace log {
 
-	typedef std::function<gather_ptr(gather_ptr)>	FormmatterSet;
+	typedef std::function<void(Gather &)>	FormmatterSet;
 	
 
 	struct EmptyFormatters
 	{
-		gather_ptr operator () (gather_ptr gather) const
+		void	operator () (Gather &) const
 		{
-			return gather;
 		}
 	};
 
@@ -40,31 +39,30 @@ namespace lv { namespace log {
 		bool	use_clock_;
 
 	public:
+
 		CommonFormatters(bool use_clock = false, bool line_break = true)
 			: line_break_(line_break)
 			, use_clock_(use_clock)
 		{
 		}
 
-		gather_ptr operator () (gather_ptr gather) const
+		void operator () (Gather & gather) const
 		{
 			if (use_clock_)
 			{
-				gather->add_header(Clock());
+				gather.add_header(Clock());
 			}
 			else
 			{
-				gather->add_header(Time());
+				gather.add_header(Time());
 			}
 
-			gather->add_header(Tag());
+			gather.add_header(Tag());
 			
 			if (line_break_)
 			{
-				gather->add_tailer(LineBreak());
+				gather.add_tailer(LineBreak());
 			}
-
-			return gather;
 		}
 	};
 
@@ -72,8 +70,9 @@ namespace lv { namespace log {
 	inline gather_ptr	add_gather(Log & log, ostream_ptr os, FormmatterSet formatters = CommonFormatters())
 	{
 		gather_ptr gather = std::make_shared<Gather>(os);
+		formatters(*gather);
 
-		log.add_gather(formatters(gather));
+		log.add_gather(gather);
 
 		return gather;
 	}
@@ -111,8 +110,9 @@ namespace lv { namespace log {
 	inline gather_ptr	add_debug_string_gather(Log & log, FormmatterSet formatters = CommonFormatters(true))
 	{
 		gather_ptr gather = std::make_shared<DebugStringGather>();
-		
-		log.add_gather(formatters(gather));
+		formatters(*gather);
+
+		log.add_gather(gather);
 
 		return gather;
 	}

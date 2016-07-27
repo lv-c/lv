@@ -275,7 +275,7 @@ namespace lv
 		// write
 
 		/// @exception std::out_of_range
-		inline	void write(BufferRef buf, size_t pos, void const * data, size_t size)
+		inline	void write(BufferRef & buf, size_t pos, void const * data, size_t size)
 		{
 			if (pos + size > buf.size())
 			{
@@ -287,7 +287,7 @@ namespace lv
 		}
 
 		template<typename T>
-		typename std::enable_if<std::is_arithmetic<T>::value>::type	write(BufferRef buf, size_t pos, T t)
+		typename std::enable_if<std::is_arithmetic<T>::value>::type	write(BufferRef & buf, size_t pos, T t)
 		{
 			write(buf, pos, &t, sizeof(t));
 		}

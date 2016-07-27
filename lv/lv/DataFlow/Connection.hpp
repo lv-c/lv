@@ -80,7 +80,7 @@ namespace lv { namespace flow {
 
 		template<template<class> class, class, class> friend class DataFlow;
 
-		Connection(std::shared_ptr<detail::ConnectionImpl> impl)
+		Connection(std::shared_ptr<detail::ConnectionImpl> const & impl)
 			: impl_(impl)
 		{
 		}
