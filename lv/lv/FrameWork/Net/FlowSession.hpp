@@ -64,7 +64,7 @@ namespace lv { namespace net {
 		{
 			if (buf->size() > 2)
 			{
-				buffer::write(buf, 0, uint16(buf->size()));
+				buffer::write(*buf, 0, uint16(buf->size()));
 
 				start_write(buf);
 			}

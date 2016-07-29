@@ -20,12 +20,12 @@
 
 namespace lv { namespace detail {
 
-	inline void	ensure_throw(char const * msg)
+	[[noreturn]] inline void	ensure_throw(char const * msg)
 	{
 		throw std::runtime_error(msg);
 	}
 
-	inline void	ensure_throw(std::string const & msg)
+	[[noreturn]] inline void	ensure_throw(std::string const & msg)
 	{
 		throw std::runtime_error(msg);
 	}

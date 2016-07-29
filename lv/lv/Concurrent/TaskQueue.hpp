@@ -59,19 +59,12 @@ namespace lv
 		 */
 		void	put(value_type const & task)
 		{
-			std::unique_lock<std::mutex> lock(mutex_);
+			put_impl(task);
+		}
 
-			while (queue_.size() >= max_count_)
-			{
-				full_.wait(lock);
-			}
-
-			if (queue_.empty())
-			{
-				empty_.notify_one();
-			}
-
-			queue_.push(task);
+		void	put(value_type && task)
+		{
+			put_impl(std::forward<value_type>(task));
 		}
 
 		
@@ -115,7 +108,7 @@ namespace lv
 			}
 			//
 
-			value_type task = queue_.top();
+			value_type task = std::move(queue_.top());
 			queue_.pop();
 
 			return task;
@@ -174,6 +167,27 @@ namespace lv
 		{
 			max_count_ = count;
 		}
+
+	private:
+
+		template<typename T>
+		void	put_impl(T && task)
+		{
+			std::unique_lock<std::mutex> lock(mutex_);
+
+			while (queue_.size() >= max_count_)
+			{
+				full_.wait(lock);
+			}
+
+			if (queue_.empty())
+			{
+				empty_.notify_one();
+			}
+
+			queue_.push(std::forward<T>(task));
+		}
+
 	};
 
 }

@@ -28,6 +28,11 @@ namespace lv
 			container_.push_back(value);
 		}
 
+		void	push(value_type && value)
+		{
+			container_.push_back(std::forward<value_type>(value));
+		}
+
 		void	pop()
 		{
 			container_.pop_front();
@@ -36,7 +41,7 @@ namespace lv
 		/** 
 		 * Get a reference to the next object (that should be executed)
 		 */
-		value_type const & top() const
+		value_type &	top()
 		{
 			return container_.front();
 		}

@@ -29,6 +29,11 @@ namespace lv
 			container_.push(value);
 		}
 
+		void	push(value_type && value)
+		{
+			container_.push(value);
+		}
+
 		void	pop()
 		{
 			container_.pop();
@@ -37,7 +42,7 @@ namespace lv
 		/** 
 		 * Get a reference to the next object (that should be executed)
 		 */
-		value_type const & top() const
+		value_type &	top()
 		{
 			return container_.top();
 		}
