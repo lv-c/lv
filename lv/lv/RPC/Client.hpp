@@ -194,7 +194,7 @@ namespace lv { namespace rpc {
 		PrivateHandler<Ret> call(Id const & id, Types const &... args)
 		{
 			BufferPtr buf = this->get_buffer();
-			unique_ptr<oarchive_wrapper> oa = std::make_unique<oarchive_wrapper>(ostream_factory_, *buf);
+			std::unique_ptr<oarchive_wrapper> oa = std::make_unique<oarchive_wrapper>(ostream_factory_, *buf);
 
 			oa->get() << Protocol::header::call << id;
 			int dummy[] = { 0, ((oa->get() << args), 0)... };

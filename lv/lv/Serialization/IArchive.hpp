@@ -82,7 +82,7 @@ namespace lv
 		}
 
 		// What?
-		void reset_object_address(const void * new_address, const void * old_address)
+		void	reset_object_address(const void * new_address, const void * old_address)
 		{
 		}
 
