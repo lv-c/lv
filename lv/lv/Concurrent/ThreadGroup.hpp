@@ -16,7 +16,6 @@
 #include <thread>
 #include <shared_mutex>
 
-// boost.thread_group has no timed join
 
 namespace lv
 {
@@ -55,24 +54,6 @@ namespace lv
 			{
 				v->join();
 			}
-		}
-
-		template<typename TimeDuration>
-		inline bool	timed_join(TimeDuration const & rel_time)
-		{
-			boost::posix_time::ptime end_time = boost::get_system_time() + rel_time;
-
-			std::shared_lock<std::shared_timed_mutex> lock(mutex_);
-
-			for (ThreadPtr & v : threads_)
-			{
-				if (! v->timed_join(end_time))
-				{
-					return false;
-				}
-			}
-
-			return true;
 		}
 	};
 }

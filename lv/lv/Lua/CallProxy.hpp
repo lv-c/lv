@@ -41,7 +41,7 @@ namespace lv { namespace lua {
 			oss_ << fun << "(";
 		}
 
-		CallProxy(CallProxy & rhs)
+		CallProxy(CallProxy && rhs)
 			: oss_(rhs.oss_)
 			, first_param_(rhs.first_param_)
 			, callback_(rhs.callback_)

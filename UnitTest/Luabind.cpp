@@ -10,12 +10,18 @@
 
 #include "UnitTest.hpp"
 
+#include <lv/LuaArchive/Vector.hpp>
 #include <lv/Luabind/Vector.hpp>
 #include <lv/Lua/Exec.hpp>
 #include <lv/Lua/Extract.hpp>
-#include <lv/LuaArchive/Vector.hpp>
+
+// compilation error using gcc
+#ifdef LV_PLATFORM_WINDOWS
+
 #include <lv/Serialization/Graphics/Point.hpp>
 #include <lv/Graphics/Stream/Point.hpp>
+
+#endif
 
 #include <lua.hpp>
 
@@ -47,7 +53,11 @@ BOOST_AUTO_TEST_CASE(test_luabind)
 
 	BOOST_CHECK_EQUAL(lv::lua::extract<int>(global["i"]), 1);
 
+#ifdef LV_PLATFORM_WINDOWS
+
 	BOOST_CHECK_EQUAL(lv::lua::extract<lv::Point>(global["pt"]), lv::Point(10, 20));
+
+#endif
 
 	// release
 	global = luabind::object();

@@ -17,7 +17,7 @@
 namespace lv
 {
 
-#define STD_SET_OPERATION(op)	std:: ## op (lhs.begin(), lhs.end(), rhs.begin(), rhs.end(), std::inserter(ret, ret.begin()))
+#define STD_SET_OPERATION(op)	std::op (lhs.begin(), lhs.end(), rhs.begin(), rhs.end(), std::inserter(ret, ret.begin()))
 
 	// difference
 

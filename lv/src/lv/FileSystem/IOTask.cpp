@@ -4,8 +4,8 @@
 namespace lv
 {
 	IOTask::IOTask(std::string const & file, BufferPtr buffer, std::shared_ptr<IFileIO> file_io)
-		: file_(std::make_shared<std::string>(file))
-		, promise_(std::make_shared<promise_type>())
+		: promise_(std::make_shared<promise_type>())
+		, file_(std::make_shared<std::string>(file))
 		, buffer_(buffer)
 		, file_io_(file_io)
 	{

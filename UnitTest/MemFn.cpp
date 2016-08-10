@@ -33,7 +33,7 @@ template<typename F, typename T>
 void test_bind(F f, T t)
 {
 	std::string str("aa");
-	lv::result_of::bind_mem_fn<F>::type newfn = lv::bind_mem_fn(f, t);
+	auto newfn = lv::bind_mem_fn(f, t);
 
 	BOOST_CHECK_EQUAL(str, newfn(1, &str, 2));
 }

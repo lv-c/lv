@@ -23,7 +23,7 @@ namespace lv { namespace lua { namespace archive {
 	{
 		if (v)
 		{
-			save(os, *v, level);
+			save_adl(os, *v, level);
 		}
 		else
 		{

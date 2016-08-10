@@ -24,11 +24,11 @@ namespace lv
 			ele_num	=	N
 		};
 
-		typedef	typename T			value_type;
-		typedef typename T &		reference;
-		typedef typename T const &	const_reference;
-		typedef T *					iterator;
-		typedef T const *			const_iterator;
+		typedef	T		value_type;
+		typedef T &		reference;
+		typedef T const &	const_reference;
+		typedef T *		iterator;
+		typedef T const *	const_iterator;
 
 		size_t		size() const
 		{

@@ -90,7 +90,7 @@ namespace lv { namespace flow {
 				Key key;
 				ia >> key;
 
-				invoker_map::iterator it;
+				typename invoker_map::iterator it;
 
 				{
 					// no deletion, so the iterator will be valid

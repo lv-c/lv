@@ -22,6 +22,7 @@
 #include <string>
 #include <array>
 
+
 using namespace std;
 using namespace lv;
 
@@ -35,7 +36,7 @@ struct Test : boost::noncopyable
 	{
 	}
 
-	Test(int a, string const &)
+	Test(int a, string const & s)
 		: a(a)
 		, s(s)
 	{
@@ -58,7 +59,7 @@ struct CheckVersion
 	template<class Archive>
 	void serialize(Archive & ar, unsigned int version)
 	{
-		BOOST_CHECK_EQUAL(version, 2);
+		BOOST_CHECK_EQUAL(version, 2u);
 	}
 };
 
@@ -82,7 +83,7 @@ BOOST_AUTO_TEST_CASE(test_serialization)
 	vector<int> int_vec(10, 20);
 	Test obj(20, "hh");
 	array<int, 10> int_arr;
-	int_arr.assign(20);
+	int_arr.fill(20);
 	CheckVersion ver;
 	boost::interprocess::string	inter_str("inter");
 	shared_ptr<int> empty_shared_ptr;

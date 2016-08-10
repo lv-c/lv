@@ -72,7 +72,7 @@ namespace lv
 	{
 		static_assert(std::is_integral<T>::value, "integral type only");
 
-		typedef	typename T	type;
+		typedef	T	type;
 	};
 
 	template<>

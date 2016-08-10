@@ -26,16 +26,16 @@ namespace lv { namespace flow {
 	{
 	public:
 
-		typedef typename Key		key_type;
-		typedef typename OArchive	oarchive_type;
+		typedef Key		key_type;
+		typedef OArchive	oarchive_type;
 
 		typedef std::function<void(BufferPtr)>	callback_type;
 
 	private:
 
-		BufferManagerPtr	buf_manager_;
-
 		callback_type	callback_;
+
+		BufferManagerPtr	buf_manager_;
 
 		OStreamFactory	ostream_factory_;
 
@@ -83,6 +83,7 @@ namespace lv { namespace flow {
 
 			oa.get() << key;
 			int dummy[] = { 0, ((oa.get() << args), 0)... };
+			(void)dummy;
 
 			oa.flush();
 

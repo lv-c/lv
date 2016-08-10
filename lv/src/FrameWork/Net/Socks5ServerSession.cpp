@@ -228,7 +228,7 @@ namespace lv { namespace net {
 
 		uint8 rep = error_to_rep(error);
 
-		PacketProxy proxy = send() << Socks5::Version << rep << uint8(0);
+		PacketProxy proxy = std::move(send() << Socks5::Version << rep << uint8(0));
 
 		if (! error)
 		{

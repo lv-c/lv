@@ -53,7 +53,7 @@ namespace lv { namespace math {
 		return math::sqrt((lhs.x - rhs.x) * (lhs.x - rhs.x) + (lhs.y - rhs.y) * (lhs.y - rhs.y));
 	}
 
-#ifndef LV_X64
+#ifdef LV_WIN32
 
 	inline __declspec(naked) float	rsqrt(float v)
 	{
@@ -97,7 +97,7 @@ namespace lv { namespace math {
 		return math::sqrt(length_sq(v));
 	}
 
-#ifndef LV_X64
+#ifdef LV_WIN32
 
 	inline Vector3f	normalize(Vector3f const & v)
 	{

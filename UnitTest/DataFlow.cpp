@@ -10,7 +10,11 @@
 
 #include "UnitTest.hpp"
 
+#include <lv/Config.hpp>
+
+#ifdef LV_PLATFORM_WINDOWS
 #include "MemoryAnalyser.h"
+#endif
 
 #include <lv/DataFlow/DataFlow.hpp>
 #include <lv/DataFlow/Sink.hpp>
@@ -27,8 +31,8 @@
 #include <lv/Timer.hpp>
 
 #include <string>
+#include <iostream>
 
-#include <Windows.h>
 
 enum ParamType
 {
@@ -134,8 +138,12 @@ BOOST_AUTO_TEST_CASE(test_dataflow)
 	source.call("sum", 10, 40.3f);
 
 
+#ifdef LV_PLATFORM_WINDOWS
+
 	MemoryAnalyser::instance().attach();
 	MemoryAnalyser::instance().begin_analyse();
+
+#endif
 
 	lv::Timer timer;
 
@@ -147,12 +155,17 @@ BOOST_AUTO_TEST_CASE(test_dataflow)
 
 	double elapsed = timer.elapsed() * 1000;
 
+#ifdef LV_PLATFORM_WINDOWS
+
 	int counter;
 	uint64 total_memory = MemoryAnalyser::instance().end_analyse(counter);
 	MemoryAnalyser::instance().detach();
 
-	cout << "Time elapsed:" << elapsed << endl;
 	cout << "Total memory:" << total_memory << "  counter:" << counter << endl;
+
+#endif
+
+	cout << "Time elapsed:" << elapsed << endl;
 
 
 	
@@ -167,7 +180,7 @@ BOOST_AUTO_TEST_CASE(test_dataflow)
 	source.call("echo", PT_String, std::string("hello world"));
 
 	// wait for the tasks to be finished
-	::Sleep(500);
+	this_thread::sleep_for(500ms);
 
 	// disconnect
 	BOOST_CHECK(conn.connected());

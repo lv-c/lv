@@ -32,7 +32,7 @@ namespace lv { namespace detail {
 				return;
 			}
 
-			Factory::release(obj);
+			Factory<T>::release(obj);
 		}
 	};
 } }

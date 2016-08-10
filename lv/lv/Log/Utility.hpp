@@ -15,6 +15,7 @@
 #include <lv/Log/Log.hpp>
 #include <lv/Log/DebugStringGather.hpp>
 #include <lv/Exception.hpp>
+#include <lv/SharedPtr.hpp>
 
 #include <fstream>
 #include <functional>

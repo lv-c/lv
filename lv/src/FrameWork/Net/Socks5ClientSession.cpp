@@ -143,6 +143,9 @@ namespace lv { namespace net {
 			case Request:
 				handle_request_response(bis);
 				break;
+
+			default:
+				BOOST_ASSERT(false);
 			}
 		}
 		catch (std::ios_base::failure const &)
@@ -329,7 +332,7 @@ namespace lv { namespace net {
 		}
 
 		uint8 const cmd = 1;	// CONNECT
-		PacketProxy proxy = socks_send() << Socks5::Version << cmd << uint8(0);
+		PacketProxy proxy = std::move(socks_send() << Socks5::Version << cmd << uint8(0));
 
 		unsigned short port = 0;
 

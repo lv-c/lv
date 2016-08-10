@@ -14,8 +14,8 @@
 #include <lv/Endian.hpp>
 #include <lv/BinaryStream/Tags.hpp>
 
-#include <boost/call_traits.hpp>
 #include <boost/serialization/serialization.hpp>
+#include <boost/range/value_type.hpp>
 
 
 namespace lv { namespace bstream {
@@ -26,7 +26,7 @@ namespace lv { namespace bstream {
 
 
 	template<typename T, class OStream>
-	void	write(OStream & os, typename boost::call_traits<T>::param_type t)
+	void	write(OStream & os, T const & t)
 	{
 		Serializer<T, typename object_tag<T>::type>::write(os, t);
 	}
@@ -34,7 +34,14 @@ namespace lv { namespace bstream {
 	template<typename T, class IStream>
 	void	read(IStream & is, T & t)
 	{
-		Serializer<T, typename object_tag<T>::type>::read(is, t);
+		typedef typename object_tag<typename std::decay<T>::type>::type	tag_type;
+		Serializer<T, tag_type>::read(is, t);
+	}
+
+	template<typename T, class IStream>
+	void	read(IStream & is, T const & t)
+	{
+		Serializer<T const, typename object_tag<T>::type>::read(is, t);
 	}
 
 
@@ -46,13 +53,13 @@ namespace lv { namespace bstream {
 		template<class OStream>
 		static void write(OStream & os, T const & t)
 		{
-			boost::serialization::serialize(os, const_cast<T&>(t), 1);
+			boost::serialization::serialize_adl(os, const_cast<T&>(t), 1);
 		}
 
 		template<class IStream>
 		static void read(IStream & is, T & t)
 		{
-			boost::serialization::serialize(is, t, 1);
+			boost::serialization::serialize_adl(is, t, 1);
 		}
 	};
 
@@ -89,7 +96,7 @@ namespace lv { namespace bstream {
 		template<class OStream>
 		static void write(OStream & os, T const & t)
 		{
-			if (! boost::empty(t))
+			if (! std::empty(t))
 			{
 				size_t const value_size = sizeof(typename boost::range_value<T>::type);
 
@@ -100,7 +107,7 @@ namespace lv { namespace bstream {
 				else
 				{
 					os.write(reinterpret_cast<char const*>(&*std::begin(t)), static_cast<std::streamsize>(
-						boost::size(t) * value_size));
+						std::size(t) * value_size));
 				}
 			}
 		}
@@ -108,7 +115,7 @@ namespace lv { namespace bstream {
 		template<class IStream>
 		static void read(IStream & is, T & t)
 		{
-			if (! boost::empty(t))
+			if (! std::empty(t))
 			{
 				size_t const value_size = sizeof(typename boost::range_value<T>::type);
 
@@ -119,7 +126,7 @@ namespace lv { namespace bstream {
 				else
 				{
 					is.read(reinterpret_cast<char*>(&*std::begin(t)), static_cast<std::streamsize>(
-						boost::size(t) * sizeof(typename boost::range_value<T>::type)));
+						std::size(t) * sizeof(typename boost::range_value<T>::type)));
 				}
 			}
 		}

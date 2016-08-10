@@ -27,7 +27,7 @@ namespace lv
 		restart();
 	}
 
-	inline double Timer::cur_time() const
+	double Timer::cur_time() const
 	{
 #ifdef LV_PLATFORM_WINDOWS
 		LARGE_INTEGER count;

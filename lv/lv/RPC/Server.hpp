@@ -88,7 +88,7 @@ namespace lv { namespace rpc {
 		{
 			IArchiveWrapper<iarchive_type> ia(istream_factory_, data);
 
-			register_type::ResultHolder result;
+			typename register_type::ResultHolder result;
 
 			// TODO : call_option and id are better in the front, or they may be serialized as parameters
 
@@ -118,7 +118,8 @@ namespace lv { namespace rpc {
 
 			OArchiveWrapper<oarchive_type> oa(ostream_factory_, *buf);
 
-			oa.get() << Protocol::header::reply << id;
+			auto reply = Protocol::header::reply;
+			oa.get() << reply << id;
 			
 			if (call_option == Protocol::options::ret)
 			{

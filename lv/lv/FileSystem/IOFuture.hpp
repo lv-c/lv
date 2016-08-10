@@ -24,9 +24,9 @@ namespace lv
 	public:
 
 		IOFuture(IOTask & task)
-			: file_(task.file_)
+			: std::future<void>(task.get_future())
+			, file_(task.file_)
 			, buffer_(task.buffer_)
-			, std::future<void>(task.get_future())
 		{
 		}
 

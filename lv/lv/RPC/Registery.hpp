@@ -106,7 +106,7 @@ namespace lv { namespace rpc {
 				id_type id;
 				ia >> id;
 
-				invoker_map::iterator it;
+				typename invoker_map::iterator it;
 				
 				{
 					// no deletion, so the iterator will be valid

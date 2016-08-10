@@ -21,6 +21,8 @@
 
 #	ifdef _WIN64
 #		define LV_X64
+#	else
+#		define LV_WIN32
 #	endif
 
 #else

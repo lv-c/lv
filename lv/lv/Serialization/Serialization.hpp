@@ -68,7 +68,7 @@ namespace lv { namespace serialization {
 			template<typename T>
 			static void load(Archive & ar, T & t)
 			{
-				typedef typename boost::remove_extent<T>::type value_type;
+				typedef typename std::remove_extent<T>::type value_type;
 				
 				std::size_t current_count = sizeof(t) / sizeof(value_type);
 
@@ -96,7 +96,7 @@ namespace lv { namespace serialization {
 				unsigned int ver = boost::serialization::version<T>::value;
 
 				ar << boost::archive::version_type(ver);
-				boost::serialization::serialize(ar, const_cast<T &>(t), ver);
+				boost::serialization::serialize_adl(ar, const_cast<T &>(t), ver);
 			}
 
 			template<typename T>
@@ -110,7 +110,7 @@ namespace lv { namespace serialization {
 					throw boost::archive::archive_exception(boost::archive::archive_exception::unsupported_class_version);
 				}
 
-				boost::serialization::serialize(ar, t, file_ver);
+				boost::serialization::serialize_adl(ar, t, file_ver);
 			}
 		};
 
@@ -136,15 +136,28 @@ namespace lv { namespace serialization {
 
 
 	template<class Archive, typename T>
-	void	save(Archive & ar, T const & t)
+	void	save(Archive & ar, T const & t, Overload)
 	{
 		detail::serializer_type<Archive, T>::type::save(ar, t);
 	}
 
 	template<class Archive, typename T>
-	void	load(Archive & ar, T & t)
+	void	save_adl(Archive & ar, T const & t)
+	{
+		save(ar, t, Overload());
+	}
+
+
+	template<class Archive, typename T>
+	void	load(Archive & ar, T & t, Overload)
 	{
 		detail::serializer_type<Archive, T>::type::load(ar, t);
+	}
+
+	template<class Archive, typename T>
+	void	load_adl(Archive & ar, T & t)
+	{
+		load(ar, t, Overload());
 	}
 
 } }

@@ -14,6 +14,7 @@
 #include <lv/Serialization/DSTree.hpp>
 
 #include <sstream>
+#include <iostream>
 
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/text_iarchive.hpp>

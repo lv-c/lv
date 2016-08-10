@@ -68,7 +68,17 @@ namespace lv { namespace rpc { namespace detail {
 	template<class ArchivePair>
 	class InvokerBase
 	{
-	protected:
+	public:
+
+		typedef std::function<void(typename ArchivePair::oarchive_type &)>		ResultHolder;
+
+	};
+
+
+	template<class Signature, class ArchivePair>
+	class Invoker : public InvokerBase<ArchivePair>
+	{
+		typedef typename InvokerBase<ArchivePair>::ResultHolder	ResultHolder;
 
 		typedef typename ArchivePair::iarchive_type iarchive_type;
 		typedef typename ArchivePair::oarchive_type oarchive_type;
@@ -87,16 +97,7 @@ namespace lv { namespace rpc { namespace detail {
 			}
 		};
 
-	public:
 
-		typedef std::function<void(oarchive_type &)>		ResultHolder;
-
-	};
-
-
-	template<class Signature, class ArchivePair>
-	class Invoker : public InvokerBase<ArchivePair>
-	{
 		typedef std::function<Signature>	function_type;
 		function_type	f_;
 
@@ -105,6 +106,7 @@ namespace lv { namespace rpc { namespace detail {
 		typedef typename boost::function_types::parameter_types<Signature>::type param_type;
 
 		static_assert(! std::is_pointer<result_type>::value, "The result type shouldn't be a pointer type");
+
 
 	public:
 		
@@ -134,9 +136,9 @@ namespace lv { namespace rpc { namespace detail {
 
 		result_type invoke_impl(iarchive_type & ia)
 		{
-			MplToFusionCons<typename boost::mpl::transform<param_type, ParamType<boost::mpl::_> >::type>::type params;
+			typename MplToFusionCons<typename boost::mpl::transform<param_type, ParamType<boost::mpl::_> >::type>::type params;
 		
-			boost::fusion::for_each(params, ExtractParameters<IArchive>(ia));
+			boost::fusion::for_each(params, ExtractParameters<iarchive_type>(ia));
 			return boost::fusion::invoke(f_, params);
 		}
 

@@ -46,6 +46,9 @@ namespace lv { namespace rpc {
 
 		typedef	OArchiveWrapper<oarchive_type>	oarchive_wrapper;
 
+
+		callback_type	callback_;
+
 		typedef typename Protocol::request_id_type request_id_type;
 
 		std::atomic<request_id_type>	next_request_id_;
@@ -60,18 +63,17 @@ namespace lv { namespace rpc {
 
 		std::mutex	mutex_;
 
-		callback_type	callback_;
 
 		template<typename Ret>
 		class PrivateHandler
 		{
 			Client & client_;
 
-			request_id_type	request_id_;
-
 			BufferPtr	buffer_;
 
 			std::unique_ptr<oarchive_wrapper>	oa_;
+
+			request_id_type	request_id_;
 
 			bool	sent_;
 
@@ -86,11 +88,10 @@ namespace lv { namespace rpc {
 			{
 			}
 
-			/// copy constructor
-			PrivateHandler(PrivateHandler & rhs)
+			PrivateHandler(PrivateHandler && rhs)
 				: client_(rhs.client_)
 				, buffer_(rhs.buffer_)
-				, oa_(rhs.oa_)
+				, oa_(std::move(rhs.oa_))
 				, request_id_(rhs.request_id_)
 				, sent_(false)
 			{
@@ -178,7 +179,7 @@ namespace lv { namespace rpc {
 			{
 				lock_guard lock(mutex_);
 				
-				promise_map::iterator it = promises_.find(id);
+				auto it = promises_.find(id);
 				LV_ENSURE(it != promises_.end(), InvalidRequestID());
 
 				promise = it->second;
@@ -196,8 +197,11 @@ namespace lv { namespace rpc {
 			BufferPtr buf = this->get_buffer();
 			std::unique_ptr<oarchive_wrapper> oa = std::make_unique<oarchive_wrapper>(ostream_factory_, *buf);
 
-			oa->get() << Protocol::header::call << id;
+			auto header = Protocol::header::call;
+			oa->get() << header << id;
+
 			int dummy[] = { 0, ((oa->get() << args), 0)... };
+			(void)dummy;
 
 			return PrivateHandler<Ret>(*this, buf, std::move(oa), next_request_id_++);
 		}
@@ -210,10 +214,10 @@ namespace lv { namespace rpc {
 
 			{
 				lock_guard lock(mutex_);
-				std::swap(pro, promises_);
+				pro = std::move(promises_);
 			}
 
-			for (promise_map::reference v : pro)
+			for (auto & v : pro)
 			{
 				try
 				{

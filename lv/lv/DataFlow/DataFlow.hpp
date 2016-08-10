@@ -69,7 +69,7 @@ namespace lv { namespace flow {
 			// a write lock
 			std::lock_guard<std::shared_timed_mutex> lock(shared_mutex_);
 
-			slots_map_type::iterator it = slots_.insert(std::make_pair(port, connection_slot));
+			auto it = slots_.insert(std::make_pair(port, connection_slot));
 			it->second.conn = std::make_shared<detail::ConnectionImpl>(this, &DataFlow::disconnect_fun, it);
 
 			return Connection(it->second.conn);
@@ -99,7 +99,7 @@ namespace lv { namespace flow {
 
 			auto ret = slots_.equal_range(port_buf.first);
 
-			for (slots_map_type::iterator it = ret .first; it != ret .second; ++it)
+			for (auto it = ret.first; it != ret.second; ++it)
 			{
 				it->second.slot(port_buf.second);
 			}
@@ -110,7 +110,7 @@ namespace lv { namespace flow {
 		{
 			DataFlow * dataflow = reinterpret_cast<DataFlow*>(obj);
 			
-			slots_map_type::iterator it = boost::any_cast<slots_map_type::iterator>(iter);
+			auto it = boost::any_cast<typename slots_map_type::iterator>(iter);
 			
 			// a write lock
 			std::lock_guard<std::shared_timed_mutex> lock(dataflow->shared_mutex_);

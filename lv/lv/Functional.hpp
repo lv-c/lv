@@ -54,7 +54,7 @@ namespace lv
 			typedef typename ft::function_type<
 				typename detail::RemoveSecond<
 					typename ft::components<
-						typename decltype(&T::operator ())
+						decltype(&T::operator ())
 					>::type
 				>::type
 			>::type type;

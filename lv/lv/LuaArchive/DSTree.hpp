@@ -25,7 +25,7 @@ namespace lv { namespace lua { namespace archive {
 	{
 		inline void	dstree_save_deque(std::ostream & os, std::deque<char> const & v, size_t level)
 		{
-			save(os, std::string(v.begin(), v.end()), level);
+			save_adl(os, std::string(v.begin(), v.end()), level);
 		}
 
 		template<typename T>
@@ -70,7 +70,7 @@ namespace lv { namespace lua { namespace archive {
 					os << std::endl << write_tabs(level + 1);
 				}
 
-				save(os, *tree.data(), level + 1);
+				save_adl(os, *tree.data(), level + 1);
 			}
 			else
 			{
@@ -154,21 +154,21 @@ namespace lv { namespace lua { namespace archive {
 
 			if (std::is_same<Key, char>::value)
 			{
-				load(*v_it, str);
+				load_adl(*v_it, str);
 			}
 			else
 			{
-				load(*v_it, keys);
+				load_adl(*v_it, keys);
 			}
 
 			++v_it;
 
-			tree_type::data_pointer data;
+			typename tree_type::data_pointer data;
 
 			if (v_it != end && luabind::type(*v_it) != LUA_TNIL)
 			{
-				data = std::make_shared<tree_type::data_type>();
-				load(*v_it, *data);
+				data = std::make_shared<typename tree_type::data_type>();
+				load_adl(*v_it, *data);
 			}
 
 			detail::dstree_insert(tree, keys, str, data, std::is_same<Key, char>());

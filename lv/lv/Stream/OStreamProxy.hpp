@@ -53,8 +53,8 @@ namespace lv
 
 		OStreamProxy(OBufferStream & ios)
 			: StreamProxyBase(ios)
-			, lv_ios_(&ios)
 			, std_ios_(nullptr)
+			, lv_ios_(&ios)
 		{
 		}
 

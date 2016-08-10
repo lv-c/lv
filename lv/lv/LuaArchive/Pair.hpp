@@ -11,7 +11,9 @@
 #ifndef LV_LUAARCHIVE_PAIR_HPP
 #define LV_LUAARCHIVE_PAIR_HPP
 
-#include <lv/LuaArchive/Fwd.hpp>
+#include <lv/LuaArchive/ISerializer.hpp>
+#include <lv/LuaArchive/OSerializer.hpp>
+#include <lv/LuaArchive/PlainISerializer.hpp>
 
 #include <luabind/object.hpp>
 
@@ -26,7 +28,7 @@ namespace lv { namespace lua { namespace archive {
 		template<typename T>
 		typename std::remove_const<T>::type &	remove_const(T & v)
 		{
-			return const_cast<std::remove_const<T>::type &>(v);
+			return const_cast<typename std::remove_const<T>::type &>(v);
 		}
 	}
 
@@ -48,6 +50,13 @@ namespace lv { namespace lua { namespace archive {
 	namespace detail
 	{
 		template<typename F, typename S>
+		void	load_impl(Parser & parser, int index, std::pair<F, S> & v, std::false_type)
+		{
+			parser >> detail::remove_const(v.first) >> detail::symbol('=') >> detail::remove_const(v.second);
+		}
+
+
+		template<typename F, typename S>
 		void	load_impl(Parser & parser, int index, std::pair<F, S> & v, std::true_type)
 		{
 			Token token = parser.next_token();
@@ -62,12 +71,6 @@ namespace lv { namespace lua { namespace archive {
 			{
 				load_impl(parser, index, v, std::false_type());
 			}
-		}
-
-		template<typename F, typename S>
-		void	load_impl(Parser & parser, int index, std::pair<F, S> & v, std::false_type)
-		{
-			parser >> detail::remove_const(v.first) >> detail::symbol('=') >> detail::remove_const(v.second);
 		}
 	}
 

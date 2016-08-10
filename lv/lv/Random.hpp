@@ -75,7 +75,7 @@ namespace lv
 #ifdef LV_PLATFORM_WINDOWS
 			seed(clock() * rand() * GetTickCount());	// WINDOWS
 #else
-			seed(clock() * rand() * uint32(this));
+			seed(clock() * rand());
 #endif
 		}
 

@@ -21,7 +21,11 @@ BOOST_AUTO_TEST_CASE(test_log)
 	lv::log::add_stdio_gather(log);
 	lv::log::add_file_gather(log, "log.txt");
 
+#ifdef LV_PLATFORM_WINDOWS
+
 	lv::log::add_debug_string_gather(log)->set_filter(lv::log::DebugFilter());
+
+#endif
 
 	log(lv::info) << L"hello world";
 	log(lv::debug) << "debug something " << 100;

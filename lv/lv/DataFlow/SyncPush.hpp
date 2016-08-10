@@ -22,7 +22,7 @@ namespace lv { namespace flow {
 
 		void operator () (T const & t)
 		{
-			callback_(t);
+			this->callback_(t);
 		}
 	};
 

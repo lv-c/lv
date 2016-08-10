@@ -18,7 +18,11 @@ namespace lv
 
 	template<class Archive>
 	class NvpHelper;
-}
 
+	namespace serialization
+	{
+		class Overload {};
+	}
+}
 
 #endif

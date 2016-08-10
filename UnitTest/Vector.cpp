@@ -10,6 +10,9 @@
 
 #include "UnitTest.hpp"
 
+// compilation error using gcc
+#ifdef LV_PLATFORM_WINDOWS
+
 #include <lv/Graphics/Vector.hpp>
 #include <lv/Graphics/Math.hpp>
 #include <lv/IntType.hpp>
@@ -32,7 +35,7 @@ BOOST_AUTO_TEST_CASE(test_vector)
 
 	}
 
-#ifndef LV_X64
+#ifdef LV_WIN32
 
 	{
 		Vector3f v(100.0f, 100.0f, 100.0f);
@@ -62,3 +65,5 @@ BOOST_AUTO_TEST_CASE(test_vector)
 	}
 
 }
+
+#endif

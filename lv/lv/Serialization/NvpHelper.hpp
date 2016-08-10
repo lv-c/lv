@@ -49,7 +49,7 @@ namespace lv
 		}
 
 		template<typename T>
-		NvpHelper const & _serialize (char const * dummy, T & t, char const * name) const
+		NvpHelper const & _serialize (char const *, T & t, char const * name) const
 		{
 			return (*this) (name, t);
 		}
@@ -60,11 +60,17 @@ namespace lv
 	{
 		return NvpHelper<Archive>(ar);
 	}
+
+	template<class Archive>
+	NvpHelper<Archive const>	make_nvp_helper(Archive && ar)
+	{
+		return NvpHelper<Archive const>(ar);
+	}
 }
 
-#define _NVP_HELPER_A(x, ...) _NVP_HELPER_OP(B, x, __VA_ARGS__)
-#define _NVP_HELPER_B(x, ...) _NVP_HELPER_OP(A, x, __VA_ARGS__)
-#define _NVP_HELPER_OP(next, x, ...)	_NVP_HELPER_A->_serialize(#x, __VA_ARGS__, x)._NVP_HELPER_##next
+#define _NVP_HELPER_A(x, ...) _NVP_HELPER_OP(B, x, ##__VA_ARGS__)
+#define _NVP_HELPER_B(x, ...) _NVP_HELPER_OP(A, x, ##__VA_ARGS__)
+#define _NVP_HELPER_OP(next, x, ...)	_NVP_HELPER_A->_serialize(#x, ##__VA_ARGS__, x)._NVP_HELPER_##next
 
 #define LV_NVP_HELPER(ar) lv::make_nvp_helper(ar)._NVP_HELPER_A
 

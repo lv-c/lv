@@ -97,7 +97,7 @@ namespace lv { namespace flow { namespace detail {
 
 		void operator() (IArchive & ia)
 		{
-			MplToFusionCons<typename boost::mpl::transform<parameter_types, ParamType<boost::mpl::_,
+			typename MplToFusionCons<typename boost::mpl::transform<parameter_types, ParamType<boost::mpl::_,
 				IArchive> >::type>::type params;
 
 			boost::fusion::for_each(params, ExtractParameters<IArchive>(ia));

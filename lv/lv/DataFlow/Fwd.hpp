@@ -11,6 +11,7 @@
 #ifndef LV_DATAFLOW_FWD_HPP
 #define LV_DATAFLOW_FWD_HPP
 
+#include <lv/Serialization/Fwd.hpp>
 #include <lv/Buffer.hpp>
 
 #include <functional>

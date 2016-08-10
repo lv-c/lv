@@ -56,7 +56,7 @@ namespace lv
 
 		// 
 		template<typename T>
-		void	save_array(boost::serialization::array<T> const & a, unsigned int)
+		void	save_array(boost::serialization::array_wrapper<T> const & a, unsigned int)
 		{
 			save_binary(a.address(), a.count() * sizeof(T));
 		}
@@ -89,7 +89,7 @@ namespace lv
 		template<typename T>
 		typename std::enable_if<! std::is_arithmetic<T>::value>::type	save(T const & t)
 		{
-			serialization::save(*this, t);
+			serialization::save_adl(*this, t);
 		}
 
 		template<typename T>

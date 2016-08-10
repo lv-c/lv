@@ -22,7 +22,6 @@ namespace lv
 	namespace lua { namespace archive {
 
 		class Parser;
-
 	} }
 
 }

@@ -51,7 +51,7 @@ namespace lv
 				first_time_ = false;
 			}
 
-			lua::archive::save(os_, t, 0);
+			lua::archive::save_adl(os_, t, 0);
 			return *this;
 		}
 

@@ -46,14 +46,13 @@ namespace lv { namespace net {
 
 		std::deque<Message>	messages_;
 
-		uint32	next_id_;
-
-		uint32	id_base_;
-
-
 		ContextPtr	context_;
 
 		Timer &	timer_;
+
+		uint32	next_id_;
+
+		uint32	id_base_;
 
 	public:
 
@@ -139,9 +138,9 @@ namespace lv { namespace net {
 
 		std::deque<Message>	messages_;
 
-		uint32	id_base_;
-
 		ContextPtr	context_;
+
+		uint32	id_base_;
 
 	public:
 

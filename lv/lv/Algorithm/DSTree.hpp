@@ -38,8 +38,8 @@ namespace lv
 	private:
 		
 		DSTree(Key const & key, DSTree * parent, Pred const & pred)
-			: pred_(pred)
-			, key_(key)
+			: key_(key)
+			, pred_(pred)
 			, parent_(parent)
 		{
 		}
@@ -59,8 +59,8 @@ namespace lv
 
 	public:
 
-		typedef typename Key	key_type;
-		typedef typename Data	data_type;
+		typedef Key	key_type;
+		typedef Data	data_type;
 
 		typedef DSTree	value_type;
 

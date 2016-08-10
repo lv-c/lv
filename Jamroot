@@ -2,43 +2,41 @@
 import modules ;
 import os ;
 import path ;
+import virtual-target ;
 
 BOOST_ROOT = [ modules.peek : BOOST_ROOT ] ;
 LUA_PATH = [ modules.peek : LUA_PATH ] ;
-
-# project root
-path-constant PRJ_ROOT : . ;
-
-# DirectX SDK
-DXSDK_DIR = [ modules.peek : DXSDK_DIR ] ;
-
-# libraries to include. (conditional)
-rule include_directx ( properties * )
-{
-	local result ;
-	if <target-os>windows in $(properties)
-	{
-		result += <include>$(DXSDK_DIR)include ;
-		result += <library-path>$(DXSDK_DIR)lib ;
-	}
-	return $(result) ;
-}
 
 project lv
 	: requirements 
 		<include>lv
 		<include>$(BOOST_ROOT)
-		<toolset>msvc:<define>NOMINMAX
 	: usage-requirements <include>lv
 	: build-dir build
 	;
 
-using msvc : : : <compileflags>/wd4819 ;
+using gcc : : : <compileflags>-std=gnu++17 ;
 
-use-project /lv/lv : projects/lv ;
-# use-project /lv/D3D9Renderer : projects/bjam/lv/D3D9Renderer ;
+rule tag-names ( name : type ? : property-set )
+{
+	if [ $(property-set).get <variant> ] = debug
+	{
+		name = $(name)d ;
+	}
 
+	local result = [ virtual-target.add-prefix-and-suffix $(name) : $(type) : $(property-set) ] ;
 
-build-project /lv/lv ;
+	return $(result) ;
+}
 
-# explicit lv ;
+local proj =
+	lv/src/lv
+	lv/src/FrameWork
+	UnitTest
+	;
+
+for p in $(proj)
+{
+	build-project $(p) ;
+}
+

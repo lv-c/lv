@@ -16,6 +16,7 @@
 #include <boost/io/ios_state.hpp>
 
 #include <ostream>
+#include <iomanip>
 
 
 namespace lv

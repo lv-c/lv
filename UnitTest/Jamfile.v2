@@ -1,0 +1,24 @@
+
+
+exe UnitTest 
+	: [ glob-tree *.cpp : MemoryAnalyser.cpp ZeroMQ.cpp ] 
+	  /site-config//boost_unit_test_framework
+	  /site-config//boost_system
+	  /site-config//boost_date_time
+	  /site-config//boost_serialization
+	  /site-config//pthread
+	  /site-config//dl
+	  /site-config//lua
+	  /site-config//luabind
+	  /site-config//ssl
+	  /site-config//crypto
+	  /site-config//lv
+	  /site-config//lv_framework
+	: <link>static
+	;
+
+install stage
+	: UnitTest
+	: <location>../bin/lv
+	  <install-type>EXE
+	;

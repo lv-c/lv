@@ -62,7 +62,7 @@ namespace lv { namespace flow {
 				{
 					try
 					{
-						callback_(queue_.get());
+						this->callback_(queue_.get());
 					}
 					catch (ThreadInterrupted const &)
 					{
@@ -77,6 +77,8 @@ namespace lv { namespace flow {
 	template<class T>
 	class ThreadedPush : public PushPolicyBase<T>
 	{
+		typedef typename PushPolicyBase<T>::Callback	Callback;
+
 		// Make this class copyable
 		std::shared_ptr<detail::ThreadedPushImpl<T> > impl_;
 

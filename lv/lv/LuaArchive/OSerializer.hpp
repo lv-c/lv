@@ -26,6 +26,10 @@
 
 namespace lv { namespace lua { namespace archive {
 
+	template<typename T>
+	void	save_adl(std::ostream & os, T const & t, size_t level);
+
+
 	namespace detail
 	{
 		// unknown_tag
@@ -98,7 +102,7 @@ namespace lv { namespace lua { namespace archive {
 					primitive_ = false;
 				}
 
-				archive::save(os_, t, level_);
+				archive::save_adl(os_, t, level_);
 			}
 
 		};
@@ -108,7 +112,7 @@ namespace lv { namespace lua { namespace archive {
 		{
 			unsigned int version = boost::serialization::version<T>::value;
 			OArchiveProxy proxy(os, level + 1, version);
-			boost::serialization::serialize(proxy, const_cast<T &>(t), version);
+			boost::serialization::serialize_adl(proxy, const_cast<T &>(t), version);
 		}
 
 		// primitive_tag
@@ -196,7 +200,7 @@ namespace lv { namespace lua { namespace archive {
 		template<typename T>
 		void	save_impl(std::ostream & os, T t, size_t level, enum_tag)
 		{
-			archive::save(os, static_cast<int>(t), level);
+			archive::save_adl(os, static_cast<int>(t), level);
 		}
 
 		// sequence_tag
@@ -215,7 +219,7 @@ namespace lv { namespace lua { namespace archive {
 					os << std::endl << write_tabs(level + 1);
 				}
 
-				archive::save(os, *it, level + 1);
+				archive::save_adl(os, *it, level + 1);
 
 				Iter next = it;
 				if (++next != end)
@@ -243,25 +247,33 @@ namespace lv { namespace lua { namespace archive {
 		void	save_key_value(std::ostream & os, K const & key, V const & value, size_t level)
 		{
 			os << '[';
-			save(os, key, level);
+			save_adl(os, key, level);
 			os << "] = ";
 
-			save(os, value, level);
+			save_adl(os, value, level);
 		}
 	}
 
+	BOOST_STRONG_TYPEDEF(size_t, level_type)
 
 	template<typename T>
 	void	save(std::ostream & os, T const & t, size_t level)
 	{
-		detail::save_impl(os, t, level, object_tag<T>::type());
+		detail::save_impl(os, t, level, typename object_tag<T>::type());
+	}
+
+	template<typename T>
+	void	save_adl(std::ostream & os, T const & t, size_t level)
+	{
+		level_type lvl(level);
+		save(os, t, lvl);
 	}
 
 	template<typename T>
 	void	save(std::ostream & os, boost::serialization::nvp<T> const & t, size_t level)
 	{
 		os << t.name() << " = ";
-		save(os, t.value(), level);
+		save_adl(os, t.value(), level);
 	}
 
 } } }

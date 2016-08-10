@@ -13,10 +13,12 @@
 
 #include <lv/LuaArchive/Tags.hpp>
 #include <lv/LuaArchive/Common.hpp>
+#include <lv/ContainerAdaptor/Adaptor.hpp>
 #include <lv/Buffer.hpp>
 #include <lv/Ensure.hpp>
 
 #include <boost/serialization/nvp.hpp>
+#include <boost/serialization/serialization.hpp>
 
 
 namespace lv { namespace lua { namespace archive {
@@ -219,7 +221,7 @@ namespace lv { namespace lua { namespace archive {
 				parser >> symbol('=') >> ver;
 			}
 
-			boost::serialization::serialize(parser, t, ver);
+			boost::serialization::serialize_adl(parser, t, ver);
 
 			parser >> symbol('}');
 		}
@@ -304,7 +306,7 @@ namespace lv { namespace lua { namespace archive {
 	template<typename T>
 	void	load(Parser & parser, T & t)
 	{
-		detail::load_impl(parser, t, object_tag<T>::type());
+		detail::load_impl(parser, t, typename object_tag<T>::type());
 	}
 
 

@@ -70,7 +70,7 @@ namespace lv
 		{
 			check_nvp(false);
 
-			lua::archive::load(table_[index_], t);
+			lua::archive::load_adl(table_[index_], t);
 			index_++;
 		}
 
@@ -79,7 +79,7 @@ namespace lv
 		{
 			check_nvp(true);
 
-			lua::archive::load(table_, t);
+			lua::archive::load_adl(table_, t);
 		}
 
 		void	check_nvp(bool is_nvp)

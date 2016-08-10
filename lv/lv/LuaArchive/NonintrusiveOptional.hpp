@@ -22,7 +22,7 @@ namespace lv { namespace lua { namespace archive {
 	{
 		if (luabind::type(obj) != LUA_TNIL)
 		{
-			load(obj, t.value());
+			load_adl(obj, t.value());
 		}
 	}
 

@@ -46,7 +46,7 @@ namespace lv { namespace lua {
 			save_key(key);
 			oss_ << " = ";
 
-			lv::lua::archive::save(oss_, value, 0);
+			lv::lua::archive::save_adl(oss_, value, 0);
 
 			return *this;
 		}
@@ -72,7 +72,7 @@ namespace lv { namespace lua {
 		void	save_key(T const & t)
 		{
 			oss_ << '[';
-			lv::lua::archive::save(oss_, t, 0);
+			lv::lua::archive::save_adl(oss_, t, 0);
 			oss_ << ']';
 		}
 
@@ -104,7 +104,7 @@ namespace lv { namespace lua {
 
 			first_time_ = false;
 
-			lv::lua::archive::save(oss_, t, 0);
+			lv::lua::archive::save_adl(oss_, t, 0);
 
 			return *this;
 		}
@@ -145,7 +145,7 @@ namespace lv { namespace lua {
 
 		friend std::ostream & operator << (std::ostream & os, ObjectBuilder const & builder)
 		{
-			lv::lua::archive::save(os, builder.value_, 0);
+			lv::lua::archive::save_adl(os, builder.value_, 0);
 			return os;
 		}
 	};

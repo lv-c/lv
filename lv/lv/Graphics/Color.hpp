@@ -133,7 +133,7 @@ namespace lv
 	
 		element	gray() const
 		{
-			static_cast<element>(r() * 0.3 + g() * 0.59 + b() * 0.11 + 0.5);
+			return static_cast<element>(r() * 0.3 + g() * 0.59 + b() * 0.11 + 0.5);
 		}
 
 

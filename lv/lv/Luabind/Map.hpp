@@ -44,7 +44,7 @@ namespace lv { namespace lua {
 				.def("find", (iterator(type::*)(key_type const &)) &type::find)
 				.scope
 				[
-					class_<type::iterator>((std::string(name) + "_it").c_str())
+					class_<iterator>((std::string(name) + "_it").c_str())
 						.def(self == iterator())
 					,
 					class_<value_type>("pair")

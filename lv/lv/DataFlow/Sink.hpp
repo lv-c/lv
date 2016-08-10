@@ -34,8 +34,8 @@ namespace lv { namespace flow {
 	{
 	public:
 
-		typedef typename Key		key_type;
-		typedef typename IArchive	iarchive_type;
+		typedef Key		key_type;
+		typedef IArchive	iarchive_type;
 
 		typedef PushPolicy<ConstBufferRef> push_policy_type;
 

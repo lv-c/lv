@@ -23,7 +23,7 @@ namespace lv { namespace lua { namespace archive {
 	{
 		if (t)
 		{
-			save(os, *t, level);
+			save_adl(os, *t, level);
 		}
 		else
 		{
@@ -45,7 +45,7 @@ namespace lv { namespace lua { namespace archive {
 			{
 				t = T();
 			}
-			load(obj, *t);
+			load_adl(obj, *t);
 		}
 	}
 

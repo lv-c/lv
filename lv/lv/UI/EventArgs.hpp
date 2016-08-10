@@ -15,6 +15,7 @@
 
 #include <lv/Graphics/RenderFwd.hpp>
 
+
 namespace lv
 {
 
@@ -197,8 +198,8 @@ namespace lv
 
 	class EventArgs
 	{
-		
 		bool	consumed_;
+
 	public:
 
 		EventArgs() : consumed_(false) {}
@@ -218,7 +219,6 @@ namespace lv
 	
 	class InputEvent : public EventArgs
 	{
-
 		int	modifier_;
 
 	public:
@@ -256,10 +256,10 @@ namespace lv
 		 * constructs a mouse event except MOUSE_WHEEL
 		 */
 		MouseEvent(Point const & pos, Mouse::Button button = Mouse::Null, int wheel = 0, int modifier = 0)
-			: button_(button)
+			: InputEvent(modifier)
+			, button_(button)
 			, pos_(pos)
 			, wheel_(wheel)
-			, InputEvent(modifier)
 		{
 		}
 
@@ -293,9 +293,9 @@ namespace lv
 		 * constructs a key event except KEY_CHAR
 		 */
 		KeyEvent(Key::Scan key, wchar_t c = 0, int modifier = 0)
-			: key_(key)
+			: InputEvent(modifier)
+			, key_(key)
 			, char_(c)
-			, InputEvent(modifier)
 		{
 		}
 

@@ -98,7 +98,7 @@ namespace lv
 
 	private:
 
-		inline double	cur_time() const;			// return the current time
+		double	cur_time() const;			// return the current time
 	};
 }
 

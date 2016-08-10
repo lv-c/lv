@@ -13,10 +13,11 @@
 
 #include <memory>
 
+
 namespace lv { namespace serialization {
 
 	template<class Archive, typename T>
-	void	save(Archive & ar, std::shared_ptr<T> const & t)
+	void	save(Archive & ar, std::shared_ptr<T> const & t, Overload)
 	{
 		bool exist(t);
 		ar << exist;
@@ -28,7 +29,7 @@ namespace lv { namespace serialization {
 	}
 
 	template<class Archive, typename T>
-	void	load(Archive & ar, std::shared_ptr<T> & t)
+	void	load(Archive & ar, std::shared_ptr<T> & t, Overload)
 	{
 		bool exist;
 		ar >> exist;

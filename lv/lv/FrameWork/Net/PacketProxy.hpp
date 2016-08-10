@@ -34,7 +34,7 @@ namespace lv { namespace net {
 
 		PacketProxy(BufferPtr buf, PacketProxyCallback const & callback);
 
-		PacketProxy(PacketProxy & rhs);
+		PacketProxy(PacketProxy && rhs);
 
 		~PacketProxy();
 

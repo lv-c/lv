@@ -68,16 +68,16 @@ namespace lv
 		 * @exception std::ios_base::failure
 		 */
 		template<typename T>
-		BinaryIStream & operator >> (T & val)
+		BinaryIStream & operator >> (T && val)
 		{
-			bstream::read(*this, val);
+			bstream::read(*this, std::forward<T>(val));
 			return *this;
 		}
 
 		template<typename T>
-		BinaryIStream & operator & (T & val)
+		BinaryIStream & operator & (T && val)
 		{
-			return *this >> val;
+			return *this >> std::forward<T>(val);
 		}
 
 	private:

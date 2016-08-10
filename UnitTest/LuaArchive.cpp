@@ -11,13 +11,13 @@
 #include "UnitTest.hpp"
 
 #include <lv/IntType.hpp>
+#include <lv/LuaArchive/Deque.hpp>
+#include <lv/LuaArchive/Vector.hpp>
 #include <lv/LuaArchive/LuaIArchive.hpp>
 #include <lv/LuaArchive/LuaOArchive.hpp>
 #include <lv/LuaArchive/PlainLuaIArchive.hpp>
-#include <lv/LuaArchive/Vector.hpp>
 #include <lv/LuaArchive/Map.hpp>
 #include <lv/LuaArchive/DSTree.hpp>
-#include <lv/LuaArchive/Deque.hpp>
 #include <lv/LuaArchive/Mapping.hpp>
 #include <lv/LuaArchive/Array.hpp>
 #include <lv/LuaArchive/NonintrusiveOptional.hpp>
@@ -283,13 +283,14 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 		array<string, 3> new_arr;
 		map<int, int> que_to_map;
 		Mapping<string, int> new_mapping;
+		auto optional_new_mapping = lv::serialization::make_optional(new_mapping);
 
 		ia >> boost::serialization::make_nvp("vertex", new_vertex) 
 			>> boost::serialization::make_nvp("number", new_num)
 			>> boost::serialization::make_nvp("mode", new_mode)
 			>> boost::serialization::make_nvp("que", new_que)
 			>> boost::serialization::make_nvp("que_to_map", que_to_map)
-			>> boost::serialization::make_nvp("mapping", lv::serialization::make_optional(new_mapping))
+			>> boost::serialization::make_nvp("mapping", optional_new_mapping)
 			>> boost::serialization::make_nvp("arr", new_arr)
 			>> boost::serialization::make_nvp("tree", new_tree)
 			>> boost::serialization::make_nvp("tree2", new_tree2)
@@ -303,7 +304,7 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 		BOOST_CHECK(que == new_que);
 		BOOST_CHECK(arr == new_arr);
 		BOOST_CHECK_EQUAL(que_to_map[1], que[0]);
-		BOOST_CHECK_EQUAL(new_mapping.size(), 1);
+		BOOST_CHECK_EQUAL(new_mapping.size(), 1u);
 		BOOST_CHECK_EQUAL(new_mapping.get_left(mapping_key), 1);
 	}
 
@@ -318,6 +319,7 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 		deque<int> new_que;
 		map<int, int> que_to_map;
 		Mapping<string, int> new_mapping;
+		auto optional_new_mapping = lv::serialization::make_optional(new_mapping);
 		array<string, 3> new_arr;
 
 		ia >> boost::serialization::make_nvp("vertex", new_vertex) 
@@ -325,7 +327,7 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 			>> boost::serialization::make_nvp("mode", new_mode)
 			>> boost::serialization::make_nvp("que", new_que)
 			>> boost::serialization::make_nvp("que_to_map", que_to_map)
-			>> boost::serialization::make_nvp("mapping", lv::serialization::make_optional(new_mapping))
+			>> boost::serialization::make_nvp("mapping", optional_new_mapping)
 			>> boost::serialization::make_nvp("arr", new_arr)
 			// >> boost::serialization::make_nvp("tree", new_tree)
 			// >> boost::serialization::make_nvp("tree2", new_tree2)
@@ -336,7 +338,7 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 		BOOST_CHECK_EQUAL(mode, new_mode);
 		BOOST_CHECK(que == new_que);
 		BOOST_CHECK_EQUAL(que_to_map[1], que[0]);
-		BOOST_CHECK_EQUAL(new_mapping.size(), 1);
+		BOOST_CHECK_EQUAL(new_mapping.size(), 1u);
 		BOOST_CHECK_EQUAL(new_mapping.get_left(mapping_key), 1);
 		BOOST_CHECK(arr == new_arr);
 		// BOOST_CHECK(tree == new_tree);

@@ -11,6 +11,7 @@
 #ifndef LV_LUAARCHIVE_ISERIALIZER_HPP
 #define LV_LUAARCHIVE_ISERIALIZER_HPP
 
+#include <lv/LuaArchive/Fwd.hpp>
 #include <lv/LuaArchive/Tags.hpp>
 #include <lv/LuaArchive/Common.hpp>
 #include <lv/ContainerAdaptor/Adaptor.hpp>
@@ -56,12 +57,10 @@ namespace lv { namespace lua { namespace archive {
 
 
 	template<typename T>
-	void	load(luabind::object const & obj, T & t);
+	void	load_adl(luabind::object const & obj, T & t);
 
-	// load items of a container. you should overload this function if the item
-	// needs both the key and the value, such as std::pair
 	template<typename T>
-	void	load_item(luabind::iterator const & it, T & t);
+	void	load_item_adl(luabind::iterator const & it, T & t);
 
 
 	namespace detail
@@ -78,7 +77,7 @@ namespace lv { namespace lua { namespace archive {
 				version = luabind::object_cast<unsigned int>(version_obj);
 			}
 
-			boost::serialization::serialize(ia, t, version);
+			boost::serialization::serialize_adl(ia, t, version);
 		}
 
 		// primitive_tag
@@ -105,7 +104,7 @@ namespace lv { namespace lua { namespace archive {
 		void	load_impl(luabind::object const & obj, T & t, enum_tag)
 		{
 			int v;
-			archive::load(obj, v);
+			archive::load_adl(obj, v);
 
 			t = static_cast<T>(v);
 		}
@@ -133,7 +132,7 @@ namespace lv { namespace lua { namespace archive {
 
 				typename boost::range_value<T>::type item;
 
-				load_item(it, item);
+				load_item_adl(it, item);
 				lv::insert(t, item);
 			}
 		}
@@ -142,16 +141,33 @@ namespace lv { namespace lua { namespace archive {
 		template<typename K, typename V>
 		void	load_key_value(luabind::iterator const & it, K & key, V & value)
 		{
-			load(it.key(), key);
-			load(*it, value);
+			load_adl(it.key(), key);
+			load_adl(*it, value);
 		}
 	}
 
+	// adl ~~
+	template<class T>
+	class Ref
+	{
+		T * t_;
+	public:
+
+		Ref(T & t) : t_(&t) {}
+
+		operator T & () const { return *t_; }
+	};
 
 	template<typename T>
 	void	load(luabind::object const & obj, T & t)
 	{
-		detail::load_impl(obj, t, object_tag<T>::type());
+		detail::load_impl(obj, t, typename object_tag<T>::type());
+	}
+
+	template<typename T>
+	void	load_adl(luabind::object const & obj, T & t)
+	{
+		load(Ref<luabind::object const>(obj), t);
 	}
 
 	template<typename T>
@@ -159,7 +175,7 @@ namespace lv { namespace lua { namespace archive {
 	{
 		try
 		{
-			load(obj[t.name()], t.value());
+			load_adl(obj[t.name()], t.value());
 		}
 		catch (UnmatchedLuaType const & ex)
 		{
@@ -167,12 +183,19 @@ namespace lv { namespace lua { namespace archive {
 		}
 	}
 
+	// load items of a container. you should overload this function if the item
+	// needs both the key and the value, such as std::pair
 	template<typename T>
 	void	load_item(luabind::iterator const & it, T & t)
 	{
-		load(*it, t);
+		load_adl(*it, t);
 	}
 
+	template<typename T>
+	void	load_item_adl(luabind::iterator const & it, T & t)
+	{
+		load_item(Ref<luabind::iterator const>(it), t);
+	}
 } } }
 
 #endif

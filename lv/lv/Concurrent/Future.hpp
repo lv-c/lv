@@ -104,7 +104,7 @@ namespace lv
 
 		Future<Ret>	get_future()
 		{
-			return Future<Ret>(future_, shared_from_this());
+			return Future<Ret>(future_, this->shared_from_this());
 		}
 
 		void	set_value(Ret const * val)

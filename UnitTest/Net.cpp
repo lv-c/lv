@@ -19,6 +19,7 @@
 #include <lv/SharedPtr.hpp>
 #include <lv/SimpleBufferManager.hpp>
 
+#include <iostream>
 #include <mutex>
 #include <thread>
 #include <condition_variable>
@@ -33,8 +34,6 @@ using namespace lv;
 #include <string>
 using namespace std;
 
-
-namespace asio = boost::asio;
 
 condition_variable g_condition_called;
 mutex	g_mutex;
@@ -51,7 +50,7 @@ public:
 		: base_type(context)
 		, text_("Hello Net")
 	{
-		sink_
+		this->sink_
 			.reg_mem_fn("notify", &ClientSession::notify, this)
 		;
 	}
@@ -60,7 +59,7 @@ private:
 
 	virtual	void	on_connected()
 	{
-		source_->call("echo", text_);
+		this->source_->call("echo", text_);
 	}
 
 	virtual	void	on_error(ErrorType type, boost::system::error_code const & error)
@@ -89,7 +88,7 @@ public:
 	ServerSession(ContextPtr context)
 		: base_type(context)
 	{
-		sink_
+		this->sink_
 			.reg_mem_fn("echo", &ServerSession::echo, this)
 		;
 	}
@@ -99,7 +98,7 @@ public:
 		std::cout << str << std::endl;
 
 		// call the notify function of the client session
-		source_->call("notify", str);		
+		this->source_->call("notify", str);		
 	}
 
 private:
@@ -118,7 +117,7 @@ void test_net_impl()
 
 	typedef Server	server_type;
 
-	asio::io_service service;
+	boost::asio::io_service service;
 
 	// 
 	shared_ptr<SSLContext> server_context = std::make_shared<SSLContext>(std::make_shared<SimpleBufferManager>(1024), service);

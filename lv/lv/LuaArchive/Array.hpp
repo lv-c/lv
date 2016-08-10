@@ -40,7 +40,7 @@ namespace lv { namespace lua { namespace archive {
 
 			BOOST_ASSERT(! detail::is_version_key(it.key()) && "you shouldn't place a version key here");
 
-			load_item(it, v[index]);
+			load_item_adl(it, v[index]);
 		}
 	}
 
@@ -49,7 +49,7 @@ namespace lv { namespace lua { namespace archive {
 	{
 		parser >> detail::symbol('{');
 
-		int index = 0;
+		size_t index = 0;
 
 		while (! parser.read_if('}'))
 		{

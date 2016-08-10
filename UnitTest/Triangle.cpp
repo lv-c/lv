@@ -10,9 +10,14 @@
 
 #include "UnitTest.hpp"
 
+// compilation error using gcc
+#ifdef LV_PLATFORM_WINDOWS
+
 #include <lv/Graphics/Triangle.hpp>
 
 BOOST_AUTO_TEST_CASE(test_triangle)
 {
 
 }
+
+#endif

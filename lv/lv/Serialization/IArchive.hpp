@@ -53,7 +53,7 @@ namespace lv
 		}
 
 		template<typename T>
-		void	load_array(boost::serialization::array<T> & a, unsigned int)
+		void	load_array(boost::serialization::array_wrapper<T> & a, unsigned int)
 		{
 			load_binary(a.address(), a.count() * sizeof(T));
 		}
@@ -92,7 +92,7 @@ namespace lv
 		template<typename T>
 		typename std::enable_if<! std::is_arithmetic<T>::value>::type	load(T & t)
 		{
-			serialization::load(*this, t);
+			serialization::load_adl(*this, t);
 		}
 
 

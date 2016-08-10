@@ -58,7 +58,7 @@ namespace lv { namespace log {
 			{
 			}
 
-			Proxy(Proxy & rhs)
+			Proxy(Proxy && rhs)
 				: log_(rhs.log_)
 				, active_(true)
 			{

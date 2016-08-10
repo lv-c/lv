@@ -27,7 +27,7 @@ namespace lv { namespace lua {
 		else
 		{
 			T t;
-			archive::load(obj, t);
+			archive::load_adl(obj, t);
 
 			return t;
 		}

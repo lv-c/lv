@@ -24,9 +24,9 @@ namespace lv
 
 	class StreamProxyBase
 	{
-		std::ios_base *	std_ios_;
+		std::ios *	std_ios_;
 
-		StreamBase * lv_ios_;
+		StreamBase * 	lv_ios_;
 
 	protected:
 
@@ -36,19 +36,19 @@ namespace lv
 		{
 		}
 
-		StreamProxyBase(std::ios_base & ios)
+		StreamProxyBase(std::ios & ios)
 			: std_ios_(&ios)
 			, lv_ios_(nullptr)
 		{
 		}
 
 		StreamProxyBase(StreamBase & ios)
-			: lv_ios_(&ios)
-			, std_ios_(nullptr)
+			: std_ios_(nullptr)
+			, lv_ios_(&ios)
 		{
 		}
 
-		void	set(std::ios_base * std_ios, StreamBase * lv_ios)
+		void	set(std::ios * std_ios, StreamBase * lv_ios)
 		{
 			BOOST_ASSERT(std_ios == nullptr || lv_ios == nullptr);
 

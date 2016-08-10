@@ -28,9 +28,6 @@ namespace lv
 
 		boost::optional<value_type>	value_;
 
-		// optional::m_initialized is not volatile ~~
-		volatile bool	init_;
-
 		// from optional document
 
 		// Creates an optional<T> with an expression which can be either
@@ -43,6 +40,9 @@ namespace lv
 		// Depending on the above some T ctor is called.
 
 		Expr			expr_;
+
+		// optional::m_initialized is not volatile ~~
+		volatile bool	init_;
 
 		std::mutex	mutex_;
 

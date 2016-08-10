@@ -1,0 +1,10 @@
+
+
+lib FrameWork : [ glob-tree *.cpp ] : <link>static <tag>@tag-names ;
+
+install stage
+	: FrameWork
+	: <location>../../../bin/lv
+	  <install-type>LIB
+	;
+

@@ -1,0 +1,13 @@
+
+
+lib lv 
+	: [ glob-tree *.cpp : ZeroMQ Graphics UI MyZipReader.cpp ] 
+	: <link>static <tag>@tag-names
+	;
+
+install stage
+	: lv
+	: <location>../../../bin/lv
+	  <install-type>LIB
+	;
+

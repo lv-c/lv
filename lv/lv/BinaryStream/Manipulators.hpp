@@ -47,7 +47,7 @@ namespace lv { namespace bstream {
 			/**
 			 * @exception CheckEqualError
 			 */
-			friend BinaryIStream & operator >> (BinaryIStream & is, check_equal_impl const & ce)
+			friend BinaryIStream & operator >> (BinaryIStream & is, check_equal_impl && ce)
 			{
 				T val;
 				is >> val;
@@ -84,7 +84,7 @@ namespace lv { namespace bstream {
 		
 		explicit forward(std::streamoff off) : off_(off) {}
 
-		friend inline BinaryIStream & operator >> (BinaryIStream & is, forward const & fwd)
+		friend inline BinaryIStream & operator >> (BinaryIStream & is, forward && fwd)
 		{
 			is.seekg(fwd.off_, std::ios_base::cur);
 			return is;
@@ -107,7 +107,7 @@ namespace lv { namespace bstream {
 		{
 		}
 
-		friend BinaryOStream & operator << (BinaryOStream & os, fill_n const & fill)
+		friend BinaryOStream & operator << (BinaryOStream & os, fill_n && fill)
 		{
 			std::size_t const buf_size = 128;
 			char buf[buf_size];
@@ -233,12 +233,12 @@ namespace lv { namespace bstream {
 			}
 
 			template<class Archive>
-			void	serialize(Archive & ar, unsigned int version)
+			void	serialize(Archive & ar, unsigned int version) const
 			{
 				boost::serialization::split_member(ar, *this, version);
 			}
 
-			void	load(BinaryIStream & is, unsigned int)
+			void	load(BinaryIStream & is, unsigned int) const
 			{
 				SizeType size;
 				is >> size;

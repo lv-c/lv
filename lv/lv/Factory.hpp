@@ -12,7 +12,6 @@
 #define LV_FACTORY_HPP
 
 #include <vector>
-#include <atomic>
 #include <functional>
 #include <mutex>
 
@@ -47,10 +46,6 @@ namespace lv
 
 		typedef	std::function<void(T*)>	deleter_type;
 
-		static std::atomic<int>	total_num_;
-
-		static std::atomic<int>	current_num_;
-	
 	public:
 
 		explicit Factory(creator_type const & creator = NewCreator<T>())
@@ -71,20 +66,16 @@ namespace lv
 				{
 					obj = objects_.back();
 					objects_.pop_back();
-
-					current_num_--;
 				}
 				else
 				{
 					obj = creator_();
-
-					total_num_++;
 				}
 
 				post_process(*obj);
 			}
 
-			return unique_pointer(obj, std::bind(&Factory::release, shared_from_this(), std::placeholders::_1));
+			return unique_pointer(obj, std::bind(&Factory<T>::release, this->shared_from_this(), std::placeholders::_1));
 		}
 
 
@@ -100,17 +91,6 @@ namespace lv
 			objects_.clear();
 		}
 
-
-		static	long	current_num()
-		{
-			return current_num_;
-		}
-
-		static	long	total_num()
-		{
-			return total_num_;
-		}
-
 	protected:
 
 		virtual	void	post_process(T & obj)
@@ -122,16 +102,9 @@ namespace lv
 			lock_guard lock(mutex_);
 
 			objects_.push_back(obj);
-
-			current_num_++;
 		}
 	};
 
-	template<typename T>
-	std::atomic<int> Factory<T>::total_num_ = 0;
-
-	template<typename T>
-	std::atomic<int> Factory<T>::current_num_ = 0;
 }
 
 #endif

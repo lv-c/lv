@@ -17,6 +17,8 @@
 
 #include <boost/assert.hpp>
 
+#include <type_traits>
+
 
 namespace lv
 {
@@ -29,9 +31,9 @@ namespace lv
 	class Singleton
 	{
 	public:
-		static	T&	instance()
+		static	T &	instance()
 		{
-			return instance_impl<StaticAlloc>();
+			return instance_impl(std::integral_constant<bool, StaticAlloc>());
 		}
 
 		static bool	initialized()
@@ -46,15 +48,13 @@ namespace lv
 		Singleton & operator = (Singleton const &) = delete;
 
 
-		template <bool StaticAlloc>
-		static T & instance_impl()
+		static T & instance_impl(std::true_type)
 		{
-			static T obj;
+			static typename std::remove_const<T>::type obj;
 			return obj;
 		}
 
-		template <>
-		static T & instance_impl<false>()
+		static T & instance_impl(std::false_type)
 		{
 			BOOST_ASSERT(instance_ != nullptr);
 			return *instance_;
