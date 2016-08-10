@@ -422,7 +422,6 @@
     <ClInclude Include="..\..\..\lv\lv\ZeroMQ.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\lv\src\LuaArchive\PlainISerializer.cpp" />
     <ClCompile Include="..\..\..\lv\src\lv\Audio\WavSource.cpp" />
     <ClCompile Include="..\..\..\lv\src\lv\Concurrent\ThreadName.cpp" />
     <ClCompile Include="..\..\..\lv\src\lv\Console.cpp" />
@@ -434,6 +433,7 @@
     <ClCompile Include="..\..\..\lv\src\lv\Graphics\Color.cpp" />
     <ClCompile Include="..\..\..\lv\src\lv\Graphics\Font.cpp" />
     <ClCompile Include="..\..\..\lv\src\lv\Graphics\FreeTypeFont.cpp" />
+    <ClCompile Include="..\..\..\lv\src\lv\LuaArchive\PlainISerializer.cpp" />
     <ClCompile Include="..\..\..\lv\src\lv\Lua\Exec.cpp" />
     <ClCompile Include="..\..\..\lv\src\lv\Lua\StackBalance.cpp" />
     <ClCompile Include="..\..\..\lv\src\lv\Timer.cpp" />

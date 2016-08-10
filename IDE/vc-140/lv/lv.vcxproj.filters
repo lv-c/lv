@@ -852,7 +852,7 @@
     <ClCompile Include="..\..\..\lv\src\lv\Lua\StackBalance.cpp">
       <Filter>Lua\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\lv\src\LuaArchive\PlainISerializer.cpp">
+    <ClCompile Include="..\..\..\lv\src\lv\LuaArchive\PlainISerializer.cpp">
       <Filter>LuaArchive\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
