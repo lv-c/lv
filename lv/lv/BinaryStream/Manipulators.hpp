@@ -278,12 +278,12 @@ namespace lv { namespace bstream {
 			}
 
 			template<class Archive>
-			void	serialize(Archive & ar, unsigned int version)
+			void	serialize(Archive & ar, unsigned int version) const
 			{
 				boost::serialization::split_member(ar, *this, version);
 			}
 
-			void	load(BinaryIStream & is, unsigned int)
+			void	load(BinaryIStream & is, unsigned int) const
 			{
 				is.read(reinterpret_cast<char *>(&t_), sizeof(t_));
 			}
