@@ -24,7 +24,7 @@
 #		define LV_LIB_LINK_OPT	"S"
 #	endif
 
-#	ifdef LV_X64
+#	ifdef LV_WIN64
 #		define LV_LIB_PLATFORM_OPT	"-x64"
 #	else
 #		define LV_LIB_PLATFORM_OPT

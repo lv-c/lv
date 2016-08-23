@@ -32,7 +32,7 @@ namespace lv
 		}
 
 		SetConsoleTitleA(title);
-		long lStdHandle = (long)GetStdHandle(STD_ERROR_HANDLE);
+		intptr_t lStdHandle = (intptr_t)GetStdHandle(STD_ERROR_HANDLE);
 		int hConHandle = _open_osfhandle(lStdHandle, _O_TEXT);       
 		FILE* fp = _fdopen(hConHandle,"w");
 		if (fp == nullptr)

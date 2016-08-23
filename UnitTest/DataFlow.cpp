@@ -138,7 +138,7 @@ BOOST_AUTO_TEST_CASE(test_dataflow)
 	source.call("sum", 10, 40.3f);
 
 
-#ifdef LV_PLATFORM_WINDOWS
+#ifdef LV_WIN32
 
 	MemoryAnalyser::instance().attach();
 	MemoryAnalyser::instance().begin_analyse();
@@ -155,7 +155,7 @@ BOOST_AUTO_TEST_CASE(test_dataflow)
 
 	double elapsed = timer.elapsed() * 1000;
 
-#ifdef LV_PLATFORM_WINDOWS
+#ifdef LV_WIN32
 
 	int counter;
 	uint64 total_memory = MemoryAnalyser::instance().end_analyse(counter);

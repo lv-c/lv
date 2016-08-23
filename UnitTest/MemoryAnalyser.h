@@ -1,10 +1,12 @@
 #pragma once
 
+#include <lv/Config.hpp>
+
+#ifdef LV_WIN32
 
 #include <map>
 
 #include <lv/Singleton.hpp>
-#include <lv/IntType.hpp>
 
 using namespace lv;
 
@@ -60,3 +62,5 @@ private:
 	void	remove(void const * addr);
 
 };
+
+#endif

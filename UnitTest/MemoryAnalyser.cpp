@@ -1,4 +1,7 @@
 #include "MemoryAnalyser.h"
+
+#ifdef LV_WIN32
+
 #include <cassert>
 #include <algorithm>
 
@@ -138,3 +141,5 @@ void MemoryAnalyser::remove(void const * addr)
 		allocated_.erase(it);
 	}
 }
+
+#endif
