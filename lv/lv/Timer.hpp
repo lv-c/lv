@@ -11,10 +11,10 @@
 #ifndef LV_TIMER_HPP
 #define LV_TIMER_HPP
 
-#include <lv/lvlib2.hpp>
-#include <lv/IntType.hpp>
-
 #include <boost/operators.hpp>
+
+#include <chrono>
+
 
 namespace lv
 {
@@ -77,28 +77,27 @@ namespace lv
 
 	class Timer
 	{
-		double	start_time_;		
+		typedef std::chrono::high_resolution_clock	clock_type;
 
-		static	uint64	cps_;
+		clock_type::time_point	start_time_;
 
 	public:
-		// start the timer
-		Timer();
+
+		Timer()
+		{
+			restart();
+		}
 
 		inline void	restart() 
 		{
-			start_time_ = cur_time();
+			start_time_ = clock_type::now();
 		}
 		
-		// return the seconds that has elapsed
 		inline TimeSpan	elapsed() const
 		{
-			return TimeSpan(cur_time() - start_time_);
+			clock_type::duration span = clock_type::now() - start_time_;
+			return TimeSpan(static_cast<double>(span.count()) * clock_type::period::num / clock_type::period::den);
 		}
-
-	private:
-
-		double	cur_time() const;			// return the current time
 	};
 }
 

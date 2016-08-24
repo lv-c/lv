@@ -78,13 +78,13 @@
     <ClInclude Include="..\..\..\lv\lv\FrameWork\AutoLink.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\DeadlineTimer.hpp">
-      <Filter>Net\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\MessageQueue.hpp">
       <Filter>Net\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\MessageQueueContext.hpp">
+      <Filter>Net\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\SteadyTimer.hpp">
       <Filter>Net\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -113,10 +113,10 @@
     <ClCompile Include="..\..\..\lv\src\FrameWork\Net\TcpSession.cpp">
       <Filter>Net\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\lv\src\FrameWork\Net\DeadlineTimer.cpp">
+    <ClCompile Include="..\..\..\lv\src\FrameWork\Net\MessageQueue.cpp">
       <Filter>Net\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\lv\src\FrameWork\Net\MessageQueue.cpp">
+    <ClCompile Include="..\..\..\lv\src\FrameWork\Net\SteadyTimer.cpp">
       <Filter>Net\Source Files</Filter>
     </ClCompile>
   </ItemGroup>

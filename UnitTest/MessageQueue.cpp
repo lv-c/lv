@@ -12,7 +12,7 @@
 
 #include <lv/FrameWork/Net/MessageQueue.hpp>
 #include <lv/FrameWork/Net/MessageQueueContext.hpp>
-#include <lv/FrameWork/Net/DeadlineTimer.hpp>
+#include <lv/FrameWork/Net/SteadyTimer.hpp>
 #include <lv/SimpleBufferManager.hpp>
 #include <lv/Random.hpp>
 #include <lv/Exception.hpp>

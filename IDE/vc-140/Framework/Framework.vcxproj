@@ -199,7 +199,6 @@
     <ClInclude Include="..\..\..\lv\lv\FrameWork\AutoLink.hpp" />
     <ClInclude Include="..\..\..\lv\lv\FrameWork\Net.hpp" />
     <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\Context.hpp" />
-    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\DeadlineTimer.hpp" />
     <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\Event.hpp" />
     <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\FlowSession.hpp" />
     <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\Fwd.hpp" />
@@ -219,10 +218,10 @@
     <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\SSLContext.hpp" />
     <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\SSLServer.hpp" />
     <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\SSLSession.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\SteadyTimer.hpp" />
     <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\TcpSession.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\lv\src\FrameWork\Net\DeadlineTimer.cpp" />
     <ClCompile Include="..\..\..\lv\src\FrameWork\Net\MessageQueue.cpp" />
     <ClCompile Include="..\..\..\lv\src\FrameWork\Net\PacketProxy.cpp" />
     <ClCompile Include="..\..\..\lv\src\FrameWork\Net\ServerBase.cpp" />
@@ -231,6 +230,7 @@
     <ClCompile Include="..\..\..\lv\src\FrameWork\Net\Socks5ServerSession.cpp" />
     <ClCompile Include="..\..\..\lv\src\FrameWork\Net\SSLServer.cpp" />
     <ClCompile Include="..\..\..\lv\src\FrameWork\Net\SSLSession.cpp" />
+    <ClCompile Include="..\..\..\lv\src\FrameWork\Net\SteadyTimer.cpp" />
     <ClCompile Include="..\..\..\lv\src\FrameWork\Net\TcpSession.cpp" />
   </ItemGroup>
   <ItemGroup>

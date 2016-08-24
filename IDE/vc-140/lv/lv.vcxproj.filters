@@ -801,9 +801,6 @@
     <ClCompile Include="..\..\..\lv\src\lv\Console.cpp">
       <Filter>Utility\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\lv\src\lv\Timer.cpp">
-      <Filter>Utility\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\lv\src\lv\Graphics\Color.cpp">
       <Filter>Graphics\Source Files</Filter>
     </ClCompile>

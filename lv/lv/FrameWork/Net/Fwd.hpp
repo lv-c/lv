@@ -61,7 +61,7 @@ namespace lv { namespace net {
 
 	class MessageQueue;
 
-	class DeadlineTimer;
+	class SteadyTimer;
 
 	namespace asio = boost::asio;
 

@@ -1,6 +1,6 @@
 #include <lv/FrameWork/Net/MessageQueue.hpp>
 #include <lv/FrameWork/Net/MessageQueueContext.hpp>
-#include <lv/FrameWork/Net/DeadlineTimer.hpp>
+#include <lv/FrameWork/Net/SteadyTimer.hpp>
 #include <lv/BinaryStream.hpp>
 #include <lv/BinaryStream/Vector.hpp>
 #include <lv/Ensure.hpp>
@@ -229,7 +229,7 @@ namespace lv { namespace net {
 		send_queue_ = std::make_unique<SendQueue>(context, timer_);
 		receive_queue_ = std::make_unique<ReceiveQueue>(context);
 
-		deadline_timer_ = std::make_unique<DeadlineTimer>(context->service_wrapper(), boost::posix_time::millisec(200), 
+		deadline_timer_ = std::make_unique<SteadyTimer>(context->service_wrapper(), std::chrono::milliseconds(200), 
 			std::bind(&MessageQueue::on_timer, this));
 	}
 

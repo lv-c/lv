@@ -436,7 +436,6 @@
     <ClCompile Include="..\..\..\lv\src\lv\LuaArchive\PlainISerializer.cpp" />
     <ClCompile Include="..\..\..\lv\src\lv\Lua\Exec.cpp" />
     <ClCompile Include="..\..\..\lv\src\lv\Lua\StackBalance.cpp" />
-    <ClCompile Include="..\..\..\lv\src\lv\Timer.cpp" />
     <ClCompile Include="..\..\..\lv\src\lv\UI\Button.cpp" />
     <ClCompile Include="..\..\..\lv\src\lv\UI\ButtonBase.cpp" />
     <ClCompile Include="..\..\..\lv\src\lv\UI\Editbox.cpp" />

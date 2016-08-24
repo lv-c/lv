@@ -1,5 +1,5 @@
 // *********************************************************************
-//  DeadlineTimer   version:  1.0   ¡¤  date: 2015/11/19
+//  SteadyTimer   version:  1.0   ¡¤  date: 2015/11/19
 //  --------------------------------------------------------------------
 //  
 //  --------------------------------------------------------------------
@@ -14,35 +14,38 @@
 #include <lv/FrameWork/AutoLink.hpp>
 #include <lv/ServiceWrapper.hpp>
 
-#include <boost/asio/deadline_timer.hpp>
+#include <boost/asio/steady_timer.hpp>
 
 #include <functional>
 
 
 namespace lv { namespace net {
 
-	class DeadlineTimer
+	class SteadyTimer
 	{
 		ServiceWrapper	service_wrapper_;
 
-		typedef std::shared_ptr<boost::asio::deadline_timer>	TimerPtr;
-		typedef std::weak_ptr<boost::asio::deadline_timer>	WeakTimerPtr;
+		typedef boost::asio::steady_timer	timer_type;
+
+		typedef std::shared_ptr<timer_type>	TimerPtr;
+		typedef std::weak_ptr<timer_type>	WeakTimerPtr;
 
 		TimerPtr	timer_;
 
-		boost::posix_time::time_duration	duration_;
+		typedef timer_type::duration	duration_type;
+		duration_type	duration_;
 
 		typedef std::function<void()>		Callback;
 		Callback	callback_;
 
 	public:
 
-		DeadlineTimer(ServiceWrapper const & service_wrapper, boost::posix_time::time_duration const & duration,
+		SteadyTimer(ServiceWrapper const & service_wrapper, duration_type const & duration,
 			Callback const & callback);
 
 	private:
 
-		DeadlineTimer();
+		SteadyTimer();
 
 		void	start();
 
