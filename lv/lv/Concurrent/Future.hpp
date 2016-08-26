@@ -11,11 +11,8 @@
 #ifndef LV_CONCURRENT_FUTURE_HPP
 #define LV_CONCURRENT_FUTURE_HPP
 
-#include <lv/LazyInit.hpp>
-
-#include <boost/signals2/signal.hpp>
-
 #include <future>
+#include <functional>
 
 
 namespace lv
@@ -33,7 +30,7 @@ namespace lv
 
 		template<typename> friend class Promise;
 
-		Future(std::shared_future<Ret> future, std::shared_ptr<Promise<Ret> > promise)
+		Future(std::shared_future<Ret> future, std::weak_ptr<Promise<Ret> > promise)
 			: base_type(future)
 			, promise_(promise)
 		{
@@ -44,19 +41,14 @@ namespace lv
 		typedef Ret	value_type;
 
 		/// creates an empty future
-		Future()
-		{
-		}
+		Future() {}
 
-		// this callback function will be invoked within the same thread of Client::on_receive
-		template<typename Slot>
-		boost::signals2::connection	connect(Slot const & slot)
+		template<class T>
+		void	set_callback(T && t) const
 		{
-			auto p = promise_.lock();
-
-			if (p)
+			if (auto p = promise_.lock())
 			{
-				return p->connect(slot);
+				return p->set_callback(std::forward<T>(t));
 			}
 			else
 			{
@@ -91,9 +83,11 @@ namespace lv
 		// promise_.get_future can only be called once
 		std::shared_future<Ret>	future_;
 
-		typedef boost::signals2::signal<void(Future<Ret>)>	signal_type;
+		typedef std::function<void(Future<Ret>)>	Callback;
 
-		LazeInit<signal_type>	signal_;
+		Callback	callback_;
+
+		std::mutex	mutex_;
 
 	public:
 
@@ -123,17 +117,21 @@ namespace lv
 
 		void	signal()
 		{
-			if (signal_)
+			std::lock_guard<std::mutex> lock(mutex_);
+
+			if (callback_)
 			{
-				signal_.get() (get_future());
+				callback_(get_future());
 			}
 		}
 
 		template<typename> friend class Future;
 
-		boost::signals2::connection	connect(typename signal_type::slot_type const & slot)
+		void	set_callback(Callback cb)
 		{
-			return signal_.get().connect(slot);
+			std::lock_guard<std::mutex> lock(mutex_);
+
+			callback_ = std::move(cb);
 		}
 	};
 

@@ -273,10 +273,9 @@
     <ClInclude Include="..\..\..\lv\lv\Ensure.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Exception.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Factory.hpp" />
-    <ClInclude Include="..\..\..\lv\lv\FileSystem\AsynFileIO.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\FileSystem\AsyncFileIO.hpp" />
     <ClInclude Include="..\..\..\lv\lv\FileSystem\Fwd.hpp" />
     <ClInclude Include="..\..\..\lv\lv\FileSystem\IFileIO.hpp" />
-    <ClInclude Include="..\..\..\lv\lv\FileSystem\IOFuture.hpp" />
     <ClInclude Include="..\..\..\lv\lv\FileSystem\IOTask.hpp" />
     <ClInclude Include="..\..\..\lv\lv\FileSystem\MyZipReader.hpp" />
     <ClInclude Include="..\..\..\lv\lv\FileSystem\RawFileReader.hpp" />

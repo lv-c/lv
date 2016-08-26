@@ -1,5 +1,5 @@
 // *********************************************************************
-//  AsynFileIO   version:  1.0   ·  date: 08/09/2008
+//  AsyncFileIO   version:  1.0   ·  date: 08/09/2008
 //  --------------------------------------------------------------------
 //		为同步 IO 提供异步 IO 的能力
 //		Proxy Pattern
@@ -13,27 +13,23 @@
 #define LV_ASYNFILEIO_HPP
 
 #include <lv/FileSystem/IFileIO.hpp>
+#include <lv/FileSystem/IOTask.hpp>
 #include <lv/ServiceWrapper.hpp>
 #include <lv/Exception.hpp>
 
 
 namespace lv
 {
-	class AsynFileIO : public IFileIO
+	class AsyncFileIO : public IFileIO
 	{
-	public:
-		typedef std::shared_ptr<IFileIO>	synio_ptr;
-
-	private:
-
-		synio_ptr	syn_filio_;
+		IFileIOPtr	sync_io_;
 
 		ServiceWrapper	service_wrapper_;
 
 	public:
 		
-		AsynFileIO(synio_ptr synio, ServiceWrapper const & service_wrapper)
-			: syn_filio_(synio)
+		AsyncFileIO(IFileIOPtr synio, ServiceWrapper const & service_wrapper)
+			: sync_io_(synio)
 			, service_wrapper_(service_wrapper)
 		{
 		}
@@ -41,14 +37,14 @@ namespace lv
 		/**
 		 * get the underlying synchronous file io
 		 */
-		synio_ptr	syn_io() const
+		IFileIOPtr	sync_io() const
 		{
-			return syn_filio_;
+			return sync_io_;
 		}
 
 		virtual	bool	exist(std::string const & file)
 		{
-			return syn_filio_->exist(file);
+			return sync_io_->exist(file);
 		}
 
 
@@ -62,25 +58,17 @@ namespace lv
 		 */
 		virtual void fulfill(std::string const & file, BufferPtr buffer)
 		{
-			IOFuture future = add_task(file, buffer);
-
-			try
-			{
-				future.get();
-			}
-			catch (std::runtime_error const & err)
-			{
-				throw file_io_error(err.what());
-			}
+			add_task(file, buffer).get();
 		}
 
-		virtual	IOFuture add_task(std::string const & file, BufferPtr buffer)
+		IOFuture	add_task(std::string const & file, BufferPtr buffer)
 		{
-			IOTask task(file, buffer, syn_filio_);
+			IOTask task(file, buffer, sync_io_);
+			IOFuture future = task.get_future();
 
-			service_wrapper_.post(task);
+			service_wrapper_.post(std::move(task));
 			
-			return IOFuture(task);
+			return future;
 		}
 	};
 }

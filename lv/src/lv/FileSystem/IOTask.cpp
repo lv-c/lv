@@ -3,11 +3,19 @@
 
 namespace lv
 {
-	IOTask::IOTask(std::string const & file, BufferPtr buffer, std::shared_ptr<IFileIO> file_io)
+	IOTask::IOTask(std::string file, BufferPtr buffer, IFileIOPtr file_io)
 		: promise_(std::make_shared<promise_type>())
-		, file_(std::make_shared<std::string>(file))
+		, file_(std::move(file))
 		, buffer_(buffer)
 		, file_io_(file_io)
+	{
+	}
+
+	IOTask::IOTask(IOTask && other)
+		: promise_(std::move(other.promise_))
+		, file_(std::move(other.file_))
+		, buffer_(std::move(other.buffer_))
+		, file_io_(std::move(other.file_io_))
 	{
 	}
 
@@ -15,12 +23,19 @@ namespace lv
 	{
 		try
 		{
-			file_io_->fulfill(*file_, buffer_);
-			promise_->set_value();
+			file_io_->fulfill(file_, buffer_);
 		}
-		catch (std::exception const &)
+		catch (...)
 		{
 			promise_->set_exception(std::current_exception());
+			return;
 		}
+
+		promise_->set_value(&buffer_);
+	}
+
+	IOFuture IOTask::get_future()
+	{
+		return promise_->get_future();
 	}
 }

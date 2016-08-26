@@ -11,9 +11,9 @@
 #ifndef LV_MYZIPREADER_HPP
 #define LV_MYZIPREADER_HPP
 
+#include <lv/FileSystem/Fwd.hpp>
 #include <lv/FileSystem/IFileIO.hpp>
 
-#include <string>
 #include <map>
 #include <mutex>
 

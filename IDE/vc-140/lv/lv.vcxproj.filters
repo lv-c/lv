@@ -322,16 +322,10 @@
     <ClInclude Include="..\..\..\lv\lv\Graphics\Stream\Vector.hpp">
       <Filter>Graphics\Stream\Header Fiels</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\lv\lv\FileSystem\AsynFileIO.hpp">
-      <Filter>FileSystem\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\FileSystem\Fwd.hpp">
       <Filter>FileSystem\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\FileSystem\IFileIO.hpp">
-      <Filter>FileSystem\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\lv\lv\FileSystem\IOFuture.hpp">
       <Filter>FileSystem\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\FileSystem\IOTask.hpp">
@@ -795,6 +789,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\Serialization\IArchiveWrapper.hpp">
       <Filter>Serialization\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\FileSystem\AsyncFileIO.hpp">
+      <Filter>FileSystem\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

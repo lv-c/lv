@@ -11,13 +11,14 @@
 #ifndef LV_IFILEIO_HPP
 #define LV_IFILEIO_HPP
 
-#include <lv/FileSystem/Fwd.hpp>
-#include <lv/FileSystem/IOFuture.hpp>
+#include <lv/Buffer.hpp>
+
+#include <string>
 
 
 namespace lv
 {
-	class IFileIO : public std::enable_shared_from_this<IFileIO>
+	class IFileIO
 	{
 
 		std::string		working_dir_;
@@ -35,13 +36,6 @@ namespace lv
 		virtual void	fulfill(std::string const & file, BufferPtr buf) = 0;
 
 		virtual	bool	exist(std::string const & file) = 0;
-
-		/**
-		 * This should perform an asynchronous operation if it's an asynchronous io class.
-		 * Otherwise it should call @a fulfill to perform a synchronous operation, which is
-		 * the default behavior.
-		 */
-		virtual	IOFuture	add_task(std::string const & file, BufferPtr buf);
 
 
 		/**

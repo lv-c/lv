@@ -22,7 +22,7 @@ namespace lv
 	// thread-safe lazy initialization
 
 	template<class T, class Expr = boost::in_place_factory0>
-	class LazeInit
+	class LazyInit
 	{
 		typedef T	value_type;
 
@@ -48,7 +48,7 @@ namespace lv
 
 	public:
 
-		LazeInit(Expr const & expr = Expr())
+		LazyInit(Expr const & expr = Expr())
 			: expr_(expr)
 			, init_(false)
 		{

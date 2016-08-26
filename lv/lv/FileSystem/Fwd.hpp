@@ -11,7 +11,7 @@
 #ifndef LV_FILESYSTEM_HPP
 #define LV_FILESYSTEM_HPP
 
-#include <memory>
+#include <lv/Buffer.hpp>
 
 
 namespace lv
@@ -24,9 +24,10 @@ namespace lv
 
 	class MyZipReader;
 
-	class IOFuture;
-
 	class IOTask;
+
+	template<typename Ret> class Future;
+	typedef Future<BufferPtr>	IOFuture;
 }
 
 

@@ -75,17 +75,17 @@ namespace lv
 		}
 
 		template<class Handler>
-		void	post(Handler const & handler) const
+		void	post(Handler && handler) const
 		{
 			BOOST_ASSERT(*this);
 
 			if (service_ != nullptr)
 			{
-				service_->post(handler);
+				service_->post(std::forward<Handler>(handler));
 			}
 			else
 			{
-				strand_->post(handler);
+				strand_->post(std::forward<Handler>(handler));
 			}
 		}
 	};
