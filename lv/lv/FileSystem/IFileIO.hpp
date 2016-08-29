@@ -11,6 +11,7 @@
 #ifndef LV_IFILEIO_HPP
 #define LV_IFILEIO_HPP
 
+#include <lv/lvlib2.hpp>
 #include <lv/Buffer.hpp>
 
 #include <string>
