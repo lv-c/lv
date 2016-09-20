@@ -28,7 +28,7 @@ namespace lv { namespace log {
 	typedef boost::wformat	format_type;
 #endif
 
-	// most often this's used as a tailer
+	// most often this is used as a tailer
 	struct LineBreak
 	{
 		void operator () (ostream_type& os, int) const

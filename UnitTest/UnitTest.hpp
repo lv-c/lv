@@ -17,4 +17,5 @@
 #define BOOST_SP_USE_QUICK_ALLOCATOR
 #endif
 
+#include <lv/Config.hpp>
 #include <boost/test/unit_test.hpp>

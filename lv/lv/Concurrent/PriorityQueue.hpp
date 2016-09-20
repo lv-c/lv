@@ -19,11 +19,12 @@ namespace lv
 	class PriorityQueue
 	{
 		std::priority_queue<T>	container_;
+
 	public:
+
 		typedef T value_type;
 
 
-		
 		void	push(value_type const & value)
 		{
 			container_.push(value);

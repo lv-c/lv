@@ -32,7 +32,9 @@ namespace lv { namespace log {
 		Pred	pred_;
 
 		int	lvl_;
+
 	public:
+
 		UnaryFilter(int lvl, Pred pred = Pred()) 
 			: lvl_(lvl)
 			, pred_(pred)

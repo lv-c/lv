@@ -13,14 +13,13 @@
 
 #include <lv/Log/Fwd.hpp>
 
-#include <boost/lexical_cast.hpp>
 
 namespace lv 
 { 
 	namespace log
 	{
-
-		enum level {
+		enum level
+		{
 			debug	= 10,
 			info	= 20,
 			warning	= 30,
@@ -48,7 +47,12 @@ namespace lv
 				return L_TEXT("fatal");
 
 			default:
-				return boost::lexical_cast<string_type>(lvl);
+
+#ifdef LV_UNICODE_LOG
+				return std::to_wstring(lvl);
+#else
+				return std::to_string(lvl);
+#endif
 			}
 		}
 	}

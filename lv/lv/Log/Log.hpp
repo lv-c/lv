@@ -38,7 +38,7 @@ namespace lv { namespace log {
 
 		std::mutex	mutex_;
 
-		bool	enabled_;
+		volatile bool	enabled_;
 
 	
 		int		lvl_;	// level of the current record
@@ -129,8 +129,6 @@ namespace lv { namespace log {
 		
 		void	enable(bool enabled = true)
 		{
-			lock_guard lock(mutex_);
-
 			enabled_ = enabled;
 		}
 
