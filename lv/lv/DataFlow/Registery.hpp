@@ -11,18 +11,18 @@
 #ifndef LV_DATAFLOW_REGISTERY_HPP
 #define LV_DATAFLOW_REGISTERY_HPP
 
-#include <lv/Exception.hpp>
-#include <lv/Functional.hpp>
-
 #include <lv/DataFlow/Fwd.hpp>
 #include <lv/DataFlow/Invoker.hpp>
+
+#include <lv/Exception.hpp>
+#include <lv/Functional.hpp>
+#include <lv/Concurrent/SpinMutex.hpp>
 
 #include <boost/noncopyable.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/archive/archive_exception.hpp>
 
 #include <map>
-#include <shared_mutex>
 
 
 namespace lv { namespace flow {
@@ -59,7 +59,7 @@ namespace lv { namespace flow {
 
 			invoker_map		invokers_;
 
-			std::shared_timed_mutex	mutex_;
+			SpinMutex		mutex_;
 
 		public:
 
@@ -69,7 +69,7 @@ namespace lv { namespace flow {
 			template<class Signature, class F>
 			void	reg(Key const & key, F f)
 			{
-				std::lock_guard<std::shared_timed_mutex> lock(mutex_);
+				std::lock_guard<SpinMutex> lock(mutex_);
 
 				if (invokers_.find(key) != invokers_.end())
 				{
@@ -94,7 +94,7 @@ namespace lv { namespace flow {
 
 				{
 					// no deletion, so the iterator will be valid
-					std::shared_lock<std::shared_timed_mutex> lock(mutex_);
+					std::lock_guard<SpinMutex> lock(mutex_);
 
 					it = invokers_.find(key);
 					if (it == invokers_.end())

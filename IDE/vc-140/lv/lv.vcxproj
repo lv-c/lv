@@ -245,6 +245,7 @@
     <ClInclude Include="..\..\..\lv\lv\Concurrent\Future.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Concurrent\Fwd.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Concurrent\PriorityQueue.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\Concurrent\SpinMutex.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Concurrent\TaskQueue.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Concurrent\ThreadGroup.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Concurrent\ThreadName.hpp" />

@@ -42,7 +42,7 @@ namespace lv { namespace flow {
 
 		void operator () (T const & t)
 		{
-			service_wrapper_.post(std::bind(callback_, t));
+			service_wrapper_.post([this, t] { callback_(t); });
 		}
 	};
 

@@ -41,38 +41,19 @@ namespace lv
 
 		Expr			expr_;
 
-		// optional::m_initialized is not volatile ~~
-		volatile bool	init_;
-
-		std::mutex	mutex_;
+		std::once_flag	once_;
 
 	public:
 
 		LazyInit(Expr const & expr = Expr())
 			: expr_(expr)
-			, init_(false)
 		{
 		}
 
 		value_type &	get()
 		{
-			if (! init_)
-			{
-				std::unique_lock<std::mutex> lock(mutex_);
-
-				if (! init_)
-				{
-					value_ = expr_;
-					init_ = true;
-				}
-			}
-
+			std::call_once(once_, [this] { value_ = expr_; });
 			return *value_;
-		}
-
-		operator bool () const
-		{
-			return init_;
 		}
 	};
 }

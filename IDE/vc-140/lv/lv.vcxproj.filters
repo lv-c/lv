@@ -793,6 +793,9 @@
     <ClInclude Include="..\..\..\lv\lv\FileSystem\AsyncFileIO.hpp">
       <Filter>FileSystem\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Concurrent\SpinMutex.hpp">
+      <Filter>Concurrent\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\lv\src\lv\Console.cpp">

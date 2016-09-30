@@ -16,6 +16,7 @@
 
 #include <lv/Functional.hpp>
 #include <lv/Exception.hpp>
+#include <lv/Concurrent/SpinMutex.hpp>
 
 #include <boost/fusion/container/map.hpp>
 #include <boost/assert.hpp>
@@ -24,7 +25,6 @@
 #include <boost/noncopyable.hpp>
 
 #include <map>
-#include <shared_mutex>
 
 
 namespace lv { namespace rpc {
@@ -74,7 +74,7 @@ namespace lv { namespace rpc {
 			typedef std::map<id_type, invoker_type>	invoker_map;
 			invoker_map		invokers_;
 
-			std::shared_timed_mutex	mutex_;
+			SpinMutex		mutex_;
 
 		public:
 
@@ -84,7 +84,7 @@ namespace lv { namespace rpc {
 			template<class Signature, class F>
 			Registery &	reg(Id const & id, F f)
 			{
-				std::lock_guard<std::shared_timed_mutex> lock(mutex_);
+				std::lock_guard<SpinMutex> lock(mutex_);
 
 				if (invokers_.find(id) != invokers_.end())
 				{
@@ -110,7 +110,7 @@ namespace lv { namespace rpc {
 				
 				{
 					// no deletion, so the iterator will be valid
-					std::shared_lock<std::shared_timed_mutex> lock(mutex_);
+					std::lock_guard<SpinMutex> lock(mutex_);
 				
 					it = invokers_.find(id);
 					if (it == invokers_.end())
