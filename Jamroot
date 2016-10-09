@@ -19,7 +19,7 @@ using gcc : : : <compileflags>-std=gnu++17 ;
 
 rule tag-names ( name : type ? : property-set )
 {
-	if [ $(property-set).get <variant> ] = debug
+	if $(type) in STATIC_LIB SHARED_LIB EXE && [ $(property-set).get <variant> ] = debug
 	{
 		name = $(name)d ;
 	}

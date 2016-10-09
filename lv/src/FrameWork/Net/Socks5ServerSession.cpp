@@ -59,6 +59,10 @@ namespace lv { namespace net {
 			case Request:
 				handle_request(bis);
 				break;
+
+			default:
+				BOOST_ASSERT(false);
+				break;
 			}
 		}
 		catch (std::ios_base::failure const &)

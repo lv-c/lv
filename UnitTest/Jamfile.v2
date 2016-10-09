@@ -14,7 +14,7 @@ exe UnitTest
 	  /site-config//crypto
 	  /site-config//lv
 	  /site-config//lv_framework
-	: <link>static
+	: <link>static <tag>@tag-names
 	;
 
 install stage

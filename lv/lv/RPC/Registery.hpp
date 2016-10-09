@@ -25,6 +25,7 @@
 #include <boost/noncopyable.hpp>
 
 #include <map>
+#include <mutex>
 
 
 namespace lv { namespace rpc {

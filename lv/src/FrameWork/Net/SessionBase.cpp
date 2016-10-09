@@ -33,10 +33,10 @@ namespace lv { namespace net {
 	}
 
 	SessionBase::SessionBase(ContextPtr context, SocketHolderPtr socket)
-		: context_(context)
+		: socket_(socket)
 		, closed_(false)
 		, writing_(false)
-		, socket_(socket)
+		, context_(context)
 	{
 	}
 
