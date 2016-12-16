@@ -30,13 +30,13 @@ namespace lv { namespace net {
 		SSLSession(ContextPtr context);
 
 		//
-		virtual	void	server_side_start();
+		void	server_side_start() override;
 
 	protected:
 
-		virtual void	handle_handshake(boost::system::error_code const & error);
+		virtual	void	handle_handshake(boost::system::error_code const & error);
 
-		virtual	void	handle_connect(boost::system::error_code const & error);
+		void	handle_connect(boost::system::error_code const & error) override;
 
 	private:
 

@@ -85,9 +85,7 @@ namespace lv
 
 	protected:
 
-		virtual	void	update_cache(std::wstring const & txt)
-		{
-		}
+		virtual	void	update_cache(std::wstring const & txt) {}
 
 	};
 }

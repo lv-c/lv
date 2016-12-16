@@ -54,12 +54,12 @@ namespace lv
 		/** 
 		 * @see IFileIO::fulfill
 		 */
-		virtual void	fulfill(std::string const & file, BufferPtr buf);
+		void	fulfill(std::string const & file, BufferPtr buf) override;
 
-		virtual	bool	exist(std::string const & file);
+		bool	exist(std::string const & file) override;
 
 
-		virtual	void	reset();
+		void	reset() override;
 
 	private:
 

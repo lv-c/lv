@@ -51,7 +51,7 @@ namespace lv { namespace net {
 				std::make_shared<PacketBufferManager>(1024));
 		}
 
-		virtual	void	close()
+		void	close() override
 		{
 			base_type::close();
 
@@ -74,7 +74,7 @@ namespace lv { namespace net {
 			}
 		}
 
-		virtual void	on_receive(BufferPtr buf)
+		void	on_receive(BufferPtr buf) override
 		{
 			splitter_.push(buf);
 
@@ -100,7 +100,7 @@ namespace lv { namespace net {
 			}
 		}
 
-		/// @note overload this function to handle the exceptions. If any exception is thrown
+		/// @note override this function to handle the exceptions. If any exception is thrown
 		///	 by this function, the socket will be closed
 		virtual	void	handle_packet(BufferPtr buf)
 		{

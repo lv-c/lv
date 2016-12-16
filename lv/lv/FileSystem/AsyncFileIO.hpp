@@ -42,7 +42,7 @@ namespace lv
 			return sync_io_;
 		}
 
-		virtual	bool	exist(std::string const & file)
+		bool	exist(std::string const & file) override
 		{
 			return sync_io_->exist(file);
 		}
@@ -56,7 +56,7 @@ namespace lv
 		 * @see IFileIO::fulfill(std::string const & file, BufferPtr buffer)
 		 * @exception lv::file_io_error on failure
 		 */
-		virtual void fulfill(std::string const & file, BufferPtr buffer)
+		void	fulfill(std::string const & file, BufferPtr buffer) override
 		{
 			add_task(file, buffer).get();
 		}

@@ -12,6 +12,7 @@
 #define LV_CONCURRENT_FUTURE_HPP
 
 #include <future>
+#include <atomic>
 #include <functional>
 
 
@@ -83,7 +84,8 @@ namespace lv
 		// promise_.get_future can only be called once
 		std::shared_future<Ret>	future_;
 
-		volatile bool	is_ready_;
+		// http://stackoverflow.com/questions/14365595/is-it-necessary-to-use-a-stdatomic-to-signal-that-a-thread-has-finished-execut
+		std::atomic<bool>		is_ready_;
 
 		typedef std::function<void(Future<Ret>)>	Callback;
 
@@ -103,6 +105,8 @@ namespace lv
 		{
 			return Future<Ret>(future_, this->shared_from_this());
 		}
+
+		// TODO : r-value is not supported
 
 		void	set_value(Ret const * val)
 		{

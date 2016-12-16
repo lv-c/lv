@@ -26,7 +26,7 @@ namespace lv { namespace net {
 		{
 		}
 
-		virtual BufferPtr	get()
+		BufferPtr	get() override
 		{
 			BufferPtr buf = base_type::get();
 

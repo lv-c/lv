@@ -99,15 +99,15 @@ namespace lv
 		/**
 		 * @copydoc Font::loaded()
 		 */
-		virtual bool	loaded() const;
+		bool	loaded() const override;
 
 		/// TODO : clipping
-		virtual	void	draw_char(wchar_t c, Point const & pt, ColorRect const & colors);
+		void	draw_char(wchar_t c, Point const & pt, ColorRect const & colors) override;
 
 		/**
 		 * @copydoc Font::advance()
 		 */
-		virtual	int		advance(wchar_t c);
+		int		advance(wchar_t c) override;
 
 	protected:
 
@@ -115,7 +115,7 @@ namespace lv
 
 		void	load_impl(BufferPtr buffer, std::string const & file);
 
-		virtual	void	update_cache(std::wstring const & txt);
+		void	update_cache(std::wstring const & txt) override;
 
 		void	update_cache(wchar_t c);
 

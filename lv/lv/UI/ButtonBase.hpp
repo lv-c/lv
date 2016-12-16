@@ -39,11 +39,11 @@ namespace lv
 
 	protected:
 
-		virtual	void	on_mouse_enter(MouseEvent & e);
-		virtual	void	on_mouse_leave(MouseEvent & e);
+		void	on_mouse_enter(MouseEvent & e) override;
+		void	on_mouse_leave(MouseEvent & e) override;
 
-		virtual	void	on_button_down(MouseEvent & e);
-		virtual	void	on_button_up(MouseEvent & e);
+		void	on_button_down(MouseEvent & e) override;
+		void	on_button_up(MouseEvent & e) override;
 
 	};
 }

@@ -57,12 +57,12 @@ public:
 
 private:
 
-	virtual	void	on_connected()
+	void	on_connected() override
 	{
 		this->source_->call("echo", text_);
 	}
 
-	virtual	void	on_error(ErrorType type, boost::system::error_code const & error)
+	void	on_error(ErrorType type, boost::system::error_code const & error) override
 	{
 		std::cout << "client err:" << error.message() << std::endl;
 	}
@@ -103,7 +103,7 @@ public:
 
 private:
 
-	virtual	void	on_error(ErrorType type, boost::system::error_code const & error)
+	void	on_error(ErrorType type, boost::system::error_code const & error) override
 	{
 		std::cout << "server err:" << error.message() << std::endl;
 	}

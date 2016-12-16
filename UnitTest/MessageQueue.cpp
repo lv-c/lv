@@ -46,7 +46,7 @@ public:
 		this->callback_ = callback;
 	}
 
-	virtual	void	send(BufferPtr buf)
+	void	send(BufferPtr buf) override
 	{
 		BOOST_CHECK(sendable_);
 
@@ -58,7 +58,7 @@ public:
 		}
 	}
 
-	virtual	bool	sendable()
+	bool	sendable() override
 	{
 		sendable_ = (die_(0, 100) < 60);
 		return sendable_;

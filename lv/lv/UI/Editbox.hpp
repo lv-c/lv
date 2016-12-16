@@ -74,9 +74,9 @@ namespace lv
 
 	protected:
 
-		virtual void	on_button_down(MouseEvent & e);
-		virtual	void	on_key_down(KeyEvent & e);
-		virtual	void	on_char(KeyEvent & e);
+		void	on_button_down(MouseEvent & e) override;
+		void	on_key_down(KeyEvent & e) override;
+		void	on_char(KeyEvent & e) override;
 
 	};
 }

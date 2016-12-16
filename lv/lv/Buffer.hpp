@@ -320,22 +320,6 @@ namespace lv
 		}
 
 		//
-
-		inline char * data(Buffer & buf)
-		{
-			return buf.empty() ? nullptr : &buf[0];
-		}
-
-		inline char const * data(Buffer const & buf)
-		{
-			return buf.empty() ? nullptr : &buf[0];
-		}
-
-		inline char * data(BufferPtr const & buf)
-		{
-			return buf->empty() ? nullptr : &(*buf)[0];
-		}
-
 		inline std::string	to_string(ConstBufferRef const & buf)
 		{
 			return std::string(buf.data(), buf.size());

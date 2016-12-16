@@ -45,17 +45,17 @@ namespace lv { namespace net {
 		explicit Socks5ClientSession(ContextPtr context);
 
 		/// @exception runtime_error
-		virtual	void	connect(std::string const & ip, std::string const & port, std::string const & to_bind = std::string());
+		void	connect(std::string const & ip, std::string const & port, std::string const & to_bind = std::string()) override;
 
 	protected:
 
-		virtual	void	on_connected_internal();
+		void	on_connected_internal() override;
 
-		virtual	void	handle_connect(boost::system::error_code const & error);
+		void	handle_connect(boost::system::error_code const & error) override;
 
-		virtual	void	handle_read(BufferPtr buf, size_t bytes_transferred, boost::system::error_code const & error);
+		void	handle_read(BufferPtr buf, size_t bytes_transferred, boost::system::error_code const & error) override;
 
-		virtual	void	handle_write(BufferPtr buf, boost::system::error_code const & error);
+		void	handle_write(BufferPtr buf, boost::system::error_code const & error) override;
 
 		virtual	void	gen_request_error(uint8 rep, ErrorType & err_type, boost::system::error_code & error);
 

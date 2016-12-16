@@ -67,6 +67,7 @@ namespace lv
 			BOOST_ASSERT(instance_ == nullptr);
 			instance_ = static_cast<T*>(this);
 		}
+
 		virtual	~Singleton() 
 		{
 			instance_ = nullptr;

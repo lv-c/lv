@@ -34,9 +34,9 @@ namespace lv
 		 */
 		explicit WavSource(std::shared_ptr<std::istream> is);
 
-		virtual	size_t	read(BufferRef buf);
+		size_t	read(BufferRef buf) override;
 
-		virtual	void	reset();
+		void	reset() override;
 
 	};
 }

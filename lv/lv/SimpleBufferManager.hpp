@@ -29,7 +29,7 @@ namespace lv
 		}
 
 		/// return an empty buffer whose capacity is @a init_capacity_
-		virtual BufferPtr	get()
+		BufferPtr	get() override
 		{
 			BufferPtr buf = std::make_shared<Buffer>();
 			buf->reserve(init_capacity_);

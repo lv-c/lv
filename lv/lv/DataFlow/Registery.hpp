@@ -41,7 +41,7 @@ namespace lv { namespace flow {
 		{
 		}
 
-		virtual char const * what() const noexcept
+		char const * what() const noexcept override
 		{
 			return msg_.c_str();
 		}

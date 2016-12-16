@@ -22,9 +22,9 @@ namespace lv
 		RawFileWriter(std::string const & working_dir = std::string());
 
 		// throws file_io_error on failure
-		virtual void	fulfill(std::string const & file, BufferPtr buffer);
+		void	fulfill(std::string const & file, BufferPtr buffer) override;
 
-		virtual	bool	exist(std::string const & file);
+		bool	exist(std::string const & file) override;
 	};
 }
 

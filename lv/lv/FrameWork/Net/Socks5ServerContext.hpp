@@ -83,7 +83,7 @@ namespace lv { namespace net {
 			this->auth_ = auth;
 		}
 
-		virtual	uint8	select_method(std::vector<uint8> const & methods)
+		uint8	select_method(std::vector<uint8> const & methods) override
 		{
 			uint8 m = (auth_.empty() ? Socks5::NoAuth : Socks5::UserPassword);
 
@@ -97,7 +97,7 @@ namespace lv { namespace net {
 			}
 		}
 
-		virtual	bool	verify(Socks5Auth const & auth)
+		bool	verify(Socks5Auth const & auth) override
 		{
 			BOOST_ASSERT(! auth_.empty());
 

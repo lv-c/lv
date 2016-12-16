@@ -47,9 +47,9 @@ namespace lv { namespace net {
 
 	protected:
 
-		virtual	void	on_receive(BufferPtr buf);
-		virtual	void	on_write(BufferPtr buf);
-		virtual	void	on_error(ErrorType type, boost::system::error_code const & error);
+		void	on_receive(BufferPtr buf) override;
+		void	on_write(BufferPtr buf) override;
+		void	on_error(ErrorType type, boost::system::error_code const & error) override;
 
 
 	private:

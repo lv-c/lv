@@ -41,7 +41,7 @@ namespace lv { namespace log {
 
 	protected:
 
-		virtual	void on_record_end(int lvl)
+		void	on_record_end(int lvl) override
 		{
 			LV_SCOPE_EXIT([this] { mutex_.unlock(); });
 
@@ -53,7 +53,7 @@ namespace lv { namespace log {
 			oss_.str(log::string_type());
 		}
 
-		virtual	void on_receive(string_type && str, int lvl)
+		virtual	void	on_receive(string_type && str, int lvl)
 		{
 			if (receiver_)
 			{

@@ -155,7 +155,7 @@ namespace lv { namespace net {
 		{
 			LV_ENSURE(buf->size() >= sizeof(Header), "invalid packet size");
 
-			Header header = *reinterpret_cast<Header const *>(buffer::data(buf));
+			Header header = *reinterpret_cast<Header const *>(buf->data());
 			BOOST_ASSERT(header.type == PacketType);
 
 			int32 index = header.id - id_base_;

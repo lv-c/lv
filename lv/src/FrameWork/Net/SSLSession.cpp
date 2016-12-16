@@ -25,7 +25,7 @@ namespace lv { namespace net {
 		{
 		}
 
-		virtual asio::ip::tcp::socket & get()
+		asio::ip::tcp::socket & get() override
 		{
 			return socket_.next_layer();
 		}

@@ -32,7 +32,7 @@ namespace lv
 			infile.seekg(0, std::ios_base::beg);
 
 			init_buffer(*buf, static_cast<size_t>(len));
-			infile.read(buffer::data(buf), len);
+			infile.read(buf->data(), len);
 		}
 		else
 		{

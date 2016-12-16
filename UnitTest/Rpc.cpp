@@ -38,7 +38,8 @@ using namespace lv::rpc;
 class MyBufferManager : public IBufferManager
 {
 public:
-	virtual BufferPtr	get()
+
+	BufferPtr	get() override
 	{
 		return std::make_shared<Buffer>();
 	}

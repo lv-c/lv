@@ -25,7 +25,7 @@ namespace lv
 		// get the size of the file
 		if (buf->size() != 0)
 		{
-			ofile.write(buffer::data(buf), buf->size());	// write the whole file
+			ofile.write(buf->data(), buf->size());	// write the whole file
 		}
 
 		if (! ofile)

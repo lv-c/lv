@@ -96,7 +96,7 @@ namespace lv { namespace flow {
 		}
 
 		// not intended to be called by the user
-		virtual	void	set_callback(Callback const & callback)
+		void	set_callback(Callback const & callback) override
 		{
 			impl_->set_callback(callback);
 		}

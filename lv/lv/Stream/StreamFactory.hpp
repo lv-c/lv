@@ -20,7 +20,7 @@ namespace lv { namespace detail {
 	{
 	protected:
 
-		virtual void	release(T * obj)
+		void	release(T * obj) override
 		{
 			obj->clear();
 			obj->close();

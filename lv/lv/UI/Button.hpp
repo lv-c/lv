@@ -19,7 +19,7 @@ namespace lv
 	{
 	protected:
 
-		virtual	void	on_button_up(MouseEvent & e);
+		void	on_button_up(MouseEvent & e) override;
 
 		virtual	void	on_clicked(WindowEvent & e) {}
 	};

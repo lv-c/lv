@@ -69,13 +69,13 @@ namespace lv { namespace rpc {
 			/**
 			 * @exception boost::archive::archive_exception ?
 			 */
-			virtual void	set(typename ArchivePair::iarchive_type & ia)
+			void	set(typename ArchivePair::iarchive_type & ia) override
 			{
 				ValueWrapper<Ret, ArchivePair> val;
 				val.load(ia, *promise_);
 			}
 
-			virtual	void	set_exception(std::exception_ptr ex)
+			void	set_exception(std::exception_ptr ex) override
 			{
 				promise_->set_exception(ex);
 			}
