@@ -92,7 +92,7 @@ namespace lv { namespace rpc {
 					throw std::runtime_error("The id has already been used");
 				}
 
-				invokers_.insert(std::make_pair(id, detail::Invoker<Signature, ArchivePair>(f)));
+				invokers_.emplace(id, detail::Invoker<Signature, ArchivePair>(f));
 
 				return *this;
 			}

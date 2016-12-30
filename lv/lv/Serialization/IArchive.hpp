@@ -18,6 +18,7 @@
 
 #include <string>
 
+
 namespace lv
 {
 	class IArchive : boost::noncopyable
@@ -42,7 +43,7 @@ namespace lv
 		template<typename T>
 		IArchive & operator >> (T & t)
 		{
-			load(const_cast<typename boost::remove_const<T>::type &>(t));
+			load(const_cast<std::remove_const_t<T> &>(t));
 			return *this;
 		}
 
@@ -90,14 +91,14 @@ namespace lv
 
 
 		template<typename T>
-		typename std::enable_if<! std::is_arithmetic<T>::value>::type	load(T & t)
+		std::enable_if_t<! std::is_arithmetic<T>::value>	load(T & t)
 		{
 			serialization::load_adl(*this, t);
 		}
 
 
 		template<typename T>
-		typename std::enable_if<std::is_arithmetic<T>::value>::type	load(T & t)
+		std::enable_if_t<std::is_arithmetic<T>::value>	load(T & t)
 		{
 			load_binary(&t, sizeof(T));
 		}

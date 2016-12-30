@@ -28,20 +28,20 @@ namespace lv { namespace bstream {
 	template<typename T, class OStream>
 	void	write(OStream & os, T const & t)
 	{
-		Serializer<T, typename object_tag<T>::type>::write(os, t);
+		Serializer<T, object_tag_t<T> >::write(os, t);
 	}
 
 	template<typename T, class IStream>
 	void	read(IStream & is, T & t)
 	{
-		typedef typename object_tag<typename std::decay<T>::type>::type	tag_type;
+		typedef object_tag_t<std::decay_t<T> >	tag_type;
 		Serializer<T, tag_type>::read(is, t);
 	}
 
 	template<typename T, class IStream>
 	void	read(IStream & is, T const & t)
 	{
-		Serializer<T const, typename object_tag<T>::type>::read(is, t);
+		Serializer<T const, object_tag_t<T> >::read(is, t);
 	}
 
 

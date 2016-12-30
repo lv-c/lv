@@ -259,7 +259,7 @@ namespace lv { namespace rpc {
 		void	add_promise(int request_id, PromiseBasePtr promise)
 		{
 			lock_guard lock(mutex_);
-			promises_.insert(std::make_pair(request_id, promise));
+			promises_.emplace(request_id, promise);
 		}
 
 		void	remove_promise(int request_id)

@@ -26,9 +26,9 @@ namespace lv { namespace lua { namespace archive {
 	namespace detail
 	{
 		template<typename T>
-		typename std::remove_const<T>::type &	remove_const(T & v)
+		std::remove_const_t<T> &	remove_const(T & v)
 		{
-			return const_cast<typename std::remove_const<T>::type &>(v);
+			return const_cast<std::remove_const_t<T> &>(v);
 		}
 	}
 

@@ -50,7 +50,7 @@ namespace lv
 
 		static T & instance_impl(std::true_type)
 		{
-			static typename std::remove_const<T>::type obj;
+			static std::remove_const_t<T>	obj;
 			return obj;
 		}
 

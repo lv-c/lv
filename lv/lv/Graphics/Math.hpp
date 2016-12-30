@@ -35,7 +35,7 @@ namespace lv { namespace math {
 	};
 
 	template<typename T>
-	struct FloatType<T, typename std::enable_if<std::is_floating_point<T>::value>::type>
+	struct FloatType<T, std::enable_if_t<std::is_floating_point<T>::value> >
 		: boost::mpl::identity<T>
 	{
 	};

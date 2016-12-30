@@ -286,7 +286,7 @@ namespace lv { namespace lua { namespace archive {
 				typename boost::range_value<T>::type item;
 
 				load_item(parser, index++, item);
-				lv::insert(t, item);
+				lv::insert(t, std::move(item));
 			}
 		}
 	}
@@ -306,7 +306,7 @@ namespace lv { namespace lua { namespace archive {
 	template<typename T>
 	void	load(Parser & parser, T & t)
 	{
-		detail::load_impl(parser, t, typename object_tag<T>::type());
+		detail::load_impl(parser, t, object_tag_t<T>());
 	}
 
 

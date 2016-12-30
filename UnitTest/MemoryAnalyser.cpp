@@ -122,7 +122,7 @@ void MemoryAnalyser::add(void const * addr, size_t size)
 	{
 		counter_ ++;
 
-		allocated_.insert(std::make_pair(addr, size));
+		allocated_.emplace(addr, size);
 		cur_memory_ += size;
 
 		max_memory_ = std::max(cur_memory_, max_memory_);

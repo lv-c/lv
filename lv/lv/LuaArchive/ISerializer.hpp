@@ -133,7 +133,7 @@ namespace lv { namespace lua { namespace archive {
 				typename boost::range_value<T>::type item;
 
 				load_item_adl(it, item);
-				lv::insert(t, item);
+				lv::insert(t, std::move(item));
 			}
 		}
 
@@ -161,7 +161,7 @@ namespace lv { namespace lua { namespace archive {
 	template<typename T>
 	void	load(luabind::object const & obj, T & t)
 	{
-		detail::load_impl(obj, t, typename object_tag<T>::type());
+		detail::load_impl(obj, t, object_tag_t<T>());
 	}
 
 	template<typename T>

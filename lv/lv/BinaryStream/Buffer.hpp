@@ -21,25 +21,25 @@ namespace lv { namespace bstream {
 	struct object_tag<Buffer> : primitive_buffer_tag {};			//
 
 	template<typename T>
-	struct object_tag<BufferRefT<T>, typename std::enable_if<is_primitive<T>::value>::type> 
+	struct object_tag<BufferRefT<T>, std::enable_if_t<is_primitive<T>::value> > 
 		: primitive_buffer_tag 
 	{
 	};
 
 	template<typename T>
-	struct object_tag<BufferRefT<T>, typename std::enable_if<! is_primitive<T>::value>::type>
+	struct object_tag<BufferRefT<T>, std::enable_if_t<! is_primitive<T>::value> >
 		: range_tag
 	{
 	};
 
 	template<typename T>
-	struct object_tag<ConstBufferRefT<T>, typename std::enable_if<is_primitive<T>::value>::type> 
+	struct object_tag<ConstBufferRefT<T>, std::enable_if_t<is_primitive<T>::value> > 
 		: primitive_buffer_tag 
 	{
 	};
 
 	template<typename T>
-	struct object_tag<ConstBufferRefT<T>, typename std::enable_if<! is_primitive<T>::value>::type>
+	struct object_tag<ConstBufferRefT<T>, std::enable_if_t<! is_primitive<T>::value> >
 		: range_tag
 	{
 	};

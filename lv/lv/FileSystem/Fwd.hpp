@@ -24,10 +24,7 @@ namespace lv
 
 	class MyZipReader;
 
-	class IOTask;
-
-	template<typename Ret> class Future;
-	typedef Future<BufferPtr>	IOFuture;
+	class AsyncFileIO;
 }
 
 

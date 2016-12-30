@@ -14,18 +14,19 @@
 #include <functional>
 
 #include <boost/preprocessor/cat.hpp>
+#include <boost/noncopyable.hpp>
 
 
 namespace lv
 {
-	class ScopeExit
+	class ScopeExit : boost::noncopyable
 	{
 		std::function<void()>	fun_;
 
 	public:
 
-		ScopeExit(std::function<void()> fun)
-			: fun_(fun)
+		explicit ScopeExit(std::function<void()> fun)
+			: fun_(std::move(fun))
 		{
 		}
 

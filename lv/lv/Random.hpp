@@ -40,7 +40,7 @@ namespace lv
 	struct RandomTraits;
 
 	template<typename T>
-	struct RandomTraits<T, typename std::enable_if<std::is_integral<T>::value>::type>
+	struct RandomTraits<T, std::enable_if_t<std::is_integral<T>::value> >
 	{
 		typedef boost::mt19937	generator_type;
 
@@ -49,7 +49,7 @@ namespace lv
 
 
 	template<typename T>
-	struct RandomTraits<T, typename std::enable_if<std::is_floating_point<T>::value>::type>
+	struct RandomTraits<T, std::enable_if_t<std::is_floating_point<T>::value> >
 	{
 		typedef boost::mt19937	generator_type;
 

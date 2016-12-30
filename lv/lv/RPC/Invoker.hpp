@@ -30,9 +30,7 @@ namespace lv { namespace rpc { namespace detail {
 	template<class T>
 	struct ParamType
 	{
-		typedef typename std::remove_const<
-			typename std::remove_reference<T>::type
-		>::type type;
+		typedef std::remove_const_t<std::remove_reference_t<T> >	type;
 
 		static_assert(! std::is_pointer<type>::value, "parameter types of the registered functions can't be pointer types");
 	};

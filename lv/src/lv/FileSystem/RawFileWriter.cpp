@@ -19,7 +19,7 @@ namespace lv
 		std::ofstream ofile(path.c_str(), std::ios_base::out | std::ios_base::binary | std::ios_base::trunc);
 		if (! ofile)
 		{
-			throw(file_io_error("error opening file: " + file));
+			throw std::system_error(std::make_error_code(std::errc::io_error), "error opening file: " + file);
 		}
 		
 		// get the size of the file
@@ -30,7 +30,7 @@ namespace lv
 
 		if (! ofile)
 		{
-			throw(file_io_error("error writing file: " + file));
+			throw std::system_error(std::make_error_code(std::errc::io_error), "error writing file: " + file);
 		}
 	}
 

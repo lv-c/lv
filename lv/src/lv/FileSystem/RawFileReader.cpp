@@ -20,7 +20,7 @@ namespace lv
 		std::ifstream infile(path.c_str(), std::ios_base::binary);
 		if (! infile)
 		{
-			throw(file_io_error("error opening file: " + file));
+			throw std::system_error(std::make_error_code(std::errc::io_error), "error opening file: " + file);
 		}
 
 		// get the size of the file
@@ -41,7 +41,7 @@ namespace lv
 
 		if (! infile)
 		{
-			throw(file_io_error("error reading file : " + file));
+			throw std::system_error(std::make_error_code(std::errc::io_error), "error reading file : " + file);
 		}
 	}
 

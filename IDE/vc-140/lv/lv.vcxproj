@@ -277,7 +277,6 @@
     <ClInclude Include="..\..\..\lv\lv\FileSystem\AsyncFileIO.hpp" />
     <ClInclude Include="..\..\..\lv\lv\FileSystem\Fwd.hpp" />
     <ClInclude Include="..\..\..\lv\lv\FileSystem\IFileIO.hpp" />
-    <ClInclude Include="..\..\..\lv\lv\FileSystem\IOTask.hpp" />
     <ClInclude Include="..\..\..\lv\lv\FileSystem\MyZipReader.hpp" />
     <ClInclude Include="..\..\..\lv\lv\FileSystem\RawFileReader.hpp" />
     <ClInclude Include="..\..\..\lv\lv\FileSystem\RawFileWriter.hpp" />
@@ -426,7 +425,6 @@
     <ClCompile Include="..\..\..\lv\src\lv\Concurrent\ThreadName.cpp" />
     <ClCompile Include="..\..\..\lv\src\lv\Console.cpp" />
     <ClCompile Include="..\..\..\lv\src\lv\FileSystem\IFileIO.cpp" />
-    <ClCompile Include="..\..\..\lv\src\lv\FileSystem\IOTask.cpp" />
     <ClCompile Include="..\..\..\lv\src\lv\FileSystem\MyZipReader.cpp" />
     <ClCompile Include="..\..\..\lv\src\lv\FileSystem\RawFileReader.cpp" />
     <ClCompile Include="..\..\..\lv\src\lv\FileSystem\RawFileWriter.cpp" />

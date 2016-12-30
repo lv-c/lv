@@ -328,9 +328,6 @@
     <ClInclude Include="..\..\..\lv\lv\FileSystem\IFileIO.hpp">
       <Filter>FileSystem\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\lv\lv\FileSystem\IOTask.hpp">
-      <Filter>FileSystem\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\FileSystem\MyZipReader.hpp">
       <Filter>FileSystem\Header Files</Filter>
     </ClInclude>
@@ -811,9 +808,6 @@
       <Filter>Graphics\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\lv\src\lv\FileSystem\IFileIO.cpp">
-      <Filter>FileSystem\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\lv\src\lv\FileSystem\IOTask.cpp">
       <Filter>FileSystem\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\lv\src\lv\FileSystem\MyZipReader.cpp">

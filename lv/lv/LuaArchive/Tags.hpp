@@ -61,16 +61,20 @@ namespace lv { namespace lua { namespace archive {
 	struct object_tag : unknown_tag {};
 
 	template<typename T>
-	struct object_tag<T, typename std::enable_if<is_primitive<T>::value>::type>
+	struct object_tag<T, std::enable_if_t<is_primitive<T>::value> >
 		: primitive_tag
 	{
 	};
 
 	template<typename T>
-	struct object_tag<T, typename std::enable_if<std::is_enum<T>::value>::type>
+	struct object_tag<T, std::enable_if_t<std::is_enum<T>::value> >
 		: enum_tag
 	{
 	};
+
+
+	template<typename T, class Enabled = void>
+	using object_tag_t = typename object_tag<T, Enabled>::type;
 
 } } }
 

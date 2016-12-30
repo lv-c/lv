@@ -12,10 +12,11 @@
 #ifndef LV_ASYNFILEIO_HPP
 #define LV_ASYNFILEIO_HPP
 
+#include <lv/FileSystem/Fwd.hpp>
 #include <lv/FileSystem/IFileIO.hpp>
-#include <lv/FileSystem/IOTask.hpp>
 #include <lv/ServiceWrapper.hpp>
-#include <lv/Exception.hpp>
+
+#include <future>
 
 
 namespace lv
@@ -54,21 +55,40 @@ namespace lv
 		 *	want this task to be executed after all the previous tasks have been finished, call @a 
 		 *	synio()->fulfill(file, buffer) instead.
 		 * @see IFileIO::fulfill(std::string const & file, BufferPtr buffer)
-		 * @exception lv::file_io_error on failure
+		 * @exception std::system_error on failure
 		 */
 		void	fulfill(std::string const & file, BufferPtr buffer) override
 		{
-			add_task(file, buffer).get();
+			std::promise<void> promise;
+			std::future<void> future = promise.get_future();
+
+			async_fulfill(file, buffer, [promise = std::move(promise)] (std::error_code err) mutable {
+				if (err) {
+					promise.set_exception(std::make_exception_ptr(std::system_error(err)));
+				}
+				else {
+					promise.set_value();
+				}
+			});
+
+			future.get();
 		}
 
-		IOFuture	add_task(std::string const & file, BufferPtr buffer)
+		template<class Handler>
+		void	async_fulfill(std::string const & file, BufferPtr buffer, Handler && handler)
 		{
-			IOTask task(file, buffer, sync_io_);
-			IOFuture future = task.get_future();
-
-			service_wrapper_.post(std::move(task));
-			
-			return future;
+			service_wrapper_.post([=, sync_io_ = sync_io_, handler = std::forward<Handler>(handler)]() mutable {
+				try {
+					sync_io_->fulfill(file, buffer);
+					handler(std::error_code());
+				}
+				catch (std::system_error const & err) {
+					handler(err.code());
+				}
+				catch (...) {
+					handler(std::make_error_code(std::errc::io_error));
+				}
+			});
 		}
 	};
 }

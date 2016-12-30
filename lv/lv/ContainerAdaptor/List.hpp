@@ -18,9 +18,9 @@
 namespace lv
 {
 	template<class T, class Ax, class V>
-	void	insert(std::list<T, Ax> & t, V const & v)
+	void	insert(std::list<T, Ax> & t, V && v)
 	{
-		t.push_back(v);
+		t.push_back(std::forward<V>(v));
 	}
 
 	template<class T, class Ax, class V>

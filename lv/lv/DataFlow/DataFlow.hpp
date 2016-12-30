@@ -69,7 +69,7 @@ namespace lv { namespace flow {
 			// a write lock
 			std::lock_guard<std::shared_timed_mutex> lock(shared_mutex_);
 
-			auto it = slots_.insert(std::make_pair(port, connection_slot));
+			auto it = slots_.emplace(port, connection_slot);
 			it->second.conn = std::make_shared<detail::ConnectionImpl>(this, &DataFlow::disconnect_fun, it);
 
 			return Connection(it->second.conn);

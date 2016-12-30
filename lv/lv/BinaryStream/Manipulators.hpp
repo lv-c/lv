@@ -296,7 +296,7 @@ namespace lv { namespace bstream {
 	}
 
 	template<typename T>
-	typename std::enable_if<std::is_pod<T>::value, detail::pod_impl<T> >::type	pod(T & t)
+	std::enable_if_t<std::is_pod<T>::value, detail::pod_impl<T> >	pod(T & t)
 	{
 		return detail::pod_impl<T>(t);
 	}

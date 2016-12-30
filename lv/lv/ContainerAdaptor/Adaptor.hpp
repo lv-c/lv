@@ -20,21 +20,21 @@ namespace lv
 	}
 
 	template<class T, class V>
-	void	insert(T & t, V const & v)
+	void	insert(T & t, V && v)
 	{
-		t.insert(v);
+		t.insert(std::forward<V>(v));
 	}
 
 	template<class T, class V>
-	void	push_back(T & t, V const & v)
+	void	push_back(T & t, V && v)
 	{
-		t.push_back(v);
+		t.push_back(std::forward<V>(v));
 	}
 
 	template<class T, class V>
-	void	push_front(T & t, V const & v)
+	void	push_front(T & t, V && v)
 	{
-		t.push_front(v);
+		t.push_front(std::forward<V>(v));
 	}
 
 	template<class T, class I>

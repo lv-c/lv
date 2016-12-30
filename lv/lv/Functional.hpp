@@ -31,7 +31,7 @@ namespace lv
 
 		// function
 		template<typename T, typename ClassTypeTransform>
-		struct SignatureImpl<T, ClassTypeTransform, typename std::enable_if<std::is_function<T>::value>::type>
+		struct SignatureImpl<T, ClassTypeTransform, std::enable_if_t<std::is_function<T>::value> >
 		{
 			typedef T	type;
 		};
@@ -41,7 +41,7 @@ namespace lv
 
 		// member function
 		template<typename T, typename ClassTypeTransform>
-		struct SignatureImpl<T, ClassTypeTransform, typename std::enable_if<std::is_member_function_pointer<T>::value>::type>
+		struct SignatureImpl<T, ClassTypeTransform, std::enable_if_t<std::is_member_function_pointer<T>::value> >
 		{
 			typedef typename ft::function_type<typename ft::components<T, ClassTypeTransform>::type>::type type;
 		};
@@ -49,7 +49,7 @@ namespace lv
 
 		// class type function object
 		template<typename T, typename ClassTypeTransform>
-		struct SignatureImpl<T, ClassTypeTransform, typename std::enable_if<std::is_class<T>::value>::type>
+		struct SignatureImpl<T, ClassTypeTransform, std::enable_if_t<std::is_class<T>::value> >
 		{
 			typedef typename ft::function_type<
 				typename detail::RemoveSecond<
@@ -76,7 +76,7 @@ namespace lv
 	 *	T is a member function pointer type
 	 */
 	template<typename T, typename ClassTypeTransform = boost::add_reference<boost::mpl::_> >
-	struct Signature : detail::SignatureImpl<typename std::remove_pointer<T>::type, ClassTypeTransform>
+	struct Signature : detail::SignatureImpl<std::remove_pointer_t<T>, ClassTypeTransform>
 	{
 	};
 

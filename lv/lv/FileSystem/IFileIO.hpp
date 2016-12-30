@@ -32,7 +32,7 @@ namespace lv
 
 		/**
 		 * Synchronous operation. 
-		 * @exception lv::file_io_error on failure
+		 * @exception std::system_error on failure
 		 */
 		virtual void	fulfill(std::string const & file, BufferPtr buf) = 0;
 

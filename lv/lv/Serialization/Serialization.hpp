@@ -59,7 +59,7 @@ namespace lv { namespace serialization {
 			template<typename T>
 			static void save(Archive & ar, T const & t)
 			{
-				typedef typename std::remove_extent<T>::type value_type;
+				typedef std::remove_extent_t<T> value_type;
 
 				boost::serialization::collection_size_type count(sizeof(t) / sizeof(value_type));
 				ar << count << boost::serialization::make_array(static_cast<value_type const*>(&t[0]), count);
@@ -68,7 +68,7 @@ namespace lv { namespace serialization {
 			template<typename T>
 			static void load(Archive & ar, T & t)
 			{
-				typedef typename std::remove_extent<T>::type value_type;
+				typedef std::remove_extent_t<T> value_type;
 				
 				std::size_t current_count = sizeof(t) / sizeof(value_type);
 

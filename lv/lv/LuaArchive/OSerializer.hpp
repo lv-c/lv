@@ -117,13 +117,13 @@ namespace lv { namespace lua { namespace archive {
 
 		// primitive_tag
 		template<typename T>
-		typename std::enable_if<std::is_integral<T>::value>::type	save_primitive(std::ostream & os, T t)
+		std::enable_if_t<std::is_integral<T>::value>	save_primitive(std::ostream & os, T t)
 		{
 			os << lv::widen_int(t);
 		}
 
 		template<typename T>
-		typename std::enable_if<std::is_floating_point<T>::value>::type save_primitive(std::ostream & os, T t)
+		std::enable_if_t<std::is_floating_point<T>::value>	save_primitive(std::ostream & os, T t)
 		{
 			os << t;
 		}
@@ -259,7 +259,7 @@ namespace lv { namespace lua { namespace archive {
 	template<typename T>
 	void	save(std::ostream & os, T const & t, size_t level)
 	{
-		detail::save_impl(os, t, level, typename object_tag<T>::type());
+		detail::save_impl(os, t, level, object_tag_t<T>());
 	}
 
 	template<typename T>

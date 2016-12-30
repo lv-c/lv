@@ -45,16 +45,27 @@ namespace lv
 		ZIPENTRY entry;
 		ZRESULT	ret = uz->find_item(inner_path, &index, &entry);
 
+		std::error_code err;
+
 		if (ret == ZR_OK && entry.unc_size > 0)
 		{
 			init_buffer(*buf, static_cast<size_t>(entry.unc_size));
 			ret = uz->unzip(index, *buf);
-		}		
+
+			if (ret != ZR_OK)
+			{
+				err = std::make_error_code(std::errc::io_error);
+			}
+		}
+		else
+		{
+			err = std::make_error_code(std::errc::no_such_file_or_directory);
+		}
 
 		// sometimes returns ZR_MORE while it's actually finished
-		if (ret != ZR_OK && ret != ZR_MORE)
+		if (err)
 		{
-			throw file_io_error("error reading file:" + file);
+			throw std::system_error(err, "error reading file:" + file);
 		}
 	}
 
@@ -63,7 +74,7 @@ namespace lv
 		std::string zip_file = get_zip_file(file);
 		if (zip_file.empty() || zip_file.size() + 1 >= file.size())	// + 1 : '\\' or '/'
 		{
-			throw file_io_error("invalid file name:" + file);
+			throw std::system_error(std::make_error_code(std::errc::invalid_argument), "invalid file name:" + file);
 		}
 
 		UnzipMap::iterator it = unzip_.find(zip_file);
@@ -96,10 +107,10 @@ namespace lv
 
 			if (ret != ZR_OK)
 			{
-				throw file_io_error("error opening pkt file:" + zip_path);
+				throw std::system_error(std::make_error_code(std::errc::io_error), "error opening pkt file:" + zip_path);
 			}
 
-			unzip_.insert(std::make_pair(zip_file, uz));
+			unzip_.emplace(zip_file, uz);
 		}
 		else
 		{

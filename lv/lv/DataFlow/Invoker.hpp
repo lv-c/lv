@@ -20,15 +20,15 @@
 #include <boost/fusion/include/for_each.hpp>
 #include <boost/fusion/include/invoke.hpp>
 
+#include <type_traits>
+
 
 namespace lv { namespace flow { namespace detail {
 
 	template<class T, class IArchive>
 	struct ParamType
 	{
-		typedef typename boost::remove_const<
-			typename boost::remove_reference<T>::type
-		>::type type;
+		typedef std::remove_const_t<std::remove_reference_t<T> >	type;
 
 		static_assert(! std::is_pointer<type>::value, "parameter types of the registered functions can't be pointer types");
 	};

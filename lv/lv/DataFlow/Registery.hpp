@@ -77,7 +77,7 @@ namespace lv { namespace flow {
 						boost::lexical_cast<std::string>(key));
 				}
 
-				invokers_.insert(std::make_pair(key, detail::Invoker<Signature, IArchive>(f)));
+				invokers_.emplace(key, detail::Invoker<Signature, IArchive>(f));
 			}
 
 
