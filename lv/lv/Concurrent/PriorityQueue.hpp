@@ -32,7 +32,7 @@ namespace lv
 
 		void	push(value_type && value)
 		{
-			container_.push(value);
+			container_.push(std::forward<value_type>(value));
 		}
 
 		void	pop()
