@@ -21,8 +21,8 @@
 #include <boost/mpl/bool.hpp>
 #include <boost/optional.hpp>
 
-namespace lv
-{
+namespace lv { namespace bstream {
+
 	class BinaryIStream : public BinaryStreamBase, public IStreamProxy
 	{
 
@@ -70,7 +70,7 @@ namespace lv
 		template<typename T>
 		BinaryIStream & operator >> (T && val)
 		{
-			bstream::read(*this, std::forward<T>(val));
+			bstream::load(*this, std::forward<T>(val));
 			return *this;
 		}
 
@@ -88,6 +88,6 @@ namespace lv
 		}
 
 	};
-}
+} }
 
 #endif

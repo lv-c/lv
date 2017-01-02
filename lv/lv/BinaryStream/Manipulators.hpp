@@ -18,6 +18,7 @@
 #include <boost/serialization/split_member.hpp>
 
 #include <type_traits>
+#include <algorithm>
 
 
 namespace lv { namespace bstream {

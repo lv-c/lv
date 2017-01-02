@@ -13,8 +13,16 @@
 
 namespace lv 
 {
-	class BinaryIStream;
-	class BinaryOStream;
+	namespace bstream
+	{
+		class BinaryStreamBase;
+		class BinaryIStream;
+		class BinaryOStream;
+	}
+
+	using bstream::BinaryStreamBase;
+	using bstream::BinaryIStream;
+	using bstream::BinaryOStream;
 }
 
 

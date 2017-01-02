@@ -21,8 +21,8 @@
 #include <functional>
 
 
-namespace lv
-{
+namespace lv { namespace bstream {
+
 	class BinaryOStream : public BinaryStreamBase, public OStreamProxy
 	{
 
@@ -77,7 +77,7 @@ namespace lv
 		template<typename T>
 		BinaryOStream & operator << (T const & val)
 		{
-			bstream::write<T>(*this, val);
+			bstream::save(*this, val);
 			return *this;
 		}
 
@@ -95,6 +95,6 @@ namespace lv
 		}
 
 	};
-}
+} }
 
 #endif

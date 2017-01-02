@@ -12,8 +12,10 @@
 #define LV_NET_PACKETSPLITTER_HPP
 
 #include <lv/IBufferManager.hpp>
+#include <lv/Endian.hpp>
 
 #include <deque>
+
 
 namespace lv { namespace net {
 
@@ -24,10 +26,13 @@ namespace lv { namespace net {
 
 		BufferManagerPtr	buf_manager_;
 
+		bool				switch_endian_;
+
 	public:
 
-		explicit PacketSplitter(BufferManagerPtr buf_manager)
+		explicit PacketSplitter(BufferManagerPtr buf_manager, bool switch_endian = false)
 			: buf_manager_(buf_manager)
+			, switch_endian_(switch_endian)
 		{
 		}
 
@@ -41,6 +46,11 @@ namespace lv { namespace net {
 			cache_.insert(cache_.end(), buf.begin(), buf.end());
 		}
 
+		void	clear()
+		{
+			cache_.clear();
+		}
+
 		BufferPtr	get()
 		{
 			size_t const header_size = sizeof(SizeType);
@@ -49,6 +59,11 @@ namespace lv { namespace net {
 			{
 				SizeType size;	// includes the size of the header
 				std::copy(cache_.begin(), cache_.begin() + header_size, reinterpret_cast<char*>(&size));
+
+				if (switch_endian_)
+				{
+					size = lv::endian_switch(size);
+				}
 
 				if (size <= cache_.size())
 				{

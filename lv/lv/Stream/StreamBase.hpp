@@ -23,6 +23,7 @@ namespace lv
 	class StreamBase : boost::noncopyable
 	{
 	public:
+
 		typedef std::ios_base::iostate	iostate;
 		typedef std::ios_base::failure	failure;
 
@@ -34,6 +35,22 @@ namespace lv
 			: state_(std::ios_base::goodbit)
 			, except_(std::ios_base::goodbit)
 		{
+		}
+
+		StreamBase(StreamBase && other)
+		{
+			*this = std::forward<StreamBase>(other);
+		}
+
+		StreamBase & operator = (StreamBase && other)
+		{
+			if (this != &other)
+			{
+				state_ = other.state_;
+				except_ = other.except_;
+			}
+
+			return *this;
 		}
 
 

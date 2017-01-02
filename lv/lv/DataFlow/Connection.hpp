@@ -84,8 +84,31 @@ namespace lv { namespace flow {
 			: impl_(impl)
 		{
 		}
+	};
 
+	class ScopedConnection : public Connection, boost::noncopyable
+	{
+	public:
 
+		ScopedConnection() = default;
+
+		ScopedConnection(Connection const & other)
+			: Connection(other)
+		{
+		}
+
+		ScopedConnection & operator = (Connection const & rhs)
+		{
+			disconnect();
+			Connection::operator = (rhs);
+
+			return *this;
+		}
+
+		~ScopedConnection()
+		{
+			disconnect();
+		}
 	};
 
 } }

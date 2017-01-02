@@ -43,7 +43,7 @@ namespace lv
 		}
 	}
 
-	inline	bool	little_endian()
+	constexpr	bool	little_endian()
 	{
 #ifdef BOOST_LITTLE_ENDIAN
 		return true;
@@ -52,7 +52,7 @@ namespace lv
 #endif
 	}
 
-	inline	bool	big_endian()
+	constexpr	bool	big_endian()
 	{
 		return ! little_endian();
 	}
