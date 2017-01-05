@@ -97,8 +97,8 @@ void RepeaterSession::on_timer(boost::system::error_code const & error)
 void RepeaterSession::start_timer()
 {
 	timer_.expires_from_now(boost::posix_time::seconds(1));
-	timer_.async_wait(boost::bind(&RepeaterSession::on_timer, 
-		boost::shared_dynamic_cast<RepeaterSession>(shared_from_this()), _1));
+	timer_.async_wait(std::bind(&RepeaterSession::on_timer, 
+		std::dynamic_pointer_cast<RepeaterSession>(shared_from_this()), std::placeholders::_1));
 }
 
 void RepeaterSession::exit()

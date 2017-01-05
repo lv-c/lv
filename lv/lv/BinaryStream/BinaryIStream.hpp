@@ -53,6 +53,17 @@ namespace lv { namespace bstream {
 			set_exceptions();
 		}
 
+		BinaryIStream(BinaryIStream && other)
+			: BinaryStreamBase(std::move(other))
+			, IStreamProxy(std::move(other))
+			, raw_is_(std::move(other.raw_is_))
+		{
+			if (raw_is_)
+			{
+				IStreamProxy::set(nullptr, raw_is_.get_ptr());
+			}
+		}
+
 		streamsize	bytes_left()
 		{
 			streampos pos = tellg();

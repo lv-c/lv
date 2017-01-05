@@ -1,9 +1,11 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual Studio 2005
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Repeater", "Repeater.vcproj", "{05A18959-D378-4176-9FF5-0CEE26D93A26}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Repeater", "Repeater.vcxproj", "{05A18959-D378-4176-9FF5-0CEE26D93A26}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Socks5Server", "Socks5Server.vcproj", "{586F6876-EBDB-4432-908D-E62836E98A73}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Socks5Server", "Socks5Server.vcxproj", "{586F6876-EBDB-4432-908D-E62836E98A73}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

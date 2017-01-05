@@ -24,7 +24,7 @@ struct IPStat
 		Num
 	};
 
-	boost::array<uint64, Num>	value;
+	array<uint64, Num>	value;
 
 	set<uint32>	sub_ip;
 

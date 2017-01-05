@@ -44,6 +44,12 @@ namespace lv
 	}
 
 	template<class T>
+	void	resize(T & t, size_t size)
+	{
+		t.resize(size);
+	}
+
+	template<class T>
 	void	reserve(T & t, size_t size)
 	{
 		t.reserve(size);

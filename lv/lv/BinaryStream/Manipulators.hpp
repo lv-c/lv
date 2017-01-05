@@ -19,6 +19,7 @@
 
 #include <type_traits>
 #include <algorithm>
+#include <limits>
 
 
 namespace lv { namespace bstream {
@@ -250,6 +251,8 @@ namespace lv { namespace bstream {
 
 			void	save(BinaryOStream & os, unsigned int) const
 			{
+				BOOST_ASSERT(range_.size() <= std::numeric_limits<std::make_unsigned_t<SizeType> >::max());
+
 				SizeType size = static_cast<SizeType>(range_.size());
 				os << size << range_;
 			}

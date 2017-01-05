@@ -17,9 +17,9 @@ Monitor::Monitor(boost::asio::io_service & service)
 	OSVERSIONINFOEXA os;
 	os.dwOSVersionInfoSize = sizeof(os);
 	
-	if(GetVersionExA((LPOSVERSIONINFOA) &os))
+	if (GetVersionExA((LPOSVERSIONINFOA) &os))
 	{
-		switch(os.dwMajorVersion)
+		switch (os.dwMajorVersion)
 		{
 		case 6:
 			os_version_ = Win2008;
@@ -36,7 +36,7 @@ Monitor::Monitor(boost::asio::io_service & service)
 	ip_mask_ = mask.to_ulong();
 
 	int bits = 0;
-	for(int i = 0; i < sizeof(ip_mask_) * 8; ++i)
+	for (int i = 0; i < sizeof(ip_mask_) * 8; ++i)
 	{
 		if(ip_mask_ & (1 << i))
 		{
@@ -50,7 +50,7 @@ Monitor::Monitor(boost::asio::io_service & service)
 	log::add_debug_string_gather(log_);
 	start_timer();
 
-	if(os_version_ == WinOthers)
+	if (os_version_ == WinOthers)
 	{
 		ipsec("add mmpolicy name=lv_mmpolicy");	
 	}
@@ -70,7 +70,7 @@ void Monitor::increase(uint32 ip, IPStat::Type type, uint32 num)
 {
 	uint32 masked_ip = ip & ip_mask_;
 
-	if(masked_ip != 0)
+	if (masked_ip != 0)
 	{
 		IPStat & s = stat_[masked_ip];
 		s.value[type] += num;
@@ -86,7 +86,7 @@ void Monitor::start_timer()
 
 void Monitor::on_timer(boost::system::error_code const & error)
 {
-	if(! error)
+	if (!error)
 	{
 		start_timer();
 		hack_scan();
@@ -97,11 +97,11 @@ void Monitor::hack_scan()
 {
 	Config const & cfg = Config::instance();
 
-	foreach(IPStatMap::reference v, stat_)
+	for (IPStatMap::reference v : stat_)
 	{
 		IPStat & info = v.second;
 
-		if(info.value[IPStat::RecvCount] == 0 && info.value[IPStat::SendCount] == 0
+		if (info.value[IPStat::RecvCount] == 0 && info.value[IPStat::SendCount] == 0
 			&& info.value[IPStat::Connection] >= cfg.connections_to_ban
 			&& info.sub_ip.size() >= cfg.sub_ip_to_ban)
 		{
@@ -112,14 +112,14 @@ void Monitor::hack_scan()
 				addr.to_string() % cfg.mask).str();
 			*/
 
-			if(os_version_ == WinOthers)
+			if (os_version_ == WinOthers)
 			{
 				string str = (boost::format("add rule mmpolicy=lv_mmpolicy srcaddr=%s srcmask=%s dstaddr=Me actioninbound=block actionoutbound=block") %
 					addr.to_string() % cfg.mask).str();
 				
 				ipsec(str);
 			}
-			else if(os_version_ == Win2008)
+			else if (os_version_ == Win2008)
 			{
 				string str = "netsh advfirewall firewall add rule name=lv_repeater dir=in action=block remoteip=" + addr.to_string()
 					+ "/" + mask_bits_;

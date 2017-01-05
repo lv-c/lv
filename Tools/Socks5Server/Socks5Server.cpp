@@ -43,22 +43,26 @@ Log	log_;
 DWORD enumerate_ip(vector<string> & ip)
 {
 	ULONG buf_len(0);
-	DWORD ret = GetAdaptersAddresses(AF_INET, GAA_FLAG_INCLUDE_PREFIX, NULL, NULL, &buf_len);
+	DWORD ret = GetAdaptersAddresses(AF_INET, GAA_FLAG_INCLUDE_PREFIX, nullptr, nullptr, &buf_len);
 
-	if(ret != ERROR_BUFFER_OVERFLOW)
+	if (ret != ERROR_BUFFER_OVERFLOW)
+	{
 		return ret;
+	}
 
 	Buffer buf(buf_len);
-	ret = GetAdaptersAddresses(AF_INET, GAA_FLAG_INCLUDE_PREFIX, NULL, (PIP_ADAPTER_ADDRESSES)buffer::data(buf), &buf_len);
+	ret = GetAdaptersAddresses(AF_INET, GAA_FLAG_INCLUDE_PREFIX, nullptr, (PIP_ADAPTER_ADDRESSES)buf.data(), &buf_len);
 
-	if(ret != ERROR_SUCCESS)
+	if (ret != ERROR_SUCCESS)
+	{
 		return ret;
+	}
 
-	PIP_ADAPTER_ADDRESSES cur_address = (PIP_ADAPTER_ADDRESSES)buffer::data(buf);
-	while(cur_address)
+	PIP_ADAPTER_ADDRESSES cur_address = (PIP_ADAPTER_ADDRESSES)buf.data();
+	while (cur_address)
 	{
 		PIP_ADAPTER_UNICAST_ADDRESS unicast = cur_address->FirstUnicastAddress;
-		while(unicast != NULL)
+		while (unicast != nullptr)
 		{
 			char host[MAX_PATH] = {0};
 			char service[MAX_PATH] = {0};
@@ -66,11 +70,15 @@ DWORD enumerate_ip(vector<string> & ip)
 			ret = getnameinfo(unicast->Address.lpSockaddr, unicast->Address.iSockaddrLength, host, sizeof(host), 
 				service, sizeof(service), NI_NUMERICHOST | NI_NUMERICSERV);
 
-			if(ret != ERROR_SUCCESS)
+			if (ret != ERROR_SUCCESS)
+			{
 				return ret;
+			}
 
-			if(host != string("127.0.0.1"))
+			if (host != string("127.0.0.1"))
+			{
 				ip.push_back(host);
+			}
 
 			unicast = unicast->Next;
 		}
@@ -97,7 +105,7 @@ void on_error(ErrorType type, boost::system::error_code const & error)
 }
 
 typedef ServerBase	server_type;
-typedef boost::shared_ptr<server_type>	server_ptr;
+typedef unique_ptr<server_type>	server_ptr;
 
 void on_new_session(SessionPtr session)
 {
@@ -115,7 +123,7 @@ int main(int argc, char **argv)
 	bool all_ip;
 	bool emulate = false;
 
-	if(argc >= 2 && argv[1] == string("-e"))
+	if (argc >= 2 && argv[1] == string("-e"))
 	{
 		emulate = true;
 		log_() << "emulate.";
@@ -138,7 +146,7 @@ int main(int argc, char **argv)
 	
 	vector<string>	ip;
 
-	if(all_ip)
+	if (all_ip)
 	{
 		DWORD ret = enumerate_ip(ip);
 
@@ -156,17 +164,17 @@ int main(int argc, char **argv)
 
 	boost::asio::io_service io;
 
-	BufferManagerPtr buf_manager(new SimpleBufferManager(1024));
+	BufferManagerPtr buf_manager = std::make_shared<SimpleBufferManager>(1024);
 
 	vector<server_ptr>	servers;
 
 	try
 	{
-		foreach(string const & v, ip)
+		for (string const & v : ip)
 		{
-			boost::shared_ptr<Socks5ServerContext> context(new Socks5ServerContext(buf_manager, io));
+			auto context = std::make_shared<Socks5ServerContext>(buf_manager, io);
 
-			if(! v.empty())
+			if (!v.empty())
 			{
 				context->address_to_bind(v);
 			}
@@ -175,15 +183,14 @@ int main(int argc, char **argv)
 
 			log_() << "start server:" << v << " port:" << port;
 
-			if(! emulate)
+			if (!emulate)
 			{
-				server_ptr server(new server_type(context, SessionCreator<Socks5ServerSession>()));
+				server_ptr server = std::make_unique<server_type>(context, SessionCreator<Socks5ServerSession>());
 
 				server->new_session_event().connect(on_new_session);
-
 				server->start(port);
 
-				servers.push_back(server);
+				servers.push_back(std::move(server));
 			}
 
 			port++;

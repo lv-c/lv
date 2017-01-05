@@ -34,7 +34,7 @@ public:
 
 	SessionPtr operator () (ContextPtr context) const
 	{
-		return SessionPtr(new RepeaterSession(context, ip_, port_, monitor_));
+		return std::make_shared<RepeaterSession>(context, ip_, port_, monitor_);
 	}
 };
 
@@ -55,7 +55,7 @@ int main(int argc, char **argv)
 
 		lua_cfg (cfg);
 	}
-	catch(exception const & ex)
+	catch (exception const & ex)
 	{
 		LOG(lv::error) << ex.what();
 		return 1;
@@ -66,22 +66,22 @@ int main(int argc, char **argv)
 	boost::asio::io_service service;
 	BufferManagerPtr buf_manager(new SimpleBufferManager(1024));
 
-	ContextPtr context(new Context(buf_manager, service));
+	ContextPtr context = std::make_shared<Context>(buf_manager, service);
 
-	typedef boost::shared_ptr<ServerBase> ServerPtr;
+	typedef unique_ptr<ServerBase> ServerPtr;
 
 	vector<ServerPtr> servers;
 
 	Monitor stat(service);
 
-	foreach(Config::AddressMap::const_reference v, cfg.mapping)
+	for (auto const & v : cfg.mapping)
 	{
 		RepeaterSessionCreater creater(v.second.ip, boost::lexical_cast<string>(v.second.port), stat);
-		ServerPtr server(new ServerBase(context, creater));
+		ServerPtr server = std::make_unique<ServerBase>(context, creater);
 
 		server->start(v.first);
 
-		servers.push_back(server);
+		servers.push_back(std::move(server));
 
 		LOG() << v.first << " -> " << v.second.ip << ":" << v.second.port;
 	}

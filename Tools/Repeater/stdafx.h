@@ -8,6 +8,7 @@
 #define _WIN32_WINNT	0x0501
 
 
+#include <lv/IntType.hpp>
 #include <lv/Log/LogManager.hpp>
 
 using namespace lv;
@@ -17,7 +18,6 @@ using namespace lv;
 
 using namespace std;
 
-#include <boost/array.hpp>
 #include <boost/asio/deadline_timer.hpp>
 
 
