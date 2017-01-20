@@ -66,7 +66,7 @@ namespace lv
 	template<typename F>
 	void reg(F f)	// F can be a function type, a member function pointer type or a class type function object type
 	{
-		std::function<typename SignatureImpl<F>::type> fun = f;
+		std::function<typename SignatureImpl<F>::type> fn = f;
 	}
 	*/
 

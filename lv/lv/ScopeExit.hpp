@@ -21,24 +21,24 @@ namespace lv
 {
 	class ScopeExit : boost::noncopyable
 	{
-		std::function<void()>	fun_;
+		std::function<void()>	fn_;
 
 	public:
 
-		explicit ScopeExit(std::function<void()> fun)
-			: fun_(std::move(fun))
+		explicit ScopeExit(std::function<void()> fn)
+			: fn_(std::move(fn))
 		{
 		}
 
 
 		~ScopeExit()
 		{
-			fun_();
+			fn_();
 		}
 	};
 }
 
-#define LV_SCOPE_EXIT(fun) lv::ScopeExit BOOST_PP_CAT(_LV_EXIT_, __LINE__) (fun)
+#define LV_SCOPE_EXIT(fn) lv::ScopeExit BOOST_PP_CAT(_LV_EXIT_, __LINE__) (fn)
 
 
 #endif

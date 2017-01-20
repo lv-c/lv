@@ -31,14 +31,14 @@ namespace lv { namespace lua {
 
 	public:
 
-		CallProxy(std::ostringstream & oss, char const * fun, Callback const & callback = Callback())
+		CallProxy(std::ostringstream & oss, char const * fn, Callback const & callback = Callback())
 			: oss_(oss)
 			, first_param_(true)
 			, finished_(false)
 			, callback_(callback)
 		{
 			oss.str(std::string());
-			oss_ << fun << "(";
+			oss_ << fn << "(";
 		}
 
 		CallProxy(CallProxy && rhs)

@@ -37,12 +37,12 @@ namespace lv
 		{
 		}
 
-		StreamBase(StreamBase && other)
+		StreamBase(StreamBase && other) noexcept
 		{
 			*this = std::forward<StreamBase>(other);
 		}
 
-		StreamBase & operator = (StreamBase && other)
+		StreamBase & operator = (StreamBase && other) noexcept
 		{
 			if (this != &other)
 			{

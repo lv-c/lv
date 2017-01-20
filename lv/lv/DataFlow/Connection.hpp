@@ -18,7 +18,7 @@
 
 namespace lv { namespace flow {
 
-	typedef void (* disconnect_fun_type) (void *, boost::any const &);
+	typedef void (* disconnect_fn_type) (void *, boost::any const &);
 
 
 	namespace detail
@@ -27,21 +27,21 @@ namespace lv { namespace flow {
 		{
 			void *	dataflow_;
 
-			disconnect_fun_type	disconnect_fun_;
+			disconnect_fn_type	disconnect_fn_;
 
 			boost::any	iter_;
 
 		public:
-			ConnectionImpl(void * dataflow, disconnect_fun_type fun, boost::any const & iter)
+			ConnectionImpl(void * dataflow, disconnect_fn_type fn, boost::any const & iter)
 				: dataflow_(dataflow)
-				, disconnect_fun_(fun)
+				, disconnect_fn_(fn)
 				, iter_(iter)
 			{
 			}
 
 			void	disconnect()
 			{
-				disconnect_fun_(dataflow_, iter_);
+				disconnect_fn_(dataflow_, iter_);
 			}
 
 		};

@@ -97,7 +97,7 @@ namespace lv { namespace rpc { namespace detail {
 
 
 		typedef std::function<Signature>	function_type;
-		function_type	f_;
+		function_type	fn_;
 
 		// result type of the function
 		typedef typename function_type::result_type result_type;
@@ -108,8 +108,8 @@ namespace lv { namespace rpc { namespace detail {
 
 	public:
 		
-		Invoker(std::function<Signature> f)
-			: f_(f)
+		Invoker(std::function<Signature> fn)
+			: fn_(fn)
 		{
 		}
 
@@ -137,7 +137,7 @@ namespace lv { namespace rpc { namespace detail {
 			typename MplToFusionCons<typename boost::mpl::transform<param_type, ParamType<boost::mpl::_> >::type>::type params;
 		
 			boost::fusion::for_each(params, ExtractParameters<iarchive_type>(ia));
-			return boost::fusion::invoke(f_, params);
+			return boost::fusion::invoke(fn_, params);
 		}
 
 	};

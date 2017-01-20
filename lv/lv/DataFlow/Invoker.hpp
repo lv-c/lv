@@ -82,16 +82,15 @@ namespace lv { namespace flow { namespace detail {
 	template<class Signature, class IArchive>
 	class Invoker
 	{
-
 		typedef std::function<Signature>	function_type;
-		function_type f_;
+		function_type	fn_;
 	
 		typedef typename boost::function_types::parameter_types<Signature>::type parameter_types;
 
 	public:
 
-		Invoker(function_type const & f)
-			: f_(f)
+		Invoker(function_type const & fn)
+			: fn_(fn)
 		{
 		}
 
@@ -102,7 +101,7 @@ namespace lv { namespace flow { namespace detail {
 
 			boost::fusion::for_each(params, ExtractParameters<IArchive>(ia));
 
-			boost::fusion::invoke(f_, params);
+			boost::fusion::invoke(fn_, params);
 		}
 	};
 

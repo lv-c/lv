@@ -67,6 +67,7 @@ namespace lv { namespace log {
 
 			~Proxy()
 			{
+				// TODO: what if on_record_end throws an exception
 				if (active_)
 				{
 					log_.on_record_end();
@@ -83,11 +84,11 @@ namespace lv { namespace log {
 			}
 
 			// streaming std::endl, std::ends, std::flush ...
-			Proxy & operator << (ostream_type & (* fun)(ostream_type &))
+			Proxy & operator << (ostream_type & (* fn)(ostream_type &))
 			{
 				BOOST_ASSERT(active_);
 
-				log_.log(fun);
+				log_.log(fn);
 				return *this;
 			}
 		};
