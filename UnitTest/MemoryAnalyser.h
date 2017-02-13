@@ -6,6 +6,7 @@
 
 #include <map>
 
+#include <lv/IntType.hpp>
 #include <lv/Singleton.hpp>
 
 using namespace lv;
