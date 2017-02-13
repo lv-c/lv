@@ -14,6 +14,7 @@
 #include <lv/FrameWork/AutoLink.hpp>
 #include <lv/FrameWork/Net/Fwd.hpp>
 
+#include <lv/IntType.hpp>
 #include <lv/Buffer.hpp>
 #include <lv/Timer.hpp>
 

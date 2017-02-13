@@ -11,14 +11,16 @@
 #ifndef LV_LOG_FORMATTER_HPP
 #define LV_LOG_FORMATTER_HPP
 
-#include <iostream>
-
-#include <boost/date_time.hpp>
-#include <boost/format.hpp>
-
+#include <lv/Config.hpp>
 #include <lv/Log/Fwd.hpp>
 #include <lv/Log/Level.hpp>
 #include <lv/Timer.hpp>
+
+#include <boost/format.hpp>
+
+#include <ctime>
+#include <iomanip>
+
 
 namespace lv { namespace log {
 
@@ -41,9 +43,16 @@ namespace lv { namespace log {
 	{
 		void operator () (ostream_type & os, int) const
 		{
-			using namespace boost::posix_time;
-			os << format_type(L_TEXT("%1%%|24t|")) % to_simple_string_type<char_type>(
-				second_clock::local_time());
+			std::time_t t = std::time(nullptr);
+			std::tm tm;
+
+#ifdef LV_PLATFORM_WINDOWS
+			localtime_s(&tm, &t);
+#else
+			localtime_r(&t, &tm);
+#endif
+
+			os << std::put_time(&tm, L_TEXT("%F %T  "));
 		}
 	};
 

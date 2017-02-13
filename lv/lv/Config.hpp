@@ -10,8 +10,6 @@
 #ifndef LV_CONFIG_HPP
 #define LV_CONFIG_HPP
 
-#include <lv/IntType.hpp>
-
 
 #if defined(linux) || defined(__linux) || defined(__linux__)
 #	define LV_PLATFORM_LINUX
