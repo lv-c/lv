@@ -14,10 +14,10 @@
 
 using namespace lv;
 
-#include <boost/assign.hpp>
-
 #include <string>
+
 using namespace std;
+
 
 enum Language
 {
@@ -29,13 +29,10 @@ enum Language
 
 BOOST_AUTO_TEST_CASE(test_mapping)
 {
-	using namespace boost::assign;
-
 	{
-		typedef Mapping<Language, string>	mapping_type;
-		mapping_type m;
-
-		insert(m) (C, "C") (Cpp, "Cpp") (Java, "Java");
+		Mapping<Language, string> m = {
+			{ C, "C" }, { Cpp, "Cpp" }, { Java, "Java" }
+		};
 
 		BOOST_CHECK_EQUAL(m.get_left(Cpp), "Cpp");
 		BOOST_CHECK_EQUAL(m.get_right("Java"), Java);
@@ -52,19 +49,17 @@ BOOST_AUTO_TEST_CASE(test_mapping)
 	}
 
 	{
-		typedef Mapping<int, short>	mapping_type;
-		mapping_type m;
-
-		insert(m) (10, 11) (20, 21) (0, 1);
+		Mapping<int, short> m = {
+			{ 10, 11 }, { 20, 21 }, { 0, 1 }
+		};
 
 		BOOST_CHECK_EQUAL(m.get_left(10), 11);
 	}
 
 	{
-		typedef Mapping<int, int>	mapping_type;
-		mapping_type m;
-
-		insert(m) (10, 11) (20, 21) (0, 1);
+		Mapping<int, int> m = {
+			{ 10, 11 }, { 20, 21 }, { 0, 1 }
+		};
 
 		BOOST_CHECK_EQUAL(m.get_left(10), 11);
 		BOOST_CHECK_EQUAL(m.get_right(11), 10);
