@@ -236,7 +236,8 @@
     <ClInclude Include="..\..\..\lv\lv\BinaryStream\Interprocess\String.hpp" />
     <ClInclude Include="..\..\..\lv\lv\BinaryStream\List.hpp" />
     <ClInclude Include="..\..\..\lv\lv\BinaryStream\Manipulators.hpp" />
-    <ClInclude Include="..\..\..\lv\lv\BinaryStream\Serializer.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\BinaryStream\OSerializer.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\BinaryStream\ISerializer.hpp" />
     <ClInclude Include="..\..\..\lv\lv\BinaryStream\String.hpp" />
     <ClInclude Include="..\..\..\lv\lv\BinaryStream\Tags.hpp" />
     <ClInclude Include="..\..\..\lv\lv\BinaryStream\Vector.hpp" />

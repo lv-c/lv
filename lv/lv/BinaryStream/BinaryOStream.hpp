@@ -12,7 +12,7 @@
 #define LV_BINARYOSTREAM_HPP
 
 #include <lv/BinaryStream/BinaryStreamBase.hpp>
-#include <lv/BinaryStream/Serializer.hpp>
+#include <lv/BinaryStream/OSerializer.hpp>
 #include <lv/Stream/OStreamProxy.hpp>
 
 #include <boost/mpl/bool.hpp>

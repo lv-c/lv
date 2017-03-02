@@ -11,9 +11,10 @@
 #ifndef LV_BINARYSTREAM_STRING_HPP
 #define LV_BINARYSTREAM_STRING_HPP
 
+#include <lv/BinaryStream/Tags.hpp>
+
 #include <string>
 
-#include <lv/BinaryStream/Serializer.hpp>
 
 namespace lv { namespace bstream {
 

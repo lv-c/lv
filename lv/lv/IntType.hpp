@@ -30,7 +30,7 @@ namespace lv
 
 	// size to type
 
-	template<size_t size>
+	template<std::size_t size>
 	struct IntType;
 
 	template<>
@@ -58,7 +58,7 @@ namespace lv
 	};
 
 
-	template<size_t size>
+	template<std::size_t size>
 	struct UIntType : std::make_unsigned<typename IntType<size>::type>
 	{
 	};

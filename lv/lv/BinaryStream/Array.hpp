@@ -11,9 +11,10 @@
 #ifndef LV_BINARYSTREAM_ARRAY_HPP
 #define LV_BINARYSTREAM_ARRAY_HPP
 
-#include <lv/BinaryStream/Serializer.hpp>
+#include <lv/BinaryStream/Tags.hpp>
 
 #include <array>
+
 
 namespace lv { namespace bstream {
 

@@ -15,11 +15,12 @@
 #define LV_BINARYISTREAM_HPP
 
 #include <lv/BinaryStream/BinaryStreamBase.hpp>
-#include <lv/BinaryStream/Serializer.hpp>
+#include <lv/BinaryStream/ISerializer.hpp>
 #include <lv/Stream/IStreamProxy.hpp>
 
 #include <boost/mpl/bool.hpp>
 #include <boost/optional.hpp>
+
 
 namespace lv { namespace bstream {
 

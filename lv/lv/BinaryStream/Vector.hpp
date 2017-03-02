@@ -12,9 +12,10 @@
 #define LV_BINARYSTREAM_VECTOR_HPP
 
 
+#include <lv/BinaryStream/Tags.hpp>
+
 #include <vector>
 
-#include <lv/BinaryStream/Serializer.hpp>
 
 namespace lv { namespace bstream {
 
