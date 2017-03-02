@@ -11,7 +11,6 @@
 #ifndef LV_BINARYSTREAM_OSERIALIZER_HPP
 #define LV_BINARYSTREAM_OSERIALIZER_HPP
 
-#include <lv/BinaryStream/Fwd.hpp>
 #include <lv/BinaryStream/Tags.hpp>
 #include <lv/Endian.hpp>
 
@@ -24,15 +23,15 @@ namespace lv { namespace bstream {
 	namespace detail
 	{
 		// unknown_tag
-		template<typename T>
-		void	save_impl(BinaryOStream & os, T const & t, unknown_tag)
+		template<class OStream, class T>
+		void	save_impl(OStream & os, T const & t, unknown_tag)
 		{
 			boost::serialization::serialize_adl(os, const_cast<T&>(t), 1);
 		}
 
 		// primitive_tag
-		template<typename T>
-		void	save_impl(BinaryOStream & os, T t, primitive_tag)
+		template<class OStream, class T>
+		void	save_impl(OStream & os, T t, primitive_tag)
 		{
 			if (os.switch_endian())
 			{
@@ -42,9 +41,19 @@ namespace lv { namespace bstream {
 			os.write(reinterpret_cast<char const*>(&t), sizeof(T));
 		}
 
+		// range_tag
+		template<class OStream, class T>
+		void	save_impl(OStream & os, T const & t, range_tag)
+		{
+			for (auto const & item : t)
+			{
+				os << item;
+			}
+		}
+
 		// primitive_buffer_tag
-		template<typename T>
-		void	save_impl(BinaryOStream & os, T const & t, primitive_buffer_tag)
+		template<class OStream, class T>
+		void	save_impl(OStream & os, T const & t, primitive_buffer_tag)
 		{
 			if (!std::empty(t))
 			{
@@ -61,21 +70,10 @@ namespace lv { namespace bstream {
 				}
 			}
 		}
-
-
-		// range_tag
-		template<typename T>
-		void	save_impl(BinaryOStream & os, T const & t, range_tag)
-		{
-			for (auto const & item : t)
-			{
-				os << item;
-			}
-		}
 	}
 
-	template<typename T>
-	void	save(BinaryOStream & os, T const & t)
+	template<class OStream, class T>
+	void	save(OStream & os, T const & t)
 	{
 		detail::save_impl(os, t, object_tag_t<T>());
 	}

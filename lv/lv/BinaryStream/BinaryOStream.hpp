@@ -11,6 +11,7 @@
 #ifndef LV_BINARYOSTREAM_HPP
 #define LV_BINARYOSTREAM_HPP
 
+#include <lv/BinaryStream/Fwd.hpp>
 #include <lv/BinaryStream/BinaryStreamBase.hpp>
 #include <lv/BinaryStream/OSerializer.hpp>
 #include <lv/Stream/OStreamProxy.hpp>

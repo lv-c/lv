@@ -14,6 +14,7 @@
 #ifndef LV_BINARYISTREAM_HPP
 #define LV_BINARYISTREAM_HPP
 
+#include <lv/BinaryStream/Fwd.hpp>
 #include <lv/BinaryStream/BinaryStreamBase.hpp>
 #include <lv/BinaryStream/ISerializer.hpp>
 #include <lv/Stream/IStreamProxy.hpp>
@@ -82,7 +83,7 @@ namespace lv { namespace bstream {
 		template<typename T>
 		BinaryIStream & operator >> (T && val)
 		{
-			bstream::load(*this, std::forward<T>(val));
+			bstream::load(*this, val);
 			return *this;
 		}
 

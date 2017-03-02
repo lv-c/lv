@@ -37,7 +37,7 @@ void test_binary_stream_impl(bool switch_endian)
 	
 	bos.switch_endian(switch_endian);
 
-	Test t;
+	Test t{};
 	int i(0x123455);
 	bos << t << i;
 

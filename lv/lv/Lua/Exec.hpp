@@ -13,6 +13,9 @@
 
 #include <lv/lvlib2.hpp>
 
+#include <cstddef>
+
+
 struct lua_State;
 
 namespace lv { namespace lua {
@@ -27,7 +30,7 @@ namespace lv { namespace lua {
 
 	/// @exception runtime_error
 	/// @name set to str if name is nullptr
-	void dostr(lua_State * L, char const * str, size_t size, char const * name = nullptr, pcall_handler h = default_pcall_handler);
+	void dostr(lua_State * L, char const * str, std::size_t size, char const * name = nullptr, pcall_handler h = default_pcall_handler);
 
 
 } }

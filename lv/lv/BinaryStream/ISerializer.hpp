@@ -11,7 +11,6 @@
 #ifndef LV_BINARYSTREAM_ISERIALIZER_HPP
 #define LV_BINARYSTREAM_ISERIALIZER_HPP
 
-#include <lv/BinaryStream/Fwd.hpp>
 #include <lv/BinaryStream/Tags.hpp>
 #include <lv/Endian.hpp>
 
@@ -24,15 +23,15 @@ namespace lv { namespace bstream {
 	namespace detail
 	{
 		// unknown_tag
-		template<typename T>
-		void	load_impl(BinaryIStream & is, T & t, unknown_tag)
+		template<class IStream, class T>
+		void	load_impl(IStream & is, T & t, unknown_tag)
 		{
 			boost::serialization::serialize_adl(is, t, 1);
 		}
 
 		// primitive_tag
-		template<typename T>
-		void load_impl(BinaryIStream & is, T & t, primitive_tag)
+		template<class IStream, class T>
+		void load_impl(IStream & is, T & t, primitive_tag)
 		{
 			is.read(reinterpret_cast<char*>(&t), sizeof(T));
 
@@ -42,9 +41,19 @@ namespace lv { namespace bstream {
 			}
 		}
 
+		// range_tag
+		template<class IStream, class T>
+		void	load_impl(IStream & is, T & t, range_tag)
+		{
+			for (auto & item : t)
+			{
+				is >> item;
+			}
+		}
+
 		// primitive_buffer_tag
-		template<typename T>
-		void	load_impl(BinaryIStream & is, T & t, primitive_buffer_tag)
+		template<class IStream, class T>
+		void	load_impl(IStream & is, T & t, primitive_buffer_tag)
 		{
 			if (!std::empty(t))
 			{
@@ -61,21 +70,11 @@ namespace lv { namespace bstream {
 				}
 			}
 		}
-
-		// range_tag
-		template<typename T>
-		void	load_impl(BinaryIStream & is, T & t, range_tag)
-		{
-			for (auto & item : t)
-			{
-				is >> item;
-			}
-		}
 	}
 
 
-	template<typename T>
-	void	load(BinaryIStream & is, T & t)
+	template<class IStream, class T>
+	void	load(IStream & is, T & t)
 	{
 		typedef object_tag_t<std::decay_t<T> >	tag_type;
 		detail::load_impl(is, t, tag_type());
