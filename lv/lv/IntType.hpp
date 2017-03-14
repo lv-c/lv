@@ -69,7 +69,7 @@ namespace lv
 	template<typename T>
 	struct WidenInt
 	{
-		static_assert(std::is_integral<T>::value, "integral type only");
+		static_assert(std::is_arithmetic<T>::value, "arithmetic type only");
 
 		typedef	T	type;
 	};
