@@ -23,8 +23,6 @@ namespace lv
 	class TaskQueue;
 
 	class ThreadGroup;
-
-	class ThreadPool;
 }
 
 #endif

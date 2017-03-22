@@ -19,7 +19,9 @@ namespace lv
 	class FIFOQueue
 	{
 		std::deque<T>	container_;
+
 	public:
+
 		typedef T	value_type;
 
 		

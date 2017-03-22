@@ -130,6 +130,9 @@ namespace lv { namespace log {
 		
 		void	enable(bool enabled = true)
 		{
+			// locking is necessary to avoid setting @enabled_ when a record is being logged
+			lock_guard lock(mutex_);
+
 			enabled_ = enabled;
 		}
 
