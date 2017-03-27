@@ -40,7 +40,7 @@ namespace lv { namespace lua {
 	}	\
 		static ret default_##fn(base * ptr)	\
 	{	\
-		return ptr->base##::##fn();	\
+		return ptr->base::fn();	\
 	}	
 
 
@@ -51,7 +51,7 @@ namespace lv { namespace lua {
 	}	\
 		static ret default_##fn(base * ptr, t0 v0)	\
 	{	\
-		return ptr->base##::##fn(v0);	\
+		return ptr->base::fn(v0);	\
 	}
 
 #define LUA_WRAPPER_FN_2(base, ret, fn, t0, t1)	\
@@ -61,7 +61,7 @@ namespace lv { namespace lua {
 	}	\
 		static ret default_##fn(base * ptr, t0 v0, t1 v1)	\
 	{	\
-		return ptr->base##::##fn(v0, v1);	\
+		return ptr->base::fn(v0, v1);	\
 	}	
 
 #define LUA_WRAPPER_FN_3(base, ret, fn, t0, t1, t2)	\
@@ -71,13 +71,13 @@ namespace lv { namespace lua {
 	}	\
 		static ret default_##fn(base * ptr, t0 v0, t1 v1, t2 v2)	\
 	{	\
-		return ptr->base##::##fn(v0, v1, v2);	\
+		return ptr->base::fn(v0, v1, v2);	\
 	}	
 
 #define LUA_REG_VIRTUAL_FN(base, fn)	\
-	.def(#fn, & base##::##fn, & base##Wrapper::default_##fn)
+	.def(#fn, & base::fn, & base##Wrapper::default_##fn)
 
 #define LUA_REG_FN(base, fn)	\
-	.def(#fn, & base##::##fn)
+	.def(#fn, & base::fn)
 
 #endif

@@ -11,8 +11,9 @@
 #ifndef LV_BINARYSTREAM_BUFFER_HPP
 #define LV_BINARYSTREAM_BUFFER_HPP
 
-#include <lv/BinaryStream/Serializer.hpp>
 #include <lv/Buffer.hpp>
+#include <lv/BinaryStream/Tags.hpp>
+
 
 namespace lv { namespace bstream {
 
