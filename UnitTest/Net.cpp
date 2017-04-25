@@ -24,8 +24,10 @@
 #include <thread>
 #include <condition_variable>
 
-#pragma comment(lib, "libeay32.lib")
-#pragma comment(lib, "ssleay32.lib")
+#ifdef LV_PLATFORM_WINDOWS
+#	pragma comment(lib, "libeay32.lib")
+#	pragma comment(lib, "ssleay32.lib")
+#endif
 
 
 using namespace lv::net;

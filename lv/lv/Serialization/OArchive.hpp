@@ -16,6 +16,7 @@
 #include <lv/Stream/OStreamProxy.hpp>
 
 #include <boost/noncopyable.hpp>
+#include <boost/serialization/array_wrapper.hpp>
 
 #include <string>
 

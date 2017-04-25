@@ -11,6 +11,9 @@
 #ifndef LV_NET_SOCKS5_HPP
 #define LV_NET_SOCKS5_HPP
 
+#include <lv/IntType.hpp>
+
+
 namespace lv { namespace net {
 
 	struct Socks5

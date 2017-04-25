@@ -18,6 +18,7 @@
 #include <boost/serialization/array.hpp>
 #include <boost/serialization/serialization.hpp>
 #include <boost/serialization/item_version_type.hpp>
+#include <boost/serialization/array_optimization.hpp>
 
 #include <boost/archive/archive_exception.hpp>
 #include <boost/archive/basic_archive.hpp>

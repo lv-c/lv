@@ -16,8 +16,11 @@ using namespace lv;
 #define LOG LogManager::instance().logger()
 
 
+#include <array>
+
 using namespace std;
 
+#include <boost/lexical_cast.hpp>
 #include <boost/asio/deadline_timer.hpp>
 
 

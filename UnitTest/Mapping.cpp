@@ -40,7 +40,9 @@ BOOST_AUTO_TEST_CASE(test_mapping)
 		// shouldn't compile
 		// m.begin()->second = "D";
 
+#ifdef NDEBUG
 		BOOST_CHECK_THROW(m.get_left(Php), mapping_key_not_found);
+#endif
 		
 		BOOST_CHECK_EQUAL(m.get_left(Php, "Php"), "Php");
 
