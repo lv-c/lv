@@ -14,6 +14,8 @@ Monitor::Monitor(boost::asio::io_service & service)
 	, ip_mask_(0)
 	, os_version_(WinOthers)
 {
+#ifdef LV_PLATFORM_WINDOWS
+
 	OSVERSIONINFOEXA os;
 	os.dwOSVersionInfoSize = sizeof(os);
 	
@@ -29,6 +31,10 @@ Monitor::Monitor(boost::asio::io_service & service)
 			break;
 		}
 	}
+
+	log::add_debug_string_gather(log_);
+
+#endif
 
 	LOG() << "os version:" << os_version_;
 
@@ -47,7 +53,6 @@ Monitor::Monitor(boost::asio::io_service & service)
 	mask_bits_ = boost::lexical_cast<string>(bits);
 
 	//
-	log::add_debug_string_gather(log_);
 	start_timer();
 
 	if (os_version_ == WinOthers)
@@ -137,5 +142,7 @@ void Monitor::hack_scan()
 
 void Monitor::ipsec(string const & str)
 {
+#ifdef LV_PLATFORM_WINDOWS
 	system(("netsh ipsec dynamic " + str).c_str());
+#endif
 }

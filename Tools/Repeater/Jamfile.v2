@@ -1,0 +1,24 @@
+
+import pch ;
+
+cpp-pch stdafx : stdafx.h ;
+
+exe Repeater
+	: [ glob-tree *.cpp ] stdafx
+	  /site-config//boost_system
+	  /site-config//boost_filesystem
+	  /site-config//dl
+	  /site-config//lua
+	  /site-config//luabind
+	  /site-config//lv
+	  /site-config//lv_framework
+	  /site-config//lv_toolkit
+	: <tag>@tag-names
+	;
+
+
+install stage
+	: Repeater
+	: <location>../../bin/Tools/Repeater
+	  <install-type>EXE
+	;

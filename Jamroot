@@ -32,7 +32,9 @@ rule tag-names ( name : type ? : property-set )
 local proj =
 	lv/src/lv
 	lv/src/FrameWork
+	lv/src/Toolkit
 	UnitTest
+	Tools/Repeater
 	;
 
 for p in $(proj)

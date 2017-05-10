@@ -21,7 +21,7 @@ class RepeaterSession : public TcpSession
 {
 	typedef TcpSession	base_type;
 
-	boost::shared_ptr<TcpSession>	dest_session_;
+	shared_ptr<TcpSession>	dest_session_;
 
 	string	dest_ip_;
 

@@ -1,0 +1,9 @@
+
+
+lib Toolkit : [ glob-tree *.cpp ] : <link>static <tag>@tag-names ;
+
+install stage
+	: Toolkit
+	: <location>../../../bin/lv
+	  <install-type>LIB
+	;

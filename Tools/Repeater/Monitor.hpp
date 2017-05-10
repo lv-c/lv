@@ -30,7 +30,7 @@ struct IPStat
 
 	IPStat()
 	{
-		value.assign(0);
+		value.fill(0);
 	}
 };
 
