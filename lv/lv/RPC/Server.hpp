@@ -11,12 +11,11 @@
 #ifndef LV_RPC_SERVER_HPP
 #define LV_RPC_SERVER_HPP
 
-#include <lv/MemFn.hpp>
-
 #include <lv/RPC/Registery.hpp>
 #include <lv/RPC/Common.hpp>
 #include <lv/RPC/RpcBase.hpp>
 #include <lv/RPC/Protocol.hpp>
+#include <lv/MPL/MemFn.hpp>
 #include <lv/Ensure.hpp>
 
 

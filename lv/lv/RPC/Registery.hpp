@@ -14,8 +14,8 @@
 #include <lv/RPC/Fwd.hpp>
 #include <lv/RPC/Invoker.hpp>
 
-#include <lv/Functional.hpp>
 #include <lv/Exception.hpp>
+#include <lv/MPL/Functional.hpp>
 #include <lv/Concurrent/SpinMutex.hpp>
 
 #include <boost/fusion/container/map.hpp>

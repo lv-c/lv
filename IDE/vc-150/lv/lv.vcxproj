@@ -221,10 +221,6 @@
     <ClInclude Include="..\..\..\lv\lv\Algorithm\Rle.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Algorithm\Set.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Align.hpp" />
-    <ClInclude Include="..\..\..\lv\lv\Audio\AudioBuffer.hpp" />
-    <ClInclude Include="..\..\..\lv\lv\Audio\AudioDataSource.hpp" />
-    <ClInclude Include="..\..\..\lv\lv\Audio\AudioEngine.hpp" />
-    <ClInclude Include="..\..\..\lv\lv\Audio\WavSource.hpp" />
     <ClInclude Include="..\..\..\lv\lv\AutoLink.hpp" />
     <ClInclude Include="..\..\..\lv\lv\BinaryStream.hpp" />
     <ClInclude Include="..\..\..\lv\lv\BinaryStream\Array.hpp" />
@@ -269,8 +265,6 @@
     <ClInclude Include="..\..\..\lv\lv\DataFlow\Source.hpp" />
     <ClInclude Include="..\..\..\lv\lv\DataFlow\SyncPush.hpp" />
     <ClInclude Include="..\..\..\lv\lv\DataFlow\ThreadedPush.hpp" />
-    <ClInclude Include="..\..\..\lv\lv\DelayTimer.hpp" />
-    <ClInclude Include="..\..\..\lv\lv\detail\RemoveSecond.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Endian.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Ensure.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Exception.hpp" />
@@ -281,9 +275,6 @@
     <ClInclude Include="..\..\..\lv\lv\FileSystem\MyZipReader.hpp" />
     <ClInclude Include="..\..\..\lv\lv\FileSystem\RawFileReader.hpp" />
     <ClInclude Include="..\..\..\lv\lv\FileSystem\RawFileWriter.hpp" />
-    <ClInclude Include="..\..\..\lv\lv\FourCC.hpp" />
-    <ClInclude Include="..\..\..\lv\lv\Functional.hpp" />
-    <ClInclude Include="..\..\..\lv\lv\Fusion.hpp" />
     <ClInclude Include="..\..\..\lv\lv\graphics\Color.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Graphics\ColorRect.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Graphics\ContainerBase.hpp" />
@@ -360,7 +351,10 @@
     <ClInclude Include="..\..\..\lv\lv\Lua\TableBuilder.hpp" />
     <ClInclude Include="..\..\..\lv\lv\lvlib2.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Mapping.hpp" />
-    <ClInclude Include="..\..\..\lv\lv\MemFn.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\MPL\detail\RemoveSecond.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\MPL\Functional.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\MPL\Fusion.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\MPL\MemFn.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Random.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Ref.hpp" />
     <ClInclude Include="..\..\..\lv\lv\RPC\ArchiveBase.hpp" />
@@ -422,7 +416,6 @@
     <ClInclude Include="..\..\..\lv\lv\ZeroMQ.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\lv\src\lv\Audio\WavSource.cpp" />
     <ClCompile Include="..\..\..\lv\src\lv\Concurrent\ThreadName.cpp" />
     <ClCompile Include="..\..\..\lv\src\lv\Console.cpp" />
     <ClCompile Include="..\..\..\lv\src\lv\FileSystem\IFileIO.cpp" />

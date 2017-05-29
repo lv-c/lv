@@ -12,7 +12,7 @@
 #define LV_DATAFLOW_INVOKER_HPP
 
 #include <lv/Ref.hpp>
-#include <lv/Fusion.hpp>
+#include <lv/MPL/Fusion.hpp>
 
 #include <boost/mpl/transform.hpp>
 

@@ -12,9 +12,8 @@
 #define LV_DATAFLOW_SINK_HPP
 
 #include <lv/Buffer.hpp>
-#include <lv/MemFn.hpp>
 #include <lv/Serialization/IArchiveWrapper.hpp>
-
+#include <lv/MPL/MemFn.hpp>
 #include <lv/DataFlow/Fwd.hpp>
 #include <lv/DataFlow/Registery.hpp>
 

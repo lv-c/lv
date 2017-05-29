@@ -10,8 +10,8 @@
 
 #include "UnitTest.hpp"
 
-#include <lv/MemFn.hpp>
 #include <lv/SharedPtr.hpp>
+#include <lv/MPL/MemFn.hpp>
 
 #include <string>
 

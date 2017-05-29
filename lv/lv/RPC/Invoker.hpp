@@ -11,8 +11,8 @@
 #ifndef LV_RPC_INVOKER_HPP
 #define LV_RPC_INVOKER_HPP
 
-#include <lv/Fusion.hpp>
 #include <lv/Ref.hpp>
+#include <lv/MPL/Fusion.hpp>
 
 #include <boost/fusion/include/for_each.hpp>
 #include <boost/fusion/include/invoke.hpp>

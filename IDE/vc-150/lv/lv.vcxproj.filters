@@ -10,9 +10,6 @@
     <Filter Include="Utility\Source Files">
       <UniqueIdentifier>{b9464d2a-6b62-4c48-93cc-d47a04df98b5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Utility\detail">
-      <UniqueIdentifier>{f6e80eef-6fd4-4757-a10d-ceb0f0d4a157}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Graphics">
       <UniqueIdentifier>{0beccce6-3084-48d9-8ee1-289d4d1bfc01}</UniqueIdentifier>
     </Filter>
@@ -64,15 +61,6 @@
     </Filter>
     <Filter Include="Concurrent\Source Files">
       <UniqueIdentifier>{a1fc6641-205f-45f9-b553-69e0d88513d4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Audio">
-      <UniqueIdentifier>{605e8d6b-7d60-46c2-8e0f-541bbe28ae65}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Audio\Header Files">
-      <UniqueIdentifier>{227704e9-7085-4138-b4af-dcbef774fdff}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Audio\Source Files">
-      <UniqueIdentifier>{7b3b38cd-c76d-4d4e-9751-2258662d8819}</UniqueIdentifier>
     </Filter>
     <Filter Include="BinaryStream">
       <UniqueIdentifier>{d864018b-6bad-4171-9dde-52c9eb7d21c4}</UniqueIdentifier>
@@ -179,6 +167,15 @@
     <Filter Include="ContainerAdaptor\Interprocess\Header Files">
       <UniqueIdentifier>{787b5bf2-2981-44c6-a7bb-ee249ded55aa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MPL">
+      <UniqueIdentifier>{90406c9c-7879-473a-9d0d-6c5cbb665b8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MPL\Header Files">
+      <UniqueIdentifier>{fea94f90-5bc7-4688-a581-424c2b031213}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MPL\detail">
+      <UniqueIdentifier>{f6e80eef-6fd4-4757-a10d-ceb0f0d4a157}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\lv\lv\Align.hpp">
@@ -196,9 +193,6 @@
     <ClInclude Include="..\..\..\lv\lv\Console.hpp">
       <Filter>Utility\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\lv\lv\DelayTimer.hpp">
-      <Filter>Utility\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\Endian.hpp">
       <Filter>Utility\Header Files</Filter>
     </ClInclude>
@@ -211,12 +205,6 @@
     <ClInclude Include="..\..\..\lv\lv\Factory.hpp">
       <Filter>Utility\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\lv\lv\Functional.hpp">
-      <Filter>Utility\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\lv\lv\Fusion.hpp">
-      <Filter>Utility\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\IBufferManager.hpp">
       <Filter>Utility\Header Files</Filter>
     </ClInclude>
@@ -227,9 +215,6 @@
       <Filter>Utility\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\Mapping.hpp">
-      <Filter>Utility\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\lv\lv\MemFn.hpp">
       <Filter>Utility\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\Random.hpp">
@@ -255,9 +240,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\Timer.hpp">
       <Filter>Utility\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\lv\lv\detail\RemoveSecond.hpp">
-      <Filter>Utility\detail</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\graphics\Color.hpp">
       <Filter>Graphics\Header Files</Filter>
@@ -435,18 +417,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\Concurrent\ThreadName.hpp">
       <Filter>Concurrent\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\lv\lv\Audio\AudioBuffer.hpp">
-      <Filter>Audio\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\lv\lv\Audio\AudioDataSource.hpp">
-      <Filter>Audio\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\lv\lv\Audio\AudioEngine.hpp">
-      <Filter>Audio\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\lv\lv\Audio\WavSource.hpp">
-      <Filter>Audio\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\BinaryStream\Array.hpp">
       <Filter>BinaryStream\Header Files</Filter>
@@ -772,9 +742,6 @@
     <ClInclude Include="..\..\..\lv\lv\ScopeExit.hpp">
       <Filter>Utility\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\lv\lv\FourCC.hpp">
-      <Filter>Utility\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\LazyInit.hpp">
       <Filter>Utility\Header Files</Filter>
     </ClInclude>
@@ -795,6 +762,18 @@
     </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\BinaryStream\ISerializer.hpp">
       <Filter>BinaryStream\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\MPL\Functional.hpp">
+      <Filter>MPL\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\MPL\Fusion.hpp">
+      <Filter>MPL\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\MPL\MemFn.hpp">
+      <Filter>MPL\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\MPL\detail\RemoveSecond.hpp">
+      <Filter>MPL\detail</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -824,9 +803,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\lv\src\lv\Concurrent\ThreadName.cpp">
       <Filter>Concurrent\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\lv\src\lv\Audio\WavSource.cpp">
-      <Filter>Audio\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\lv\src\lv\UI\Button.cpp">
       <Filter>UI\Source Files</Filter>

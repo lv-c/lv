@@ -15,7 +15,7 @@
 #include <lv/DataFlow/Invoker.hpp>
 
 #include <lv/Exception.hpp>
-#include <lv/Functional.hpp>
+#include <lv/MPL/Functional.hpp>
 #include <lv/Concurrent/SpinMutex.hpp>
 
 #include <boost/noncopyable.hpp>
