@@ -775,6 +775,9 @@
     <ClInclude Include="..\..\..\lv\lv\MPL\detail\RemoveSecond.hpp">
       <Filter>MPL\detail</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\StringSwitch.hpp">
+      <Filter>Utility\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\lv\src\lv\Console.cpp">

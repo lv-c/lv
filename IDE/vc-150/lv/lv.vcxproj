@@ -403,6 +403,7 @@
     <ClInclude Include="..\..\..\lv\lv\Stream\StreamBase.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Stream\StreamFactory.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Stream\StreamProxyBase.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\StringSwitch.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Timer.hpp" />
     <ClInclude Include="..\..\..\lv\lv\UI\Button.hpp" />
     <ClInclude Include="..\..\..\lv\lv\UI\ButtonBase.hpp" />
