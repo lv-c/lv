@@ -11,6 +11,8 @@
 #ifndef LV_STRINGSWITCH_HPP
 #define LV_STRINGSWITCH_HPP
 
+#include <lv/Ensure.hpp>
+
 #include <boost/utility/string_view.hpp>
 #include <boost/assert.hpp>
 
@@ -67,6 +69,13 @@ namespace lv
 				result_ = &value;
 			}
 
+			return *this;
+		}
+
+		template<class E>
+		StringSwitch &	except(E const & ex)
+		{
+			LV_ENSURE(result_ != nullptr, ex);
 			return *this;
 		}
 
