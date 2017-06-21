@@ -21,6 +21,7 @@ namespace lv
 	class RefWrapper
 	{
 		T * t_;
+
 	public:
 
 		typedef T type;
@@ -28,7 +29,7 @@ namespace lv
 		// here is the difference between this class and std::reference_wrapper
 		RefWrapper() : t_(nullptr) {}
 
-		explicit RefWrapper(T& t): t_(std::addressof(t)) {}
+		explicit RefWrapper(T & t): t_(std::addressof(t)) {}
 
 		RefWrapper(std::reference_wrapper<T> const & r) : t_(&r.get()) {}
 
@@ -38,12 +39,12 @@ namespace lv
 			return *this;
 		}
 
-		operator T& () const 
+		operator T & () const 
 		{ 
 			return *t_; 
 		}
 
-		T& get() const 
+		T & get() const 
 		{ 
 			return *t_; 
 		}

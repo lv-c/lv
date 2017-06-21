@@ -42,7 +42,7 @@ Monitor::Monitor(boost::asio::io_service & service)
 	ip_mask_ = mask.to_ulong();
 
 	int bits = 0;
-	for (int i = 0; i < sizeof(ip_mask_) * 8; ++i)
+	for (size_t i = 0; i < sizeof(ip_mask_) * 8; ++i)
 	{
 		if(ip_mask_ & (1 << i))
 		{

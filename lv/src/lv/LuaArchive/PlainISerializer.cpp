@@ -86,6 +86,8 @@ namespace lv { namespace lua { namespace archive {
 
 		void	assign(std::string & t, Token const & token)
 		{
+			expect(token, Token::String);
+
 			Token::iterator p = token.begin;
 			Token::iterator end = token.end;
 
@@ -161,6 +163,8 @@ namespace lv { namespace lua { namespace archive {
 
 		void	assign(bool & t, Token const & token)
 		{
+			expect(token, Token::Literal);
+
 			if (token == "true")
 			{
 				t = true;

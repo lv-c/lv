@@ -11,6 +11,7 @@
 #ifndef LV_LUAARCHIVE_PLAINISERIALIZER_HPP
 #define LV_LUAARCHIVE_PLAINISERIALIZER_HPP
 
+#include <lv/lvlib2.hpp>
 #include <lv/LuaArchive/Tags.hpp>
 #include <lv/LuaArchive/Common.hpp>
 #include <lv/ContainerAdaptor/Adaptor.hpp>
