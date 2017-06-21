@@ -104,7 +104,7 @@ namespace lv { namespace flow {
 		template<class Signature, class F>
 		Sink &	reg(key_type const & key, F f)
 		{
-			registery_.reg<Signature>(key, f);
+			registery_.template reg<Signature>(key, f);
 			return *this;
 		}
 

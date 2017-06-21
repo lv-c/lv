@@ -72,7 +72,7 @@ namespace lv { namespace rpc {
 		template<class Signature, class F>
 		Server &	reg(Id const & id, F f)
 		{
-			registery_.reg<Signature>(id, f);
+			registery_.template reg<Signature>(id, f);
 			return *this;
 		}
 
