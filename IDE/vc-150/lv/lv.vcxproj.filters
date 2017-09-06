@@ -778,6 +778,15 @@
     <ClInclude Include="..\..\..\lv\lv\StringSwitch.hpp">
       <Filter>Utility\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Concurrent\Collector.hpp">
+      <Filter>Concurrent\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Concurrent\Async.hpp">
+      <Filter>Concurrent\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Concurrent\ThreadPool.hpp">
+      <Filter>Concurrent\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\lv\src\lv\Console.cpp">
@@ -827,6 +836,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\lv\src\lv\LuaArchive\PlainISerializer.cpp">
       <Filter>LuaArchive\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lv\src\lv\Concurrent\Async.cpp">
+      <Filter>Concurrent\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lv\src\lv\Concurrent\ThreadPool.cpp">
+      <Filter>Concurrent\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
