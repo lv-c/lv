@@ -13,37 +13,51 @@
 
 #include <lv/IntType.hpp>
 
-#include <boost/detail/endian.hpp>
-
-#include <algorithm>
-#include <type_traits>
+#include <boost/endian/conversion.hpp>
 
 
 namespace lv
 {
-	template<typename T>
-	T	endian_switch(T t, bool s = true)
+	template<class T>
+	inline std::enable_if_t<!std::is_enum<T>::value, T>	endian_switch(T v) noexcept
 	{
-		static_assert(std::is_arithmetic<T>::value || std::is_enum<T>::value, "arithmetic or enum type only");
+		return boost::endian::endian_reverse(v);
+	}
 
-		if (sizeof(t) == 1 || ! s)
+	template<class T>
+	inline std::enable_if_t<std::is_enum<T>::value, T>	endian_switch(T v) noexcept
+	{
+		return static_cast<T>(endian_switch(static_cast<std::underlying_type_t<T>>(v)));
+	}
+
+
+	// http://www.boost.org/doc/libs/1_65_1/libs/endian/doc/index.html#FAQ
+	// "Why is there no floating point support? 
+	// ...Even with those limitations, support for floating point types was not reliable and was removed.
+	// For example, simply reversing the endianness of a floating point number can result in a signaling-NAN. "
+
+	namespace detail
+	{
+		template<class T, class U>
+		inline T	reinterpret(U v) noexcept
 		{
-			return t;
-		}
-		else
-		{
-			T ret;
-
-			uint8 * pold = reinterpret_cast<uint8*>(&t);
-			uint8 * pnew = reinterpret_cast<uint8*>(&ret);
-
-			std::reverse_copy(pold, pold + sizeof(t), pnew);
-
-			return ret;
+			static_assert(sizeof(T) == sizeof(U), "should be same size");
+			return *reinterpret_cast<T const *>(&v);
 		}
 	}
 
-	constexpr	bool	little_endian()
+	inline float	endian_switch(float v) noexcept
+	{
+		return detail::reinterpret<float>(endian_switch(detail::reinterpret<uint32>(v)));
+	}
+
+	inline double	endian_switch(double v) noexcept
+	{
+		return detail::reinterpret<double>(endian_switch(detail::reinterpret<uint64>(v)));
+	}
+
+
+	constexpr	bool	little_endian() noexcept
 	{
 #ifdef BOOST_LITTLE_ENDIAN
 		return true;
@@ -52,7 +66,7 @@ namespace lv
 #endif
 	}
 
-	constexpr	bool	big_endian()
+	constexpr	bool	big_endian() noexcept
 	{
 		return ! little_endian();
 	}
