@@ -42,7 +42,14 @@ namespace lv
 		inline T	reinterpret(U v) noexcept
 		{
 			static_assert(sizeof(T) == sizeof(U), "should be same size");
-			return *reinterpret_cast<T const *>(&v);
+
+			union {
+				U	u;
+				T	t;
+			} obj;
+
+			obj.u = v;
+			return obj.t;
 		}
 	}
 

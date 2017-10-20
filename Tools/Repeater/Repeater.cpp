@@ -64,7 +64,7 @@ int main(int argc, char **argv)
 
 	// context
 	boost::asio::io_service service;
-	BufferManagerPtr buf_manager(new SimpleBufferManager(1024));
+	BufferManagerPtr buf_manager = std::make_shared<SimpleBufferManager>(1024);
 
 	ContextPtr context = std::make_shared<Context>(buf_manager, service);
 

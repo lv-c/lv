@@ -38,7 +38,7 @@ void RepeaterSession::on_connected()
 	//
 	monitor_.increase(remote_ip_, IPStat::Connection, 1);
 
-	dest_session_.reset(new TcpSession(context_));
+	dest_session_ = std::make_shared<TcpSession>(context_);
 
 	dest_session_->connect_event().connect(boost::bind(&RepeaterSession::dest_on_connected, this));
 	dest_session_->error_event().connect(boost::bind(&RepeaterSession::dest_on_error, this, _1, _2));
