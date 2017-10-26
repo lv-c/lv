@@ -95,20 +95,20 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>..\..\..\bin\lv\</OutDir>
     <IntDir>..\..\..\build\msvc-14.0\debug\link-static\</IntDir>
-    <TargetName>$(ProjectName)2d</TargetName>
+    <TargetName>lib$(ProjectName)2D</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <TargetName>$(ProjectName)2d-$(Platform)</TargetName>
+    <TargetName>lib$(ProjectName)2D-$(Platform)</TargetName>
     <IntDir>..\..\..\build\msvc-$(MSBuildToolsVersion)\$(Platform)\$(Configuration)\link-static\</IntDir>
     <OutDir>..\..\..\bin\lv\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>..\..\..\bin\lv\</OutDir>
     <IntDir>..\..\..\build\msvc-14.0\release\link-static\</IntDir>
-    <TargetName>$(ProjectName)2</TargetName>
+    <TargetName>lib$(ProjectName)2</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <TargetName>$(ProjectName)2-$(Platform)</TargetName>
+    <TargetName>lib$(ProjectName)2-$(Platform)</TargetName>
     <OutDir>..\..\..\bin\lv\</OutDir>
     <IntDir>..\..\..\build\msvc-$(MSBuildToolsVersion)\$(Platform)\$(Configuration)\link-static\</IntDir>
   </PropertyGroup>
