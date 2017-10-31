@@ -1,11 +1,14 @@
 
 import modules ;
-import os ;
-import path ;
 import virtual-target ;
+import property-set ;
+import ac ;
+import path ;
+import project ;
+
 
 BOOST_ROOT = [ modules.peek : BOOST_ROOT ] ;
-LUA_PATH = [ modules.peek : LUA_PATH ] ;
+
 
 project lv
 	: requirements 
@@ -15,13 +18,20 @@ project lv
 	: build-dir build
 	;
 
-using gcc : : : <compileflags>-std=gnu++17 ;
 
 rule tag-names ( name : type ? : property-set )
 {
-	if $(type) in STATIC_LIB SHARED_LIB EXE && [ $(property-set).get <variant> ] = debug
+	if $(type) in STATIC_LIB SHARED_LIB EXE
 	{
-		name = $(name)D ;
+		if [ $(property-set).get <variant> ] = debug
+		{
+			name = $(name)D ;
+		}
+
+		if [ $(property-set).get <address-model> ] = 64
+		{
+			name = $(name)-x64 ;
+		}
 	}
 
 	local result = [ virtual-target.add-prefix-and-suffix $(name) : $(type) : $(property-set) ] ;
@@ -29,12 +39,36 @@ rule tag-names ( name : type ? : property-set )
 	return $(result) ;
 }
 
+
+rule conditional-exclude ( properties * : header : exclude * )
+{
+	local prop = [ property-set.create $(properties) ] ;
+	if ! [ ac.find-include-path $(prop) : $(header) ]
+	{
+		return $(exclude) ;
+	}
+}
+
+
+rule build-source ( proj : exclude * )
+{
+	local result ;
+	for s in [ project.glob-internal $(proj) : *.cpp : $(exclude) : glob-tree ]
+	{
+		result += <source>$(s) ;
+	}
+
+	return $(result) ;
+}
+
+
+
 local proj =
 	lv/src/lv
 	lv/src/FrameWork
-	lv/src/Toolkit
-	UnitTest
-	Tools/Repeater
+	#lv/src/Toolkit
+	#UnitTest
+	#Tools/Repeater
 	;
 
 for p in $(proj)

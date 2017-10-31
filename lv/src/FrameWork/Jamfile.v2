@@ -1,6 +1,18 @@
+import project ;
+
+project.initialize $(__name__) ;
+.project = [ project.current ] ;
 
 
-lib FrameWork : [ glob-tree *.cpp ] : <link>static <tag>@tag-names ;
+rule source ( properties * )
+{
+	local exclude = [ conditional-exclude $(properties) : openssl/conf.h : SSL* ] ;
+	return [ build-source $(.project) : $(exclude) ] ;
+}
+
+
+lib FrameWork : : <link>static <tag>@tag-names <conditional>@source ;
+
 
 install stage
 	: FrameWork
