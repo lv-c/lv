@@ -13,13 +13,13 @@
 
 #include <lv/LuaArchive/Fwd.hpp>
 
-#include <boost/optional.hpp>
+#include <optional>
 
 
 namespace lv::lua::archive
 {
 	template<typename T>
-	void	save(std::ostream & os, boost::optional<T> const & t, size_t level)
+	void	save(std::ostream & os, std::optional<T> const & t, size_t level)
 	{
 		if (t)
 		{
@@ -33,7 +33,7 @@ namespace lv::lua::archive
 
 
 	template<typename T>
-	void	load(luabind::object const & obj, boost::optional<T> & t)
+	void	load(luabind::object const & obj, std::optional<T> & t)
 	{
 		if (luabind::type(obj) == LUA_TNIL)
 		{
@@ -50,7 +50,7 @@ namespace lv::lua::archive
 	}
 
 	template<typename T>
-	void	load(Parser & parser, boost::optional<T> & t)
+	void	load(Parser & parser, std::optional<T> & t)
 	{
 		if (parser.read_if("nil"))
 		{

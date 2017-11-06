@@ -17,9 +17,9 @@
 #include <lv/Stream/OStreamProxy.hpp>
 
 #include <boost/mpl/bool.hpp>
-#include <boost/optional.hpp>
 
 #include <functional>
+#include <optional>
 
 
 namespace lv::bstream
@@ -27,7 +27,7 @@ namespace lv::bstream
 	class BinaryOStream : public BinaryStreamBase, public OStreamProxy
 	{
 
-		boost::optional<OBufferStream>	raw_os_;
+		std::optional<OBufferStream>	raw_os_;
 
 	public:
 
@@ -49,7 +49,7 @@ namespace lv::bstream
 		explicit BinaryOStream(Buffer & buf)
 			: raw_os_(std::ref(buf))
 		{
-			OStreamProxy::set(nullptr, raw_os_.get_ptr());
+			OStreamProxy::set(nullptr, &(*raw_os_));
 
 			set_exceptions();
 		}
@@ -57,7 +57,7 @@ namespace lv::bstream
 		explicit BinaryOStream(BufferPtr buf)
 			: raw_os_(buf)
 		{
-			OStreamProxy::set(nullptr, raw_os_.get_ptr());
+			OStreamProxy::set(nullptr, &(*raw_os_));
 
 			set_exceptions();
 		}
@@ -71,7 +71,7 @@ namespace lv::bstream
 		{
 			if (raw_os_)
 			{
-				OStreamProxy::set(nullptr, raw_os_.get_ptr());
+				OStreamProxy::set(nullptr, &(*raw_os_));
 			}
 		}
 

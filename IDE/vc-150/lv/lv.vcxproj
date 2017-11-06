@@ -307,7 +307,6 @@
     <ClInclude Include="..\..\..\lv\lv\Graphics\Vector.hpp" />
     <ClInclude Include="..\..\..\lv\lv\IBufferManager.hpp" />
     <ClInclude Include="..\..\..\lv\lv\IntType.hpp" />
-    <ClInclude Include="..\..\..\lv\lv\LazyInit.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Log\DbgPrint.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Log\DebugStringGather.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Log\Formatter.hpp" />

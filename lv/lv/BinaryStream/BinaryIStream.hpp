@@ -20,7 +20,8 @@
 #include <lv/Stream/IStreamProxy.hpp>
 
 #include <boost/mpl/bool.hpp>
-#include <boost/optional.hpp>
+
+#include <optional>
 
 
 namespace lv::bstream
@@ -28,7 +29,7 @@ namespace lv::bstream
 	class BinaryIStream : public BinaryStreamBase, public IStreamProxy
 	{
 
-		boost::optional<IBufferStream>	raw_is_;
+		std::optional<IBufferStream>	raw_is_;
 
 	public:
 		
@@ -50,7 +51,7 @@ namespace lv::bstream
 		explicit BinaryIStream(ConstBufferRef const & buf)
 			: raw_is_(buf)
 		{
-			IStreamProxy::set(nullptr, raw_is_.get_ptr());
+			IStreamProxy::set(nullptr, &(*raw_is_));
 
 			set_exceptions();
 		}
@@ -62,7 +63,7 @@ namespace lv::bstream
 		{
 			if (raw_is_)
 			{
-				IStreamProxy::set(nullptr, raw_is_.get_ptr());
+				IStreamProxy::set(nullptr, &(*raw_is_));
 			}
 		}
 

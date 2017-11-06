@@ -742,9 +742,6 @@
     <ClInclude Include="..\..\..\lv\lv\ScopeExit.hpp">
       <Filter>Utility\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\lv\lv\LazyInit.hpp">
-      <Filter>Utility\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\Serialization\OArchiveWrapper.hpp">
       <Filter>Serialization\Header Files</Filter>
     </ClInclude>

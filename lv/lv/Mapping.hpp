@@ -15,9 +15,9 @@
 #include <lv/Ensure.hpp>
 
 #include <boost/bimap.hpp>
-#include <boost/optional.hpp>
 
 #include <list>
+#include <optional>
 
 
 namespace lv
@@ -93,12 +93,12 @@ namespace lv
 			return get_impl(bimap_.right, y, default_value);
 		}
 
-		boost::optional<Y>	get_left_optional(X const & x) const
+		std::optional<Y>	get_left_optional(X const & x) const
 		{
 			return get_optional_impl(bimap_.left, x);
 		}
 
-		boost::optional<X>	get_right_optional(Y const & y) const
+		std::optional<X>	get_right_optional(Y const & y) const
 		{
 			return get_optional_impl(bimap_.right, y);
 		}
@@ -168,13 +168,13 @@ namespace lv
 		}
 
 		template<class M, class K>
-		boost::optional<std::remove_const_t<typename M::mapped_type> >	get_optional_impl(M const & m, K const & k) const
+		std::optional<std::remove_const_t<typename M::mapped_type> >	get_optional_impl(M const & m, K const & k) const
 		{
 			auto it = m.find(k);
 
 			if (it == m.end())
 			{
-				return boost::none;
+				return std::nullopt;
 			}
 			else
 			{
