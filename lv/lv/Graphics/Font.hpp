@@ -11,11 +11,13 @@
 #ifndef LV_FONT_HPP
 #define LV_FONT_HPP
 
-#include <string>
-
+#include <lv/Config.hpp>
 #include <lv/Graphics/ColorRect.hpp>
 #include <lv/Graphics/Rect.hpp>
 #include <lv/Graphics/RenderFwd.hpp>
+
+#include <string>
+
 
 namespace lv
 {

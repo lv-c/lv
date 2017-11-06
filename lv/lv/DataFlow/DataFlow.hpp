@@ -106,11 +106,11 @@ namespace lv::flow
 		}
 
 
-		static void disconnect_fun(void * obj, boost::any const & iter)
+		static void disconnect_fun(void * obj, std::any const & iter)
 		{
 			DataFlow * dataflow = reinterpret_cast<DataFlow*>(obj);
 			
-			auto it = boost::any_cast<typename slots_map_type::iterator>(iter);
+			auto it = std::any_cast<typename slots_map_type::iterator>(iter);
 			
 			// a write lock
 			std::lock_guard<std::shared_timed_mutex> lock(dataflow->shared_mutex_);

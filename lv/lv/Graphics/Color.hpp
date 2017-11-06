@@ -10,6 +10,7 @@
 #ifndef LV_COLOR_HPP
 #define LV_COLOR_HPP
 
+#include <lv/Config.hpp>
 #include <lv/IntType.hpp>
 #include <lv/lvlib2.hpp>
 

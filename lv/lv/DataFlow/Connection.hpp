@@ -11,14 +11,13 @@
 #ifndef LV_DATAFLOW_CONNECTION_HPP
 #define LV_DATAFLOW_CONNECTION_HPP
 
-#include <boost/any.hpp>
-
+#include <any>
 #include <memory>
 
 
 namespace lv::flow
 {
-	typedef void (* disconnect_fn_type) (void *, boost::any const &);
+	typedef void (* disconnect_fn_type) (void *, std::any const &);
 
 
 	namespace detail
@@ -29,10 +28,10 @@ namespace lv::flow
 
 			disconnect_fn_type	disconnect_fn_;
 
-			boost::any	iter_;
+			std::any	iter_;
 
 		public:
-			ConnectionImpl(void * dataflow, disconnect_fn_type fn, boost::any const & iter)
+			ConnectionImpl(void * dataflow, disconnect_fn_type fn, std::any const & iter)
 				: dataflow_(dataflow)
 				, disconnect_fn_(fn)
 				, iter_(iter)
