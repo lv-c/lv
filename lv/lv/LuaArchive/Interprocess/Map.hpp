@@ -16,16 +16,16 @@
 #include <lv/LuaArchive/Tags.hpp>
 #include <lv/LuaArchive/Pair.hpp>
 
-namespace lv { namespace lua { namespace archive {
 
+namespace lv::lua::archive
+{
 	template<typename K, typename V, typename Pr, typename Ax>
 	struct object_tag<boost::interprocess::map<K, V, Pr, Ax> >
 		: sequence_tag
 	{
 	};
 
-
-} } }
+}
 
 
 #endif

@@ -17,8 +17,8 @@
 
 #include <array>
 
-namespace lv { namespace lua { namespace archive {
-
+namespace lv::lua::archive
+{
 	DEFINE_EXCEPTION_MSG(ArraySizeTooShort, std::out_of_range)
 
 	template<typename T, size_t N>
@@ -59,6 +59,6 @@ namespace lv { namespace lua { namespace archive {
 	}
 
 
-} } }
+}
 
 #endif

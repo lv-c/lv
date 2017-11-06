@@ -14,8 +14,8 @@
 #include <lv/IntType.hpp>
 
 
-namespace lv { namespace net {
-
+namespace lv::net
+{
 	struct Socks5
 	{
 		static uint8 const	Version		= 0x05;
@@ -37,6 +37,6 @@ namespace lv { namespace net {
 		};
 	};
 
-} }
+}
 
 #endif

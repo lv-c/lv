@@ -21,8 +21,8 @@
 #include <functional>
 
 
-namespace lv { namespace log {
-
+namespace lv::log
+{
 	typedef std::function<void(Gather &)>	FormmatterSet;
 	
 
@@ -120,6 +120,6 @@ namespace lv { namespace log {
 
 #endif
 
-} }
+}
 
 #endif

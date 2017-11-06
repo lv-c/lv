@@ -17,14 +17,14 @@
 #include <boost/fusion/include/std_tuple.hpp>
 
 
-namespace boost { namespace serialization {
-	
+namespace boost::serialization
+{
 	template<class Archive, class ...Types>
 	void serialize(Archive & ar, std::tuple<Types...> & t, unsigned int)
 	{
 		boost::fusion::for_each(t, [&ar](auto & v) { ar & boost::serialization::make_nvp("item", v); });
 	}
 
-} }
+}
 
 #endif

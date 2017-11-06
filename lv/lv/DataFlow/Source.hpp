@@ -18,8 +18,8 @@
 #include <lv/Stream/OStreamFactory.hpp>
 
 
-namespace lv { namespace flow {
-
+namespace lv::flow
+{
 	/// thread-safe (as long as the BufferManager is thread-safe)
 	template<class Key, class OArchive>
 	class Source
@@ -99,6 +99,6 @@ namespace lv { namespace flow {
 
 	};
 
-} }
+}
 
 #endif

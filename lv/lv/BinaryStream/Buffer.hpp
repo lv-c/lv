@@ -15,9 +15,8 @@
 #include <lv/BinaryStream/Tags.hpp>
 
 
-namespace lv { namespace bstream {
-
-
+namespace lv::bstream
+{
 	template<>
 	struct object_tag<Buffer> : primitive_buffer_tag {};			//
 
@@ -45,6 +44,6 @@ namespace lv { namespace bstream {
 	{
 	};
 
-} }
+}
 
 #endif

@@ -13,8 +13,9 @@
 
 #include <lv/FrameWork/Net/ServerBase.hpp>
 
-namespace lv { namespace net {
 
+namespace lv::net
+{
 	class SSLServer : public ServerBase
 	{
 		typedef ServerBase	base_type;
@@ -35,6 +36,6 @@ namespace lv { namespace net {
 		virtual	std::string	get_password();
 	};
 
-} }
+}
 
 #endif

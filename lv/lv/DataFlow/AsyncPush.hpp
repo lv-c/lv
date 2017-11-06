@@ -20,8 +20,8 @@
 #include <functional>
 
 
-namespace lv { namespace flow {
-
+namespace lv::flow
+{
 	template<class T>
 	class AsyncPush : public PushPolicyBase<T>
 	{
@@ -46,6 +46,6 @@ namespace lv { namespace flow {
 		}
 	};
 
-} }
+}
 
 #endif

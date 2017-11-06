@@ -17,8 +17,9 @@
 #include <boost/serialization/collections_load_imp.hpp>
 #include <boost/serialization/split_free.hpp>
 
-namespace boost { namespace serialization {
 
+namespace boost::serialization
+{
 	template<class Archive, class C, class Tr, class Ax>
 	void save(Archive & ar, interprocess::basic_string<C, Tr, Ax> const & t, unsigned int)
 	{
@@ -52,6 +53,6 @@ namespace boost { namespace serialization {
 		boost::serialization::split_free(ar, t, version);
 	}
 
-} }
+}
 
 #endif

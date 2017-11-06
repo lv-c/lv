@@ -21,8 +21,8 @@
 #include <memory>
 
 
-namespace lv { namespace net {
-
+namespace lv::net
+{
 	class AcceptorHolder;
 
 	template<class SessionType>
@@ -75,7 +75,7 @@ namespace lv { namespace net {
 		virtual	void	on_new_session(SessionPtr session);
 	};
 
-} }
+}
 
 
 #endif

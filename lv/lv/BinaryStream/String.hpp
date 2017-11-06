@@ -16,11 +16,11 @@
 #include <string>
 
 
-namespace lv { namespace bstream {
-
+namespace lv::bstream
+{
 	template<class C, class Tr, class Ax>
 	struct object_tag<std::basic_string<C, Tr, Ax> > : primitive_buffer_tag {};
 
-} }
+}
 
 #endif

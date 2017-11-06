@@ -15,9 +15,9 @@
 #include <boost/assert.hpp>
 #include <lv/IntType.hpp>
 
-namespace lv { namespace rle {
 
-	
+namespace lv::rle
+{
 	inline size_t encode_bound(size_t src_len)
 	{
 		return src_len + (src_len >> 6) + 1;
@@ -147,6 +147,6 @@ namespace lv { namespace rle {
 		return reinterpret_cast<char*>(dest_ele) - dest;
 	}
 
-} }
+}
 
 #endif

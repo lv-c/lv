@@ -16,8 +16,9 @@
 
 #include <boost/serialization/serialization.hpp>
 
-namespace lv { namespace rpc {
-	
+
+namespace lv::rpc
+{
 	DEFINE_EXCEPTION_MSG(InvalidProtocolValue, std::runtime_error);
 
 	// temporary solution
@@ -25,6 +26,6 @@ namespace lv { namespace rpc {
 	BOOST_CLASS_IMPLEMENTATION(c, boost::serialization::object_serializable)	\
 	BOOST_CLASS_TRACKING(c, boost::serialization::track_never)
 
-} }
+}
 
 #endif

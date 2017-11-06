@@ -13,8 +13,9 @@
 
 #include <lv/Factory.hpp>
 
-namespace lv { namespace detail {
-	
+
+namespace lv::detail
+{
 	template<typename T>
 	class StreamFactory : public Factory<T>
 	{
@@ -35,6 +36,6 @@ namespace lv { namespace detail {
 			Factory<T>::release(obj);
 		}
 	};
-} }
+}
 
 #endif

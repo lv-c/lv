@@ -14,8 +14,8 @@
 #include <memory>
 
 
-namespace lv { namespace serialization {
-
+namespace lv::serialization
+{
 	namespace detail
 	{
 		template<class Archive, class T>
@@ -69,6 +69,6 @@ namespace lv { namespace serialization {
 		detail::load_smart_ptr(ar, t, &std::make_unique<T>);
 	}
 
-} }
+}
 
 #endif

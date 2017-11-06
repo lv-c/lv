@@ -15,8 +15,8 @@
 #include <type_traits>
 
 
-namespace lv { namespace lua {
-
+namespace lv::lua
+{
 	template<class T>
 	struct is_primitive
 		: std::integral_constant<bool, 
@@ -24,6 +24,6 @@ namespace lv { namespace lua {
 	{
 	};
 
-} }
+}
 
 #endif

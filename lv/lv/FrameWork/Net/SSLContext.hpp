@@ -15,8 +15,9 @@
 
 #include <boost/asio/ssl/context.hpp>
 
-namespace lv { namespace net {
 
+namespace lv::net
+{
 	class SSLContext : public Context
 	{
 		typedef std::shared_ptr<asio::ssl::context>	ssl_context_ptr;
@@ -37,7 +38,7 @@ namespace lv { namespace net {
 		}
 	};
 
-} }
+}
 
 
 

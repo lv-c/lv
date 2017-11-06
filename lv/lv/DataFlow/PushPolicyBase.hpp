@@ -14,8 +14,8 @@
 #include <functional>
 
 
-namespace lv { namespace flow {
-
+namespace lv::flow
+{
 	template<class T>
 	class PushPolicyBase
 	{
@@ -33,6 +33,6 @@ namespace lv { namespace flow {
 			this->callback_ = callback;
 		}
 	};
-} }
+}
 
 #endif

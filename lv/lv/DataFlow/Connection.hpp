@@ -16,8 +16,8 @@
 #include <memory>
 
 
-namespace lv { namespace flow {
-
+namespace lv::flow
+{
 	typedef void (* disconnect_fn_type) (void *, boost::any const &);
 
 
@@ -111,6 +111,6 @@ namespace lv { namespace flow {
 		}
 	};
 
-} }
+}
 
 #endif

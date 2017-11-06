@@ -16,14 +16,14 @@
 #include <list>
 
 
-namespace lv { namespace bstream {
-
+namespace lv::bstream
+{
 	template<typename T, typename Ax>
 	struct object_tag<std::list<T, Ax> >
 		: range_tag
 	{
 	};
 
-} }
+}
 
 #endif

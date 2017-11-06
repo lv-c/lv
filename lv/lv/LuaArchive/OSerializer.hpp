@@ -24,8 +24,8 @@
 #include <type_traits>
 
 
-namespace lv { namespace lua { namespace archive {
-
+namespace lv::lua::archive
+{
 	template<typename T>
 	void	save_adl(std::ostream & os, T const & t, size_t level);
 
@@ -276,6 +276,6 @@ namespace lv { namespace lua { namespace archive {
 		save_adl(os, t.value(), level);
 	}
 
-} } }
+}
 
 #endif

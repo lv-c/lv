@@ -1,8 +1,9 @@
 #include <lv/LuaArchive/PlainISerializer.hpp>
 #include <lv/IntType.hpp>
 
-namespace lv { namespace lua { namespace archive {
 
+namespace lv::lua::archive
+{
 	namespace detail
 	{
 		inline bool is_space::eval(char c)
@@ -339,4 +340,4 @@ namespace lv { namespace lua { namespace archive {
 		return false;
 	}
 
-} } }
+}

@@ -15,8 +15,9 @@
 
 #include <string>
 
-namespace lv { namespace net {
 
+namespace lv::net
+{
 	class Socks5ClientContext : public Context
 	{
 		std::string	proxy_;
@@ -63,6 +64,6 @@ namespace lv { namespace net {
 
 	};
 
-} }
+}
 
 #endif

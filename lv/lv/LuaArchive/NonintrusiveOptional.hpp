@@ -14,9 +14,8 @@
 #include <lv/LuaArchive/Fwd.hpp>
 #include <lv/Serialization/NonintrusiveOptional.hpp>
 
-namespace lv { namespace lua { namespace archive {
-
-
+namespace lv::lua::archive
+{
 	template<typename T>
 	void	load(luabind::object const & obj, lv::serialization::NonintrusiveOptional<T> & t)
 	{
@@ -36,6 +35,6 @@ namespace lv { namespace lua { namespace archive {
 		}
 	}
 
-} } }
+}
 
 #endif

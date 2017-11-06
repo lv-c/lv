@@ -7,8 +7,9 @@
 #include <lua.hpp>
 #include <luabind/luabind.hpp>
 
-namespace lv { namespace lua {
 
+namespace lv::lua
+{
 	LuaConfig::LuaConfig(std::string const & file /* = std::string() */, IFileIOPtr file_loader /* = IFileIOPtr */)
 		: file_loader_(file_loader)
 	{
@@ -69,4 +70,4 @@ namespace lv { namespace lua {
 		lua::dostr(L_, str, size);
 	}
 
-} }
+}

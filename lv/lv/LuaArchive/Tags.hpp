@@ -17,7 +17,8 @@
 #include <type_traits>
 
 
-namespace lv { namespace lua { namespace archive {
+namespace lv::lua::archive
+{
 
 #define DEFINE_tag(tag) \
 	struct tag : boost::mpl::identity<tag> {}
@@ -76,6 +77,6 @@ namespace lv { namespace lua { namespace archive {
 	template<typename T, class Enabled = void>
 	using object_tag_t = typename object_tag<T, Enabled>::type;
 
-} } }
+}
 
 #endif

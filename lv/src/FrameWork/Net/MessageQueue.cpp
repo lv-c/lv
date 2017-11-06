@@ -9,8 +9,8 @@
 #include <deque>
 
 
-namespace lv { namespace net {
-
+namespace lv::net
+{
 	enum HeaderType : uint8
 	{
 		PacketType	= 0xB0,
@@ -354,4 +354,4 @@ namespace lv { namespace net {
 		}
 	}
 
-} }
+}

@@ -12,8 +12,8 @@
 #define LV_RPC_ARCHIVEBASE_HPP
 
 
-namespace lv { namespace rpc {
-
+namespace lv::rpc
+{
 	template<class IArchive, class OArchive>
 	struct ArchiveBase
 	{
@@ -21,6 +21,6 @@ namespace lv { namespace rpc {
 		typedef OArchive	oarchive_type;
 	};
 
-} }
+}
 
 #endif

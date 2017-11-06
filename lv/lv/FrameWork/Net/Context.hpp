@@ -16,8 +16,9 @@
 
 #include <lv/IBufferManager.hpp>
 
-namespace lv { namespace net {
 
+namespace lv::net
+{
 	class Context
 	{
 	protected:
@@ -70,6 +71,6 @@ namespace lv { namespace net {
 		}
 	};
 
-} }
+}
 
 #endif

@@ -12,8 +12,8 @@
 #include <boost/asio/ip/tcp.hpp>
 
 
-namespace lv { namespace net {
-
+namespace lv::net
+{
 	Socks5ServerSession::Socks5ServerSession(ContextPtr context)
 		: base_type(context)
 		, status_(MethodSelect)
@@ -363,4 +363,4 @@ namespace lv { namespace net {
 		return PacketProxy(context_->buffer(), std::bind(&Socks5ServerSession::start_write, this, std::placeholders::_1));
 	}
 
-} }
+}

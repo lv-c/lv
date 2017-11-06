@@ -16,9 +16,8 @@
 #include <type_traits>
 
 
-namespace lv { namespace bstream {
-
-
+namespace lv::bstream
+{
 	// arithmetic type or enum type
 	template<typename T>
 	struct is_primitive 
@@ -52,6 +51,6 @@ namespace lv { namespace bstream {
 	template<typename T, class Enabled = void>
 	using object_tag_t = typename object_tag<T, Enabled>::type;
 
-} }
+}
 
 #endif

@@ -13,8 +13,8 @@
 
 struct lua_State;
 
-namespace lv { namespace lua {
-
+namespace lv::lua
+{
 	class StackBalance
 	{
 		int	top_;
@@ -28,7 +28,7 @@ namespace lv { namespace lua {
 		~StackBalance();
 	};
 
-} }
+}
 
 
 #endif

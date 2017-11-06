@@ -21,8 +21,8 @@
 #include <thread>
 
 
-namespace lv { namespace flow {
-
+namespace lv::flow
+{
 	namespace detail
 	{
 		template<class T>
@@ -102,6 +102,6 @@ namespace lv { namespace flow {
 		}
 	};
 
-} }
+}
 
 #endif 

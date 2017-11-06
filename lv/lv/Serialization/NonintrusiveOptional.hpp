@@ -13,9 +13,9 @@
 
 #include <boost/serialization/nvp.hpp>
 
-namespace lv { namespace serialization {
 
-
+namespace lv::serialization
+{
 	template<typename T>
 	class NonintrusiveOptional
 	{
@@ -45,6 +45,6 @@ namespace lv { namespace serialization {
 #define	LV_SERIALIZATION_OPTIONAL_NVP(name)				\
 	boost::serialization::make_nvp(#name, lv::serialization::make_optional(name))
 
-} }
+}
 
 #endif

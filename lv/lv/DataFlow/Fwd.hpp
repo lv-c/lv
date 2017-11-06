@@ -17,8 +17,8 @@
 #include <functional>
 
 
-namespace lv { namespace flow {
-
+namespace lv::flow
+{
 	template<template<class> class PushPolicy, class Port = std::string, class Compare = std::less<Port> >
 	class DataFlow;
 
@@ -43,6 +43,6 @@ namespace lv { namespace flow {
 	typedef std::function<void(ConstBufferRef)>	slot_type;
 	
 
-} }
+}
 
 #endif 

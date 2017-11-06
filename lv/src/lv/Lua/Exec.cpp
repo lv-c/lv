@@ -6,8 +6,8 @@
 #include <lua.hpp>
 
 
-namespace lv { namespace lua {
-
+namespace lv::lua
+{
 	void dostr(lua_State * L, char const * str, std::size_t size, char const * name /* = nullptr */, pcall_handler h /* = default_pcall_handler */)
 	{
 		if (name == nullptr)
@@ -32,4 +32,4 @@ namespace lv { namespace lua {
 		}
 	}
 
-} }
+}

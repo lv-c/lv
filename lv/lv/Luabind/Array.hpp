@@ -17,8 +17,9 @@
 
 #include <array>
 
-namespace lv { namespace lua {
 
+namespace lv::lua
+{
 	template<class T, size_t N>
 	void bind_array(lua_State * L, char const* name)
 	{
@@ -53,7 +54,7 @@ namespace lv { namespace lua {
 			arr
 		];
 	}
-} }
+}
 
 
 #endif 

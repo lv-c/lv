@@ -13,8 +13,9 @@
 
 #include <lv/SimpleBufferManager.hpp>
 
-namespace lv { namespace net {
 
+namespace lv::net
+{
 	class PacketBufferManager : public SimpleBufferManager
 	{
 		typedef SimpleBufferManager	base_type;
@@ -37,6 +38,6 @@ namespace lv { namespace net {
 		}
 	};
 
-} }
+}
 
 #endif

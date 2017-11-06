@@ -21,8 +21,8 @@
 #include <type_traits>
 
 
-namespace lv { namespace lua { namespace archive {
-
+namespace lv::lua::archive
+{
 	namespace detail
 	{
 		template<typename T>
@@ -80,6 +80,6 @@ namespace lv { namespace lua { namespace archive {
 		detail::load_impl(parser, index, v, std::is_arithmetic<F>());
 	}
 
-} } }
+}
 
 #endif

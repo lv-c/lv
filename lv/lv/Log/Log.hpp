@@ -22,8 +22,8 @@
 #include <mutex>
 
 
-namespace lv { namespace log {
-
+namespace lv::log
+{
 	/**
 	 * Thread-safe
 	 */
@@ -189,6 +189,6 @@ namespace lv { namespace log {
 		}
 
 	};
-} }
+}
 
 #endif

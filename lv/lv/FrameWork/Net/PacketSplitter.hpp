@@ -17,8 +17,8 @@
 #include <deque>
 
 
-namespace lv { namespace net {
-
+namespace lv::net
+{
 	template<typename SizeType>
 	class PacketSplitter
 	{
@@ -81,6 +81,6 @@ namespace lv { namespace net {
 		
 	};
 
-} }
+}
 
 #endif

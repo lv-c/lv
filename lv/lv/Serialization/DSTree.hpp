@@ -19,8 +19,9 @@
 
 #include <boost/range/as_array.hpp>
 
-namespace boost { namespace serialization {
 
+namespace boost::serialization
+{
 	template<typename Key, typename Data, typename Pred>
 	struct version<lv::DSTree<Key, Data, Pred> >
 		: mpl::int_<1>
@@ -95,6 +96,6 @@ namespace boost { namespace serialization {
 		split_free(ar, tree, version);
 	}
 
-} }
+}
 
 #endif

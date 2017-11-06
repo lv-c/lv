@@ -35,19 +35,20 @@ namespace lv
 
 		Window	* parent_;
 
-		std::auto_ptr<IWindowRenderer>	renderer_;
+		std::unique_ptr<IWindowRenderer>	renderer_;
+
 	public:
 
 		Window();
 
 		// accessors
 
-		void	set_renderer(std::auto_ptr<IWindowRenderer>	renderer)
+		void	set_renderer(std::unique_ptr<IWindowRenderer> renderer)
 		{
-			this->renderer_ = renderer;
+			this->renderer_ = std::move(renderer);
 		}
 
-		Window*	parent() const
+		Window *	parent() const
 		{
 			return parent_;
 		}

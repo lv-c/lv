@@ -20,8 +20,8 @@
 #include <mutex>
 
 
-namespace lv { namespace log {
-	
+namespace lv::log
+{
 	class LogManager : public Singleton<LogManager, true>
 	{
 		typedef std::lock_guard<std::mutex>	lock_guard;
@@ -81,6 +81,6 @@ namespace lv { namespace log {
 		}
 
 	};
-} }
+}
 
 #endif

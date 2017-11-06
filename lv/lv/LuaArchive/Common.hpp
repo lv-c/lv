@@ -13,12 +13,12 @@
 
 #include <string>
 
-namespace lv { namespace lua { namespace archive {
-
+namespace lv::lua::archive
+{
 	static std::string const	VersionKey		= "__version";
 
 	static unsigned int const	DefaultVersion	= 0;	
 
-} } }
+}
 
 #endif

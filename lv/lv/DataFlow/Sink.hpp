@@ -23,8 +23,8 @@
 #include <functional>
 
 
-namespace lv { namespace flow {
-
+namespace lv::flow
+{
 	typedef std::function<void(slot_type const &, ConstBufferRef const &)> proxy_push_type;
 
 	/// thread-safe
@@ -125,6 +125,6 @@ namespace lv { namespace flow {
 		}
 	};
 
-} }
+}
 
 #endif

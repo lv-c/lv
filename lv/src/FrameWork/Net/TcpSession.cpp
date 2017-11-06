@@ -2,8 +2,9 @@
 #include <lv/FrameWork/Net/SocketHolder.hpp>
 #include <lv/FrameWork/Net/Context.hpp>
 
-namespace lv { namespace net {
 
+namespace lv::net
+{
 	class TcpSocketHolder : public SocketHolder
 	{
 		asio::ip::tcp::socket	socket_;
@@ -26,4 +27,4 @@ namespace lv { namespace net {
 	{
 	}
 
-} }
+}

@@ -22,8 +22,8 @@
 #include <boost/serialization/serialization.hpp>
 
 
-namespace lv { namespace lua { namespace archive {
-
+namespace lv::lua::archive
+{
 	struct Token
 	{
 		enum Type
@@ -311,6 +311,6 @@ namespace lv { namespace lua { namespace archive {
 	}
 
 
-} } }
+}
 
 #endif

@@ -15,8 +15,8 @@
 #include <functional>
 
 
-namespace lv { namespace lua {
-
+namespace lv::lua
+{
 	class CallProxy
 	{
 		std::ostringstream &	oss_;
@@ -110,6 +110,6 @@ namespace lv { namespace lua {
 		}
 	};
 
-} }
+}
 
 #endif

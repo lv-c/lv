@@ -25,8 +25,8 @@
 #include <map>
 
 
-namespace lv { namespace flow {
-
+namespace lv::flow
+{
 	class SerializationError : public boost::archive::archive_exception
 	{
 		typedef boost::archive::archive_exception	base_type;
@@ -122,6 +122,6 @@ namespace lv { namespace flow {
 
 	
 
-} }
+}
 
 #endif 

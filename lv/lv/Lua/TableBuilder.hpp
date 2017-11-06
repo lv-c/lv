@@ -17,8 +17,9 @@
 
 #include <boost/noncopyable.hpp>
 
-namespace lv { namespace lua {
 
+namespace lv::lua
+{
 	class TableBuilder : boost::noncopyable
 	{
 		std::ostringstream	oss_;
@@ -156,7 +157,7 @@ namespace lv { namespace lua {
 		return ObjectBuilder<T>(t);
 	}
 
-} }
+}
 
 #define LV_TBL(x, y)	(lv::lua::TableBuilder() (x, y))
 #define LV_ARR(...)		(lv::lua::ArrayBuilder(), __VA_ARGS__)

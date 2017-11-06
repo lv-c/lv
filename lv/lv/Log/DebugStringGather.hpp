@@ -20,8 +20,9 @@
 #include <lv/Log/Fwd.hpp>
 #include <lv/Log/StringGather.hpp>
 
-namespace lv { namespace log {
-	
+
+namespace lv::log
+{
 	class DebugStringGather : public StringGather
 	{
 		struct Receiver
@@ -43,7 +44,7 @@ namespace lv { namespace log {
 		{
 		}
 	};
-} }
+}
 
 #endif
 

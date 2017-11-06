@@ -8,8 +8,8 @@
 #include <functional>
 
 
-namespace lv { namespace net {
-
+namespace lv::net
+{
 	char const * error_string(ErrorType type)
 	{
 		switch (type)
@@ -319,4 +319,4 @@ namespace lv { namespace net {
 		}
 	}
 
-} }
+}

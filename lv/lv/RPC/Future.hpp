@@ -14,8 +14,8 @@
 #include <lv/Concurrent/Future.hpp>
 
 
-namespace lv { namespace rpc {
-	
+namespace lv::rpc
+{
 	namespace detail
 	{
 		template<class ArchivePair>
@@ -81,6 +81,6 @@ namespace lv { namespace rpc {
 			}
 		};
 	}
-} }
+}
 
 #endif

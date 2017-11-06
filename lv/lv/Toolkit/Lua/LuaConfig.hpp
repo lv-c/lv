@@ -18,10 +18,11 @@
 
 #include <string>
 
+
 struct lua_State;
 
-namespace lv { namespace lua {
-
+namespace lv::lua
+{
 	/// you can call luabind::set_pcall_callback to catch the errors
 
 	class LuaConfig
@@ -69,6 +70,6 @@ namespace lv { namespace lua {
 
 	};
 
-} }
+}
 
 #endif

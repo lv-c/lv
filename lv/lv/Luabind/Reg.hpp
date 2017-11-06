@@ -14,8 +14,8 @@
 #include <type_traits>
 
 
-namespace lv { namespace lua {
-
+namespace lv::lua
+{
 	namespace detail
 	{
 		template<typename ret, typename wrap>
@@ -29,7 +29,7 @@ namespace lv { namespace lua {
 			return v;
 		}
 	}
-} }
+}
 
 
 

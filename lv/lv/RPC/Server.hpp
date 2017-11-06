@@ -19,8 +19,8 @@
 #include <lv/Ensure.hpp>
 
 
-namespace lv { namespace rpc {
-
+namespace lv::rpc
+{
 	/**
 	 * This class is thread-safe as long as the BufferManager and Socket passed in are thread-safe
 	 */
@@ -132,6 +132,6 @@ namespace lv { namespace rpc {
 
 	};
 
-} }
+}
 
 #endif

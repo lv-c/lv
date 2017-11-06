@@ -15,8 +15,9 @@
 
 #include <map>
 
-namespace lv { namespace lua {
 
+namespace lv::lua
+{
 	template<typename K, typename V>
 	void bind_map(lua_State * L, char const * name)
 	{
@@ -56,6 +57,6 @@ namespace lv { namespace lua {
 		bind_pair<iterator, bool>(L, (std::string(name) + "_ib_pair").c_str());
 	}
 
-} }
+}
 
 #endif

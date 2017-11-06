@@ -11,8 +11,9 @@
 #ifndef LV_GRAPHICS_GRAPHICS_HPP
 #define LV_GRAPHICS_GRAPHICS_HPP
 
-namespace lv { namespace graphics {
 
+namespace lv::graphics
+{
 	template<class Action>
 	void	line(int sx, int sy, int ex, int ey, Action act)
 	{
@@ -90,6 +91,6 @@ namespace lv { namespace graphics {
 		return Shader<Img, Clr>(img, clr);
 	}
 
-} }
+}
 
 #endif

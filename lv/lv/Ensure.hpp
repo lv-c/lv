@@ -20,8 +20,8 @@
 #include <boost/assert.hpp>
 
 
-namespace lv { namespace detail {
-
+namespace lv::detail
+{
 	[[noreturn]] inline void	ensure_throw(char const * msg)
 	{
 		throw std::runtime_error(msg);
@@ -40,7 +40,7 @@ namespace lv { namespace detail {
 		throw ex;
 	}
 	
-} }
+}
 
 #define LV_ENSURE(check, msg)			\
 	if (! (check)) {					\

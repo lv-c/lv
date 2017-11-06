@@ -20,8 +20,9 @@
 #include <luabind/class.hpp>
 #include <luabind/iterator_policy.hpp>
 
-namespace lv { namespace lua {
-	
+
+namespace lv::lua
+{
 	namespace detail
 	{
 		template<class T, bool Enable>
@@ -85,6 +86,6 @@ namespace lv { namespace lua {
 			vec
 		];
 	}
-} }
+}
 
 #endif

@@ -18,8 +18,8 @@
 #include <functional>
 
 
-namespace lv { namespace net {
-
+namespace lv::net
+{
 	typedef std::function<void(BufferPtr)> PacketProxyCallback;
 
 	class PacketProxy
@@ -50,6 +50,6 @@ namespace lv { namespace net {
 		}
 	};
 
-} }
+}
 
 #endif

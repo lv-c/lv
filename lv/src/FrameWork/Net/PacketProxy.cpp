@@ -1,7 +1,8 @@
 #include <lv/FrameWork/Net/PacketProxy.hpp>
 
-namespace lv { namespace net {
 
+namespace lv::net
+{
 	PacketProxy::PacketProxy(BufferPtr buf, PacketProxyCallback const & callback)
 		: bos_(buf)
 		, valid_(true)
@@ -31,4 +32,4 @@ namespace lv { namespace net {
 		bos_.switch_endian(s);
 	}
 
-} }
+}

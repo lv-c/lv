@@ -21,8 +21,8 @@
 #include <functional>
 
 
-namespace lv { namespace net {
-
+namespace lv::net
+{
 	class ISender
 	{
 	public:
@@ -94,6 +94,6 @@ namespace lv { namespace net {
 	};
 
 
-} }
+}
 
 #endif

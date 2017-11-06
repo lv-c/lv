@@ -13,8 +13,9 @@
 
 #include <lv/FrameWork/Net/SessionBase.hpp>
 
-namespace lv { namespace net {
 
+namespace lv::net
+{
 	class TcpSession : public SessionBase
 	{
 		typedef SessionBase	base_type;
@@ -24,6 +25,6 @@ namespace lv { namespace net {
 		explicit TcpSession(ContextPtr context);
 	};
 
-} }
+}
 
 #endif

@@ -15,8 +15,9 @@
 
 #include <luabind/object.hpp>
 
-namespace lv { namespace lua {
 
+namespace lv::lua
+{
 	template<class T>
 	T	extract(luabind::object const & obj)
 	{
@@ -33,6 +34,6 @@ namespace lv { namespace lua {
 		}
 	}
 
-} }
+}
 
 #endif

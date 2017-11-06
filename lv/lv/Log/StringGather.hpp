@@ -17,8 +17,8 @@
 #include <lv/Log/Gather.hpp>
 #include <lv/SharedPtr.hpp>
 
-namespace lv { namespace log {
-	
+namespace lv::log
+{
 	class StringGather : public Gather
 	{
 	public:
@@ -61,6 +61,6 @@ namespace lv { namespace log {
 			}
 		}
 	};
-} }
+}
 
 #endif

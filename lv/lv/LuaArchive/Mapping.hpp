@@ -15,8 +15,8 @@
 #include <lv/LuaArchive/Tags.hpp>
 #include <lv/LuaArchive/Pair.hpp>
 
-namespace lv { namespace lua { namespace archive {
-
+namespace lv::lua::archive
+{
 	template<typename X, typename Y>
 	struct object_tag<Mapping<X, Y> >
 		: sequence_tag
@@ -24,6 +24,6 @@ namespace lv { namespace lua { namespace archive {
 	};
 
 
-} } }
+}
 
 #endif

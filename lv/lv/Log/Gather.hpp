@@ -22,8 +22,8 @@
 #include <mutex>
 
 
-namespace lv { namespace log {
-
+namespace lv::log
+{
 	// filters
 	
 	template<class Pred>
@@ -161,6 +161,6 @@ namespace lv { namespace log {
 			}
 		}
 	};
-} }
+}
 
 #endif

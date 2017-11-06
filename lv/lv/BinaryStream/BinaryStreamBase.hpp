@@ -11,8 +11,9 @@
 #ifndef LV_BINARYSTREAMBASE_HPP
 #define LV_BINARYSTREAMBASE_HPP
 
-namespace lv { namespace bstream {
 
+namespace lv::bstream
+{
 	class BinaryStreamBase
 	{
 		bool	switch_endian_;
@@ -34,6 +35,6 @@ namespace lv { namespace bstream {
 			switch_endian_ = s;
 		}
 	};
-} }
+}
 
 #endif

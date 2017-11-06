@@ -16,8 +16,8 @@
 #include <memory>
 
 
-namespace lv { namespace lua { namespace archive {
-
+namespace lv::lua::archive
+{
 	namespace detail
 	{
 		template<class T>
@@ -108,6 +108,6 @@ namespace lv { namespace lua { namespace archive {
 	}
 
 
-} } }
+}
 
 #endif

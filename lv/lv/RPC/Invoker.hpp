@@ -25,8 +25,8 @@
 #include <type_traits>
 
 
-namespace lv { namespace rpc { namespace detail {
-
+namespace lv::rpc::detail
+{
 	template<class T>
 	struct ParamType
 	{
@@ -143,6 +143,6 @@ namespace lv { namespace rpc { namespace detail {
 	};
 
 
-} } }
+}
 
 #endif

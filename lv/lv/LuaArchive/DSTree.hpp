@@ -19,8 +19,8 @@
 
 #include <deque>
 
-namespace lv { namespace lua { namespace archive {
-
+namespace lv::lua::archive
+{
 	namespace detail
 	{
 		inline void	dstree_save_deque(std::ostream & os, std::deque<char> const & v, size_t level)
@@ -175,6 +175,6 @@ namespace lv { namespace lua { namespace archive {
 		}
 	}
 
-} } }
+}
 
 #endif

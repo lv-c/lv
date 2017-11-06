@@ -3,8 +3,8 @@
 #include <functional>
 
 
-namespace lv { namespace net {
-
+namespace lv::net
+{
 	SteadyTimer::SteadyTimer(ServiceWrapper const & service_wrapper, duration_type const & duration, Callback const & callback)
 		: service_wrapper_(service_wrapper)
 		, timer_(std::make_shared<timer_type>(service_wrapper.service()))
@@ -42,4 +42,4 @@ namespace lv { namespace net {
 		}
 	}
 
-} }
+}

@@ -13,8 +13,8 @@
 
 #include <lv/DataFlow/PushPolicyBase.hpp>
 
-namespace lv { namespace flow {
-
+namespace lv::flow
+{
 	template<class T>
 	class SyncPush : public PushPolicyBase<T>
 	{
@@ -26,6 +26,6 @@ namespace lv { namespace flow {
 		}
 	};
 
-} }
+}
 
 #endif 

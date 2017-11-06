@@ -16,13 +16,14 @@
 #include <boost/signals2/signal.hpp>
 #include <boost/system/system_error.hpp>
 
-namespace lv { namespace net {
 
+namespace lv::net
+{
 	typedef boost::signals2::signal<void(ErrorType, boost::system::error_code const &)>	ErrorEvent;
 	typedef boost::signals2::signal<void()>				ConnectEvent;
 	typedef boost::signals2::signal<void(BufferPtr)>	ReceiveEvent;
 	typedef boost::signals2::signal<void(BufferPtr)>	WriteEvent;
 
-} }
+}
 
 #endif

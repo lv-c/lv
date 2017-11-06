@@ -23,8 +23,8 @@
 #include <type_traits>
 
 
-namespace lv { namespace flow { namespace detail {
-
+namespace lv::flow::detail
+{
 	template<class T, class IArchive>
 	struct ParamType
 	{
@@ -105,6 +105,6 @@ namespace lv { namespace flow { namespace detail {
 		}
 	};
 
-} } }
+}
 
 #endif

@@ -22,8 +22,9 @@
 
 #include <boost/noncopyable.hpp>
 
-namespace lv { namespace rpc {
 
+namespace lv::rpc
+{
 	class RpcBase : boost::noncopyable
 	{
 		BufferManagerPtr	buf_manager_;
@@ -54,6 +55,6 @@ namespace lv { namespace rpc {
 		}
 	};
 
-} }
+}
 
 #endif

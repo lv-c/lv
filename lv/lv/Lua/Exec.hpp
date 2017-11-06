@@ -18,8 +18,8 @@
 
 struct lua_State;
 
-namespace lv { namespace lua {
-
+namespace lv::lua
+{
 	typedef int (* pcall_handler)(lua_State * L);
 
 	inline int default_pcall_handler(lua_State * L)
@@ -33,7 +33,7 @@ namespace lv { namespace lua {
 	void dostr(lua_State * L, char const * str, std::size_t size, char const * name = nullptr, pcall_handler h = default_pcall_handler);
 
 
-} }
+}
 
 
 #endif

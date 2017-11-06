@@ -15,14 +15,15 @@
 
 #include <lv/LuaArchive/Tags.hpp>
 
-namespace lv { namespace lua { namespace archive {
 
+namespace lv::lua::archive
+{
 	template<typename T, typename Pr, typename Ax>
 	struct object_tag<std::set<T, Pr, Ax> >
 		: sequence_tag
 	{
 	};
 
-} } }
+}
 
 #endif

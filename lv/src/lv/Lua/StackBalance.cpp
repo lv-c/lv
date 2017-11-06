@@ -2,8 +2,8 @@
 
 #include <lua.hpp>
 
-namespace lv { namespace lua {
-
+namespace lv::lua
+{
 	StackBalance::StackBalance(lua_State * L)
 		: top_(lua_gettop(L))
 		, L_(L)
@@ -15,4 +15,4 @@ namespace lv { namespace lua {
 		lua_settop(L_, top_);
 	}
 
-} }
+}

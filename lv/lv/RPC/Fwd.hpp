@@ -16,8 +16,8 @@
 #include <memory>
 
 
-namespace lv { namespace rpc {
-
+namespace lv::rpc
+{
 	struct PacketArchive;
 	
 	template<
@@ -32,6 +32,6 @@ namespace lv { namespace rpc {
 	>
 	class Server;
 
-} }
+}
 
 #endif

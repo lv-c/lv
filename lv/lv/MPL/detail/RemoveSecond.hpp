@@ -15,8 +15,9 @@
 #include <boost/mpl/next.hpp>
 #include <boost/mpl/erase.hpp>
 
-namespace lv { namespace detail {
 
+namespace lv::detail
+{
 	namespace mpl = boost::mpl;
 
 	template<class T>
@@ -29,6 +30,6 @@ namespace lv { namespace detail {
 		>::type type;
 	};
 
-} }
+}
 
 #endif

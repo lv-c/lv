@@ -22,8 +22,8 @@
 #include <lv/Serialization/OArchive.hpp>
 
 
-namespace lv { namespace net {
-
+namespace lv::net
+{
 	template<typename Key, class S>
 	class FlowSession : public S
 	{
@@ -109,6 +109,6 @@ namespace lv { namespace net {
 
 	};
 
-} }
+}
 
 #endif

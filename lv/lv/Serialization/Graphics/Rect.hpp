@@ -11,17 +11,17 @@
 #ifndef LV_SERIALIZATION_GRAPHICS_RECT_HPP
 #define LV_SERIALIZATION_GRAPHICS_RECT_HPP
 
-
 #include <lv/Graphics/Rect.hpp>
 
-namespace boost { namespace serialization {
 
+namespace boost::serialization
+{
 	template<typename Archive, typename T>
 	void serialize(Archive & ar, lv::RectT<T> & rc, unsigned int)
 	{
 		ar & rc.left & rc.top & rc.right & rc.bottom;
 	}
 
-} }
+}
 
 #endif

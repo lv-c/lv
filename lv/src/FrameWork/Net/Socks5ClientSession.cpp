@@ -13,8 +13,8 @@
 #include <functional>
 
 
-namespace lv { namespace net {
-
+namespace lv::net
+{
 	Socks5ClientSession::Socks5ClientSession(ContextPtr context)
 		: base_type(context)
 		, use_proxy_(false)
@@ -370,4 +370,4 @@ namespace lv { namespace net {
 		return PacketProxy(context_->buffer(), std::bind(&Socks5ClientSession::start_write, this, std::placeholders::_1));
 	}
 
-} }
+}

@@ -13,8 +13,9 @@
 
 #include <lv/IntType.hpp>
 
-namespace lv { namespace rpc {
 
+namespace lv::rpc
+{
 	struct Protocol
 	{
 		typedef uint32	request_id_type;
@@ -51,6 +52,6 @@ namespace lv { namespace rpc {
 	};
 
 
-} }
+}
 
 #endif

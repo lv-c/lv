@@ -22,8 +22,8 @@
 #include <functional>
 
 
-namespace lv { namespace bstream {
-
+namespace lv::bstream
+{
 	class BinaryOStream : public BinaryStreamBase, public OStreamProxy
 	{
 
@@ -109,6 +109,6 @@ namespace lv { namespace bstream {
 		}
 
 	};
-} }
+}
 
 #endif

@@ -18,8 +18,9 @@
 #include <set>
 #include <algorithm>
 
-namespace lv { namespace net {
 
+namespace lv::net
+{
 	struct Socks5Auth
 	{
 		std::string	user;
@@ -106,6 +107,6 @@ namespace lv { namespace net {
 
 	};
 
-} }
+}
 
 #endif

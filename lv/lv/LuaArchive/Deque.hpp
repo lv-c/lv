@@ -16,17 +16,15 @@
 #include <lv/LuaArchive/Tags.hpp>
 #include <lv/ContainerAdaptor/Deque.hpp>
 
-namespace lv { namespace lua { namespace archive {
-
-
+namespace lv::lua::archive
+{
 	template<typename T, typename Ax>
 	struct object_tag<std::deque<T, Ax> >
 		: sequence_tag
 	{
 	};
 
-
-} } }
+}
 
 
 #endif

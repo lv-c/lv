@@ -15,9 +15,9 @@
 
 #include <boost/optional.hpp>
 
-namespace lv { namespace lua { namespace archive {
 
-
+namespace lv::lua::archive
+{
 	template<typename T>
 	void	save(std::ostream & os, boost::optional<T> const & t, size_t level)
 	{
@@ -66,6 +66,6 @@ namespace lv { namespace lua { namespace archive {
 		}
 	}
 
-} } }
+}
 
 #endif

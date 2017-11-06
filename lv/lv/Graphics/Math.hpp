@@ -20,9 +20,8 @@
 #include <type_traits>
 
 
-namespace lv { namespace math {
-
-
+namespace lv::math
+{
 	float const PI		=	3.14159265f;
 	float const PId2	=	1.57079632f;
 	float const PId4	=	0.78539816f;
@@ -161,6 +160,6 @@ namespace lv { namespace math {
 	}
 	*/
 
-} }
+}
 
 #endif

@@ -23,8 +23,8 @@
 #include <shared_mutex>
 
 
-namespace lv { namespace flow {
-
+namespace lv::flow
+{
 	// thread-safe and the data flow is running concurrently when 
 	// push_impl is called in multiple threads.
 	template<template<class> class PushPolicy, class Port, class Compare>
@@ -120,7 +120,7 @@ namespace lv { namespace flow {
 
 	};
 
-} }
+}
 
 
 #endif

@@ -16,8 +16,9 @@
 #include <set>
 #include <string>
 
-namespace lv { namespace lua {
 
+namespace lv::lua
+{
 	template<typename T>
 	void bind_set(lua_State * L, char const * name)
 	{
@@ -52,6 +53,6 @@ namespace lv { namespace lua {
 		// used by type::insert
 		bind_pair<iterator, bool>(L, (std::string(name) + "_ib_pair").c_str());
 	}
-} }
+}
 
 #endif

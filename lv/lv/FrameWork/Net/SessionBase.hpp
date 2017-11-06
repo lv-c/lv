@@ -19,8 +19,8 @@
 #include <mutex>
 
 
-namespace lv { namespace net {
-
+namespace lv::net
+{
 	char const *	error_string(ErrorType type);
 
 	class SessionBase : public std::enable_shared_from_this<SessionBase>
@@ -108,6 +108,6 @@ namespace lv { namespace net {
 
 	};
 
-} }
+}
 
 #endif

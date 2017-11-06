@@ -5,9 +5,9 @@
 #include <boost/asio/ssl.hpp>
 #include <boost/asio/placeholders.hpp>
 
-namespace lv { namespace net {
 
-
+namespace lv::net
+{
 	class SSLSocketHolder : public SocketHolder
 	{
 	public:
@@ -107,4 +107,4 @@ namespace lv { namespace net {
 			std::dynamic_pointer_cast<SSLSession>(shared_from_this()), std::placeholders::_1));
 	}
 
-} }
+}

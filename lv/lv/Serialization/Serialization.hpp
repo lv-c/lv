@@ -30,9 +30,8 @@
 #include <type_traits>
 
 
-namespace lv { namespace serialization {
-
-
+namespace lv::serialization
+{
 	namespace detail
 	{
 		template<class Archive>
@@ -162,11 +161,11 @@ namespace lv { namespace serialization {
 		load(ar, t, Overload());
 	}
 
-} }
+}
 
 
-namespace boost { namespace serialization {
-
+namespace boost::serialization
+{
 	template<>
 	struct use_array_optimization<lv::OArchive>
 	{
@@ -181,7 +180,7 @@ namespace boost { namespace serialization {
 		struct apply : boost::mpl::bool_<std::is_arithmetic<T>::value> {};
 	};
 
-} }
+}
 
 
 

@@ -9,8 +9,8 @@
 #include <functional>
 
 
-namespace lv { namespace net {
-
+namespace lv::net
+{
 	class AcceptorHolder
 	{
 		std::unique_ptr<asio::ip::tcp::acceptor>	acceptor_;
@@ -103,4 +103,4 @@ namespace lv { namespace net {
 		new_session_event_(session);
 	}
 
-} }
+}

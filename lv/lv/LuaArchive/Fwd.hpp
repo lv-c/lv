@@ -19,10 +19,10 @@ namespace lv
 
 	class PlainLuaIArchive;
 
-	namespace lua { namespace archive {
-
+	namespace lua::archive 
+	{
 		class Parser;
-	} }
+	}
 
 }
 

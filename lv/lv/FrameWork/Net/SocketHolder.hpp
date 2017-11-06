@@ -15,8 +15,9 @@
 
 #include <boost/asio/ip/tcp.hpp>
 
-namespace lv { namespace net {
 
+namespace lv::net
+{
 	class SocketHolder
 	{
 	public:
@@ -24,7 +25,7 @@ namespace lv { namespace net {
 		virtual asio::ip::tcp::socket & get() = 0;
 	};
 
-} }
+}
 
 
 #endif

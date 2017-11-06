@@ -28,8 +28,8 @@
 #include <mutex>
 
 
-namespace lv { namespace rpc {
-
+namespace lv::rpc
+{
 	DEFINE_EXCEPTION_MSG(InvalidFunctionID, std::runtime_error);
 
 	class SerializationError : public boost::archive::archive_exception
@@ -136,7 +136,7 @@ namespace lv { namespace rpc {
 
 		};
 	}
-} }
+}
 
 #endif
 

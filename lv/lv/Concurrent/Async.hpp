@@ -16,8 +16,8 @@
 #include <boost/asio/io_service.hpp>
 
 
-namespace lv { namespace concurrent {
-
+namespace lv::concurrent
+{
 	namespace detail
 	{
 		boost::asio::io_service &	get_service();
@@ -50,6 +50,6 @@ namespace lv { namespace concurrent {
 		return fork_join(detail::get_service(), std::forward<Tasks>(tasks), std::forward<Fn>(fn));
 	}
 
-} }
+}
 
 #endif

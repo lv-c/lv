@@ -13,14 +13,15 @@
 
 #include <lv/Graphics/Triangle.hpp>
 
-namespace boost { namespace serialization {
 
+namespace boost::serialization
+{
 	template<typename Archive, typename T>
 	void serialize(Archive & ar, lv::TriangleT<T> & tri, unsigned int)
 	{
 		ar & tri.v0 & tri.v1 & tri.v2;
 	}
 
-} }
+}
 
 #endif

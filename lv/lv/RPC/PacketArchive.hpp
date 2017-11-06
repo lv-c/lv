@@ -18,13 +18,14 @@
 
 #include <lv/RPC/ArchiveBase.hpp>
 
-namespace lv { namespace rpc {
 
+namespace lv::rpc
+{
 	struct PacketArchive : ArchiveBase<IArchive, OArchive>
 	{
 	};
 
-} }
+}
 
 
 #endif

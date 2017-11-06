@@ -17,8 +17,9 @@
 #include <luabind/class.hpp>
 #include <luabind/operator.hpp>
 
-namespace lv { namespace lua { namespace graphics {
 
+namespace lv::lua::graphics
+{
 	template<typename T>
 	void	bind_rect(lua_State * L, char const * name)
 	{
@@ -57,6 +58,6 @@ namespace lv { namespace lua { namespace graphics {
 		];
 	}
 
-} } }
+}
 
 #endif

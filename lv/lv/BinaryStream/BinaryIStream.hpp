@@ -23,8 +23,8 @@
 #include <boost/optional.hpp>
 
 
-namespace lv { namespace bstream {
-
+namespace lv::bstream
+{
 	class BinaryIStream : public BinaryStreamBase, public IStreamProxy
 	{
 
@@ -101,6 +101,6 @@ namespace lv { namespace bstream {
 		}
 
 	};
-} }
+}
 
 #endif

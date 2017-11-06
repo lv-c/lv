@@ -14,10 +14,10 @@
 #include <memory>
 
 
-namespace boost { namespace asio {} }
+namespace boost::asio {}
 
-namespace lv { namespace net {
-
+namespace lv::net
+{
 	enum ErrorType
 	{
 		ErrorConnect,
@@ -65,6 +65,6 @@ namespace lv { namespace net {
 
 	namespace asio = boost::asio;
 
-} }
+}
 
 #endif 

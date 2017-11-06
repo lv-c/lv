@@ -22,7 +22,8 @@
 #include <iomanip>
 
 
-namespace lv { namespace log {
+namespace lv::log
+{
 
 #ifndef LV_UNICODE_LOG
 	typedef boost::format	format_type;
@@ -84,6 +85,6 @@ namespace lv { namespace log {
 		}
 	};
 
-} }
+}
 
 #endif

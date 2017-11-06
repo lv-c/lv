@@ -13,8 +13,9 @@
 
 #include <lv/FrameWork/Net/SessionBase.hpp>
 
-namespace lv { namespace net {
 
+namespace lv::net
+{
 	class SSLSession : public SessionBase
 	{
 		typedef SessionBase	base_type;
@@ -45,6 +46,6 @@ namespace lv { namespace net {
 	};
 
 
-} }
+}
 
 #endif

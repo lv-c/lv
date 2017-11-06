@@ -13,14 +13,15 @@
 
 #include <lv/Graphics/Vector.hpp>
 
-namespace boost { namespace serialization {
 
+namespace boost::serialization
+{
 	template<typename Archive, typename T>
 	void serialize(Archive & ar, lv::VectorT<T> & vec, unsigned int)
 	{
 		ar & vec.x & vec.y & vec.z;
 	}
 
-} }
+}
 
 #endif

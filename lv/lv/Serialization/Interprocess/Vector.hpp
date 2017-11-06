@@ -20,8 +20,9 @@
 
 #include <boost/mpl/bool.hpp>
 
-namespace boost { namespace serialization {
 
+namespace boost::serialization
+{
 	namespace detail
 	{
 		template <class T, class Ax>
@@ -116,7 +117,7 @@ namespace boost { namespace serialization {
 		boost::serialization::split_free(ar, t, version);
 	}
 
-} }
+}
 
 
 #endif

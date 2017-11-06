@@ -5,8 +5,8 @@
 #include <boost/asio/ssl.hpp>
 
 
-namespace lv { namespace net {
-
+namespace lv::net
+{
 	SSLServer::SSLServer(ContextPtr context, creator_type session_creator /* = creator_type */,
 			std::string const & password /* = "m2lvxu" */)
 		: base_type(context, session_creator)
@@ -42,4 +42,4 @@ namespace lv { namespace net {
 		return password_;
 	}
 
-} }
+}

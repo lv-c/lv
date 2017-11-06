@@ -19,8 +19,8 @@
 #include <functional>
 
 
-namespace lv { namespace net {
-
+namespace lv::net
+{
 	class SteadyTimer
 	{
 		ServiceWrapper	service_wrapper_;
@@ -53,6 +53,6 @@ namespace lv { namespace net {
 
 	};
 
-} }
+}
 
 #endif

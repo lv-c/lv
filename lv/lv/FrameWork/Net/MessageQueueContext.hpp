@@ -13,8 +13,9 @@
 
 #include <lv/FrameWork/Net/Context.hpp>
 
-namespace lv { namespace net {
 
+namespace lv::net
+{
 	class MessageQueueContext : public Context
 	{
 		bool	preserve_order_;
@@ -47,6 +48,6 @@ namespace lv { namespace net {
 		}
 	};
 
-} }
+}
 
 #endif

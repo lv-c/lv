@@ -18,8 +18,8 @@
 #include <boost/range/value_type.hpp>
 
 
-namespace lv { namespace bstream {
-
+namespace lv::bstream
+{
 	namespace detail
 	{
 		// unknown_tag
@@ -78,6 +78,6 @@ namespace lv { namespace bstream {
 		detail::save_impl(os, t, object_tag_t<T>());
 	}
 
-} }
+}
 
 #endif

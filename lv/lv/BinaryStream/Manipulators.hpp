@@ -22,9 +22,8 @@
 #include <limits>
 
 
-namespace lv { namespace bstream {
-
-
+namespace lv::bstream
+{
 	// check_equal
 
 	DEFINE_EXCEPTION_MSG(CheckEqualError, std::runtime_error);
@@ -305,7 +304,7 @@ namespace lv { namespace bstream {
 		return detail::pod_impl<T>(t);
 	}
 
-} }
+}
 
 
 #endif

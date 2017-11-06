@@ -15,8 +15,9 @@
 #include <lv/FrameWork/Net/PacketProxy.hpp>
 #include <lv/BinaryStream/Fwd.hpp>
 
-namespace lv { namespace net {
 
+namespace lv::net
+{
 	class Socks5ServerSession : public TcpSession
 	{
 		typedef TcpSession	base_type;
@@ -73,6 +74,6 @@ namespace lv { namespace net {
 		void	exit();
 	};
 
-} }
+}
 
 #endif

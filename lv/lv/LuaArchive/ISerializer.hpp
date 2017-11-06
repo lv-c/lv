@@ -27,7 +27,9 @@
 
 #include <stdexcept>
 
-namespace lv { namespace lua { namespace archive {
+
+namespace lv::lua::archive
+{
 
 	class UnmatchedLuaType : public std::runtime_error
 	{
@@ -196,6 +198,6 @@ namespace lv { namespace lua { namespace archive {
 	{
 		load_item(Ref<luabind::iterator const>(it), t);
 	}
-} } }
+}
 
 #endif

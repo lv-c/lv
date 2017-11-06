@@ -25,8 +25,8 @@
 #include <atomic>
 
 
-namespace lv { namespace rpc {
-
+namespace lv::rpc
+{
 	DEFINE_EXCEPTION_MSG(InvalidRequestID, std::runtime_error);
 
 	/**
@@ -270,6 +270,6 @@ namespace lv { namespace rpc {
 
 	};
 
-} }
+}
 
 #endif
