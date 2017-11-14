@@ -75,7 +75,7 @@ namespace lv
 
 	constexpr	bool	big_endian() noexcept
 	{
-		return ! little_endian();
+		return !little_endian();
 	}
 }
 

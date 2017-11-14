@@ -220,10 +220,10 @@ namespace lv::net
 		asio::ip::address addr;
 		unsigned short port = 0;
 
-		if (! error)
+		if (!error)
 		{
 			asio::ip::tcp::endpoint endpoint = dest_session_->socket()->get().local_endpoint(error);
-			if (! error)
+			if (!error)
 			{
 				addr = endpoint.address();
 				port = endpoint.port();
@@ -234,7 +234,7 @@ namespace lv::net
 
 		PacketProxy proxy = std::move(send() << Socks5::Version << rep << uint8(0));
 
-		if (! error)
+		if (!error)
 		{
 			uint8 high_byte = (port >> 8) & 0xFF;
 			uint8 low_byte = port & 0xFF;
@@ -263,7 +263,7 @@ namespace lv::net
 
 	uint8 Socks5ServerSession::error_to_rep(boost::system::error_code const & error)
 	{
-		if (! error)
+		if (!error)
 		{
 			return 0;
 		}
@@ -327,7 +327,7 @@ namespace lv::net
 	{
 		exit();
 
-		if (! closed_)
+		if (!closed_)
 		{
 			closed_ = true;
 			close();

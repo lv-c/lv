@@ -13,7 +13,7 @@ namespace lv::lua
 	LuaConfig::LuaConfig(std::string const & file /* = std::string() */, IFileIOPtr file_loader /* = IFileIOPtr */)
 		: file_loader_(file_loader)
 	{
-		if (! this->file_loader_)
+		if (!this->file_loader_)
 		{
 			this->file_loader_ = std::make_shared<RawFileReader>();
 		}
@@ -23,7 +23,7 @@ namespace lv::lua
 		ia_ = std::make_unique<LuaIArchive>(luabind::globals(L_));
 
 		//
-		if (! file.empty())
+		if (!file.empty())
 		{
 			load_file(file);
 		}

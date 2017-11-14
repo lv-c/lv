@@ -282,7 +282,7 @@ namespace lv::lua::archive
 
 			int index = 1;
 
-			while (! parser.read_if('}'))
+			while (!parser.read_if('}'))
 			{
 				typename boost::range_value<T>::type item;
 

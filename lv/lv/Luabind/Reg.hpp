@@ -24,7 +24,7 @@ namespace lv::lua
 		}
 
 		template<typename ret, typename wrap>
-		std::enable_if_t<! std::is_same<ret, void>::value, ret>	return_value(wrap v)
+		std::enable_if_t<!std::is_same<ret, void>::value, ret>	return_value(wrap v)
 		{
 			return v;
 		}

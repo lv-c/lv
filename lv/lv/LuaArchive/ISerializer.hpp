@@ -130,7 +130,7 @@ namespace lv::lua::archive
 			lv::clear(t);
 			for (luabind::iterator it(obj), end; it != end; ++it)
 			{
-				BOOST_ASSERT(! is_version_key(it.key()) && "you shouldn't place a version key here");
+				BOOST_ASSERT(!is_version_key(it.key()) && "you shouldn't place a version key here");
 
 				typename boost::range_value<T>::type item;
 

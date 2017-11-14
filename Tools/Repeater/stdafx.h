@@ -8,6 +8,9 @@
 #define _WIN32_WINNT	0x0501
 
 
+#include <lv/Config.hpp>
+
+
 #include <lv/IntType.hpp>
 #include <lv/Log/LogManager.hpp>
 

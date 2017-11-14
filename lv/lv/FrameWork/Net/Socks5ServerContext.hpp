@@ -100,7 +100,7 @@ namespace lv::net
 
 		bool	verify(Socks5Auth const & auth) override
 		{
-			BOOST_ASSERT(! auth_.empty());
+			BOOST_ASSERT(!auth_.empty());
 
 			return (this->auth_.find(auth) != this->auth_.end());
 		}

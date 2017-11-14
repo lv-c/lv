@@ -47,7 +47,7 @@ BOOST_AUTO_TEST_CASE(test_mapping)
 		BOOST_CHECK_EQUAL(m.get_left(Php, "Php"), "Php");
 
 		BOOST_CHECK(m.get_right_optional("C"));
-		BOOST_CHECK(! m.get_right_optional("A"));
+		BOOST_CHECK(!m.get_right_optional("A"));
 	}
 
 	{

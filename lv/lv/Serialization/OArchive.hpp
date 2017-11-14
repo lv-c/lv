@@ -88,7 +88,7 @@ namespace lv
 	protected:
 
 		template<typename T>
-		std::enable_if_t<! std::is_arithmetic<T>::value>	save(T const & t)
+		std::enable_if_t<!std::is_arithmetic<T>::value>	save(T const & t)
 		{
 			serialization::save_adl(*this, t);
 		}

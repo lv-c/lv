@@ -81,7 +81,7 @@ namespace lv::net
 			while (true)
 			{
 				BufferPtr new_buf = splitter_.get();
-				if (! new_buf)
+				if (!new_buf)
 				{
 					break;
 				}

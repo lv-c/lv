@@ -30,7 +30,7 @@ MemoryAnalyser::~MemoryAnalyser()
 
 void MemoryAnalyser::attach()
 {
-	if (! attached_)
+	if (!attached_)
 	{
 		DetourTransactionBegin();
 		DetourUpdateThread(GetCurrentThread());
@@ -105,7 +105,7 @@ void MemoryAnalyser::begin_analyse()
 
 uint64 MemoryAnalyser::end_analyse(int & counter)
 {
-	if (! begun_)
+	if (!begun_)
 		throw std::logic_error("You haven't begun the analysis");
 
 	begun_ = false;

@@ -57,7 +57,7 @@ namespace lv
 
 	void FreeTypeFont::load(BufferPtr buffer)
 	{
-		BOOST_ASSERT(buffer && ! buffer->empty());
+		BOOST_ASSERT(buffer && !buffer->empty());
 		load_impl(buffer, std::string());
 	}
 
@@ -96,7 +96,7 @@ namespace lv
 		Size sz = Renderer::instance().max_texture_size();
 		tex_size_.set(std::min(sz.cx, tex_size_.cx), std::min(sz.cy, tex_size_.cy));
 		texture_ = RenderFactory::instance().create_texture(tex_size_, PF_L8);
-		if (! texture_)
+		if (!texture_)
 		{
 			throw std::runtime_error(std::string("FreeTypeFont::load Error creating texture : ") + name());
 		}

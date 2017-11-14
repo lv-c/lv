@@ -93,7 +93,7 @@ namespace lv
 				throw std::runtime_error("Texture::map Invalid format");
 			}
 
-			if (! Rect(Point(), texture_size_).contains(rect))
+			if (!Rect(Point(), texture_size_).contains(rect))
 			{
 				throw std::runtime_error("Texture::map rect out of bound");
 			}

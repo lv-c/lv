@@ -123,7 +123,7 @@ namespace lv
 		}
 
 		template<typename T, typename C, typename Tr>
-		std::enable_if_t<! std::is_arithmetic<T>::value>	write(std::basic_ostream<C, Tr> & os, T const & t, bool use_hex, int setw)
+		std::enable_if_t<!std::is_arithmetic<T>::value>	write(std::basic_ostream<C, Tr> & os, T const & t, bool use_hex, int setw)
 		{
 			os << t;
 		}
@@ -157,7 +157,7 @@ namespace lv
 
 				for (auto const & v : r.range_)
 				{
-					if (! first)
+					if (!first)
 					{
 						os << r.delimiter_;
 					}

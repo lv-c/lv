@@ -185,7 +185,7 @@ BOOST_AUTO_TEST_CASE(test_dataflow)
 	// disconnect
 	BOOST_CHECK(conn.connected());
 	conn.disconnect();
-	BOOST_CHECK(! conn.connected());
+	BOOST_CHECK(!conn.connected());
 
 	// it's diconnected and the function @a sum will not be called
 	source.call("sum", 10, 20.0f);

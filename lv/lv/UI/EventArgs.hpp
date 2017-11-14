@@ -206,7 +206,7 @@ namespace lv
 
 		void	consume()
 		{
-			BOOST_ASSERT(! consumed_);
+			BOOST_ASSERT(!consumed_);
 			consumed_ = true;
 		}
 

@@ -12,7 +12,7 @@ namespace lv
 	
 	void Window::render()
 	{
-		if (! visible())
+		if (!visible())
 		{
 			return;
 		}

@@ -1,3 +1,5 @@
+#include <lv/Config.hpp>
+
 #define _SCL_SECURE_NO_WARNINGS
 #define BOOST_SP_USE_QUICK_ALLOCATOR
 

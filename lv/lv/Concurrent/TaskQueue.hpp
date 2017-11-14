@@ -93,7 +93,7 @@ namespace lv
 					throw ThreadInterrupted();
 				}
 
-				if (! queue_.empty())
+				if (!queue_.empty())
 				{
 					break;
 				}

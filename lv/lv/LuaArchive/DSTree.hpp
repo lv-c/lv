@@ -52,7 +52,7 @@ namespace lv::lua::archive
 
 			bool primitive = true;
 			
-			if (! is_primitive<Key>::value)
+			if (!is_primitive<Key>::value)
 			{
 				primitive = false;
 				os << std::endl << write_tabs(level + 1);
@@ -64,7 +64,7 @@ namespace lv::lua::archive
 
 			if (tree.data())
 			{
-				if (! is_primitive<Data>::value)
+				if (!is_primitive<Data>::value)
 				{
 					primitive = false;
 					os << std::endl << write_tabs(level + 1);
@@ -78,7 +78,7 @@ namespace lv::lua::archive
 			}
 
 
-			if (! primitive)
+			if (!primitive)
 			{
 				os << std::endl << write_tabs(level);
 			}
@@ -93,7 +93,7 @@ namespace lv::lua::archive
 			{
 				if (v.empty() || v.data())
 				{
-					if (! first_time)
+					if (!first_time)
 					{
 						os << ", ";
 					}

@@ -86,7 +86,7 @@ namespace lv::log
 	inline gather_ptr	add_file_gather(Log & log, char const * file, bool append = false, FormmatterSet formatters = CommonFormatters())
 	{
 		ostream_ptr ofile = std::make_shared<std::basic_ofstream<char_type> >(file, append ? std::ios_base::app : std::ios_base::trunc);
-		if (! (*ofile))
+		if (!(*ofile))
 		{
 			throw file_io_error(std::string("error opening file:") + file);
 		}

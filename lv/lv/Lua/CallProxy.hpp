@@ -55,7 +55,7 @@ namespace lv::lua
 		{
 			if (callback_)
 			{
-				if (! finished_)
+				if (!finished_)
 				{
 					finish();
 					callback_(oss_.str());
@@ -69,7 +69,7 @@ namespace lv::lua
 
 		operator std::string ()
 		{
-			if (! finished_)
+			if (!finished_)
 			{
 				finish();
 				return oss_.str();
@@ -84,7 +84,7 @@ namespace lv::lua
 		template<class T>
 		CallProxy & operator << (T const & t)
 		{
-			BOOST_ASSERT(! finished_);
+			BOOST_ASSERT(!finished_);
 
 			if (first_param_)
 			{

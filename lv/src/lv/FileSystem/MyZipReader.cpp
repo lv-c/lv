@@ -90,7 +90,7 @@ namespace lv
 
 			if (in_memory_)
 			{
-				if (! raw_file_reader_)
+				if (!raw_file_reader_)
 				{
 					raw_file_reader_ = std::make_shared<RawFileReader>();
 				}

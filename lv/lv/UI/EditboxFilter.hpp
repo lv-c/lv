@@ -71,7 +71,7 @@ namespace lv
 		{
 			for (Editbox::filter_type & f : filters_)
 			{
-				if (! f(c, edit))
+				if (!f(c, edit))
 				{
 					return false;
 				}
@@ -94,7 +94,7 @@ namespace lv
 
 		bool operator () (wchar_t c, Editbox const & edit)
 		{
-			return ! filter_(c, edit);
+			return !filter_(c, edit);
 		}
 
 	private:

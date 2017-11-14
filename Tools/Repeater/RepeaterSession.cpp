@@ -28,7 +28,7 @@ void RepeaterSession::on_connected()
 {
 	string ip = remote_ip();
 
-	if(! ip.empty())
+	if(!ip.empty())
 	{
 		boost::asio::ip::address_v4 addr = boost::asio::ip::address_v4::from_string(ip);
 		remote_ip_ = (addr.to_ulong());
@@ -78,7 +78,7 @@ void RepeaterSession::on_receive(BufferPtr buf)
 
 void RepeaterSession::on_timer(boost::system::error_code const & error)
 {
-	if(! error && ! closed())
+	if(!error && !closed())
 	{
 		int sec = Config::instance().no_data_disconnect_seconds;
 

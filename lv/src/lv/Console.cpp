@@ -20,13 +20,13 @@ namespace lv
 
 	bool	create_console(char const * title, bool std_io /* = true */)
 	{
-		if (! AllocConsole())
+		if (!AllocConsole())
 		{
 			return false;
 		}
 
 		BOOL   bOK   =   SetConsoleCtrlHandler((PHANDLER_ROUTINE)console_handler, TRUE);
-		if (! bOK)
+		if (!bOK)
 		{
 			return false;
 		}

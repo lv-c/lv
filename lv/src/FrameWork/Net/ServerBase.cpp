@@ -21,7 +21,7 @@ namespace lv::net
 		{
 			asio::ip::address bind_addr;
 
-			if (! to_bind.empty())
+			if (!to_bind.empty())
 			{
 				bind_addr = asio::ip::address::from_string(to_bind);
 			}
@@ -69,7 +69,7 @@ namespace lv::net
 
 	void ServerBase::handle_accept(SessionPtr session, boost::system::error_code const & error)
 	{
-		if (! error)
+		if (!error)
 		{
 			on_new_session(session);
 			session->server_side_start();

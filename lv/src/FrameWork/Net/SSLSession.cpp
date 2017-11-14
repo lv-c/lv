@@ -55,7 +55,7 @@ namespace lv::net
 			return;
 		}
 
-		if (! error)
+		if (!error)
 		{
 			on_connected_internal();
 		}
@@ -72,7 +72,7 @@ namespace lv::net
 			return;
 		}
 
-		if (! error)
+		if (!error)
 		{
 			handshake(ClientHandshake);
 		}

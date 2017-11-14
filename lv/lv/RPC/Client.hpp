@@ -95,13 +95,13 @@ namespace lv::rpc
 				, request_id_(rhs.request_id_)
 				, sent_(false)
 			{
-				BOOST_ASSERT(! rhs.sent_);
+				BOOST_ASSERT(!rhs.sent_);
 				rhs.sent_ = true;
 			}
 
 			~PrivateHandler()
 			{
-				if (! sent_)
+				if (!sent_)
 				{
 					client_.send(buffer_, *oa_, request_id_, Protocol::options::none);
 				}

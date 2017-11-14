@@ -26,7 +26,7 @@ namespace boost::serialization
 		collection_size_type const count(t.size());
 		ar << BOOST_SERIALIZATION_NVP(count);
 
-		if (! t.empty())
+		if (!t.empty())
 		{
 			ar << make_array(t.data(), t.size());
 		}
@@ -39,7 +39,7 @@ namespace boost::serialization
 		ar >> BOOST_SERIALIZATION_NVP(count);
 		t.resize(count);
 
-		if (! t.empty())
+		if (!t.empty())
 		{
 			// TODO: t.data(): <b>Requires< / b>: The program shall not alter any of the values stored in the character array.
 			// So it may be wrong here.

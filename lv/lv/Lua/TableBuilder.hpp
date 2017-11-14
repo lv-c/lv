@@ -37,7 +37,7 @@ namespace lv::lua
 		template<class K, class V>
 		TableBuilder &	operator () (K const & key, V const & value)
 		{
-			if (! first_time_)
+			if (!first_time_)
 			{
 				oss_ << ", ";
 			}
@@ -98,7 +98,7 @@ namespace lv::lua
 		template<class T>
 		ArrayBuilder & operator , (T const & t)
 		{
-			if (! first_time_)
+			if (!first_time_)
 			{
 				oss_ << ", ";
 			}

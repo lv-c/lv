@@ -29,7 +29,7 @@ namespace lv::lua::archive
 	template<typename T>
 	void	load(Parser & parser, lv::serialization::NonintrusiveOptional<T> & t)
 	{
-		if (! parser.read_if("nil"))
+		if (!parser.read_if("nil"))
 		{
 			parser >> t.value();
 		}

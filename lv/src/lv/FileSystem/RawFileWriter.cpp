@@ -17,7 +17,7 @@ namespace lv
 		std::string path = resolve(file);
 
 		std::ofstream ofile(path.c_str(), std::ios_base::out | std::ios_base::binary | std::ios_base::trunc);
-		if (! ofile)
+		if (!ofile)
 		{
 			throw std::system_error(std::make_error_code(std::errc::io_error), "error opening file: " + file);
 		}
@@ -28,7 +28,7 @@ namespace lv
 			ofile.write(buf->data(), buf->size());	// write the whole file
 		}
 
-		if (! ofile)
+		if (!ofile)
 		{
 			throw std::system_error(std::make_error_code(std::errc::io_error), "error writing file: " + file);
 		}

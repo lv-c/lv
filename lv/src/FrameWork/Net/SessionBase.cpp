@@ -60,7 +60,7 @@ namespace lv::net
 		asio::ip::tcp::endpoint endpoint = remote ?
 			socket_->get().remote_endpoint(error) : socket_->get().local_endpoint(error);
 
-		if (! error)
+		if (!error)
 		{
 			return endpoint.address().to_string(error);
 		}
@@ -121,7 +121,7 @@ namespace lv::net
 		asio::ip::tcp::resolver::query query(ip, port);
 		asio::ip::tcp::resolver resolver(context_->service());
 
-		if (! to_bind.empty())
+		if (!to_bind.empty())
 		{
 			asio::ip::address bind_addr = asio::ip::address::from_string(to_bind);
 
@@ -163,7 +163,7 @@ namespace lv::net
 
 	void SessionBase::start_write(BufferPtr buf)
 	{
-		if (! closed_)
+		if (!closed_)
 		{
 			/*
 			async_write
@@ -189,7 +189,7 @@ namespace lv::net
 
 	void SessionBase::write_impl(BufferPtr buf)
 	{
-		BOOST_ASSERT(! writing_);
+		BOOST_ASSERT(!writing_);
 		writing_ = true;
 
 		if (context_->has_strand())
@@ -217,7 +217,7 @@ namespace lv::net
 
 	void SessionBase::on_error_internal(ErrorType type, boost::system::error_code const & error)
 	{
-		if (! closed_)
+		if (!closed_)
 		{
 			close();
 			on_error(type, error);
@@ -289,7 +289,7 @@ namespace lv::net
 			{
 				lock_guard lock(write_mutex_);
 
-				if (! writing_ && ! write_queue_.empty())
+				if (!writing_ && !write_queue_.empty())
 				{
 					BufferPtr new_buf = write_queue_.front();
 					write_queue_.pop_front();
@@ -309,7 +309,7 @@ namespace lv::net
 			return;
 		}
 
-		if (! error)
+		if (!error)
 		{
 			on_connected_internal();
 		}

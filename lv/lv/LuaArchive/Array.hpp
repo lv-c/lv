@@ -38,7 +38,7 @@ namespace lv::lua::archive
 		{
 			LV_ENSURE(index < N, ArraySizeTooShort());
 
-			BOOST_ASSERT(! detail::is_version_key(it.key()) && "you shouldn't place a version key here");
+			BOOST_ASSERT(!detail::is_version_key(it.key()) && "you shouldn't place a version key here");
 
 			load_item_adl(it, v[index]);
 		}
@@ -51,7 +51,7 @@ namespace lv::lua::archive
 
 		size_t index = 0;
 
-		while (! parser.read_if('}'))
+		while (!parser.read_if('}'))
 		{
 			LV_ENSURE(index < N, ArraySizeTooShort());
 			parser >> v[index++];

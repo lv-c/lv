@@ -114,7 +114,7 @@ BOOST_AUTO_TEST_CASE(test_serialization)
 	BOOST_CHECK(obj == new_obj);
 	BOOST_CHECK(int_arr == new_int_arr);
 	BOOST_CHECK(inter_str == new_inter_str);
-	BOOST_CHECK(! new_empty_shared_ptr);
+	BOOST_CHECK(!new_empty_shared_ptr);
 	BOOST_CHECK_EQUAL(*str_shared_ptr, *new_str_shared_ptr);
 
 	// end of the buffer

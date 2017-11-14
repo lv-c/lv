@@ -101,7 +101,7 @@ namespace lv::net
 
 				messages_[index].buf.reset();
 
-				while (! messages_.empty() && ! messages_.front().buf)
+				while (!messages_.empty() && !messages_.front().buf)
 				{
 					messages_.pop_front();
 					id_base_ ++;
@@ -169,7 +169,7 @@ namespace lv::net
 
 				Message & msg = messages_[index];
 
-				if (! msg.received)
+				if (!msg.received)
 				{
 					buf->erase(buf->begin(), buf->begin() + sizeof(Header));
 
@@ -200,7 +200,7 @@ namespace lv::net
 				}
 			}
 
-			while (! messages_.empty() && messages_.front().received && ! messages_.front().buf)
+			while (!messages_.empty() && messages_.front().received && !messages_.front().buf)
 			{
 				messages_.pop_front();
 				id_base_++;
@@ -305,14 +305,14 @@ namespace lv::net
 				LV_ENSURE(false, "unknown header type");
 			}
 
-		} while (! buf->empty());
+		} while (!buf->empty());
 	}
 
 	void MessageQueue::on_timer()
 	{
 		check_send();
 
-		if (! need_reply_.empty() && sender_->sendable() && last_reply_time_ + 0.5 < timer_.elapsed())
+		if (!need_reply_.empty() && sender_->sendable() && last_reply_time_ + 0.5 < timer_.elapsed())
 		{
 			BufferPtr buf = context_->buffer();
 			fill_replies(*buf);
@@ -323,7 +323,7 @@ namespace lv::net
 
 	void MessageQueue::check_send()
 	{
-		if (! sender_->sendable())
+		if (!sender_->sendable())
 		{
 			return;
 		}
@@ -333,7 +333,7 @@ namespace lv::net
 			// make a copy of the data, because the sender may modify it.
 			BufferPtr new_buf = context_->buffer();
 
-			if (! need_reply_.empty())
+			if (!need_reply_.empty())
 			{
 				fill_replies(*new_buf);
 			}
@@ -345,7 +345,7 @@ namespace lv::net
 
 	void MessageQueue::fill_replies(Buffer & buf)
 	{
-		if (! need_reply_.empty())
+		if (!need_reply_.empty())
 		{
 			BinaryOStream(buf) << ReplayType << bstream::variable_len_range<uint32>(need_reply_);
 

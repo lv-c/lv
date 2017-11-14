@@ -41,7 +41,7 @@ namespace lv::lua::archive
 		}
 		else
 		{
-			if (! t)
+			if (!t)
 			{
 				t = T();
 			}
@@ -58,7 +58,7 @@ namespace lv::lua::archive
 		}
 		else
 		{
-			if (! t)
+			if (!t)
 			{
 				t = T();
 			}

@@ -59,7 +59,7 @@ namespace lv::net
 
 		bool	has_auth() const
 		{
-			return (! user_.empty());
+			return (!user_.empty());
 		}
 
 	};

@@ -35,7 +35,7 @@ namespace lv::net
 		std::string socks_ip, socks_port;
 		dynamic_cast<Socks5ClientContext &>(*context_).get_proxy(socks_ip, socks_port);
 
-		use_proxy_ = (! socks_ip.empty());
+		use_proxy_ = (!socks_ip.empty());
 
 		if (use_proxy_)
 		{
@@ -54,7 +54,7 @@ namespace lv::net
 			return;
 		}
 
-		if (! use_proxy_)
+		if (!use_proxy_)
 		{
 			base_type::handle_connect(error);
 		}
@@ -73,7 +73,7 @@ namespace lv::net
 
 	void Socks5ClientSession::on_connected_internal()
 	{
-		if (! use_proxy_)
+		if (!use_proxy_)
 		{
 			status_ = Established;
 			base_type::on_connected_internal();

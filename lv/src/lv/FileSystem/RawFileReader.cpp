@@ -18,7 +18,7 @@ namespace lv
 		std::string path = resolve(file);
 
 		std::ifstream infile(path.c_str(), std::ios_base::binary);
-		if (! infile)
+		if (!infile)
 		{
 			throw std::system_error(std::make_error_code(std::errc::io_error), "error opening file: " + file);
 		}
@@ -39,7 +39,7 @@ namespace lv
 			buf->clear();
 		}
 
-		if (! infile)
+		if (!infile)
 		{
 			throw std::system_error(std::make_error_code(std::errc::io_error), "error reading file : " + file);
 		}

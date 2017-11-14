@@ -30,7 +30,7 @@ namespace lv::flow::detail
 	{
 		typedef std::remove_const_t<std::remove_reference_t<T> >	type;
 
-		static_assert(! std::is_pointer<type>::value, "parameter types of the registered functions can't be pointer types");
+		static_assert(!std::is_pointer<type>::value, "parameter types of the registered functions can't be pointer types");
 	};
 
 	template<class T>
