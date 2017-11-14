@@ -19,13 +19,13 @@
 namespace lv
 {
 	template<class T>
-	inline std::enable_if_t<!std::is_enum<T>::value, T>	endian_switch(T v) noexcept
+	inline std::enable_if_t<!std::is_enum_v<T>, T>	endian_switch(T v) noexcept
 	{
 		return boost::endian::endian_reverse(v);
 	}
 
 	template<class T>
-	inline std::enable_if_t<std::is_enum<T>::value, T>	endian_switch(T v) noexcept
+	inline std::enable_if_t<std::is_enum_v<T>, T>	endian_switch(T v) noexcept
 	{
 		return static_cast<T>(endian_switch(static_cast<std::underlying_type_t<T>>(v)));
 	}
@@ -41,7 +41,7 @@ namespace lv
 		template<class T, class U>
 		inline T	reinterpret(U v) noexcept
 		{
-			static_assert(sizeof(T) == sizeof(U), "should be same size");
+			static_assert(sizeof(T) == sizeof(U));
 
 			union {
 				U	u;

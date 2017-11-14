@@ -21,9 +21,13 @@ namespace lv::bstream
 	// arithmetic type or enum type
 	template<typename T>
 	struct is_primitive 
-		: std::integral_constant<bool, std::is_arithmetic<T>::value || std::is_enum<T>::value>
+		: std::integral_constant<bool, std::is_arithmetic_v<T> || std::is_enum_v<T> >
 	{
 	};
+
+
+	template<typename T>
+	constexpr bool	is_primitive_v = is_primitive<T>::value;
 
 
 	// tags
@@ -42,7 +46,7 @@ namespace lv::bstream
 	struct object_tag : unknown_tag {};
 
 	template<typename T>
-	struct object_tag<T, std::enable_if_t<is_primitive<T>::value> >
+	struct object_tag<T, std::enable_if_t<is_primitive_v<T> > >
 		: primitive_tag
 	{
 	};

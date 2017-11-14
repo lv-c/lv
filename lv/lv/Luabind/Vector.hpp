@@ -70,7 +70,7 @@ namespace lv::lua
 			.def("pop_back", &type::pop_back)
 		;
 
-		if (!is_primitive<T>::value)
+		if (!is_primitive_v<T>)
 		{
 			vec
 				.def("at", (reference(type::*)(size_type))&type::at)

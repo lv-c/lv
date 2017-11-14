@@ -96,7 +96,7 @@ namespace lv::lua::archive
 
 				first_time_ = false;
 
-				if (!is_primitive<T>::value)
+				if (!is_primitive_v<T>)
 				{
 					os_ << std::endl << write_tabs(level_);
 					primitive_ = false;
@@ -117,13 +117,13 @@ namespace lv::lua::archive
 
 		// primitive_tag
 		template<typename T>
-		std::enable_if_t<std::is_integral<T>::value>	save_primitive(std::ostream & os, T t)
+		std::enable_if_t<std::is_integral_v<T> >	save_primitive(std::ostream & os, T t)
 		{
 			os << lv::widen_int(t);
 		}
 
 		template<typename T>
-		std::enable_if_t<std::is_floating_point<T>::value>	save_primitive(std::ostream & os, T t)
+		std::enable_if_t<std::is_floating_point_v<T> >	save_primitive(std::ostream & os, T t)
 		{
 			os << t;
 		}
@@ -210,7 +210,7 @@ namespace lv::lua::archive
 		{
 			os << '{';
 
-			bool is_primitive_item = is_primitive<typename std::iterator_traits<Iter>::value_type>::value;
+			constexpr bool is_primitive_item = is_primitive_v<typename std::iterator_traits<Iter>::value_type>;
 
 			for (Iter it = begin; it != end; ++it)
 			{

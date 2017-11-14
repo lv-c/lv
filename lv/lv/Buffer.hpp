@@ -246,7 +246,7 @@ namespace lv
 		}
 
 		template<typename T>
-		std::enable_if_t<std::is_arithmetic<T>::value>	append(Buffer & buf, T t)
+		std::enable_if_t<std::is_arithmetic_v<T> >	append(Buffer & buf, T t)
 		{
 			append(buf, &t, sizeof(t));
 		}
@@ -265,7 +265,7 @@ namespace lv
 		}
 
 		template<typename T>
-		std::enable_if_t<std::is_arithmetic<T>::value>	insert(Buffer & buf, size_t pos, T t)
+		std::enable_if_t<std::is_arithmetic_v<T> >	insert(Buffer & buf, size_t pos, T t)
 		{
 			insert(buf, pos, &t, sizeof(t));
 		}
@@ -285,7 +285,7 @@ namespace lv
 		}
 
 		template<typename T>
-		std::enable_if_t<std::is_arithmetic<T>::value>	write(BufferRef buf, size_t pos, T t)
+		std::enable_if_t<std::is_arithmetic_v<T> >	write(BufferRef buf, size_t pos, T t)
 		{
 			write(buf, pos, &t, sizeof(t));
 		}
@@ -305,7 +305,7 @@ namespace lv
 		}
 
 		template<typename T>
-		std::enable_if_t<std::is_arithmetic<T>::value>	read(ConstBufferRef const & buf, size_t pos, T & t)
+		std::enable_if_t<std::is_arithmetic_v<T> >	read(ConstBufferRef const & buf, size_t pos, T & t)
 		{
 			read(buf, pos, &t, sizeof(t));
 		}

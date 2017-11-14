@@ -19,6 +19,7 @@
 
 #include <deque>
 
+
 namespace lv::lua::archive
 {
 	namespace detail
@@ -52,7 +53,7 @@ namespace lv::lua::archive
 
 			bool primitive = true;
 			
-			if (!is_primitive<Key>::value)
+			if (!is_primitive_v<Key>)
 			{
 				primitive = false;
 				os << std::endl << write_tabs(level + 1);
@@ -64,7 +65,7 @@ namespace lv::lua::archive
 
 			if (tree.data())
 			{
-				if (!is_primitive<Data>::value)
+				if (!is_primitive_v<Data>)
 				{
 					primitive = false;
 					os << std::endl << write_tabs(level + 1);
@@ -152,7 +153,7 @@ namespace lv::lua::archive
 		{
 			luabind::iterator v_it(*it);
 
-			if (std::is_same<Key, char>::value)
+			if (std::is_same_v<Key, char>)
 			{
 				load_adl(*v_it, str);
 			}

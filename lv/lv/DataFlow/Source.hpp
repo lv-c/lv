@@ -82,8 +82,7 @@ namespace lv::flow
 			OArchiveWrapper<oarchive_type> oa(ostream_factory_, *buf);
 
 			oa.get() << key;
-			int dummy[] = { 0, ((oa.get() << args), 0)... };
-			(void)dummy;
+			[[maybe_unused]] int dummy[] = { 0, ((oa.get() << args), 0)... };
 
 			oa.flush();
 

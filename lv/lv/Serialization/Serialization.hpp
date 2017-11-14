@@ -170,14 +170,14 @@ namespace boost::serialization
 	struct use_array_optimization<lv::OArchive>
 	{
 		template<class T>
-		struct apply : boost::mpl::bool_<std::is_arithmetic<T>::value> {};
+		struct apply : boost::mpl::bool_<std::is_arithmetic_v<T> > {};
 	};
 
 	template<>
 	struct use_array_optimization<lv::IArchive>
 	{
 		template<class T>
-		struct apply : boost::mpl::bool_<std::is_arithmetic<T>::value> {};
+		struct apply : boost::mpl::bool_<std::is_arithmetic_v<T> > {};
 	};
 
 }

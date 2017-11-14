@@ -32,7 +32,7 @@ namespace lv
 	template<typename MemFn>
 	struct BindMemFnSignature
 	{
-		static_assert(std::is_member_function_pointer<MemFn>::value, "member function pointer");
+		static_assert(std::is_member_function_pointer_v<MemFn>);
 
 		typedef typename boost::function_types::function_type<
 			typename detail::RemoveSecond<

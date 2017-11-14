@@ -35,7 +35,7 @@ namespace lv::detail
 	// we can't do it like this: void ensure_throw(std::exception const & ex) { throw ex; }
 	// ex will be copied so we must known the real type
 	template<typename T>
-	[[noreturn]] std::enable_if_t<std::is_base_of<std::exception, T>::value>	ensure_throw(T const & ex)
+	[[noreturn]] std::enable_if_t<std::is_base_of_v<std::exception, T> >	ensure_throw(T const & ex)
 	{
 		throw ex;
 	}

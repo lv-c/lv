@@ -120,7 +120,7 @@ namespace lv::rpc
 
 				try
 				{
-					Protocol::options::type option = (std::is_same<Ret, void>::value ? Protocol::options::ack : Protocol::options::ret);
+					Protocol::options::type option = (std::is_same_v<Ret, void> ? Protocol::options::ack : Protocol::options::ret);
 					client_.send(buffer_, *oa_, request_id_, option);
 				}
 				catch (...)
@@ -200,8 +200,7 @@ namespace lv::rpc
 			auto header = Protocol::header::call;
 			oa->get() << header << id;
 
-			int dummy[] = { 0, ((oa->get() << args), 0)... };
-			(void)dummy;
+			[[maybe_unused]] int dummy[] = { 0, ((oa->get() << args), 0)... };
 
 			return PrivateHandler<Ret>(*this, buf, std::move(oa), next_request_id_++);
 		}

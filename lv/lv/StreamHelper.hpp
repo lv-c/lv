@@ -105,7 +105,7 @@ namespace lv
 	namespace detail
 	{
 		template<typename T, typename C, typename Tr>
-		std::enable_if_t<std::is_arithmetic<T>::value>	write(std::basic_ostream<C, Tr> & os, T const & t, bool use_hex, int setw)
+		std::enable_if_t<std::is_arithmetic_v<T> >	write(std::basic_ostream<C, Tr> & os, T const & t, bool use_hex, int setw)
 		{
 			if (setw != -1)
 			{
@@ -123,7 +123,7 @@ namespace lv
 		}
 
 		template<typename T, typename C, typename Tr>
-		std::enable_if_t<!std::is_arithmetic<T>::value>	write(std::basic_ostream<C, Tr> & os, T const & t, bool use_hex, int setw)
+		std::enable_if_t<!std::is_arithmetic_v<T> >	write(std::basic_ostream<C, Tr> & os, T const & t, bool use_hex, int setw)
 		{
 			os << t;
 		}

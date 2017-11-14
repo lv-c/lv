@@ -20,10 +20,13 @@ namespace lv::lua
 	template<class T>
 	struct is_primitive
 		: std::integral_constant<bool, 
-			std::is_arithmetic<T>::value || std::is_same<T, std::string>::value>
+			std::is_arithmetic_v<T> || std::is_same_v<T, std::string> >
 	{
 	};
 
+
+	template<class T>
+	constexpr bool	is_primitive_v = is_primitive<T>::value;
 }
 
 #endif

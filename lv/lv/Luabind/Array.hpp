@@ -40,7 +40,7 @@ namespace lv::lua
 			.def("back", (const_reference(type::*)() const)&type::back)
 		;
 
-		if (!is_primitive<T>::value)
+		if (!is_primitive_v<T>)
 		{
 			arr
 				.def("at", (reference(type::*)(size_type))&type::at)

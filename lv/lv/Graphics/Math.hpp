@@ -34,7 +34,7 @@ namespace lv::math
 	};
 
 	template<typename T>
-	struct FloatType<T, std::enable_if_t<std::is_floating_point<T>::value> >
+	struct FloatType<T, std::enable_if_t<std::is_floating_point_v<T> > >
 		: boost::mpl::identity<T>
 	{
 	};
@@ -56,7 +56,7 @@ namespace lv::math
 
 	inline __declspec(naked) float	rsqrt(float v)
 	{
-		static_assert(sizeof(float) == 4, "32bit only");
+		static_assert(sizeof(float) == 4);
 
 		__asm{
 			rsqrtss xmm0, dword ptr [esp + 4]

@@ -58,17 +58,22 @@ namespace lv::lua::archive
 	};
 
 
+	template<typename T>
+	constexpr bool	is_primitive_v = is_primitive<T>::value;
+
+
+
 	template<typename T, class Enabled = void>
 	struct object_tag : unknown_tag {};
 
 	template<typename T>
-	struct object_tag<T, std::enable_if_t<is_primitive<T>::value> >
+	struct object_tag<T, std::enable_if_t<is_primitive_v<T> > >
 		: primitive_tag
 	{
 	};
 
 	template<typename T>
-	struct object_tag<T, std::enable_if_t<std::is_enum<T>::value> >
+	struct object_tag<T, std::enable_if_t<std::is_enum_v<T> > >
 		: enum_tag
 	{
 	};

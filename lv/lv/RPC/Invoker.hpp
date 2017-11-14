@@ -32,7 +32,7 @@ namespace lv::rpc::detail
 	{
 		typedef std::remove_const_t<std::remove_reference_t<T> >	type;
 
-		static_assert(!std::is_pointer<type>::value, "parameter types of the registered functions can't be pointer types");
+		static_assert(!std::is_pointer_v<type>, "parameter types of the registered functions can't be pointer types");
 	};
 
 	template<class T, class IArchive>
@@ -103,7 +103,7 @@ namespace lv::rpc::detail
 		typedef typename function_type::result_type result_type;
 		typedef typename boost::function_types::parameter_types<Signature>::type param_type;
 
-		static_assert(!std::is_pointer<result_type>::value, "The result type shouldn't be a pointer type");
+		static_assert(!std::is_pointer_v<result_type>, "The result type shouldn't be a pointer type");
 
 
 	public:

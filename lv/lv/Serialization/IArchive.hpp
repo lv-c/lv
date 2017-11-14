@@ -92,14 +92,14 @@ namespace lv
 
 
 		template<typename T>
-		std::enable_if_t<!std::is_arithmetic<T>::value>	load(T & t)
+		std::enable_if_t<!std::is_arithmetic_v<T> >	load(T & t)
 		{
 			serialization::load_adl(*this, t);
 		}
 
 
 		template<typename T>
-		std::enable_if_t<std::is_arithmetic<T>::value>	load(T & t)
+		std::enable_if_t<std::is_arithmetic_v<T> >	load(T & t)
 		{
 			load_binary(&t, sizeof(T));
 		}
