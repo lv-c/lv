@@ -22,7 +22,7 @@
 
 namespace lv
 {
-	DEFINE_EXCEPTION_MSG(ThreadInterrupted, std::runtime_error);
+	DEFINE_EXCEPTION_MSG(TaskQueueClosed, std::runtime_error);
 
 
 	template <typename Task, template <typename> class QueuePolicy>
@@ -36,19 +36,18 @@ namespace lv
 
 		std::condition_variable	full_;
 		std::condition_variable	empty_;
-		std::condition_variable	consumer_interruption_done_;
 
-		volatile size_t		max_count_;		// maximum number of tasks
-		volatile size_t		consumers_to_interrupt_;
+		size_t		max_count_;		// maximum number of tasks
+		bool		closed_;
 
 	public:
 
 		typedef Task	value_type;
 
 
-		TaskQueue(size_t max_count = std::numeric_limits<size_t>::max())
+		explicit TaskQueue(size_t max_count = std::numeric_limits<size_t>::max())
 			: max_count_(max_count)
-			, consumers_to_interrupt_(0)
+			, closed_(false)
 		{
 		}
 
@@ -56,6 +55,7 @@ namespace lv
 		/** 
 		 * Put a task into the queue. 
 		 * If the queue is full, block until it's not full.
+		 * @exception TaskQueueClosed if the task queue is closed
 		 */
 		void	put(value_type const & task)
 		{
@@ -71,34 +71,18 @@ namespace lv
 		/**
 		 * Get the next task that should be executed
 		 * If the queue is empty, block until it's not empty.
-		 * Note that this function can be interrupted, which will throw a boost::thread_interrupted
-		 * exception.
-		 * @see interrupt_consumers
+		 * @exception TaskQueueClosed if the task queue is closed
 		 */
-		value_type get() // throw(boost::thread_interrupted)
+		value_type get()
 		{
 			std::unique_lock<std::mutex> lock(mutex_);
 
-			while (true)
+			check_closed();
+
+			while (queue_.empty())
 			{
-				if (consumers_to_interrupt_ > 0)
-				{
-					consumers_to_interrupt_ --;
-
-					if (consumers_to_interrupt_ == 0)
-					{
-						consumer_interruption_done_.notify_all();
-					}
-
-					throw ThreadInterrupted();
-				}
-
-				if (!queue_.empty())
-				{
-					break;
-				}
-
 				empty_.wait(lock);
+				check_closed();
 			}
 
 			//
@@ -133,23 +117,14 @@ namespace lv
 		}
 
 
-		/**
-		 * Interrupt num consumers that are currently waiting for ( tasks and that will call 'get' method later.
-		 * The number of consumers to interrupt will be accumulated.
-		 * @param num number of consumers to interrupt.
-		 * @param wait wait for ( the job done or not
-		 */
-		void	interrupt_consumers(size_t num, bool wait = false)
+		void	close()
 		{
-			std::unique_lock<std::mutex> lock(mutex_);
-			consumers_to_interrupt_ += num;
-			
-			empty_.notify_all();
+			lock_guard lock(mutex_);
 
-			if (wait)
-			{
-				consumer_interruption_done_.wait(lock);
-			}
+			closed_ = true;
+
+			empty_.notify_all();
+			full_.notify_all();
 		}
 
 		/**
@@ -165,6 +140,7 @@ namespace lv
 		 */
 		void	max_count(size_t count)
 		{
+			lock_guard lock(mutex_);
 			max_count_ = count;
 		}
 
@@ -175,9 +151,12 @@ namespace lv
 		{
 			std::unique_lock<std::mutex> lock(mutex_);
 
+			check_closed();
+
 			while (queue_.size() >= max_count_)
 			{
 				full_.wait(lock);
+				check_closed();
 			}
 
 			if (queue_.empty())
@@ -186,6 +165,14 @@ namespace lv
 			}
 
 			queue_.push(std::forward<T>(task));
+		}
+
+		void	check_closed()
+		{
+			if (closed_)
+			{
+				throw TaskQueueClosed();
+			}
 		}
 
 	};

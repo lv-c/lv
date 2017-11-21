@@ -44,8 +44,7 @@ namespace lv::flow
 
 			~ThreadedPushImpl()
 			{
-				queue_.interrupt_consumers(threads_.size());
-
+				queue_.close();
 				threads_.join_all();
 			}
 
@@ -64,7 +63,7 @@ namespace lv::flow
 					{
 						this->callback_(queue_.get());
 					}
-					catch (ThreadInterrupted const &)
+					catch (TaskQueueClosed const &)
 					{
 						break;
 					}

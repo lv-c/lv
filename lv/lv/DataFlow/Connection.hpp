@@ -63,8 +63,7 @@ namespace lv::flow
 		 */
 		void	disconnect()
 		{
-			std::shared_ptr<detail::ConnectionImpl> p = impl_.lock();
-			if (p)
+			if (auto p = impl_.lock())
 			{
 				p->disconnect();
 			}
