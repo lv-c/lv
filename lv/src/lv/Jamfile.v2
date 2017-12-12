@@ -8,7 +8,7 @@ project.initialize $(__name__) ;
 rule source ( properties * )
 {
 	local exclude = ZeroMQ Graphics UI MyZipReader.cpp ;
-	exclude += [ conditional-exclude $(properties) : Luabind/Luabind.hpp : Lua Luabind ] ;
+	exclude += [ conditional-exclude $(properties) : luabind/luabind.hpp : Lua Luabind ] ;
 
 	return [ build-source $(.project) : $(exclude) ] ;
 }

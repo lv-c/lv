@@ -17,7 +17,7 @@ namespace lv
 	{
 		std::string path = resolve(file);
 
-		std::ifstream infile(path.c_str(), std::ios_base::binary);
+		std::ifstream infile(path, std::ios_base::binary);
 		if (!infile)
 		{
 			throw std::system_error(std::make_error_code(std::errc::io_error), "error opening file: " + file);

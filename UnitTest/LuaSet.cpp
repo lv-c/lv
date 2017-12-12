@@ -18,13 +18,12 @@
 
 #include <iostream>
 
-#ifdef _DEBUG
-#pragma comment(lib, "libluabindd.lib")
-#else
-#pragma comment(lib, "libluabind.lib")
-#endif
+#define LV_LIB_NAME "luabind"
+#include <lv/AutoLink.hpp>
 
-#pragma comment(lib, "liblua.lib")
+#define LV_LIB_NAME "lua"
+#include <lv/AutoLink.hpp>
+
 
 int error_handler(lua_State* state)
 {

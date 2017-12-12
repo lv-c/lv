@@ -16,7 +16,7 @@ namespace lv
 	{
 		std::string path = resolve(file);
 
-		std::ofstream ofile(path.c_str(), std::ios_base::out | std::ios_base::binary | std::ios_base::trunc);
+		std::ofstream ofile(path, std::ios_base::out | std::ios_base::binary | std::ios_base::trunc);
 		if (!ofile)
 		{
 			throw std::system_error(std::make_error_code(std::errc::io_error), "error opening file: " + file);
