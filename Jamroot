@@ -66,7 +66,7 @@ rule build-source ( proj : exclude * )
 local proj =
 	lv/src/lv
 	lv/src/FrameWork
-	#lv/src/Toolkit
+	lv/src/Toolkit
 	#UnitTest
 	#Tools/Repeater
 	;

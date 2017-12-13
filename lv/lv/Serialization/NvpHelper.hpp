@@ -43,13 +43,13 @@ namespace lv
 		// used by library
 
 		template<typename T>
-		NvpHelper const & _serialize (char const * name, T & t) const
+		NvpHelper const & _serialize (char const * name, T && t) const
 		{
 			return (*this) (name, t);
 		}
 
 		template<typename T>
-		NvpHelper const & _serialize (char const *, T & t, char const * name) const
+		NvpHelper const & _serialize (char const *, T && t, char const * name) const
 		{
 			return (*this) (name, t);
 		}

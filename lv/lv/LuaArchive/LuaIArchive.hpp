@@ -51,16 +51,16 @@ namespace lv
 		}
 		
 		template<typename T>
-		LuaIArchive & operator >> (T & t)
+		LuaIArchive & operator >> (T && t)
 		{
 			load(t);
 			return *this;
 		}
 
 		template<typename T>
-		LuaIArchive & operator & (T & t)
+		LuaIArchive & operator & (T && t)
 		{
-			return *this >> t;
+			return *this >> std::forward<T>(t);
 		}
 
 	private:
