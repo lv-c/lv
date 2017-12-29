@@ -30,83 +30,83 @@ namespace lv::lua::archive
 	void	save_adl(std::ostream & os, T const & t, size_t level);
 
 
+	// unknown_tag
+	class OArchiveProxy : boost::noncopyable
+	{
+		std::ostream &	os_;
+
+		size_t	level_;
+
+		bool	primitive_;
+
+		bool	first_time_;
+
+	public:
+
+		typedef boost::mpl::true_	is_saving;
+		typedef boost::mpl::false_	is_loading;
+
+		OArchiveProxy(std::ostream & os, size_t level, unsigned int version)
+			: os_(os)
+			, level_(level)
+			, primitive_(true)
+			, first_time_(true)
+		{
+			os_ << '{';
+			if (version != DefaultVersion)
+			{
+				*this << boost::serialization::make_nvp(VersionKey.c_str(), version);
+			}
+		}
+
+		~OArchiveProxy()
+		{
+			if (!primitive_)
+			{
+				os_ << std::endl << write_tabs(level_ - 1);
+			}
+
+			os_ << '}';
+		}
+
+		template<typename T>
+		OArchiveProxy & operator << (T const & t)
+		{
+			this->save(t);
+			return *this;
+		}
+
+		template<typename T>
+		OArchiveProxy & operator & (T const & t)
+		{
+			return *this << t;
+		}
+
+	private:
+
+		template<typename T>
+		void	save(T const & t)
+		{
+			if (!first_time_)
+			{
+				os_ << ", ";
+			}
+
+			first_time_ = false;
+
+			if (!is_primitive_v<T>)
+			{
+				os_ << std::endl << write_tabs(level_);
+				primitive_ = false;
+			}
+
+			archive::save_adl(os_, t, level_);
+		}
+
+	};
+
 	namespace detail
 	{
-		// unknown_tag
-		class OArchiveProxy : boost::noncopyable
-		{
-			std::ostream &	os_;
-
-			size_t	level_;
-
-			bool	primitive_;
-
-			bool	first_time_;
-
-		public:
-
-			typedef boost::mpl::true_	is_saving;
-			typedef boost::mpl::false_	is_loading;
-
-			OArchiveProxy(std::ostream & os, size_t level, unsigned int version)
-				: os_(os)
-				, level_(level)
-				, primitive_(true)
-				, first_time_(true)
-			{
-				os_ << '{';
-				if (version != DefaultVersion)
-				{
-					*this << boost::serialization::make_nvp(VersionKey.c_str(), version);
-				}
-			}
-
-			~OArchiveProxy()
-			{
-				if (!primitive_)
-				{
-					os_ << std::endl << write_tabs(level_ - 1);
-				}
-
-				os_ << '}';
-			}
-
-			template<typename T>
-			OArchiveProxy & operator << (T const & t)
-			{
-				this->save(t);
-				return *this;
-			}
-
-			template<typename T>
-			OArchiveProxy & operator & (T const & t)
-			{
-				return *this << t;
-			}
-
-		private:
-
-			template<typename T>
-			void	save(T const & t)
-			{
-				if (!first_time_)
-				{
-					os_ << ", ";
-				}
-
-				first_time_ = false;
-
-				if (!is_primitive_v<T>)
-				{
-					os_ << std::endl << write_tabs(level_);
-					primitive_ = false;
-				}
-
-				archive::save_adl(os_, t, level_);
-			}
-
-		};
-
 		template<typename T>
 		void	save_impl(std::ostream & os, T const & t, size_t level, unknown_tag)
 		{

@@ -22,6 +22,8 @@ namespace lv
 	namespace lua::archive 
 	{
 		class Parser;
+
+		class OArchiveProxy;
 	}
 
 }
