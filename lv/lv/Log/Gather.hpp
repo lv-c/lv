@@ -134,7 +134,7 @@ namespace lv::log
 #endif
 
 
-		virtual void on_record_begin(int lvl)
+		virtual void	on_record_begin(int lvl)
 		{
 			// lock
 			mutex_.lock();
@@ -146,7 +146,7 @@ namespace lv::log
 		}
 
 		/// overloaded function should take care of the unlock
-		virtual void on_record_end(int lvl)
+		virtual void	on_record_end(int lvl)
 		{
 			LV_SCOPE_EXIT([this] { mutex_.unlock(); });
 

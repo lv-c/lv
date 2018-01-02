@@ -47,10 +47,10 @@ namespace lv::log
 
 			end_record(lvl);
 
-			on_receive(oss_.str(), lvl);
+			string_type str = oss_.str();
+			oss_.str(string_type());
 
-			// empty the stringstream
-			oss_.str(log::string_type());
+			on_receive(std::move(str), lvl);
 		}
 
 		virtual	void	on_receive(string_type && str, int lvl)

@@ -20,6 +20,7 @@
 #include <iostream>
 #include <memory>
 #include <mutex>
+#include <exception>
 
 
 namespace lv::log
@@ -65,9 +66,8 @@ namespace lv::log
 				rhs.active_ = false;
 			}
 
-			~Proxy()
+			~Proxy() noexcept(false)
 			{
-				// TODO: what if on_record_end throws an exception
 				if (active_)
 				{
 					log_.on_record_end();
@@ -75,7 +75,7 @@ namespace lv::log
 			}
 
 			template <typename T>
-			Proxy & operator << (T const & t)
+			Proxy &	operator << (T const & t)
 			{
 				BOOST_ASSERT(active_);
 
@@ -84,7 +84,7 @@ namespace lv::log
 			}
 
 			// streaming std::endl, std::ends, std::flush ...
-			Proxy & operator << (ostream_type & (* fn)(ostream_type &))
+			Proxy &	operator << (ostream_type & (* fn)(ostream_type &))
 			{
 				BOOST_ASSERT(active_);
 
@@ -107,7 +107,7 @@ namespace lv::log
 		 * log_(debug) << "hello world" << 4545;
 		 * @endcode
 		 */
-		Proxy operator () (int lvl = info)
+		Proxy	operator () (int lvl = info)
 		{
 			on_record_begin(lvl);
 
@@ -139,7 +139,7 @@ namespace lv::log
 	private:
 		
 		template <typename T>
-		void log(T const & t)
+		void	log(T const & t)
 		{
 			if (enabled_)
 			{
@@ -153,7 +153,7 @@ namespace lv::log
 			}
 		}
 
-		void on_record_begin(int lvl)
+		void	on_record_begin(int lvl)
 		{
 			// lock
 			mutex_.lock();
@@ -172,18 +172,36 @@ namespace lv::log
 			}
 		}
 
-		void on_record_end()
+
+		// there may be circumstances that users want to throw an exception (to terminate the execution)
+		// when an error message is received (inside @Gather::on_record_end). only the last exception will
+		// be rethrown if multiple exceptions are caught
+		void	on_record_end()
 		{
 			LV_SCOPE_EXIT([this] { mutex_.unlock(); });
 
 			if (enabled_)
 			{
+				std::exception_ptr last_ex;
+
 				for (gather_ptr gather : this->gathers_)
 				{
 					if (gather->filter(lvl_))
 					{
-						gather->on_record_end(lvl_);
+						try
+						{
+							gather->on_record_end(lvl_);
+						}
+						catch (...)
+						{
+							last_ex = std::current_exception();
+						}
 					}
+				}
+
+				if (last_ex)
+				{
+					std::rethrow_exception(last_ex);
 				}
 			}
 		}

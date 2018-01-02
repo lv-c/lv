@@ -118,7 +118,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalOptions>/D "_SCL_SECURE_NO_WARNINGS" /D "_WIN32_WINNT=0x0501" %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/D "_SCL_SECURE_NO_WARNINGS" /D "_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING" /D "_WIN32_WINNT=0x0501" %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
@@ -135,7 +135,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalOptions>/D "_SCL_SECURE_NO_WARNINGS" /D "_WIN32_WINNT=0x0501" %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/D "_SCL_SECURE_NO_WARNINGS" /D "_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING" /D "_WIN32_WINNT=0x0501" %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -152,7 +152,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalOptions>/D "_SCL_SECURE_NO_WARNINGS" /D "_CRT_SECURE_NO_WARNINGS" /D "_WIN32_WINNT=0x0501" %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/D "_SCL_SECURE_NO_WARNINGS" /D "_CRT_SECURE_NO_WARNINGS" /D "_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING" /D "_WIN32_WINNT=0x0501" %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader />
@@ -163,7 +163,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalOptions>/D "_SCL_SECURE_NO_WARNINGS" /D "_CRT_SECURE_NO_WARNINGS" /D "_WIN32_WINNT=0x0501" %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/D "_SCL_SECURE_NO_WARNINGS" /D "_CRT_SECURE_NO_WARNINGS" /D "_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING" /D "_WIN32_WINNT=0x0501" %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
@@ -175,7 +175,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseRuntimeStatic|Win32'">
     <ClCompile>
-      <AdditionalOptions>/D "_SCL_SECURE_NO_WARNINGS" /D "_CRT_SECURE_NO_WARNINGS" /D "_WIN32_WINNT=0x0501" %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/D "_SCL_SECURE_NO_WARNINGS" /D "_CRT_SECURE_NO_WARNINGS" /D "_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING" /D "_WIN32_WINNT=0x0501" %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <PrecompiledHeader />
@@ -189,7 +189,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseRuntimeStatic|x64'">
     <ClCompile>
-      <AdditionalOptions>/D "_SCL_SECURE_NO_WARNINGS" /D "_CRT_SECURE_NO_WARNINGS" /D "_WIN32_WINNT=0x0501" %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/D "_SCL_SECURE_NO_WARNINGS" /D "_CRT_SECURE_NO_WARNINGS" /D "_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING" /D "_WIN32_WINNT=0x0501" %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <PrecompiledHeader>

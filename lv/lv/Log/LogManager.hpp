@@ -38,7 +38,7 @@ namespace lv::log
 		/**
 		 * get the static logger
 		 */
-		Log & logger()
+		Log &	logger()
 		{
 			// lock_guard lock(mutex_);
 
@@ -50,7 +50,7 @@ namespace lv::log
 		 * creates a new logger if no logger with the given name exists, otherwise returns 
 		 *	the existing logger.
 		 */
-		Log & create_logger(std::string const & name)
+		Log &	create_logger(std::string const & name)
 		{
 			lock_guard lock(mutex_);
 
@@ -67,7 +67,7 @@ namespace lv::log
 		 * retrieve a logger
 		 * @exception std::runtime_error if no logger with the given name exists.
 		 */
-		Log & logger(std::string const & name)
+		Log &	logger(std::string const & name)
 		{
 			lock_guard lock(mutex_);
 
