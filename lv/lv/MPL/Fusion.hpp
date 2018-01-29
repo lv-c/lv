@@ -23,15 +23,15 @@ namespace lv
 	template<class T>
 	struct MplToFusionCons
 	{
-		typedef typename boost::mpl::reverse_fold<T, boost::fusion::nil, 
-			boost::fusion::cons<boost::mpl::_2, boost::mpl::_1> >::type type;
+		using type = typename boost::mpl::reverse_fold<T, boost::fusion::nil, 
+			boost::fusion::cons<boost::mpl::_2, boost::mpl::_1> >::type;
 	};
 	
 	template<class T>
 	struct MplToFusionVec
 	{
-		typedef typename boost::fusion::result_of::as_vector<typename 
-			MplToFusionCons<T>::type>::type type;
+		using type = typename boost::fusion::result_of::as_vector<typename 
+			MplToFusionCons<T>::type>::type;
 	};
 
 }

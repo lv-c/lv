@@ -23,10 +23,10 @@ namespace lv::lua
 	template<class T, size_t N>
 	void bind_array(lua_State * L, char const* name)
 	{
-		typedef std::array<T, N>	type;
-		typedef typename type::const_reference	const_reference;
-		typedef typename type::reference		reference;
-		typedef typename type::size_type		size_type;
+		using type = std::array<T, N>;
+		using const_reference = typename type::const_reference;
+		using reference = typename type::reference;
+		using size_type = typename type::size_type;
 
 		using namespace luabind;
 

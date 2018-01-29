@@ -22,11 +22,11 @@ namespace lv::lua
 	template<typename T>
 	void bind_set(lua_State * L, char const * name)
 	{
-		typedef std::set<T>	type;
-		typedef typename type::key_type		key_type;
-		typedef typename type::value_type	value_type;
-		typedef typename type::iterator		iterator;
-		typedef typename type::size_type	size_type;
+		using type = std::set<T>;
+		using key_type = typename type::key_type;
+		using value_type = typename type::value_type;
+		using iterator = typename type::iterator;
+		using size_type = typename type::size_type;
 
 		using namespace luabind;
 

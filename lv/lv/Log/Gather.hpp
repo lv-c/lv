@@ -47,9 +47,9 @@ namespace lv::log
 		}
 	};
 
-	typedef UnaryFilter<std::equal_to<int> >		EqualFilter;
-	typedef UnaryFilter<std::greater_equal<int> >	GreaterEqualFilter;
-	typedef UnaryFilter<std::less_equal<int> >		LessEualFilter;
+	using EqualFilter = UnaryFilter<std::equal_to<int> >;
+	using GreaterEqualFilter = UnaryFilter<std::greater_equal<int> >;
+	using LessEualFilter = UnaryFilter<std::less_equal<int> >;
 
 	// do not output debug messages in release version
 	struct DebugFilter

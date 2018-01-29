@@ -21,8 +21,8 @@ namespace lv
 {
 	class IStreamFactory
 	{
-		typedef boost::iostreams::stream<boost::iostreams::array_source> istream_type;
-		typedef detail::StreamFactory<istream_type>	factory_type;
+		using istream_type = boost::iostreams::stream<boost::iostreams::array_source>;
+		using factory_type = detail::StreamFactory<istream_type>;
 
 		std::shared_ptr<factory_type>	factory_;
 
@@ -33,7 +33,7 @@ namespace lv
 		{
 		}
 
-		typedef	factory_type::unique_pointer	unique_pointer;
+		using unique_pointer = factory_type::unique_pointer;
 
 		unique_pointer	open(ConstBufferRef buf, 
 			std::ios_base::iostate except = std::ios_base::badbit | std::ios_base::failbit)

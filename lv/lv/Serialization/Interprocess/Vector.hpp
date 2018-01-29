@@ -92,9 +92,9 @@ namespace boost::serialization
 	template<class Archive, class T, class Ax>
 	void save(Archive & ar, interprocess::vector<T, Ax> const & t, unsigned int version)
 	{
-		typedef typename boost::serialization::use_array_optimization<Archive>::template apply<
+		using use_optimized = typename boost::serialization::use_array_optimization<Archive>::template apply<
 			typename remove_const<T>::type
-		>::type use_optimized;
+		>::type;
 
 		save(ar, t, version, use_optimized());
 	}
@@ -102,9 +102,9 @@ namespace boost::serialization
 	template<class Archive, class T, class Ax>
 	void load(Archive & ar, interprocess::vector<T, Ax> & t, unsigned int version)
 	{
-		typedef typename boost::serialization::use_array_optimization<Archive>::template apply<
+		using use_optimized = typename boost::serialization::use_array_optimization<Archive>::template apply<
 			typename remove_const<T>::type
-		>::type use_optimized;
+		>::type;
 
 		load(ar, t, version, use_optimized());
 	}

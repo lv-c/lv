@@ -23,7 +23,7 @@ namespace lv::lua::graphics
 	template<typename T>
 	void	bind_vector(lua_State * L, char const * name)
 	{
-		typedef VectorT<T> type;
+		using type = VectorT<T>;
 		using namespace luabind;
 
 		module(L)

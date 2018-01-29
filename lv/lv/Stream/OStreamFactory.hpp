@@ -22,8 +22,8 @@ namespace lv
 {
 	class OStreamFactory
 	{
-		typedef boost::iostreams::stream<boost::iostreams::back_insert_device<Buffer> > ostream_type;
-		typedef detail::StreamFactory<ostream_type>	factory_type;
+		using ostream_type = boost::iostreams::stream<boost::iostreams::back_insert_device<Buffer> >;
+		using factory_type = detail::StreamFactory<ostream_type>;
 
 		std::shared_ptr<factory_type>	factory_;
 
@@ -34,7 +34,7 @@ namespace lv
 		{
 		}
 
-		typedef	factory_type::unique_pointer	unique_pointer;
+		using unique_pointer = factory_type::unique_pointer;
 
 		unique_pointer	open(Buffer & buf, std::ios_base::iostate except = std::ios_base::badbit | std::ios_base::failbit)
 		{

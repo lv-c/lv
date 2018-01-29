@@ -23,7 +23,7 @@ namespace lv::lua::graphics
 	template<typename T>
 	void	bind_point(lua_State * L, char const * name)
 	{
-		typedef PointT<T> type;
+		using type = PointT<T>;
 		using namespace luabind;
 
 		module(L)

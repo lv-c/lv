@@ -17,8 +17,8 @@ namespace lv::rpc
 	template<class IArchive, class OArchive>
 	struct ArchiveBase
 	{
-		typedef IArchive	iarchive_type;
-		typedef OArchive	oarchive_type;
+		using iarchive_type = IArchive;
+		using oarchive_type = OArchive;
 	};
 
 }

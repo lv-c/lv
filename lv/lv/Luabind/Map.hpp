@@ -21,12 +21,12 @@ namespace lv::lua
 	template<typename K, typename V>
 	void bind_map(lua_State * L, char const * name)
 	{
-		typedef std::map<K, V>	type;
-		typedef typename type::key_type		key_type;
-		typedef typename type::value_type	value_type;
-		typedef typename type::mapped_type	mapped_type;
-		typedef typename type::iterator		iterator;
-		typedef typename type::size_type	size_type;
+		using type = std::map<K, V>;
+		using key_type = typename type::key_type;
+		using value_type = typename type::value_type;
+		using mapped_type = typename type::mapped_type;
+		using iterator = typename type::iterator;
+		using size_type = typename type::size_type;
 
 		using namespace luabind;
 

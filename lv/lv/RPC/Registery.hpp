@@ -34,7 +34,7 @@ namespace lv::rpc
 
 	class SerializationError : public boost::archive::archive_exception
 	{
-		typedef boost::archive::archive_exception	base_type;
+		using base_type = boost::archive::archive_exception;
 
 		std::string const msg_;
 
@@ -60,19 +60,19 @@ namespace lv::rpc
 		{
 		public:
 
-			typedef typename detail::InvokerBase<ArchivePair>::ResultHolder	ResultHolder;
+			using ResultHolder = typename detail::InvokerBase<ArchivePair>::ResultHolder;
 
-			typedef ArchivePair		archive_pair_type;
+			using archive_pair_type = ArchivePair;
 
 		private:
 
-			typedef typename ArchivePair::iarchive_type iarchive_type;
+			using iarchive_type = typename ArchivePair::iarchive_type;
 
-			typedef	Id				id_type;
+			using id_type = Id;
 
-			typedef std::function<ResultHolder(iarchive_type &)>	invoker_type;
+			using invoker_type = std::function<ResultHolder(iarchive_type &)>;
 
-			typedef std::map<id_type, invoker_type>	invoker_map;
+			using invoker_map = std::map<id_type, invoker_type>;
 			invoker_map		invokers_;
 
 			SpinMutex		mutex_;

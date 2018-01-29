@@ -28,7 +28,7 @@ namespace lv::flow::detail
 	template<class T, class IArchive>
 	struct ParamType
 	{
-		typedef std::remove_const_t<std::remove_reference_t<T> >	type;
+		using type = std::remove_const_t<std::remove_reference_t<T> >;
 
 		static_assert(!std::is_pointer_v<type>, "parameter types of the registered functions can't be pointer types");
 	};
@@ -37,7 +37,7 @@ namespace lv::flow::detail
 	struct ParamType<T &, T>
 	{
 		// we shouldn't make a copy of the input archive.
-		typedef RefWrapper<T>	type;
+		using type = RefWrapper<T>;
 	};
 
 
@@ -82,10 +82,10 @@ namespace lv::flow::detail
 	template<class Signature, class IArchive>
 	class Invoker
 	{
-		typedef std::function<Signature>	function_type;
+		using function_type = std::function<Signature>;
 		function_type	fn_;
 	
-		typedef typename boost::function_types::parameter_types<Signature>::type parameter_types;
+		using parameter_types = typename boost::function_types::parameter_types<Signature>::type;
 
 	public:
 

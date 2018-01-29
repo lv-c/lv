@@ -19,10 +19,10 @@
 
 namespace lv::net
 {
-	typedef boost::signals2::signal<void(ErrorType, boost::system::error_code const &)>	ErrorEvent;
-	typedef boost::signals2::signal<void()>				ConnectEvent;
-	typedef boost::signals2::signal<void(BufferPtr)>	ReceiveEvent;
-	typedef boost::signals2::signal<void(BufferPtr)>	WriteEvent;
+	using ErrorEvent = boost::signals2::signal<void(ErrorType, boost::system::error_code const &)>;
+	using ConnectEvent = boost::signals2::signal<void()>;
+	using ReceiveEvent = boost::signals2::signal<void(BufferPtr)>;
+	using WriteEvent = boost::signals2::signal<void(BufferPtr)>;
 
 }
 

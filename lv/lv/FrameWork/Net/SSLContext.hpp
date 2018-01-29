@@ -20,7 +20,7 @@ namespace lv::net
 {
 	class SSLContext : public Context
 	{
-		typedef std::shared_ptr<asio::ssl::context>	ssl_context_ptr;
+		using ssl_context_ptr = std::shared_ptr<asio::ssl::context>;
 		ssl_context_ptr	ssl_context_;
 
 	public:

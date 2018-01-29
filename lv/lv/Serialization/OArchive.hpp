@@ -28,8 +28,8 @@ namespace lv
 
 	public:
 
-		typedef boost::mpl::true_	is_saving;
-		typedef boost::mpl::false_	is_loading;
+		using is_saving = boost::mpl::true_;
+		using is_loading = boost::mpl::false_;
 
 
 		explicit OArchive(std::ostream & os)

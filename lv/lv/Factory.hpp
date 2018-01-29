@@ -35,16 +35,16 @@ namespace lv
 	{
 	protected:
 
-		typedef std::lock_guard<std::mutex>	lock_guard;
+		using lock_guard = std::lock_guard<std::mutex>;
 
 		std::mutex	mutex_;
 
 		std::vector<T*>	objects_;
 
-		typedef std::function<T*()>	creator_type;
+		using creator_type = std::function<T*()>;
 		creator_type	creator_;
 
-		typedef	std::function<void(T*)>	deleter_type;
+		using deleter_type = std::function<void(T*)>;
 
 	public:
 
@@ -53,7 +53,7 @@ namespace lv
 		{
 		}
 
-		typedef std::unique_ptr<T, deleter_type>	unique_pointer;
+		using unique_pointer = std::unique_ptr<T, deleter_type>;
 
 		virtual	unique_pointer	get()
 		{

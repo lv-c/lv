@@ -76,7 +76,7 @@ namespace lv::flow
 	template<class T>
 	class ThreadedPush : public PushPolicyBase<T>
 	{
-		typedef typename PushPolicyBase<T>::Callback	Callback;
+		using Callback = typename PushPolicyBase<T>::Callback;
 
 		// Make this class copyable
 		std::shared_ptr<detail::ThreadedPushImpl<T> > impl_;

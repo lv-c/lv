@@ -58,12 +58,12 @@ namespace lv
 
 	public:
 
-		typedef std::ios_base::iostate	iostate;
-		typedef std::ios_base::failure	failure;
+		using iostate = std::ios_base::iostate;
+		using failure = std::ios_base::failure;
 
-		typedef std::streamsize	streamsize;
-		typedef std::streamoff	streamoff;
-		typedef std::streampos	streampos;
+		using streamsize = std::streamsize;
+		using streamoff = std::streamoff;
+		using streampos = std::streampos;
 
 
 		iostate	exceptions() const

@@ -27,7 +27,7 @@ namespace lv
 
 		boost::asio::io_service		service_;
 
-		typedef boost::asio::io_service::work	work_type;
+		using work_type = boost::asio::io_service::work;
 
 		std::unique_ptr<work_type>	work_;
 

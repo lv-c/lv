@@ -32,7 +32,7 @@ namespace boost::serialization
 	template<typename Archive, typename Key, typename Data, typename Pred>
 	void save(Archive & ar, lv::DSTree<Key, Data, Pred> const & tree, unsigned int)
 	{
-		typedef lv::DSTree<Key, Data, Pred> tree_type;
+		using tree_type = lv::DSTree<Key, Data, Pred>;
 
 		typename tree_type::size_type size = tree.size();
 		ar & size;
@@ -54,7 +54,7 @@ namespace boost::serialization
 	template<typename Archive, typename Key, typename Data, typename Pred>
 	void load(Archive & ar, lv::DSTree<Key, Data, Pred> & tree, unsigned int version)
 	{
-		typedef lv::DSTree<Key, Data, Pred> tree_type;
+		using tree_type = lv::DSTree<Key, Data, Pred>;
 
 		BOOST_ASSERT(version == 1);		// version 0 has been removed
 

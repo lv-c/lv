@@ -38,7 +38,7 @@ namespace lv::lua::archive
 		template<typename Key, typename Data, typename Pred>
 		void	save_dstree_item(std::ostream & os, DSTree<Key, Data, Pred> const & tree, size_t level)
 		{
-			typedef DSTree<Key, Data, Pred> tree_type;
+			using tree_type = DSTree<Key, Data, Pred>;
 
 			std::deque<Key> keys;
 			tree_type const * root = &tree;
@@ -128,7 +128,7 @@ namespace lv::lua::archive
 	template<typename Key, typename Data, typename Pred>
 	void	save(std::ostream & os, DSTree<Key, Data, Pred> const & tree, size_t level)
 	{
-		typedef DSTree<Key, Data, Pred> tree_type;
+		using tree_type = DSTree<Key, Data, Pred>;
 
 		os << '{';
 
@@ -142,7 +142,7 @@ namespace lv::lua::archive
 	template<typename Key, typename Data, typename Pred>
 	void	load(luabind::object const & obj, DSTree<Key, Data, Pred> & tree)
 	{
-		typedef DSTree<Key, Data, Pred> tree_type;
+		using tree_type = DSTree<Key, Data, Pred>;
 
 		tree.clear();
 

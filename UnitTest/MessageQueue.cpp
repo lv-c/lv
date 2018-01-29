@@ -26,7 +26,7 @@ DEFINE_EXCEPTION_MSG(TaskFinished, runtime_error);
 
 class Sender : public ISender
 {
-	typedef std::function<void(BufferPtr)>	Callback;
+	using Callback = std::function<void(BufferPtr)>;
 
 	Callback	callback_;
 

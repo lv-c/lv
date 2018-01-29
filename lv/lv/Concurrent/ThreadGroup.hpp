@@ -21,7 +21,7 @@ namespace lv
 {
 	class ThreadGroup
 	{
-		typedef std::unique_ptr<std::thread>	ThreadPtr;
+		using ThreadPtr = std::unique_ptr<std::thread>;
 
 		std::list<ThreadPtr>	threads_;
 

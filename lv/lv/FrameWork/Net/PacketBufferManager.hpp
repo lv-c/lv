@@ -18,7 +18,7 @@ namespace lv::net
 {
 	class PacketBufferManager : public SimpleBufferManager
 	{
-		typedef SimpleBufferManager	base_type;
+		using base_type = SimpleBufferManager;
 
 	public:
 

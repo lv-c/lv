@@ -23,9 +23,9 @@ namespace lv::lua::graphics
 	template<typename T>
 	void	bind_rect(lua_State * L, char const * name)
 	{
-		typedef RectT<T> type;
-		typedef PointT<T> point_type;
-		typedef SizeT<T> size_type;
+		using type = RectT<T>;
+		using point_type = PointT<T>;
+		using size_type = SizeT<T>;
 
 		using namespace luabind;
 

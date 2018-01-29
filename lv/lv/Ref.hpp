@@ -24,7 +24,7 @@ namespace lv
 
 	public:
 
-		typedef T type;
+		using type = T;
 
 		// here is the difference between this class and std::reference_wrapper
 		RefWrapper() : t_(nullptr) {}

@@ -60,7 +60,7 @@ namespace lv::serialization
 			template<typename T>
 			static void save(Archive & ar, T const & t)
 			{
-				typedef std::remove_extent_t<T> value_type;
+				using value_type = std::remove_extent_t<T>;
 
 				boost::serialization::collection_size_type count(sizeof(t) / sizeof(value_type));
 				ar << count << boost::serialization::make_array(static_cast<value_type const*>(&t[0]), count);
@@ -69,7 +69,7 @@ namespace lv::serialization
 			template<typename T>
 			static void load(Archive & ar, T & t)
 			{
-				typedef std::remove_extent_t<T> value_type;
+				using value_type = std::remove_extent_t<T>;
 				
 				std::size_t current_count = sizeof(t) / sizeof(value_type);
 
@@ -121,7 +121,7 @@ namespace lv::serialization
 		template<class Archive, typename T>
 		struct serializer_type
 		{
-			typedef typename mpl::eval_if<
+			using type = typename mpl::eval_if<
 				std::is_enum<T>,
 				mpl::identity<detail::serialize_enum_type<Archive> >,
 
@@ -130,7 +130,7 @@ namespace lv::serialization
 					mpl::identity<detail::serialize_array_type<Archive> >,
 					mpl::identity<detail::serialize_default<Archive> >
 				>
-			>::type type;
+			>::type;
 		};
 
 	}

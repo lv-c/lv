@@ -23,7 +23,7 @@ namespace lv
 	template<typename Ret>
 	class Future : public std::shared_future<Ret>
 	{
-		typedef	std::shared_future<Ret>	base_type;
+		using base_type = std::shared_future<Ret>;
 
 		std::shared_ptr<Promise<Ret> >	promise_;
 
@@ -39,7 +39,7 @@ namespace lv
 
 	public:
 
-		typedef Ret	value_type;
+		using value_type = Ret;
 
 		/// creates an empty future
 		Future() {}
@@ -58,7 +58,7 @@ namespace lv
 		}
 	};
 
-	typedef Future<void>	Acknowledgment;
+	using Acknowledgment = Future<void>;
 
 
 	namespace detail
@@ -87,7 +87,7 @@ namespace lv
 		// http://stackoverflow.com/questions/14365595/is-it-necessary-to-use-a-stdatomic-to-signal-that-a-thread-has-finished-execut
 		std::atomic<bool>		is_ready_;
 
-		typedef std::function<void(Future<Ret>)>	Callback;
+		using Callback = std::function<void(Future<Ret>)>;
 
 		Callback	callback_;
 

@@ -107,7 +107,7 @@ namespace lv
 	T PointT<T>::* const PointT<T>::mem_array[PointT<T>::ele_num] = { &PointT<T>::x, &PointT<T>::y };
 
 	
-	typedef PointT<int32>	Point;
+	using Point = PointT<int32>;
 }
 
 #endif

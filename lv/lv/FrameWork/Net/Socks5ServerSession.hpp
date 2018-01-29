@@ -20,7 +20,7 @@ namespace lv::net
 {
 	class Socks5ServerSession : public TcpSession
 	{
-		typedef TcpSession	base_type;
+		using base_type = TcpSession;
 
 		BufferPtr	cache_;
 
@@ -35,7 +35,7 @@ namespace lv::net
 
 		volatile Status	status_;
 
-		typedef TcpSession	DestSession;
+		using DestSession = TcpSession;
 		std::unique_ptr<DestSession>	dest_session_;
 
 		std::vector<boost::signals2::connection>	connections_;

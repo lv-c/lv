@@ -18,7 +18,7 @@ namespace lv::net
 {
 	class SSLSession : public SessionBase
 	{
-		typedef SessionBase	base_type;
+		using base_type = SessionBase;
 
 		enum HandshakeType
 		{

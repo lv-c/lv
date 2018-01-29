@@ -24,32 +24,32 @@ namespace lv
 
 #ifndef LV_UNICODE_LOG
 
-		typedef	char			char_type;
+		using char_type = char;
 
 #		define L_TEXT(x)	x
 
 
 #else
 
-		typedef	wchar_t			char_type;
+		using char_type = wchar_t;
 
 #		define L_TEXT(x)	L ## x
 
 #endif
 
-		typedef std::basic_string<char_type>	string_type;
-		typedef std::basic_ostream<char_type>	ostream_type;
+		using string_type = std::basic_string<char_type>;
+		using ostream_type = std::basic_ostream<char_type>;
 		
-		typedef std::shared_ptr<ostream_type>	ostream_ptr;
+		using ostream_ptr = std::shared_ptr<ostream_type>;
 
-		typedef std::function<void (log::ostream_type &, int)> formatter_type;
+		using formatter_type = std::function<void (log::ostream_type &, int)>;
 
 		// returns true to output the record and false to suppress it
-		typedef std::function<bool (int)>	filter_type;
+		using filter_type = std::function<bool (int)>;
 
 
 		class Gather;
-		typedef std::shared_ptr<Gather>	gather_ptr;
+		using gather_ptr = std::shared_ptr<Gather>;
 
 		class Log;
 

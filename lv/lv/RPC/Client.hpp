@@ -37,29 +37,29 @@ namespace lv::rpc
 	{
 	public:
 
-		typedef std::function<void(BufferPtr)>	callback_type;
+		using callback_type = std::function<void(BufferPtr)>;
 
 	private:
 
-		typedef typename ArchivePair::iarchive_type	iarchive_type;
-		typedef typename ArchivePair::oarchive_type	oarchive_type;
+		using iarchive_type = typename ArchivePair::iarchive_type;
+		using oarchive_type = typename ArchivePair::oarchive_type;
 
-		typedef	OArchiveWrapper<oarchive_type>	oarchive_wrapper;
+		using oarchive_wrapper = OArchiveWrapper<oarchive_type>;
 
 
 		callback_type	callback_;
 
-		typedef typename Protocol::request_id_type request_id_type;
+		using request_id_type = typename Protocol::request_id_type;
 
 		std::atomic<request_id_type>	next_request_id_;
 
 
-		typedef std::shared_ptr<detail::IPromise<ArchivePair> >	PromiseBasePtr;
-		typedef std::map<request_id_type, PromiseBasePtr>	promise_map;
+		using PromiseBasePtr = std::shared_ptr<detail::IPromise<ArchivePair> >;
+		using promise_map = std::map<request_id_type, PromiseBasePtr>;
 
 		promise_map		promises_;
 
-		typedef std::lock_guard<std::mutex>	lock_guard;
+		using lock_guard = std::lock_guard<std::mutex>;
 
 		std::mutex	mutex_;
 
@@ -113,7 +113,7 @@ namespace lv::rpc
 				
 				// if we call @a send first, @a on_receive might be called before 
 				// @a add_promise is called and InvalidRequestID may be thrown
-				typedef detail::ReturnPromise<Ret, ArchivePair>	promise_type;
+				using promise_type = detail::ReturnPromise<Ret, ArchivePair>;
 				auto promise = std::make_shared<promise_type>();
 
 				client_.add_promise(request_id_, promise);

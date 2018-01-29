@@ -33,7 +33,7 @@ namespace lv
 		template<typename T, typename ClassTypeTransform>
 		struct SignatureImpl<T, ClassTypeTransform, std::enable_if_t<std::is_function_v<T> > >
 		{
-			typedef T	type;
+			using type = T;
 		};
 
 
@@ -43,7 +43,7 @@ namespace lv
 		template<typename T, typename ClassTypeTransform>
 		struct SignatureImpl<T, ClassTypeTransform, std::enable_if_t<std::is_member_function_pointer_v<T> > >
 		{
-			typedef typename ft::function_type<typename ft::components<T, ClassTypeTransform>::type>::type type;
+			using type = typename ft::function_type<typename ft::components<T, ClassTypeTransform>::type>::type;
 		};
 
 
@@ -51,13 +51,13 @@ namespace lv
 		template<typename T, typename ClassTypeTransform>
 		struct SignatureImpl<T, ClassTypeTransform, std::enable_if_t<std::is_class_v<T> > >
 		{
-			typedef typename ft::function_type<
+			using type = typename ft::function_type<
 				typename detail::RemoveSecond<
 					typename ft::components<
 						decltype(&T::operator ())
 					>::type
 				>::type
-			>::type type;
+			>::type;
 		};
 	}
 

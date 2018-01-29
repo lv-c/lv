@@ -24,7 +24,7 @@ class MemoryAnalyser : public Singleton<MemoryAnalyser, true>
 
 	int	counter_;
 
-	typedef std::map<void const *, size_t>	allocated_map;
+	using allocated_map = std::map<void const *, size_t>;
 	allocated_map		allocated_;		// allocated memory
 
 public:

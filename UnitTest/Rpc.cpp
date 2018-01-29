@@ -127,7 +127,7 @@ struct Multiply
 	}
 };
 
-typedef Server<> server_t;
+using server_t = Server<>;
 
 struct Tunnel
 {
@@ -222,18 +222,18 @@ BOOST_AUTO_TEST_CASE(test_rpc)
 		boost::archive::archive_exception);
 
 	// test std::pair type
-	typedef pair<string, int>	pair_type;
+	using pair_type = pair<string, int>;
 	BOOST_CHECK(pair_type(client.call<pair_type>("test_pair", make_pair(string("hello"), 100))) 
 		== make_pair(string("hello"), 100));
 
 	// test std::tuple type
-	typedef tuple<string, int, bool> tuple_type;
+	using tuple_type = tuple<string, int, bool>;
 	BOOST_CHECK(tuple_type(client.call<tuple_type>("test_tuple", std::make_tuple(string("what"), 3, true))) 
 		== std::make_tuple(string("what"), 3, true));
 
 	// test boost::fusion::vector type. fusion::vector is not supported. please use std::tuple instead
 	/*
-	typedef boost::fusion::vector<int, string> fusion_vec_type;
+	using fusion_vec_type = boost::fusion::vector<int, string>;
 	Future<fusion_vec_type> fv_ret = client.call<fusion_vec_type>("test_fusion_vector", boost::fusion::make_vector(5, string("ok")));
 
 	BOOST_CHECK(fv_ret() == boost::fusion::make_vector(5, string("ok")));

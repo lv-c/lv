@@ -23,7 +23,7 @@
 
 namespace lv::log
 {
-	typedef std::function<void(Gather &)>	FormmatterSet;
+	using FormmatterSet = std::function<void(Gather &)>;
 	
 
 	struct EmptyFormatters

@@ -47,11 +47,11 @@ namespace lv::lua
 	template<class T>
 	void bind_vector(lua_State * L, char const* name)
 	{
-		typedef std::vector<T>	type;
-		typedef typename type::value_type		value_type;
-		typedef typename type::const_reference	const_reference;
-		typedef typename type::reference		reference;
-		typedef typename type::size_type		size_type;
+		using type = std::vector<T>;
+		using value_type = typename type::value_type;
+		using const_reference = typename type::const_reference;
+		using reference = typename type::reference;
+		using size_type = typename type::size_type;
 
 		using namespace luabind;
 

@@ -26,9 +26,9 @@ namespace lv::log
 {
 
 #ifndef LV_UNICODE_LOG
-	typedef boost::format	format_type;
+	using format_type = boost::format;
 #else
-	typedef boost::wformat	format_type;
+	using format_type = boost::wformat;
 #endif
 
 	struct LineBreak

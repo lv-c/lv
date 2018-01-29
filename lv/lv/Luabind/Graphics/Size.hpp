@@ -23,7 +23,7 @@ namespace lv::lua::graphics
 	template<typename T>
 	void	bind_size(lua_State * L, char const * name)
 	{
-		typedef SizeT<T> type;
+		using type = SizeT<T>;
 		using namespace luabind;
 
 		module(L)

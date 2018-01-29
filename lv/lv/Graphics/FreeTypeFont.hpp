@@ -39,11 +39,11 @@ namespace lv
 		TexturePtr	texture_;
 		Size	tex_size_;		// size of the texture (to be created)
 
-		typedef GIL::ViewT<PF_L8>::type	view_t;
+		using view_t = GIL::ViewT<PF_L8>::type;
 
 		Point	next_glyph_pos_;	// Where to put the next glyph (if the texture is not yet full)
 
-		typedef LRUList<wchar_t, boost::fast_pool_allocator<wchar_t> > lru_list;
+		using lru_list = LRUList<wchar_t, boost::fast_pool_allocator<wchar_t> >;
 
 		struct Glyph
 		{
@@ -53,8 +53,8 @@ namespace lv
 			lru_list::iterator lru_it;
 		};
 
-		typedef boost::unordered_map<wchar_t, Glyph, boost::hash<wchar_t>, std::equal_to<wchar_t>, 
-			boost::pool_allocator<std::pair<wchar_t, Glyph> > >	glyph_map;
+		using glyph_map = boost::unordered_map<wchar_t, Glyph, boost::hash<wchar_t>, std::equal_to<wchar_t>,
+			boost::pool_allocator<std::pair<wchar_t, Glyph> > >;
 		glyph_map	glyphs_;
 
 		lru_list	lru_glyphs_;

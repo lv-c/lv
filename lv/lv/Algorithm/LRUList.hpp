@@ -21,18 +21,18 @@ namespace lv
 	template <typename T, class Ax = std::allocator<T> >
 	class LRUList
 	{
-		typedef std::list<T, Ax>	list_type;
+		using list_type = std::list<T, Ax>;
 
 		list_type list_;
 
 	public:
 
-		typedef typename list_type::size_type	size_type;
-		typedef typename list_type::value_type	value_type;
-		typedef typename list_type::reference	reference;
-		typedef typename list_type::const_reference	const_reference;
-		typedef typename list_type::iterator	iterator;
-		typedef typename list_type::const_iterator	const_iterator;
+		using size_type = typename list_type::size_type;
+		using value_type = typename list_type::value_type;
+		using reference = typename list_type::reference;
+		using const_reference = typename list_type::const_reference;
+		using iterator = typename list_type::iterator;
+		using const_iterator = typename list_type::const_iterator;
 
 		iterator	insert(T const & t)
 		{

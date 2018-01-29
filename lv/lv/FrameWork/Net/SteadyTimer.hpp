@@ -25,17 +25,17 @@ namespace lv::net
 	{
 		ServiceWrapper	service_wrapper_;
 
-		typedef boost::asio::steady_timer	timer_type;
+		using timer_type = boost::asio::steady_timer;
 
-		typedef std::shared_ptr<timer_type>	TimerPtr;
-		typedef std::weak_ptr<timer_type>	WeakTimerPtr;
+		using TimerPtr = std::shared_ptr<timer_type>;
+		using WeakTimerPtr = std::weak_ptr<timer_type>;
 
 		TimerPtr	timer_;
 
-		typedef timer_type::duration	duration_type;
+		using duration_type = timer_type::duration;
 		duration_type	duration_;
 
-		typedef std::function<void()>		Callback;
+		using Callback = std::function<void()>;
 		Callback	callback_;
 
 	public:

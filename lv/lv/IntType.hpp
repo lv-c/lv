@@ -16,15 +16,15 @@
 
 namespace lv
 {
-	typedef std::int8_t		int8;
-	typedef std::int16_t	int16;
-	typedef std::int32_t	int32;
-	typedef std::int64_t	int64;
+	using int8 = std::int8_t;
+	using int16 = std::int16_t;
+	using int32 = std::int32_t;
+	using int64 = std::int64_t;
 
-	typedef std::uint8_t	uint8;
-	typedef std::uint16_t	uint16;
-	typedef std::uint32_t	uint32;
-	typedef std::uint64_t	uint64;
+	using uint8 = std::uint8_t;
+	using uint16 = std::uint16_t;
+	using uint32 = std::uint32_t;
+	using uint64 = std::uint64_t;
 
 
 
@@ -36,25 +36,25 @@ namespace lv
 	template<>
 	struct IntType<1>
 	{
-		typedef	int8	type;
+		using type = int8;
 	};
 
 	template<>
 	struct IntType<2>
 	{
-		typedef int16	type;
+		using type = int16;
 	};
 
 	template<>
 	struct IntType<4>
 	{
-		typedef int32	type;
+		using type = int32;
 	};
 
 	template<>
 	struct IntType<8>
 	{
-		typedef int64	type;
+		using type = int64;
 	};
 
 
@@ -71,25 +71,25 @@ namespace lv
 	{
 		static_assert(std::is_arithmetic_v<T>);
 
-		typedef	T	type;
+		using type = T;
 	};
 
 	template<>
 	struct WidenInt<int8>		// signed char
 	{
-		typedef int32 type;
+		using type = int32;
 	};
 
 	template<>
 	struct WidenInt<uint8>		// unsigned char
 	{
-		typedef uint32 type;
+		using type = uint32;
 	};
 
 	template<>
 	struct WidenInt<char>		// plain char
 	{
-		typedef int32 type;
+		using type = int32;
 	};
 
 	

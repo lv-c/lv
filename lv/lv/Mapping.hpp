@@ -30,24 +30,24 @@ namespace lv
 	template<typename X, typename Y>
 	class Mapping
 	{
-		typedef boost::bimap<X, Y>	bimap_type;
+		using bimap_type = boost::bimap<X, Y>;
 		bimap_type	bimap_;
 
 		// reserve the insert order
-		typedef std::list<std::pair<X const, Y const> > list_type;
+		using list_type = std::list<std::pair<X const, Y const> >;
 		list_type	list_;
 
 	public:
 
 
-		typedef typename list_type::value_type		value_type;
-		typedef typename list_type::reference		reference;
-		typedef typename list_type::const_reference	const_reference;
-		typedef typename list_type::iterator		iterator;
-		typedef typename list_type::const_iterator	const_iterator;
+		using value_type = typename list_type::value_type;
+		using reference = typename list_type::reference;
+		using const_reference = typename list_type::const_reference;
+		using iterator = typename list_type::iterator;
+		using const_iterator = typename list_type::const_iterator;
 
-		typedef typename bimap_type::left_map		left_map;
-		typedef typename bimap_type::right_map		right_map;
+		using left_map = typename bimap_type::left_map;
+		using right_map = typename bimap_type::right_map;
 
 
 		Mapping() = default;

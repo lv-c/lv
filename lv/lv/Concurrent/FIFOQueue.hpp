@@ -22,7 +22,7 @@ namespace lv
 
 	public:
 
-		typedef T	value_type;
+		using value_type = T;
 
 		
 		void	push(value_type const & value)

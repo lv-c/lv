@@ -30,11 +30,11 @@ namespace lv::flow
 	template<template<class> class PushPolicy, class Port, class Compare>
 	class DataFlow : boost::noncopyable
 	{
-		typedef std::pair<Port, BufferPtr>	port_buffer_pair;
+		using port_buffer_pair = std::pair<Port, BufferPtr>;
 
 	public:
 
-		typedef PushPolicy<port_buffer_pair>	push_policy_type;
+		using push_policy_type = PushPolicy<port_buffer_pair>;
 
 	private:
 
@@ -44,7 +44,7 @@ namespace lv::flow
 			slot_type	slot;
 		};
 
-		typedef std::multimap<Port, ConnectionSlotPair, Compare>  slots_map_type;
+		using slots_map_type = std::multimap<Port, ConnectionSlotPair, Compare> ;
 		slots_map_type	slots_;
 
 		

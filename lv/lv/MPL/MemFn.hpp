@@ -34,11 +34,11 @@ namespace lv
 	{
 		static_assert(std::is_member_function_pointer_v<MemFn>);
 
-		typedef typename boost::function_types::function_type<
+		using type = typename boost::function_types::function_type<
 			typename detail::RemoveSecond<
 				typename boost::function_types::components<MemFn>::type
 			>::type 
-		>::type type;
+		>::type;
 	};
 
 	namespace result_of
@@ -46,7 +46,7 @@ namespace lv
 		template<typename MemFn>
 		struct bind_mem_fn
 		{
-			typedef std::function<typename BindMemFnSignature<MemFn>::type>	type;
+			using type = std::function<typename BindMemFnSignature<MemFn>::type>;
 		};
 	}
 

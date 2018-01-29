@@ -23,14 +23,14 @@ namespace lv
 	template<class Key, class Data, class Pred = std::less<Key> >
 	class DSTree : boost::equality_comparable<DSTree<Key, Data, Pred> >
 	{
-		typedef std::shared_ptr<Data>	DataPtr;
+		using DataPtr = std::shared_ptr<Data>;
 
 		Key			key_;
 		DataPtr		data_;
 
 		Pred		pred_;
 
-		typedef boost::ptr_vector<DSTree>	children_type;
+		using children_type = boost::ptr_vector<DSTree>;
 		children_type	children_;
 
 		DSTree	*	parent_;
@@ -59,18 +59,18 @@ namespace lv
 
 	public:
 
-		typedef Key	key_type;
-		typedef Data	data_type;
+		using key_type = Key;
+		using data_type = Data;
 
-		typedef DSTree	value_type;
+		using value_type = DSTree;
 
-		typedef typename children_type::iterator	iterator;
-		typedef typename children_type::const_iterator	const_iterator;
+		using iterator = typename children_type::iterator;
+		using const_iterator = typename children_type::const_iterator;
 
-		typedef typename children_type::size_type	size_type;
+		using size_type = typename children_type::size_type;
 
-		typedef std::shared_ptr<Data>			data_pointer;
-		typedef std::shared_ptr<Data const>	const_data_pointer;
+		using data_pointer = std::shared_ptr<Data>;
+		using const_data_pointer = std::shared_ptr<Data const>;
 
 
 		explicit DSTree(Pred const & pred = Pred())

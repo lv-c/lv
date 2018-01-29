@@ -58,13 +58,13 @@ namespace lv
 		template <>
 		struct PixelT<PF_ARGB>
 		{
-			typedef boost::gil::argb32_pixel_t	type;
+			using type = boost::gil::argb32_pixel_t;
 		};
 
 		template <>
 		struct PixelT<PF_L8>
 		{
-			typedef boost::gil::gray8_pixel_t	type;
+			using type = boost::gil::gray8_pixel_t;
 		};
 
 		// x iterator type
@@ -79,7 +79,7 @@ namespace lv
 		template <int PF, bool IsMutable = true>
 		struct ViewT
 		{
-			typedef typename boost::gil::type_from_x_iterator<typename XIteratorT<PF, IsMutable>::type>::view_t type;
+			using type = typename boost::gil::type_from_x_iterator<typename XIteratorT<PF, IsMutable>::type>::view_t;
 		};
 	}
 

@@ -166,7 +166,7 @@ namespace lv
 		&RectT<T>::left, &RectT<T>::top, &RectT<T>::right, &RectT<T>::bottom
 	};
 
-	typedef RectT<int32>	Rect;
+	using Rect = RectT<int32>;
 }
 
 

@@ -23,7 +23,7 @@ namespace lv::log
 	{
 	public:
 		
-		typedef std::function<void(log::string_type &&, int)> receiver_t;
+		using receiver_t = std::function<void(log::string_type &&, int)>;
 
 	protected:
 

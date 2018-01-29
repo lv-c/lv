@@ -99,7 +99,7 @@ namespace lv
 	template<typename T>
 	T VectorT<T>::* const VectorT<T>::mem_array[VectorT<T>::ele_num] = { &VectorT<T>::x, &VectorT<T>::y, &VectorT<T>::z};
 
-	typedef VectorT<float>	Vector3f;
+	using Vector3f = VectorT<float>;
 
 }
 

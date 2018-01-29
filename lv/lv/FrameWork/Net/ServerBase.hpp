@@ -37,7 +37,7 @@ namespace lv::net
 	class ServerBase : boost::noncopyable
 	{
 
-		typedef boost::signals2::signal<void(SessionPtr)>	NewSessionEvent;
+		using NewSessionEvent = boost::signals2::signal<void(SessionPtr)>;
 
 		std::unique_ptr<AcceptorHolder>	acceptor_;
 
@@ -47,7 +47,7 @@ namespace lv::net
 
 		ContextPtr	context_;
 
-		typedef std::function<SessionPtr(ContextPtr)>	creator_type;
+		using creator_type = std::function<SessionPtr(ContextPtr)>;
 		creator_type	session_creator_;
 
 	public:

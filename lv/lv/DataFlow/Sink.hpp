@@ -25,7 +25,7 @@
 
 namespace lv::flow
 {
-	typedef std::function<void(slot_type const &, ConstBufferRef const &)> proxy_push_type;
+	using proxy_push_type = std::function<void(slot_type const &, ConstBufferRef const &)>;
 
 	/// thread-safe
 	template<template<class> class PushPolicy, class Key, class IArchive>
@@ -33,10 +33,10 @@ namespace lv::flow
 	{
 	public:
 
-		typedef Key		key_type;
-		typedef IArchive	iarchive_type;
+		using key_type = Key;
+		using iarchive_type = IArchive;
 
-		typedef PushPolicy<ConstBufferRef> push_policy_type;
+		using push_policy_type = PushPolicy<ConstBufferRef>;
 
 	private:
 
@@ -44,8 +44,8 @@ namespace lv::flow
 
 		push_policy_type	push_policy_;
 
-		typedef std::shared_ptr<IStreamFactory>		IStreamFactoryPtr;
-		typedef std::weak_ptr<IStreamFactory>		WeakIStreamFactoryPtr;
+		using IStreamFactoryPtr = std::shared_ptr<IStreamFactory>;
+		using WeakIStreamFactoryPtr = std::weak_ptr<IStreamFactory>;
 
 		IStreamFactoryPtr	istream_factory_;
 

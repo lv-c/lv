@@ -71,7 +71,7 @@ namespace lv
 		template <int PF>
 		struct ViewPtrT
 		{
-			typedef std::shared_ptr<typename GIL::ViewT<PF>::type>	type;
+			using type = std::shared_ptr<typename GIL::ViewT<PF>::type>;
 		};
 
 		/**
@@ -98,7 +98,7 @@ namespace lv
 				throw std::runtime_error("Texture::map rect out of bound");
 			}
 
-			typedef typename GIL::ViewT<PF>::type view_t;
+			using view_t = typename GIL::ViewT<PF>::type;
 			return ViewPtrT<PF>::type(new view_t(boost::gil::interleaved_view(rect.width(), rect.height(), 
 				(GIL::XIteratorT<PF>::type) map_impl(rect), PixelBytes<PF>::value * texture_size_.cx)), 
 				AutoUnmap<view_t>(*this));

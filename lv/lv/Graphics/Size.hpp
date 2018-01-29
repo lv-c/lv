@@ -97,7 +97,7 @@ namespace lv
 	template<typename T>
 	T SizeT<T>::* const SizeT<T>::mem_array[SizeT<T>::ele_num] = { &SizeT<T>::cx, &SizeT<T>::cy };
 
-	typedef SizeT<int32>	Size;
+	using Size = SizeT<int32>;
 }
 
 #endif

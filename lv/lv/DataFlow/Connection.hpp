@@ -17,7 +17,7 @@
 
 namespace lv::flow
 {
-	typedef void (* disconnect_fn_type) (void *, std::any const &);
+	using disconnect_fn_type = void (*) (void *, std::any const &);
 
 
 	namespace detail

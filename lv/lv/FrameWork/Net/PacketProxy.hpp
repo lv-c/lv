@@ -20,7 +20,7 @@
 
 namespace lv::net
 {
-	typedef std::function<void(BufferPtr)> PacketProxyCallback;
+	using PacketProxyCallback = std::function<void(BufferPtr)>;
 
 	class PacketProxy
 	{

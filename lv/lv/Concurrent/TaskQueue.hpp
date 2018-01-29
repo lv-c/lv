@@ -30,7 +30,7 @@ namespace lv
 	{
 		QueuePolicy<Task>	queue_;
 
-		typedef std::lock_guard<std::mutex>	lock_guard;
+		using lock_guard = std::lock_guard<std::mutex>;
 
 		std::mutex	mutex_;
 
@@ -42,7 +42,7 @@ namespace lv
 
 	public:
 
-		typedef Task	value_type;
+		using value_type = Task;
 
 
 		explicit TaskQueue(size_t max_count = std::numeric_limits<size_t>::max())

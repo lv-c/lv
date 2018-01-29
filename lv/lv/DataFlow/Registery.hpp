@@ -29,7 +29,7 @@ namespace lv::flow
 {
 	class SerializationError : public boost::archive::archive_exception
 	{
-		typedef boost::archive::archive_exception	base_type;
+		using base_type = boost::archive::archive_exception;
 
 		std::string const msg_;
 
@@ -53,9 +53,9 @@ namespace lv::flow
 		class Registery : boost::noncopyable
 		{
 
-			typedef std::function<void(IArchive &)>	invoker_type;
+			using invoker_type = std::function<void(IArchive &)>;
 
-			typedef std::map<Key, invoker_type>	invoker_map;
+			using invoker_map = std::map<Key, invoker_type>;
 
 			invoker_map		invokers_;
 

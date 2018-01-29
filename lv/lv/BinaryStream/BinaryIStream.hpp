@@ -33,8 +33,8 @@ namespace lv::bstream
 
 	public:
 		
-		typedef boost::mpl::true_	is_loading;
-		typedef boost::mpl::false_	is_saving;
+		using is_loading = boost::mpl::true_;
+		using is_saving = boost::mpl::false_;
 
 
 		/**

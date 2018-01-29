@@ -21,17 +21,17 @@
 
 namespace lv
 {
-	typedef std::vector<char>	Buffer;
-	typedef std::shared_ptr<Buffer>	BufferPtr;
-	typedef std::shared_ptr<Buffer const>	ConstBufferPtr;
+	using Buffer = std::vector<char>;
+	using BufferPtr = std::shared_ptr<Buffer>;
+	using ConstBufferPtr = std::shared_ptr<Buffer const>;
 
 
 	/// these two classes are compatible with boost.range and boost.BOOST_FOREACH
 	template <typename T> class ConstBufferRefT;
 	template <typename T> class BufferRefT;
 
-	typedef ConstBufferRefT<char>	ConstBufferRef;
-	typedef BufferRefT<char>	BufferRef;
+	using ConstBufferRef = ConstBufferRefT<char>;
+	using BufferRef = BufferRefT<char>;
 
 
 	template <typename T>
@@ -46,11 +46,11 @@ namespace lv
 
 	public:
 
-		typedef T & reference;
-		typedef T const & const_reference;
+		using reference = T &;
+		using const_reference = T const &;
 
-		typedef T * iterator;
-		typedef T const * const_iterator;
+		using iterator = T *;
+		using const_iterator = T const *;
 
 		BufferRefT()
 			: data_(nullptr)
@@ -149,11 +149,11 @@ namespace lv
 		std::shared_ptr<std::vector<T> >	holder_;
 
 	public:
-		typedef T const & const_reference;
+		using const_reference = T const &;
 
 
-		typedef T const * iterator;
-		typedef T const * const_iterator;
+		using iterator = T const *;
+		using const_iterator = T const *;
 
 
 		ConstBufferRefT()

@@ -12,7 +12,7 @@ namespace lv::net
 	{
 	public:
 
-		typedef asio::ssl::stream<asio::ip::tcp::socket> socket_type;
+		using socket_type = asio::ssl::stream<asio::ip::tcp::socket>;
 
 	private:
 

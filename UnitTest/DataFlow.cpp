@@ -40,8 +40,8 @@ enum ParamType
 	PT_String
 };
 
-typedef lv::IArchive iarchive_type;
-typedef lv::OArchive oarchive_type;
+using iarchive_type = lv::IArchive;
+using oarchive_type = lv::OArchive;
 
 using namespace std;
 
@@ -108,16 +108,16 @@ BOOST_AUTO_TEST_CASE(test_dataflow)
 {
 	lv::BufferManagerPtr buf_manager = std::make_shared<lv::SimpleBufferManager>(1024);
 
-	typedef std::string key_type;
-	typedef std::string port_type;
+	using key_type = std::string;
+	using port_type = std::string;
 
-	typedef lv::flow::DataFlow<lv::flow::ThreadedPush, port_type> dataflow_type;
+	using dataflow_type = lv::flow::DataFlow<lv::flow::ThreadedPush, port_type>;
 	dataflow_type dataflow(5);	// number of threads
 
-	typedef lv::flow::Source<key_type> source_type;
+	using source_type = lv::flow::Source<key_type>;
 	source_type source(std::bind(&dataflow_type::push, &dataflow, port_type(), std::placeholders::_1), buf_manager);
 
-	typedef lv::flow::Sink<lv::flow::SyncPush, key_type> sink_type;
+	using sink_type = lv::flow::Sink<lv::flow::SyncPush, key_type>;
 	sink_type sink(&proxy_push);
 
 	sink
