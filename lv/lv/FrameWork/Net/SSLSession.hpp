@@ -20,10 +20,10 @@ namespace lv::net
 	{
 		using base_type = SessionBase;
 
-		enum HandshakeType
+		enum class HandshakeType
 		{
-			ClientHandshake,
-			ServerHandshake
+			Client,
+			Server
 		};
 
 	public:
