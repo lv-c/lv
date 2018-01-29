@@ -76,7 +76,7 @@ namespace lv::bstream
 	template<class IStream, class T>
 	void	load(IStream & is, T & t)
 	{
-		using tag_type = object_tag_t<std::decay_t<T> >;
+		using tag_type = object_tag_t<std::remove_cv_t<T> >;
 		detail::load_impl(is, t, tag_type());
 	}
 

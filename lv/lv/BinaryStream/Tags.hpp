@@ -51,6 +51,18 @@ namespace lv::bstream
 	{
 	};
 
+	template<typename T, size_t N>
+	struct object_tag<T[N], std::enable_if_t<is_primitive_v<T> > >
+		: primitive_buffer_tag
+	{
+	};
+
+	template<typename T, size_t N>
+	struct object_tag<T[N], std::enable_if_t<!is_primitive_v<T> > >
+		: range_tag
+	{
+	};
+
 
 	template<typename T, class Enabled = void>
 	using object_tag_t = typename object_tag<T, Enabled>::type;
