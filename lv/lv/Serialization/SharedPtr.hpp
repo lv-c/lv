@@ -11,6 +11,8 @@
 #ifndef LV_SERIALIZATION_SHAREDPTR_HPP
 #define LV_SERIALIZATION_SHAREDPTR_HPP
 
+#include <lv/Serialization/Fwd.hpp>
+
 #include <memory>
 
 

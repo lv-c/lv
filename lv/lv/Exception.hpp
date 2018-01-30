@@ -35,7 +35,7 @@ namespace lv
 	};													
 
 	// use the class name as the default message
-#define DEFINE_EXCEPTION_MSG(excp, base)					\
+#define DEFINE_EXCEPTION_MSG(excp, base)				\
 	DEFINE_EXCEPTION(excp, base, #excp)			// # (stringize) and ## (token catenation)
 
 

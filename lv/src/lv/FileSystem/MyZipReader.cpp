@@ -52,7 +52,8 @@ namespace lv
 			init_buffer(*buf, static_cast<size_t>(entry.unc_size));
 			ret = uz->unzip(index, *buf);
 
-			if (ret != ZR_OK)
+			// sometimes returns ZR_MORE while it's actually finished
+			if (ret != ZR_OK && ret != ZR_MORE)
 			{
 				err = std::make_error_code(std::errc::io_error);
 			}
@@ -62,7 +63,6 @@ namespace lv
 			err = std::make_error_code(std::errc::no_such_file_or_directory);
 		}
 
-		// sometimes returns ZR_MORE while it's actually finished
 		if (err)
 		{
 			throw std::system_error(err, "error reading file:" + file);
