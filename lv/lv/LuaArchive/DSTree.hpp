@@ -29,13 +29,13 @@ namespace lv::lua::archive
 			save_adl(os, std::string(v.begin(), v.end()), level);
 		}
 
-		template<typename T>
+		template<class T>
 		void	dstree_save_deque(std::ostream & os, std::deque<T> const & v, size_t level)
 		{
 			save_range(os, v.begin(), v.end(), level);
 		}
 
-		template<typename Key, typename Data, typename Pred>
+		template<class Key, class Data, class Pred>
 		void	save_dstree_item(std::ostream & os, DSTree<Key, Data, Pred> const & tree, size_t level)
 		{
 			using tree_type = DSTree<Key, Data, Pred>;
@@ -87,7 +87,7 @@ namespace lv::lua::archive
 			os << '}';
 		}
 
-		template<typename Key, typename Data, typename Pred>
+		template<class Key, class Data, class Pred>
 		void	save_dstree(std::ostream & os, DSTree<Key, Data, Pred> const & tree, size_t level, bool & first_time)
 		{
 			for (auto const & v : tree)
@@ -111,13 +111,13 @@ namespace lv::lua::archive
 
 		//
 
-		template<typename Tree, typename Key, typename Data>
+		template<class Tree, class Key, class Data>
 		void	dstree_insert(Tree & tree, std::vector<Key> const &, std::string const & str, Data const & data, std::true_type)
 		{
 			tree.insert(str, data);
 		}
 
-		template<typename Tree, typename Key, typename Data>
+		template<class Tree, class Key, class Data>
 		void	dstree_insert(Tree & tree, std::vector<Key> const & keys, std::string const &, Data const & data, std::false_type)
 		{
 			tree.insert(keys, data);
@@ -125,7 +125,7 @@ namespace lv::lua::archive
 	}
 
 
-	template<typename Key, typename Data, typename Pred>
+	template<class Key, class Data, class Pred>
 	void	save(std::ostream & os, DSTree<Key, Data, Pred> const & tree, size_t level)
 	{
 		using tree_type = DSTree<Key, Data, Pred>;
@@ -139,7 +139,7 @@ namespace lv::lua::archive
 	}
 
 
-	template<typename Key, typename Data, typename Pred>
+	template<class Key, class Data, class Pred>
 	void	load(luabind::object const & obj, DSTree<Key, Data, Pred> & tree)
 	{
 		using tree_type = DSTree<Key, Data, Pred>;

@@ -19,7 +19,7 @@
 
 namespace lv::lua::archive
 {
-	template<typename T, typename Ax>
+	template<class T, class Ax>
 	struct object_tag<boost::interprocess::vector<T, Ax> >
 		: sequence_tag
 	{

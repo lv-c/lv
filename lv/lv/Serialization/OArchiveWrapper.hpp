@@ -16,7 +16,7 @@
 
 namespace lv
 {
-	template<typename Archive>
+	template<class Archive>
 	class OArchiveWrapper
 	{
 		OStreamFactory::unique_pointer	raw_os_;

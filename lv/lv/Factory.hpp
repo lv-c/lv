@@ -19,7 +19,7 @@
 namespace lv
 {
 
-	template<typename T>
+	template<class T>
 	struct NewCreator
 	{
 		T * operator () () const
@@ -30,7 +30,7 @@ namespace lv
 
 	// for expensive objects
 
-	template<typename T>
+	template<class T>
 	class Factory : public std::enable_shared_from_this<Factory<T> >
 	{
 	protected:

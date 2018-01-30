@@ -39,7 +39,7 @@ namespace lv
 		{
 		}
 
-		template<typename T>
+		template<class T>
 		LuaOArchive & operator << (T const & t)
 		{
 			if (!first_time_)
@@ -55,7 +55,7 @@ namespace lv
 			return *this;
 		}
 
-		template<typename T>
+		template<class T>
 		LuaOArchive & operator & (T const & t)
 		{
 			return *this << t;

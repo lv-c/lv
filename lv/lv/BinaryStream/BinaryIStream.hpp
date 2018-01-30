@@ -81,14 +81,14 @@ namespace lv::bstream
 		/**
 		 * @exception std::ios_base::failure
 		 */
-		template<typename T>
+		template<class T>
 		BinaryIStream & operator >> (T && val)
 		{
 			bstream::load(*this, val);
 			return *this;
 		}
 
-		template<typename T>
+		template<class T>
 		BinaryIStream & operator & (T && val)
 		{
 			return *this >> std::forward<T>(val);

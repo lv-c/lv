@@ -29,14 +29,14 @@ namespace lv
 		{
 		}
 
-		template<typename T>
+		template<class T>
 		PlainLuaIArchive & operator >> (T & t)
 		{
 			lua::archive::load(parser_, t);
 			return *this;
 		}
 
-		template<typename T>
+		template<class T>
 		PlainLuaIArchive & operator & (T & t)
 		{
 			return *this >> t;
@@ -46,7 +46,7 @@ namespace lv
 
 	class IStreamFactory;
 
-	template<typename Archive>
+	template<class Archive>
 	class IArchiveWrapper;
 
 	template<>

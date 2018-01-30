@@ -64,7 +64,7 @@ namespace lv::rpc
 		std::mutex	mutex_;
 
 
-		template<typename Ret>
+		template<class Ret>
 		class PrivateHandler
 		{
 			Client & client_;
@@ -191,7 +191,7 @@ namespace lv::rpc
 		}
 
 
-		template<typename Ret, typename ...Types>
+		template<class Ret, class ...Types>
 		PrivateHandler<Ret> call(Id const & id, Types const &... args)
 		{
 			BufferPtr buf = this->get_buffer();

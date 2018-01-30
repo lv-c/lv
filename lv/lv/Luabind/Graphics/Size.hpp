@@ -20,7 +20,7 @@
 
 namespace lv::lua::graphics
 {
-	template<typename T>
+	template<class T>
 	void	bind_size(lua_State * L, char const * name)
 	{
 		using type = SizeT<T>;

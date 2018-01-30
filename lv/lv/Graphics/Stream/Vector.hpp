@@ -15,7 +15,7 @@
 
 namespace lv
 {
-	template<typename T>
+	template<class T>
 	std::ostream & operator << (std::ostream & stream, VectorT<T> const & vec)
 	{
 		return stream << "Vector(" << vec.x << ", " << vec.y << ", " << vec.z << ')';

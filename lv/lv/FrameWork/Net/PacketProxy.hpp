@@ -40,7 +40,7 @@ namespace lv::net
 
 		void	switch_endian(bool s);
 
-		template<typename T>
+		template<class T>
 		PacketProxy & operator << (T const & t)
 		{
 			BOOST_ASSERT(valid_);

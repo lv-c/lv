@@ -55,7 +55,7 @@ namespace lv::rpc
 
 	namespace detail
 	{
-		template<typename Id, class ArchivePair>
+		template<class Id, class ArchivePair>
 		class Registery : boost::noncopyable
 		{
 		public:

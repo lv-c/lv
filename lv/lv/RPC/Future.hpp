@@ -28,7 +28,7 @@ namespace lv::rpc
 			virtual	void	set_exception(std::exception_ptr ex) = 0;
 		};
 
-		template<typename Ret, class ArchivePair>
+		template<class Ret, class ArchivePair>
 		struct ValueWrapper
 		{
 			Ret		value;
@@ -49,7 +49,7 @@ namespace lv::rpc
 			}
 		};
 
-		template<typename Ret, class ArchivePair>
+		template<class Ret, class ArchivePair>
 		class ReturnPromise : public IPromise<ArchivePair>
 		{
 			std::shared_ptr<Promise<Ret> > promise_;

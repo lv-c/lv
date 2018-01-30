@@ -16,7 +16,7 @@
 
 namespace lv::lua::archive
 {
-	template<typename T>
+	template<class T>
 	void	load(luabind::object const & obj, lv::serialization::NonintrusiveOptional<T> & t)
 	{
 		if (luabind::type(obj) != LUA_TNIL)
@@ -26,7 +26,7 @@ namespace lv::lua::archive
 	}
 
 
-	template<typename T>
+	template<class T>
 	void	load(Parser & parser, lv::serialization::NonintrusiveOptional<T> & t)
 	{
 		if (!parser.read_if("nil"))

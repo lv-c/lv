@@ -18,7 +18,7 @@
 
 namespace lv::lua
 {
-	template<typename K, typename V>
+	template<class K, class V>
 	void bind_map(lua_State * L, char const * name)
 	{
 		using type = std::map<K, V>;

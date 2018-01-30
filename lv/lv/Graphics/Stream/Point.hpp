@@ -15,7 +15,7 @@
 
 namespace lv
 {
-	template<typename T>
+	template<class T>
 	std::ostream & operator << (std::ostream & stream, PointT<T> const & pt)
 	{
 		return stream << "Point(" << pt.x << ", " << pt.y << ')';

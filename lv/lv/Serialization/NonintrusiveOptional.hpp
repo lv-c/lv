@@ -16,7 +16,7 @@
 
 namespace lv::serialization
 {
-	template<typename T>
+	template<class T>
 	class NonintrusiveOptional
 	{
 		T &	val_;
@@ -35,7 +35,7 @@ namespace lv::serialization
 	};
 
 
-	template<typename T>
+	template<class T>
 	inline NonintrusiveOptional<T>	make_optional(T & val)
 	{
 		return NonintrusiveOptional<T>(val);

@@ -18,9 +18,9 @@
 
 namespace lv
 {
-	template<typename Ret> class Promise;
+	template<class Ret> class Promise;
 
-	template<typename Ret>
+	template<class Ret>
 	class Future : public std::shared_future<Ret>
 	{
 		using base_type = std::shared_future<Ret>;
@@ -29,7 +29,7 @@ namespace lv
 
 	private:
 
-		template<typename> friend class Promise;
+		template<class> friend class Promise;
 
 		Future(std::shared_future<Ret> future, std::shared_ptr<Promise<Ret> > promise)
 			: base_type(future)
@@ -68,7 +68,7 @@ namespace lv
 			p.set_value();
 		}
 
-		template<typename T>
+		template<class T>
 		void	promise_set_value(std::promise<T> & p, T const * val)
 		{
 			p.set_value(*val);
@@ -76,7 +76,7 @@ namespace lv
 	}
 
 
-	template<typename Ret>
+	template<class Ret>
 	class Promise : public std::enable_shared_from_this<Promise<Ret> >
 	{
 		std::promise<Ret>	promise_;
@@ -138,7 +138,7 @@ namespace lv
 			}
 		}
 
-		template<typename> friend class Future;
+		template<class> friend class Future;
 
 		bool	is_ready() const
 		{

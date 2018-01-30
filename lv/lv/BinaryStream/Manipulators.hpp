@@ -31,7 +31,7 @@ namespace lv::bstream
 	
 	namespace detail
 	{
-		template<typename T, class Except>
+		template<class T, class Except>
 		class check_equal_impl
 		{
 			T	t_;
@@ -62,14 +62,14 @@ namespace lv::bstream
 		};
 	}
 
-	template<typename T>
+	template<class T>
 	inline detail::check_equal_impl<T, CheckEqualError>	check_equal(T const & t)
 	{
 		return detail::check_equal_impl<T, CheckEqualError>(t, CheckEqualError());
 	}
 	
 	// you can specify your own exception type
-	template<typename T, class Except>
+	template<class T, class Except>
 	inline detail::check_equal_impl<T, Except>	check_equal(T const & t, Except const & ex)
 	{
 		return detail::check_equal_impl<T, Except>(t, ex);
@@ -221,7 +221,7 @@ namespace lv::bstream
 
 	namespace detail
 	{
-		template<typename SizeType, class Range>
+		template<class SizeType, class Range>
 		class variable_len_range_impl
 		{
 			Range &	range_;
@@ -258,7 +258,7 @@ namespace lv::bstream
 		};
 	}
 
-	template<typename SizeType, class Range>
+	template<class SizeType, class Range>
 	detail::variable_len_range_impl<SizeType, Range>	variable_len_range(Range & range)
 	{
 		return detail::variable_len_range_impl<SizeType, Range>(range);
@@ -268,7 +268,7 @@ namespace lv::bstream
 
 	namespace detail
 	{
-		template<typename T>
+		template<class T>
 		class pod_impl
 		{
 			T &		t_;
@@ -298,7 +298,7 @@ namespace lv::bstream
 		};
 	}
 
-	template<typename T>
+	template<class T>
 	std::enable_if_t<std::is_pod_v<T>, detail::pod_impl<T> >	pod(T & t)
 	{
 		return detail::pod_impl<T>(t);

@@ -18,7 +18,7 @@ struct Test
 {
 	int	i;
 
-	template<typename Archive>
+	template<class Archive>
 	void serialize(Archive & ar, unsigned int)
 	{
 		ar & i;

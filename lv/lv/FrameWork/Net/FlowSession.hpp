@@ -24,7 +24,7 @@
 
 namespace lv::net
 {
-	template<typename Key, class S>
+	template<class Key, class S>
 	class FlowSession : public S
 	{
 		PacketSplitter<uint16>	splitter_;

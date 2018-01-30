@@ -29,7 +29,7 @@ namespace lv
 
 	public:
 
-		template<typename F>
+		template<class F>
 		std::thread &	create_thread(F && func)
 		{
 			std::lock_guard<std::mutex> lock(mutex_);

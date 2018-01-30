@@ -32,7 +32,7 @@ namespace lv
 			_NVP_HELPER_B = this;
 		}
 
-		template<typename T>
+		template<class T>
 		NvpHelper const & operator () (char const * name, T & t) const
 		{
 			ar_ & boost::serialization::make_nvp(name, t);
@@ -42,13 +42,13 @@ namespace lv
 
 		// used by library
 
-		template<typename T>
+		template<class T>
 		NvpHelper const & _serialize (char const * name, T && t) const
 		{
 			return (*this) (name, t);
 		}
 
-		template<typename T>
+		template<class T>
 		NvpHelper const & _serialize (char const *, T && t, char const * name) const
 		{
 			return (*this) (name, t);

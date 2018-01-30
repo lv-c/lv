@@ -50,14 +50,14 @@ namespace lv::lua
 
 		lua_State *	lua_state();
 
-		template<typename T>
+		template<class T>
 		LuaConfig const & operator () (char const * name, T & t) const
 		{
 			*ia_ & boost::serialization::make_nvp(name, t);
 			return *this;
 		}
 
-		template<typename T>
+		template<class T>
 		LuaConfig const & operator () (T & t) const
 		{
 			archive::load(luabind::globals(L_), t);

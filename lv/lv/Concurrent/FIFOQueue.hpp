@@ -15,7 +15,7 @@
 
 namespace lv
 {
-	template<typename T>
+	template<class T>
 	class FIFOQueue
 	{
 		std::deque<T>	container_;

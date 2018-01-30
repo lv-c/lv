@@ -88,14 +88,14 @@ namespace lv::bstream
 		/**
 		 * @exception std::ios_base::failure
 		 */
-		template<typename T>
+		template<class T>
 		BinaryOStream & operator << (T const & val)
 		{
 			bstream::save(*this, val);
 			return *this;
 		}
 
-		template<typename T>
+		template<class T>
 		BinaryOStream & operator & (T const & val)
 		{
 			return *this << val;

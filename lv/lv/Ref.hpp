@@ -17,7 +17,7 @@
 namespace lv
 {
 
-	template<typename T>
+	template<class T>
 	class RefWrapper
 	{
 		T * t_;

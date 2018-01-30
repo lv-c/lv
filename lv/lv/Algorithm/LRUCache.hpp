@@ -18,7 +18,7 @@
 
 namespace lv
 {
-	template<typename K, typename D, class VAx = std::allocator<std::pair<K const, D> >, 
+	template<class K, class D, class VAx = std::allocator<std::pair<K const, D> >, 
 		class M = std::map<K, LRUList<std::pair<K const, D>, VAx>::iterator> >
 	class LRUCache
 	{

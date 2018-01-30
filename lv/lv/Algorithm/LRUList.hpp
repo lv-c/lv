@@ -18,7 +18,7 @@ namespace lv
 	/**
 	 * @param Ax allocator type.
 	 */
-	template <typename T, class Ax = std::allocator<T> >
+	template<class T, class Ax = std::allocator<T> >
 	class LRUList
 	{
 		using list_type = std::list<T, Ax>;

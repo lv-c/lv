@@ -25,7 +25,7 @@ namespace boost::serialization
 {
 	namespace detail
 	{
-		template <class T, class Ax>
+		template<class T, class Ax>
 		T * get_data(interprocess::vector<T, Ax> & v)
 		{
 			return v.empty() ? 0 : &(v[0]);

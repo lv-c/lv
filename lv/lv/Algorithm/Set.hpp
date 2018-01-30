@@ -21,7 +21,7 @@ namespace lv
 
 	// difference
 
-	template<typename T, typename Pr, typename Ax>
+	template<class T, class Pr, class Ax>
 	std::set<T, Pr, Ax> & operator -= (std::set<T, Pr, Ax> & lhs, std::set<T, Pr, Ax> const & rhs)
 	{
 		std::set<T, Pr, Ax> ret;
@@ -31,7 +31,7 @@ namespace lv
 		return lhs;
 	}
 
-	template<typename T, typename Pr, typename Ax>
+	template<class T, class Pr, class Ax>
 	std::set<T, Pr, Ax> operator - (std::set<T, Pr, Ax> const & lhs, std::set<T, Pr, Ax> const & rhs)
 	{
 		std::set<T, Pr, Ax> ret;
@@ -42,14 +42,14 @@ namespace lv
 
 	// join
 
-	template<typename T, typename Pr, typename Ax>
+	template<class T, class Pr, class Ax>
 	std::set<T, Pr, Ax> & operator += (std::set<T, Pr, Ax> & lhs, std::set<T, Pr, Ax> const & rhs)
 	{
 		lhs.insert(rhs.begin(), rhs.end());
 		return lhs;
 	}
 
-	template<typename T, typename Pr, typename Ax>
+	template<class T, class Pr, class Ax>
 	std::set<T, Pr, Ax> operator + (std::set<T, Pr, Ax> const & lhs, std::set<T, Pr, Ax> const & rhs)
 	{
 		std::set<T, Pr, Ax> ret = lhs;
@@ -60,7 +60,7 @@ namespace lv
 
 	// intersect
 
-	template<typename T, typename Pr, typename Ax>
+	template<class T, class Pr, class Ax>
 	std::set<T, Pr, Ax> & operator &= (std::set<T, Pr, Ax> & lhs, std::set<T, Pr, Ax> const & rhs)
 	{
 		std::set<T, Pr, Ax> ret;
@@ -70,7 +70,7 @@ namespace lv
 		return lhs;
 	}
 
-	template<typename T, typename Pr, typename Ax>
+	template<class T, class Pr, class Ax>
 	std::set<T, Pr, Ax> operator & (std::set<T, Pr, Ax> const & lhs, std::set<T, Pr, Ax> const & rhs)
 	{
 		std::set<T, Pr, Ax> ret;

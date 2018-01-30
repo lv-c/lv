@@ -19,7 +19,7 @@
 
 namespace lv::lua
 {
-	template<typename T>
+	template<class T>
 	void bind_set(lua_State * L, char const * name)
 	{
 		using type = std::set<T>;

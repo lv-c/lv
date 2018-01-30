@@ -27,7 +27,7 @@ namespace lv
 	DEFINE_EXCEPTION_MSG(dunplicated_key, std::runtime_error)
 
 
-	template<typename X, typename Y>
+	template<class X, class Y>
 	class Mapping
 	{
 		using bimap_type = boost::bimap<X, Y>;

@@ -13,13 +13,13 @@
 
 namespace lv
 {
-	template<typename T>
+	template<class T>
 	class FIFOQueue;
 
-	template <typename T>
+	template<class T>
 	class PriorityQueue;
 
-	template <typename Task, template <typename> class QueuePolicy = FIFOQueue>
+	template<class Task, template<class> class QueuePolicy = FIFOQueue>
 	class TaskQueue;
 
 	class ThreadGroup;

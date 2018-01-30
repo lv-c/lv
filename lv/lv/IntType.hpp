@@ -66,7 +66,7 @@ namespace lv
 
 
 	// for ( streaming
-	template<typename T>
+	template<class T>
 	struct WidenInt
 	{
 		static_assert(std::is_arithmetic_v<T>);
@@ -93,7 +93,7 @@ namespace lv
 	};
 
 	
-	template<typename T>
+	template<class T>
 	typename WidenInt<T>::type widen_int(T t)
 	{
 		return t;
@@ -101,7 +101,7 @@ namespace lv
 
 
 	//
-	template<typename T>
+	template<class T>
 	int	sign(T val)
 	{
 		return (T(0) < val) - (val < T(0));

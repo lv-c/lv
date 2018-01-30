@@ -25,13 +25,13 @@ namespace lv
 	class Font;
 	using FontPtr = std::shared_ptr<Font>;
 
-	template<typename>	class PointT;
+	template<class>	class PointT;
 	using Point = PointT<int32>;
 
-	template<typename>	class SizeT;
+	template<class>	class SizeT;
 	using Size = SizeT<int32>;
 
-	template<typename>	class RectT;
+	template<class>	class RectT;
 	using Rect = RectT<int32>;
 
 }

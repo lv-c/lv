@@ -15,7 +15,7 @@
 
 namespace lv
 {
-	template<class Derived, typename T, size_t N>
+	template<class Derived, class T, size_t N>
 	class ContainerBase : boost::equality_comparable<Derived>
 	{
 	public:

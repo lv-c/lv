@@ -18,12 +18,12 @@ namespace lv::lua
 {
 	namespace detail
 	{
-		template<typename ret, typename wrap>
+		template<class ret, class wrap>
 		std::enable_if_t<std::is_same_v<ret, void>, ret>	return_value(wrap v)
 		{
 		}
 
-		template<typename ret, typename wrap>
+		template<class ret, class wrap>
 		std::enable_if_t<!std::is_same_v<ret, void>, ret>	return_value(wrap v)
 		{
 			return v;

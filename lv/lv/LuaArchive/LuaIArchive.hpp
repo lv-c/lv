@@ -50,14 +50,14 @@ namespace lv
 			}
 		}
 		
-		template<typename T>
+		template<class T>
 		LuaIArchive & operator >> (T && t)
 		{
 			load(t);
 			return *this;
 		}
 
-		template<typename T>
+		template<class T>
 		LuaIArchive & operator & (T && t)
 		{
 			return *this >> std::forward<T>(t);
@@ -65,7 +65,7 @@ namespace lv
 
 	private:
 
-		template<typename T>
+		template<class T>
 		void	load(T & t)
 		{
 			check_nvp(false);
@@ -74,7 +74,7 @@ namespace lv
 			index_++;
 		}
 
-		template<typename T>
+		template<class T>
 		void	load(boost::serialization::nvp<T> const & t)
 		{
 			check_nvp(true);

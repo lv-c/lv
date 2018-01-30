@@ -15,7 +15,7 @@
 
 namespace lv
 {
-	template <typename T>
+	template<class T>
 	class PriorityQueue
 	{
 		std::priority_queue<T>	container_;

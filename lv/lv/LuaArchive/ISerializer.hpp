@@ -58,16 +58,16 @@ namespace lv::lua::archive
 	}
 
 
-	template<typename T>
+	template<class T>
 	void	load_adl(luabind::object const & obj, T & t);
 
-	template<typename T>
+	template<class T>
 	void	load_item_adl(luabind::iterator const & it, T & t);
 
 
 	namespace detail
 	{
-		template<typename T>
+		template<class T>
 		void	load_impl(luabind::object const & obj, T & t, unknown_tag)
 		{
 			LuaIArchive ia(obj);
@@ -83,7 +83,7 @@ namespace lv::lua::archive
 		}
 
 		// primitive_tag
-		template<typename T>
+		template<class T>
 		struct primitive_type : boost::mpl::int_<LUA_TNUMBER> {};
 
 		template<>
@@ -93,7 +93,7 @@ namespace lv::lua::archive
 		struct primitive_type<std::string> : boost::mpl::int_<LUA_TSTRING> {};
 
 
-		template<typename T>
+		template<class T>
 		void	load_impl(luabind::object const & obj, T & t, primitive_tag)
 		{
 			expect_obj_type(obj, primitive_type<T>::value);
@@ -102,7 +102,7 @@ namespace lv::lua::archive
 		}
 
 		// enum_tag
-		template<typename T>
+		template<class T>
 		void	load_impl(luabind::object const & obj, T & t, enum_tag)
 		{
 			int v;
@@ -122,7 +122,7 @@ namespace lv::lua::archive
 			return false;
 		}
 
-		template<typename T>
+		template<class T>
 		void	load_impl(luabind::object const & obj, T & t, sequence_tag)
 		{
 			expect_obj_type(obj, LUA_TTABLE);
@@ -140,7 +140,7 @@ namespace lv::lua::archive
 		}
 
 		// utility
-		template<typename K, typename V>
+		template<class K, class V>
 		void	load_key_value(luabind::iterator const & it, K & key, V & value)
 		{
 			load_adl(it.key(), key);
@@ -160,19 +160,19 @@ namespace lv::lua::archive
 		operator T & () const { return *t_; }
 	};
 
-	template<typename T>
+	template<class T>
 	void	load(luabind::object const & obj, T & t)
 	{
 		detail::load_impl(obj, t, object_tag_t<T>());
 	}
 
-	template<typename T>
+	template<class T>
 	void	load_adl(luabind::object const & obj, T & t)
 	{
 		load(Ref<luabind::object const>(obj), t);
 	}
 
-	template<typename T>
+	template<class T>
 	void	load(luabind::object const & obj, boost::serialization::nvp<T> const & t)
 	{
 		try
@@ -187,13 +187,13 @@ namespace lv::lua::archive
 
 	// load items of a container. you should overload this function if the item
 	// needs both the key and the value, such as std::pair
-	template<typename T>
+	template<class T>
 	void	load_item(luabind::iterator const & it, T & t)
 	{
 		load_adl(*it, t);
 	}
 
-	template<typename T>
+	template<class T>
 	void	load_item_adl(luabind::iterator const & it, T & t)
 	{
 		load_item(Ref<luabind::iterator const>(it), t);

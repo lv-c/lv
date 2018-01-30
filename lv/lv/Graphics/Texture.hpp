@@ -33,7 +33,7 @@ namespace lv
 		
 	class Texture
 	{
-		template <typename T>
+		template<class T>
 		class AutoUnmap
 		{
 			Texture & tex_;
@@ -68,7 +68,7 @@ namespace lv
 		/**
 		 * use this meta-function to deduce the result type of function @a map.
 		 */
-		template <int PF>
+		template<int PF>
 		struct ViewPtrT
 		{
 			using type = std::shared_ptr<typename GIL::ViewT<PF>::type>;
@@ -84,7 +84,7 @@ namespace lv
 		 * @exception std::runtime_error if @a PF is not same as @a this->format() or @a rect 
 		 *	is out of bound.
 		 */
-		template <int PF>
+		template<int PF>
 		typename ViewPtrT<PF>::type map(Rect const & rect)
 		{
 			BOOST_ASSERT(PF == this->format_);

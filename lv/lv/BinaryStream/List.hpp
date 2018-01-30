@@ -18,7 +18,7 @@
 
 namespace lv::bstream
 {
-	template<typename T, typename Ax>
+	template<class T, class Ax>
 	struct object_tag<std::list<T, Ax> >
 		: range_tag
 	{

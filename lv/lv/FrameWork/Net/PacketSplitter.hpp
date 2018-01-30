@@ -19,7 +19,7 @@
 
 namespace lv::net
 {
-	template<typename SizeType>
+	template<class SizeType>
 	class PacketSplitter
 	{
 		std::deque<char>	cache_;

@@ -22,14 +22,14 @@
 
 namespace boost::serialization
 {
-	template<typename Key, typename Data, typename Pred>
+	template<class Key, class Data, class Pred>
 	struct version<lv::DSTree<Key, Data, Pred> >
 		: mpl::int_<1>
 	{
 	};
 
 
-	template<typename Archive, typename Key, typename Data, typename Pred>
+	template<class Archive, class Key, class Data, class Pred>
 	void save(Archive & ar, lv::DSTree<Key, Data, Pred> const & tree, unsigned int)
 	{
 		using tree_type = lv::DSTree<Key, Data, Pred>;
@@ -51,7 +51,7 @@ namespace boost::serialization
 		}
 	}
 
-	template<typename Archive, typename Key, typename Data, typename Pred>
+	template<class Archive, class Key, class Data, class Pred>
 	void load(Archive & ar, lv::DSTree<Key, Data, Pred> & tree, unsigned int version)
 	{
 		using tree_type = lv::DSTree<Key, Data, Pred>;
@@ -90,7 +90,7 @@ namespace boost::serialization
 		}
 	}
 
-	template<typename Archive, typename Key, typename Data, typename Pred>
+	template<class Archive, class Key, class Data, class Pred>
 	void serialize(Archive & ar, lv::DSTree<Key, Data, Pred> & tree, unsigned int version)
 	{
 		split_free(ar, tree, version);

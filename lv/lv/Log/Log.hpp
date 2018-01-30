@@ -74,7 +74,7 @@ namespace lv::log
 				}
 			}
 
-			template <typename T>
+			template<class T>
 			Proxy &	operator << (T const & t)
 			{
 				BOOST_ASSERT(active_);
@@ -138,7 +138,7 @@ namespace lv::log
 
 	private:
 		
-		template <typename T>
+		template<class T>
 		void	log(T const & t)
 		{
 			if (enabled_)

@@ -18,7 +18,7 @@
 
 namespace lv::lua::archive
 {
-	template<typename T, typename Pr, typename Ax>
+	template<class T, class Pr, class Ax>
 	struct object_tag<std::set<T, Pr, Ax> >
 		: sequence_tag
 	{

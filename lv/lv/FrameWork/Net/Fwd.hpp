@@ -37,7 +37,7 @@ namespace lv::net
 
 	class TcpSession;
 
-	template<typename Key, class S>
+	template<class Key, class S>
 	class FlowSession;
 
 	class ISender;

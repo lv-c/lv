@@ -19,7 +19,7 @@
 
 namespace lv::lua
 {
-	template<typename T1, typename T2>
+	template<class T1, class T2>
 	void bind_pair(lua_State * L, char const * name)
 	{
 		using type = std::pair<T1, T2>;

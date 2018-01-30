@@ -36,10 +36,10 @@ namespace lv
 	they don't share an engine). """
 	*/
 
-	template<typename T, typename Enabled = void>
+	template<class T, class Enabled = void>
 	struct RandomTraits;
 
-	template<typename T>
+	template<class T>
 	struct RandomTraits<T, std::enable_if_t<std::is_integral_v<T> > >
 	{
 		using generator_type = boost::mt19937;
@@ -48,7 +48,7 @@ namespace lv
 	};
 
 
-	template<typename T>
+	template<class T>
 	struct RandomTraits<T, std::enable_if_t<std::is_floating_point_v<T> > >
 	{
 		using generator_type = boost::mt19937;
@@ -57,7 +57,7 @@ namespace lv
 	};
 
 
-	template<typename T = int, typename Traits = RandomTraits<T> >
+	template<class T = int, class Traits = RandomTraits<T> >
 	class Random
 	{
 		using engine_type = typename Traits::generator_type;

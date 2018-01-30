@@ -81,7 +81,7 @@ namespace lv::rpc::detail
 		using iarchive_type = typename ArchivePair::iarchive_type;
 		using oarchive_type = typename ArchivePair::oarchive_type;
 
-		template<typename T>
+		template<class T>
 		class ResultWrapper
 		{
 			T	val_;

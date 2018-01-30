@@ -15,7 +15,7 @@
 
 namespace lv
 {
-	template<typename T>
+	template<class T>
 	std::ostream & operator << (std::ostream & stream, SizeT<T> const & sz)
 	{
 		return stream << "Size(" << sz.cx << ", " << sz.cy << ')';

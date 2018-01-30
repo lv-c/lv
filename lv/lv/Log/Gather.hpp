@@ -118,7 +118,7 @@ namespace lv::log
 		}
 
 
-		template <typename T>
+		template<class T>
 		void	log(T const & t)
 		{
 			*os_ << t;

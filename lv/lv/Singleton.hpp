@@ -79,7 +79,7 @@ namespace lv
 		static	T*	instance_;
 	};
 
-	template <class T, bool StaticAlloc>
+	template<class T, bool StaticAlloc>
 	T* Singleton<T, StaticAlloc>::instance_ = nullptr;
 
 }

@@ -27,20 +27,20 @@ namespace lv
 
 
 	/// these two classes are compatible with boost.range and boost.BOOST_FOREACH
-	template <typename T> class ConstBufferRefT;
-	template <typename T> class BufferRefT;
+	template<class T> class ConstBufferRefT;
+	template<class T> class BufferRefT;
 
 	using ConstBufferRef = ConstBufferRefT<char>;
 	using BufferRef = BufferRefT<char>;
 
 
-	template <typename T>
+	template<class T>
 	class BufferRefT
 	{
 		T * data_;
 		size_t size_;
 
-		template<typename> friend class ConstBufferRefT;
+		template<class> friend class ConstBufferRefT;
 
 		std::shared_ptr<std::vector<T> >	holder_;
 
@@ -140,7 +140,7 @@ namespace lv
 	};
 
 
-	template <typename T>
+	template<class T>
 	class ConstBufferRefT
 	{
 		T const * data_;
@@ -245,7 +245,7 @@ namespace lv
 			buf.insert(buf.end(), data.begin(), data.end());
 		}
 
-		template<typename T>
+		template<class T>
 		std::enable_if_t<std::is_arithmetic_v<T> >	append(Buffer & buf, T t)
 		{
 			append(buf, &t, sizeof(t));
@@ -264,7 +264,7 @@ namespace lv
 			buf.insert(buf.begin() + pos, static_cast<char const *>(data), static_cast<char const *>(data) + size);
 		}
 
-		template<typename T>
+		template<class T>
 		std::enable_if_t<std::is_arithmetic_v<T> >	insert(Buffer & buf, size_t pos, T t)
 		{
 			insert(buf, pos, &t, sizeof(t));
@@ -284,7 +284,7 @@ namespace lv
 			std::copy(static_cast<char const *>(data), static_cast<char const *>(data) + size, buf.data() + pos);
 		}
 
-		template<typename T>
+		template<class T>
 		std::enable_if_t<std::is_arithmetic_v<T> >	write(BufferRef buf, size_t pos, T t)
 		{
 			write(buf, pos, &t, sizeof(t));
@@ -304,13 +304,13 @@ namespace lv
 			std::copy(buf.data() + pos, buf.data() + pos + size, static_cast<char *>(data));
 		}
 
-		template<typename T>
+		template<class T>
 		std::enable_if_t<std::is_arithmetic_v<T> >	read(ConstBufferRef const & buf, size_t pos, T & t)
 		{
 			read(buf, pos, &t, sizeof(t));
 		}
 
-		template<typename T>
+		template<class T>
 		T	read(ConstBufferRef const & buf, size_t pos)
 		{
 			T t;
