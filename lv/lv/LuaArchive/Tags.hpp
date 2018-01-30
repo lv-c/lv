@@ -32,7 +32,7 @@ namespace lv::lua::archive
 
 
 	// arithmetic type or enum type or string type
-	template<typename T>
+	template<class T>
 	struct is_primitive : std::is_arithmetic<T>
 	{
 	};
@@ -58,28 +58,28 @@ namespace lv::lua::archive
 	};
 
 
-	template<typename T>
+	template<class T>
 	constexpr bool	is_primitive_v = is_primitive<T>::value;
 
 
 
-	template<typename T, class Enabled = void>
+	template<class T, class Enabled = void>
 	struct object_tag : unknown_tag {};
 
-	template<typename T>
+	template<class T>
 	struct object_tag<T, std::enable_if_t<is_primitive_v<T> > >
 		: primitive_tag
 	{
 	};
 
-	template<typename T>
+	template<class T>
 	struct object_tag<T, std::enable_if_t<std::is_enum_v<T> > >
 		: enum_tag
 	{
 	};
 
 
-	template<typename T, class Enabled = void>
+	template<class T, class Enabled = void>
 	using object_tag_t = typename object_tag<T, Enabled>::type;
 
 }

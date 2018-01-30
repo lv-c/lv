@@ -43,7 +43,7 @@ mutex	g_mutex;
 template<class LowerSession>
 class ClientSession : public FlowSession<string, LowerSession>
 {
-	typedef FlowSession<string, LowerSession> base_type;
+	using base_type = FlowSession<string, LowerSession>;
 
 	string	text_;
 
@@ -84,7 +84,7 @@ private:
 template<class LowerSession>
 class ServerSession : public FlowSession<string, LowerSession>
 {
-	typedef FlowSession<string, LowerSession> base_type;
+	using base_type = FlowSession<string, LowerSession>;
 
 public:
 	ServerSession(ContextPtr context)
@@ -114,10 +114,10 @@ private:
 template<class Server, class LowerSession>
 void test_net_impl()
 {
-	typedef ServerSession<LowerSession>	server_session_type;
-	typedef ClientSession<LowerSession> client_session_type;
+	using server_session_type = ServerSession<LowerSession>;
+	using client_session_type = ClientSession<LowerSession>;
 
-	typedef Server	server_type;
+	using server_type = Server;
 
 	boost::asio::io_service service;
 

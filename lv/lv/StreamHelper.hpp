@@ -26,7 +26,7 @@ namespace lv
 
 	namespace detail
 	{
-		template<typename T>
+		template<class T>
 		class hex_impl
 		{
 			T	t_;
@@ -35,7 +35,7 @@ namespace lv
 
 			hex_impl(T t) : t_(t) {}
 
-			template<typename C, typename Tr>
+			template<class C, class Tr>
 			friend std::basic_ostream<C, Tr> & operator << (std::basic_ostream<C, Tr> & os, hex_impl const & h)
 			{
 				boost::io::ios_flags_saver ias(os);
@@ -55,7 +55,7 @@ namespace lv
 	}
 
 
-	template<typename T>
+	template<class T>
 	detail::hex_impl<T> hex(T t)
 	{
 		return detail::hex_impl<T>(t);
@@ -78,7 +78,7 @@ namespace lv
 		{
 		}
 
-		template<typename C, typename Tr>
+		template<class C, class Tr>
 		friend std::basic_ostream<C, Tr> & operator << (std::basic_ostream<C, Tr> & os, write_tabs tabs)
 		{
 			if (tabs.expand_)
@@ -104,7 +104,7 @@ namespace lv
 
 	namespace detail
 	{
-		template<typename T, typename C, typename Tr>
+		template<class T, class C, class Tr>
 		std::enable_if_t<std::is_arithmetic_v<T> >	write(std::basic_ostream<C, Tr> & os, T const & t, bool use_hex, int setw)
 		{
 			if (setw != -1)
@@ -122,14 +122,14 @@ namespace lv
 			}
 		}
 
-		template<typename T, typename C, typename Tr>
+		template<class T, class C, class Tr>
 		std::enable_if_t<!std::is_arithmetic_v<T> >	write(std::basic_ostream<C, Tr> & os, T const & t, bool use_hex, int setw)
 		{
 			os << t;
 		}
 
 
-		template<typename Range>
+		template<class Range>
 		class write_range_impl
 		{
 			Range const &	range_;
@@ -150,7 +150,7 @@ namespace lv
 			{
 			}
 
-			template<typename C, typename Tr>
+			template<class C, class Tr>
 			friend std::basic_ostream<C, Tr> & operator << (std::basic_ostream<C, Tr> & os, write_range_impl const & r)
 			{
 				bool first = true;
@@ -172,7 +172,7 @@ namespace lv
 		};
 	}
 
-	template<typename Range>
+	template<class Range>
 	detail::write_range_impl<Range>	write_range(Range const & range, char const * delimiter = ", ", bool use_hex = false,
 		int setw = -1)
 	{

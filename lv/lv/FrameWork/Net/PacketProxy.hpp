@@ -20,7 +20,7 @@
 
 namespace lv::net
 {
-	typedef std::function<void(BufferPtr)> PacketProxyCallback;
+	using PacketProxyCallback = std::function<void(BufferPtr)>;
 
 	class PacketProxy
 	{
@@ -40,7 +40,7 @@ namespace lv::net
 
 		void	switch_endian(bool s);
 
-		template<typename T>
+		template<class T>
 		PacketProxy & operator << (T const & t)
 		{
 			BOOST_ASSERT(valid_);

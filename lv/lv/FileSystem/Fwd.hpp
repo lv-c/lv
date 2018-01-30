@@ -17,7 +17,7 @@
 namespace lv
 {
 	class IFileIO;
-	typedef std::shared_ptr<IFileIO>	IFileIOPtr;
+	using IFileIOPtr = std::shared_ptr<IFileIO>;
 
 	class RawFileReader;
 	class RawFileWriter;

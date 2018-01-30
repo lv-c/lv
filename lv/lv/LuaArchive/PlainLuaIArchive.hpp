@@ -21,22 +21,22 @@ namespace lv
 
 	public:
 
-		typedef boost::mpl::true_	is_loading;
-		typedef boost::mpl::false_	is_saving;
+		using is_loading = boost::mpl::true_;
+		using is_saving = boost::mpl::false_;
 
 		explicit PlainLuaIArchive(ConstBufferRef buf)
 			: parser_(buf)
 		{
 		}
 
-		template<typename T>
+		template<class T>
 		PlainLuaIArchive & operator >> (T & t)
 		{
 			lua::archive::load(parser_, t);
 			return *this;
 		}
 
-		template<typename T>
+		template<class T>
 		PlainLuaIArchive & operator & (T & t)
 		{
 			return *this >> t;
@@ -46,7 +46,7 @@ namespace lv
 
 	class IStreamFactory;
 
-	template<typename Archive>
+	template<class Archive>
 	class IArchiveWrapper;
 
 	template<>

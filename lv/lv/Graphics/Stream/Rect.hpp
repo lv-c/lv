@@ -15,7 +15,7 @@
 
 namespace lv
 {
-	template<typename T>
+	template<class T>
 	std::ostream & operator << (std::ostream & stream, RectT<T> const & rc)
 	{
 		return stream << "Rect(" << rc.left << ", " << rc.top << ", " << rc.right

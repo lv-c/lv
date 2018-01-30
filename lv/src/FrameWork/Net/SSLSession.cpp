@@ -12,7 +12,7 @@ namespace lv::net
 	{
 	public:
 
-		typedef asio::ssl::stream<asio::ip::tcp::socket> socket_type;
+		using socket_type = asio::ssl::stream<asio::ip::tcp::socket>;
 
 	private:
 
@@ -45,7 +45,7 @@ namespace lv::net
 	//
 	void SSLSession::server_side_start()
 	{
-		handshake(ServerHandshake);
+		handshake(HandshakeType::Server);
 	}
 
 	void SSLSession::handle_handshake(boost::system::error_code const & error)
@@ -74,7 +74,7 @@ namespace lv::net
 
 		if (!error)
 		{
-			handshake(ClientHandshake);
+			handshake(HandshakeType::Client);
 		}
 		else
 		{
@@ -84,20 +84,17 @@ namespace lv::net
 
 	void SSLSession::handshake(HandshakeType type)
 	{
-		asio::ssl::stream_base::handshake_type true_type;
+		asio::ssl::stream_base::handshake_type true_type{};
 
 		switch (type)
 		{
-		case ClientHandshake:
+		case HandshakeType::Client:
 			true_type = asio::ssl::stream_base::client;
 			break;
 
-		case ServerHandshake:
+		case HandshakeType::Server:
 			true_type = asio::ssl::stream_base::server;
 			break;
-
-		default:
-			BOOST_ASSERT(false);
 		}
 
 

@@ -21,7 +21,7 @@ namespace lv
 	class Editbox : public Window
 	{
 	public:
-		typedef std::function<bool (wchar_t, Editbox const &)>	filter_type;
+		using filter_type = std::function<bool (wchar_t, Editbox const &)>;
 
 	protected:
 		size_t	caret_index_;

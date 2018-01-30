@@ -26,10 +26,10 @@ namespace lv::flow
 	{
 	public:
 
-		typedef Key		key_type;
-		typedef OArchive	oarchive_type;
+		using key_type = Key;
+		using oarchive_type = OArchive;
 
-		typedef std::function<void(BufferPtr)>	callback_type;
+		using callback_type = std::function<void(BufferPtr)>;
 
 	private:
 

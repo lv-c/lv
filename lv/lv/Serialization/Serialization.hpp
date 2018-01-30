@@ -37,14 +37,14 @@ namespace lv::serialization
 		template<class Archive>
 		struct serialize_enum_type
 		{
-			template<typename T>
+			template<class T>
 			static void save(Archive & ar, T t)
 			{
 				int const i = static_cast<int>(t);
 				ar << i;
 			}
 
-			template<typename T>
+			template<class T>
 			static void load(Archive & ar, T & t)
 			{
 				int i;
@@ -57,19 +57,19 @@ namespace lv::serialization
 		template<class Archive>
 		struct serialize_array_type
 		{
-			template<typename T>
+			template<class T>
 			static void save(Archive & ar, T const & t)
 			{
-				typedef std::remove_extent_t<T> value_type;
+				using value_type = std::remove_extent_t<T>;
 
 				boost::serialization::collection_size_type count(sizeof(t) / sizeof(value_type));
 				ar << count << boost::serialization::make_array(static_cast<value_type const*>(&t[0]), count);
 			}
 
-			template<typename T>
+			template<class T>
 			static void load(Archive & ar, T & t)
 			{
-				typedef std::remove_extent_t<T> value_type;
+				using value_type = std::remove_extent_t<T>;
 				
 				std::size_t current_count = sizeof(t) / sizeof(value_type);
 
@@ -89,7 +89,7 @@ namespace lv::serialization
 		template<class Archive>
 		struct serialize_default
 		{
-			template<typename T>
+			template<class T>
 			static void save(Archive & ar, T const & t)
 			{
 				boost::archive::detail::check_object_versioning<T>();
@@ -100,7 +100,7 @@ namespace lv::serialization
 				boost::serialization::serialize_adl(ar, const_cast<T &>(t), ver);
 			}
 
-			template<typename T>
+			template<class T>
 			static void load(Archive & ar, T & t)
 			{
 				boost::archive::version_type file_ver;
@@ -118,10 +118,10 @@ namespace lv::serialization
 
 		namespace mpl = boost::mpl;
 
-		template<class Archive, typename T>
+		template<class Archive, class T>
 		struct serializer_type
 		{
-			typedef typename mpl::eval_if<
+			using type = typename mpl::eval_if<
 				std::is_enum<T>,
 				mpl::identity<detail::serialize_enum_type<Archive> >,
 
@@ -130,32 +130,32 @@ namespace lv::serialization
 					mpl::identity<detail::serialize_array_type<Archive> >,
 					mpl::identity<detail::serialize_default<Archive> >
 				>
-			>::type type;
+			>::type;
 		};
 
 	}
 
 
-	template<class Archive, typename T>
+	template<class Archive, class T>
 	void	save(Archive & ar, T const & t, Overload)
 	{
 		detail::serializer_type<Archive, T>::type::save(ar, t);
 	}
 
-	template<class Archive, typename T>
+	template<class Archive, class T>
 	void	save_adl(Archive & ar, T const & t)
 	{
 		save(ar, t, Overload());
 	}
 
 
-	template<class Archive, typename T>
+	template<class Archive, class T>
 	void	load(Archive & ar, T & t, Overload)
 	{
 		detail::serializer_type<Archive, T>::type::load(ar, t);
 	}
 
-	template<class Archive, typename T>
+	template<class Archive, class T>
 	void	load_adl(Archive & ar, T & t)
 	{
 		load(ar, t, Overload());

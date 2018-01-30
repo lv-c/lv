@@ -21,7 +21,7 @@ namespace lv::flow
 	{
 	protected:
 
-		typedef std::function<void(T const &)>	Callback;
+		using Callback = std::function<void(T const &)>;
 
 		Callback	callback_;
 

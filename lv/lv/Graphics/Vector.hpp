@@ -15,7 +15,7 @@
 
 namespace lv
 {
-	template<typename T>
+	template<class T>
 	class VectorT : public ContainerBase<VectorT<T>, T, 3>,
 		boost::additive<VectorT<T>,
 		boost::multiplicative2<VectorT<T>, T,
@@ -30,7 +30,7 @@ namespace lv
 		VectorT() : x(0), y(0), z(0) {}
 		VectorT(T _x, T _y, T _z) : x(_x), y(_y), z(_z) {}
 
-		template<typename U>
+		template<class U>
 		explicit VectorT(VectorT<U> const & vec)
 		{
 			x = static_cast<T>(vec.x);
@@ -89,17 +89,17 @@ namespace lv
 
 	private:
 
-		template<class, typename, size_t>	friend class ContainerBase;
+		template<class, class, size_t>	friend class ContainerBase;
 
 		static T VectorT::* const		mem_array[ele_num];
 
 	};
 
 
-	template<typename T>
+	template<class T>
 	T VectorT<T>::* const VectorT<T>::mem_array[VectorT<T>::ele_num] = { &VectorT<T>::x, &VectorT<T>::y, &VectorT<T>::z};
 
-	typedef VectorT<float>	Vector3f;
+	using Vector3f = VectorT<float>;
 
 }
 

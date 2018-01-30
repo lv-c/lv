@@ -41,7 +41,7 @@ namespace lv::net
 	{
 	public:
 
-		typedef std::function<void(BufferPtr)>	Receiver;
+		using Receiver = std::function<void(BufferPtr)>;
 
 	private:
 

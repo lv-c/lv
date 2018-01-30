@@ -25,7 +25,7 @@ namespace lv::lua
 
 		bool	finished_;
 
-		typedef std::function<void(std::string const &)> Callback;
+		using Callback = std::function<void(std::string const &)>;
 
 		Callback	callback_;
 

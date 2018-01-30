@@ -40,7 +40,7 @@ namespace lv::flow
 	template<class T>
 	class ThreadedPush;
 
-	typedef std::function<void(ConstBufferRef)>	slot_type;
+	using slot_type = std::function<void(ConstBufferRef)>;
 	
 
 }

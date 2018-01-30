@@ -17,14 +17,14 @@
 namespace lv
 {
 
-	template<typename T>
+	template<class T>
 	class RefWrapper
 	{
 		T * t_;
 
 	public:
 
-		typedef T type;
+		using type = T;
 
 		// here is the difference between this class and std::reference_wrapper
 		RefWrapper() : t_(nullptr) {}

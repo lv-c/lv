@@ -16,7 +16,7 @@
 
 namespace lv
 {
-	template<typename Archive>
+	template<class Archive>
 	class IArchiveWrapper
 	{
 		IStreamFactory::unique_pointer	raw_is_;

@@ -26,7 +26,7 @@
 
 namespace lv::lua::archive
 {
-	template<typename T>
+	template<class T>
 	void	save_adl(std::ostream & os, T const & t, size_t level);
 
 
@@ -43,8 +43,8 @@ namespace lv::lua::archive
 
 	public:
 
-		typedef boost::mpl::true_	is_saving;
-		typedef boost::mpl::false_	is_loading;
+		using is_saving = boost::mpl::true_;
+		using is_loading = boost::mpl::false_;
 
 		OArchiveProxy(std::ostream & os, size_t level, unsigned int version)
 			: os_(os)
@@ -69,14 +69,14 @@ namespace lv::lua::archive
 			os_ << '}';
 		}
 
-		template<typename T>
+		template<class T>
 		OArchiveProxy & operator << (T const & t)
 		{
 			this->save(t);
 			return *this;
 		}
 
-		template<typename T>
+		template<class T>
 		OArchiveProxy & operator & (T const & t)
 		{
 			return *this << t;
@@ -84,7 +84,7 @@ namespace lv::lua::archive
 
 	private:
 
-		template<typename T>
+		template<class T>
 		void	save(T const & t)
 		{
 			if (!first_time_)
@@ -107,7 +107,7 @@ namespace lv::lua::archive
 
 	namespace detail
 	{
-		template<typename T>
+		template<class T>
 		void	save_impl(std::ostream & os, T const & t, size_t level, unknown_tag)
 		{
 			unsigned int version = boost::serialization::version<T>::value;
@@ -116,13 +116,13 @@ namespace lv::lua::archive
 		}
 
 		// primitive_tag
-		template<typename T>
+		template<class T>
 		std::enable_if_t<std::is_integral_v<T> >	save_primitive(std::ostream & os, T t)
 		{
 			os << lv::widen_int(t);
 		}
 
-		template<typename T>
+		template<class T>
 		std::enable_if_t<std::is_floating_point_v<T> >	save_primitive(std::ostream & os, T t)
 		{
 			os << t;
@@ -190,14 +190,14 @@ namespace lv::lua::archive
 			save_primitive(os, t.c_str());
 		}
 
-		template<typename T>
+		template<class T>
 		void	save_impl(std::ostream & os, T const & t, size_t level, primitive_tag)
 		{
 			save_primitive(os, t);
 		}
 
 		// enum_tag
-		template<typename T>
+		template<class T>
 		void	save_impl(std::ostream & os, T t, size_t level, enum_tag)
 		{
 			archive::save_adl(os, static_cast<int>(t), level);
@@ -205,7 +205,7 @@ namespace lv::lua::archive
 
 		// sequence_tag
 
-		template<typename Iter>
+		template<class Iter>
 		void	save_range(std::ostream & os, Iter begin, Iter end, size_t level)
 		{
 			os << '{';
@@ -236,14 +236,14 @@ namespace lv::lua::archive
 			os << '}';
 		}
 
-		template<typename T>
+		template<class T>
 		void	save_impl(std::ostream & os, T const & t, size_t level, sequence_tag)
 		{
 			save_range(os, std::begin(t), std::end(t), level);
 		}
 
 		// utility
-		template<typename K, typename V>
+		template<class K, class V>
 		void	save_key_value(std::ostream & os, K const & key, V const & value, size_t level)
 		{
 			os << '[';
@@ -256,20 +256,20 @@ namespace lv::lua::archive
 
 	BOOST_STRONG_TYPEDEF(size_t, level_type)
 
-	template<typename T>
+	template<class T>
 	void	save(std::ostream & os, T const & t, size_t level)
 	{
 		detail::save_impl(os, t, level, object_tag_t<T>());
 	}
 
-	template<typename T>
+	template<class T>
 	void	save_adl(std::ostream & os, T const & t, size_t level)
 	{
 		level_type lvl(level);
 		save(os, t, lvl);
 	}
 
-	template<typename T>
+	template<class T>
 	void	save(std::ostream & os, boost::serialization::nvp<T> const & t, size_t level)
 	{
 		os << t.name() << " = ";

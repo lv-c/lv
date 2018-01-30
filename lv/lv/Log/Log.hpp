@@ -32,10 +32,10 @@ namespace lv::log
 	{
 		// we use set rather than list here to prevent deadlock when some
 		// gathers are shared among different loggers
-		typedef std::set<gather_ptr>	gather_set;
+		using gather_set = std::set<gather_ptr>;
 		gather_set gathers_;
 
-		typedef std::lock_guard<std::mutex>	lock_guard;
+		using lock_guard = std::lock_guard<std::mutex>;
 
 		std::mutex	mutex_;
 
@@ -74,7 +74,7 @@ namespace lv::log
 				}
 			}
 
-			template <typename T>
+			template<class T>
 			Proxy &	operator << (T const & t)
 			{
 				BOOST_ASSERT(active_);
@@ -138,7 +138,7 @@ namespace lv::log
 
 	private:
 		
-		template <typename T>
+		template<class T>
 		void	log(T const & t)
 		{
 			if (enabled_)

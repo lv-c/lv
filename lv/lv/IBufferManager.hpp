@@ -25,7 +25,7 @@ namespace lv
 		virtual BufferPtr	get() = 0;
 	};
 
-	typedef std::shared_ptr<IBufferManager> BufferManagerPtr;
+	using BufferManagerPtr = std::shared_ptr<IBufferManager>;
 
 }
 

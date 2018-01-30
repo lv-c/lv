@@ -33,7 +33,7 @@ namespace lv
 		
 	class Texture
 	{
-		template <typename T>
+		template<class T>
 		class AutoUnmap
 		{
 			Texture & tex_;
@@ -68,10 +68,10 @@ namespace lv
 		/**
 		 * use this meta-function to deduce the result type of function @a map.
 		 */
-		template <int PF>
+		template<int PF>
 		struct ViewPtrT
 		{
-			typedef std::shared_ptr<typename GIL::ViewT<PF>::type>	type;
+			using type = std::shared_ptr<typename GIL::ViewT<PF>::type>;
 		};
 
 		/**
@@ -84,7 +84,7 @@ namespace lv
 		 * @exception std::runtime_error if @a PF is not same as @a this->format() or @a rect 
 		 *	is out of bound.
 		 */
-		template <int PF>
+		template<int PF>
 		typename ViewPtrT<PF>::type map(Rect const & rect)
 		{
 			BOOST_ASSERT(PF == this->format_);
@@ -98,7 +98,7 @@ namespace lv
 				throw std::runtime_error("Texture::map rect out of bound");
 			}
 
-			typedef typename GIL::ViewT<PF>::type view_t;
+			using view_t = typename GIL::ViewT<PF>::type;
 			return ViewPtrT<PF>::type(new view_t(boost::gil::interleaved_view(rect.width(), rect.height(), 
 				(GIL::XIteratorT<PF>::type) map_impl(rect), PixelBytes<PF>::value * texture_size_.cx)), 
 				AutoUnmap<view_t>(*this));

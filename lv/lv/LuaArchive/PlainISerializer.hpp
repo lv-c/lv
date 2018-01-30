@@ -35,7 +35,7 @@ namespace lv::lua::archive
 			Literal
 		};
 
-		typedef ConstBufferRef::iterator	iterator;
+		using iterator = ConstBufferRef::iterator;
 
 		Token(iterator begin, iterator end, Type type)
 			: begin(begin)
@@ -87,7 +87,7 @@ namespace lv::lua::archive
 	{
 		ConstBufferRef	holder_;
 
-		typedef ConstBufferRef::iterator	iterator;
+		using iterator = ConstBufferRef::iterator;
 
 		iterator	cur_;
 
@@ -95,21 +95,21 @@ namespace lv::lua::archive
 
 	public:
 
-		typedef boost::mpl::true_	is_loading;
-		typedef boost::mpl::false_	is_saving;
+		using is_loading = boost::mpl::true_;
+		using is_saving = boost::mpl::false_;
 
 		Parser(ConstBufferRef buf);
 
 		Token	next_token();
 
-		template<typename T>
+		template<class T>
 		Parser & operator >> (T & t)
 		{
 			load(*this, t);
 			return *this;
 		}
 
-		template<typename T>
+		template<class T>
 		Parser & operator & (T & t)
 		{
 			return *this >> t;
@@ -125,7 +125,7 @@ namespace lv::lua::archive
 
 		bool	test_and_forward(iterator it, char test);
 
-		template<typename T>
+		template<class T>
 		void	next(T)
 		{
 			while (cur_ != end_ && T::eval(*cur_))
@@ -210,7 +210,7 @@ namespace lv::lua::archive
 
 		// unknown_tag
 
-		template<typename T>
+		template<class T>
 		void	load_impl(Parser & parser, T & t, unknown_tag)
 		{
 			parser >> symbol('{');
@@ -234,7 +234,7 @@ namespace lv::lua::archive
 
 		void	assign(bool & t, Token const & token);
 
-		template<typename T>
+		template<class T>
 		void	assign(T & t, Token const & token)
 		{
 			expect(token, Token::Number);
@@ -254,7 +254,7 @@ namespace lv::lua::archive
 			t = static_cast<T>(val);
 		}
 
-		template<typename T>
+		template<class T>
 		void	load_impl(Parser & parser, T & t, primitive_tag)
 		{
 			assign(t, parser.next_token());
@@ -263,7 +263,7 @@ namespace lv::lua::archive
 
 		// enum_tag
 
-		template<typename T>
+		template<class T>
 		void	load_impl(Parser & parser, T & t, enum_tag)
 		{
 			int v;
@@ -275,7 +275,7 @@ namespace lv::lua::archive
 
 		// sequence_tag
 
-		template<typename T>
+		template<class T>
 		void	load_impl(Parser & parser, T & t, sequence_tag)
 		{
 			parser >> symbol('{');
@@ -292,19 +292,19 @@ namespace lv::lua::archive
 		}
 	}
 
-	template<typename T>
+	template<class T>
 	void	load_item(Parser & parser, int index, T & t)
 	{
 		parser >> t;
 	}
 
-	template<typename T>
+	template<class T>
 	void	load(Parser & parser, boost::serialization::nvp<T> const & t)
 	{
 		parser >> detail::literal(t.name()) >> detail::symbol('=') >> t.value();
 	}
 
-	template<typename T>
+	template<class T>
 	void	load(Parser & parser, T & t)
 	{
 		detail::load_impl(parser, t, object_tag_t<T>());

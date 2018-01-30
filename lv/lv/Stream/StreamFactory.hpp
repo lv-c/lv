@@ -16,7 +16,7 @@
 
 namespace lv::detail
 {
-	template<typename T>
+	template<class T>
 	class StreamFactory : public Factory<T>
 	{
 	protected:

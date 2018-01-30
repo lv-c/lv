@@ -19,7 +19,7 @@
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/text_iarchive.hpp>
 
-typedef lv::DSTree<char, int>	dstree_type;
+using dstree_type = lv::DSTree<char, int>;
 
 void verify_dstree(dstree_type const & tree)
 {

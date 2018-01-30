@@ -15,7 +15,7 @@
 
 namespace lv
 {
-	template<typename T>
+	template<class T>
 	class RectT : public ContainerBase<RectT<T>, T, 4>,
 		boost::additive2<RectT<T>, PointT<T>,
 		boost::multiplicative2<RectT<T>, T> > 
@@ -156,17 +156,17 @@ namespace lv
 
 	private:
 
-		template<class, typename, size_t>	friend class ContainerBase;
+		template<class, class, size_t>	friend class ContainerBase;
 
 		static T RectT::* const mem_array[ele_num];
 	};
 
-	template<typename T>
+	template<class T>
 	T RectT<T>::* const RectT<T>::mem_array[RectT<T>::ele_num] = {
 		&RectT<T>::left, &RectT<T>::top, &RectT<T>::right, &RectT<T>::bottom
 	};
 
-	typedef RectT<int32>	Rect;
+	using Rect = RectT<int32>;
 }
 
 

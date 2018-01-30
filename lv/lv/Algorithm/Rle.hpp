@@ -37,7 +37,7 @@ namespace lv::rle
 			throw std::invalid_argument("the destination buffer is too small");
 		}
 
-		typedef IntType<EleSize>::type element;
+		using element = IntType<EleSize>::type;
 		size_t ele_num = src_size / EleSize;
 
 		element const * src_ele = reinterpret_cast<element const*>(src);
@@ -115,7 +115,7 @@ namespace lv::rle
 	template<size_t EleSize>
 	size_t decode(char const * src, size_t src_size, char * dest)
 	{
-		typedef IntType<EleSize>::type	element;
+		using element = IntType<EleSize>::type;
 
 		element * dest_ele = reinterpret_cast<element*>(dest);
 		size_t index = 0;

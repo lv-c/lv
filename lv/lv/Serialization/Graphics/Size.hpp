@@ -16,7 +16,7 @@
 
 namespace boost::serialization
 {
-	template<typename Archive, typename T>
+	template<class Archive, class T>
 	void serialize(Archive & ar, lv::SizeT<T> & sz, unsigned int)
 	{
 		ar & sz.cx & sz.cy;

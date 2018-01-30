@@ -30,8 +30,8 @@ namespace lv
 
 	public:
 
-		typedef boost::mpl::true_	is_loading;
-		typedef boost::mpl::false_	is_saving;
+		using is_loading = boost::mpl::true_;
+		using is_saving = boost::mpl::false_;
 
 		explicit LuaIArchive(luabind::object const & table)
 			: index_(1)
@@ -50,14 +50,14 @@ namespace lv
 			}
 		}
 		
-		template<typename T>
+		template<class T>
 		LuaIArchive & operator >> (T && t)
 		{
 			load(t);
 			return *this;
 		}
 
-		template<typename T>
+		template<class T>
 		LuaIArchive & operator & (T && t)
 		{
 			return *this >> std::forward<T>(t);
@@ -65,7 +65,7 @@ namespace lv
 
 	private:
 
-		template<typename T>
+		template<class T>
 		void	load(T & t)
 		{
 			check_nvp(false);
@@ -74,7 +74,7 @@ namespace lv
 			index_++;
 		}
 
-		template<typename T>
+		template<class T>
 		void	load(boost::serialization::nvp<T> const & t)
 		{
 			check_nvp(true);

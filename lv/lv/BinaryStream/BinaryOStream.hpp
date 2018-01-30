@@ -31,8 +31,8 @@ namespace lv::bstream
 
 	public:
 
-		typedef boost::mpl::true_	is_saving;
-		typedef boost::mpl::false_	is_loading;
+		using is_saving = boost::mpl::true_;
+		using is_loading = boost::mpl::false_;
 
 
 		/**
@@ -88,14 +88,14 @@ namespace lv::bstream
 		/**
 		 * @exception std::ios_base::failure
 		 */
-		template<typename T>
+		template<class T>
 		BinaryOStream & operator << (T const & val)
 		{
 			bstream::save(*this, val);
 			return *this;
 		}
 
-		template<typename T>
+		template<class T>
 		BinaryOStream & operator & (T const & val)
 		{
 			return *this << val;

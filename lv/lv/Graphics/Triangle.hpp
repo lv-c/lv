@@ -15,7 +15,7 @@
 
 namespace lv
 {
-	template<typename T>
+	template<class T>
 	class TriangleT : public ContainerBase<TriangleT<T>, T, 3>
 	{
 	public:
@@ -62,7 +62,7 @@ namespace lv
 
 	};
 
-	template<typename T>
+	template<class T>
 	T TriangleT<T>::* const TriangleT<T>::mem_array[TriangleT<T>::ele_num] = { &TriangleT<T>::v0, &TriangleT<T>::v1, &TriangleT<T>::v2};
 }
 

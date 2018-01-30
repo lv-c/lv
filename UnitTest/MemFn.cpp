@@ -29,7 +29,7 @@ struct Test
 	}
 };
 
-template<typename F, typename T>
+template<class F, class T>
 void test_bind(F f, T t)
 {
 	std::string str("aa");

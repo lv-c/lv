@@ -20,7 +20,7 @@ struct lua_State;
 
 namespace lv::lua
 {
-	typedef int (* pcall_handler)(lua_State * L);
+	using pcall_handler = int (*)(lua_State * L);
 
 	inline int default_pcall_handler(lua_State * L)
 	{

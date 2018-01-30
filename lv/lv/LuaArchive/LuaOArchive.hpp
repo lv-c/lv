@@ -29,8 +29,8 @@ namespace lv
 
 	public:
 
-		typedef boost::mpl::true_	is_saving;
-		typedef boost::mpl::false_	is_loading;
+		using is_saving = boost::mpl::true_;
+		using is_loading = boost::mpl::false_;
 
 		LuaOArchive(std::ostream & os, std::string const & spliter = ", ")
 			: os_(os)
@@ -39,7 +39,7 @@ namespace lv
 		{
 		}
 
-		template<typename T>
+		template<class T>
 		LuaOArchive & operator << (T const & t)
 		{
 			if (!first_time_)
@@ -55,7 +55,7 @@ namespace lv
 			return *this;
 		}
 
-		template<typename T>
+		template<class T>
 		LuaOArchive & operator & (T const & t)
 		{
 			return *this << t;

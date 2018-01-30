@@ -25,12 +25,12 @@ namespace lv
 	DEFINE_EXCEPTION_MSG(TaskQueueClosed, std::runtime_error);
 
 
-	template <typename Task, template <typename> class QueuePolicy>
+	template<class Task, template<class> class QueuePolicy>
 	class TaskQueue
 	{
 		QueuePolicy<Task>	queue_;
 
-		typedef std::lock_guard<std::mutex>	lock_guard;
+		using lock_guard = std::lock_guard<std::mutex>;
 
 		std::mutex	mutex_;
 
@@ -42,7 +42,7 @@ namespace lv
 
 	public:
 
-		typedef Task	value_type;
+		using value_type = Task;
 
 
 		explicit TaskQueue(size_t max_count = std::numeric_limits<size_t>::max())
@@ -146,7 +146,7 @@ namespace lv
 
 	private:
 
-		template<typename T>
+		template<class T>
 		void	put_impl(T && task)
 		{
 			std::unique_lock<std::mutex> lock(mutex_);

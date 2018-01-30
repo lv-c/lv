@@ -21,7 +21,7 @@ namespace lv
 {
 	class ThreadGroup
 	{
-		typedef std::unique_ptr<std::thread>	ThreadPtr;
+		using ThreadPtr = std::unique_ptr<std::thread>;
 
 		std::list<ThreadPtr>	threads_;
 
@@ -29,7 +29,7 @@ namespace lv
 
 	public:
 
-		template<typename F>
+		template<class F>
 		std::thread &	create_thread(F && func)
 		{
 			std::lock_guard<std::mutex> lock(mutex_);

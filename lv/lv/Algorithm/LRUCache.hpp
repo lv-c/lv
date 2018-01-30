@@ -18,25 +18,25 @@
 
 namespace lv
 {
-	template<typename K, typename D, class VAx = std::allocator<std::pair<K const, D> >, 
+	template<class K, class D, class VAx = std::allocator<std::pair<K const, D> >, 
 		class M = std::map<K, LRUList<std::pair<K const, D>, VAx>::iterator> >
 	class LRUCache
 	{
 	public:
 
-		typedef	K	key_type;
-		typedef D	data_type;
+		using key_type = K;
+		using data_type = D;
 
-		typedef pair<key_type const, data_type>	value_type;
+		using value_type = pair<key_type const, data_type>;
 
-		typedef LRUList<value_type, VAx>	list_type;
-		typedef M				map_type;
+		using list_type = LRUList<value_type, VAx>;
+		using map_type = M;
 
-		typedef typename list_type::iterator	iterator;
-		typedef typename list_type::const_iterator	const_iterator;
-		typedef typename list_type::size_type	size_type;
+		using iterator = typename list_type::iterator;
+		using const_iterator = typename list_type::const_iterator;
+		using size_type = typename list_type::size_type;
 
-		typedef std::function<void(key_type const &, data_type const &)>	removal_callback;
+		using removal_callback = std::function<void(key_type const &, data_type const &)>;
 
 	private:
 

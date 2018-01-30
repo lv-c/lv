@@ -20,7 +20,7 @@ namespace lv::net
 {
 	class Socks5ClientSession : public TcpSession
 	{
-		typedef TcpSession	base_type;
+		using base_type = TcpSession;
 
 		bool	use_proxy_;
 

@@ -25,8 +25,8 @@ namespace lv
 
 	class MyZipReader : public IFileIO
 	{
-		typedef std::shared_ptr<MyUnzip>	UnzipPtr;
-		typedef std::map<std::string, UnzipPtr>	UnzipMap;
+		using UnzipPtr = std::shared_ptr<MyUnzip>;
+		using UnzipMap = std::map<std::string, UnzipPtr>;
 
 		UnzipMap	unzip_;
 
@@ -38,7 +38,7 @@ namespace lv
 
 		IFileIOPtr	raw_file_reader_;
 
-		typedef std::lock_guard<std::mutex>	lock_guard;
+		using lock_guard = std::lock_guard<std::mutex>;
 
 		std::mutex	mutex_;
 

@@ -15,7 +15,7 @@
 
 namespace lv
 {
-	template<class Derived, typename T, size_t N>
+	template<class Derived, class T, size_t N>
 	class ContainerBase : boost::equality_comparable<Derived>
 	{
 	public:
@@ -24,11 +24,11 @@ namespace lv
 			ele_num	=	N
 		};
 
-		typedef	T		value_type;
-		typedef T &		reference;
-		typedef T const &	const_reference;
-		typedef T *		iterator;
-		typedef T const *	const_iterator;
+		using value_type = T;
+		using reference = T &;
+		using const_reference = T const &;
+		using iterator = T *;
+		using const_iterator = T const *;
 
 		size_t		size() const
 		{

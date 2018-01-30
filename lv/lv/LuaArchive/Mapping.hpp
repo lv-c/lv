@@ -17,7 +17,7 @@
 
 namespace lv::lua::archive
 {
-	template<typename X, typename Y>
+	template<class X, class Y>
 	struct object_tag<Mapping<X, Y> >
 		: sequence_tag
 	{

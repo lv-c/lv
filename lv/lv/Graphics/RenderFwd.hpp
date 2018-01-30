@@ -19,20 +19,20 @@
 namespace lv
 {
 	class Texture;
-	typedef std::shared_ptr<Texture>	TexturePtr;
+	using TexturePtr = std::shared_ptr<Texture>;
 
 
 	class Font;
-	typedef std::shared_ptr<Font>	FontPtr;
+	using FontPtr = std::shared_ptr<Font>;
 
-	template<typename>	class PointT;
-	typedef PointT<int32>	Point;
+	template<class>	class PointT;
+	using Point = PointT<int32>;
 
-	template<typename>	class SizeT;
-	typedef SizeT<int32>	Size;
+	template<class>	class SizeT;
+	using Size = SizeT<int32>;
 
-	template<typename>	class RectT;
-	typedef RectT<int32>	Rect;
+	template<class>	class RectT;
+	using Rect = RectT<int32>;
 
 }
 

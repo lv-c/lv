@@ -24,12 +24,12 @@ namespace lv::log
 {
 	class LogManager : public Singleton<LogManager, true>
 	{
-		typedef std::lock_guard<std::mutex>	lock_guard;
+		using lock_guard = std::lock_guard<std::mutex>;
 
 		std::mutex mutex_;
 
-		typedef std::unique_ptr<Log>	log_ptr;
-		typedef std::map<std::string, log_ptr>	logger_map;
+		using log_ptr = std::unique_ptr<Log>;
+		using logger_map = std::map<std::string, log_ptr>;
 
 		logger_map	loggers_;
 

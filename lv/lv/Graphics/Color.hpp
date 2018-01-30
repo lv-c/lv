@@ -32,7 +32,7 @@ namespace lv
 			ele_num = 4
 		};
 
-		typedef uint8	element;
+		using element = uint8;
 
 
 		static Color const white;

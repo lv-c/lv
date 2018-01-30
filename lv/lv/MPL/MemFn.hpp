@@ -29,24 +29,24 @@
 
 namespace lv
 {
-	template<typename MemFn>
+	template<class MemFn>
 	struct BindMemFnSignature
 	{
 		static_assert(std::is_member_function_pointer_v<MemFn>);
 
-		typedef typename boost::function_types::function_type<
+		using type = typename boost::function_types::function_type<
 			typename detail::RemoveSecond<
 				typename boost::function_types::components<MemFn>::type
 			>::type 
-		>::type type;
+		>::type;
 	};
 
 	namespace result_of
 	{
-		template<typename MemFn>
+		template<class MemFn>
 		struct bind_mem_fn
 		{
-			typedef std::function<typename BindMemFnSignature<MemFn>::type>	type;
+			using type = std::function<typename BindMemFnSignature<MemFn>::type>;
 		};
 	}
 
@@ -67,14 +67,14 @@ namespace lv
 
 #define n BOOST_PP_ITERATION()
 
-template<typename R, typename T, typename T0 BOOST_PP_COMMA_IF(n) BOOST_PP_ENUM_PARAMS(n, typename A)>
+template<class R, class T, class T0 BOOST_PP_COMMA_IF(n) BOOST_PP_ENUM_PARAMS(n, class A)>
 std::function<R(BOOST_PP_ENUM_PARAMS(n, A))> bind_mem_fn(R (T::*f)(BOOST_PP_ENUM_PARAMS(n, A)), T0 t)
 {
 	return std::bind(f, t BOOST_PP_COMMA_IF(n) BOOST_PP_ENUM_SHIFTED_PARAMS(BOOST_PP_INC(n), std::placeholders::_));
 }
 
 // const version
-template<typename R, typename T, typename T0 BOOST_PP_COMMA_IF(n) BOOST_PP_ENUM_PARAMS(n, typename A)>
+template<class R, class T, class T0 BOOST_PP_COMMA_IF(n) BOOST_PP_ENUM_PARAMS(n, class A)>
 std::function<R(BOOST_PP_ENUM_PARAMS(n, A))> bind_mem_fn(R (T::*f)(BOOST_PP_ENUM_PARAMS(n, A)) const, T0 t)
 {
 	return std::bind(f, t BOOST_PP_COMMA_IF(n) BOOST_PP_ENUM_SHIFTED_PARAMS(BOOST_PP_INC(n), std::placeholders::_));

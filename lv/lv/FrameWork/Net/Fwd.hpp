@@ -27,21 +27,21 @@ namespace lv::net
 	};
 
 	class Context;
-	typedef std::shared_ptr<Context>	ContextPtr;
+	using ContextPtr = std::shared_ptr<Context>;
 
 	class SocketHolder;
-	typedef std::shared_ptr<SocketHolder>	SocketHolderPtr;
+	using SocketHolderPtr = std::shared_ptr<SocketHolder>;
 
 	class SessionBase;
-	typedef std::shared_ptr<SessionBase>	SessionPtr;
+	using SessionPtr = std::shared_ptr<SessionBase>;
 
 	class TcpSession;
 
-	template<typename Key, class S>
+	template<class Key, class S>
 	class FlowSession;
 
 	class ISender;
-	typedef std::shared_ptr<ISender>	ISenderPtr;
+	using ISenderPtr = std::shared_ptr<ISender>;
 
 	class ServerBase;
 

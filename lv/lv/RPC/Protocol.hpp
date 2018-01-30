@@ -18,7 +18,7 @@ namespace lv::rpc
 {
 	struct Protocol
 	{
-		typedef uint32	request_id_type;
+		using request_id_type = uint32;
 
 		/**
 		 * purpose of this packet.
@@ -30,7 +30,7 @@ namespace lv::rpc
 			// The requirement is that it should be serializable and equality comparable.
 			// The requirements are the same for ( options::type and except::type, but they don't have to 
 			// be same type.
-			typedef int8 type;
+			using type = int8;
 
 			static type const	call	= 0x30;
 			static type const	reply	= 0x31;
@@ -42,7 +42,7 @@ namespace lv::rpc
 		 */
 		struct options
 		{
-			typedef int8 type;
+			using type = int8;
 
 			static type const	ret		= 0x40;	// send back the result
 			static type const	ack		= 0x41;	// send back an acknowledgment

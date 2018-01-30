@@ -24,20 +24,20 @@
 
 namespace lv::net
 {
-	template<typename Key, class S>
+	template<class Key, class S>
 	class FlowSession : public S
 	{
 		PacketSplitter<uint16>	splitter_;
 
 	protected:
 
-		typedef S	base_type;
-		typedef Key	key_type;
+		using base_type = S;
+		using key_type = Key;
 
-		typedef flow::Sink<flow::SyncPush, key_type> sink_type;
+		using sink_type = flow::Sink<flow::SyncPush, key_type>;
 		sink_type	sink_;
 
-		typedef flow::Source<key_type>	source_type;
+		using source_type = flow::Source<key_type>;
 		std::unique_ptr<source_type>	source_;
 
 	public:

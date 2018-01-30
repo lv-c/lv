@@ -15,7 +15,7 @@
 
 namespace lv
 {
-	template<typename T>
+	template<class T>
 	class SizeT : public ContainerBase<SizeT<T>, T, 2>,
 		boost::additive<SizeT<T>, 
 		boost::multiplicative2<SizeT<T>, T,
@@ -89,15 +89,15 @@ namespace lv
 
 	private:
 
-		template<class, typename, size_t>	friend class ContainerBase;
+		template<class, class, size_t>	friend class ContainerBase;
 
 		static T SizeT::* const mem_array[ele_num];
 	};
 
-	template<typename T>
+	template<class T>
 	T SizeT<T>::* const SizeT<T>::mem_array[SizeT<T>::ele_num] = { &SizeT<T>::cx, &SizeT<T>::cy };
 
-	typedef SizeT<int32>	Size;
+	using Size = SizeT<int32>;
 }
 
 #endif

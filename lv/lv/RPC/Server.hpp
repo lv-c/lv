@@ -27,10 +27,10 @@ namespace lv::rpc
 	template<class Id, class ArchivePair>
 	class Server : public RpcBase
 	{
-		typedef typename ArchivePair::iarchive_type	iarchive_type;
-		typedef typename ArchivePair::oarchive_type	oarchive_type;
+		using iarchive_type = typename ArchivePair::iarchive_type;
+		using oarchive_type = typename ArchivePair::oarchive_type;
 
-		typedef detail::Registery<Id, ArchivePair>	register_type;
+		using register_type = detail::Registery<Id, ArchivePair>;
 		register_type	registery_;
 
 	public:

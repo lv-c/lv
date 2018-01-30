@@ -28,8 +28,8 @@ namespace lv
 
 	public:
 
-		typedef boost::mpl::true_	is_loading;
-		typedef boost::mpl::false_	is_saving;
+		using is_loading = boost::mpl::true_;
+		using is_saving = boost::mpl::false_;
 
 		explicit IArchive(std::istream & is)
 			: istream_(is)
@@ -41,20 +41,20 @@ namespace lv
 		{
 		}
 
-		template<typename T>
+		template<class T>
 		IArchive & operator >> (T & t)
 		{
 			load(const_cast<std::remove_const_t<T> &>(t));
 			return *this;
 		}
 
-		template<typename T>
+		template<class T>
 		IArchive & operator & (T & t)
 		{
 			return *this >> t;
 		}
 
-		template<typename T>
+		template<class T>
 		void	load_array(boost::serialization::array_wrapper<T> & a, unsigned int)
 		{
 			load_binary(a.address(), a.count() * sizeof(T));
@@ -91,14 +91,14 @@ namespace lv
 	protected:
 
 
-		template<typename T>
+		template<class T>
 		std::enable_if_t<!std::is_arithmetic_v<T> >	load(T & t)
 		{
 			serialization::load_adl(*this, t);
 		}
 
 
-		template<typename T>
+		template<class T>
 		std::enable_if_t<std::is_arithmetic_v<T> >	load(T & t)
 		{
 			load_binary(&t, sizeof(T));
@@ -153,7 +153,7 @@ namespace lv
 	//
 	class IStreamFactory;
 
-	template<typename Archive>
+	template<class Archive>
 	class IArchiveWrapper;
 
 	template<>

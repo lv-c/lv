@@ -18,7 +18,7 @@
 
 namespace lv::lua::archive
 {
-	template<typename T>
+	template<class T>
 	void	save(std::ostream & os, std::optional<T> const & t, size_t level)
 	{
 		if (t)
@@ -32,7 +32,7 @@ namespace lv::lua::archive
 	}
 
 
-	template<typename T>
+	template<class T>
 	void	load(luabind::object const & obj, std::optional<T> & t)
 	{
 		if (luabind::type(obj) == LUA_TNIL)
@@ -49,7 +49,7 @@ namespace lv::lua::archive
 		}
 	}
 
-	template<typename T>
+	template<class T>
 	void	load(Parser & parser, std::optional<T> & t)
 	{
 		if (parser.read_if("nil"))

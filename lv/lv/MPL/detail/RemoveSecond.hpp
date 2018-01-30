@@ -23,11 +23,11 @@ namespace lv::detail
 	template<class T>
 	struct RemoveSecond
 	{
-		typedef typename mpl::erase<T, 
+		using type = typename mpl::erase<T, 
 			typename mpl::next<
 				typename mpl::begin<T>::type
 			>::type
-		>::type type;
+		>::type;
 	};
 
 }

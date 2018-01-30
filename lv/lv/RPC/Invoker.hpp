@@ -30,7 +30,7 @@ namespace lv::rpc::detail
 	template<class T>
 	struct ParamType
 	{
-		typedef std::remove_const_t<std::remove_reference_t<T> >	type;
+		using type = std::remove_const_t<std::remove_reference_t<T> >;
 
 		static_assert(!std::is_pointer_v<type>, "parameter types of the registered functions can't be pointer types");
 	};
@@ -68,7 +68,7 @@ namespace lv::rpc::detail
 	{
 	public:
 
-		typedef std::function<void(typename ArchivePair::oarchive_type &)>		ResultHolder;
+		using ResultHolder = std::function<void(typename ArchivePair::oarchive_type &)>;
 
 	};
 
@@ -76,12 +76,12 @@ namespace lv::rpc::detail
 	template<class Signature, class ArchivePair>
 	class Invoker : public InvokerBase<ArchivePair>
 	{
-		typedef typename InvokerBase<ArchivePair>::ResultHolder	ResultHolder;
+		using ResultHolder = typename InvokerBase<ArchivePair>::ResultHolder;
 
-		typedef typename ArchivePair::iarchive_type iarchive_type;
-		typedef typename ArchivePair::oarchive_type oarchive_type;
+		using iarchive_type = typename ArchivePair::iarchive_type;
+		using oarchive_type = typename ArchivePair::oarchive_type;
 
-		template<typename T>
+		template<class T>
 		class ResultWrapper
 		{
 			T	val_;
@@ -96,12 +96,12 @@ namespace lv::rpc::detail
 		};
 
 
-		typedef std::function<Signature>	function_type;
+		using function_type = std::function<Signature>;
 		function_type	fn_;
 
 		// result type of the function
-		typedef typename function_type::result_type result_type;
-		typedef typename boost::function_types::parameter_types<Signature>::type param_type;
+		using result_type = typename function_type::result_type;
+		using param_type = typename boost::function_types::parameter_types<Signature>::type;
 
 		static_assert(!std::is_pointer_v<result_type>, "The result type shouldn't be a pointer type");
 

@@ -36,38 +36,38 @@ namespace lv
 	they don't share an engine). """
 	*/
 
-	template<typename T, typename Enabled = void>
+	template<class T, class Enabled = void>
 	struct RandomTraits;
 
-	template<typename T>
+	template<class T>
 	struct RandomTraits<T, std::enable_if_t<std::is_integral_v<T> > >
 	{
-		typedef boost::mt19937	generator_type;
+		using generator_type = boost::mt19937;
 
-		typedef boost::uniform_int<T>	distribution_type;
+		using distribution_type = boost::uniform_int<T>;
 	};
 
 
-	template<typename T>
+	template<class T>
 	struct RandomTraits<T, std::enable_if_t<std::is_floating_point_v<T> > >
 	{
-		typedef boost::mt19937	generator_type;
+		using generator_type = boost::mt19937;
 
-		typedef boost::uniform_real<T>	distribution_type;
+		using distribution_type = boost::uniform_real<T>;
 	};
 
 
-	template<typename T = int, typename Traits = RandomTraits<T> >
+	template<class T = int, class Traits = RandomTraits<T> >
 	class Random
 	{
-		typedef typename Traits::generator_type		engine_type;
-		typedef typename Traits::distribution_type	distribution_type;
+		using engine_type = typename Traits::generator_type;
+		using distribution_type = typename Traits::distribution_type;
 
 		boost::variate_generator<engine_type, distribution_type> die_;
 
 	public:
 
-		typedef T result_type;
+		using result_type = T;
 
 		Random(T min = std::numeric_limits<T>::min(), T max = std::numeric_limits<T>::max())
 			: die_(engine_type(), distribution_type(min, max))

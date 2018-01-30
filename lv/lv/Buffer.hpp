@@ -21,36 +21,36 @@
 
 namespace lv
 {
-	typedef std::vector<char>	Buffer;
-	typedef std::shared_ptr<Buffer>	BufferPtr;
-	typedef std::shared_ptr<Buffer const>	ConstBufferPtr;
+	using Buffer = std::vector<char>;
+	using BufferPtr = std::shared_ptr<Buffer>;
+	using ConstBufferPtr = std::shared_ptr<Buffer const>;
 
 
 	/// these two classes are compatible with boost.range and boost.BOOST_FOREACH
-	template <typename T> class ConstBufferRefT;
-	template <typename T> class BufferRefT;
+	template<class T> class ConstBufferRefT;
+	template<class T> class BufferRefT;
 
-	typedef ConstBufferRefT<char>	ConstBufferRef;
-	typedef BufferRefT<char>	BufferRef;
+	using ConstBufferRef = ConstBufferRefT<char>;
+	using BufferRef = BufferRefT<char>;
 
 
-	template <typename T>
+	template<class T>
 	class BufferRefT
 	{
 		T * data_;
 		size_t size_;
 
-		template<typename> friend class ConstBufferRefT;
+		template<class> friend class ConstBufferRefT;
 
 		std::shared_ptr<std::vector<T> >	holder_;
 
 	public:
 
-		typedef T & reference;
-		typedef T const & const_reference;
+		using reference = T &;
+		using const_reference = T const &;
 
-		typedef T * iterator;
-		typedef T const * const_iterator;
+		using iterator = T *;
+		using const_iterator = T const *;
 
 		BufferRefT()
 			: data_(nullptr)
@@ -140,7 +140,7 @@ namespace lv
 	};
 
 
-	template <typename T>
+	template<class T>
 	class ConstBufferRefT
 	{
 		T const * data_;
@@ -149,11 +149,11 @@ namespace lv
 		std::shared_ptr<std::vector<T> >	holder_;
 
 	public:
-		typedef T const & const_reference;
+		using const_reference = T const &;
 
 
-		typedef T const * iterator;
-		typedef T const * const_iterator;
+		using iterator = T const *;
+		using const_iterator = T const *;
 
 
 		ConstBufferRefT()
@@ -245,7 +245,7 @@ namespace lv
 			buf.insert(buf.end(), data.begin(), data.end());
 		}
 
-		template<typename T>
+		template<class T>
 		std::enable_if_t<std::is_arithmetic_v<T> >	append(Buffer & buf, T t)
 		{
 			append(buf, &t, sizeof(t));
@@ -264,7 +264,7 @@ namespace lv
 			buf.insert(buf.begin() + pos, static_cast<char const *>(data), static_cast<char const *>(data) + size);
 		}
 
-		template<typename T>
+		template<class T>
 		std::enable_if_t<std::is_arithmetic_v<T> >	insert(Buffer & buf, size_t pos, T t)
 		{
 			insert(buf, pos, &t, sizeof(t));
@@ -284,7 +284,7 @@ namespace lv
 			std::copy(static_cast<char const *>(data), static_cast<char const *>(data) + size, buf.data() + pos);
 		}
 
-		template<typename T>
+		template<class T>
 		std::enable_if_t<std::is_arithmetic_v<T> >	write(BufferRef buf, size_t pos, T t)
 		{
 			write(buf, pos, &t, sizeof(t));
@@ -304,13 +304,13 @@ namespace lv
 			std::copy(buf.data() + pos, buf.data() + pos + size, static_cast<char *>(data));
 		}
 
-		template<typename T>
+		template<class T>
 		std::enable_if_t<std::is_arithmetic_v<T> >	read(ConstBufferRef const & buf, size_t pos, T & t)
 		{
 			read(buf, pos, &t, sizeof(t));
 		}
 
-		template<typename T>
+		template<class T>
 		T	read(ConstBufferRef const & buf, size_t pos)
 		{
 			T t;

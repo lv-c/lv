@@ -18,7 +18,7 @@ namespace lv::net
 {
 	class SSLServer : public ServerBase
 	{
-		typedef ServerBase	base_type;
+		using base_type = ServerBase;
 
 		std::string	password_;
 

@@ -18,7 +18,7 @@ namespace lv::net
 {
 	class TcpSession : public SessionBase
 	{
-		typedef SessionBase	base_type;
+		using base_type = SessionBase;
 
 	public:
 

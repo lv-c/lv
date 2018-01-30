@@ -40,7 +40,7 @@ namespace lv::net
 
 		bool	writing_;
 
-		typedef std::lock_guard<std::mutex>	lock_guard;
+		using lock_guard = std::lock_guard<std::mutex>;
 
 		std::mutex	write_mutex_;
 

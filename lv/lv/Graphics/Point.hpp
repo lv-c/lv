@@ -15,7 +15,7 @@
 
 namespace lv
 {
-	template<typename T>
+	template<class T>
 	class PointT : public ContainerBase<PointT<T>, T, 2>,
 		boost::additive<PointT<T>, 
 		boost::multiplicative2<PointT<T>, T,
@@ -39,7 +39,7 @@ namespace lv
 		{
 		}
 
-		template<typename U>
+		template<class U>
 		PointT(PointT<U> const & pt)
 			: x(pt.x)
 			, y(pt.y)
@@ -97,17 +97,17 @@ namespace lv
 
 	private:
 
-		template<class, typename, size_t>	friend class ContainerBase;
+		template<class, class, size_t>	friend class ContainerBase;
 
 		// array of pointers to member variables
 		static T PointT::* const		mem_array[ele_num];
 	};
 
-	template<typename T>
+	template<class T>
 	T PointT<T>::* const PointT<T>::mem_array[PointT<T>::ele_num] = { &PointT<T>::x, &PointT<T>::y };
 
 	
-	typedef PointT<int32>	Point;
+	using Point = PointT<int32>;
 }
 
 #endif

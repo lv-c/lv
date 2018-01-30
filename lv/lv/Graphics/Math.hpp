@@ -27,26 +27,26 @@ namespace lv::math
 	float const PId4	=	0.78539816f;
 
 
-	template<typename T, typename Enabled = void>
+	template<class T, class Enabled = void>
 	struct FloatType 
 		: boost::mpl::identity<float> 
 	{
 	};
 
-	template<typename T>
+	template<class T>
 	struct FloatType<T, std::enable_if_t<std::is_floating_point_v<T> > >
 		: boost::mpl::identity<T>
 	{
 	};
 
-	template<typename T>
+	template<class T>
 	typename FloatType<T>::type	sqrt(T v)
 	{
 		return std::sqrt(static_cast<typename FloatType<T>::type>(v));
 	}
 
 
-	template<typename T>
+	template<class T>
 	typename FloatType<T>::type	dist(PointT<T> const & lhs, PointT<T> const & rhs)
 	{
 		return math::sqrt((lhs.x - rhs.x) * (lhs.x - rhs.x) + (lhs.y - rhs.y) * (lhs.y - rhs.y));
@@ -68,13 +68,13 @@ namespace lv::math
 
 #endif
 
-	template<typename T>
+	template<class T>
 	T	dot(VectorT<T> const & lhs, VectorT<T> const & rhs)
 	{
 		return (lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z);
 	}
 
-	template<typename T>
+	template<class T>
 	VectorT<T>	cross(VectorT<T> const & lhs, VectorT<T> const & rhs)
 	{
 		return VectorT<T>(
@@ -84,13 +84,13 @@ namespace lv::math
 		);
 	}
 
-	template<typename T>
+	template<class T>
 	T	length_sq(VectorT<T> const & v)
 	{
 		return dot(v, v);
 	}
 
-	template<typename T>
+	template<class T>
 	typename FloatType<T>::type	length(VectorT<T> const & v)
 	{
 		return math::sqrt(length_sq(v));
@@ -106,7 +106,7 @@ namespace lv::math
 #endif
 
 
-	template<typename T>
+	template<class T>
 	bool	intersect(VectorT<T> const & v0, VectorT<T> const & v1, VectorT<T> const & v2,
 		VectorT<T> const & orig, VectorT<T> const & dir, VectorT<T> & ret)
 	{
@@ -152,7 +152,7 @@ namespace lv::math
 
 
 	/*
-	template<typename T>
+	template<class T>
 	bool	intersect(TriangleT<VectorT<T> > const & tri, VectorT<T> const & orig, VectorT<T> const & dir, 
 		VectorT<T> & ret)
 	{

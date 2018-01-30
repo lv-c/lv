@@ -27,20 +27,20 @@ namespace lv
 		PF_L8		// 8 bits luminace
 	};
 
-	template <int PF>
+	template<int PF>
 	struct PixelBytes;
 
-	template <>
+	template<>
 	struct PixelBytes<PF_RGB> : std::integral_constant<size_t, 3>
 	{
 	};
 	
-	template <>
+	template<>
 	struct PixelBytes<PF_ARGB> : std::integral_constant<size_t, 4>
 	{
 	};
 	
-	template <>
+	template<>
 	struct PixelBytes<PF_L8> : std::integral_constant<size_t, 1>
 	{
 	};
@@ -52,34 +52,34 @@ namespace lv
 
 		// pixel type
 
-		template <int PF>
+		template<int PF>
 		struct PixelT;
 
-		template <>
+		template<>
 		struct PixelT<PF_ARGB>
 		{
-			typedef boost::gil::argb32_pixel_t	type;
+			using type = boost::gil::argb32_pixel_t;
 		};
 
-		template <>
+		template<>
 		struct PixelT<PF_L8>
 		{
-			typedef boost::gil::gray8_pixel_t	type;
+			using type = boost::gil::gray8_pixel_t;
 		};
 
 		// x iterator type
 
-		template <int PF, bool IsMutable = true>
+		template<int PF, bool IsMutable = true>
 		struct XIteratorT 
 			: boost::gil::iterator_type_from_pixel<typename PixelT<PF>::type, false, false, IsMutable>
 		{
 		};
 
 		// view type
-		template <int PF, bool IsMutable = true>
+		template<int PF, bool IsMutable = true>
 		struct ViewT
 		{
-			typedef typename boost::gil::type_from_x_iterator<typename XIteratorT<PF, IsMutable>::type>::view_t type;
+			using type = typename boost::gil::type_from_x_iterator<typename XIteratorT<PF, IsMutable>::type>::view_t;
 		};
 	}
 
