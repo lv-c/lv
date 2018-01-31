@@ -42,7 +42,8 @@ namespace lv::detail
 }
 
 #define LV_ENSURE(check, msg)			\
-	if (!(check)) {					\
+	if (!(check)) {						\
 		BOOST_ASSERT(false);			\
 		lv::detail::ensure_throw(msg);	\
 	}
+
