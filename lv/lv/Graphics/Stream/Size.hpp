@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_GRAPHICS_STREAM_SIZE_HPP
-#define LV_GRAPHICS_STREAM_SIZE_HPP
+#pragma once
 
 #include <lv/Graphics/Size.hpp>
 
@@ -21,5 +20,3 @@ namespace lv
 		return stream << "Size(" << sz.cx << ", " << sz.cy << ')';
 	}
 }
-
-#endif

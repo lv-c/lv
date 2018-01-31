@@ -11,8 +11,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_GLYPHCACHE_HPP
-#define LV_GLYPHCACHE_HPP
+#pragma once
 
 #include <list>
 
@@ -133,8 +132,5 @@ namespace lv
 		void	draw_glyph_to_view(view_t & view);
 	};
 }
-
-#endif //LV_GLYPHCACHE_HPP
-
 
 #endif

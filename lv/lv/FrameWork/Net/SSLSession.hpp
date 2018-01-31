@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_NET_SSLSESSION_HPP
-#define LV_NET_SSLSESSION_HPP
+#pragma once
 
 #include <lv/FrameWork/Net/SessionBase.hpp>
 
@@ -47,5 +46,3 @@ namespace lv::net
 
 
 }
-
-#endif

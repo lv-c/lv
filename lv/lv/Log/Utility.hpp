@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LOG_UTILITY_HPP
-#define LV_LOG_UTILITY_HPP
+#pragma once
 
 #include <lv/Log/Fwd.hpp>
 #include <lv/Log/Log.hpp>
@@ -121,5 +120,3 @@ namespace lv::log
 #endif
 
 }
-
-#endif

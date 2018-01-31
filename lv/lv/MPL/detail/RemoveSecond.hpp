@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_REMOVE_SECOND_HPP
-#define LV_REMOVE_SECOND_HPP
+#pragma once
 
 #include <boost/mpl/begin.hpp>
 #include <boost/mpl/next.hpp>
@@ -31,5 +30,3 @@ namespace lv::detail
 	};
 
 }
-
-#endif

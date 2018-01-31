@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_RENDERER_HPP
-#define LV_RENDERER_HPP
+#pragma once
 
 
 #include <lv/Singleton.hpp>
@@ -58,6 +57,3 @@ namespace lv
 		virtual	void	frame_quad(Rect const & rect, bool fill, ColorRect const & colors) = 0;
 	};
 }
-
-
-#endif

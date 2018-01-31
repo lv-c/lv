@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_DATAFLOW_INVOKER_HPP
-#define LV_DATAFLOW_INVOKER_HPP
+#pragma once
 
 #include <lv/Ref.hpp>
 #include <lv/MPL/Fusion.hpp>
@@ -106,5 +105,3 @@ namespace lv::flow::detail
 	};
 
 }
-
-#endif

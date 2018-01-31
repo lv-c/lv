@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_RPC_SERVER_HPP
-#define LV_RPC_SERVER_HPP
+#pragma once
 
 #include <lv/RPC/Registery.hpp>
 #include <lv/RPC/Common.hpp>
@@ -133,5 +132,3 @@ namespace lv::rpc
 	};
 
 }
-
-#endif

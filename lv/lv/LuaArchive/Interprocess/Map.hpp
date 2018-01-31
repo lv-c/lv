@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUAARCHIVE_INTERPROCESS_MAP_HPP
-#define LV_LUAARCHIVE_INTERPROCESS_MAP_HPP
+#pragma once
 
 #include <boost/interprocess/containers/map.hpp>
 
@@ -26,6 +25,3 @@ namespace lv::lua::archive
 	};
 
 }
-
-
-#endif

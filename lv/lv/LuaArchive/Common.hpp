@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUAARCHIVE_COMMON_HPP
-#define LV_LUAARCHIVE_COMMON_HPP
+#pragma once
 
 #include <string>
 
@@ -20,5 +19,3 @@ namespace lv::lua::archive
 	static unsigned int const	DefaultVersion	= 0;	
 
 }
-
-#endif

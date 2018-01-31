@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_SERIALIZATION_INTERPROCESS_STRING_HPP
-#define LV_SERIALIZATION_INTERPROCESS_STRING_HPP
+#pragma once
 
 #include <boost/interprocess/containers/string.hpp>
 
@@ -54,5 +53,3 @@ namespace boost::serialization
 	}
 
 }
-
-#endif

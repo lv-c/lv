@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_DATAFLOW_SOURCE_HPP
-#define LV_DATAFLOW_SOURCE_HPP
+#pragma once
 
 #include <lv/DataFlow/Fwd.hpp>
 
@@ -99,5 +98,3 @@ namespace lv::flow
 	};
 
 }
-
-#endif

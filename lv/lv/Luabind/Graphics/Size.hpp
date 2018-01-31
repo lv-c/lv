@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUABIND_GRAPHICS_SIZE_HPP
-#define LV_LUABIND_GRAPHICS_SIZE_HPP
+#pragma once
 
 #include <lv/Graphics/Size.hpp>
 #include <lv/Graphics/Stream/Size.hpp>
@@ -44,5 +43,3 @@ namespace lv::lua::graphics
 	}
 
 }
-
-#endif

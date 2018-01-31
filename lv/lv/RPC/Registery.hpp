@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_RPC_REGISTERY_HPP
-#define LV_RPC_REGISTERY_HPP
+#pragma once
 
 #include <lv/RPC/Fwd.hpp>
 #include <lv/RPC/Invoker.hpp>
@@ -137,6 +136,4 @@ namespace lv::rpc
 		};
 	}
 }
-
-#endif
 

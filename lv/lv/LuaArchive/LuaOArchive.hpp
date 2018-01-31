@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUAARCHIVE_LUAOARCHIVE_HPP
-#define LV_LUAARCHIVE_LUAOARCHIVE_HPP
+#pragma once
 
 #include <lv/LuaArchive/Fwd.hpp>
 #include <lv/LuaArchive/OSerializer.hpp>
@@ -64,5 +63,3 @@ namespace lv
 
 }
 
-
-#endif

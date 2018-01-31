@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_CONCURRENT_THREADGROUP_HPP
-#define LV_CONCURRENT_THREADGROUP_HPP
+#pragma once
 
 #include <memory>
 #include <list>
@@ -57,5 +56,3 @@ namespace lv
 		}
 	};
 }
-
-#endif

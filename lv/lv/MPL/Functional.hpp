@@ -9,8 +9,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_FUNCTIONAL_HPP
-#define LV_FUNCTIONAL_HPP
+#pragma once
 
 #include <lv/MPL/detail/RemoveSecond.hpp>
 
@@ -81,5 +80,3 @@ namespace lv
 	};
 
 }
-
-#endif

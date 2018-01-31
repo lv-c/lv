@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_DATAFLOW_CONNECTION_HPP
-#define LV_DATAFLOW_CONNECTION_HPP
+#pragma once
 
 #include <any>
 #include <memory>
@@ -110,5 +109,3 @@ namespace lv::flow
 	};
 
 }
-
-#endif

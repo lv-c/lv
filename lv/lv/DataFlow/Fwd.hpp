@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_DATAFLOW_FWD_HPP
-#define LV_DATAFLOW_FWD_HPP
+#pragma once
 
 #include <lv/Serialization/Fwd.hpp>
 #include <lv/Buffer.hpp>
@@ -43,6 +42,4 @@ namespace lv::flow
 	using slot_type = std::function<void(ConstBufferRef)>;
 	
 
-}
-
-#endif 
+} 

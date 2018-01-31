@@ -10,8 +10,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_RPC_PACKETARCHIVE_HPP
-#define LV_RPC_PACKETARCHIVE_HPP
+#pragma once
 
 #include <lv/Serialization/IArchive.hpp>
 #include <lv/Serialization/OArchive.hpp>
@@ -26,6 +25,3 @@ namespace lv::rpc
 	};
 
 }
-
-
-#endif

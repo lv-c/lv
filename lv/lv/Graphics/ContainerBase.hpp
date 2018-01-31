@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_GRAPHICS_CONTAINERBASE_HPP
-#define LV_GRAPHICS_CONTAINERBASE_HPP
+#pragma once
 
 #include <boost/operators.hpp>
 
@@ -76,5 +75,3 @@ namespace lv
 
 	};
 }
-
-#endif

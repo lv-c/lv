@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_BINARYOSTREAM_HPP
-#define LV_BINARYOSTREAM_HPP
+#pragma once
 
 #include <lv/BinaryStream/Fwd.hpp>
 #include <lv/BinaryStream/BinaryStreamBase.hpp>
@@ -110,5 +109,3 @@ namespace lv::bstream
 
 	};
 }
-
-#endif

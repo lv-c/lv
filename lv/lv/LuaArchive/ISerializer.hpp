@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUAARCHIVE_ISERIALIZER_HPP
-#define LV_LUAARCHIVE_ISERIALIZER_HPP
+#pragma once
 
 #include <lv/LuaArchive/Fwd.hpp>
 #include <lv/LuaArchive/Tags.hpp>
@@ -199,5 +198,3 @@ namespace lv::lua::archive
 		load_item(Ref<luabind::iterator const>(it), t);
 	}
 }
-
-#endif

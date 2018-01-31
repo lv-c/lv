@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUABIND_GRAPHICS_VECTOR_HPP
-#define LV_LUABIND_GRAPHICS_VECTOR_HPP
+#pragma once
 
 #include <lv/Graphics/Vector.hpp>
 #include <lv/Graphics/Stream/Vector.hpp>
@@ -46,5 +45,3 @@ namespace lv::lua::graphics
 	}
 
 }
-
-#endif

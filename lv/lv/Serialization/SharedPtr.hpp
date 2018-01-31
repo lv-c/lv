@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_SERIALIZATION_SHAREDPTR_HPP
-#define LV_SERIALIZATION_SHAREDPTR_HPP
+#pragma once
 
 #include <lv/Serialization/Fwd.hpp>
 
@@ -72,5 +71,3 @@ namespace lv::serialization
 	}
 
 }
-
-#endif

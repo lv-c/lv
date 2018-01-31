@@ -9,8 +9,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_CONCURRENT_TASKQUEUE_HPP
-#define LV_CONCURRENT_TASKQUEUE_HPP
+#pragma once
 
 #include <lv/Concurrent/Fwd.hpp>
 #include <lv/Exception.hpp>
@@ -178,6 +177,3 @@ namespace lv
 	};
 
 }
-
-
-#endif

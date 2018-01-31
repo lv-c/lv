@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUABIND_GRAPHICS_RECT_HPP
-#define LV_LUABIND_GRAPHICS_RECT_HPP
+#pragma once
 
 #include <lv/Graphics/Rect.hpp>
 #include <lv/Graphics/Stream/Rect.hpp>
@@ -59,5 +58,3 @@ namespace lv::lua::graphics
 	}
 
 }
-
-#endif

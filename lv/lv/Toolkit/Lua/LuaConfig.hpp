@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_TOOLKIT_LUA_LUACONFIG_HPP
-#define LV_TOOLKIT_LUA_LUACONFIG_HPP
+#pragma once
 
 #include <lv/Toolkit/Lua/Fwd.hpp>
 #include <lv/Toolkit/AutoLink.hpp>
@@ -71,5 +70,3 @@ namespace lv::lua
 	};
 
 }
-
-#endif

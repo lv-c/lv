@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_RPC_CLIENT_HPP
-#define LV_RPC_CLIENT_HPP
+#pragma once
 
 #include <lv/Exception.hpp>
 #include <lv/Ensure.hpp>
@@ -270,5 +269,3 @@ namespace lv::rpc
 	};
 
 }
-
-#endif

@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_WINDOW_HPP
-#define LV_WINDOW_HPP
+#pragma once
 
 #include <memory>
 #include <string>
@@ -124,6 +123,3 @@ namespace lv
 		void	release_input();
 	};
 }
-
-
-#endif

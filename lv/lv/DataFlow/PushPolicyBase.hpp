@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_DATAFLOW_PUSHPOLICYBASE_HPP
-#define LV_DATAFLOW_PUSHPOLICYBASE_HPP
+#pragma once
 
 #include <functional>
 
@@ -34,5 +33,3 @@ namespace lv::flow
 		}
 	};
 }
-
-#endif

@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_STREAM_OSTREAMPROXY_HPP
-#define LV_STREAM_OSTREAMPROXY_HPP
+#pragma once
 
 #include <lv/Stream/StreamProxyBase.hpp>
 #include <lv/Stream/OBufferStream.hpp>
@@ -83,5 +82,3 @@ namespace lv
 
 	};
 }
-
-#endif

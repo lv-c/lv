@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_RENDERFACTORY_HPP
-#define LV_RENDERFACTORY_HPP
+#pragma once
 
 #include <lv/Graphics/RenderFwd.hpp>
 
@@ -25,5 +24,3 @@ namespace lv
 		virtual TexturePtr	create_texture(Size size, PixelFormat format) = 0;
 	};
 }
-
-#endif

@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUABIND_PAIR_HPP
-#define LV_LUABIND_PAIR_HPP
+#pragma once
 
 #include <utility>
 
@@ -36,5 +35,3 @@ namespace lv::lua
 		];
 	}
 }
-
-#endif

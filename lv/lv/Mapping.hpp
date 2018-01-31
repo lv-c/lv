@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_MAPPING_HPP
-#define LV_MAPPING_HPP
+#pragma once
 
 #include <lv/Exception.hpp>
 #include <lv/Ensure.hpp>
@@ -185,5 +184,3 @@ namespace lv
 	};
 }
 
-
-#endif

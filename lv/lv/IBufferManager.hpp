@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_IBUFFERMANAGER_HPP
-#define LV_IBUFFERMANAGER_HPP
+#pragma once
 
 #include <lv/Buffer.hpp>
 
@@ -28,5 +27,3 @@ namespace lv
 	using BufferManagerPtr = std::shared_ptr<IBufferManager>;
 
 }
-
-#endif

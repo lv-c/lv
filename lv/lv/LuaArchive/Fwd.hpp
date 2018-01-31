@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUAARCHIVE_FWD_HPP
-#define LV_LUAARCHIVE_FWD_HPP
+#pragma once
 
 namespace lv
 { 
@@ -37,5 +36,3 @@ namespace luabind
 
 	using adl::object;
 }
-
-#endif

@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUABIND_VECTOR_HPP
-#define LV_LUABIND_VECTOR_HPP
+#pragma once
 
 #include <lv/Luabind/Utility.hpp>
 
@@ -87,5 +86,3 @@ namespace lv::lua
 		];
 	}
 }
-
-#endif

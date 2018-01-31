@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LOG_DBGPRINT_HPP
-#define LV_LOG_DBGPRINT_HPP
+#pragma once
 
 
 #ifdef _DEBUG
@@ -24,7 +23,4 @@
 #else
 #define WeakPrint(log, exp)	((void)0)
 #endif
-#endif
-
-
 #endif

@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_SERIALIZATION_DSTREE_HPP
-#define LV_SERIALIZATION_DSTREE_HPP
+#pragma once
 
 #include <lv/Algorithm/DSTree.hpp>
 
@@ -97,5 +96,3 @@ namespace boost::serialization
 	}
 
 }
-
-#endif

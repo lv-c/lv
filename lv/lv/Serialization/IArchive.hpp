@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_SERIALIZATION_IARCHIVE_HPP
-#define LV_SERIALIZATION_IARCHIVE_HPP
+#pragma once
 
 #include <lv/Serialization/Serialization.hpp>
 #include <lv/Stream/IStreamProxy.hpp>
@@ -177,5 +176,3 @@ namespace lv
 		}
 	};
 }
-
-#endif

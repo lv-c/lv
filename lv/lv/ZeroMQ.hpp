@@ -8,12 +8,8 @@
 // 
 // *********************************************************************
 
-#ifndef LV_ZEROMQ_HPP
-#define LV_ZEROMQ_HPP
+#pragma once
 
 #include <lv/ZeroMQ/SinkSocket.hpp>
 #include <lv/ZeroMQ/SourceSocket.hpp>
 #include <lv/ZeroMQ/Device.hpp>
-
-
-#endif

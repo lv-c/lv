@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_CONCURRENT_THREADNAME_HPP
-#define LV_CONCURRENT_THREADNAME_HPP
+#pragma once
 
 #include <lv/lvlib2.hpp>
 #include <lv/Config.hpp>
@@ -31,7 +30,5 @@ namespace lv
 
 	void	set_current_thread_name(char const * name);
 }
-
-#endif
 
 #endif

@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_NET_CONTEX_HPP
-#define LV_NET_CONTEX_HPP
+#pragma once
 
 #include <lv/FrameWork/Net/Fwd.hpp>
 #include <lv/ServiceWrapper.hpp>
@@ -72,5 +71,3 @@ namespace lv::net
 	};
 
 }
-
-#endif

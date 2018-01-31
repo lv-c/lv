@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_NET_SOCKS5CLIENTCONTEXT_HPP
-#define LV_NET_SOCKS5CLIENTCONTEXT_HPP
+#pragma once
 
 #include <lv/FrameWork/Net/Context.hpp>
 
@@ -65,5 +64,3 @@ namespace lv::net
 	};
 
 }
-
-#endif

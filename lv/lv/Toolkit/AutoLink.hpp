@@ -8,12 +8,8 @@
 // 
 // *********************************************************************
 
-#ifndef LV_TOOLKIT_AUTOLINK_HPP
-#define LV_TOOLKIT_AUTOLINK_HPP
+#pragma once
 
 
 #define LV_LIB_NAME "Toolkit"
 #include <lv/AutoLink.hpp>
-
-
-#endif

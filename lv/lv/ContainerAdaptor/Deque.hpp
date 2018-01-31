@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_CONTAINERADAPTOR_DEQUE_HPP
-#define LV_CONTAINERADAPTOR_DEQUE_HPP
+#pragma once
 
 #include <lv/ContainerAdaptor/Adaptor.hpp>
 
@@ -28,5 +27,3 @@ namespace lv
 	{
 	}
 }
-
-#endif

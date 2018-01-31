@@ -8,9 +8,6 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LOG_MANIPULATORS_HPP
-#define LV_LOG_MANIPULATORS_HPP
+#pragma once
 
 #include <lv/StreamHelper.hpp>
-
-#endif

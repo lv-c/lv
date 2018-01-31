@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_SERIALIZATION_OARCHIVE_HPP
-#define LV_SERIALIZATION_OARCHIVE_HPP
+#pragma once
 
 
 #include <lv/Serialization/Serialization.hpp>
@@ -166,5 +165,3 @@ namespace lv
 		}
 	};
 }
-
-#endif

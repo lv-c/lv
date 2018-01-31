@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_RPC_ARCHIVEBASE_HPP
-#define LV_RPC_ARCHIVEBASE_HPP
+#pragma once
 
 
 namespace lv::rpc
@@ -22,5 +21,3 @@ namespace lv::rpc
 	};
 
 }
-
-#endif

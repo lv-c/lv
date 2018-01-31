@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_NET_EVENT_HPP
-#define LV_NET_EVENT_HPP
+#pragma once
 
 #include <lv/Buffer.hpp>
 
@@ -25,5 +24,3 @@ namespace lv::net
 	using WriteEvent = boost::signals2::signal<void(BufferPtr)>;
 
 }
-
-#endif

@@ -11,8 +11,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_BINARYISTREAM_HPP
-#define LV_BINARYISTREAM_HPP
+#pragma once
 
 #include <lv/BinaryStream/Fwd.hpp>
 #include <lv/BinaryStream/BinaryStreamBase.hpp>
@@ -103,5 +102,3 @@ namespace lv::bstream
 
 	};
 }
-
-#endif

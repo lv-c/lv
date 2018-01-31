@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUABIND_SET_HPP
-#define LV_LUABIND_SET_HPP
+#pragma once
 
 #include <lv/Luabind/Pair.hpp>
 
@@ -54,5 +53,3 @@ namespace lv::lua
 		bind_pair<iterator, bool>(L, (std::string(name) + "_ib_pair").c_str());
 	}
 }
-
-#endif

@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_PRC_PROTOCOL_HPP
-#define LV_PRC_PROTOCOL_HPP
+#pragma once
 
 #include <lv/IntType.hpp>
 
@@ -53,5 +52,3 @@ namespace lv::rpc
 
 
 }
-
-#endif

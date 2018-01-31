@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_REF_HPP
-#define LV_REF_HPP
+#pragma once
 
 #include <functional>
 
@@ -52,5 +51,3 @@ namespace lv
 	};
 		
 }
-
-#endif

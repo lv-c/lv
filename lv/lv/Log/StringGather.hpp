@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LOG_STRINGGATHER_HPP
-#define LV_LOG_STRINGGATHER_HPP
+#pragma once
 
 #include <sstream>
 
@@ -62,5 +61,3 @@ namespace lv::log
 		}
 	};
 }
-
-#endif

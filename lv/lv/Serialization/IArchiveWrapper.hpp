@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_SERIALIZATION_IARCHIVEHOLDER_HPP
-#define LV_SERIALIZATION_IARCHIVEHOLDER_HPP
+#pragma once
 
 #include <lv/Stream/IStreamFactory.hpp>
 
@@ -37,5 +36,3 @@ namespace lv
 		}
 	};
 }
-
-#endif

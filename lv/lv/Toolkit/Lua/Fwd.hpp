@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_TOOLKIT_LUA_FWD_HPP
-#define LV_TOOLKIT_LUA_FWD_HPP
+#pragma once
 
 namespace lv 
 { 
@@ -20,5 +19,3 @@ namespace lv
 
 	using lua::LuaConfig;
 }
-
-#endif

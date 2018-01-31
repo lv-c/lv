@@ -9,8 +9,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_RLE_HPP
-#define LV_RLE_HPP
+#pragma once
 
 #include <boost/assert.hpp>
 #include <lv/IntType.hpp>
@@ -148,5 +147,3 @@ namespace lv::rle
 	}
 
 }
-
-#endif

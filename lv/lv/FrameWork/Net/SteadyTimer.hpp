@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_NET_DEADLINETIMER_HPP
-#define LV_NET_DEADLINETIMER_HPP
+#pragma once
 
 #include <lv/FrameWork/AutoLink.hpp>
 #include <lv/ServiceWrapper.hpp>
@@ -54,5 +53,3 @@ namespace lv::net
 	};
 
 }
-
-#endif

@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_ALGORITHM_SET_HPP
-#define LV_ALGORITHM_SET_HPP
+#pragma once
 
 #include <set>
 #include <algorithm>
@@ -82,5 +81,3 @@ namespace lv
 #undef STD_SET_OPERATION
 
 }
-
-#endif

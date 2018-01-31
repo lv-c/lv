@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUAARCHIVE_SHAREDPTR_HPP
-#define LV_LUAARCHIVE_SHAREDPTR_HPP
+#pragma once
 
 #include <lv/LuaArchive/Fwd.hpp>
 
@@ -109,5 +108,3 @@ namespace lv::lua::archive
 
 
 }
-
-#endif

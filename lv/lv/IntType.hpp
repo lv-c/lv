@@ -7,8 +7,7 @@
 // *********************************************************************
 // 
 // *********************************************************************
-#ifndef LV_INTTYPE_HPP
-#define LV_INTTYPE_HPP
+#pragma once
 
 #include <cstdint>
 #include <type_traits>
@@ -108,5 +107,3 @@ namespace lv
 	}
 }
 
-
-#endif

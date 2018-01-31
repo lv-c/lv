@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_GRAPHICS_STREAM_POINT_HPP
-#define LV_GRAPHICS_STREAM_POINT_HPP
+#pragma once
 
 #include <lv/Graphics/Point.hpp>
 
@@ -21,5 +20,3 @@ namespace lv
 		return stream << "Point(" << pt.x << ", " << pt.y << ')';
 	}
 }
-
-#endif

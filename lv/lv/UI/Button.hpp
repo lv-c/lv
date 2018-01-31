@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_BUTTON_HPP
-#define LV_BUTTON_HPP
+#pragma once
 
 #include <lv/UI/ButtonBase.hpp>
 
@@ -24,5 +23,3 @@ namespace lv
 		virtual	void	on_clicked(WindowEvent & e) {}
 	};
 }
-
-#endif

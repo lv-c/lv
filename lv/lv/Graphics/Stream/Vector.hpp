@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_GRAPHICS_STREAM_VECTOR_HPP
-#define LV_GRAPHICS_STREAM_VECTOR_HPP
+#pragma once
 
 #include <lv/Graphics/Vector.hpp>
 
@@ -21,5 +20,3 @@ namespace lv
 		return stream << "Vector(" << vec.x << ", " << vec.y << ", " << vec.z << ')';
 	}
 }
-
-#endif

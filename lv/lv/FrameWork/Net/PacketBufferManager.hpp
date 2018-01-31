@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_NET_PACKETBUFFERMANAGER_HPP
-#define LV_NET_PACKETBUFFERMANAGER_HPP
+#pragma once
 
 #include <lv/SimpleBufferManager.hpp>
 
@@ -39,5 +38,3 @@ namespace lv::net
 	};
 
 }
-
-#endif

@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUAARCHIVE_PLAINLUAIARCHIVE_HPP
-#define LV_LUAARCHIVE_PLAINLUAIARCHIVE_HPP
+#pragma once
 
 #include <lv/LuaArchive/PlainISerializer.hpp>
 
@@ -68,6 +67,3 @@ namespace lv
 
 	};
 }
-
-
-#endif

@@ -8,12 +8,8 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LVLIB2_HPP
-#define LV_LVLIB2_HPP
+#pragma once
 
 
 #define LV_LIB_NAME "lv2"
 #include <lv/AutoLink.hpp>
-
-
-#endif

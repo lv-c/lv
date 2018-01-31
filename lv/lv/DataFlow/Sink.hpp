@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_DATAFLOW_SINK_HPP
-#define LV_DATAFLOW_SINK_HPP
+#pragma once
 
 #include <lv/Buffer.hpp>
 #include <lv/Serialization/IArchiveWrapper.hpp>
@@ -126,5 +125,3 @@ namespace lv::flow
 	};
 
 }
-
-#endif

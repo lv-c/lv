@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_STREAM_STREAMPROXYBASE_HPP
-#define LV_STREAM_STREAMPROXYBASE_HPP
+#pragma once
 
 #include <lv/Stream/StreamBase.hpp>
 #include <lv/Stream/CallForwarding.hpp>
@@ -119,5 +118,3 @@ namespace lv
 	};
 
 }
-
-#endif

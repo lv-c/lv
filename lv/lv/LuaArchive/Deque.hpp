@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUAARCHIVE_DEQUE_HPP
-#define LV_LUAARCHIVE_DEQUE_HPP
+#pragma once
 
 #include <deque>
 
@@ -25,6 +24,3 @@ namespace lv::lua::archive
 	};
 
 }
-
-
-#endif

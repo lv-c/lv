@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_RPC_FUTURE_HPP
-#define LV_RPC_FUTURE_HPP
+#pragma once
 
 #include <lv/Concurrent/Future.hpp>
 
@@ -82,5 +81,3 @@ namespace lv::rpc
 		};
 	}
 }
-
-#endif

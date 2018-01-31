@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_TEXTURE_HPP
-#define LV_TEXTURE_HPP
+#pragma once
 
 #include <boost/assert.hpp>
 
@@ -129,6 +128,3 @@ namespace lv
 
 	};
 }
-
-
-#endif

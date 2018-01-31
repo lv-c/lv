@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUAARCHIVE_INTERPROCESS_VECTOR_HPP
-#define LV_LUAARCHIVE_INTERPROCESS_VECTOR_HPP
+#pragma once
 
 #include <boost/interprocess/containers/vector.hpp>
 
@@ -26,5 +25,3 @@ namespace lv::lua::archive
 	};
 
 }
-
-#endif

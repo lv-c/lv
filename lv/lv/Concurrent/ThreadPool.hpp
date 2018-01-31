@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_CONCURRENT_THREADPOOL_HPP
-#define LV_CONCURRENT_THREADPOOL_HPP
+#pragma once
 
 #include <vector>
 #include <thread>
@@ -43,5 +42,3 @@ namespace lv
 
 	};
 }
-
-#endif

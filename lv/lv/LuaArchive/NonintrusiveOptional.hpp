@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUAARCHIVE_NONINTRUSIVE_OPTIONAL_HPP
-#define LV_LUAARCHIVE_NONINTRUSIVE_OPTIONAL_HPP
+#pragma once
 
 #include <lv/LuaArchive/Fwd.hpp>
 #include <lv/Serialization/NonintrusiveOptional.hpp>
@@ -36,5 +35,3 @@ namespace lv::lua::archive
 	}
 
 }
-
-#endif

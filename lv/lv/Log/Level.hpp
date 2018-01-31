@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LOG_LEVEL_HPP
-#define LV_LOG_LEVEL_HPP
+#pragma once
 
 #include <lv/Log/Fwd.hpp>
 
@@ -63,5 +62,3 @@ namespace lv
 	using log::error;
 	using log::fatal;
 }
-
-#endif

@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LOG_DEBUGSTRINGGATHER_HPP
-#define LV_LOG_DEBUGSTRINGGATHER_HPP
+#pragma once
 
 #include <lv/Config.hpp>
 
@@ -45,7 +44,5 @@ namespace lv::log
 		}
 	};
 }
-
-#endif
 
 #endif

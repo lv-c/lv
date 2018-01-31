@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_STREAM_CALLFORWARDING_HPP
-#define LV_STREAM_CALLFORWARDING_HPP
+#pragma once
 
 namespace lv
 {
@@ -47,5 +46,3 @@ namespace lv
 	}
 
 }
-
-#endif

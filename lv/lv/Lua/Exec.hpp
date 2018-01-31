@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUA_EXEC_HPP
-#define LV_LUA_EXEC_HPP
+#pragma once
 
 #include <lv/lvlib2.hpp>
 
@@ -35,5 +34,3 @@ namespace lv::lua
 
 }
 
-
-#endif

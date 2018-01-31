@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_DATAFLOW_ASYNCPUSH_HPP
-#define LV_DATAFLOW_ASYNCPUSH_HPP
+#pragma once
 
 #include <lv/ServiceWrapper.hpp>
 #include <lv/DataFlow/PushPolicyBase.hpp>
@@ -47,5 +46,3 @@ namespace lv::flow
 	};
 
 }
-
-#endif

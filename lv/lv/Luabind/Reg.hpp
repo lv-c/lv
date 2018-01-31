@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUABIND_REG_HPP
-#define LV_LUABIND_REG_HPP
+#pragma once
 
 #include <type_traits>
 
@@ -79,5 +78,3 @@ namespace lv::lua
 
 #define LUA_REG_FN(base, fn)	\
 	.def(#fn, & base::fn)
-
-#endif

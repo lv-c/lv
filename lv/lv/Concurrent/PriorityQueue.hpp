@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_CONCURRENT_PRIORITYQUEUE_HPP
-#define LV_CONCURRENT_PRIORITYQUEUE_HPP
+#pragma once
 
 #include <queue>
 
@@ -65,6 +64,3 @@ namespace lv
 		}
 	};
 }
-
-
-#endif

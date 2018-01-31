@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_SERIALIZATION_GRAPHICS_POINT_HPP
-#define LV_SERIALIZATION_GRAPHICS_POINT_HPP
+#pragma once
 
 #include <lv/Graphics/Point.hpp>
 
@@ -23,5 +22,3 @@ namespace boost::serialization
 	}
 
 }
-
-#endif

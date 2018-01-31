@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_GRAPHICS_GRAPHICS_HPP
-#define LV_GRAPHICS_GRAPHICS_HPP
+#pragma once
 
 
 namespace lv::graphics
@@ -92,5 +91,3 @@ namespace lv::graphics
 	}
 
 }
-
-#endif

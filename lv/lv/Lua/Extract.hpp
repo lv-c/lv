@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUA_EXTRACT_HPP
-#define LV_LUA_EXTRACT_HPP
+#pragma once
 
 #include <lv/LuaArchive/LuaIArchive.hpp>
 
@@ -35,5 +34,3 @@ namespace lv::lua
 	}
 
 }
-
-#endif

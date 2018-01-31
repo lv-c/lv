@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_NET_SSLSERVER_HPP
-#define LV_NET_SSLSERVER_HPP
+#pragma once
 
 #include <lv/FrameWork/Net/ServerBase.hpp>
 
@@ -37,5 +36,3 @@ namespace lv::net
 	};
 
 }
-
-#endif

@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_BINARYSTREAM_ARRAY_HPP
-#define LV_BINARYSTREAM_ARRAY_HPP
+#pragma once
 
 #include <lv/BinaryStream/Tags.hpp>
 
@@ -31,6 +30,3 @@ namespace lv::bstream
 	};
 
 }
-
-
-#endif

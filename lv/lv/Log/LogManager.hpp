@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LOG_LOGMANAGER_HPP
-#define LV_LOG_LOGMANAGER_HPP
+#pragma once
 
 #include <lv/Singleton.hpp>
 #include <lv/Log/Log.hpp>
@@ -82,5 +81,3 @@ namespace lv::log
 
 	};
 }
-
-#endif

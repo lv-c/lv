@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_MYZIPREADER_HPP
-#define LV_MYZIPREADER_HPP
+#pragma once
 
 #include <lv/Config.hpp>
 #include <lv/FileSystem/Fwd.hpp>
@@ -74,6 +73,3 @@ namespace lv
 		UnzipPtr	get_unzip(std::string const & file, std::string & inner_path);
 	};
 }
-
-
-#endif

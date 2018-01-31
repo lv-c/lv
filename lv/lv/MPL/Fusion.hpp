@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_FUSION_HPP
-#define LV_FUSION_HPP
+#pragma once
 
 #include <boost/mpl/vector.hpp>
 #include <boost/mpl/reverse_fold.hpp>
@@ -35,5 +34,3 @@ namespace lv
 	};
 
 }
-
-#endif

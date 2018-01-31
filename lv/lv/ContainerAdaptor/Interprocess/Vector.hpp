@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_CONTAINERADAPTOR_INTERPROCESS_VECTOR_HPP
-#define LV_CONTAINERADAPTOR_INTERPROCESS_VECTOR_HPP
+#pragma once
 
 #include <lv/ContainerAdaptor/Adaptor.hpp>
 
@@ -29,5 +28,3 @@ namespace lv
 		t.reserve(size);
 	}
 }
-
-#endif

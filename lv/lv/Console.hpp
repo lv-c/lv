@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_CONSOLE_HPP
-#define LV_CONSOLE_HPP
+#pragma once
 
 #include <lv/Config.hpp>
 
@@ -21,7 +20,5 @@ namespace lv
 {
 	bool	create_console(char const * title, bool std_io = true);
 }
-
-#endif
 
 #endif

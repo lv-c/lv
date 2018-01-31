@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_GRAPHICS_STREAM_RECT_HPP
-#define LV_GRAPHICS_STREAM_RECT_HPP
+#pragma once
 
 #include <lv/Graphics/Rect.hpp>
 
@@ -22,5 +21,3 @@ namespace lv
 			<< ", " << rc.bottom << ')';
 	}
 }
-
-#endif

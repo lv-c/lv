@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_GRAPHICS_MATH_HPP
-#define LV_GRAPHICS_MATH_HPP
+#pragma once
 
 #include <lv/Config.hpp>
 #include <lv/Graphics/Point.hpp>
@@ -161,5 +160,3 @@ namespace lv::math
 	*/
 
 }
-
-#endif

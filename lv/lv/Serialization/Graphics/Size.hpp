@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_SERIALIZATION_GRAPHICS_SIZE_HPP
-#define LV_SERIALIZATION_GRAPHICS_SIZE_HPP
+#pragma once
 
 #include <lv/Graphics/Size.hpp>
 
@@ -23,5 +22,3 @@ namespace boost::serialization
 	}
 
 }
-
-#endif

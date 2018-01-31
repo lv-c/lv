@@ -7,8 +7,7 @@
 // *********************************************************************
 // 
 // *********************************************************************
-#ifndef LV_RECT_HPP
-#define LV_RECT_HPP
+#pragma once
 
 #include <lv/Graphics/Point.hpp>
 #include <lv/Graphics/Size.hpp>
@@ -168,6 +167,3 @@ namespace lv
 
 	using Rect = RectT<int32>;
 }
-
-
-#endif

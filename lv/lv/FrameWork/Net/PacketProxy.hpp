@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_NET_PACKETPROXY_HPP
-#define LV_NET_PACKETPROXY_HPP
+#pragma once
 
 #include <lv/FrameWork/AutoLink.hpp>
 #include <lv/Stream/OBufferStream.hpp>
@@ -51,5 +50,3 @@ namespace lv::net
 	};
 
 }
-
-#endif

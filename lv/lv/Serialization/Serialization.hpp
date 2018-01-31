@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_SERIALIZATION_SERIALIZATION_HPP
-#define LV_SERIALIZATION_SERIALIZATION_HPP
+#pragma once
 
 #include <lv/IntType.hpp>
 #include <lv/Serialization/Fwd.hpp>
@@ -183,5 +182,3 @@ namespace boost::serialization
 }
 
 
-
-#endif

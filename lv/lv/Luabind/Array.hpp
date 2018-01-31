@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUABIND_ARRAY_HPP
-#define LV_LUABIND_ARRAY_HPP
+#pragma once
 
 #include <lv/Luabind/Utility.hpp>
 
@@ -55,6 +54,4 @@ namespace lv::lua
 		];
 	}
 }
-
-
-#endif 
+ 

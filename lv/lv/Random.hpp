@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_RANDOM_HPP
-#define LV_RANDOM_HPP
+#pragma once
 
 #include <limits>
 
@@ -114,5 +113,3 @@ namespace lv
 }
 
 
-
-#endif

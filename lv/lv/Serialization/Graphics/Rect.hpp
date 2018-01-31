@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_SERIALIZATION_GRAPHICS_RECT_HPP
-#define LV_SERIALIZATION_GRAPHICS_RECT_HPP
+#pragma once
 
 #include <lv/Graphics/Rect.hpp>
 
@@ -23,5 +22,3 @@ namespace boost::serialization
 	}
 
 }
-
-#endif

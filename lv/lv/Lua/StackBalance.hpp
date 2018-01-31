@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUA_STACKBALANCE_HPP
-#define LV_LUA_STACKBALANCE_HPP
+#pragma once
 
 struct lua_State;
 
@@ -29,6 +28,3 @@ namespace lv::lua
 	};
 
 }
-
-
-#endif

@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_RPC_COMMON_HPP
-#define LV_RPC_COMMON_HPP
+#pragma once
 
 
 #include <lv/Exception.hpp>
@@ -27,5 +26,3 @@ namespace lv::rpc
 	BOOST_CLASS_TRACKING(c, boost::serialization::track_never)
 
 }
-
-#endif

@@ -8,12 +8,9 @@
 // 
 // *********************************************************************
 
-#ifndef LV_NET_HPP
-#define LV_NET_HPP
+#pragma once
 
 #include <lv/FrameWork/Net/Fwd.hpp>
 #include <lv/FrameWork/Net/TcpSession.hpp>
 #include <lv/FrameWork/Net/FlowSession.hpp>
 #include <lv/FrameWork/Net/ServerBase.hpp>
-
-#endif

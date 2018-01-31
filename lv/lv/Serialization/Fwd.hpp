@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_SERIALIZATION_FWD_HPP
-#define LV_SERIALIZATION_FWD_HPP
+#pragma once
 
 namespace lv
 {
@@ -24,5 +23,3 @@ namespace lv
 		class Overload {};
 	}
 }
-
-#endif

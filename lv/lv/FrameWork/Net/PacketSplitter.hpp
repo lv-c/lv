@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_NET_PACKETSPLITTER_HPP
-#define LV_NET_PACKETSPLITTER_HPP
+#pragma once
 
 #include <lv/IBufferManager.hpp>
 #include <lv/Endian.hpp>
@@ -82,5 +81,3 @@ namespace lv::net
 	};
 
 }
-
-#endif

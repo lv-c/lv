@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_NET_SERVERBASE_HPP
-#define LV_NET_SERVERBASE_HPP
+#pragma once
 
 #include <lv/FrameWork/AutoLink.hpp>
 #include <lv/FrameWork/Net/Fwd.hpp>
@@ -77,5 +76,3 @@ namespace lv::net
 
 }
 
-
-#endif

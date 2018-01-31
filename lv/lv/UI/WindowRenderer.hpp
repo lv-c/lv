@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_WINDOWRENDERER_HPP
-#define LV_WINDOWRENDERER_HPP
+#pragma once
 
 
 namespace lv
@@ -41,5 +40,3 @@ namespace lv
 		virtual	void	render() = 0;
 	};
 }
-
-#endif

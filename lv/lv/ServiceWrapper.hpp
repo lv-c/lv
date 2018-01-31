@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_SERVICEWRAPPER_HPP
-#define LV_SERVICEWRAPPER_HPP
+#pragma once
 
 #include <boost/assert.hpp>
 #include <boost/asio/io_service.hpp>
@@ -90,5 +89,3 @@ namespace lv
 		}
 	};
 }
-
-#endif

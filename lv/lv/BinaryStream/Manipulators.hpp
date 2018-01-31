@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_BINARYSTREAM_MANIPULATORS_HPP
-#define LV_BINARYSTREAM_MANIPULATORS_HPP
+#pragma once
 
 #include <lv/BinaryStream/BinaryIStream.hpp>
 #include <lv/BinaryStream/BinaryOStream.hpp>
@@ -306,5 +305,3 @@ namespace lv::bstream
 
 }
 
-
-#endif

@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_CONTAINERADAPTOR_ADAPTOR_HPP
-#define LV_CONTAINERADAPTOR_ADAPTOR_HPP
+#pragma once
 
 namespace lv
 {
@@ -55,5 +54,3 @@ namespace lv
 		t.reserve(size);
 	}
 }
-
-#endif

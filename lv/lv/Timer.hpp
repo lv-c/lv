@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_TIMER_HPP
-#define LV_TIMER_HPP
+#pragma once
 
 #include <boost/operators.hpp>
 
@@ -101,5 +100,3 @@ namespace lv
 	};
 }
 
-
-#endif

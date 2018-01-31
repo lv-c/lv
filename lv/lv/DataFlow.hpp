@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_DATAFLOW_HPP
-#define LV_DATAFLOW_HPP
+#pragma once
 
 #include <lv/DataFlow/Fwd.hpp>
 #include <lv/DataFlow/DataFlow.hpp>
@@ -22,5 +21,3 @@
 // not included by default
 // #include <lv/DataFlow/AsyncPush.hpp>
 // #include <lv/DataFlow/ThreadedPush.hpp>
-
-#endif

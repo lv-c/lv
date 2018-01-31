@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_STREAM_FWD_HPP
-#define LV_STREAM_FWD_HPP
+#pragma once
 
 namespace lv
 {
@@ -17,5 +16,3 @@ namespace lv
 
 	class OStreamProxy;
 }
-
-#endif

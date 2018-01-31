@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_SERIALIZATION_NVPHELPER_HPP
-#define LV_SERIALIZATION_NVPHELPER_HPP
+#pragma once
 
 #include <boost/serialization/nvp.hpp>
 
@@ -75,5 +74,3 @@ namespace lv
 #define LV_NVP_HELPER(ar) lv::make_nvp_helper(ar)._NVP_HELPER_A
 
 // how to use : LV_NVP_HELPER(ar) (a) (b) ("my_own_name", c);
-
-#endif

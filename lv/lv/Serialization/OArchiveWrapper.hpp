@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_SERIALIZATION_OARCHIVEHOLDER_HPP
-#define LV_SERIALIZATION_OARCHIVEHOLDER_HPP
+#pragma once
 
 #include <lv/Stream/OStreamFactory.hpp>
 
@@ -42,6 +41,3 @@ namespace lv
 		}
 	};
 }
-
-
-#endif

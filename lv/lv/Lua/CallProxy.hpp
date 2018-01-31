@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUA_CALLPROXY_HPP
-#define LV_LUA_CALLPROXY_HPP
+#pragma once
 
 #include <sstream>
 #include <functional>
@@ -111,5 +110,3 @@ namespace lv::lua
 	};
 
 }
-
-#endif

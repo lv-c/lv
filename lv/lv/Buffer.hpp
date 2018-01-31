@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_BUFFER_HPP
-#define LV_BUFFER_HPP
+#pragma once
 
 #include <boost/assert.hpp>
 #include <boost/range.hpp>
@@ -326,5 +325,3 @@ namespace lv
 		}
 	}
 }
-
-#endif

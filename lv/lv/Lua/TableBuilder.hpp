@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUA_TABLEBUILDER_HPP
-#define LV_LUA_TABLEBUILDER_HPP
+#pragma once
 
 #include <lv/LuaArchive/OSerializer.hpp>
 
@@ -163,5 +162,3 @@ namespace lv::lua
 #define LV_ARR(...)		(lv::lua::ArrayBuilder(), __VA_ARGS__)
 
 #define LV_OBJ(x)		(lv::lua::make_object_builder(x))
-
-#endif

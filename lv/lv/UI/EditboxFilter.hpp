@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_EDITBOXFILTER_HPP
-#define LV_EDITBOXFILTER_HPP
+#pragma once
 
 #include <list>
 #include <locale>
@@ -105,5 +104,3 @@ namespace lv
 	
 
 }
-
-#endif

@@ -8,12 +8,8 @@
 // 
 // *********************************************************************
 
-#ifndef LV_FRAMEWORK_AUTOLINK_HPP
-#define LV_FRAMEWORK_AUTOLINK_HPP
+#pragma once
 
 
 #define LV_LIB_NAME "Framework"
 #include <lv/AutoLink.hpp>
-
-
-#endif

@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LRULIST_HPP
-#define LV_LRULIST_HPP
+#pragma once
 
 #include <list>
 
@@ -109,5 +108,3 @@ namespace lv
 		}
 	};
 }
-
-#endif

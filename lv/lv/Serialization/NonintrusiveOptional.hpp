@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_SERIALIZATION_NONINTRUSIVE_OPTIONAL_HPP
-#define LV_SERIALIZATION_NONINTRUSIVE_OPTIONAL_HPP
+#pragma once
 
 #include <boost/serialization/nvp.hpp>
 
@@ -46,5 +45,3 @@ namespace lv::serialization
 	boost::serialization::make_nvp(#name, lv::serialization::make_optional(name))
 
 }
-
-#endif

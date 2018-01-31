@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_FACTORY_HPP
-#define LV_FACTORY_HPP
+#pragma once
 
 #include <vector>
 #include <functional>
@@ -106,5 +105,3 @@ namespace lv
 	};
 
 }
-
-#endif

@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_IFILEIO_HPP
-#define LV_IFILEIO_HPP
+#pragma once
 
 #include <lv/lvlib2.hpp>
 #include <lv/Buffer.hpp>
@@ -53,5 +52,3 @@ namespace lv
 
 	};
 }
-
-#endif

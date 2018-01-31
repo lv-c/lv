@@ -11,8 +11,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_STREAM_STREAMBASE_HPP
-#define LV_STREAM_STREAMBASE_HPP
+#pragma once
 
 #include <ios>
 
@@ -133,6 +132,3 @@ namespace lv
 		iostate	except_;	// exception mask
 	};
 }
-
-
-#endif

@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_SERIALIZATION_TRIANGLE_HPP
-#define LV_SERIALIZATION_TRIANGLE_HPP
+#pragma once
 
 #include <lv/Graphics/Triangle.hpp>
 
@@ -23,5 +22,3 @@ namespace boost::serialization
 	}
 
 }
-
-#endif

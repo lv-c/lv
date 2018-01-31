@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_BINARYSTREAMBASE_HPP
-#define LV_BINARYSTREAMBASE_HPP
+#pragma once
 
 
 namespace lv::bstream
@@ -36,5 +35,3 @@ namespace lv::bstream
 		}
 	};
 }
-
-#endif

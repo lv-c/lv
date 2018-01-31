@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUAARCHIVE_ARRAY_HPP
-#define LV_LUAARCHIVE_ARRAY_HPP
+#pragma once
 
 #include <lv/LuaArchive/Fwd.hpp>
 #include <lv/Exception.hpp>
@@ -60,5 +59,3 @@ namespace lv::lua::archive
 
 
 }
-
-#endif

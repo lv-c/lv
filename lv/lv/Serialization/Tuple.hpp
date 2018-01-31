@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_PACKET_TUPLE_HPP
-#define LV_PACKET_TUPLE_HPP
+#pragma once
 
 #include <tuple>
 
@@ -26,5 +25,3 @@ namespace boost::serialization
 	}
 
 }
-
-#endif

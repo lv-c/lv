@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_CONCURRENT_COLLECTOR_HPP
-#define LV_CONCURRENT_COLLECTOR_HPP
+#pragma once
 
 #include <boost/noncopyable.hpp>
 
@@ -174,5 +173,3 @@ namespace lv
 	};
 
 }
-
-#endif

@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LOG_FORMATTER_HPP
-#define LV_LOG_FORMATTER_HPP
+#pragma once
 
 #include <lv/Config.hpp>
 #include <lv/Log/Fwd.hpp>
@@ -86,5 +85,3 @@ namespace lv::log
 	};
 
 }
-
-#endif

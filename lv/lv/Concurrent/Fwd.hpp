@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_CONCURRENT_FWD_HPP
-#define LV_CONCURRENT_FWD_HPP
+#pragma once
 
 namespace lv
 {
@@ -24,5 +23,3 @@ namespace lv
 
 	class ThreadGroup;
 }
-
-#endif

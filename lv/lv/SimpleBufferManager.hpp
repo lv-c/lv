@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_SIMPLEBUFFERMANAGER_HPP
-#define LV_SIMPLEBUFFERMANAGER_HPP
+#pragma once
 
 #include <lv/IBufferManager.hpp>
 
@@ -40,5 +39,3 @@ namespace lv
 	};
 
 }
-
-#endif

@@ -12,8 +12,8 @@
 // *********************************************************************
 // 
 // *********************************************************************
-#ifndef LV_SINGLETON_AHPP
-#define LV_SINGLETON_AHPP
+
+#pragma once
 
 #include <boost/assert.hpp>
 
@@ -83,5 +83,3 @@ namespace lv
 	T* Singleton<T, StaticAlloc>::instance_ = nullptr;
 
 }
-
-#endif

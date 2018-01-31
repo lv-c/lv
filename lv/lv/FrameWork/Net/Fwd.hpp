@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_NET_FWD_HPP
-#define LV_NET_FWD_HPP
+#pragma once
 
 #include <memory>
 
@@ -65,6 +64,4 @@ namespace lv::net
 
 	namespace asio = boost::asio;
 
-}
-
-#endif 
+} 

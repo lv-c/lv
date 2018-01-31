@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUAARCHIVE_PLAINISERIALIZER_HPP
-#define LV_LUAARCHIVE_PLAINISERIALIZER_HPP
+#pragma once
 
 #include <lv/lvlib2.hpp>
 #include <lv/LuaArchive/Tags.hpp>
@@ -312,5 +311,3 @@ namespace lv::lua::archive
 
 
 }
-
-#endif

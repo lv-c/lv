@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_DATAFLOW_DATAFLOW_HPP
-#define LV_DATAFLOW_DATAFLOW_HPP
+#pragma once
 
 #include <lv/Buffer.hpp>
 
@@ -122,5 +121,3 @@ namespace lv::flow
 
 }
 
-
-#endif

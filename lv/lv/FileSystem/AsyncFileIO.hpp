@@ -9,8 +9,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_ASYNFILEIO_HPP
-#define LV_ASYNFILEIO_HPP
+#pragma once
 
 #include <lv/FileSystem/Fwd.hpp>
 #include <lv/FileSystem/IFileIO.hpp>
@@ -92,5 +91,3 @@ namespace lv
 		}
 	};
 }
-
-#endif

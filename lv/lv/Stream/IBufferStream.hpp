@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_STREAM_IBUFFERSTREAM_HPP
-#define LV_STREAM_IBUFFERSTREAM_HPP
+#pragma once
 
 #include <lv/Buffer.hpp>
 #include <lv/Stream/StreamBase.hpp>
@@ -146,5 +145,3 @@ namespace lv
 	};
 
 }
-
-#endif

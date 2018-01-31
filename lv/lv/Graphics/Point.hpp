@@ -7,8 +7,7 @@
 // *********************************************************************
 // 
 // *********************************************************************
-#ifndef LV_POINT_HPP
-#define LV_POINT_HPP
+#pragma once
 
 #include <lv/Graphics/ContainerBase.hpp>
 #include <lv/IntType.hpp>
@@ -109,5 +108,3 @@ namespace lv
 	
 	using Point = PointT<int32>;
 }
-
-#endif

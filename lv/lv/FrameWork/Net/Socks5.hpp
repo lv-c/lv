@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_NET_SOCKS5_HPP
-#define LV_NET_SOCKS5_HPP
+#pragma once
 
 #include <lv/IntType.hpp>
 
@@ -38,5 +37,3 @@ namespace lv::net
 	};
 
 }
-
-#endif

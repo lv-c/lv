@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_EVENTARGS_HPP
-#define LV_EVENTARGS_HPP
+#pragma once
 
 #include <boost/assert.hpp>
 
@@ -332,5 +331,3 @@ namespace lv
 	};
 }
 
-
-#endif

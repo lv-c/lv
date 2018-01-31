@@ -7,8 +7,7 @@
 // *********************************************************************
 // 
 // *********************************************************************
-#ifndef LV_COLOR_HPP
-#define LV_COLOR_HPP
+#pragma once
 
 #include <lv/Config.hpp>
 #include <lv/IntType.hpp>
@@ -189,5 +188,3 @@ namespace lv
 
 	};
 }
-
-#endif

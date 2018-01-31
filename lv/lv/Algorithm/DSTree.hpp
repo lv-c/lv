@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_DSTREE_HPP
-#define LV_DSTREE_HPP
+#pragma once
 
 #include <boost/ptr_container/ptr_vector.hpp>
 #include <boost/operators.hpp>
@@ -351,5 +350,3 @@ namespace lv
 	};
 }
 
-
-#endif

@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUABIND_UTILITY_HPP
-#define LV_LUABIND_UTILITY_HPP
+#pragma once
 
 #include <string>
 #include <type_traits>
@@ -28,5 +27,3 @@ namespace lv::lua
 	template<class T>
 	constexpr bool	is_primitive_v = is_primitive<T>::value;
 }
-
-#endif

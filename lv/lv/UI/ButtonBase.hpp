@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_BUTTONBASE_HPP
-#define LV_BUTTONBASE_HPP
+#pragma once
 
 #include <lv/UI/Window.hpp>
 
@@ -47,5 +46,3 @@ namespace lv
 
 	};
 }
-
-#endif

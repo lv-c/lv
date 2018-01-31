@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_BINARYSTREAM_OSERIALIZER_HPP
-#define LV_BINARYSTREAM_OSERIALIZER_HPP
+#pragma once
 
 #include <lv/BinaryStream/Tags.hpp>
 #include <lv/Endian.hpp>
@@ -79,5 +78,3 @@ namespace lv::bstream
 	}
 
 }
-
-#endif

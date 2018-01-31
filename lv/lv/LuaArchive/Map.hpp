@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUAARCHIVE_MAP_HPP
-#define LV_LUAARCHIVE_MAP_HPP
+#pragma once
 
 #include <map>
 
@@ -27,6 +26,3 @@ namespace lv::lua::archive
 
 
 }
-
-
-#endif

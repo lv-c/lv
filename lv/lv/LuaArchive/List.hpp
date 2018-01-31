@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUAARCHIVE_LIST_HPP
-#define LV_LUAARCHIVE_LIST_HPP
+#pragma once
 
 #include <list>
 
@@ -27,6 +26,3 @@ namespace lv::lua::archive
 
 
 }
-
-
-#endif

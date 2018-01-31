@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_CONCURRENT_FUTURE_HPP
-#define LV_CONCURRENT_FUTURE_HPP
+#pragma once
 
 #include <future>
 #include <atomic>
@@ -159,5 +158,3 @@ namespace lv
 	};
 
 }
-
-#endif

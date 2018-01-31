@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_RAWFILEREADER_HPP
-#define LV_RAWFILEREADER_HPP
+#pragma once
 
 #include <lv/FileSystem/IFileIO.hpp>
 
@@ -29,5 +28,3 @@ namespace lv
 		bool	exist(std::string const & file) override;
 	};
 }
-
-#endif

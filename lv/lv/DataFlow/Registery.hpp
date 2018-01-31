@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_DATAFLOW_REGISTERY_HPP
-#define LV_DATAFLOW_REGISTERY_HPP
+#pragma once
 
 #include <lv/DataFlow/Fwd.hpp>
 #include <lv/DataFlow/Invoker.hpp>
@@ -122,6 +121,4 @@ namespace lv::flow
 
 	
 
-}
-
-#endif 
+} 

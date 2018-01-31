@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_EXCEPTION_HPP
-#define LV_EXCEPTION_HPP
+#pragma once
 
 #include <stdexcept>
 #include <string>
@@ -45,6 +44,3 @@ namespace lv
 	DEFINE_EXCEPTION_MSG(file_not_found, io_error)
 
 }
-
-
-#endif

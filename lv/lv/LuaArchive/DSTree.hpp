@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUAARCHIVE_DSTREE_HPP
-#define LV_LUAARCHIVE_DSTREE_HPP
+#pragma once
 
 #include <lv/Algorithm/DSTree.hpp>
 
@@ -177,5 +176,3 @@ namespace lv::lua::archive
 	}
 
 }
-
-#endif

@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_ENSURE_HPP
-#define LV_ENSURE_HPP
+#pragma once
 
 // TODO : make it better. LV_ENSURE(check, msg) (v0) (v1) ?
 
@@ -47,5 +46,3 @@ namespace lv::detail
 		BOOST_ASSERT(false);			\
 		lv::detail::ensure_throw(msg);	\
 	}
-
-#endif

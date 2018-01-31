@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_GRAPHICS_VECTOR_HPP
-#define LV_GRAPHICS_VECTOR_HPP
+#pragma once
 
 #include <lv/Graphics/ContainerBase.hpp>
 
@@ -102,5 +101,3 @@ namespace lv
 	using Vector3f = VectorT<float>;
 
 }
-
-#endif

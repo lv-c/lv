@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_RENDERFWD_HPP
-#define LV_RENDERFWD_HPP
+#pragma once
 
 #include <lv/IntType.hpp>
 
@@ -35,6 +34,3 @@ namespace lv
 	using Rect = RectT<int32>;
 
 }
-
-
-#endif

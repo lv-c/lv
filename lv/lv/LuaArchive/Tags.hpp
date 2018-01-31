@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUAARCHIVE_TAGS_HPP
-#define LV_LUAARCHIVE_TAGS_HPP
+#pragma once
 
 #include <boost/mpl/identity.hpp>
 
@@ -83,5 +82,3 @@ namespace lv::lua::archive
 	using object_tag_t = typename object_tag<T, Enabled>::type;
 
 }
-
-#endif

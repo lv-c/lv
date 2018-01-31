@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LOG_FWD_HPP
-#define LV_LOG_FWD_HPP
+#pragma once
 
 #include <iostream>
 #include <string>
@@ -62,6 +61,3 @@ namespace lv
 	using log::LogManager;
 
 }
-
-
-#endif

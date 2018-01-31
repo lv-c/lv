@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_FILESYSTEM_HPP
-#define LV_FILESYSTEM_HPP
+#pragma once
 
 #include <lv/Buffer.hpp>
 
@@ -26,6 +25,3 @@ namespace lv
 
 	class AsyncFileIO;
 }
-
-
-#endif

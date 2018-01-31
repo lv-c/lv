@@ -7,8 +7,7 @@
 // *********************************************************************
 // 
 // *********************************************************************
-#ifndef LV_CONFIG_HPP
-#define LV_CONFIG_HPP
+#pragma once
 
 
 #if defined(linux) || defined(__linux) || defined(__linux__)
@@ -34,5 +33,3 @@
 
 #endif
 
-
-#endif

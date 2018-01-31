@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_PIXELFORMAT_HPP
-#define LV_PIXELFORMAT_HPP
+#pragma once
 
 #include <boost/gil/typedefs.hpp>
 #include <boost/gil/image.hpp>
@@ -85,6 +84,3 @@ namespace lv
 
 }
 
-
-
-#endif

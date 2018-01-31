@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_RPC_INVOKER_HPP
-#define LV_RPC_INVOKER_HPP
+#pragma once
 
 #include <lv/Ref.hpp>
 #include <lv/MPL/Fusion.hpp>
@@ -144,5 +143,3 @@ namespace lv::rpc::detail
 
 
 }
-
-#endif

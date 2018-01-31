@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_ALIGN_HPP
-#define LV_ALIGN_HPP
+#pragma once
 
 namespace lv
 {
@@ -50,5 +49,3 @@ namespace lv
 		return is_aligned(reinterpret_cast<size_t>(value), alignment);
 	}
 }
-
-#endif

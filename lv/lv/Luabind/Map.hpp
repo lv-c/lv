@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUABIND_MAP_HPP
-#define LV_LUABIND_MAP_HPP
+#pragma once
 
 #include <lv/Luabind/Pair.hpp>
 
@@ -58,5 +57,3 @@ namespace lv::lua
 	}
 
 }
-
-#endif

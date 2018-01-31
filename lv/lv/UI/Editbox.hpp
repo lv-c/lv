@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_EDIT_HPP
-#define LV_EDIT_HPP
+#pragma once
 
 #include <lv/UI/Window.hpp>
 
@@ -80,5 +79,3 @@ namespace lv
 
 	};
 }
-
-#endif

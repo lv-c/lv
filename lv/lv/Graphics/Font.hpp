@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_FONT_HPP
-#define LV_FONT_HPP
+#pragma once
 
 #include <lv/Config.hpp>
 #include <lv/Graphics/ColorRect.hpp>
@@ -91,5 +90,3 @@ namespace lv
 
 	};
 }
-
-#endif

@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_SERIALIZATION_GRAPHICS_VECTOR_HPP
-#define LV_SERIALIZATION_GRAPHICS_VECTOR_HPP
+#pragma once
 
 #include <lv/Graphics/Vector.hpp>
 
@@ -23,5 +22,3 @@ namespace boost::serialization
 	}
 
 }
-
-#endif

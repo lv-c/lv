@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_BINARYISTREAM_FWD_HPP
-#define LV_BINARYISTREAM_FWD_HPP
+#pragma once
 
 namespace lv 
 {
@@ -24,6 +23,3 @@ namespace lv
 	using bstream::BinaryIStream;
 	using bstream::BinaryOStream;
 }
-
-
-#endif

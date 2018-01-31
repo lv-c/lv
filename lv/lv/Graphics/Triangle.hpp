@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_GRAPHICS_TRIANGLE_HPP
-#define LV_GRAPHICS_TRIANGLE_HPP
+#pragma once
 
 #include <lv/Graphics/ContainerBase.hpp>
 
@@ -65,5 +64,3 @@ namespace lv
 	template<class T>
 	T TriangleT<T>::* const TriangleT<T>::mem_array[TriangleT<T>::ele_num] = { &TriangleT<T>::v0, &TriangleT<T>::v1, &TriangleT<T>::v2};
 }
-
-#endif

@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_ENDIAN_HPP
-#define LV_ENDIAN_HPP
+#pragma once
 
 #include <lv/IntType.hpp>
 
@@ -78,5 +77,3 @@ namespace lv
 		return !little_endian();
 	}
 }
-
-#endif

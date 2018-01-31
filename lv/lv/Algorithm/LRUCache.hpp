@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LRUCACHE_HPP
-#define LV_LRUCACHE_HPP
+#pragma once
 
 #include <lv/Algorithm/LRUList.hpp>
 
@@ -166,6 +165,3 @@ namespace lv
 	};
 
 }
-
-
-#endif

@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LOG_GATHER_HPP
-#define LV_LOG_GATHER_HPP
+#pragma once
 
 #include <lv/Log/Fwd.hpp>
 #include <lv/Log/Level.hpp>
@@ -162,5 +161,3 @@ namespace lv::log
 		}
 	};
 }
-
-#endif

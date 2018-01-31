@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_DATAFLOW_THREADEDPUSH_HPP
-#define LV_DATAFLOW_THREADEDPUSH_HPP
+#pragma once
 
 #include <lv/Concurrent/TaskQueue.hpp>
 #include <lv/Concurrent/FIFOQueue.hpp>
@@ -101,6 +100,4 @@ namespace lv::flow
 		}
 	};
 
-}
-
-#endif 
+} 

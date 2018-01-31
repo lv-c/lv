@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_STRINGSWITCH_HPP
-#define LV_STRINGSWITCH_HPP
+#pragma once
 
 #include <lv/Ensure.hpp>
 
@@ -135,5 +134,3 @@ namespace lv
 		}
 	};
 }
-
-#endif

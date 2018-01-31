@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_NET_MESSAGEQUEUE_HPP
-#define LV_NET_MESSAGEQUEUE_HPP
+#pragma once
 
 #include <lv/FrameWork/AutoLink.hpp>
 #include <lv/FrameWork/Net/Fwd.hpp>
@@ -95,5 +94,3 @@ namespace lv::net
 
 
 }
-
-#endif

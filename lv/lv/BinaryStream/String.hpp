@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_BINARYSTREAM_STRING_HPP
-#define LV_BINARYSTREAM_STRING_HPP
+#pragma once
 
 #include <lv/BinaryStream/Tags.hpp>
 
@@ -22,5 +21,3 @@ namespace lv::bstream
 	struct object_tag<std::basic_string<C, Tr, Ax> > : primitive_buffer_tag {};
 
 }
-
-#endif

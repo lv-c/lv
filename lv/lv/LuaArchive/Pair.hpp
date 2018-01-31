@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUAARCHIVE_PAIR_HPP
-#define LV_LUAARCHIVE_PAIR_HPP
+#pragma once
 
 #include <lv/LuaArchive/ISerializer.hpp>
 #include <lv/LuaArchive/OSerializer.hpp>
@@ -81,5 +80,3 @@ namespace lv::lua::archive
 	}
 
 }
-
-#endif

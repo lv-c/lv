@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_PROGRESS_HPP
-#define LV_PROGRESS_HPP
+#pragma once
 
 #include <boost/assert.hpp>
 
@@ -88,5 +87,3 @@ namespace lv
 
 	};
 }
-
-#endif

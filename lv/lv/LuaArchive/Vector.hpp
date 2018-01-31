@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUAARCHIVE_VECTOR_HPP
-#define LV_LUAARCHIVE_VECTOR_HPP
+#pragma once
 
 #include <vector>
 
@@ -25,6 +24,3 @@ namespace lv::lua::archive
 	};
 
 }
-
-
-#endif

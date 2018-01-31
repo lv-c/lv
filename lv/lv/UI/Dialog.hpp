@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_DIALOG_HPP
-#define LV_DIALOG_HPP
+#pragma once
 
 
 
@@ -20,5 +19,3 @@ namespace lv
 
 	};
 }
-
-#endif

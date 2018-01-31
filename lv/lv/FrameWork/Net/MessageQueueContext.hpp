@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_NET_MESSAGEQUEUECONTEX_HPP
-#define LV_NET_MESSAGEQUEUECONTEX_HPP
+#pragma once
 
 #include <lv/FrameWork/Net/Context.hpp>
 
@@ -49,5 +48,3 @@ namespace lv::net
 	};
 
 }
-
-#endif

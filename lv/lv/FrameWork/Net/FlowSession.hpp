@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_NET_FLOWSESSION_HPP
-#define LV_NET_FLOWSESSION_HPP
+#pragma once
 
 #include <lv/FrameWork/Net/Fwd.hpp>
 #include <lv/FrameWork/Net/PacketBufferManager.hpp>
@@ -110,5 +109,3 @@ namespace lv::net
 	};
 
 }
-
-#endif

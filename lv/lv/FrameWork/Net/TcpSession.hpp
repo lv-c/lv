@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_NET_TCPSESSION_HPP
-#define LV_NET_TCPSESSION_HPP
+#pragma once
 
 #include <lv/FrameWork/Net/SessionBase.hpp>
 
@@ -26,5 +25,3 @@ namespace lv::net
 	};
 
 }
-
-#endif

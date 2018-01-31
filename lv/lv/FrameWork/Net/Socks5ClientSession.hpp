@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_NET_SOCKS5CLIENTSESSION_HPP
-#define LV_NET_SOCKS5CLIENTSESSION_HPP
+#pragma once
 
 #include <lv/FrameWork/Net/TcpSession.hpp>
 #include <lv/FrameWork/Net/PacketProxy.hpp>
@@ -75,5 +74,3 @@ namespace lv::net
 	};
 
 }
-
-#endif

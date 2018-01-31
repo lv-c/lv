@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_RPCBASE_HPP
-#define LV_RPCBASE_HPP
+#pragma once
 
 
 #include <lv/RPC/Fwd.hpp>
@@ -56,5 +55,3 @@ namespace lv::rpc
 	};
 
 }
-
-#endif

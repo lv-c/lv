@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_SHAREDPTR_HPP
-#define LV_SHAREDPTR_HPP
+#pragma once
 
 #include <memory>
 
@@ -24,5 +23,3 @@ namespace lv
 		return std::shared_ptr<T>(&t, [](void const *) {});
 	}
 }
-
-#endif

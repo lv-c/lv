@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_CONCURRENT_ASYNC_HPP
-#define LV_CONCURRENT_ASYNC_HPP
+#pragma once
 
 #include <lv/Concurrent/Collector.hpp>
 
@@ -51,5 +50,3 @@ namespace lv::concurrent
 	}
 
 }
-
-#endif

@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_STREAM_STREAMFACTORY_HPP
-#define LV_STREAM_STREAMFACTORY_HPP
+#pragma once
 
 #include <lv/Factory.hpp>
 
@@ -37,5 +36,3 @@ namespace lv::detail
 		}
 	};
 }
-
-#endif

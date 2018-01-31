@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_SCOPEGUARD_HPP
-#define LV_SCOPEGUARD_HPP
+#pragma once
 
 #include <functional>
 
@@ -39,6 +38,3 @@ namespace lv
 }
 
 #define LV_SCOPE_EXIT(fn) lv::ScopeExit BOOST_PP_CAT(_LV_EXIT_, __LINE__) (fn)
-
-
-#endif

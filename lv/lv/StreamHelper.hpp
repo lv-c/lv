@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_STREAMHELPER_HPP
-#define LV_STREAMHELPER_HPP
+#pragma once
 
 #include <lv/IntType.hpp>
 
@@ -179,5 +178,3 @@ namespace lv
 		return detail::write_range_impl<Range>(range, delimiter, use_hex, setw);
 	}
 }
-
-#endif

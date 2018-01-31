@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_RPC_FWD_HPP
-#define LV_RPC_FWD_HPP
+#pragma once
 
 #include <boost/fusion/include/map_fwd.hpp>
 
@@ -33,5 +32,3 @@ namespace lv::rpc
 	class Server;
 
 }
-
-#endif

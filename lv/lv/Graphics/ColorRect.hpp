@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_COLORRECT_HPP
-#define LV_COLORRECT_HPP
+#pragma once
 
 #include <boost/operators.hpp>
 #include <boost/assert.hpp>
@@ -128,6 +127,3 @@ namespace lv
 		static Color ColorRect::* const mem_array[ele_num]; 
 	};
 }
-
-
-#endif

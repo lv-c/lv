@@ -7,8 +7,7 @@
 // *********************************************************************
 // 
 // *********************************************************************
-#ifndef LV_SIZE_HPP
-#define LV_SIZE_HPP
+#pragma once
 
 #include <lv/Graphics/ContainerBase.hpp>
 #include <lv/IntType.hpp>
@@ -99,5 +98,3 @@ namespace lv
 
 	using Size = SizeT<int32>;
 }
-
-#endif

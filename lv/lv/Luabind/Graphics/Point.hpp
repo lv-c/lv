@@ -8,8 +8,7 @@
 // 
 // *********************************************************************
 
-#ifndef LV_LUABIND_GRAPHICS_POINT_HPP
-#define LV_LUABIND_GRAPHICS_POINT_HPP
+#pragma once
 
 #include <lv/Graphics/Point.hpp>
 #include <lv/Graphics/Stream/Point.hpp>
@@ -45,5 +44,3 @@ namespace lv::lua::graphics
 	}
 
 }
-
-#endif
