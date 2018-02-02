@@ -361,7 +361,6 @@
     <ClInclude Include="..\..\..\lv\lv\Mapping.hpp" />
     <ClInclude Include="..\..\..\lv\lv\MPL\detail\RemoveSecond.hpp" />
     <ClInclude Include="..\..\..\lv\lv\MPL\Functional.hpp" />
-    <ClInclude Include="..\..\..\lv\lv\MPL\Fusion.hpp" />
     <ClInclude Include="..\..\..\lv\lv\MPL\MemFn.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Random.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Ref.hpp" />

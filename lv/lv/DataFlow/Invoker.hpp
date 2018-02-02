@@ -11,15 +11,12 @@
 #pragma once
 
 #include <lv/Ref.hpp>
-#include <lv/MPL/Fusion.hpp>
 
-#include <boost/mpl/transform.hpp>
-
-#include <boost/function_types/parameter_types.hpp>
 #include <boost/fusion/include/for_each.hpp>
-#include <boost/fusion/include/invoke.hpp>
+#include <boost/fusion/include/std_tuple.hpp>
 
 #include <type_traits>
+#include <tuple>
 
 
 namespace lv::flow::detail
@@ -37,6 +34,16 @@ namespace lv::flow::detail
 	{
 		// we shouldn't make a copy of the input archive.
 		using type = RefWrapper<T>;
+	};
+
+
+	template<class Signature, class IArchive>
+	struct ParametersType;
+
+	template<class R, class ...T, class IArchive>
+	struct ParametersType<R(T...), IArchive>
+	{
+		using type = std::tuple<typename ParamType<T, IArchive>::type...>;
 	};
 
 
@@ -84,8 +91,6 @@ namespace lv::flow::detail
 		using function_type = std::function<Signature>;
 		function_type	fn_;
 	
-		using parameter_types = typename boost::function_types::parameter_types<Signature>::type;
-
 	public:
 
 		Invoker(function_type const & fn)
@@ -95,12 +100,10 @@ namespace lv::flow::detail
 
 		void operator() (IArchive & ia)
 		{
-			typename MplToFusionCons<typename boost::mpl::transform<parameter_types, ParamType<boost::mpl::_,
-				IArchive> >::type>::type params;
+			typename ParametersType<Signature, IArchive>::type params;
 
 			boost::fusion::for_each(params, ExtractParameters<IArchive>(ia));
-
-			boost::fusion::invoke(fn_, params);
+			std::apply(fn_, std::move(params));
 		}
 	};
 

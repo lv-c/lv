@@ -763,9 +763,6 @@
     <ClInclude Include="..\..\..\lv\lv\MPL\Functional.hpp">
       <Filter>MPL\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\lv\lv\MPL\Fusion.hpp">
-      <Filter>MPL\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\MPL\MemFn.hpp">
       <Filter>MPL\Header Files</Filter>
     </ClInclude>

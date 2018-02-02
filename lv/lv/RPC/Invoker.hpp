@@ -11,17 +11,13 @@
 #pragma once
 
 #include <lv/Ref.hpp>
-#include <lv/MPL/Fusion.hpp>
 
 #include <boost/fusion/include/for_each.hpp>
-#include <boost/fusion/include/invoke.hpp>
-
-#include <boost/function_types/parameter_types.hpp>
-
-#include <boost/mpl/transform.hpp>
+#include <boost/fusion/include/std_tuple.hpp>
 
 #include <functional>
 #include <type_traits>
+#include <tuple>
 
 
 namespace lv::rpc::detail
@@ -33,6 +29,17 @@ namespace lv::rpc::detail
 
 		static_assert(!std::is_pointer_v<type>, "parameter types of the registered functions can't be pointer types");
 	};
+
+
+	template<class Signature>
+	struct ParametersType;
+
+	template<class R, class ...T>
+	struct ParametersType<R(T...)>
+	{
+		using type = std::tuple<typename ParamType<T>::type...>;
+	};
+
 
 	template<class T, class IArchive>
 	struct Extractor
@@ -100,7 +107,6 @@ namespace lv::rpc::detail
 
 		// result type of the function
 		using result_type = typename function_type::result_type;
-		using param_type = typename boost::function_types::parameter_types<Signature>::type;
 
 		static_assert(!std::is_pointer_v<result_type>, "The result type shouldn't be a pointer type");
 
@@ -133,10 +139,10 @@ namespace lv::rpc::detail
 
 		result_type invoke_impl(iarchive_type & ia)
 		{
-			typename MplToFusionCons<typename boost::mpl::transform<param_type, ParamType<boost::mpl::_> >::type>::type params;
+			typename ParametersType<Signature>::type params;
 		
 			boost::fusion::for_each(params, ExtractParameters<iarchive_type>(ia));
-			return boost::fusion::invoke(fn_, params);
+			return std::apply(fn_, std::move(params));
 		}
 
 	};
