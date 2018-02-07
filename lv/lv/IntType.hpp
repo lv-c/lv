@@ -101,9 +101,24 @@ namespace lv
 
 	//
 	template<class T>
-	int	sign(T val)
+	inline int	sign(T val) noexcept
 	{
 		return (T(0) < val) - (val < T(0));
+	}
+
+
+	template<class T, class U>
+	inline T	reinterpret(U v) noexcept
+	{
+		static_assert(sizeof(T) == sizeof(U));
+
+		union {
+			U	u;
+			T	t;
+		} obj;
+
+		obj.u = v;
+		return obj.t;
 	}
 }
 

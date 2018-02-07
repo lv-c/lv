@@ -35,31 +35,16 @@ namespace lv
 	// ...Even with those limitations, support for floating point types was not reliable and was removed.
 	// For example, simply reversing the endianness of a floating point number can result in a signaling-NAN. "
 
-	namespace detail
-	{
-		template<class T, class U>
-		inline T	reinterpret(U v) noexcept
-		{
-			static_assert(sizeof(T) == sizeof(U));
 
-			union {
-				U	u;
-				T	t;
-			} obj;
-
-			obj.u = v;
-			return obj.t;
-		}
-	}
 
 	inline float	endian_switch(float v) noexcept
 	{
-		return detail::reinterpret<float>(endian_switch(detail::reinterpret<uint32>(v)));
+		return reinterpret<float>(endian_switch(reinterpret<uint32>(v)));
 	}
 
 	inline double	endian_switch(double v) noexcept
 	{
-		return detail::reinterpret<double>(endian_switch(detail::reinterpret<uint64>(v)));
+		return reinterpret<double>(endian_switch(reinterpret<uint64>(v)));
 	}
 
 
