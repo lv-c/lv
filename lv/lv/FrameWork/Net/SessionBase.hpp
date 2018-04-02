@@ -14,7 +14,7 @@
 #include <lv/FrameWork/Net/Fwd.hpp>
 #include <lv/FrameWork/Net/Event.hpp>
 
-#include <list>
+#include <deque>
 #include <mutex>
 
 
@@ -35,7 +35,7 @@ namespace lv::net
 
 		//
 
-		std::list<BufferPtr>	write_queue_;
+		std::deque<BufferPtr>	write_queue_;
 
 		bool	writing_;
 
