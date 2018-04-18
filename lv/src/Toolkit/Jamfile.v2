@@ -1,23 +1,11 @@
-import project ;
-
-project.initialize $(__name__) ;
-.project = [ project.current ] ;
-
-
-rule source ( properties * )
-{
-	local exclude = [ conditional-exclude $(properties) : luabind/luabind.hpp : Lua ] ;
-
-	return [ build-source $(.project) : $(exclude) ] ;
-}
 
 
 lib Toolkit 
-	:
+	: [ glob-tree *.cpp ]
 	: <link>static
 	  <tag>@tag-names
-	  <conditional>@source
 	;
+
 
 install stage
 	: Toolkit

@@ -1,24 +1,9 @@
-import project ;
-
-
-project.initialize $(__name__) ;
-.project = [ project.current ] ;
-
-
-rule source ( properties * )
-{
-	local exclude = ZeroMQ Graphics UI MyZipReader.cpp ;
-	exclude += [ conditional-exclude $(properties) : luabind/luabind.hpp : Lua Luabind ] ;
-
-	return [ build-source $(.project) : $(exclude) ] ;
-}
 
 
 lib lv2
-	:
+	: [ glob-tree *.cpp : ZeroMQ Graphics UI MyZipReader.cpp ]
 	: <link>static 
 	  <tag>@tag-names
-	  <conditional>@source
 	;
 
 install stage

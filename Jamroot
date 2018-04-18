@@ -7,14 +7,30 @@ import path ;
 import project ;
 
 
-BOOST_ROOT = [ modules.peek : BOOST_ROOT ] ;
+use-project /boost : $(BOOST_ROOT) ;
+use-project /luabind : $(LUABIND_ROOT) ;
+use-project /lua : $(LUA_ROOT) ;
+
+
+local usage-requirements = 
+	<include>lv
+	<library>/luabind
+	<library>/lua
+	<library>/boost//date_time
+	<library>/boost//filesystem
+	<library>/boost//system
+	<library>/boost//serialization
+	;
 
 
 project lv
 	: requirements 
-		<include>lv
-		<include>$(BOOST_ROOT)
-	: usage-requirements <include>lv
+		$(usage-requirements)
+		<toolset>msvc:<cxxflags>-std:c++17
+		<toolset>msvc:<define>_SCL_SECURE_NO_WARNINGS
+		<toolset>msvc:<define>_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING
+		<toolset>gcc:<cxxflags>-std=gnu++17
+	: usage-requirements $(usage-requirements)
 	: build-dir build
 	;
 
@@ -38,29 +54,6 @@ rule tag-names ( name : type ? : property-set )
 
 	return $(result) ;
 }
-
-
-rule conditional-exclude ( properties * : header : exclude * )
-{
-	local prop = [ property-set.create $(properties) ] ;
-	if ! [ ac.find-include-path $(prop) : $(header) ]
-	{
-		return $(exclude) ;
-	}
-}
-
-
-rule build-source ( proj : exclude * )
-{
-	local result ;
-	for s in [ project.glob-internal $(proj) : *.cpp : $(exclude) : glob-tree ]
-	{
-		result += <source>$(s) ;
-	}
-
-	return $(result) ;
-}
-
 
 
 local proj =
