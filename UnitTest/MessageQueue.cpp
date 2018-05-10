@@ -13,7 +13,6 @@
 #include <lv/FrameWork/Net/MessageQueue.hpp>
 #include <lv/FrameWork/Net/MessageQueueContext.hpp>
 #include <lv/FrameWork/Net/SteadyTimer.hpp>
-#include <lv/SimpleBufferManager.hpp>
 #include <lv/Random.hpp>
 #include <lv/Exception.hpp>
 #include <lv/SharedPtr.hpp>
@@ -114,7 +113,7 @@ BOOST_AUTO_TEST_CASE(test_message_queue)
 
 	Sender client_sender, server_sender;
 
-	std::shared_ptr<MessageQueueContext> ctx = std::make_shared<MessageQueueContext>(std::make_shared<SimpleBufferManager>(1024), service, true);
+	std::shared_ptr<MessageQueueContext> ctx = std::make_shared<MessageQueueContext>(service, true);
 	ctx->set_resend_time(0.02);
 
 	MessageQueue client(ctx, lv::shared_from_object(client_sender), MessageQueue::Receiver());

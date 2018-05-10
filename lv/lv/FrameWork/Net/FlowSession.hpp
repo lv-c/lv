@@ -34,20 +34,19 @@ namespace lv::net
 		using key_type = Key;
 
 		using sink_type = flow::Sink<flow::SyncPush, key_type>;
-		sink_type	sink_;
+		sink_type		sink_;
 
 		using source_type = flow::Source<key_type>;
-		std::unique_ptr<source_type>	source_;
+		source_type		source_;
 
 	public:
 
 		/// @TODO constructor of the base_type may take other parameters
 		explicit FlowSession(ContextPtr context)
 			: base_type(context)
-			, splitter_(context->buffer_manager())
+			, source_(std::bind(&FlowSession::push, this, std::placeholders::_1),
+				std::make_shared<PacketBufferManager>(1024))
 		{
-			source_ = std::make_unique<source_type>(std::bind(&FlowSession::push, this, std::placeholders::_1),
-				std::make_shared<PacketBufferManager>(1024));
 		}
 
 		void	close() override
@@ -73,21 +72,15 @@ namespace lv::net
 			}
 		}
 
-		void	on_receive(BufferPtr buf) override
+		void	on_receive(Buffer const & buf) override
 		{
 			splitter_.push(buf);
 
-			while (true)
+			while (Buffer const * packet = splitter_.get())
 			{
-				BufferPtr new_buf = splitter_.get();
-				if (!new_buf)
-				{
-					break;
-				}
-
 				try
 				{
-					handle_packet(new_buf);
+					handle_packet(*packet);
 				}
 				catch (std::exception const & /* ex */)
 				{
@@ -101,7 +94,7 @@ namespace lv::net
 
 		/// @note override this function to handle the exceptions. If any exception is thrown
 		///	 by this function, the socket will be closed
-		virtual	void	handle_packet(BufferPtr buf)
+		virtual	void	handle_packet(Buffer const & buf)
 		{
 			sink_.push(buf);
 		}

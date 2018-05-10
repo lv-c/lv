@@ -21,7 +21,7 @@ namespace lv::net
 	{
 		using base_type = TcpSession;
 
-		BufferPtr	cache_;
+		Buffer	cache_;
 
 		enum Status
 		{
@@ -47,8 +47,8 @@ namespace lv::net
 
 	protected:
 
-		void	on_receive(BufferPtr buf) override;
-		void	on_write(BufferPtr buf) override;
+		void	on_receive(Buffer const & buf) override;
+		void	on_write(size_t size) override;
 		void	on_error(ErrorType type, boost::system::error_code const & error) override;
 
 
@@ -64,7 +64,7 @@ namespace lv::net
 
 		void	dest_on_connected();
 		void	dest_on_error(ErrorType type, boost::system::error_code const & error);
-		void	dest_on_receive(BufferPtr buf);
+		void	dest_on_receive(Buffer const & buf);
 
 		void	send_request_response(boost::system::error_code error);
 

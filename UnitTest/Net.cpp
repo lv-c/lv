@@ -17,7 +17,6 @@
 #include <lv/FrameWork/Net/SSLContext.hpp>
 
 #include <lv/SharedPtr.hpp>
-#include <lv/SimpleBufferManager.hpp>
 
 #include <iostream>
 #include <mutex>
@@ -61,7 +60,7 @@ private:
 
 	void	on_connected() override
 	{
-		this->source_->call("echo", text_);
+		this->source_.call("echo", text_);
 	}
 
 	void	on_error(ErrorType type, boost::system::error_code const & error) override
@@ -100,7 +99,7 @@ public:
 		std::cout << str << std::endl;
 
 		// call the notify function of the client session
-		this->source_->call("notify", str);		
+		this->source_.call("notify", str);		
 	}
 
 private:
@@ -122,8 +121,8 @@ void test_net_impl()
 	boost::asio::io_service service;
 
 	// 
-	shared_ptr<SSLContext> server_context = std::make_shared<SSLContext>(std::make_shared<SimpleBufferManager>(1024), service);
-	shared_ptr<SSLContext> client_context = std::make_shared<SSLContext>(std::make_shared<SimpleBufferManager>(1024), service);
+	shared_ptr<SSLContext> server_context = std::make_shared<SSLContext>(service);
+	shared_ptr<SSLContext> client_context = std::make_shared<SSLContext>(service);
 
 	// server
 	server_type server(server_context, SessionCreator<server_session_type>());

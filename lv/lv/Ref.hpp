@@ -10,7 +10,7 @@
 
 #pragma once
 
-#include <functional>
+#include <type_traits>
 
 
 namespace lv
@@ -43,7 +43,7 @@ namespace lv
 			return *t_; 
 		}
 
-		T & get() const 
+		T &	get() const 
 		{ 
 			return *t_; 
 		}

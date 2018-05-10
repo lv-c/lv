@@ -5,8 +5,6 @@
 #include <boost/asio/write.hpp>
 #include <boost/asio/placeholders.hpp>
 
-#include <functional>
-
 
 namespace lv::net
 {
@@ -35,6 +33,7 @@ namespace lv::net
 	SessionBase::SessionBase(ContextPtr context, SocketHolderPtr socket)
 		: socket_(socket)
 		, closed_(false)
+		, write_index_(0)
 		, writing_(false)
 		, context_(context)
 	{
@@ -118,6 +117,15 @@ namespace lv::net
 		closed_ = false;
 		writing_ = false;
 
+		{
+			lock_guard lock(write_mutex_);
+
+			for (Buffer & v : write_buffers_)
+			{
+				v.clear();
+			}
+		}
+
 		asio::ip::tcp::resolver::query query(ip, port);
 		asio::ip::tcp::resolver resolver(context_->service());
 
@@ -129,39 +137,49 @@ namespace lv::net
 			socket_->get().bind(asio::ip::tcp::endpoint(bind_addr, 0));
 		}
 
+		auto handler = [shared_this = shared_from_this()](boost::system::error_code const & error) {
+			shared_this->handle_connect(error);
+		};
+
 		if (context_->has_strand())
 		{
-			socket_->get().async_connect(*resolver.resolve(query), 
-				context_->strand().wrap(std::bind(&SessionBase::handle_connect, shared_from_this(), std::placeholders::_1)));
+			socket_->get().async_connect(*resolver.resolve(query), context_->strand().wrap(std::move(handler)));
 		}
 		else
 		{
-			socket_->get().async_connect(*resolver.resolve(query), 
-				std::bind(&SessionBase::handle_connect, shared_from_this(), std::placeholders::_1));
+			socket_->get().async_connect(*resolver.resolve(query), std::move(handler));
 		}
 	}
 
-	void SessionBase::start_read()
+	void SessionBase::start_read(BufferPtr buf)
 	{
-		BufferPtr buf = context_->buffer();
+		if (buf && buf->size() > max_buffer_size_)
+		{
+			buf.reset();
+		}
+
+		if (!buf)
+		{
+			buf = std::make_shared<Buffer>(20 * 1024);
+		}
 
 		buf->resize(buf->capacity());
 
+		auto handler = [shared_this = shared_from_this(), buf](boost::system::error_code const & error, size_t bytes_transferred) {
+			shared_this->handle_read(buf, bytes_transferred, error);
+		};
+
 		if (context_->has_strand())
 		{
-			socket_->get().async_read_some(asio::buffer(*buf), context_->strand().wrap(
-				std::bind(&SessionBase::handle_read, shared_from_this(), buf,
-				std::placeholders::_2, std::placeholders::_1)));
+			socket_->get().async_read_some(asio::buffer(*buf), context_->strand().wrap(std::move(handler)));
 		}
 		else
 		{
-			socket_->get().async_read_some(asio::buffer(*buf), 
-				std::bind(&SessionBase::handle_read, shared_from_this(), buf,
-				std::placeholders::_2, std::placeholders::_1));
+			socket_->get().async_read_some(asio::buffer(*buf), std::move(handler));
 		}
 	}
 
-	void SessionBase::start_write(BufferPtr buf)
+	void SessionBase::start_write(ConstBufferRef buf)
 	{
 		if (!closed_)
 		{
@@ -176,31 +194,9 @@ namespace lv::net
 
 			lock_guard lock(write_mutex_);
 
-			if (writing_)
-			{
-				write_queue_.push_back(buf);
-			}
-			else
-			{
-				write_impl(buf);
-			}
-		}
-	}
+			buffer::append(write_buffers_[write_index_], buf);
 
-	void SessionBase::write_impl(BufferPtr buf)
-	{
-		BOOST_ASSERT(!writing_);
-		writing_ = true;
-
-		if (context_->has_strand())
-		{
-			asio::async_write(socket_->get(), asio::buffer(*buf), context_->strand().wrap(
-				std::bind(&SessionBase::handle_write, shared_from_this(), buf, std::placeholders::_1)));
-		}
-		else
-		{
-			asio::async_write(socket_->get(), asio::buffer(*buf), 
-				std::bind(&SessionBase::handle_write, shared_from_this(), buf, std::placeholders::_1));
+			check_write();
 		}
 	}
 
@@ -226,11 +222,11 @@ namespace lv::net
 
 	void SessionBase::on_connected_internal()
 	{
-		start_read();
+		start_read(BufferPtr());
 		on_connected();
 	}
 
-	void SessionBase::on_receive_internal(BufferPtr buf)
+	void SessionBase::on_receive_internal(Buffer const & buf)
 	{
 		on_receive(buf);
 	}
@@ -240,14 +236,14 @@ namespace lv::net
 		connect_event_();
 	}
 
-	void SessionBase::on_receive(BufferPtr buf)
+	void SessionBase::on_receive(Buffer const & buf)
 	{
 		receive_event_(buf);
 	}
 
-	void SessionBase::on_write(BufferPtr buf)
+	void SessionBase::on_write(size_t size)
 	{
-		write_event_(buf);
+		write_event_(size);
 	}
 
 	void SessionBase::handle_read(BufferPtr buf, size_t bytes_transferred, boost::system::error_code const & error)
@@ -264,16 +260,17 @@ namespace lv::net
 		else
 		{
 			buf->resize(bytes_transferred);
-			on_receive_internal(buf);
+			on_receive_internal(*buf);
 
-			start_read();
+			//
+			start_read(buf);
 		}
 	}
 
-	void SessionBase::handle_write(BufferPtr buf, boost::system::error_code const & error)
+	void SessionBase::handle_write(size_t buf_index, boost::system::error_code const & error)
 	{
 		writing_ = false;
-		
+
 		//
 		if (closed_)
 		{
@@ -286,19 +283,35 @@ namespace lv::net
 		}
 		else
 		{
+			size_t size = 0;
+
 			{
 				lock_guard lock(write_mutex_);
 
-				if (!writing_ && !write_queue_.empty())
+				if (buf_index != write_index_)
 				{
-					BufferPtr new_buf = write_queue_.front();
-					write_queue_.pop_front();
+					Buffer & buf = write_buffers_[buf_index];
+					size = buf.size();
 
-					write_impl(new_buf);
+					// avoid huge buffers
+					if (size > max_buffer_size_)
+					{
+						buf = Buffer();
+					}
+					else
+					{
+						buf.clear();
+					}
+
+					check_write();
+				}
+				else
+				{
+					BOOST_ASSERT(false);
 				}
 			}
 
-			on_write(buf);
+			on_write(size);
 		}
 	}
 
@@ -319,4 +332,33 @@ namespace lv::net
 		}
 	}
 
+	void SessionBase::check_write()
+	{
+		if (writing_)
+		{
+			return;
+		}
+
+		size_t buf_index = write_index_;
+		Buffer & buf = write_buffers_[buf_index];
+
+		if (!buf.empty())
+		{
+			writing_ = true;
+			write_index_ = 1 - write_index_;
+
+			auto handler = [shared_this = shared_from_this(), buf_index](boost::system::error_code const & error, size_t) {
+				return shared_this->handle_write(buf_index, error);
+			};
+
+			if (context_->has_strand())
+			{
+				asio::async_write(socket_->get(), asio::buffer(buf), context_->strand().wrap(std::move(handler)));
+			}
+			else
+			{
+				asio::async_write(socket_->get(), asio::buffer(buf), std::move(handler));
+			}
+		}
+	}
 }

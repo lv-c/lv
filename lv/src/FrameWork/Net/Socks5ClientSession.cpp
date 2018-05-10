@@ -10,8 +10,6 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/asio/ip/tcp.hpp>
 
-#include <functional>
-
 
 namespace lv::net
 {
@@ -27,7 +25,7 @@ namespace lv::net
 		std::string const & to_bind /* = std::string */)
 	{
 		status_ = None;
-		cache_.reset();
+		cache_.clear();
 
 		ip_ = ip;
 		port_ = port;
@@ -86,7 +84,7 @@ namespace lv::net
 			status_ = MethodSelect;
 			socks_send() << Socks5::Version << methods_num << uint8(auth ? Socks5::UserPassword : Socks5::NoAuth);
 
-			start_read();
+			start_read(BufferPtr());
 		}
 	}
 
@@ -117,16 +115,11 @@ namespace lv::net
 
 		buf->resize(bytes_transferred);
 
-		if (cache_)
-		{
-			buffer::append(*cache_, buf);
-			buf = cache_;
+		//
+		Buffer temp_buf = std::move(cache_);
+		buffer::append(temp_buf, buf);
 
-			cache_.reset();
-		}
-
-
-		BinaryIStream bis(buf);
+		BinaryIStream bis(temp_buf);
 
 		try
 		{
@@ -151,10 +144,10 @@ namespace lv::net
 		catch (std::ios_base::failure const &)
 		{
 			// an incomplete packet
-			cache_ = buf;
+			cache_ = std::move(temp_buf);
 		}
 
-		start_read();
+		start_read(buf);
 	}
 
 	void Socks5ClientSession::handle_method_select_response(BinaryIStream & bis)
@@ -298,7 +291,7 @@ namespace lv::net
 		error = asio::error::make_error_code(asio_err);
 	}
 
-	void Socks5ClientSession::handle_write(BufferPtr buf, boost::system::error_code const & error)
+	void Socks5ClientSession::handle_write(size_t buf_index, boost::system::error_code const & error)
 	{
 		if (closed())
 		{
@@ -307,7 +300,7 @@ namespace lv::net
 
 		if (status_ == Established)
 		{
-			base_type::handle_write(buf, error);
+			base_type::handle_write(buf_index, error);
 		}
 		else if (error)
 		{
@@ -367,7 +360,7 @@ namespace lv::net
 
 	PacketProxy Socks5ClientSession::socks_send()
 	{
-		return PacketProxy(context_->buffer(), std::bind(&Socks5ClientSession::start_write, this, std::placeholders::_1));
+		return PacketProxy(std::make_shared<Buffer>(1024), [this](ConstBufferRef buf) { start_write(buf); });
 	}
 
 }

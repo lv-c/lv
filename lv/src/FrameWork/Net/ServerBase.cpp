@@ -6,8 +6,6 @@
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/placeholders.hpp>
 
-#include <functional>
-
 
 namespace lv::net
 {
@@ -82,9 +80,9 @@ namespace lv::net
 	{
 		SessionPtr session = create_session();
 
-		acceptor_->get().async_accept(session->socket()->get(), 
-			std::bind(&ServerBase::handle_accept, this, session,
-			std::placeholders::_1));
+		acceptor_->get().async_accept(session->socket()->get(), [session, this](boost::system::error_code const & error) {
+			handle_accept(session, error);
+		});
 	}
 
 	SessionPtr ServerBase::create_session()

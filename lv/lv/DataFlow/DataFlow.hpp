@@ -18,7 +18,6 @@
 #include <boost/noncopyable.hpp>
 
 #include <map>
-#include <functional>
 #include <shared_mutex>
 
 
@@ -56,7 +55,7 @@ namespace lv::flow
 		DataFlow(push_policy_type const & policy = push_policy_type())
 			: push_policy_(policy)
 		{
-			push_policy_.set_callback(std::bind(&DataFlow::push_impl, this, std::placeholders::_1));
+			push_policy_.set_callback([this](port_buffer_pair const & port_buf) { push_impl(port_buf); });
 		}
 
 

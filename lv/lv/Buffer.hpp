@@ -36,8 +36,8 @@ namespace lv
 	template<class T>
 	class BufferRefT
 	{
-		T * data_;
-		size_t size_;
+		T *		data_;
+		size_t	size_;
 
 		template<class> friend class ConstBufferRefT;
 
@@ -142,14 +142,14 @@ namespace lv
 	template<class T>
 	class ConstBufferRefT
 	{
-		T const * data_;
-		size_t	size_;
+		T const *	data_;
+		size_t		size_;
 
 		std::shared_ptr<std::vector<T> >	holder_;
 
 	public:
-		using const_reference = T const &;
 
+		using const_reference = T const &;
 
 		using iterator = T const *;
 		using const_iterator = T const *;

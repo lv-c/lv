@@ -16,6 +16,7 @@
 #include <lv/IntType.hpp>
 #include <lv/Buffer.hpp>
 #include <lv/Timer.hpp>
+#include <lv/IBufferManager.hpp>
 
 #include <functional>
 
@@ -44,7 +45,7 @@ namespace lv::net
 
 	private:
 
-		std::unique_ptr<SendQueue>	send_queue_;
+		std::unique_ptr<SendQueue>		send_queue_;
 		std::unique_ptr<ReceiveQueue>	receive_queue_;
 
 		ContextPtr	context_;
@@ -59,6 +60,8 @@ namespace lv::net
 		Timer	timer_;
 
 		std::unique_ptr<SteadyTimer>	deadline_timer_;
+
+		std::unique_ptr<IBufferManager>	buffer_manager_;
 
 	public:
 

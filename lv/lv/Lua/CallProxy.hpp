@@ -30,11 +30,11 @@ namespace lv::lua
 
 	public:
 
-		CallProxy(std::ostringstream & oss, char const * fn, Callback const & callback = Callback())
+		CallProxy(std::ostringstream & oss, char const * fn, Callback callback = Callback())
 			: oss_(oss)
 			, first_param_(true)
 			, finished_(false)
-			, callback_(callback)
+			, callback_(std::move(callback))
 		{
 			oss.str(std::string());
 			oss_ << fn << "(";

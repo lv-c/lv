@@ -31,7 +31,7 @@ namespace lv::net
 
 	public:
 
-		PacketProxy(BufferPtr buf, PacketProxyCallback const & callback);
+		PacketProxy(BufferPtr buf, PacketProxyCallback callback);
 
 		PacketProxy(PacketProxy && rhs);
 

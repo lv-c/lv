@@ -19,8 +19,11 @@
 namespace lv::net
 {
 	using ErrorEvent = boost::signals2::signal<void(ErrorType, boost::system::error_code const &)>;
+
 	using ConnectEvent = boost::signals2::signal<void()>;
-	using ReceiveEvent = boost::signals2::signal<void(BufferPtr)>;
-	using WriteEvent = boost::signals2::signal<void(BufferPtr)>;
+
+	using ReceiveEvent = boost::signals2::signal<void(Buffer const &)>;
+
+	using WriteEvent = boost::signals2::signal<void(size_t)>;
 
 }

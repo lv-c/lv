@@ -4,6 +4,7 @@
 #include <lv/BinaryStream.hpp>
 #include <lv/BinaryStream/Vector.hpp>
 #include <lv/Ensure.hpp>
+#include <lv/SimpleBufferManager.hpp>
 
 #include <functional>
 #include <deque>
@@ -225,6 +226,7 @@ namespace lv::net
 		, sender_(sender)
 		, receiver_(receiver)
 		, last_reply_time_(0)
+		, buffer_manager_(std::make_unique<SimpleBufferManager>(1024))
 	{
 		send_queue_ = std::make_unique<SendQueue>(context, timer_);
 		receive_queue_ = std::make_unique<ReceiveQueue>(context);
@@ -314,7 +316,7 @@ namespace lv::net
 
 		if (!need_reply_.empty() && sender_->sendable() && last_reply_time_ + 0.5 < timer_.elapsed())
 		{
-			BufferPtr buf = context_->buffer();
+			BufferPtr buf = buffer_manager_->get();
 			fill_replies(*buf);
 
 			sender_->send(buf);
@@ -331,7 +333,7 @@ namespace lv::net
 		while (BufferPtr buf = send_queue_->msg_to_send())
 		{
 			// make a copy of the data, because the sender may modify it.
-			BufferPtr new_buf = context_->buffer();
+			BufferPtr new_buf = buffer_manager_->get();
 
 			if (!need_reply_.empty())
 			{

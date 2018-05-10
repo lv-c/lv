@@ -62,6 +62,10 @@ namespace lv::net
 
 	class SteadyTimer;
 
+	template<class SizeType>
+	class PacketSplitter;
+
+
 	namespace asio = boost::asio;
 
 } 

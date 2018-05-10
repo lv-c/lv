@@ -3,10 +3,10 @@
 
 namespace lv::net
 {
-	PacketProxy::PacketProxy(BufferPtr buf, PacketProxyCallback const & callback)
+	PacketProxy::PacketProxy(BufferPtr buf, PacketProxyCallback callback)
 		: bos_(buf)
 		, valid_(true)
-		, callback_(callback)
+		, callback_(std::move(callback))
 	{
 	}
 

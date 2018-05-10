@@ -16,7 +16,6 @@
 
 #include <lv/DataFlow/PushPolicyBase.hpp>
 
-#include <functional>
 #include <thread>
 
 
@@ -37,7 +36,7 @@ namespace lv::flow
 			{
 				for (size_t i = 0; i < thread_num; ++i)
 				{
-					threads_.create_thread(std::bind(&ThreadedPushImpl::run, this));
+					threads_.create_thread([this] { run(); });
 				}
 			}
 
@@ -94,9 +93,9 @@ namespace lv::flow
 		}
 
 		// not intended to be called by the user
-		void	set_callback(Callback const & callback) override
+		void	set_callback(Callback callback) override
 		{
-			impl_->set_callback(callback);
+			impl_->set_callback(std::move(callback));
 		}
 	};
 

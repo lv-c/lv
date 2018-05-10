@@ -22,7 +22,7 @@ namespace lv::net
 		BOOST_ASSERT(std::dynamic_pointer_cast<ISocks5ServerContext>(context));
 	}
 
-	void Socks5ServerSession::on_receive(BufferPtr buf)
+	void Socks5ServerSession::on_receive(Buffer const & buf)
 	{
 		if (status_ == Established)
 		{
@@ -34,15 +34,10 @@ namespace lv::net
 			return;
 		}
 
-		if (cache_)
-		{
-			buffer::append(*cache_, buf);
-			buf = cache_;
+		Buffer temp_buf = std::move(cache_);
+		buffer::append(temp_buf, buf);
 
-			cache_.reset();
-		}
-
-		BinaryIStream bis(buf);
+		BinaryIStream bis(temp_buf);
 
 		try
 		{
@@ -68,11 +63,11 @@ namespace lv::net
 		catch (std::ios_base::failure const &)
 		{
 			// an incomplete packet
-			cache_ = buf;
+			cache_ = std::move(temp_buf);
 		}
 	}
 
-	void Socks5ServerSession::on_write(BufferPtr buf)
+	void Socks5ServerSession::on_write(size_t size)
 	{
 		//if (status_ == Ended)
 		//	exit();
@@ -192,7 +187,7 @@ namespace lv::net
 
 		uint16 port = (high_byte << 8) | low_byte;
 
-		ContextPtr context = std::make_shared<Context>(context_->buffer_manager(), context_->service_wrapper());
+		ContextPtr context = std::make_shared<Context>(context_->service_wrapper());
 
 		dest_session_ = std::make_unique<DestSession>(context);
 
@@ -318,7 +313,7 @@ namespace lv::net
 		}
 	}
 
-	void Socks5ServerSession::dest_on_receive(BufferPtr buf)
+	void Socks5ServerSession::dest_on_receive(Buffer const & buf)
 	{
 		start_write(buf);
 	}
@@ -360,7 +355,7 @@ namespace lv::net
 
 	PacketProxy Socks5ServerSession::send()
 	{
-		return PacketProxy(context_->buffer(), std::bind(&Socks5ServerSession::start_write, this, std::placeholders::_1));
+		return PacketProxy(std::make_shared<Buffer>(1024), std::bind(&Socks5ServerSession::start_write, this, std::placeholders::_1));
 	}
 
 }

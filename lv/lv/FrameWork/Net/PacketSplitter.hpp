@@ -10,8 +10,8 @@
 
 #pragma once
 
-#include <lv/IBufferManager.hpp>
 #include <lv/Endian.hpp>
+#include <lv/Buffer.hpp>
 
 #include <deque>
 
@@ -23,15 +23,14 @@ namespace lv::net
 	{
 		std::deque<char>	cache_;
 
-		BufferManagerPtr	buf_manager_;
+		Buffer				buffer_;
 
 		bool				switch_endian_;
 
 	public:
 
-		explicit PacketSplitter(BufferManagerPtr buf_manager, bool switch_endian = false)
-			: buf_manager_(buf_manager)
-			, switch_endian_(switch_endian)
+		explicit PacketSplitter(bool switch_endian = false)
+			: switch_endian_(switch_endian)
 		{
 		}
 
@@ -50,13 +49,13 @@ namespace lv::net
 			cache_.clear();
 		}
 
-		BufferPtr	get()
+		Buffer const *	get()
 		{
 			size_t const header_size = sizeof(SizeType);
 
 			if (header_size <= cache_.size())
 			{
-				SizeType size;	// includes the size of the header
+				SizeType size;	// includes size of the header
 				std::copy(cache_.begin(), cache_.begin() + header_size, reinterpret_cast<char*>(&size));
 
 				if (switch_endian_)
@@ -66,16 +65,14 @@ namespace lv::net
 
 				if (size <= cache_.size())
 				{
-					BufferPtr buf = buf_manager_->get();
-					buf->assign(cache_.begin() + header_size, cache_.begin() + size);
-					
+					buffer_.assign(cache_.begin() + header_size, cache_.begin() + size);
 					cache_.erase(cache_.begin(), cache_.begin() + size);
 
-					return buf;
+					return &buffer_;
 				}
 			}
 
-			return BufferPtr();
+			return nullptr;
 		}
 		
 	};

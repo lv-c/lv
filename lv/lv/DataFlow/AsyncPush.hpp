@@ -16,8 +16,6 @@
 #include <boost/asio/io_service.hpp>
 #include <boost/asio/strand.hpp>
 
-#include <functional>
-
 
 namespace lv::flow
 {

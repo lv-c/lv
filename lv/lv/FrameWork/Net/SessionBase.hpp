@@ -16,6 +16,7 @@
 
 #include <deque>
 #include <mutex>
+#include <array>
 
 
 namespace lv::net
@@ -34,14 +35,18 @@ namespace lv::net
 		volatile bool	closed_;
 
 		//
+		std::array<Buffer, 2>	write_buffers_;
 
-		std::deque<BufferPtr>	write_queue_;
+		size_t		write_index_;
 
-		bool	writing_;
+		bool		writing_;
+
 
 		using lock_guard = std::lock_guard<std::mutex>;
 
 		std::mutex	write_mutex_;
+
+		static size_t const	max_buffer_size_ = 100 * 1024;
 
 	protected:
 
@@ -74,34 +79,35 @@ namespace lv::net
 		virtual	void	connect(std::string const & ip, std::string const & port, std::string const & to_bind = std::string());
 
 		// thread-safe
-		virtual	void	start_write(BufferPtr buf);
+		virtual	void	start_write(ConstBufferRef buf);
 
 		// For internal use. You should use on_connected instead.
 		virtual	void	server_side_start();
 
 	protected:
 
-		virtual	void	write_impl(BufferPtr buf);
-
-		virtual void	start_read();
+		// could be null
+		virtual void	start_read(BufferPtr buf);
 
 		virtual	void	on_error(ErrorType type, boost::system::error_code const & error);
 
 		virtual	void	on_connected_internal();
-		virtual	void	on_receive_internal(BufferPtr buf);
+		virtual	void	on_receive_internal(Buffer const & buf);
 		virtual	void	on_error_internal(ErrorType type, boost::system::error_code const & error);
 
 		virtual	void	on_connected();
-		virtual	void	on_receive(BufferPtr buf);
-		virtual	void	on_write(BufferPtr buf);
+		virtual	void	on_receive(Buffer const & buf);
+		virtual	void	on_write(size_t size);
 
 		virtual	void	handle_read(BufferPtr buf, size_t bytes_transferred, boost::system::error_code const & error);
 
-		virtual	void	handle_write(BufferPtr buf, boost::system::error_code const & error);
+		virtual	void	handle_write(size_t buf_index, boost::system::error_code const & error);
 
 		virtual	void	handle_connect(boost::system::error_code const & error);
 
 	private:
+
+		void			check_write();
 
 		std::string		get_ip(bool remote);
 

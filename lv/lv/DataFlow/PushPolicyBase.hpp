@@ -27,9 +27,9 @@ namespace lv::flow
 	public:
 
 		// not intended to be called by the user
-		virtual void set_callback(Callback const & callback)
+		virtual void set_callback(Callback callback)
 		{
-			this->callback_ = callback;
+			this->callback_ = std::move(callback);
 		}
 	};
 }

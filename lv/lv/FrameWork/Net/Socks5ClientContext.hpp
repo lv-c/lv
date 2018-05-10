@@ -27,8 +27,8 @@ namespace lv::net
 
 	public:
 
-		Socks5ClientContext(BufferManagerPtr buf_manager, ServiceWrapper const & service_wrapper)
-			: Context(buf_manager, service_wrapper)
+		Socks5ClientContext(ServiceWrapper const & service_wrapper)
+			: Context(service_wrapper)
 		{
 		}
 

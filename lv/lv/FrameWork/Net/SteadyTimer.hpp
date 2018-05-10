@@ -39,8 +39,7 @@ namespace lv::net
 
 	public:
 
-		SteadyTimer(ServiceWrapper const & service_wrapper, duration_type const & duration,
-			Callback const & callback);
+		SteadyTimer(ServiceWrapper const & service_wrapper, duration_type const & duration, Callback callback);
 
 	private:
 

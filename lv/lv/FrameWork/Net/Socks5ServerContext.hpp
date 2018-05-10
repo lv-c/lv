@@ -45,8 +45,8 @@ namespace lv::net
 
 	public:
 
-		ISocks5ServerContext(BufferManagerPtr buf_manager, ServiceWrapper const & service_wrapper)
-			: Context(buf_manager, service_wrapper)
+		ISocks5ServerContext(ServiceWrapper const & service_wrapper)
+			: Context(service_wrapper)
 		{
 		}
 
@@ -73,8 +73,8 @@ namespace lv::net
 
 	public:
 
-		Socks5ServerContext(BufferManagerPtr buf_manager, ServiceWrapper const & service_wrapper)
-			: ISocks5ServerContext(buf_manager, service_wrapper)
+		Socks5ServerContext(ServiceWrapper const & service_wrapper)
+			: ISocks5ServerContext(service_wrapper)
 		{
 		}
 

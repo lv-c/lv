@@ -117,7 +117,7 @@ namespace lv
 			signal();
 		}
 
-		void set_exception(std::exception_ptr p)
+		void	set_exception(std::exception_ptr p)
 		{
 			std::lock_guard<std::mutex> lock(mutex_);
 

@@ -17,7 +17,6 @@
 
 #include <boost/mpl/bool.hpp>
 
-#include <functional>
 #include <optional>
 
 

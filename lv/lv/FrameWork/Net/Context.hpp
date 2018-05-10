@@ -13,8 +13,6 @@
 #include <lv/FrameWork/Net/Fwd.hpp>
 #include <lv/ServiceWrapper.hpp>
 
-#include <lv/IBufferManager.hpp>
-
 
 namespace lv::net
 {
@@ -22,32 +20,16 @@ namespace lv::net
 	{
 	protected:
 
-		BufferManagerPtr	buf_manager_;
-
 		ServiceWrapper		service_wrapper_;
 
 	public:
 
-		Context(BufferManagerPtr buf_manager, ServiceWrapper const & service_wrapper)
-			: buf_manager_(buf_manager)
-			, service_wrapper_(service_wrapper)
+		explicit Context(ServiceWrapper const & service_wrapper)
+			: service_wrapper_(service_wrapper)
 		{
 		}
 
-		virtual	~Context()
-		{
-		}
-
-		
-		BufferPtr	buffer() const
-		{
-			return buf_manager_->get();
-		}
-
-		BufferManagerPtr	buffer_manager() const
-		{
-			return buf_manager_;
-		}
+		virtual	~Context() = default;
 
 		asio::io_service &	service() const
 		{

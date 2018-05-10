@@ -23,9 +23,8 @@ namespace lv::net
 
 	public:
 
-		MessageQueueContext(BufferManagerPtr buf_manager, ServiceWrapper const & service_wrapper, 
-			bool preserve_order)
-			: Context(buf_manager, service_wrapper)
+		MessageQueueContext(ServiceWrapper const & service_wrapper, bool preserve_order)
+			: Context(service_wrapper)
 			, preserve_order_(preserve_order)
 			, resend_time_(20.0)
 		{

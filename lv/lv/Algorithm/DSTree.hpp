@@ -14,7 +14,6 @@
 #include <boost/operators.hpp>
 #include <boost/range/as_literal.hpp>
 
-#include <functional>
 #include <memory>
 
 namespace lv
