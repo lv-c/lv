@@ -6,7 +6,6 @@
 #include <lv/Ensure.hpp>
 #include <lv/SimpleBufferManager.hpp>
 
-#include <functional>
 #include <deque>
 
 
@@ -231,8 +230,8 @@ namespace lv::net
 		send_queue_ = std::make_unique<SendQueue>(context, timer_);
 		receive_queue_ = std::make_unique<ReceiveQueue>(context);
 
-		deadline_timer_ = std::make_unique<SteadyTimer>(context->service_wrapper(), std::chrono::milliseconds(200), 
-			std::bind(&MessageQueue::on_timer, this));
+		deadline_timer_ = std::make_unique<SteadyTimer>(context->service_wrapper(), std::chrono::milliseconds(200),
+			[this] { on_timer(); });
 	}
 
 	MessageQueue::~MessageQueue() = default;

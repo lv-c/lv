@@ -53,15 +53,17 @@ namespace lv::flow
 		/**
 		 * @proxy_push you can handle exceptions using a proxy push
 		 */
-		Sink(proxy_push_type const & proxy_push = proxy_push_type(), push_policy_type const & policy = push_policy_type())
-			: push_policy_(policy)
+		Sink(proxy_push_type proxy_push = proxy_push_type(), push_policy_type policy = push_policy_type())
+			: push_policy_(std::move(policy))
 			, istream_factory_(std::make_shared<IStreamFactory>())
 		{
 			slot_type slot = [this](ConstBufferRef const & buf) { push_impl(buf, istream_factory_); };
 
 			if (proxy_push)
 			{
-				push_policy_.set_callback(std::bind(proxy_push, slot, std::placeholders::_1));
+				push_policy_.set_callback([proxy_push = std::move(proxy_push), slot](ConstBufferRef const & buf) {
+					proxy_push(slot, buf);
+				});
 			}
 			else
 			{
@@ -80,9 +82,9 @@ namespace lv::flow
 		 *	a smart pointer.
 		 */
 		template<class MemFn, class T>
-		Sink &	reg_mem_fn(key_type const & key, MemFn f, T t)
+		Sink &	reg_mem_fn(key_type const & key, MemFn f, T && t)
 		{
-			return reg<typename BindMemFnSignature<MemFn>::type>(key, bind_mem_fn(f, t));
+			return reg<typename BindMemFnSignature<MemFn>::type>(key, bind_mem_fn(f, std::forward<T>(t)));
 		}
 
 		/**
@@ -90,9 +92,9 @@ namespace lv::flow
 		 * @exception std::runtime_error if @a key has already been used
 		 */
 		template<class F>
-		Sink &	reg(key_type const & key, F f)
+		Sink &	reg(key_type const & key, F && f)
 		{
-			return reg<typename Signature<F>::type, F>(key, f);
+			return reg<typename Signature<F>::type, F>(key, std::forward<F>(f));
 		}
 
 		/**
@@ -101,9 +103,9 @@ namespace lv::flow
 		 * @exception std::runtime_error if @a key has already been used
 		 */
 		template<class Signature, class F>
-		Sink &	reg(key_type const & key, F f)
+		Sink &	reg(key_type const & key, F && f)
 		{
-			registery_.template reg<Signature>(key, f);
+			registery_.template reg<Signature>(key, std::forward<F>(f));
 			return *this;
 		}
 

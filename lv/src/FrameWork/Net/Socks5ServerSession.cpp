@@ -355,7 +355,7 @@ namespace lv::net
 
 	PacketProxy Socks5ServerSession::send()
 	{
-		return PacketProxy(std::make_shared<Buffer>(1024), std::bind(&Socks5ServerSession::start_write, this, std::placeholders::_1));
+		return PacketProxy(std::make_shared<Buffer>(1024), [this](ConstBufferRef buf) { start_write(buf); });
 	}
 
 }

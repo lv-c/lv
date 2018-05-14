@@ -74,7 +74,9 @@ namespace lv
 				post_process(*obj);
 			}
 
-			return unique_pointer(obj, std::bind(&Factory<T>::release, this->shared_from_this(), std::placeholders::_1));
+			return unique_pointer(obj, [shared_this = this->shared_from_this()](T * v) {
+					shared_this->release(v);
+			});
 		}
 
 

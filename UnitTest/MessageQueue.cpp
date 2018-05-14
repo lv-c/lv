@@ -40,9 +40,9 @@ public:
 	{
 	}
 
-	void	set_callback(Callback const & callback)
+	void	set_callback(Callback callback)
 	{
-		this->callback_ = callback;
+		this->callback_ = std::move(callback);
 	}
 
 	void	send(BufferPtr buf) override
@@ -119,8 +119,8 @@ BOOST_AUTO_TEST_CASE(test_message_queue)
 	MessageQueue client(ctx, lv::shared_from_object(client_sender), MessageQueue::Receiver());
 	MessageQueue server(ctx, lv::shared_from_object(server_sender), BufferReceiver(received, to_send.size()));
 
-	client_sender.set_callback(std::bind(&MessageQueue::on_receive, &server, std::placeholders::_1));
-	server_sender.set_callback(std::bind(&MessageQueue::on_receive, &client, std::placeholders::_1));
+	client_sender.set_callback([&server](BufferPtr buf) { server.on_receive(buf); });
+	server_sender.set_callback([&client](BufferPtr buf) { client.on_receive(buf); });
 
 	for (BufferPtr buf : to_send)
 	{

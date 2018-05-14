@@ -143,9 +143,9 @@ namespace lv::rpc
 
 	public:
 
-		Client(callback_type const & callback, BufferManagerPtr buf_manager)
+		Client(callback_type callback, BufferManagerPtr buf_manager)
 			: RpcBase(buf_manager)
-			, callback_(callback)
+			, callback_(std::move(callback))
 			, next_request_id_(1)
 		{
 		}

@@ -90,7 +90,7 @@ namespace lv
 
 		template<class, class, size_t>	friend class ContainerBase;
 
-		static T VectorT::* const		mem_array[ele_num];
+		static T VectorT::* const		mem_array[VectorT::ele_num];
 
 	};
 

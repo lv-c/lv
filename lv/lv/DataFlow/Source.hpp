@@ -43,8 +43,8 @@ namespace lv::flow
 
 	public:
 
-		Source(callback_type const & callback, BufferManagerPtr buf_manager)
-			: callback_(callback)
+		Source(callback_type callback, BufferManagerPtr buf_manager)
+			: callback_(std::move(callback))
 			, buf_manager_(buf_manager)
 			, enabled_(true)
 		{

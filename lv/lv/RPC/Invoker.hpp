@@ -114,7 +114,7 @@ namespace lv::rpc::detail
 	public:
 		
 		Invoker(std::function<Signature> fn)
-			: fn_(fn)
+			: fn_(std::move(fn))
 		{
 		}
 

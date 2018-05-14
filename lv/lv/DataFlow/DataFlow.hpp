@@ -52,17 +52,17 @@ namespace lv::flow
 
 	public:
 
-		DataFlow(push_policy_type const & policy = push_policy_type())
-			: push_policy_(policy)
+		DataFlow(push_policy_type policy = push_policy_type())
+			: push_policy_(std::move(policy))
 		{
 			push_policy_.set_callback([this](port_buffer_pair const & port_buf) { push_impl(port_buf); });
 		}
 
 
-		Connection	connect(Port const & port, slot_type const & slot)
+		Connection	connect(Port const & port, slot_type slot)
 		{
 			ConnectionSlotPair connection_slot;
-			connection_slot.slot = slot;
+			connection_slot.slot = std::move(slot);
 
 			// a write lock
 			std::lock_guard<std::shared_timed_mutex> lock(shared_mutex_);

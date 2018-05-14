@@ -66,7 +66,7 @@ namespace lv::flow
 			 * @exception std::runtime_error if @a key has already been used
 			 */
 			template<class Signature, class F>
-			void	reg(Key const & key, F f)
+			void	reg(Key const & key, F && f)
 			{
 				std::lock_guard<SpinMutex> lock(mutex_);
 
@@ -76,7 +76,7 @@ namespace lv::flow
 						boost::lexical_cast<std::string>(key));
 				}
 
-				invokers_.emplace(key, detail::Invoker<Signature, IArchive>(f));
+				invokers_.emplace(key, detail::Invoker<Signature, IArchive>(std::forward<F>(f)));
 			}
 
 

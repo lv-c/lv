@@ -44,8 +44,7 @@ namespace lv::net
 		/// @TODO constructor of the base_type may take other parameters
 		explicit FlowSession(ContextPtr context)
 			: base_type(context)
-			, source_(std::bind(&FlowSession::push, this, std::placeholders::_1),
-				std::make_shared<PacketBufferManager>(1024))
+			, source_([this](BufferPtr buf) { push(buf); }, std::make_shared<PacketBufferManager>(1024))
 		{
 		}
 

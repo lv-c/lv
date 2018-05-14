@@ -82,7 +82,7 @@ namespace lv::rpc
 			 * @exception std::runtime_error if @a id has already been used
 			 */
 			template<class Signature, class F>
-			Registery &	reg(Id const & id, F f)
+			Registery &	reg(Id const & id, F && f)
 			{
 				std::lock_guard<SpinMutex> lock(mutex_);
 
@@ -91,7 +91,7 @@ namespace lv::rpc
 					throw std::runtime_error("The id has already been used");
 				}
 
-				invokers_.emplace(id, detail::Invoker<Signature, ArchivePair>(f));
+				invokers_.emplace(id, detail::Invoker<Signature, ArchivePair>(std::forward<F>(f)));
 
 				return *this;
 			}

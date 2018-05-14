@@ -156,15 +156,15 @@ BOOST_AUTO_TEST_CASE(test_rpc)
 	Multiply multiply;
 
 	server
-		.reg("add", add)			// register a free function
+		.reg("add", &add)			// register a free function
 		.reg("mul", Multiply())		// register a function object
 		.reg_mem_fn("mul_this", &Multiply::mul, &multiply)	// register a member function
-		.reg("echo", echo)
-		.reg("test_pair", test_pair)
-		.reg("test_tuple", test_tuple)
+		.reg("echo", &echo)
+		.reg("test_pair", &test_pair)
+		.reg("test_tuple", &test_tuple)
 		// .reg("test_fusion_vector", test_fusion_vector)
-		.reg("test_float", test_float)
-		.reg("test_enum", test_enum)
+		.reg("test_float", &test_float)
+		.reg("test_enum", &test_enum)
 	;
 
 

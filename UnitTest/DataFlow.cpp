@@ -115,7 +115,7 @@ BOOST_AUTO_TEST_CASE(test_dataflow)
 	dataflow_type dataflow(5);	// number of threads
 
 	using source_type = lv::flow::Source<key_type>;
-	source_type source(std::bind(&dataflow_type::push, &dataflow, port_type(), std::placeholders::_1), buf_manager);
+	source_type source([&dataflow](lv::BufferPtr buf) { dataflow.push(port_type(), buf); }, buf_manager);
 
 	using sink_type = lv::flow::Sink<lv::flow::SyncPush, key_type>;
 	sink_type sink(&proxy_push);
@@ -131,8 +131,7 @@ BOOST_AUTO_TEST_CASE(test_dataflow)
 	;
 
 	
-
-	lv::flow::Connection conn = dataflow.connect(port_type(), std::bind(&sink_type::push, &sink, std::placeholders::_1));
+	lv::flow::Connection conn = dataflow.connect(port_type(), [&sink](lv::ConstBufferRef buf) { sink.push(buf); });
 
 	source.call("hello");
 	source.call("sum", 10, 40.3f);

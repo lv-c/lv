@@ -57,7 +57,7 @@ namespace lv
 
 	private:
 
-		static T TriangleT::* const		mem_array[ele_num];
+		static T TriangleT::* const		mem_array[TriangleT::ele_num];
 
 	};
 

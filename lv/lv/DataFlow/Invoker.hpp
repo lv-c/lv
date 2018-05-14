@@ -93,8 +93,8 @@ namespace lv::flow::detail
 	
 	public:
 
-		Invoker(function_type const & fn)
-			: fn_(fn)
+		Invoker(function_type fn)
+			: fn_(std::move(fn))
 		{
 		}
 

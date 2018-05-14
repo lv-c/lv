@@ -99,7 +99,7 @@ namespace lv
 		template<class, class, size_t>	friend class ContainerBase;
 
 		// array of pointers to member variables
-		static T PointT::* const		mem_array[ele_num];
+		static T PointT::* const		mem_array[PointT::ele_num];
 	};
 
 	template<class T>

@@ -48,9 +48,9 @@ namespace lv::rpc
 		 *	a smart pointer.
 		 */
 		template<class MemFn, class T>
-		Server &	reg_mem_fn(Id const & id, MemFn f, T t)
+		Server &	reg_mem_fn(Id const & id, MemFn f, T && t)
 		{
-			return reg<typename BindMemFnSignature<MemFn>::type>(id, bind_mem_fn(f, t));
+			return reg<typename BindMemFnSignature<MemFn>::type>(id, bind_mem_fn(f, std::forward<T>(t)));
 		}
 
 		/**
@@ -58,9 +58,9 @@ namespace lv::rpc
 		 * @exception std::runtime_error if @a id has already been used
 		 */
 		template<class F>
-		Server &	reg(Id const & id, F f)
+		Server &	reg(Id const & id, F && f)
 		{
-			return reg<typename Signature<F>::type, F>(id, f);
+			return reg<typename Signature<F>::type, F>(id, std::forward<F>(f));
 		}
 
 		/**
@@ -69,9 +69,9 @@ namespace lv::rpc
 		 * @exception std::runtime_error if @a id has already been used
 		 */
 		template<class Signature, class F>
-		Server &	reg(Id const & id, F f)
+		Server &	reg(Id const & id, F && f)
 		{
-			registery_.template reg<Signature>(id, f);
+			registery_.template reg<Signature>(id, std::forward<F>(f));
 			return *this;
 		}
 
