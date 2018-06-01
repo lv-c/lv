@@ -110,6 +110,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseRuntimeStatic|Win32'">
     <OutDir>..\..\..\bin\lv\</OutDir>
     <IntDir>..\..\..\build\$(ProjectName)\msvc-8.0\release\runtime-static\</IntDir>
+    <TargetName>lib$(ProjectName)S</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IntDir>..\..\..\build\$(ProjectName)\msvc-$(MSBuildToolsVersion)\$(Platform)\$(Configuration)\link-static\</IntDir>
@@ -184,7 +185,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Lib>
-      <OutputFile>$(OutDir)$(ProjectName)S.lib</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseRuntimeStatic|x64'">

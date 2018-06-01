@@ -115,6 +115,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseRuntimeStatic|Win32'">
     <OutDir>..\..\..\bin\lv\</OutDir>
     <IntDir>..\..\..\build\$(ProjectName)\msvc-8.0\release\runtime-static\</IntDir>
+    <TargetName>lib$(ProjectName)S</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -199,7 +200,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Lib>
-      <OutputFile>$(OutDir)$(ProjectName)2s.lib</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseRuntimeStatic|x64'">

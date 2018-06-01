@@ -49,7 +49,7 @@ namespace lv::net
 			cache_.clear();
 		}
 
-		Buffer const *	get()
+		Buffer *	get()
 		{
 			size_t const header_size = sizeof(SizeType);
 

@@ -27,6 +27,9 @@ namespace lv::net
 	{
 	public:
 
+		virtual ~ISender() = default;
+
+
 		virtual	void	send(BufferPtr buf) = 0;
 
 		virtual	bool	sendable() = 0;
