@@ -36,6 +36,7 @@ namespace lv
 			, spliter_(spliter)
 			, first_time_(true)
 		{
+			os_.exceptions(std::ios_base::badbit | std::ios_base::failbit);
 		}
 
 		template<class T>

@@ -5,17 +5,15 @@ namespace lv::net
 {
 	SteadyTimer::SteadyTimer(ServiceWrapper const & service_wrapper, duration_type const & duration, Callback callback)
 		: service_wrapper_(service_wrapper)
-		, timer_(std::make_shared<timer_type>(service_wrapper.service()))
+		, timer_(std::make_shared<timer_type>(service_wrapper.service(), duration))
 		, duration_(duration)
 		, callback_(std::move(callback))
 	{
-		start();
+		start_timer();
 	}
 
-	void SteadyTimer::start()
+	void SteadyTimer::start_timer()
 	{
-		timer_->expires_from_now(duration_);
-
 		auto handler = [weak_timer = WeakTimerPtr(timer_), this](boost::system::error_code const & error) {
 			on_timer(weak_timer, error);
 		};
@@ -39,7 +37,9 @@ namespace lv::net
 
 		if (TimerPtr timer = weak_timer.lock())
 		{
-			start();
+			timer->expires_at(timer->expires_at() + duration_);
+			start_timer();
+
 			callback_();
 		}
 	}

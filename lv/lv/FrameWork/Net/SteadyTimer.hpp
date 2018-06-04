@@ -41,11 +41,15 @@ namespace lv::net
 
 		SteadyTimer(ServiceWrapper const & service_wrapper, duration_type const & duration, Callback callback);
 
+		template<class Duration>
+		SteadyTimer(ServiceWrapper const & service_wrapper, Duration const & duration, Callback callback)
+			: SteadyTimer(service_wrapper, std::chrono::duration_cast<duration_type>(duration), std::move(callback))
+		{
+		}
+
 	private:
 
-		SteadyTimer();
-
-		void	start();
+		void	start_timer();
 
 		void	on_timer(WeakTimerPtr weak_timer, boost::system::error_code const & error);
 
