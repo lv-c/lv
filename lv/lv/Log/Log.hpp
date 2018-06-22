@@ -46,48 +46,40 @@ namespace lv::log
 
 		class Proxy : boost::noncopyable
 		{
-			Log	&	log_;
-
-			bool	active_;
+			Log	*	log_;
 
 		public:
 
 			Proxy(Log & log) 
-				: log_(log)
-				, active_(true)
+				: log_(&log)
 			{
 			}
 
 			Proxy(Proxy && rhs)
 				: log_(rhs.log_)
-				, active_(true)
 			{
-				rhs.active_ = false;
+				rhs.log_ = nullptr;
 			}
 
 			~Proxy() noexcept(false)
 			{
-				if (active_)
+				if (log_ != nullptr)
 				{
-					log_.on_record_end();
+					log_->on_record_end();
 				}
 			}
 
 			template<class T>
-			Proxy &	operator << (T const & t)
+			Proxy &	operator << (T && t)
 			{
-				BOOST_ASSERT(active_);
-
-				log_.log(t);
+				log_->log(std::forward<T>(t));
 				return *this;
 			}
 
 			// streaming std::endl, std::ends, std::flush ...
 			Proxy &	operator << (ostream_type & (* fn)(ostream_type &))
 			{
-				BOOST_ASSERT(active_);
-
-				log_.log(fn);
+				log_->log(fn);
 				return *this;
 			}
 		};
