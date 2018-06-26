@@ -33,9 +33,9 @@ class RepeaterSession : public TcpSession
 
 	Monitor &	monitor_;
 
-	uint32	remote_ip_;
+	uint32_t	remote_ip_;
 
-	Timer	active_timer_;
+	Timer		active_timer_;
 
 	boost::asio::deadline_timer	timer_;
 
@@ -43,7 +43,7 @@ public:
 
 	RepeaterSession(ContextPtr context, string const & dest_ip, string const & dest_port, Monitor & monitor);
 
-	virtual ~RepeaterSession();
+	~RepeaterSession() override;
 
 private:
 
@@ -53,11 +53,11 @@ private:
 
 	void	exit();
 
-	virtual	void	on_connected();
-	virtual	void	on_receive(BufferPtr buf);
-	virtual	void	on_error(ErrorType type, boost::system::error_code const & error);
+	void	on_connected() override;
+	void	on_receive(Buffer const & buf) override;
+	void	on_error(ErrorType type, boost::system::error_code const & error) override;
 
 	void	dest_on_connected();
 	void	dest_on_error(ErrorType type, boost::system::error_code const & error);
-	void	dest_on_receive(BufferPtr buf);
+	void	dest_on_receive(Buffer const & buf);
 };

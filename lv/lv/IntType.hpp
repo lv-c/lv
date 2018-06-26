@@ -15,18 +15,6 @@
 
 namespace lv
 {
-	using int8 = std::int8_t;
-	using int16 = std::int16_t;
-	using int32 = std::int32_t;
-	using int64 = std::int64_t;
-
-	using uint8 = std::uint8_t;
-	using uint16 = std::uint16_t;
-	using uint32 = std::uint32_t;
-	using uint64 = std::uint64_t;
-
-
-
 	// size to type
 
 	template<std::size_t size>
@@ -35,25 +23,25 @@ namespace lv
 	template<>
 	struct IntType<1>
 	{
-		using type = int8;
+		using type = int8_t;
 	};
 
 	template<>
 	struct IntType<2>
 	{
-		using type = int16;
+		using type = int16_t;
 	};
 
 	template<>
 	struct IntType<4>
 	{
-		using type = int32;
+		using type = int32_t;
 	};
 
 	template<>
 	struct IntType<8>
 	{
-		using type = int64;
+		using type = int64_t;
 	};
 
 
@@ -74,21 +62,21 @@ namespace lv
 	};
 
 	template<>
-	struct WidenInt<int8>		// signed char
+	struct WidenInt<int8_t>		// signed char
 	{
-		using type = int32;
+		using type = int32_t;
 	};
 
 	template<>
-	struct WidenInt<uint8>		// unsigned char
+	struct WidenInt<uint8_t>		// unsigned char
 	{
-		using type = uint32;
+		using type = uint32_t;
 	};
 
 	template<>
 	struct WidenInt<char>		// plain char
 	{
-		using type = int32;
+		using type = int32_t;
 	};
 
 	

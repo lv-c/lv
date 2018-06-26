@@ -11,8 +11,9 @@
 
 #pragma once
 
-#include <boost/assert.hpp>
 #include <lv/IntType.hpp>
+
+#include <boost/assert.hpp>
 
 
 namespace lv::rle

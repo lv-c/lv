@@ -71,9 +71,9 @@ Monitor::Monitor(boost::asio::io_service & service)
 	*/
 }
 
-void Monitor::increase(uint32 ip, IPStat::Type type, uint32 num)
+void Monitor::increase(uint32_t ip, IPStat::Type type, uint32_t num)
 {
-	uint32 masked_ip = ip & ip_mask_;
+	uint32_t masked_ip = ip & ip_mask_;
 
 	if (masked_ip != 0)
 	{

@@ -13,7 +13,6 @@
 #include <lv/FrameWork/AutoLink.hpp>
 #include <lv/FrameWork/Net/Fwd.hpp>
 
-#include <lv/IntType.hpp>
 #include <lv/Buffer.hpp>
 #include <lv/Timer.hpp>
 #include <lv/IBufferManager.hpp>
@@ -56,7 +55,7 @@ namespace lv::net
 		ISenderPtr	sender_;
 		Receiver	receiver_;
 
-		std::vector<uint32>	need_reply_;
+		std::vector<uint32_t>	need_reply_;
 
 		double	last_reply_time_;
 

@@ -24,9 +24,9 @@ struct IPStat
 		Num
 	};
 
-	array<uint64, Num>	value;
+	array<uint64_t, Num>	value;
 
-	set<uint32>	sub_ip;
+	set<uint32_t>	sub_ip;
 
 	IPStat()
 	{
@@ -37,17 +37,17 @@ struct IPStat
 
 class Monitor : boost::noncopyable
 {
-	typedef map<uint32, IPStat>	IPStatMap;
+	typedef map<uint32_t, IPStat>	IPStatMap;
 
 	IPStatMap	stat_;
 
 	boost::asio::deadline_timer	timer_;
 
-	Log		log_;
+	Log			log_;
 
-	uint32	ip_mask_;
+	uint32_t	ip_mask_;
 
-	string	mask_bits_;
+	string		mask_bits_;
 
 	enum OSVerion
 	{
@@ -61,7 +61,7 @@ public:
 
 	Monitor(boost::asio::io_service & service);
 
-	void	increase(uint32 ip, IPStat::Type type, uint32 num);
+	void	increase(uint32_t ip, IPStat::Type type, uint32_t num);
 
 private:
 

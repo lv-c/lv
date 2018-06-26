@@ -51,12 +51,12 @@ void RepeaterSession::on_connected()
 	LOG() << "new sesssion:" << remote_ip();
 }
 
-void RepeaterSession::on_receive(BufferPtr buf)
+void RepeaterSession::on_receive(Buffer const & buf)
 {
 	active_timer_.restart();
 
 	monitor_.increase(remote_ip_, IPStat::SendCount, 1);
-	monitor_.increase(remote_ip_, IPStat::SendData, buf->size());
+	monitor_.increase(remote_ip_, IPStat::SendData, buf.size());
 
 
 	if(dest_connected_)
@@ -67,11 +67,11 @@ void RepeaterSession::on_receive(BufferPtr buf)
 	{
 		if(cache_)
 		{
-			buffer::append(*cache_, *buf);
+			buffer::append(*cache_, buf);
 		}
 		else
 		{
-			cache_ = buf;
+			cache_ = std::make_shared<Buffer>(buf);
 		}
 	}
 }
@@ -129,17 +129,17 @@ void RepeaterSession::dest_on_connected()
 
 	if(cache_)
 	{
-		dest_session_->start_write(cache_);
+		dest_session_->start_write(*cache_);
 		cache_.reset();
 	}
 }
 
-void RepeaterSession::dest_on_receive(BufferPtr buf)
+void RepeaterSession::dest_on_receive(Buffer const & buf)
 {
 	active_timer_.restart();
 
 	monitor_.increase(remote_ip_, IPStat::RecvCount, 1);
-	monitor_.increase(remote_ip_, IPStat::RecvData, buf->size());
+	monitor_.increase(remote_ip_, IPStat::RecvData, buf.size());
 
 	start_write(buf);
 }

@@ -1,5 +1,4 @@
 #include <lv/LuaArchive/PlainISerializer.hpp>
-#include <lv/IntType.hpp>
 
 
 namespace lv::lua::archive
@@ -59,7 +58,7 @@ namespace lv::lua::archive
 			}
 		}
 
-		uint8	hex_value(char c)
+		uint8_t	hex_value(char c)
 		{
 			if (isdigit(c))
 			{
@@ -73,7 +72,7 @@ namespace lv::lua::archive
 
 		char	read_hex(Token::iterator p, Token::iterator end)
 		{
-			uint8 c = 0;
+			uint8_t c = 0;
 
 			for (int i = 0; i < 2; ++i, ++p)
 			{

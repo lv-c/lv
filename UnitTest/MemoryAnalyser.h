@@ -6,7 +6,6 @@
 
 #include <map>
 
-#include <lv/IntType.hpp>
 #include <lv/Singleton.hpp>
 
 using namespace lv;
@@ -19,8 +18,8 @@ class MemoryAnalyser : public Singleton<MemoryAnalyser, true>
 	bool	attached_;
 	bool	begun_;
 
-	uint64	cur_memory_;
-	uint64	max_memory_;
+	uint64_t	cur_memory_;
+	uint64_t	max_memory_;
 
 	int	counter_;
 
@@ -45,12 +44,12 @@ public:
 	/**
 	 * @exception std::logic_error if the analysis has already begun.
 	 */
-	void	begin_analyse();
+	void		begin_analyse();
 	
 	/**
 	 * @exception std::logic_error if the analysis has not yet begun.
 	 */
-	uint64	end_analyse(int & counter);
+	uint64_t	end_analyse(int & counter);
 
 
 private:

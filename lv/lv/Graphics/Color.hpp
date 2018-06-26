@@ -10,7 +10,6 @@
 #pragma once
 
 #include <lv/Config.hpp>
-#include <lv/IntType.hpp>
 #include <lv/lvlib2.hpp>
 
 #include <boost/operators.hpp>
@@ -31,7 +30,7 @@ namespace lv
 			ele_num = 4
 		};
 
-		using element = uint8;
+		using element = uint8_t;
 
 
 		static Color const white;
@@ -83,12 +82,12 @@ namespace lv
 			a = this->a();
 		}
 
-		uint32 argb() const
+		uint32_t	argb() const
 		{
 			return (a() << 24) | (r() << 16) | (g() << 8) | b();
 		}
 
-		uint32 rgb() const
+		uint32_t	rgb() const
 		{
 			return (r() << 16) | (g() << 8) | b();
 		}
@@ -103,7 +102,7 @@ namespace lv
 		{
 			this->color_[0] = color;
 		}
-		element g() const
+		element	g() const
 		{
 			return color_[1];
 		}

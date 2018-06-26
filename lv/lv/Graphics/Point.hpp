@@ -10,7 +10,7 @@
 #pragma once
 
 #include <lv/Graphics/ContainerBase.hpp>
-#include <lv/IntType.hpp>
+
 
 namespace lv
 {
@@ -106,5 +106,5 @@ namespace lv
 	T PointT<T>::* const PointT<T>::mem_array[PointT<T>::ele_num] = { &PointT<T>::x, &PointT<T>::y };
 
 	
-	using Point = PointT<int32>;
+	using Point = PointT<int32_t>;
 }

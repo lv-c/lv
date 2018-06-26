@@ -26,7 +26,7 @@ namespace lv::net
 	template<class Key, class S>
 	class FlowSession : public S
 	{
-		PacketSplitter<uint16>	splitter_;
+		PacketSplitter<uint16_t>	splitter_;
 
 	protected:
 
@@ -61,7 +61,7 @@ namespace lv::net
 		{
 			if (buf->size() > 2)
 			{
-				buffer::write(*buf, 0, uint16(buf->size()));
+				buffer::write(*buf, 0, uint16_t(buf->size()));
 
 				this->start_write(buf);
 			}

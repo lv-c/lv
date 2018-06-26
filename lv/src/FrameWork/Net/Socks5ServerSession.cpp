@@ -75,7 +75,7 @@ namespace lv::net
 
 	void Socks5ServerSession::handle_method_select(BinaryIStream & bis)
 	{
-		uint8 ver, methods_num;
+		uint8_t ver, methods_num;
 		bis >> ver >> methods_num;
 	
 		if (ver != Socks5::Version || methods_num == 0)
@@ -84,10 +84,10 @@ namespace lv::net
 			return;
 		}
 
-		std::vector<uint8> methods(methods_num);
+		std::vector<uint8_t> methods(methods_num);
 		bis >> methods;
 
-		uint8 m = dynamic_cast<ISocks5ServerContext &>(*context_).select_method(methods);
+		uint8_t m = dynamic_cast<ISocks5ServerContext &>(*context_).select_method(methods);
 
 		send() << Socks5::Version << m;
 
@@ -113,17 +113,17 @@ namespace lv::net
 
 	void Socks5ServerSession::handle_auth(BinaryIStream & bis)
 	{
-		uint8 ver;
+		uint8_t ver;
 		Socks5Auth auth;
 
-		bis >> ver >> bstream::variable_len_range<uint8>(auth.user)
-			>> bstream::variable_len_range<uint8>(auth.password);
+		bis >> ver >> bstream::variable_len_range<uint8_t>(auth.user)
+			>> bstream::variable_len_range<uint8_t>(auth.password);
 
 		BOOST_ASSERT(ver == Socks5::AuthVersion);
 
 		bool valid = dynamic_cast<ISocks5ServerContext &>(*context_).verify(auth);
 
-		send() << Socks5::AuthVersion << uint8(valid ? 0 : 1);
+		send() << Socks5::AuthVersion << uint8_t(valid ? 0 : 1);
 
 		if (valid)
 		{
@@ -137,7 +137,7 @@ namespace lv::net
 
 	void Socks5ServerSession::handle_request(BinaryIStream & bis)
 	{
-		uint8 ver, cmd, addr_type;
+		uint8_t ver, cmd, addr_type;
 
 		bis >> ver >> cmd >> bstream::forward(1) >> addr_type;
 
@@ -164,7 +164,7 @@ namespace lv::net
 			}
 
 		case Socks5::DomainName:
-			bis >> bstream::variable_len_range<uint8>(host);
+			bis >> bstream::variable_len_range<uint8_t>(host);
 			break;
 
 		default:
@@ -182,10 +182,10 @@ namespace lv::net
 			return;
 		}
 
-		uint8 high_byte, low_byte;
+		uint8_t high_byte, low_byte;
 		bis >> high_byte >> low_byte;
 
-		uint16 port = (high_byte << 8) | low_byte;
+		uint16_t port = (high_byte << 8) | low_byte;
 
 		ContextPtr context = std::make_shared<Context>(context_->service_wrapper());
 
@@ -225,14 +225,14 @@ namespace lv::net
 			}
 		}
 
-		uint8 rep = error_to_rep(error);
+		uint8_t rep = error_to_rep(error);
 
-		PacketProxy proxy = std::move(send() << Socks5::Version << rep << uint8(0));
+		PacketProxy proxy = std::move(send() << Socks5::Version << rep << uint8_t(0));
 
 		if (!error)
 		{
-			uint8 high_byte = (port >> 8) & 0xFF;
-			uint8 low_byte = port & 0xFF;
+			uint8_t high_byte = (port >> 8) & 0xFF;
+			uint8_t low_byte = port & 0xFF;
 
 			if (addr.is_v4())
 			{
@@ -250,13 +250,13 @@ namespace lv::net
 		}
 		else
 		{
-			proxy << Socks5::IPV4 << asio::ip::address_v4::bytes_type() << uint16(0);
+			proxy << Socks5::IPV4 << asio::ip::address_v4::bytes_type() << uint16_t(0);
 
 			exit();
 		}
 	}
 
-	uint8 Socks5ServerSession::error_to_rep(boost::system::error_code const & error)
+	uint8_t Socks5ServerSession::error_to_rep(boost::system::error_code const & error)
 	{
 		if (!error)
 		{

@@ -100,19 +100,19 @@ namespace lv
 
 		void	save(boost::serialization::collection_size_type t)
 		{
-			save(static_cast<uint32>(t));
+			save(static_cast<uint32_t>(t));
 		}
 		
 		void	save(boost::archive::version_type ver)
 		{
-			BOOST_ASSERT(ver < boost::archive::version_type(boost::integer_traits<uint8>::const_max));
-			save(static_cast<uint8>(ver));
+			BOOST_ASSERT(ver < boost::archive::version_type(boost::integer_traits<uint8_t>::const_max));
+			save(static_cast<uint8_t>(ver));
 		}
 
 		void	save(boost::serialization::item_version_type ver)
 		{
-			BOOST_ASSERT(ver < boost::serialization::item_version_type(boost::integer_traits<uint8>::const_max));
-			save(static_cast<uint8>(ver));
+			BOOST_ASSERT(ver < boost::serialization::item_version_type(boost::integer_traits<uint8_t>::const_max));
+			save(static_cast<uint8_t>(ver));
 		}
 
 		void	save(std::string const & str)

@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include <lv/IntType.hpp>
-
 #include <memory>
 
 
@@ -25,12 +23,12 @@ namespace lv
 	using FontPtr = std::shared_ptr<Font>;
 
 	template<class>	class PointT;
-	using Point = PointT<int32>;
+	using Point = PointT<int32_t>;
 
 	template<class>	class SizeT;
-	using Size = SizeT<int32>;
+	using Size = SizeT<int32_t>;
 
 	template<class>	class RectT;
-	using Rect = RectT<int32>;
+	using Rect = RectT<int32_t>;
 
 }

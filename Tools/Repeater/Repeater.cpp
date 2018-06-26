@@ -7,7 +7,6 @@
 #include <lv/FrameWork/Net/Context.hpp>
 #include <lv/Toolkit/Lua/LuaConfig.hpp>
 #include <lv/LuaArchive/Map.hpp>
-#include <lv/SimpleBufferManager.hpp>
 #include <lv/Log/Utility.hpp>
 
 
@@ -64,9 +63,7 @@ int main(int argc, char **argv)
 
 	// context
 	boost::asio::io_service service;
-	BufferManagerPtr buf_manager = std::make_shared<SimpleBufferManager>(1024);
-
-	ContextPtr context = std::make_shared<Context>(buf_manager, service);
+	ContextPtr context = std::make_shared<Context>(service);
 
 	typedef unique_ptr<ServerBase> ServerPtr;
 

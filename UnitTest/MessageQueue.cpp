@@ -103,7 +103,7 @@ BOOST_AUTO_TEST_CASE(test_message_queue)
 
 		for (char & c : *buf)
 		{
-			c = uint8(die(0, 0xFF));
+			c = uint8_t(die(0, 0xFF));
 		}
 	}
 

@@ -61,7 +61,7 @@ namespace lv::net
 		}
 
 		
-		virtual	uint8	select_method(std::vector<uint8> const & methods) = 0;
+		virtual	uint8_t	select_method(std::vector<uint8_t> const & methods) = 0;
 
 		virtual	bool	verify(Socks5Auth const & auth) = 0;
 	};
@@ -83,9 +83,9 @@ namespace lv::net
 			this->auth_ = auth;
 		}
 
-		uint8	select_method(std::vector<uint8> const & methods) override
+		uint8_t	select_method(std::vector<uint8_t> const & methods) override
 		{
-			uint8 m = (auth_.empty() ? Socks5::NoAuth : Socks5::UserPassword);
+			uint8_t m = (auth_.empty() ? Socks5::NoAuth : Socks5::UserPassword);
 
 			if (std::find(methods.begin(), methods.end(), m) == methods.end())
 			{

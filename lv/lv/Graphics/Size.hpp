@@ -10,7 +10,7 @@
 #pragma once
 
 #include <lv/Graphics/ContainerBase.hpp>
-#include <lv/IntType.hpp>
+
 
 namespace lv
 {
@@ -96,5 +96,5 @@ namespace lv
 	template<class T>
 	T SizeT<T>::* const SizeT<T>::mem_array[SizeT<T>::ele_num] = { &SizeT<T>::cx, &SizeT<T>::cy };
 
-	using Size = SizeT<int32>;
+	using Size = SizeT<int32_t>;
 }

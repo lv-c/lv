@@ -10,7 +10,6 @@
 
 #include "UnitTest.hpp"
 
-#include <lv/IntType.hpp>
 #include <lv/LuaArchive/Deque.hpp>
 #include <lv/LuaArchive/Vector.hpp>
 #include <lv/LuaArchive/LuaIArchive.hpp>
@@ -77,9 +76,9 @@ struct Point
 
 struct Color
 {
-	uint8	r;
-	uint8	g;
-	uint8	b;
+	uint8_t	r;
+	uint8_t	g;
+	uint8_t	b;
 
 	Color()
 		: r(0)
@@ -88,7 +87,7 @@ struct Color
 	{
 	}
 
-	Color(uint8 r, uint8 g, uint8 b)
+	Color(uint8_t r, uint8_t g, uint8_t b)
 		: r(r)
 		, g(g)
 		, b(b)

@@ -39,12 +39,12 @@ namespace lv
 
 	inline float	endian_switch(float v) noexcept
 	{
-		return reinterpret<float>(endian_switch(reinterpret<uint32>(v)));
+		return reinterpret<float>(endian_switch(reinterpret<uint32_t>(v)));
 	}
 
 	inline double	endian_switch(double v) noexcept
 	{
-		return reinterpret<double>(endian_switch(reinterpret<uint64>(v)));
+		return reinterpret<double>(endian_switch(reinterpret<uint64_t>(v)));
 	}
 
 

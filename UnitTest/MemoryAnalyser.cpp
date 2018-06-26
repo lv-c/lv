@@ -103,7 +103,7 @@ void MemoryAnalyser::begin_analyse()
 	begun_ = true;
 }
 
-uint64 MemoryAnalyser::end_analyse(int & counter)
+uint64_t MemoryAnalyser::end_analyse(int & counter)
 {
 	if (!begun_)
 		throw std::logic_error("You haven't begun the analysis");

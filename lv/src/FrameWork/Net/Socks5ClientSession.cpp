@@ -79,10 +79,10 @@ namespace lv::net
 		else
 		{
 			bool auth = dynamic_cast<Socks5ClientContext &>(*context_).has_auth();
-			uint8 const methods_num = 1;
+			uint8_t const methods_num = 1;
 
 			status_ = MethodSelect;
-			socks_send() << Socks5::Version << methods_num << uint8(auth ? Socks5::UserPassword : Socks5::NoAuth);
+			socks_send() << Socks5::Version << methods_num << uint8_t(auth ? Socks5::UserPassword : Socks5::NoAuth);
 
 			start_read(BufferPtr());
 		}
@@ -152,7 +152,7 @@ namespace lv::net
 
 	void Socks5ClientSession::handle_method_select_response(BinaryIStream & bis)
 	{
-		uint8 ver, method;
+		uint8_t ver, method;
 		bis >> ver >> method;
 		if (ver != Socks5::Version || (method != Socks5::NoAuth && method != Socks5::UserPassword))
 		{
@@ -168,8 +168,8 @@ namespace lv::net
 			s5_context.get_auth(user, password);
 
 			status_ = Auth;
-			socks_send() << Socks5::AuthVersion << bstream::variable_len_range<uint8>(user)
-				<< bstream::variable_len_range<uint8>(password);
+			socks_send() << Socks5::AuthVersion << bstream::variable_len_range<uint8_t>(user)
+				<< bstream::variable_len_range<uint8_t>(password);
 		}
 		else
 		{
@@ -179,7 +179,7 @@ namespace lv::net
 
 	void Socks5ClientSession::handle_auth_response(BinaryIStream & bis)
 	{
-		uint8 ver, ret;
+		uint8_t ver, ret;
 		bis >> ver >> ret;
 		if (ret != 0)
 		{
@@ -193,7 +193,7 @@ namespace lv::net
 
 	void Socks5ClientSession::handle_request_response(BinaryIStream & bis)
 	{
-		uint8 ver, rep, addr_type;
+		uint8_t ver, rep, addr_type;
 		bis >> ver >> rep >> bstream::forward(1) >> addr_type;
 
 		// we don't need the following data but we should still read them all
@@ -206,7 +206,7 @@ namespace lv::net
 		case Socks5::DomainName:
 			{
 				std::string tmp;
-				bis >> bstream::variable_len_range<uint8>(tmp);
+				bis >> bstream::variable_len_range<uint8_t>(tmp);
 				break;
 			}
 
@@ -237,7 +237,7 @@ namespace lv::net
 		}
 	}
 
-	void Socks5ClientSession::gen_request_error(uint8 rep, ErrorType & err_type, boost::system::error_code & error)
+	void Socks5ClientSession::gen_request_error(uint8_t rep, ErrorType & err_type, boost::system::error_code & error)
 	{
 		asio::error::basic_errors asio_err;
 
@@ -324,8 +324,8 @@ namespace lv::net
 			return;
 		}
 
-		uint8 const cmd = 1;	// CONNECT
-		PacketProxy proxy = std::move(socks_send() << Socks5::Version << cmd << uint8(0));
+		uint8_t const cmd = 1;	// CONNECT
+		PacketProxy proxy = std::move(socks_send() << Socks5::Version << cmd << uint8_t(0));
 
 		unsigned short port = 0;
 
@@ -333,7 +333,7 @@ namespace lv::net
 		{
 			port = boost::lexical_cast<unsigned short>(port_);
 
-			proxy << Socks5::DomainName << bstream::variable_len_range<uint8>(ip_);
+			proxy << Socks5::DomainName << bstream::variable_len_range<uint8_t>(ip_);
 		}
 		else
 		{
@@ -352,8 +352,8 @@ namespace lv::net
 			}
 		}
 
-		uint8 high_byte = (port >> 8) & 0xFF;
-		uint8 low_byte = port & 0xFF;
+		uint8_t high_byte = (port >> 8) & 0xFF;
+		uint8_t low_byte = port & 0xFF;
 
 		proxy << high_byte << low_byte;
 	}

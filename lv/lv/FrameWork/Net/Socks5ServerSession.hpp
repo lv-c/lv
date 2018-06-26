@@ -68,7 +68,7 @@ namespace lv::net
 
 		void	send_request_response(boost::system::error_code error);
 
-		uint8	error_to_rep(boost::system::error_code const & error);
+		uint8_t	error_to_rep(boost::system::error_code const & error);
 
 		void	exit();
 	};

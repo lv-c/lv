@@ -12,8 +12,6 @@
 
 #include <limits>
 
-#include <lv/IntType.hpp>
-
 #include <boost/random/mersenne_twister.hpp>
 #include <boost/random/uniform_int.hpp>
 #include <boost/random/uniform_real.hpp>
@@ -78,7 +76,7 @@ namespace lv
 #endif
 		}
 
-		void	seed(uint32 value)
+		void	seed(uint32_t value)
 		{
 			die_.engine().seed(value);
 		}

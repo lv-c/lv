@@ -168,8 +168,8 @@ namespace lv
 		else
 		{
 			draw_glyph_to_view(*view_ptr);
-			glyph.rect = Rect(pt_glyph, Size(std::min<int32>(face_->glyph->bitmap.width, sz_slot.cx),
-				std::min<int32>(face_->glyph->bitmap.rows, sz_slot.cy)));
+			glyph.rect = Rect(pt_glyph, Size(std::min<int32_t>(face_->glyph->bitmap.width, sz_slot.cx),
+				std::min<int32_t>(face_->glyph->bitmap.rows, sz_slot.cy)));
 			glyph.advance = face_->glyph->advance.x >> 6;
 			glyph.offset.set(face_->glyph->metrics.horiBearingX >> 6, face_->glyph->metrics.horiBearingY >> 6);
 		} 
@@ -217,7 +217,7 @@ namespace lv
 		FT_Bitmap & bmp = face_->glyph->bitmap;
 
 		Size sz_slot(slot_size());
-		Size sz_draw(std::min<int32>(sz_slot.cx, bmp.width), std::min<int32>(sz_slot.cy, bmp.rows));
+		Size sz_draw(std::min<int32_t>(sz_slot.cx, bmp.width), std::min<int32_t>(sz_slot.cy, bmp.rows));
 
 		for (int i = 0; i < bmp.rows; ++i)
 		{

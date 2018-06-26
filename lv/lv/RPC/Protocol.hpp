@@ -10,26 +10,24 @@
 
 #pragma once
 
-#include <lv/IntType.hpp>
-
 
 namespace lv::rpc
 {
 	struct Protocol
 	{
-		using request_id_type = uint32;
+		using request_id_type = uint32_t;
 
 		/**
 		 * purpose of this packet.
 		 */
 		struct header
 		{
-			// If you are going to define your own protocol, you can choose other types than int8 type
+			// If you are going to define your own protocol, you can choose other types than int8_t type
 			//	and they don't have to be integral types.
 			// The requirement is that it should be serializable and equality comparable.
 			// The requirements are the same for ( options::type and except::type, but they don't have to 
 			// be same type.
-			using type = int8;
+			using type = int8_t;
 
 			static type const	call	= 0x30;
 			static type const	reply	= 0x31;
@@ -41,7 +39,7 @@ namespace lv::rpc
 		 */
 		struct options
 		{
-			using type = int8;
+			using type = int8_t;
 
 			static type const	ret		= 0x40;	// send back the result
 			static type const	ack		= 0x41;	// send back an acknowledgment

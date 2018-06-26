@@ -14,8 +14,8 @@
 
 struct Address
 {
-	string	ip;
-	uint16	port;
+	string		ip;
+	uint16_t	port;
 
 	template<class Archive>
 	void	serialize(Archive & ar, unsigned int)
@@ -26,18 +26,18 @@ struct Address
 
 struct Config : public Singleton<Config>
 {
-	typedef map<uint16, Address> AddressMap;
-	AddressMap mapping;
+	typedef map<uint16_t, Address> AddressMap;
+	AddressMap	mapping;
 
-	string	mask;
+	string		mask;
 
-	uint32	stat_minutes;
+	uint32_t	stat_minutes;
 
-	uint32	no_data_disconnect_seconds;
+	uint32_t	no_data_disconnect_seconds;
 
-	uint32	sub_ip_to_ban;
+	uint32_t	sub_ip_to_ban;
 
-	uint32	connections_to_ban;
+	uint32_t	connections_to_ban;
 
 	template<typename Archive>
 	void	serialize(Archive & ar, unsigned int)

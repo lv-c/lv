@@ -105,7 +105,7 @@ namespace lv
 
 		void	load(boost::serialization::collection_size_type & t)
 		{
-			uint32	x = 0;
+			uint32_t x = 0;
 			load(x);
 
 			t = boost::serialization::collection_size_type(x);
@@ -113,7 +113,7 @@ namespace lv
 
 		void	load(boost::archive::version_type & ver)
 		{
-			uint8 x = 0;
+			uint8_t x = 0;
 			load(x);
 
 			ver = boost::archive::version_type(x);
@@ -121,7 +121,7 @@ namespace lv
 
 		void	load(boost::serialization::item_version_type & ver)
 		{
-			uint8 x = 0;
+			uint8_t x = 0;
 			load(x);
 
 			ver = boost::serialization::item_version_type(x);

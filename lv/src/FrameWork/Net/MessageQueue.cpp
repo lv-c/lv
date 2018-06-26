@@ -11,7 +11,7 @@
 
 namespace lv::net
 {
-	enum HeaderType : uint8
+	enum HeaderType : uint8_t
 	{
 		PacketType	= 0xB0,
 		ReplayType	= 0xB1
@@ -24,7 +24,7 @@ namespace lv::net
 	{
 		HeaderType	type;
 
-		uint32		id;
+		uint32_t	id;
 	};
 
 #pragma pack(pop)
@@ -48,11 +48,11 @@ namespace lv::net
 
 		ContextPtr	context_;
 
-		Timer &	timer_;
+		Timer &		timer_;
 
-		uint32	next_id_;
+		uint32_t	next_id_;
 
-		uint32	id_base_;
+		uint32_t	id_base_;
 
 	public:
 
@@ -91,13 +91,13 @@ namespace lv::net
 			return BufferPtr();
 		}
 
-		void	on_reply(uint32 id)
+		void	on_reply(uint32_t id)
 		{
-			int32 index = id - id_base_;
+			int32_t index = id - id_base_;
 
 			if (index >= 0)
 			{
-				LV_ENSURE(uint32(index) < messages_.size(), "invalid reply id");
+				LV_ENSURE(uint32_t(index) < messages_.size(), "invalid reply id");
 
 				messages_[index].buf.reset();
 
@@ -140,7 +140,7 @@ namespace lv::net
 
 		ContextPtr	context_;
 
-		uint32	id_base_;
+		uint32_t	id_base_;
 
 	public:
 
@@ -151,18 +151,18 @@ namespace lv::net
 		}
 
 		// return the id
-		uint32	add(BufferPtr buf)
+		uint32_t	add(BufferPtr buf)
 		{
 			LV_ENSURE(buf->size() >= sizeof(Header), "invalid packet size");
 
 			Header header = *reinterpret_cast<Header const *>(buf->data());
 			BOOST_ASSERT(header.type == PacketType);
 
-			int32 index = header.id - id_base_;
+			int32_t index = header.id - id_base_;
 
 			if (index >= 0)
 			{
-				if (messages_.size() <= uint32(index))
+				if (messages_.size() <= uint32_t(index))
 				{
 					messages_.insert(messages_.end(), index - messages_.size() + 1, Message());
 				}
@@ -271,12 +271,12 @@ namespace lv::net
 		{
 			BinaryIStream bis(buf);
 
-			uint8 tp;
+			uint8_t tp;
 			bis >> tp;
 
 			if (tp == PacketType)
 			{
-				uint32 id = receive_queue_->add(buf);
+				uint32_t id = receive_queue_->add(buf);
 				need_reply_.push_back(id);
 
 				while (BufferPtr p = receive_queue_->msg_to_receive())
@@ -288,12 +288,12 @@ namespace lv::net
 			}
 			else if (tp == ReplayType)
 			{
-				uint32 num;
+				uint32_t num;
 				bis >> num;
 
-				for (uint32 i = 0; i < num; ++i)
+				for (uint32_t i = 0; i < num; ++i)
 				{
-					uint32 id;
+					uint32_t id;
 					bis >> id;
 
 					send_queue_->on_reply(id);
@@ -348,7 +348,7 @@ namespace lv::net
 	{
 		if (!need_reply_.empty())
 		{
-			BinaryOStream(buf) << ReplayType << bstream::variable_len_range<uint32>(need_reply_);
+			BinaryOStream(buf) << ReplayType << bstream::variable_len_range<uint32_t>(need_reply_);
 
 			need_reply_.clear();
 			last_reply_time_ = timer_.elapsed();

@@ -1,6 +1,7 @@
 #include <lv/Config.hpp>
 
 #define _SCL_SECURE_NO_WARNINGS
+#define _SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING
 #define BOOST_SP_USE_QUICK_ALLOCATOR
 
 #pragma warning(disable : 4819)
@@ -30,7 +31,6 @@ using namespace std;
 #include <lv/Log/Utility.hpp>
 #include <lv/Buffer.hpp>
 #include <lv/SharedPtr.hpp>
-#include <lv/SimpleBufferManager.hpp>
 #include <lv/FrameWork/Net/ServerBase.hpp>
 #include <lv/FrameWork/Net/Socks5ServerContext.hpp>
 #include <lv/FrameWork/Net/Socks5ServerSession.hpp>
@@ -121,7 +121,7 @@ int main(int argc, char **argv)
 {
 	log::add_stdio_gather(log_);
 
-	uint16 port;
+	uint16_t port;
 	bool all_ip;
 	bool emulate = false;
 
@@ -166,15 +166,13 @@ int main(int argc, char **argv)
 
 	boost::asio::io_service io;
 
-	BufferManagerPtr buf_manager = std::make_shared<SimpleBufferManager>(1024);
-
 	vector<server_ptr>	servers;
 
 	try
 	{
 		for (string const & v : ip)
 		{
-			auto context = std::make_shared<Socks5ServerContext>(buf_manager, io);
+			auto context = std::make_shared<Socks5ServerContext>(io);
 
 			if (!v.empty())
 			{

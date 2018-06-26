@@ -51,7 +51,7 @@ namespace lv
 	}
 
 #	ifndef LV_MEMFUN_MAX_ARITY
-#	define LV_MEMFUN_MAX_ARITY	5
+#	define LV_MEMFUN_MAX_ARITY	6
 #	endif
 	
 	// bind_mem_fn

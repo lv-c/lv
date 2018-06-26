@@ -10,7 +10,6 @@
 
 #pragma once
 
-#include <lv/IntType.hpp>
 #include <lv/Serialization/Fwd.hpp>
 
 #include <boost/serialization/collection_size_type.hpp>

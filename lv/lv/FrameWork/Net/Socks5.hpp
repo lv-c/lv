@@ -10,25 +10,23 @@
 
 #pragma once
 
-#include <lv/IntType.hpp>
-
 
 namespace lv::net
 {
 	struct Socks5
 	{
-		static uint8 const	Version		= 0x05;
+		static uint8_t const	Version		= 0x05;
 
-		static uint8 const	AuthVersion	= 0x01;
+		static uint8_t const	AuthVersion	= 0x01;
 
-		enum Method : uint8
+		enum Method : uint8_t
 		{
 			NoAuth			=	0,
 			UserPassword	=	2,
 			NoAcceptable	=	255
 		};
 
-		enum AddrType : uint8
+		enum AddrType : uint8_t
 		{
 			IPV4		=	1,
 			DomainName	=	3,

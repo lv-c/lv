@@ -1,6 +1,7 @@
 #pragma once
 
 #define _SCL_SECURE_NO_WARNINGS
+#define _SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING
 
 #pragma warning(disable : 4819)
 
@@ -9,9 +10,6 @@
 
 
 #include <lv/Config.hpp>
-
-
-#include <lv/IntType.hpp>
 #include <lv/Log/LogManager.hpp>
 
 using namespace lv;

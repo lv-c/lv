@@ -157,7 +157,7 @@ BOOST_AUTO_TEST_CASE(test_dataflow)
 #ifdef LV_WIN32
 
 	int counter;
-	uint64 total_memory = MemoryAnalyser::instance().end_analyse(counter);
+	uint64_t total_memory = MemoryAnalyser::instance().end_analyse(counter);
 	MemoryAnalyser::instance().detach();
 
 	cout << "Total memory:" << total_memory << "  counter:" << counter << endl;
