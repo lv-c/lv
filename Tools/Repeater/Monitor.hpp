@@ -59,7 +59,7 @@ class Monitor : boost::noncopyable
 
 public:
 
-	Monitor(boost::asio::io_service & service);
+	Monitor(boost::asio::io_context & io);
 
 	void	increase(uint32_t ip, IPStat::Type type, uint32_t num);
 

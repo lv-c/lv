@@ -38,7 +38,7 @@ namespace lv
 			if (size >= 0)
 			{
 				to_read = std::min<streamsize>(size, stream_size() - gpos_);
-				std::copy(buf_.begin() + static_cast<size_t>(gpos_), buf_.begin() + static_cast<size_t>(gpos_ + to_read), data);
+				std::copy_n(buf_.begin() + static_cast<size_t>(gpos_), to_read, data);
 				
 				gpos_ += to_read;
 			}

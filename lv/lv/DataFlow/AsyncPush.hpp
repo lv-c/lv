@@ -10,10 +10,10 @@
 
 #pragma once
 
-#include <lv/ServiceWrapper.hpp>
+#include <lv/IOContextWrapper.hpp>
 #include <lv/DataFlow/PushPolicyBase.hpp>
 
-#include <boost/asio/io_service.hpp>
+#include <boost/asio/io_context.hpp>
 #include <boost/asio/strand.hpp>
 
 
@@ -23,23 +23,23 @@ namespace lv::flow
 	class AsyncPush : public PushPolicyBase<T>
 	{
 
-		ServiceWrapper	service_wrapper_;
+		IOContextWrapper	io_wrapper_;
 
 	public:
 
-		AsyncPush(boost::asio::io_service & service)
-			: service_wrapper_(service)
+		AsyncPush(boost::asio::io_context & io)
+			: io_wrapper_(io)
 		{
 		}
 
-		AsyncPush(boost::asio::strand & strand)
-			: service_wrapper_(strand)
+		AsyncPush(boost::asio::io_context::strand & strand)
+			: io_wrapper_(strand)
 		{
 		}
 
-		void operator () (T const & t)
+		void operator () (T t)
 		{
-			service_wrapper_.post([this, t] { callback_(t); });
+			io_wrapper_.post([this, t = std::move(t)] { callback_(t); });
 		}
 	};
 

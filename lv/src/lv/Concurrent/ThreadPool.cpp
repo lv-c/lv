@@ -5,15 +5,15 @@ namespace lv
 {
 
 	ThreadPool::ThreadPool(unsigned thread_count /* = std::thread::hardware_concurrency() */)
+		: work_(boost::asio::make_work_guard(io_))
 	{
-		work_ = std::make_unique<work_type>(service_);
 
 		threads_.reserve(thread_count);
 
 		for (unsigned i = 0; i < thread_count; ++i)
 		{
 			threads_.push_back(std::thread([this] {
-				service_.run();
+				io_.run();
 			}));
 		}
 	}
@@ -30,12 +30,12 @@ namespace lv
 			}
 		}
 
-		service_.stop();
+		io_.stop();
 	}
 
-	boost::asio::io_service & ThreadPool::service()
+	boost::asio::io_context & ThreadPool::io_context()
 	{
-		return service_;
+		return io_;
 	}
 
 	size_t ThreadPool::size() const

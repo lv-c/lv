@@ -10,9 +10,9 @@ namespace lv::concurrent::detail
 		return pool;
 	}
 
-	boost::asio::io_service & get_service()
+	boost::asio::io_context & io_context()
 	{
-		return get_pool().service();
+		return get_pool().io_context();
 	}
 
 }

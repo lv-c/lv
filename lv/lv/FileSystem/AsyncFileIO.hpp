@@ -13,7 +13,7 @@
 
 #include <lv/FileSystem/Fwd.hpp>
 #include <lv/FileSystem/IFileIO.hpp>
-#include <lv/ServiceWrapper.hpp>
+#include <lv/IOContextWrapper.hpp>
 
 #include <future>
 
@@ -24,13 +24,13 @@ namespace lv
 	{
 		IFileIOPtr	sync_io_;
 
-		ServiceWrapper	service_wrapper_;
+		IOContextWrapper	io_wrapper_;
 
 	public:
 		
-		AsyncFileIO(IFileIOPtr synio, ServiceWrapper const & service_wrapper)
+		AsyncFileIO(IFileIOPtr synio, IOContextWrapper const & io_wrapper)
 			: sync_io_(synio)
-			, service_wrapper_(service_wrapper)
+			, io_wrapper_(io_wrapper)
 		{
 		}
 
@@ -76,7 +76,7 @@ namespace lv
 		template<class Handler>
 		void	async_fulfill(std::string const & file, BufferPtr buffer, Handler && handler)
 		{
-			service_wrapper_.post([=, sync_io_ = sync_io_, handler = std::forward<Handler>(handler)]() mutable {
+			io_wrapper_.post([=, sync_io_ = sync_io_, handler = std::forward<Handler>(handler)]() mutable {
 				try {
 					sync_io_->fulfill(file, buffer);
 					handler(std::error_code());

@@ -118,11 +118,11 @@ void test_net_impl()
 
 	using server_type = Server;
 
-	boost::asio::io_service service;
+	boost::asio::io_context io;
 
 	// 
-	shared_ptr<SSLContext> server_context = std::make_shared<SSLContext>(service);
-	shared_ptr<SSLContext> client_context = std::make_shared<SSLContext>(service);
+	shared_ptr<SSLContext> server_context = std::make_shared<SSLContext>(io);
+	shared_ptr<SSLContext> client_context = std::make_shared<SSLContext>(io);
 
 	// server
 	server_type server(server_context, SessionCreator<server_session_type>());
@@ -135,12 +135,12 @@ void test_net_impl()
 
 	unique_lock<mutex> lock(g_mutex);
 
-	std::thread thread([&service]() { service.run(); });
+	std::thread thread([&io]() { io.run(); });
 
 	// wait until it's finished
 	g_condition_called.wait(lock);
 
-	service.stop();
+	io.stop();
 
 	thread.join();
 }

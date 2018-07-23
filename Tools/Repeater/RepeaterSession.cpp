@@ -15,7 +15,7 @@ RepeaterSession::RepeaterSession(ContextPtr context, string const & dest_ip, str
 	, monitor_(monitor)
 	, dest_connected_(false)
 	, remote_ip_(0)
-	, timer_(context->service())
+	, timer_(context->io_context())
 {
 }
 

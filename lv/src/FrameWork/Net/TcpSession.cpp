@@ -12,7 +12,7 @@ namespace lv::net
 	public:
 
 		TcpSocketHolder(ContextPtr context)
-			: socket_(context->service())
+			: socket_(context->io_context())
 		{
 		}
 

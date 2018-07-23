@@ -127,7 +127,7 @@ namespace lv::net
 		}
 
 		asio::ip::tcp::resolver::query query(ip, port);
-		asio::ip::tcp::resolver resolver(context_->service());
+		asio::ip::tcp::resolver resolver(context_->io_context());
 
 		if (!to_bind.empty())
 		{

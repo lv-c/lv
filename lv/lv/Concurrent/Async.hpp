@@ -12,19 +12,19 @@
 
 #include <lv/Concurrent/Collector.hpp>
 
-#include <boost/asio/io_service.hpp>
+#include <boost/asio/io_context.hpp>
 
 
 namespace lv::concurrent
 {
 	namespace detail
 	{
-		boost::asio::io_service &	get_service();
+		boost::asio::io_context &	io_context();
 	}
 
 
 	template<class Tasks, class Fn>
-	decltype(auto)	fork_join(boost::asio::io_service & service, Tasks & tasks, Fn fn)
+	decltype(auto)	fork_join(boost::asio::io_context & io, Tasks & tasks, Fn fn)
 	{
 		using result_type = decltype(fn(*std::begin(tasks)));
 
@@ -33,7 +33,7 @@ namespace lv::concurrent
 
 		for (auto & v : tasks)
 		{
-			service.post(collector.wrap(index, [&] {
+			io.post(collector.wrap(index, [&] {
 				return fn(v);
 			}));
 
@@ -46,7 +46,7 @@ namespace lv::concurrent
 	template<class Tasks, class Fn>
 	decltype(auto)	fork_join(Tasks && tasks, Fn && fn)
 	{
-		return fork_join(detail::get_service(), std::forward<Tasks>(tasks), std::forward<Fn>(fn));
+		return fork_join(detail::io_context(), std::forward<Tasks>(tasks), std::forward<Fn>(fn));
 	}
 
 }

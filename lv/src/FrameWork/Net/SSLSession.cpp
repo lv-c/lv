@@ -21,7 +21,7 @@ namespace lv::net
 	public:
 
 		SSLSocketHolder(ContextPtr context)
-			: socket_(context->service(), *dynamic_cast<SSLContext &>(*context).ssl_context())
+			: socket_(context->io_context(), *dynamic_cast<SSLContext &>(*context).ssl_context())
 		{
 		}
 

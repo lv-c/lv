@@ -27,8 +27,8 @@ namespace lv::net
 
 	public:
 
-		Socks5ClientContext(ServiceWrapper const & service_wrapper)
-			: Context(service_wrapper)
+		Socks5ClientContext(IOContextWrapper const & io_wrapper)
+			: Context(io_wrapper)
 		{
 		}
 

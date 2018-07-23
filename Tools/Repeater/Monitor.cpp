@@ -9,8 +9,8 @@
 #include <boost/asio/ip/address_v4.hpp>
 
 
-Monitor::Monitor(boost::asio::io_service & service)
-	: timer_(service)
+Monitor::Monitor(boost::asio::io_context & io)
+	: timer_(io)
 	, ip_mask_(0)
 	, os_version_(WinOthers)
 {

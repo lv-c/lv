@@ -2,6 +2,7 @@
 
 #define _SCL_SECURE_NO_WARNINGS
 #define _SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING
+#define _SILENCE_CXX17_ALLOCATOR_VOID_DEPRECATION_WARNING
 #define BOOST_SP_USE_QUICK_ALLOCATOR
 
 #pragma warning(disable : 4819)
@@ -164,7 +165,7 @@ int main(int argc, char **argv)
 	}
 
 
-	boost::asio::io_service io;
+	boost::asio::io_context io;
 
 	vector<server_ptr>	servers;
 

@@ -26,9 +26,10 @@ local usage-requirements =
 project lv
 	: requirements 
 		$(usage-requirements)
-		<toolset>msvc:<cxxflags>-std:c++17
+		<toolset>msvc:<cxxflags>-std\:c++17
 		<toolset>msvc:<define>_SCL_SECURE_NO_WARNINGS
 		<toolset>msvc:<define>_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING
+		<toolset>msvc:<define>_SILENCE_CXX17_ALLOCATOR_VOID_DEPRECATION_WARNING
 		<toolset>gcc:<cxxflags>-std=gnu++17
 	: usage-requirements $(usage-requirements)
 	: build-dir build

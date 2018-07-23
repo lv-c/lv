@@ -10,7 +10,7 @@
 #include <lv/Log/Utility.hpp>
 
 
-#include <boost/asio/io_service.hpp>
+#include <boost/asio/io_context.hpp>
 
 
 
@@ -62,14 +62,14 @@ int main(int argc, char **argv)
 
 
 	// context
-	boost::asio::io_service service;
-	ContextPtr context = std::make_shared<Context>(service);
+	boost::asio::io_context io;
+	ContextPtr context = std::make_shared<Context>(io);
 
 	typedef unique_ptr<ServerBase> ServerPtr;
 
 	vector<ServerPtr> servers;
 
-	Monitor stat(service);
+	Monitor stat(io);
 
 	for (auto const & v : cfg.mapping)
 	{
@@ -85,7 +85,7 @@ int main(int argc, char **argv)
 
 	// run
 	boost::system::error_code error;
-	service.run(error);
+	io.run(error);
 
 	return 0;
 }

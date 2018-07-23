@@ -24,7 +24,7 @@ namespace lv::net
 				bind_addr = asio::ip::address::from_string(to_bind);
 			}
 
-			acceptor_ = std::make_unique<asio::ip::tcp::acceptor>(context->service(), 
+			acceptor_ = std::make_unique<asio::ip::tcp::acceptor>(context->io_context(), 
 				asio::ip::tcp::endpoint(bind_addr, port));
 		}
 

@@ -14,7 +14,8 @@
 #include <thread>
 #include <memory>
 
-#include <boost/asio/io_service.hpp>
+#include <boost/asio/io_context.hpp>
+#include <boost/asio/executor_work_guard.hpp>
 #include <boost/noncopyable.hpp>
 
 
@@ -24,11 +25,12 @@ namespace lv
 	{
 		std::vector<std::thread>	threads_;
 
-		boost::asio::io_service		service_;
+		boost::asio::io_context		io_;
 
-		using work_type = boost::asio::io_service::work;
+		using work_gurad = boost::asio::executor_work_guard<
+			boost::asio::io_context::executor_type>;
 
-		std::unique_ptr<work_type>	work_;
+		work_gurad	work_;
 
 	public:
 
@@ -36,7 +38,7 @@ namespace lv
 
 		~ThreadPool();
 
-		boost::asio::io_service &	service();
+		boost::asio::io_context &	io_context();
 
 		size_t	size() const;
 

@@ -223,9 +223,6 @@
     <ClInclude Include="..\..\..\lv\lv\Ref.hpp">
       <Filter>Utility\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\lv\lv\ServiceWrapper.hpp">
-      <Filter>Utility\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\SharedPtr.hpp">
       <Filter>Utility\Header Files</Filter>
     </ClInclude>
@@ -780,6 +777,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\Concurrent\ThreadPool.hpp">
       <Filter>Concurrent\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\IOContextWrapper.hpp">
+      <Filter>Utility\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

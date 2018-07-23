@@ -312,7 +312,7 @@ namespace lv::net
 	{
 		status_ = Request;
 
-		asio::ip::tcp::resolver resolver(context_->service());
+		asio::ip::tcp::resolver resolver(context_->io_context());
 		asio::ip::tcp::resolver::query query(ip_, port_);
 
 		boost::system::error_code err;

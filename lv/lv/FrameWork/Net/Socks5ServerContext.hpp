@@ -45,8 +45,8 @@ namespace lv::net
 
 	public:
 
-		ISocks5ServerContext(ServiceWrapper const & service_wrapper)
-			: Context(service_wrapper)
+		ISocks5ServerContext(IOContextWrapper const & io_wrapper)
+			: Context(io_wrapper)
 		{
 		}
 
@@ -73,8 +73,8 @@ namespace lv::net
 
 	public:
 
-		Socks5ServerContext(ServiceWrapper const & service_wrapper)
-			: ISocks5ServerContext(service_wrapper)
+		Socks5ServerContext(IOContextWrapper const & io_wrapper)
+			: ISocks5ServerContext(io_wrapper)
 		{
 		}
 

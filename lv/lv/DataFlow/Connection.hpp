@@ -10,6 +10,8 @@
 
 #pragma once
 
+#include <boost/noncopyable.hpp>
+
 #include <any>
 #include <memory>
 

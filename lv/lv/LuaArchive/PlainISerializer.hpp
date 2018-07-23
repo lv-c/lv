@@ -17,8 +17,11 @@
 #include <lv/Buffer.hpp>
 #include <lv/Ensure.hpp>
 
+#include <boost/range/value_type.hpp>
 #include <boost/serialization/nvp.hpp>
 #include <boost/serialization/serialization.hpp>
+
+#include <cstring>
 
 
 namespace lv::lua::archive
@@ -64,7 +67,7 @@ namespace lv::lua::archive
 
 		bool operator == (char const * s) const
 		{
-			size_t len = strlen(s);
+			size_t len = std::strlen(s);
 			return (len == size() && std::equal(begin, end, s));
 		}
 

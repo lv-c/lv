@@ -11,7 +11,6 @@
 #pragma once
 
 #include <boost/assert.hpp>
-#include <boost/range.hpp>
 
 #include <vector>
 #include <memory>

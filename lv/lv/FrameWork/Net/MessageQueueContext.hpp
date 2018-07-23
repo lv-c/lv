@@ -23,8 +23,8 @@ namespace lv::net
 
 	public:
 
-		MessageQueueContext(ServiceWrapper const & service_wrapper, bool preserve_order)
-			: Context(service_wrapper)
+		MessageQueueContext(IOContextWrapper const & io_wrapper, bool preserve_order)
+			: Context(io_wrapper)
 			, preserve_order_(preserve_order)
 			, resend_time_(20.0)
 		{

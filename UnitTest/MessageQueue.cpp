@@ -109,11 +109,11 @@ BOOST_AUTO_TEST_CASE(test_message_queue)
 
 	//
 
-	boost::asio::io_service service;
+	boost::asio::io_context io;
 
 	Sender client_sender, server_sender;
 
-	std::shared_ptr<MessageQueueContext> ctx = std::make_shared<MessageQueueContext>(service, true);
+	std::shared_ptr<MessageQueueContext> ctx = std::make_shared<MessageQueueContext>(io, true);
 	ctx->set_resend_time(0.02);
 
 	MessageQueue client(ctx, lv::shared_from_object(client_sender), MessageQueue::Receiver());
@@ -130,7 +130,7 @@ BOOST_AUTO_TEST_CASE(test_message_queue)
 
 	try
 	{
-		service.run();
+		io.run();
 	}
 	catch (TaskFinished const &)
 	{

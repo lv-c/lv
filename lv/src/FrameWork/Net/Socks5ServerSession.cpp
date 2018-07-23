@@ -187,7 +187,7 @@ namespace lv::net
 
 		uint16_t port = (high_byte << 8) | low_byte;
 
-		ContextPtr context = std::make_shared<Context>(context_->service_wrapper());
+		ContextPtr context = std::make_shared<Context>(context_->io_wrapper());
 
 		dest_session_ = std::make_unique<DestSession>(context);
 

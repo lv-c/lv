@@ -11,7 +11,7 @@
 #pragma once
 
 #include <lv/FrameWork/Net/Fwd.hpp>
-#include <lv/ServiceWrapper.hpp>
+#include <lv/IOContextWrapper.hpp>
 
 
 namespace lv::net
@@ -20,35 +20,35 @@ namespace lv::net
 	{
 	protected:
 
-		ServiceWrapper		service_wrapper_;
+		IOContextWrapper		io_wrapper_;
 
 	public:
 
-		explicit Context(ServiceWrapper const & service_wrapper)
-			: service_wrapper_(service_wrapper)
+		explicit Context(IOContextWrapper const & io_wrapper)
+			: io_wrapper_(io_wrapper)
 		{
 		}
 
 		virtual	~Context() = default;
 
-		asio::io_service &	service() const
+		asio::io_context &	io_context() const
 		{
-			return service_wrapper_.service();
+			return io_wrapper_.io_context();
 		}
 
 		bool	has_strand() const
 		{
-			return service_wrapper_.has_strand();
+			return io_wrapper_.has_strand();
 		}
 
-		asio::strand &	strand() const
+		asio::io_context::strand &	strand() const
 		{
-			return service_wrapper_.strand();
+			return io_wrapper_.strand();
 		}
 
-		ServiceWrapper const &	service_wrapper() const
+		IOContextWrapper const &	io_wrapper() const
 		{
-			return service_wrapper_;
+			return io_wrapper_;
 		}
 	};
 

@@ -11,7 +11,7 @@
 #pragma once
 
 #include <lv/FrameWork/AutoLink.hpp>
-#include <lv/ServiceWrapper.hpp>
+#include <lv/IOContextWrapper.hpp>
 
 #include <boost/asio/steady_timer.hpp>
 
@@ -22,7 +22,7 @@ namespace lv::net
 {
 	class SteadyTimer
 	{
-		ServiceWrapper	service_wrapper_;
+		IOContextWrapper	io_wrapper_;
 
 		using timer_type = boost::asio::steady_timer;
 
@@ -39,11 +39,11 @@ namespace lv::net
 
 	public:
 
-		SteadyTimer(ServiceWrapper const & service_wrapper, duration_type const & duration, Callback callback);
+		SteadyTimer(IOContextWrapper const & io_wrapper, duration_type const & duration, Callback callback);
 
 		template<class Duration>
-		SteadyTimer(ServiceWrapper const & service_wrapper, Duration const & duration, Callback callback)
-			: SteadyTimer(service_wrapper, std::chrono::duration_cast<duration_type>(duration), std::move(callback))
+		SteadyTimer(IOContextWrapper const & io_wrapper, Duration const & duration, Callback callback)
+			: SteadyTimer(io_wrapper, std::chrono::duration_cast<duration_type>(duration), std::move(callback))
 		{
 		}
 

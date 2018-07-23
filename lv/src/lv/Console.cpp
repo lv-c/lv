@@ -11,11 +11,11 @@
 
 namespace lv
 {
-	BOOL   WINAPI   console_handler(DWORD dwCtrlType)        
-	{        
-		FreeConsole();  
-		return   FALSE;  
-	}  
+	BOOL WINAPI	console_handler(DWORD dwCtrlType)
+	{
+		FreeConsole();
+		return FALSE;
+	}
 
 
 	bool	create_console(char const * title, bool std_io /* = true */)
@@ -25,16 +25,16 @@ namespace lv
 			return false;
 		}
 
-		BOOL   bOK   =   SetConsoleCtrlHandler((PHANDLER_ROUTINE)console_handler, TRUE);
-		if (!bOK)
+		if (!SetConsoleCtrlHandler((PHANDLER_ROUTINE)console_handler, TRUE))
 		{
 			return false;
 		}
 
 		SetConsoleTitleA(title);
-		intptr_t lStdHandle = (intptr_t)GetStdHandle(STD_ERROR_HANDLE);
-		int hConHandle = _open_osfhandle(lStdHandle, _O_TEXT);       
-		FILE* fp = _fdopen(hConHandle,"w");
+
+		intptr_t std_handle = (intptr_t)GetStdHandle(STD_ERROR_HANDLE);
+		int con_handle = _open_osfhandle(std_handle, _O_TEXT);
+		FILE * fp = _fdopen(con_handle, "w");
 		if (fp == nullptr)
 		{
 			return false;
