@@ -1,8 +1,7 @@
 #include <lv/FileSystem/RawFileReader.hpp>
 #include <lv/Exception.hpp>
 
-#include <boost/filesystem/operations.hpp>
-
+#include <filesystem>
 #include <fstream>
 
 namespace lv
@@ -47,6 +46,6 @@ namespace lv
 
 	bool RawFileReader::exist(std::string const & file)
 	{
-		return boost::filesystem::exists(resolve(file));
+		return std::filesystem::exists(resolve(file));
 	}
 }

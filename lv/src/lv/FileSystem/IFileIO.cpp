@@ -1,6 +1,7 @@
 #include <lv/FileSystem/IFileIO.hpp>
 
-#include <boost/filesystem/path.hpp>
+#include <filesystem>
+
 
 namespace lv
 {
@@ -18,7 +19,7 @@ namespace lv
 
 	std::string IFileIO::resolve(std::string const & file)
 	{
-		boost::filesystem::path path(file);
+		std::filesystem::path path(file);
 
 		if (!path.has_root_directory())
 		{

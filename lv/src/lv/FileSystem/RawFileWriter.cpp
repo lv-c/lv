@@ -2,8 +2,8 @@
 #include <lv/Exception.hpp>
 
 #include <fstream>
+#include <filesystem>
 
-#include <boost/filesystem/operations.hpp>
 
 namespace lv
 {
@@ -36,6 +36,6 @@ namespace lv
 
 	bool RawFileWriter::exist(std::string const & file)
 	{
-		return boost::filesystem::exists(resolve(file));
+		return std::filesystem::exists(resolve(file));
 	}
 }
