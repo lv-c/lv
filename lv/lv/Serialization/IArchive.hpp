@@ -91,16 +91,9 @@ namespace lv
 
 
 		template<class T>
-		std::enable_if_t<!std::is_arithmetic_v<T> >	load(T & t)
+		void	load(T & t)
 		{
 			serialization::load_adl(*this, t);
-		}
-
-
-		template<class T>
-		std::enable_if_t<std::is_arithmetic_v<T> >	load(T & t)
-		{
-			load_binary(&t, sizeof(T));
 		}
 
 		void	load(boost::serialization::collection_size_type & t)

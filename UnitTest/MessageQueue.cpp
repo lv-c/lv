@@ -11,7 +11,7 @@
 #include "UnitTest.hpp"
 
 #include <lv/FrameWork/Net/MessageQueue.hpp>
-#include <lv/FrameWork/Net/MessageQueueContext.hpp>
+#include <lv/FrameWork/Net/MessageQueueOptions.hpp>
 #include <lv/FrameWork/Net/SteadyTimer.hpp>
 #include <lv/Random.hpp>
 #include <lv/Exception.hpp>
@@ -25,7 +25,7 @@ DEFINE_EXCEPTION_MSG(TaskFinished, runtime_error);
 
 class Sender : public ISender
 {
-	using Callback = std::function<void(BufferPtr)>;
+	using Callback = std::function<void(Buffer &&)>;
 
 	Callback	callback_;
 
@@ -45,15 +45,14 @@ public:
 		this->callback_ = std::move(callback);
 	}
 
-	void	send(BufferPtr buf) override
+	void	send(ConstBufferRef buf) override
 	{
 		BOOST_CHECK(sendable_);
 
 		// unstable network
 		if (die_(0, 100) < 50)
 		{
-			// make a copy because buf will be modified.
-			callback_(std::make_shared<Buffer>(*buf));
+			callback_(Buffer(buf.begin(), buf.end()));
 		}
 	}
 
@@ -67,21 +66,21 @@ public:
 
 class BufferReceiver
 {
-	vector<BufferPtr> &	buffers_;
+	vector<Buffer> &	buffers_;
 
 	size_t	num_to_receive_;
 
 public:
 
-	BufferReceiver(vector<BufferPtr> & buffers, size_t num_to_receive)
+	BufferReceiver(vector<Buffer> & buffers, size_t num_to_receive)
 		: buffers_(buffers)
 		, num_to_receive_(num_to_receive)
 	{
 	}
 
-	void operator () (BufferPtr buf)
+	void operator () (Buffer buf)
 	{
-		buffers_.push_back(buf);
+		buffers_.push_back(std::move(buf));
 
 		if (buffers_.size() >= num_to_receive_)
 		{
@@ -93,15 +92,15 @@ public:
 BOOST_AUTO_TEST_CASE(test_message_queue)
 {
 	Random<> die;
-	vector<BufferPtr> to_send(100);
-	vector<BufferPtr> received;
+	vector<Buffer> to_send(100);
+	vector<Buffer> received;
 
 	// random data
-	for (BufferPtr & buf : to_send)
+	for (Buffer & buf : to_send)
 	{
-		buf = std::make_shared<Buffer>(die(0, 100));
+		buf.resize(die(0, 100));
 
-		for (char & c : *buf)
+		for (char & c : buf)
 		{
 			c = uint8_t(die(0, 0xFF));
 		}
@@ -113,19 +112,19 @@ BOOST_AUTO_TEST_CASE(test_message_queue)
 
 	Sender client_sender, server_sender;
 
-	std::shared_ptr<MessageQueueContext> ctx = std::make_shared<MessageQueueContext>(io, true);
-	ctx->set_resend_time(0.02);
+	MessageQueueOptions options;
+	options.resend_time = 0.02;
 
-	MessageQueue client(ctx, lv::shared_from_object(client_sender), MessageQueue::Receiver());
-	MessageQueue server(ctx, lv::shared_from_object(server_sender), BufferReceiver(received, to_send.size()));
+	MessageQueue client(lv::shared_from_object(client_sender), MessageQueue::Receiver(), &io, options);
+	MessageQueue server(lv::shared_from_object(server_sender), BufferReceiver(received, to_send.size()), &io, options);
 
-	client_sender.set_callback([&server](BufferPtr buf) { server.on_receive(buf); });
-	server_sender.set_callback([&client](BufferPtr buf) { client.on_receive(buf); });
+	client_sender.set_callback([&server](Buffer && buf) { server.on_receive(buf); });
+	server_sender.set_callback([&client](Buffer && buf) { client.on_receive(buf); });
 
-	for (BufferPtr buf : to_send)
+	for (Buffer const & buf : to_send)
 	{
 		// will be modified. make a copy
-		client.send(std::make_shared<Buffer>(*buf));
+		client.send(Buffer(buf));
 	}
 
 	try
@@ -140,7 +139,7 @@ BOOST_AUTO_TEST_CASE(test_message_queue)
 
 	for (size_t i = 0; i < to_send.size(); ++i)
 	{
-		BOOST_CHECK_EQUAL(to_send[i]->size(), received[i]->size());
-		BOOST_CHECK(std::equal(to_send[i]->begin(), to_send[i]->end(), received[i]->begin()));
+		BOOST_CHECK_EQUAL(to_send[i].size(), received[i].size());
+		BOOST_CHECK(std::equal(to_send[i].begin(), to_send[i].end(), received[i].begin()));
 	}
 }

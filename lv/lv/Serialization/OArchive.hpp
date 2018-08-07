@@ -19,6 +19,7 @@
 
 #include <string>
 
+
 namespace lv
 {
 	class OArchive : boost::noncopyable
@@ -87,15 +88,9 @@ namespace lv
 	protected:
 
 		template<class T>
-		std::enable_if_t<!std::is_arithmetic_v<T> >	save(T const & t)
+		void	save(T const & t)
 		{
 			serialization::save_adl(*this, t);
-		}
-
-		template<class T>
-		std::enable_if_t<std::is_arithmetic_v<T> >	save(T t)
-		{
-			save_binary(&t, sizeof(T));
 		}
 
 		void	save(boost::serialization::collection_size_type t)

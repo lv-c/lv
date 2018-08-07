@@ -781,6 +781,12 @@
     <ClInclude Include="..\..\..\lv\lv\IOContextWrapper.hpp">
       <Filter>Utility\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\MovableOnly.hpp">
+      <Filter>Utility\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Serialize.hpp">
+      <Filter>Utility\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\lv\src\lv\Console.cpp">

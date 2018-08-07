@@ -19,7 +19,7 @@ namespace lv
 	{
 	public:
 
-		virtual ~IBufferManager(){}
+		virtual ~IBufferManager() = default;
 
 		virtual BufferPtr	get() = 0;
 	};

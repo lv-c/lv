@@ -26,4 +26,6 @@ namespace lv::net
 
 	using WriteEvent = boost::signals2::signal<void(size_t)>;
 
+	using CloseEvent = boost::signals2::signal<void()>;
+
 }

@@ -211,7 +211,7 @@
     <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\FlowSession.hpp" />
     <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\Fwd.hpp" />
     <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\MessageQueue.hpp" />
-    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\MessageQueueContext.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\MessageQueueOptions.hpp" />
     <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\PacketBufferManager.hpp" />
     <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\PacketProxy.hpp" />
     <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\PacketSplitter.hpp" />

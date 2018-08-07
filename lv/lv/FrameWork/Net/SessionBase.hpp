@@ -17,6 +17,7 @@
 #include <deque>
 #include <mutex>
 #include <array>
+#include <atomic>
 
 
 namespace lv::net
@@ -29,10 +30,11 @@ namespace lv::net
 		ConnectEvent	connect_event_;
 		ReceiveEvent	receive_event_;
 		WriteEvent		write_event_;
+		CloseEvent		close_event_;		// the session is just closed, either on error, or by the user
 
 		SocketHolderPtr	socket_;
 
-		volatile bool	closed_;
+		std::atomic<bool>	closed_;
 
 		//
 		std::array<Buffer, 2>	write_buffers_;
@@ -67,6 +69,7 @@ namespace lv::net
 		ConnectEvent &	connect_event();
 		ReceiveEvent &	receive_event();
 		WriteEvent &	write_event();
+		CloseEvent &	close_event();
 
 		virtual	void	shutdown();
 
@@ -98,6 +101,7 @@ namespace lv::net
 		virtual	void	on_connected();
 		virtual	void	on_receive(Buffer const & buf);
 		virtual	void	on_write(size_t size);
+		virtual	void	on_closed();
 
 		virtual	void	handle_read(BufferPtr buf, size_t bytes_transferred, boost::system::error_code const & error);
 

@@ -150,9 +150,7 @@ namespace lv::rpc
 		{
 		}
 
-		virtual ~Client()
-		{
-		}
+		virtual ~Client() = default;
 
 
 		/**

@@ -81,10 +81,10 @@
     <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\MessageQueue.hpp">
       <Filter>Net\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\MessageQueueContext.hpp">
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\SteadyTimer.hpp">
       <Filter>Net\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\SteadyTimer.hpp">
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\MessageQueueOptions.hpp">
       <Filter>Net\Header Files</Filter>
     </ClInclude>
   </ItemGroup>

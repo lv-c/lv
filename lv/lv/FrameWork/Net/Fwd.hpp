@@ -13,7 +13,10 @@
 #include <memory>
 
 
-namespace boost::asio {}
+namespace boost::asio
+{
+	class io_context;
+}
 
 namespace lv::net
 {

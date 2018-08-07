@@ -360,6 +360,7 @@
     <ClInclude Include="..\..\..\lv\lv\Lua\TableBuilder.hpp" />
     <ClInclude Include="..\..\..\lv\lv\lvlib2.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Mapping.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\MovableOnly.hpp" />
     <ClInclude Include="..\..\..\lv\lv\MPL\detail\RemoveSecond.hpp" />
     <ClInclude Include="..\..\..\lv\lv\MPL\Functional.hpp" />
     <ClInclude Include="..\..\..\lv\lv\MPL\MemFn.hpp" />
@@ -396,6 +397,7 @@
     <ClInclude Include="..\..\..\lv\lv\Serialization\SharedPtr.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Serialization\Tuple.hpp" />
     <ClInclude Include="..\..\..\lv\lv\IOContextWrapper.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\Serialize.hpp" />
     <ClInclude Include="..\..\..\lv\lv\SharedPtr.hpp" />
     <ClInclude Include="..\..\..\lv\lv\SimpleBufferManager.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Singleton.hpp" />

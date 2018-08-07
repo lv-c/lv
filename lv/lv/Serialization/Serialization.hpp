@@ -33,17 +33,34 @@ namespace lv::serialization
 	namespace detail
 	{
 		template<class Archive>
+		struct serialize_primitive_type
+		{
+			template<class T>
+			static void	save(Archive & ar, T const & t)
+			{
+				ar.save_binary(&t, sizeof(T));
+			}
+
+			template<class T>
+			static void	load(Archive & ar, T & t)
+			{
+				ar.load_binary(&t, sizeof(T));
+			}
+		};
+
+
+		template<class Archive>
 		struct serialize_enum_type
 		{
 			template<class T>
-			static void save(Archive & ar, T t)
+			static void	save(Archive & ar, T t)
 			{
 				int const i = static_cast<int>(t);
 				ar << i;
 			}
 
 			template<class T>
-			static void load(Archive & ar, T & t)
+			static void	load(Archive & ar, T & t)
 			{
 				int i;
 				ar >> i;
@@ -56,7 +73,7 @@ namespace lv::serialization
 		struct serialize_array_type
 		{
 			template<class T>
-			static void save(Archive & ar, T const & t)
+			static void	save(Archive & ar, T const & t)
 			{
 				using value_type = std::remove_extent_t<T>;
 
@@ -65,7 +82,7 @@ namespace lv::serialization
 			}
 
 			template<class T>
-			static void load(Archive & ar, T & t)
+			static void	load(Archive & ar, T & t)
 			{
 				using value_type = std::remove_extent_t<T>;
 				
@@ -88,7 +105,7 @@ namespace lv::serialization
 		struct serialize_default
 		{
 			template<class T>
-			static void save(Archive & ar, T const & t)
+			static void	save(Archive & ar, T const & t)
 			{
 				boost::archive::detail::check_object_versioning<T>();
 
@@ -99,7 +116,7 @@ namespace lv::serialization
 			}
 
 			template<class T>
-			static void load(Archive & ar, T & t)
+			static void	load(Archive & ar, T & t)
 			{
 				boost::archive::version_type file_ver;
 				ar >> file_ver;
@@ -120,15 +137,21 @@ namespace lv::serialization
 		struct serializer_type
 		{
 			using type = typename mpl::eval_if<
-				std::is_enum<T>,
-				mpl::identity<detail::serialize_enum_type<Archive> >,
+				mpl::equal_to<
+					boost::serialization::implementation_level<T>,
+					mpl::int_<boost::serialization::primitive_type>
+				>,
+				mpl::identity<detail::serialize_primitive_type<Archive> >,
 
-				typename mpl::eval_if<
+				mpl::eval_if<
+					std::is_enum<T>,
+					mpl::identity<detail::serialize_enum_type<Archive> >,
+
+				mpl::eval_if<
 					std::is_array<T>,
 					mpl::identity<detail::serialize_array_type<Archive> >,
 					mpl::identity<detail::serialize_default<Archive> >
-				>
-			>::type;
+				> > >::type;
 		};
 
 	}

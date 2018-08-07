@@ -34,11 +34,6 @@ namespace lv::net
 		{
 		}
 
-		~PacketSplitter()
-		{
-			BOOST_ASSERT(cache_.empty());
-		}
-
 		void	push(ConstBufferRef buf)
 		{
 			cache_.insert(cache_.end(), buf.begin(), buf.end());
@@ -73,6 +68,12 @@ namespace lv::net
 			}
 
 			return nullptr;
+		}
+
+
+		std::deque<char> const &	remaining() const
+		{
+			return cache_;
 		}
 		
 	};

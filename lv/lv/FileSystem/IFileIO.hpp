@@ -27,7 +27,7 @@ namespace lv
 
 		explicit IFileIO(std::string const & working_dir = std::string());
 
-		virtual ~IFileIO() {}
+		virtual ~IFileIO() = default;
 
 		/**
 		 * Synchronous operation. 

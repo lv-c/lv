@@ -10,6 +10,8 @@
 
 #pragma once
 
+#include <lv/Ensure.hpp>
+
 #include <boost/assert.hpp>
 
 #include <vector>
@@ -135,6 +137,17 @@ namespace lv
 			BOOST_ASSERT(index < size_);
 			return data_[index];
 		}
+
+
+		BufferRefT	sub(size_t off, size_t count = -1)
+		{
+			LV_ENSURE(off <= size_, std::out_of_range("BufferRefT::sub out of range"));
+
+			BufferRefT ret(data_ + off, std::min(size_ - off, count));
+			ret.holder_ = holder_;
+
+			return ret;
+		}
 	};
 
 
@@ -223,6 +236,17 @@ namespace lv
 			BOOST_ASSERT(data_ != nullptr);
 			BOOST_ASSERT(index < size_);
 			return data_[index];
+		}
+
+
+		ConstBufferRefT	sub(size_t off, size_t count = -1)
+		{
+			LV_ENSURE(off <= size_, std::out_of_range("ConstBufferRefT::sub out of range"));
+
+			ConstBufferRefT ret(data_ + off, std::min(size_ - off, count));
+			ret.holder_ = holder_;
+
+			return ret;
 		}
 	};
 

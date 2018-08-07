@@ -50,9 +50,7 @@ namespace lv::flow
 		{
 		}
 
-		virtual ~Source()
-		{
-		}
+		virtual ~Source() = default;
 
 		void	enable(bool enabled)
 		{

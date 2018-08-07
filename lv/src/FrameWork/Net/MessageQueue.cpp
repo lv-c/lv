@@ -1,12 +1,13 @@
 #include <lv/FrameWork/Net/MessageQueue.hpp>
-#include <lv/FrameWork/Net/MessageQueueContext.hpp>
+#include <lv/FrameWork/Net/MessageQueueOptions.hpp>
 #include <lv/FrameWork/Net/SteadyTimer.hpp>
 #include <lv/BinaryStream.hpp>
 #include <lv/BinaryStream/Vector.hpp>
 #include <lv/Ensure.hpp>
-#include <lv/SimpleBufferManager.hpp>
+#include <lv/MovableOnly.hpp>
 
 #include <deque>
+#include <optional>
 
 
 namespace lv::net
@@ -31,22 +32,22 @@ namespace lv::net
 
 	class SendQueue
 	{
-		struct Message
+		struct Message : private MovableOnly
 		{
-			Message(BufferPtr buf)
-				: buf(buf)
+			Message(Buffer && buf)
+				: buf(std::move(buf))
 				, send_time(0)
 			{
 			}
 
-			BufferPtr	buf;
+			std::optional<Buffer>	buf;
 
 			double		send_time;
 		};
 
 		std::deque<Message>	messages_;
 
-		ContextPtr	context_;
+		MessageQueueOptions const &	options_;
 
 		Timer &		timer_;
 
@@ -56,39 +57,37 @@ namespace lv::net
 
 	public:
 
-		SendQueue(ContextPtr context, Timer & timer)
-			: context_(context)
+		SendQueue(MessageQueueOptions const & options, Timer & timer)
+			: options_(options)
 			, timer_(timer)
 			, next_id_(0)
 			, id_base_(0)
 		{
 		}
 
-		void	add(BufferPtr buf)
+		void	add(Buffer && buf)
 		{
 			Header header = { PacketType, next_id_++ };
-			buffer::insert(*buf, 0, &header, sizeof(header));
+			buffer::insert(buf, 0, &header, sizeof(header));
 
-			messages_.push_back(Message(buf));
+			messages_.push_back(Message(std::move(buf)));
 		}
 
-		BufferPtr	msg_to_send()
+		Buffer const *	msg_to_send()
 		{
-			double resend_interval = dynamic_cast<MessageQueueContext &>(*context_).resend_time();
-
 			for (Message & msg : messages_)
 			{
 				if (msg.buf)
 				{
-					if (msg.send_time == 0 || msg.send_time + resend_interval < timer_.elapsed())
+					if (msg.send_time == 0 || msg.send_time + options_.resend_time < timer_.elapsed())
 					{
 						msg.send_time = timer_.elapsed();
-						return msg.buf;
+						return &(*msg.buf);
 					}
 				}
 			}
 
-			return BufferPtr();
+			return nullptr;
 		}
 
 		void	on_reply(uint32_t id)
@@ -124,38 +123,33 @@ namespace lv::net
 	//
 	class ReceiveQueue
 	{
-		struct Message
+		struct Message : private MovableOnly
 		{
-			Message()
-				: received(false)
-			{
-			}
+			std::optional<Buffer>	buf;
 
-			BufferPtr	buf;
-
-			bool		received;
+			bool		received = false;
 		};
 
 		std::deque<Message>	messages_;
 
-		ContextPtr	context_;
+		MessageQueueOptions const &	options_;
 
 		uint32_t	id_base_;
 
 	public:
 
-		ReceiveQueue(ContextPtr context)
-			: context_(context)
+		ReceiveQueue(MessageQueueOptions const & options)
+			: options_(options)
 			, id_base_(0)
 		{
 		}
 
 		// return the id
-		uint32_t	add(BufferPtr buf)
+		uint32_t	add(ConstBufferRef buf)
 		{
-			LV_ENSURE(buf->size() >= sizeof(Header), "invalid packet size");
+			LV_ENSURE(buf.size() >= sizeof(Header), "invalid packet size");
 
-			Header header = *reinterpret_cast<Header const *>(buf->data());
+			Header header = *reinterpret_cast<Header const *>(buf.data());
 			BOOST_ASSERT(header.type == PacketType);
 
 			int32_t index = header.id - id_base_;
@@ -164,27 +158,30 @@ namespace lv::net
 			{
 				if (messages_.size() <= uint32_t(index))
 				{
-					messages_.insert(messages_.end(), index - messages_.size() + 1, Message());
+					size_t num = index + 1 - messages_.size();
+					LV_ENSURE(num < 100000, "invalid index:" + std::to_string(index));
+
+					for (size_t i = 0; i < num; ++i)
+					{
+						messages_.push_back(Message());
+					}
 				}
 
 				Message & msg = messages_[index];
 
 				if (!msg.received)
 				{
-					buf->erase(buf->begin(), buf->begin() + sizeof(Header));
-
 					msg.received = true;
-					msg.buf = buf;
+					msg.buf = Buffer(buf.begin() + sizeof(Header), buf.end());
 				}
 			}
 
 			return header.id;
 		}
 
-		BufferPtr	msg_to_receive()
+		std::optional<Buffer>	msg_to_receive()
 		{
-			BufferPtr ret;
-			bool preserve_order = dynamic_cast<MessageQueueContext &>(*context_).preserve_order();
+			std::optional<Buffer> ret;
 
 			for (Message & msg : messages_)
 			{
@@ -193,7 +190,7 @@ namespace lv::net
 					std::swap(ret, msg.buf);
 					break;
 				}
-				else if (preserve_order)
+				else if (options_.preserve_order)
 				{
 					// check only the first buffer
 					break;
@@ -220,25 +217,28 @@ namespace lv::net
 
 	//
 
-	MessageQueue::MessageQueue(ContextPtr context, ISenderPtr sender, Receiver receiver)
-		: context_(context)
-		, sender_(sender)
+	MessageQueue::MessageQueue(ISenderPtr sender, Receiver receiver, boost::asio::io_context * io, 
+		MessageQueueOptions const & options /* = MessageQueueOptions() */)
+		: sender_(sender)
 		, receiver_(receiver)
+		, options_(options)
 		, last_reply_time_(0)
-		, buffer_manager_(std::make_unique<SimpleBufferManager>(1024))
 	{
-		send_queue_ = std::make_unique<SendQueue>(context, timer_);
-		receive_queue_ = std::make_unique<ReceiveQueue>(context);
+		send_queue_ = std::make_unique<SendQueue>(options_, timer_);
+		receive_queue_ = std::make_unique<ReceiveQueue>(options_);
 
-		deadline_timer_ = std::make_unique<SteadyTimer>(context->io_wrapper(), std::chrono::milliseconds(200),
-			[this] { on_timer(); });
+		if (io != nullptr)
+		{
+			deadline_timer_ = std::make_unique<SteadyTimer>(*io, std::chrono::milliseconds(200),
+				[this] { on_timer(); });
+		}
 	}
 
 	MessageQueue::~MessageQueue() = default;
 
-	void MessageQueue::send(BufferPtr buf)
+	void MessageQueue::send(Buffer && buf)
 	{
-		send_queue_->add(buf);
+		send_queue_->add(std::move(buf));
 		check_send();
 	}
 
@@ -265,13 +265,13 @@ namespace lv::net
 		this->receiver_ = receiver;
 	}
 
-	void MessageQueue::on_receive(BufferPtr buf)
+	void MessageQueue::on_receive(ConstBufferRef buf)
 	{
 		do 
 		{
 			BinaryIStream bis(buf);
 
-			uint8_t tp;
+			uint8_t tp{};		// may be used uninitialized ?
 			bis >> tp;
 
 			if (tp == PacketType)
@@ -279,9 +279,9 @@ namespace lv::net
 				uint32_t id = receive_queue_->add(buf);
 				need_reply_.push_back(id);
 
-				while (BufferPtr p = receive_queue_->msg_to_receive())
+				while (std::optional<Buffer> p = receive_queue_->msg_to_receive())
 				{
-					receiver_(p);
+					receiver_(std::move(*p));
 				}
 
 				break;
@@ -299,14 +299,14 @@ namespace lv::net
 					send_queue_->on_reply(id);
 				}
 
-				buf->erase(buf->begin(), buf->begin() + static_cast<size_t>(bis.tellg()));
+				buf = buf.sub(static_cast<size_t>(bis.tellg()));
 			}
 			else
 			{
 				LV_ENSURE(false, "unknown header type");
 			}
 
-		} while (!buf->empty());
+		} while (!buf.empty());
 	}
 
 	void MessageQueue::on_timer()
@@ -315,10 +315,10 @@ namespace lv::net
 
 		if (!need_reply_.empty() && sender_->sendable() && last_reply_time_ + 0.5 < timer_.elapsed())
 		{
-			BufferPtr buf = buffer_manager_->get();
-			fill_replies(*buf);
+			send_buffer_.clear();
+			fill_replies(send_buffer_);
 
-			sender_->send(buf);
+			sender_->send(send_buffer_);
 		}
 	}
 
@@ -329,18 +329,17 @@ namespace lv::net
 			return;
 		}
 
-		while (BufferPtr buf = send_queue_->msg_to_send())
+		while (Buffer const * buf = send_queue_->msg_to_send())
 		{
-			// make a copy of the data, because the sender may modify it.
-			BufferPtr new_buf = buffer_manager_->get();
+			send_buffer_.clear();
 
 			if (!need_reply_.empty())
 			{
-				fill_replies(*new_buf);
+				fill_replies(send_buffer_);
 			}
 
-			new_buf->insert(new_buf->end(), buf->begin(), buf->end());
-			sender_->send(new_buf);
+			send_buffer_.insert(send_buffer_.end(), buf->begin(), buf->end());
+			sender_->send(send_buffer_);
 		}
 	}
 

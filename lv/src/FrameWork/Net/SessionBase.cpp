@@ -39,9 +39,7 @@ namespace lv::net
 	{
 	}
 
-	SessionBase::~SessionBase()
-	{
-	}
+	SessionBase::~SessionBase() = default;
 
 	std::string SessionBase::remote_ip()
 	{
@@ -92,6 +90,11 @@ namespace lv::net
 		return write_event_;
 	}
 
+	CloseEvent & SessionBase::close_event()
+	{
+		return close_event_;
+	}
+
 
 	void SessionBase::shutdown()
 	{
@@ -101,10 +104,13 @@ namespace lv::net
 
 	void SessionBase::close()
 	{
-		closed_ = true;
+		if (!closed_.exchange(true))
+		{
+			boost::system::error_code error;
+			socket_->get().close(error);
 
-		boost::system::error_code error;
-		socket_->get().close(error);
+			on_closed();
+		}
 	}
 
 	bool SessionBase::closed()
@@ -244,6 +250,11 @@ namespace lv::net
 	void SessionBase::on_write(size_t size)
 	{
 		write_event_(size);
+	}
+
+	void SessionBase::on_closed()
+	{
+		close_event_();
 	}
 
 	void SessionBase::handle_read(BufferPtr buf, size_t bytes_transferred, boost::system::error_code const & error)
