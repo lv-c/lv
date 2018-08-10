@@ -25,7 +25,7 @@ namespace lv::bstream
 		template<class OStream, class T>
 		void	save_impl(OStream & os, T const & t, unknown_tag)
 		{
-			boost::serialization::serialize_adl(os, const_cast<T&>(t), 1);
+			boost::serialization::serialize_adl(os, const_cast<T &>(t), 1);
 		}
 
 		// primitive_tag

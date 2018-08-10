@@ -50,31 +50,31 @@ namespace lv
 			this->cy = _cy;
 		}
 		// operators
-		SizeT& operator += (SizeT const& sz)
+		SizeT & operator += (SizeT const & sz)
 		{
 			cx += sz.cx;
 			cy += sz.cy;
 			return *this;
 		}
-		SizeT& operator -= (SizeT const& sz)
+		SizeT & operator -= (SizeT const & sz)
 		{
 			cx -= sz.cx;
 			cy -= sz.cy;
 			return *this;
 		}
-		SizeT& operator *= (T i)
+		SizeT & operator *= (T i)
 		{
 			cx *= i;
 			cy *= i;
 			return *this;
 		}
-		SizeT& operator /= (T i)
+		SizeT & operator /= (T i)
 		{
 			cx /= i;
 			cy /= i;
 			return *this;
 		}
-		SizeT& operator %= (T i)
+		SizeT & operator %= (T i)
 		{
 			cx %= i;
 			cy %= i;

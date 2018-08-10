@@ -52,31 +52,31 @@ namespace lv
 			this->y = _y;
 		}
 		// operators
-		PointT& operator += (PointT const& pt)
+		PointT & operator += (PointT const & pt)
 		{
 			x += pt.x;
 			y += pt.y;
 			return *this;
 		}
-		PointT& operator -= (PointT const& pt)
+		PointT & operator -= (PointT const & pt)
 		{
 			x -= pt.x;
 			y -= pt.y;
 			return *this;
 		}
-		PointT& operator *= (T i)
+		PointT & operator *= (T i)
 		{
 			x *= i;
 			y *= i;
 			return *this;
 		}
-		PointT& operator /= (T i)
+		PointT & operator /= (T i)
 		{
 			x /= i;
 			y /= i;
 			return *this;
 		}
-		PointT& operator %= (T i)
+		PointT & operator %= (T i)
 		{
 			x %= i;
 			y %= i;

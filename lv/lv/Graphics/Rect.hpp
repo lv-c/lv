@@ -41,11 +41,11 @@ namespace lv
 			, bottom(_bottom)
 		{
 		}
-		RectT(PointT<T> const& top_left, PointT<T> const& right_bottom)
+		RectT(PointT<T> const & top_left, PointT<T> const & right_bottom)
 		{
 			set(top_left.x, top_left.y, right_bottom.x, right_bottom.y);
 		}
-		RectT(PointT<T> const& top_left, SizeT<T> const & sz)
+		RectT(PointT<T> const & top_left, SizeT<T> const & sz)
 		{
 			set(top_left.x, top_left.y, top_left.x + sz.cx, top_left.y + sz.cy);
 		}
@@ -110,17 +110,17 @@ namespace lv
 		}
 
 		//
-		bool contains(PointT<T> const& pt)
+		bool contains(PointT<T> const & pt)
 		{
 			return pt.x >= left && pt.x < right && pt.y >= top && pt.y < bottom;
 		}
-		bool contains(RectT const& rect)
+		bool contains(RectT const & rect)
 		{
 			return rect.left >= left && rect.right <= right && rect.top >= top && rect.bottom <= bottom;
 		}
 
 		// operators
-		RectT& operator += (PointT<T> const& pt)
+		RectT & operator += (PointT<T> const & pt)
 		{
 			left += pt.x;
 			right += pt.x;
@@ -128,7 +128,7 @@ namespace lv
 			bottom += pt.y;
 			return *this;
 		}
-		RectT& operator -= (PointT<T> const& pt)
+		RectT & operator -= (PointT<T> const & pt)
 		{
 			left -= pt.x;
 			right -= pt.x;
@@ -136,7 +136,7 @@ namespace lv
 			bottom -= pt.y;
 			return *this;
 		}
-		RectT& operator *= (T i)
+		RectT & operator *= (T i)
 		{
 			left *= i;
 			right *= i;
@@ -144,7 +144,7 @@ namespace lv
 			bottom *= i;
 			return *this;
 		}
-		RectT& operator /= (T i)
+		RectT & operator /= (T i)
 		{
 			left /= i;
 			right /= i;

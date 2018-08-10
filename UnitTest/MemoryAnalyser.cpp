@@ -34,8 +34,8 @@ void MemoryAnalyser::attach()
 	{
 		DetourTransactionBegin();
 		DetourUpdateThread(GetCurrentThread());
-		DetourAttach(&(PVOID&)true_malloc, &MemoryAnalyser::my_malloc);
-		DetourAttach(&(PVOID&)true_free, &MemoryAnalyser::my_free);
+		DetourAttach(&(PVOID &)true_malloc, &MemoryAnalyser::my_malloc);
+		DetourAttach(&(PVOID &)true_free, &MemoryAnalyser::my_free);
 		DetourTransactionCommit();
 
 		attached_ = true;
@@ -50,8 +50,8 @@ void MemoryAnalyser::detach()
 	{
 		DetourTransactionBegin();
 		DetourUpdateThread(GetCurrentThread());
-		DetourDetach(&(PVOID&)true_malloc, &MemoryAnalyser::my_malloc);
-		DetourDetach(&(PVOID&)true_free, &MemoryAnalyser::my_free);
+		DetourDetach(&(PVOID &)true_malloc, &MemoryAnalyser::my_malloc);
+		DetourDetach(&(PVOID &)true_free, &MemoryAnalyser::my_free);
 		DetourTransactionCommit();
 
 		attached_ = false;

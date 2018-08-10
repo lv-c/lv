@@ -111,19 +111,27 @@ namespace lv::serialization
 
 				unsigned int ver = boost::serialization::version<T>::value;
 
-				ar << boost::archive::version_type(ver);
+				if constexpr (boost::serialization::tracking_level<T>::value != boost::serialization::track_never)
+				{
+					ar << boost::archive::version_type(ver);
+				}
+
 				boost::serialization::serialize_adl(ar, const_cast<T &>(t), ver);
 			}
 
 			template<class T>
 			static void	load(Archive & ar, T & t)
 			{
-				boost::archive::version_type file_ver;
-				ar >> file_ver;
+				boost::archive::version_type file_ver{};
 
-				if (file_ver > boost::archive::version_type(boost::serialization::version<T>::value))
+				if constexpr (boost::serialization::tracking_level<T>::value != boost::serialization::track_never)
 				{
-					throw boost::archive::archive_exception(boost::archive::archive_exception::unsupported_class_version);
+					ar >> file_ver;
+
+					if (file_ver > boost::archive::version_type(boost::serialization::version<T>::value))
+					{
+						throw boost::archive::archive_exception(boost::archive::archive_exception::unsupported_class_version);
+					}
 				}
 
 				boost::serialization::serialize_adl(ar, t, file_ver);

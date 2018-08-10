@@ -68,7 +68,7 @@ namespace lv
 			this->a(a);
 		}
 
-		void	get(element& r, element& g, element& b) const
+		void	get(element & r, element & g, element & b) const
 		{
 			r = this->r();
 			g = this->g();
@@ -76,7 +76,7 @@ namespace lv
 		}
 
 
-		void	get(element& r, element& g, element& b, element& a) const
+		void	get(element & r, element & g, element & b, element & a) const
 		{
 			get(r, g, b);
 			a = this->a();

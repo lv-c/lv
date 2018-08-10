@@ -68,7 +68,7 @@ namespace lv
 
 
 		// comparison
-		friend bool operator == (Derived const& lhs, Derived const& rhs)
+		friend bool operator == (Derived const & lhs, Derived const & rhs)
 		{
 			return std::equal(lhs.begin(), lhs.end(), rhs.begin());
 		}

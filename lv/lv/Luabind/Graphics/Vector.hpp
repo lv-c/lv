@@ -30,7 +30,7 @@ namespace lv::lua::graphics
 			class_<type>(name)
 				.def(constructor<>())
 				.def(constructor<T, T, T>())
-				.def(constructor<type const&>())
+				.def(constructor<type const &>())
 				.def_readwrite("x", &type::x)
 				.def_readwrite("y", &type::y)
 				.def_readwrite("z", &type::z)
