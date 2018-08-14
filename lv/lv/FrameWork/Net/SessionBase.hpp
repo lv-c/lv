@@ -13,10 +13,9 @@
 #include <lv/FrameWork/AutoLink.hpp>
 #include <lv/FrameWork/Net/Fwd.hpp>
 #include <lv/FrameWork/Net/Event.hpp>
+#include <lv/FrameWork/Net/DoubleBuffer.hpp>
 
 #include <deque>
-#include <mutex>
-#include <array>
 #include <atomic>
 
 
@@ -37,18 +36,10 @@ namespace lv::net
 		std::atomic<bool>	closed_;
 
 		//
-		std::array<Buffer, 2>	write_buffers_;
-
-		size_t		write_index_;
-
-		bool		writing_;
+		DoubleBuffer	write_buffers_;
 
 
-		using lock_guard = std::lock_guard<std::mutex>;
-
-		std::mutex	write_mutex_;
-
-		static size_t const	max_buffer_size_ = 100 * 1024;
+		static constexpr size_t		max_buffer_size_ = 100 * 1024;
 
 	protected:
 
@@ -105,7 +96,7 @@ namespace lv::net
 
 		virtual	void	handle_read(BufferPtr buf, size_t bytes_transferred, boost::system::error_code const & error);
 
-		virtual	void	handle_write(size_t buf_index, boost::system::error_code const & error);
+		virtual	void	handle_write(Buffer const & buf, boost::system::error_code const & error);
 
 		virtual	void	handle_connect(boost::system::error_code const & error);
 

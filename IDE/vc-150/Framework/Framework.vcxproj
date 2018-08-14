@@ -207,6 +207,7 @@
     <ClInclude Include="..\..\..\lv\lv\FrameWork\AutoLink.hpp" />
     <ClInclude Include="..\..\..\lv\lv\FrameWork\Net.hpp" />
     <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\Context.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\DoubleBuffer.hpp" />
     <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\Event.hpp" />
     <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\FlowSession.hpp" />
     <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\Fwd.hpp" />
@@ -230,6 +231,7 @@
     <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\TcpSession.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\lv\src\FrameWork\Net\DoubleBuffer.cpp" />
     <ClCompile Include="..\..\..\lv\src\FrameWork\Net\MessageQueue.cpp" />
     <ClCompile Include="..\..\..\lv\src\FrameWork\Net\PacketProxy.cpp" />
     <ClCompile Include="..\..\..\lv\src\FrameWork\Net\ServerBase.cpp" />

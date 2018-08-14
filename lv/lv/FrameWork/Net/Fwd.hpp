@@ -63,6 +63,8 @@ namespace lv::net
 
 	class MessageQueue;
 
+	class DoubleBuffer;
+
 	class SteadyTimer;
 
 	template<class SizeType>

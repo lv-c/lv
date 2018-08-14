@@ -55,7 +55,7 @@ namespace lv::net
 
 		void	handle_read(BufferPtr buf, size_t bytes_transferred, boost::system::error_code const & error) override;
 
-		void	handle_write(size_t buf_index, boost::system::error_code const & error) override;
+		void	handle_write(Buffer const & buf, boost::system::error_code const & error) override;
 
 		virtual	void	gen_request_error(uint8_t rep, ErrorType & err_type, boost::system::error_code & error);
 

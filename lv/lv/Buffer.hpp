@@ -346,5 +346,19 @@ namespace lv
 		{
 			return std::string(buf.data(), buf.size());
 		}
+
+		template<class T>
+		BufferRef		from_pod(T & t)
+		{
+			static_assert(std::is_pod_v<T>);
+			return BufferRef(reinterpret_cast<char *>(&t), sizeof(t));
+		}
+
+		template<class T>
+		ConstBufferRef	from_pod(T const & t)
+		{
+			static_assert(std::is_pod_v<T>);
+			return ConstBufferRef(reinterpret_cast<char const *>(&t), sizeof(t));
+		}
 	}
 }

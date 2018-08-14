@@ -291,7 +291,7 @@ namespace lv::net
 		error = asio::error::make_error_code(asio_err);
 	}
 
-	void Socks5ClientSession::handle_write(size_t buf_index, boost::system::error_code const & error)
+	void Socks5ClientSession::handle_write(Buffer const & buf, boost::system::error_code const & error)
 	{
 		if (closed())
 		{
@@ -300,7 +300,7 @@ namespace lv::net
 
 		if (status_ == Established)
 		{
-			base_type::handle_write(buf_index, error);
+			base_type::handle_write(buf, error);
 		}
 		else if (error)
 		{

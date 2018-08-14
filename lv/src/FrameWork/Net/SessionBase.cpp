@@ -33,8 +33,6 @@ namespace lv::net
 	SessionBase::SessionBase(ContextPtr context, SocketHolderPtr socket)
 		: socket_(socket)
 		, closed_(false)
-		, write_index_(0)
-		, writing_(false)
 		, context_(context)
 	{
 	}
@@ -121,16 +119,7 @@ namespace lv::net
 	void SessionBase::connect(std::string const & ip, std::string const & port, std::string const & to_bind /* = std::string */)
 	{
 		closed_ = false;
-		writing_ = false;
-
-		{
-			lock_guard lock(write_mutex_);
-
-			for (Buffer & v : write_buffers_)
-			{
-				v.clear();
-			}
-		}
+		write_buffers_.reset();
 
 		asio::ip::tcp::resolver::query query(ip, port);
 		asio::ip::tcp::resolver resolver(context_->io_context());
@@ -198,9 +187,7 @@ namespace lv::net
 			that perform writes) until this operation completes.
 			*/
 
-			lock_guard lock(write_mutex_);
-
-			buffer::append(write_buffers_[write_index_], buf);
+			write_buffers_.put(buf);
 
 			check_write();
 		}
@@ -278,11 +265,8 @@ namespace lv::net
 		}
 	}
 
-	void SessionBase::handle_write(size_t buf_index, boost::system::error_code const & error)
+	void SessionBase::handle_write(Buffer const & buf, boost::system::error_code const & error)
 	{
-		writing_ = false;
-
-		//
 		if (closed_)
 		{
 			return;
@@ -294,33 +278,10 @@ namespace lv::net
 		}
 		else
 		{
-			size_t size = 0;
+			size_t size = buf.size();
 
-			{
-				lock_guard lock(write_mutex_);
-
-				if (buf_index != write_index_)
-				{
-					Buffer & buf = write_buffers_[buf_index];
-					size = buf.size();
-
-					// avoid huge buffers
-					if (size > max_buffer_size_)
-					{
-						buf = Buffer();
-					}
-					else
-					{
-						buf.clear();
-					}
-
-					check_write();
-				}
-				else
-				{
-					BOOST_ASSERT(false);
-				}
-			}
+			write_buffers_.unlock(buf);
+			check_write();
 
 			on_write(size);
 		}
@@ -345,30 +306,19 @@ namespace lv::net
 
 	void SessionBase::check_write()
 	{
-		if (writing_)
+		if (Buffer const * buf = write_buffers_.lock())
 		{
-			return;
-		}
-
-		size_t buf_index = write_index_;
-		Buffer & buf = write_buffers_[buf_index];
-
-		if (!buf.empty())
-		{
-			writing_ = true;
-			write_index_ = 1 - write_index_;
-
-			auto handler = [shared_this = shared_from_this(), buf_index](boost::system::error_code const & error, size_t) {
-				return shared_this->handle_write(buf_index, error);
+			auto handler = [shared_this = shared_from_this(), buf](boost::system::error_code const & error, size_t) {
+				return shared_this->handle_write(*buf, error);
 			};
 
 			if (context_->has_strand())
 			{
-				asio::async_write(socket_->get(), asio::buffer(buf), context_->strand().wrap(std::move(handler)));
+				asio::async_write(socket_->get(), asio::buffer(*buf), context_->strand().wrap(std::move(handler)));
 			}
 			else
 			{
-				asio::async_write(socket_->get(), asio::buffer(buf), std::move(handler));
+				asio::async_write(socket_->get(), asio::buffer(*buf), std::move(handler));
 			}
 		}
 	}

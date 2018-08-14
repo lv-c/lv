@@ -87,6 +87,9 @@
     <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\MessageQueueOptions.hpp">
       <Filter>Net\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\FrameWork\Net\DoubleBuffer.hpp">
+      <Filter>Net\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\lv\src\FrameWork\Net\PacketProxy.cpp">
@@ -117,6 +120,9 @@
       <Filter>Net\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\lv\src\FrameWork\Net\SteadyTimer.cpp">
+      <Filter>Net\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lv\src\FrameWork\Net\DoubleBuffer.cpp">
       <Filter>Net\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
