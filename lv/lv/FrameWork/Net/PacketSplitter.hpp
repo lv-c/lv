@@ -15,6 +15,8 @@
 
 #include <deque>
 
+#include <boost/assert.hpp>
+
 
 namespace lv::net
 {
@@ -58,7 +60,13 @@ namespace lv::net
 					size = lv::endian_switch(size);
 				}
 
-				if (size <= cache_.size())
+				BOOST_ASSERT(header_size <= size);
+
+				// We will be trapped here if header_size > size, but it's really the same situation with
+				// that when size is extremely large. So if we want to handle it and report an error, we
+				// should handle both.
+
+				if (header_size <= size && size <= cache_.size())
 				{
 					buffer_.assign(cache_.begin() + header_size, cache_.begin() + size);
 					cache_.erase(cache_.begin(), cache_.begin() + size);
