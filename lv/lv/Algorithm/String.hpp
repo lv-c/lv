@@ -25,7 +25,8 @@ namespace lv::algo
 	void	to_base64(RangeT const & src, SequenceT & dest)
 	{
 		using namespace boost::archive::iterators;
-		using base64 = base64_from_binary<transform_width<boost::range_const_iterator<RangeT>::type, 6, 8> >;
+		using base64 = base64_from_binary<transform_width<
+			typename boost::range_const_iterator<RangeT>::type, 6, 8> >;
 
 		lv::assign(dest, base64(std::begin(src)), base64(std::end(src)));
 
@@ -52,7 +53,8 @@ namespace lv::algo
 	void	from_base64(RangeT const & src, SequenceT & dest)
 	{
 		using namespace boost::archive::iterators;
-		using base64 = transform_width<binary_from_base64<boost::range_const_iterator<RangeT>::type>, 8, 6>;
+		using base64 = transform_width<binary_from_base64<
+			typename boost::range_const_iterator<RangeT>::type>, 8, 6>;
 
 		lv::assign(dest, base64(std::begin(src)), base64(std::end(src)));
 		boost::algorithm::trim_right_if(dest, [](auto v) { return v == '\0'; });
