@@ -48,7 +48,7 @@ void RepeaterSession::on_connected()
 
 	start_timer();
 
-	LOG() << "new sesssion:" << remote_ip();
+	LOG() << "new sesssion: " << remote_ip();
 }
 
 void RepeaterSession::on_receive(Buffer const & buf)
@@ -84,7 +84,7 @@ void RepeaterSession::on_timer(boost::system::error_code const & error)
 
 		if(sec != 0 && active_timer_.elapsed().seconds() >= sec)
 		{
-			LOG() << "close inactive session:" << remote_ip();
+			LOG() << "close inactive session: " << remote_ip();
 
 			exit();
 			return;
@@ -115,7 +115,7 @@ void RepeaterSession::exit()
 
 void RepeaterSession::on_error(ErrorType type, boost::system::error_code const & error)
 {
-	LOG() << "on error:" << remote_ip();
+	LOG() << "on error: " << remote_ip();
 
 	exit();
 }
@@ -148,11 +148,11 @@ void RepeaterSession::dest_on_error(ErrorType type, boost::system::error_code co
 {
 	if(type == ErrorConnect)
 	{
-		LOG(lv::error) << "error connecting to dest:" << dest_ip_ << " port:" << dest_port_ << " msg:" << error.message();
+		LOG(lv::error) << "error connecting to dest: " << dest_ip_ << " port: " << dest_port_ << " msg: " << error.message();
 	}
 	else
 	{
-		LOG() << "dest session disconnected:" << remote_ip() << " msg:" << error.message();
+		LOG() << "dest session disconnected: " << remote_ip() << " msg: " << error.message();
 	}
 
 	exit();

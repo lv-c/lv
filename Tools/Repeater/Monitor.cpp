@@ -36,7 +36,7 @@ Monitor::Monitor(boost::asio::io_context & io)
 
 #endif
 
-	LOG() << "os version:" << os_version_;
+	LOG() << "os version: " << os_version_;
 
 	boost::asio::ip::address_v4 mask = boost::asio::ip::address_v4::from_string(Config::instance().mask);
 	ip_mask_ = mask.to_ulong();
@@ -132,8 +132,8 @@ void Monitor::hack_scan()
 				system(str.c_str());
 			}
 
-			log_() << "block ip:" << addr.to_string() << " connection:" << info.value[IPStat::Connection]
-				<< " sub_ip:" << info.sub_ip.size();
+			log_() << "block ip: " << addr.to_string() << " connection: " << info.value[IPStat::Connection]
+				<< " sub_ip: " << info.sub_ip.size();
 		}
 	}
 

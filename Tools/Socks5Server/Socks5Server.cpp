@@ -112,7 +112,7 @@ typedef unique_ptr<server_type>	server_ptr;
 
 void on_new_session(SessionPtr session)
 {
-	log_() << "new connection:" << session->remote_ip();
+	log_() << "new connection: " << session->remote_ip();
 
 	session->error_event().connect(on_error);
 }
@@ -155,7 +155,7 @@ int main(int argc, char **argv)
 
 		if(ret != 0)
 		{
-			log_(lv::error) << "enumerate_ip failed:" << ret;
+			log_(lv::error) << "enumerate_ip failed: " << ret;
 			return ret;
 		}
 	}
@@ -182,7 +182,7 @@ int main(int argc, char **argv)
 
 			context->set_auth(auth);
 
-			log_() << "start server:" << v << " port:" << port;
+			log_() << "start server: " << v << " port: " << port;
 
 			if (!emulate)
 			{
