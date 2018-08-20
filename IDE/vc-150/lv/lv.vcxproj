@@ -227,6 +227,7 @@
     <ClInclude Include="..\..\..\lv\lv\Algorithm\LRUList.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Algorithm\Rle.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Algorithm\Set.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\Algorithm\String.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Align.hpp" />
     <ClInclude Include="..\..\..\lv\lv\AutoLink.hpp" />
     <ClInclude Include="..\..\..\lv\lv\BinaryStream.hpp" />
