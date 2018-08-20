@@ -65,14 +65,14 @@ private:
 
 	void	on_error(ErrorType type, boost::system::error_code const & error) override
 	{
-		std::cout << "client err:" << error.message() << std::endl;
+		std::cout << "client err: " << error.message() << std::endl;
 	}
 
 	void	notify(string const & str)
 	{
 		BOOST_CHECK_EQUAL(str, text_);
 
-		std::cout << "notify:" << str << std::endl;
+		std::cout << "notify: " << str << std::endl;
 
 		std::lock_guard<mutex> lock(g_mutex);
 		g_condition_called.notify_all();
@@ -106,7 +106,7 @@ private:
 
 	void	on_error(ErrorType type, boost::system::error_code const & error) override
 	{
-		std::cout << "server err:" << error.message() << std::endl;
+		std::cout << "server err: " << error.message() << std::endl;
 	}
 };
 

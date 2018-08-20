@@ -152,7 +152,7 @@ namespace lv::lua::archive
 						break;
 
 					default:
-						throw std::runtime_error(std::string("invalid escape sequence:") + *p);
+						throw std::runtime_error(std::string("invalid escape sequence: ") + *p);
 					}
 				}
 
@@ -175,7 +175,7 @@ namespace lv::lua::archive
 			}
 			else
 			{
-				throw std::runtime_error("invalid bool value:" + token.str());
+				throw std::runtime_error("invalid bool value: " + token.str());
 			}
 		}
 	}
@@ -252,7 +252,7 @@ namespace lv::lua::archive
 				}
 			}
 
-			LV_ENSURE(valid, "invalid string:" + std::string(cur_, end_));
+			LV_ENSURE(valid, "invalid string: " + std::string(cur_, end_));
 
 			type = Token::String;
 		}

@@ -56,13 +56,13 @@ void echo(ParamType type, iarchive_type & ia)
 	{
 		int i;
 		ia >> i;
-		std::cout << "echo.PT_Int:" << i << std::endl;
+		std::cout << "echo.PT_Int: " << i << std::endl;
 	}
 	else if (type == PT_String)
 	{
 		string s;
 		ia >> s;
-		std::cout << "echo.PT_String:" << s << std::endl;
+		std::cout << "echo.PT_String: " << s << std::endl;
 	}
 }
 
@@ -73,7 +73,7 @@ void hello()
 
 void sum(int a, float b)
 {
-	std::cout << "sum:" << (a + static_cast<int>(b)) << std::endl;
+	std::cout << "sum: " << (a + static_cast<int>(b)) << std::endl;
 }
 
 
@@ -160,11 +160,11 @@ BOOST_AUTO_TEST_CASE(test_dataflow)
 	uint64_t total_memory = MemoryAnalyser::instance().end_analyse(counter);
 	MemoryAnalyser::instance().detach();
 
-	cout << "Total memory:" << total_memory << "  counter:" << counter << endl;
+	cout << "Total memory: " << total_memory << "  counter: " << counter << endl;
 
 #endif
 
-	cout << "Time elapsed:" << elapsed << endl;
+	cout << "Time elapsed: " << elapsed << endl;
 
 
 	

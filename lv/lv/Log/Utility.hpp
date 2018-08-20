@@ -87,7 +87,7 @@ namespace lv::log
 		ostream_ptr ofile = std::make_shared<std::basic_ofstream<char_type> >(file, append ? std::ios_base::app : std::ios_base::trunc);
 		if (!(*ofile))
 		{
-			throw file_io_error(std::string("error opening file:") + file);
+			throw file_io_error(std::string("error opening file: ") + file);
 		}
 
 		return add_gather(log, ofile, formatters);

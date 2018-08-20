@@ -78,8 +78,8 @@ namespace lv::lua::archive
 	{
 	public:
 		UnmatchedTokenType(Token const & token, Token::Type expected)
-			: std::runtime_error(std::string("unmatched token type:") + Token::name(expected) 
-			+ " expected, " + Token::name(token.type) + " given:" + token.str())
+			: std::runtime_error(std::string("unmatched token type: ") + Token::name(expected) 
+			+ " expected, " + Token::name(token.type) + " given: " + token.str())
 		{
 		}
 	};
@@ -181,7 +181,7 @@ namespace lv::lua::archive
 				Token token = parser.next_token();
 
 				expect(token, Token::Symbol);
-				LV_ENSURE(*token.begin == sym.c_, std::string("symbol expected:") + sym.c_ + " given:" + token.str());
+				LV_ENSURE(*token.begin == sym.c_, std::string("symbol expected: ") + sym.c_ + " given: " + token.str());
 
 				return parser;
 			}
@@ -203,7 +203,7 @@ namespace lv::lua::archive
 				Token token = parser.next_token();
 				expect(token, Token::Literal);
 
-				LV_ENSURE(token == lit.lit_, std::string("literal expected:") + lit.lit_);
+				LV_ENSURE(token == lit.lit_, std::string("literal expected: ") + lit.lit_);
 
 				return parser;
 			}
@@ -242,7 +242,7 @@ namespace lv::lua::archive
 			expect(token, Token::Number);
 
 			size_t const size = 128;
-			LV_ENSURE(token.size() < size, "too long number:" + token.str());
+			LV_ENSURE(token.size() < size, "too long number: " + token.str());
 
 			char buf[size];
 			memcpy(buf, token.begin, token.size());
@@ -251,7 +251,7 @@ namespace lv::lua::archive
 			char * end = nullptr;
 			double val = strtod(buf, &end);
 
-			LV_ENSURE(buf + token.size() == end, "invalid number:" + token.str());
+			LV_ENSURE(buf + token.size() == end, "invalid number: " + token.str());
 
 			t = static_cast<T>(val);
 		}

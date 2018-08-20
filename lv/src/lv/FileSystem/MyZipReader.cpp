@@ -65,7 +65,7 @@ namespace lv
 
 		if (err)
 		{
-			throw std::system_error(err, "error reading file:" + file);
+			throw std::system_error(err, "error reading file: " + file);
 		}
 	}
 
@@ -74,7 +74,7 @@ namespace lv
 		std::string zip_file = get_zip_file(file);
 		if (zip_file.empty() || zip_file.size() + 1 >= file.size())	// + 1 : '\\' or '/'
 		{
-			throw std::system_error(std::make_error_code(std::errc::invalid_argument), "invalid file name:" + file);
+			throw std::system_error(std::make_error_code(std::errc::invalid_argument), "invalid file name: " + file);
 		}
 
 		UnzipMap::iterator it = unzip_.find(zip_file);
@@ -107,7 +107,7 @@ namespace lv
 
 			if (ret != ZR_OK)
 			{
-				throw std::system_error(std::make_error_code(std::errc::io_error), "error opening pkt file:" + zip_path);
+				throw std::system_error(std::make_error_code(std::errc::io_error), "error opening pkt file: " + zip_path);
 			}
 
 			unzip_.emplace(zip_file, uz);

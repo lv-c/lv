@@ -30,7 +30,7 @@ BOOST_AUTO_TEST_CASE(test_log)
 	log(lv::info) << L"hello world";
 	log(lv::debug) << "debug something " << 100;
 
-	log(lv::warning) << boost::wformat(L"a number:%d") % 20;
+	log(lv::warning) << boost::wformat(L"a number: %d") % 20;
 
 	log() << std::endl << L"0x" << std::hex << 0x123FA << std::endl << std::flush;
 }

@@ -34,7 +34,7 @@ BOOST_AUTO_TEST_CASE(test_table_builder)
 	m[3] = "me";
 
 	oss.str(std::string());
-	oss << "map:" << LV_OBJ(m);
+	oss << "map: " << LV_OBJ(m);
 
-	BOOST_CHECK_EQUAL(oss.str(), "map:{\n\t[1] = 'you', \n\t[3] = 'me'\n}");
+	BOOST_CHECK_EQUAL(oss.str(), "map: {\n\t[1] = 'you', \n\t[3] = 'me'\n}");
 }

@@ -72,7 +72,7 @@ namespace lv::flow
 
 				if (invokers_.find(key) != invokers_.end())
 				{
-					throw std::runtime_error(std::string("The key has already been used:") + 
+					throw std::runtime_error(std::string("The key has already been used: ") + 
 						boost::lexical_cast<std::string>(key));
 				}
 
@@ -108,11 +108,11 @@ namespace lv::flow
 				}
 				catch (boost::archive::archive_exception const & ex)
 				{
-					throw SerializationError(ex.code, std::string(".error calling function:") + boost::lexical_cast<std::string>(key));
+					throw SerializationError(ex.code, std::string(".error calling function: ") + boost::lexical_cast<std::string>(key));
 				}
 				catch (std::exception const & ex)
 				{
-					throw std::runtime_error(ex.what() + std::string(".error calling function:") + boost::lexical_cast<std::string>(key));
+					throw std::runtime_error(ex.what() + std::string(".error calling function: ") + boost::lexical_cast<std::string>(key));
 				}
 			}
 

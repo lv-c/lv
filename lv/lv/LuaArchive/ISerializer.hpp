@@ -34,7 +34,7 @@ namespace lv::lua::archive
 	{
 	public:
 		UnmatchedLuaType(int given, int expected)
-			: std::runtime_error(std::string("unmatched lua type:") +
+			: std::runtime_error(std::string("unmatched lua type: ") +
 				lua_typename(nullptr, expected) + " expected, " +
 				lua_typename(nullptr, given) + " given.")
 		{

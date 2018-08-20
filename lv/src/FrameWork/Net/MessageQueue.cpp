@@ -159,7 +159,7 @@ namespace lv::net
 				if (messages_.size() <= uint32_t(index))
 				{
 					size_t num = index + 1 - messages_.size();
-					LV_ENSURE(num < 100000, "invalid index:" + std::to_string(index));
+					LV_ENSURE(num < 100000, "invalid index: " + std::to_string(index));
 
 					for (size_t i = 0; i < num; ++i)
 					{
