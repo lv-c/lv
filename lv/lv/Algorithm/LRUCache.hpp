@@ -14,11 +14,13 @@
 
 #include <functional>
 #include <map>
+#include <chrono>
+#include <limits>
+
 
 namespace lv
 {
-	template<class K, class D, class VAx = std::allocator<std::pair<K const, D> >, 
-		class M = std::map<K, LRUList<std::pair<K const, D>, VAx>::iterator> >
+	template<class K, class D>
 	class LRUCache
 	{
 	public:
@@ -26,10 +28,23 @@ namespace lv
 		using key_type = K;
 		using data_type = D;
 
-		using value_type = pair<key_type const, data_type>;
+		using clock_type = std::chrono::steady_clock;
+		using time_point = clock_type::time_point;
+		using duration = clock_type::duration;
 
-		using list_type = LRUList<value_type, VAx>;
-		using map_type = M;
+
+		struct value_type
+		{
+			key_type const	key;
+
+			data_type		data;
+
+			time_point		active_time;
+		};
+
+
+		using list_type = LRUList<value_type>;
+		using map_type = std::map<key_type, typename list_type::iterator>;
 
 		using iterator = typename list_type::iterator;
 		using const_iterator = typename list_type::const_iterator;
@@ -45,15 +60,30 @@ namespace lv
 
 		size_t		max_size_;
 
+		duration	timeout_;
+
 		removal_callback	callback_;
 
 	public:
 
-		LRUCache(size_t max_size, removal_callback callback = removal_callback())
-			: max_size_(max_size)
-			, callback_(callback)
+		explicit LRUCache(removal_callback callback = removal_callback())
+			: max_size_(std::numeric_limits<size_t>::max())
+			, timeout_(duration::max())
+			, callback_(std::move(callback))
 		{
 		}
+
+		void	set_max_size(size_t max_size)
+		{
+			this->max_size_ = max_size;
+		}
+
+		void	set_timeout(duration timeout)
+		{
+			this->timeout_ = timeout;
+		}
+
+
 
 		size_t	size() const
 		{
@@ -85,27 +115,35 @@ namespace lv
 			return list_.end();
 		}
 
-		/**
-		 * return false if the key already exists
-		 */
-		pair<iterator, bool>	insert(key_type const & key, data_type const & data)
+		// return false if the key already exists or max_size_ == 0
+		std::pair<iterator, bool>	insert(key_type const & key, data_type data)
 		{
 			map_type::iterator map_it = map_.find(key);
 
 			if (map_it != map_.end())
 			{
-				return std::make_pair(map_it->second, false);
+				return { map_it->second, false };
 			}
 
-			list_type::iterator list_it = list_.insert(std::make_pair(key, data));
-			map_.insert(std::make_pair(key, list_it));
-
-			if (map_.size() > max_size_ && map_.size() > 1)
+			if (max_size_ == 0)
 			{
-				erase(list_.last().first);
+				list_.clear();
+				map_.clear();
+
+				return { end(), false };
 			}
 
-			return std::make_pair(list_it, true);
+			check_impl(max_size_ - 1);
+
+			list_type::iterator list_it = list_.insert({ key, std::move(data), clock_type::now() });
+			map_.emplace(key, list_it);
+
+			return { list_it, true };
+		}
+
+		void	check_timeout()
+		{
+			check_impl(max_size_);
 		}
 		
 		iterator	find(key_type const & key, bool touch = true)
@@ -115,7 +153,7 @@ namespace lv
 			{
 				if (touch)
 				{
-					list_.touch(map_it->second);
+					touch_impl(map_it->second);
 				}
 
 				return map_it->second;
@@ -133,7 +171,7 @@ namespace lv
 				it = insert(key, data_type()).first;
 			}
 
-			return it->second;
+			return it->data;
 		}
 
 		void	touch(key_type const & key)
@@ -141,7 +179,7 @@ namespace lv
 			map_type::iterator map_it = map_.find(key);
 			if (map_it != map_.end())
 			{
-				list_.touch(it->second);
+				touch_impl(it->second);
 			}
 		}
 
@@ -150,7 +188,7 @@ namespace lv
 			map_type::iterator map_it = map_.find(key);
 			if (map_it != map_.end())
 			{
-				data_type data = map_it->second->second;
+				data_type data = std::move(map_it->second->data);
 
 				list_.erase(map_it->second);
 				map_.erase(map_it);
@@ -160,6 +198,31 @@ namespace lv
 					callback_(key, data);
 				}
 			}
+		}
+
+	private:
+
+		void	check_impl(size_t max_size)
+		{
+			time_point now = clock_type::now();
+
+			while (!list_.empty())
+			{
+				if (list_.size() > max_size || now - list_.last().active_time > timeout_)
+				{
+					erase(list_.last().key);
+				}
+				else
+				{
+					break;
+				}
+			}
+		}
+
+		void	touch_impl(iterator it)
+		{
+			it->active_time = clock_type::now();
+			list_.touch(it);
 		}
 
 	};
