@@ -33,9 +33,9 @@ namespace lv
 		using iterator = typename list_type::iterator;
 		using const_iterator = typename list_type::const_iterator;
 
-		iterator	insert(T const & t)
+		iterator	insert(T t)
 		{
-			list_.push_front(t);
+			list_.push_front(std::move(t));
 			return list_.begin();
 		}
 
