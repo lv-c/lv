@@ -152,7 +152,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalOptions>/D "NOMINMAX"  /D "_CRT_SECURE_NO_WARNINGS" /D "_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING" /D "_WIN32_WINNT=0x0501" %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/D "NOMINMAX"  /D "_CRT_SECURE_NO_WARNINGS" /D "_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING" /D "_SILENCE_FPOS_SEEKPOS_DEPRECATION_WARNING" /D "_WIN32_WINNT=0x0501" %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>Async</ExceptionHandling>
@@ -206,7 +206,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalOptions>/D "NOMINMAX" /D "_CRT_SECURE_NO_WARNINGS" /D "_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING" /D "_WIN32_WINNT=0x0501" %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/D "NOMINMAX" /D "_CRT_SECURE_NO_WARNINGS" /D "_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING" /D "_SILENCE_FPOS_SEEKPOS_DEPRECATION_WARNING" /D "_WIN32_WINNT=0x0501" %(AdditionalOptions)</AdditionalOptions>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
