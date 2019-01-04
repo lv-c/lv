@@ -122,7 +122,6 @@
       <AdditionalOptions>/wd 4819 /D "NOMINMAX" /D "_SCL_SECURE_NO_WARNINGS" /D "_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING" /D "_SILENCE_CXX17_ALLOCATOR_VOID_DEPRECATION_WARNING" /D "_WIN32_WINNT=0x0501" %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader />

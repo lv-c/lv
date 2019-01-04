@@ -129,7 +129,6 @@
       <AdditionalOptions>/D "NOMINMAX"  /D "_CRT_SECURE_NO_WARNINGS" /D "_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING" /D "_SILENCE_FPOS_SEEKPOS_DEPRECATION_WARNING" /D "_WIN32_WINNT=0x0501" %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
       <ExceptionHandling>Async</ExceptionHandling>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -221,7 +220,6 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
-      <AdditionalOptions>/verbose:lib %(AdditionalOptions)</AdditionalOptions>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
