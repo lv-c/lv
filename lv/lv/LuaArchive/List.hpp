@@ -10,19 +10,4 @@
 
 #pragma once
 
-#include <list>
-
-#include <lv/LuaArchive/Tags.hpp>
 #include <lv/ContainerAdaptor/List.hpp>
-
-
-namespace lv::lua::archive
-{
-	template<class T, class Ax>
-	struct object_tag<std::list<T, Ax> >
-		: sequence_tag
-	{
-	};
-
-
-}

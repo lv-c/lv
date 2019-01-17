@@ -77,28 +77,28 @@ namespace lv
 		{
 		}
 
-		DSTree(DSTree const & rhs)
+		DSTree(DSTree const & other)
 		{
-			*this = rhs;	
+			*this = other;	
 		}
 
-		DSTree const & operator = (DSTree const & rhs)
+		DSTree const & operator = (DSTree const & other)
 		{
-			if (this != &rhs)
+			if (this != &other)
 			{
-				key_ = rhs.key_;
-				pred_ = rhs.pred_;
+				key_ = other.key_;
+				pred_ = other.pred_;
 
-				if (rhs.data_)
+				if (other.data_)
 				{
-					data_ = std::make_shared<data_type>(*rhs.data_);
+					data_ = std::make_shared<data_type>(*other.data_);
 				}
 				else
 				{
 					data_.reset();
 				}
 
-				children_ = rhs.children_;
+				children_ = other.children_;
 
 				for (value_type & v : children_)
 				{
@@ -307,44 +307,44 @@ namespace lv
 		}
 
 
-		bool operator == (DSTree const & rhs) const
+		bool operator == (DSTree const & other) const
 		{
-			if (size() != rhs.size())
+			if (size() != other.size())
 			{
 				return false;
 			}
 
 			if (parent_ == nullptr)
 			{
-				if (rhs.parent_ != nullptr)
+				if (other.parent_ != nullptr)
 				{
 					return false;
 				}
 			}
 			else
 			{
-				if (key_ != rhs.key_)
+				if (key_ != other.key_)
 				{
 					return false;
 				}
 
-				 if (data_ && rhs.data_)
+				 if (data_ && other.data_)
 				 {
-					 if (*data_ != *rhs.data_)
+					 if (*data_ != *other.data_)
 					 {
 						 return false;
 					 }
 				 }
 				 else
 				 {
-					 if (bool(data_) != bool(rhs.data_))
+					 if (bool(data_) != bool(other.data_))
 					 {
 						 return false;
 					 }
 				 }
 			}
 
-			return std::equal(begin(), end(), rhs.begin());
+			return std::equal(begin(), end(), other.begin());
 		}
 	};
 }

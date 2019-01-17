@@ -61,15 +61,15 @@ namespace lv
 		}
 
 
-		TimeSpan & operator += (TimeSpan const & rhs)
+		TimeSpan & operator += (TimeSpan const & other)
 		{
-			seconds_ += rhs.seconds_;
+			seconds_ += other.seconds_;
 			return *this;
 		}
 
-		TimeSpan & operator -= (TimeSpan const & rhs)
+		TimeSpan & operator -= (TimeSpan const & other)
 		{
-			seconds_ -= rhs.seconds_;
+			seconds_ -= other.seconds_;
 			return *this;
 		}
 	};

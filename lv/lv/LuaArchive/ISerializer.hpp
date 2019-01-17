@@ -13,7 +13,7 @@
 #include <lv/LuaArchive/Fwd.hpp>
 #include <lv/LuaArchive/Tags.hpp>
 #include <lv/LuaArchive/Common.hpp>
-#include <lv/ContainerAdaptor/Adaptor.hpp>
+#include <lv/ContainerAdaptor/Operations.hpp>
 #include <lv/Ensure.hpp>
 
 #include <luabind/object.hpp>
@@ -143,7 +143,7 @@ namespace lv::lua::archive
 		}
 
 		template<class T>
-		void	load_impl(luabind::object const & obj, T & t, sequence_tag)
+		void	load_impl(luabind::object const & obj, T & t, container_adaptor::container_tag)
 		{
 			expect_obj_type(obj, LUA_TTABLE);
 
@@ -155,7 +155,7 @@ namespace lv::lua::archive
 				typename boost::range_value<T>::type item;
 
 				load_item_adl(it, item);
-				lv::insert(t, std::move(item));
+				lv::push(t, std::move(item));
 			}
 		}
 
@@ -183,7 +183,7 @@ namespace lv::lua::archive
 	template<class T>
 	void	load(luabind::object const & obj, T & t)
 	{
-		detail::load_impl(obj, t, object_tag_t<T>());
+		detail::load_impl(obj, t, object_tag<T>());
 	}
 
 	template<class T>

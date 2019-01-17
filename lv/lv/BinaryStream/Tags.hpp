@@ -10,9 +10,9 @@
 
 #pragma once
 
-#include <boost/mpl/identity.hpp>
+#include <lv/ContainerAdaptor/Tags.hpp>
 
-#include <type_traits>
+#include <boost/range/value_type.hpp>
 
 
 namespace lv::bstream
@@ -31,17 +31,13 @@ namespace lv::bstream
 
 	// tags
 
-#define DEFINE_tag(tag) \
-	struct tag : boost::mpl::identity<tag> {}
+	struct primitive_tag {};
+	struct primitive_buffer_tag {};	// copyable in continuous memory (vector<PodType>, (w)string ...)
+	struct range_tag {};			// list, boost::iterator_range, boost::sub_range ...
+	struct unknown_tag {};
 
-	DEFINE_tag(primitive_tag);
-	DEFINE_tag(primitive_buffer_tag);	// copyable in continuous memory (vector<PodType>, (w)string ...)
-	DEFINE_tag(range_tag);		// list, boost::iterator_range, boost::sub_range ...
-	DEFINE_tag(unknown_tag);
 
-#undef DEFINE_tag
-
-	template<class T, class Enabled = void>
+	template<class T, class = void>
 	struct object_tag : unknown_tag {};
 
 	template<class T>
@@ -63,7 +59,37 @@ namespace lv::bstream
 	};
 
 
-	template<class T, class Enabled = void>
-	using object_tag_t = typename object_tag<T, Enabled>::type;
+
+	namespace detail
+	{
+		template<class T>
+		struct is_range_value_primitive
+			: is_primitive<typename boost::range_value<T>::type>
+		{
+		};
+
+		template<class T>
+		constexpr bool	is_contiguous_primitive_sequence_v =
+			std::conjunction<
+				std::is_base_of<
+					container_adaptor::contiguous_sequence_tag,
+					container_adaptor::container_category<T>
+				>,
+				is_range_value_primitive<T>
+			>::value;
+	}
+
+	template<class T>
+	struct object_tag<T, std::enable_if_t<detail::is_contiguous_primitive_sequence_v<T> > >
+		: primitive_buffer_tag
+	{
+	};
+
+	template<class T>
+	struct object_tag<T, std::enable_if_t<container_adaptor::is_container_v<T>
+		&& !detail::is_contiguous_primitive_sequence_v<T> > >
+		: range_tag
+	{
+	};
 
 }

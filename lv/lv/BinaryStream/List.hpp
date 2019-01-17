@@ -10,17 +10,4 @@
 
 #pragma once
 
-#include <lv/BinaryStream/Tags.hpp>
-
-#include <list>
-
-
-namespace lv::bstream
-{
-	template<class T, class Ax>
-	struct object_tag<std::list<T, Ax> >
-		: range_tag
-	{
-	};
-
-}
+#include <lv/ContainerAdaptor/List.hpp>

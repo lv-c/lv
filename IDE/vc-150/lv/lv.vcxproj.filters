@@ -718,9 +718,6 @@
     <ClInclude Include="..\..\..\lv\lv\LuaArchive\Interprocess\Vector.hpp">
       <Filter>LuaArchive\Interprocess\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\lv\lv\ContainerAdaptor\Adaptor.hpp">
-      <Filter>ContainerAdaptor\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\ContainerAdaptor\Deque.hpp">
       <Filter>ContainerAdaptor\Header Files</Filter>
     </ClInclude>
@@ -789,6 +786,30 @@
     </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\Algorithm\String.hpp">
       <Filter>Algorithm\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\ContainerAdaptor\Tags.hpp">
+      <Filter>ContainerAdaptor\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\ContainerAdaptor\Operations.hpp">
+      <Filter>ContainerAdaptor\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\ContainerAdaptor\String.hpp">
+      <Filter>ContainerAdaptor\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\ContainerAdaptor\Map.hpp">
+      <Filter>ContainerAdaptor\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\ContainerAdaptor\Mapping.hpp">
+      <Filter>ContainerAdaptor\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\ContainerAdaptor\Set.hpp">
+      <Filter>ContainerAdaptor\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\ContainerAdaptor\Interprocess\String.hpp">
+      <Filter>ContainerAdaptor\Interprocess\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\ContainerAdaptor\Array.hpp">
+      <Filter>ContainerAdaptor\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

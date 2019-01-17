@@ -236,7 +236,7 @@ namespace lv::lua::archive
 		}
 
 		template<class T>
-		void	save_impl(std::ostream & os, T const & t, size_t level, sequence_tag)
+		void	save_impl(std::ostream & os, T const & t, size_t level, container_adaptor::container_tag)
 		{
 			save_range(os, std::begin(t), std::end(t), level);
 		}
@@ -258,7 +258,7 @@ namespace lv::lua::archive
 	template<class T>
 	void	save(std::ostream & os, T const & t, size_t level)
 	{
-		detail::save_impl(os, t, level, object_tag_t<T>());
+		detail::save_impl(os, t, level, object_tag<T>());
 	}
 
 	template<class T>

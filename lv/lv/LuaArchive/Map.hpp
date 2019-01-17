@@ -10,19 +10,5 @@
 
 #pragma once
 
-#include <map>
-
-#include <lv/LuaArchive/Tags.hpp>
 #include <lv/LuaArchive/Pair.hpp>
-
-
-namespace lv::lua::archive
-{
-	template<class K, class V, class Pr, class Ax>
-	struct object_tag<std::map<K, V, Pr, Ax> >
-		: sequence_tag
-	{
-	};
-
-
-}
+#include <lv/ContainerAdaptor/Map.hpp>

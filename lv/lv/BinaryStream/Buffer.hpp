@@ -16,9 +16,6 @@
 
 namespace lv::bstream
 {
-	template<>
-	struct object_tag<Buffer> : primitive_buffer_tag {};			//
-
 	template<class T>
 	struct object_tag<BufferRefT<T>, std::enable_if_t<is_primitive_v<T> > > 
 		: primitive_buffer_tag 

@@ -74,7 +74,7 @@ namespace lv::bstream
 	template<class OStream, class T>
 	void	save(OStream & os, T const & t)
 	{
-		detail::save_impl(os, t, object_tag_t<T>());
+		detail::save_impl(os, t, object_tag<T>());
 	}
 
 }

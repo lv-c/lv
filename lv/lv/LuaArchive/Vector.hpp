@@ -10,17 +10,4 @@
 
 #pragma once
 
-#include <vector>
-
-#include <lv/LuaArchive/Tags.hpp>
 #include <lv/ContainerAdaptor/Vector.hpp>
-
-namespace lv::lua::archive
-{
-	template<class T, class Ax>
-	struct object_tag<std::vector<T, Ax> >
-		: sequence_tag
-	{
-	};
-
-}

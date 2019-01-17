@@ -55,10 +55,10 @@ namespace lv::log
 			{
 			}
 
-			Proxy(Proxy && rhs)
-				: log_(rhs.log_)
+			Proxy(Proxy && other)
+				: log_(other.log_)
 			{
-				rhs.log_ = nullptr;
+				other.log_ = nullptr;
 			}
 
 			~Proxy() noexcept(false)
