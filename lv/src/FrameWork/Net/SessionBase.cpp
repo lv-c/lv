@@ -96,8 +96,8 @@ namespace lv::net
 
 	void SessionBase::shutdown()
 	{
-		boost::system::error_code error;
-		socket_->get().shutdown(asio::ip::tcp::socket::shutdown_both, error);
+		write_buffers_.shutdown();
+		check_write();
 	}
 
 	void SessionBase::close()
@@ -306,7 +306,9 @@ namespace lv::net
 
 	void SessionBase::check_write()
 	{
-		if (Buffer const * buf = write_buffers_.lock())
+		bool need_shutdown;
+
+		if (Buffer const * buf = write_buffers_.lock(&need_shutdown))
 		{
 			auto handler = [shared_this = shared_from_this(), buf](boost::system::error_code const & error, size_t) {
 				return shared_this->handle_write(*buf, error);
@@ -319,6 +321,14 @@ namespace lv::net
 			else
 			{
 				asio::async_write(socket_->get(), asio::buffer(*buf), std::move(handler));
+			}
+		}
+		else
+		{
+			if (need_shutdown)
+			{
+				boost::system::error_code error;
+				socket_->get().shutdown(asio::ip::tcp::socket::shutdown_both, error);
 			}
 		}
 	}

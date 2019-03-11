@@ -55,22 +55,29 @@ namespace lv::net
 		static constexpr size_t		NullLock = -1;
 
 
-		size_t		write_index_ = 0;
+		size_t		write_index_;
 
-		size_t		lock_index_ = NullLock;
+		size_t		lock_index_;
+
+
+		bool		shutdown_;
 
 
 		std::mutex	mutex_;
 
 	public:
 
+		DoubleBuffer();
+
 		void	reset();
 
 
 		void	put(ConstBufferRef buf);
 
+		void	shutdown();
 
-		Buffer const *	lock();
+
+		Buffer const *	lock(bool * need_shutdown = nullptr);
 
 		void	unlock(Buffer const & buf);
 

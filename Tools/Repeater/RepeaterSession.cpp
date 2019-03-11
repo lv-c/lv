@@ -106,11 +106,9 @@ void RepeaterSession::exit()
 	if(dest_session_)
 	{
 		dest_session_->shutdown();
-		dest_session_->close();
 	}
 
 	shutdown();
-	close();
 }
 
 void RepeaterSession::on_error(ErrorType type, boost::system::error_code const & error)

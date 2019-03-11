@@ -189,7 +189,7 @@ namespace lv::net
 
 		ContextPtr context = std::make_shared<Context>(context_->io_wrapper());
 
-		dest_session_ = std::make_unique<DestSession>(context);
+		dest_session_ = std::make_shared<DestSession>(context);
 
 		BOOST_ASSERT(connections_.empty());
 
@@ -355,7 +355,10 @@ namespace lv::net
 
 	PacketProxy Socks5ServerSession::send()
 	{
-		return PacketProxy(std::make_shared<Buffer>(1024), [this](ConstBufferRef buf) { start_write(buf); });
+		auto buf = std::make_shared<Buffer>();
+		buf->reserve(1024);
+
+		return PacketProxy(buf, [this](ConstBufferRef buf) { start_write(buf); });
 	}
 
 }

@@ -36,6 +36,11 @@ namespace lv::net
 		return buf_;
 	}
 
+	DoubleBuffer::DoubleBuffer()
+	{
+		reset();
+	}
+
 	//
 	void DoubleBuffer::reset()
 	{
@@ -46,28 +51,54 @@ namespace lv::net
 			buf.clear();
 		}
 
+		write_index_ = 0;
 		lock_index_ = NullLock;
+
+		shutdown_ = false;
 	}
 
 	void DoubleBuffer::put(ConstBufferRef buf)
 	{
 		std::lock_guard<std::mutex> lock(mutex_);
 
-		buffer::append(buffers_[write_index_], buf);
+		if (!shutdown_)
+		{
+			buffer::append(buffers_[write_index_], buf);
+		}
 	}
 
-	Buffer const * DoubleBuffer::lock()
+	void DoubleBuffer::shutdown()
+	{
+		std::lock_guard<std::mutex> lock(mutex_);
+
+		shutdown_ = true;
+	}
+
+	Buffer const * DoubleBuffer::lock(bool * need_shutdown /* = nullptr */)
 	{
 		std::lock_guard<std::mutex> lock(mutex_);
 
 		Buffer const * ret = nullptr;
+		bool ns = false;
 
-		if (lock_index_ == NullLock && !buffers_[write_index_].empty())
+		if (lock_index_ == NullLock)
 		{
-			lock_index_ = write_index_;
-			write_index_ = 1 - write_index_;
+			if (!buffers_[write_index_].empty())
+			{
+				lock_index_ = write_index_;
+				write_index_ = 1 - write_index_;
 
-			ret = &buffers_[lock_index_];
+				ret = &buffers_[lock_index_];
+			}
+			else
+			{
+				ns = shutdown_;
+			}
+		}
+
+		if (need_shutdown != nullptr)
+		{
+			*need_shutdown = ns;
 		}
 
 		return ret;

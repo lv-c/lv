@@ -1,8 +1,7 @@
 
 start_port = 5555
 
-all_ip = true
+all_ip = false
 
 auth = {
-	{'lv0', 'prwvfbuk'}
 }
