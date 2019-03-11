@@ -11,8 +11,14 @@
 #include "UnitTest.hpp"
 
 #include <lv/BinaryStream.hpp>
+#include <lv/BinaryStream/Array.hpp>
+#include <lv/BinaryStream/Vector.hpp>
+#include <lv/BinaryStream/String.hpp>
+#include <lv/BinaryStream/Buffer.hpp>
+#include <lv/BinaryStream/Interprocess/String.hpp>
 
 using namespace lv;
+
 
 struct Test
 {
@@ -57,6 +63,19 @@ void test_binary_stream_impl(bool switch_endian)
 
 BOOST_AUTO_TEST_CASE(test_binary_stream)
 {
+	static_assert(std::is_base_of_v<bstream::primitive_buffer_tag, bstream::object_tag<std::array<int, 1> > >);
+	static_assert(!std::is_base_of_v<bstream::primitive_buffer_tag, bstream::object_tag<std::array<std::string, 1> > >);
+
+	static_assert(std::is_base_of_v<bstream::primitive_buffer_tag, bstream::object_tag<std::vector<int> > >);
+	static_assert(std::is_base_of_v<bstream::primitive_buffer_tag, bstream::object_tag<Buffer> >);
+	static_assert(std::is_base_of_v<bstream::primitive_buffer_tag, bstream::object_tag<std::string> >);
+
+	static_assert(std::is_base_of_v<bstream::primitive_buffer_tag, bstream::object_tag<boost::interprocess::string> >);
+
+	static_assert(!std::is_base_of_v<bstream::primitive_buffer_tag, bstream::object_tag<std::vector<std::string> > >);
+	static_assert(std::is_base_of_v<bstream::range_tag, bstream::object_tag<std::vector<std::string> > >);
+
+
 	test_binary_stream_impl(true);
 	test_binary_stream_impl(false);
 }

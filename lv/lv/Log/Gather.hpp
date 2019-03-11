@@ -27,9 +27,9 @@ namespace lv::log
 	template<class Pred>
 	class UnaryFilter
 	{
-		Pred	pred_;
+		int		lvl_;
 
-		int	lvl_;
+		Pred	pred_;
 
 	public:
 

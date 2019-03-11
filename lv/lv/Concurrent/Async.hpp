@@ -10,6 +10,7 @@
 
 #pragma once
 
+#include <lv/lvlib2.hpp>
 #include <lv/Concurrent/Collector.hpp>
 
 #include <boost/asio/io_context.hpp>

@@ -10,20 +10,16 @@
 
 #pragma once
 
-#include <lv/ContainerAdaptor/Adaptor.hpp>
+#include <lv/ContainerAdaptor/Tags.hpp>
 
 #include <deque>
 
-namespace lv
-{
-	template<class T, class Ax, class V>
-	void	insert(std::deque<T, Ax> & t, V && v)
-	{
-		t.push_back(std::forward<V>(v));
-	}
 
-	template<class T, class Ax, class V>
-	void	reserve(std::deque<T, Ax> & /* t */, size_t /* size */)
+namespace lv::container_adaptor
+{
+	template<class T, class Ax>
+	struct container_category<std::deque<T, Ax> >
+		: virtual public back_insertion_sequence_tag
 	{
-	}
+	};
 }

@@ -87,15 +87,15 @@ namespace lv::rpc
 			{
 			}
 
-			PrivateHandler(PrivateHandler && rhs)
-				: client_(rhs.client_)
-				, buffer_(rhs.buffer_)
-				, oa_(std::move(rhs.oa_))
-				, request_id_(rhs.request_id_)
+			PrivateHandler(PrivateHandler && other)
+				: client_(other.client_)
+				, buffer_(other.buffer_)
+				, oa_(std::move(other.oa_))
+				, request_id_(other.request_id_)
 				, sent_(false)
 			{
-				BOOST_ASSERT(!rhs.sent_);
-				rhs.sent_ = true;
+				BOOST_ASSERT(!other.sent_);
+				other.sent_ = true;
 			}
 
 			~PrivateHandler()

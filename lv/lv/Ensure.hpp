@@ -16,8 +16,6 @@
 #include <stdexcept>
 #include <type_traits>
 
-#include <boost/assert.hpp>
-
 
 namespace lv::detail
 {
@@ -43,7 +41,6 @@ namespace lv::detail
 
 #define LV_ENSURE(check, msg)			\
 	if (!(check)) {						\
-		BOOST_ASSERT(false);			\
 		lv::detail::ensure_throw(msg);	\
 	}
 

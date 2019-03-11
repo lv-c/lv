@@ -33,7 +33,7 @@ namespace lv
 	they don't share an engine). """
 	*/
 
-	template<class T, class Enabled = void>
+	template<class T, class = void>
 	struct RandomTraits;
 
 	template<class T>

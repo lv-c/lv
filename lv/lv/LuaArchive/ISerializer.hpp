@@ -13,7 +13,8 @@
 #include <lv/LuaArchive/Fwd.hpp>
 #include <lv/LuaArchive/Tags.hpp>
 #include <lv/LuaArchive/Common.hpp>
-#include <lv/ContainerAdaptor/Adaptor.hpp>
+#include <lv/ContainerAdaptor/Operations.hpp>
+#include <lv/Ensure.hpp>
 
 #include <luabind/object.hpp>
 
@@ -88,9 +89,29 @@ namespace lv::lua::archive
 		template<>
 		struct primitive_type<bool> : boost::mpl::int_<LUA_TBOOLEAN> {};
 
+		template<size_t N>
+		struct primitive_type<char[N]> : boost::mpl::int_<LUA_TSTRING> {};
+
 		template<>
 		struct primitive_type<std::string> : boost::mpl::int_<LUA_TSTRING> {};
 
+
+		template<size_t N>
+		void	load_impl(luabind::object const & obj, char (&t)[N], primitive_tag)
+		{
+			expect_obj_type(obj, primitive_type<char[N]>::value);
+
+			lua_State * L = obj.interpreter();
+			obj.push(L);
+			luabind::detail::stack_pop pop(L, 1);
+
+			int index = -1;
+			size_t size = lua_rawlen(L, index);
+			LV_ENSURE(size < N, std::overflow_error("string buffer too small"));
+
+			std::copy_n(lua_tostring(L, index), size, t);
+			t[size] = '\0';
+		}
 
 		template<class T>
 		void	load_impl(luabind::object const & obj, T & t, primitive_tag)
@@ -122,7 +143,7 @@ namespace lv::lua::archive
 		}
 
 		template<class T>
-		void	load_impl(luabind::object const & obj, T & t, sequence_tag)
+		void	load_impl(luabind::object const & obj, T & t, container_adaptor::container_tag)
 		{
 			expect_obj_type(obj, LUA_TTABLE);
 
@@ -134,7 +155,7 @@ namespace lv::lua::archive
 				typename boost::range_value<T>::type item;
 
 				load_item_adl(it, item);
-				lv::insert(t, std::move(item));
+				lv::push(t, std::move(item));
 			}
 		}
 
@@ -162,7 +183,7 @@ namespace lv::lua::archive
 	template<class T>
 	void	load(luabind::object const & obj, T & t)
 	{
-		detail::load_impl(obj, t, object_tag_t<T>());
+		detail::load_impl(obj, t, object_tag<T>());
 	}
 
 	template<class T>

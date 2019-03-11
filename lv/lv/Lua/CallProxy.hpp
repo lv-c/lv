@@ -40,14 +40,14 @@ namespace lv::lua
 			oss_ << fn << "(";
 		}
 
-		CallProxy(CallProxy && rhs)
-			: oss_(rhs.oss_)
-			, first_param_(rhs.first_param_)
-			, callback_(rhs.callback_)
-			, finished_(rhs.finished_)
+		CallProxy(CallProxy && other)
+			: oss_(other.oss_)
+			, first_param_(other.first_param_)
+			, callback_(other.callback_)
+			, finished_(other.finished_)
 		{
-			rhs.callback_ = Callback();
-			rhs.finished_ = true;
+			other.callback_ = Callback();
+			other.finished_ = true;
 		}
 
 		~CallProxy()

@@ -52,7 +52,7 @@ namespace lv
 
 
 
-	// for ( streaming
+	// for streaming
 	template<class T>
 	struct WidenInt
 	{
@@ -68,7 +68,7 @@ namespace lv
 	};
 
 	template<>
-	struct WidenInt<uint8_t>		// unsigned char
+	struct WidenInt<uint8_t>	// unsigned char
 	{
 		using type = uint32_t;
 	};
@@ -108,5 +108,18 @@ namespace lv
 		obj.u = v;
 		return obj.t;
 	}
+
+
+	//
+	template<char c0, char c1, char c2, char c3>
+	struct fourcc
+	{
+		static constexpr uint32_t	value = (c0 << 24) | (c1 << 16) | (c2 << 8) | c3;
+	};
+
+
+	template<char c0, char c1, char c2, char c3>
+	constexpr uint32_t fourcc_v = fourcc<c0, c1, c2, c3>::value;
+
 }
 

@@ -10,17 +10,4 @@
 
 #pragma once
 
-#include <deque>
-
-#include <lv/LuaArchive/Tags.hpp>
 #include <lv/ContainerAdaptor/Deque.hpp>
-
-namespace lv::lua::archive
-{
-	template<class T, class Ax>
-	struct object_tag<std::deque<T, Ax> >
-		: sequence_tag
-	{
-	};
-
-}

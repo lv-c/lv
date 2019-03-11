@@ -96,10 +96,10 @@ namespace lv::flow
 		{
 		}
 
-		ScopedConnection & operator = (Connection const & rhs)
+		ScopedConnection & operator = (Connection const & other)
 		{
 			disconnect();
-			Connection::operator = (rhs);
+			Connection::operator = (other);
 
 			return *this;
 		}

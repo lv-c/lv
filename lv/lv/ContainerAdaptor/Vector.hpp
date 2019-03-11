@@ -10,15 +10,17 @@
 
 #pragma once
 
-#include <lv/ContainerAdaptor/Adaptor.hpp>
+#include <lv/ContainerAdaptor/Tags.hpp>
 
 #include <vector>
 
-namespace lv
+
+namespace lv::container_adaptor
 {
-	template<class T, class Ax, class V>
-	void	insert(std::vector<T, Ax> & t, V && v)
+	template<class T, class Ax>
+	struct container_category<std::vector<T, Ax> >
+		: virtual public contiguous_sequence_tag
+		, virtual public back_insertion_sequence_tag
 	{
-		t.push_back(std::forward<V>(v));
-	}
+	};
 }

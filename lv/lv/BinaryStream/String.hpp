@@ -10,14 +10,4 @@
 
 #pragma once
 
-#include <lv/BinaryStream/Tags.hpp>
-
-#include <string>
-
-
-namespace lv::bstream
-{
-	template<class C, class Tr, class Ax>
-	struct object_tag<std::basic_string<C, Tr, Ax> > : primitive_buffer_tag {};
-
-}
+#include <lv/ContainerAdaptor/String.hpp>

@@ -10,7 +10,8 @@
 
 #pragma once
 
-#include <lv/ContainerAdaptor/Adaptor.hpp>
+#include <lv/ContainerAdaptor/Operations.hpp>
+#include <lv/ContainerAdaptor/String.hpp>
 
 #include <boost/archive/iterators/binary_from_base64.hpp>
 #include <boost/archive/iterators/base64_from_binary.hpp>
@@ -35,7 +36,7 @@ namespace lv::algo
 
 		for (size_t i = 0; i < pad_num; ++i)
 		{
-			lv::push_back(dest, '=');
+			lv::push(dest, '=');
 		}
 	}
 

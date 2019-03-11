@@ -26,7 +26,7 @@ namespace lv::math
 	float const PId4	=	0.78539816f;
 
 
-	template<class T, class Enabled = void>
+	template<class T, class = void>
 	struct FloatType 
 		: boost::mpl::identity<float> 
 	{

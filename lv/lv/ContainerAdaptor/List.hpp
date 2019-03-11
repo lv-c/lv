@@ -10,20 +10,16 @@
 
 #pragma once
 
-#include <lv/ContainerAdaptor/Adaptor.hpp>
+#include <lv/ContainerAdaptor/Tags.hpp>
 
 #include <list>
 
-namespace lv
-{
-	template<class T, class Ax, class V>
-	void	insert(std::list<T, Ax> & t, V && v)
-	{
-		t.push_back(std::forward<V>(v));
-	}
 
-	template<class T, class Ax, class V>
-	void	reserve(std::list<T, Ax> & /* t */, size_t /* size */)
+namespace lv::container_adaptor
+{
+	template<class T, class Ax>
+	struct container_category<std::list<T, Ax> >
+		: virtual public back_insertion_sequence_tag
 	{
-	}
+	};
 }

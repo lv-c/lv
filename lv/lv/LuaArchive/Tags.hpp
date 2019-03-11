@@ -10,7 +10,7 @@
 
 #pragma once
 
-#include <boost/mpl/identity.hpp>
+#include <lv/ContainerAdaptor/Tags.hpp>
 
 #include <string>
 #include <type_traits>
@@ -19,15 +19,9 @@
 namespace lv::lua::archive
 {
 
-#define DEFINE_tag(tag) \
-	struct tag : boost::mpl::identity<tag> {}
-
-	DEFINE_tag(primitive_tag);
-	DEFINE_tag(enum_tag);
-	DEFINE_tag(sequence_tag);
-	DEFINE_tag(unknown_tag);
-
-#undef DEFINE_tag
+	struct primitive_tag {};
+	struct enum_tag {};
+	struct unknown_tag {};
 
 
 	// arithmetic type or enum type or string type
@@ -62,7 +56,7 @@ namespace lv::lua::archive
 
 
 
-	template<class T, class Enabled = void>
+	template<class T, class = void>
 	struct object_tag : unknown_tag {};
 
 	template<class T>
@@ -77,8 +71,11 @@ namespace lv::lua::archive
 	{
 	};
 
-
-	template<class T, class Enabled = void>
-	using object_tag_t = typename object_tag<T, Enabled>::type;
+	template<class T>
+	struct object_tag<T, std::enable_if_t<
+		container_adaptor::is_container_v<T> && !is_primitive_v<T> > >
+		: container_adaptor::container_category<T>
+	{
+	};
 
 }

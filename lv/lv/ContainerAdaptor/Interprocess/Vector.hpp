@@ -10,21 +10,17 @@
 
 #pragma once
 
-#include <lv/ContainerAdaptor/Adaptor.hpp>
+#include <lv/ContainerAdaptor/Tags.hpp>
 
 #include <boost/interprocess/containers/vector.hpp>
 
-namespace lv
-{
-	template<class T, class Ax, class V>
-	void	insert(boost::interprocess::vector<T, Ax> & t, V && v)
-	{
-		t.push_back(std::forward<V>(v));
-	}
 
+namespace lv::container_adaptor
+{
 	template<class T, class Ax>
-	void	reserve(boost::interprocess::vector<T, Ax> & t, size_t size)
+	struct container_category<boost::interprocess::vector<T, Ax> >
+		: virtual public contiguous_sequence_tag
+		, virtual public back_insertion_sequence_tag
 	{
-		t.reserve(size);
-	}
+	};
 }

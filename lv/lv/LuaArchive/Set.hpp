@@ -10,17 +10,4 @@
 
 #pragma once
 
-#include <set>
-
-#include <lv/LuaArchive/Tags.hpp>
-
-
-namespace lv::lua::archive
-{
-	template<class T, class Pr, class Ax>
-	struct object_tag<std::set<T, Pr, Ax> >
-		: sequence_tag
-	{
-	};
-
-}
+#include <lv/ContainerAdaptor/Set.hpp>

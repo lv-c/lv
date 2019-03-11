@@ -13,7 +13,7 @@
 #include <lv/lvlib2.hpp>
 #include <lv/LuaArchive/Tags.hpp>
 #include <lv/LuaArchive/Common.hpp>
-#include <lv/ContainerAdaptor/Adaptor.hpp>
+#include <lv/ContainerAdaptor/Operations.hpp>
 #include <lv/Buffer.hpp>
 #include <lv/Ensure.hpp>
 
@@ -278,7 +278,7 @@ namespace lv::lua::archive
 		// sequence_tag
 
 		template<class T>
-		void	load_impl(Parser & parser, T & t, sequence_tag)
+		void	load_impl(Parser & parser, T & t, container_adaptor::container_tag)
 		{
 			parser >> symbol('{');
 
@@ -289,7 +289,7 @@ namespace lv::lua::archive
 				typename boost::range_value<T>::type item;
 
 				load_item(parser, index++, item);
-				lv::insert(t, std::move(item));
+				lv::push(t, std::move(item));
 			}
 		}
 	}
@@ -309,8 +309,7 @@ namespace lv::lua::archive
 	template<class T>
 	void	load(Parser & parser, T & t)
 	{
-		detail::load_impl(parser, t, object_tag_t<T>());
+		detail::load_impl(parser, t, object_tag<T>());
 	}
-
 
 }
