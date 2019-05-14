@@ -20,6 +20,7 @@
 #include <lv/LuaArchive/Mapping.hpp>
 #include <lv/LuaArchive/Array.hpp>
 #include <lv/LuaArchive/NonintrusiveOptional.hpp>
+#include <lv/LuaArchive/BinaryObject.hpp>
 #include <lv/Lua/Exec.hpp>
 
 #include <boost/assign.hpp>
@@ -204,6 +205,8 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 	tree2.insert(str2, "xyy");
 	tree2.insert(str3, shared_ptr<string>());
 
+	uint64_t binary = 0x1234567887654321;
+
 	oa << boost::serialization::make_nvp("vertex", vertex) 
 		<< boost::serialization::make_nvp("number", num)
 		<< boost::serialization::make_nvp("mode", mode)
@@ -211,6 +214,7 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 		<< boost::serialization::make_nvp("que_to_map", que)
 		<< boost::serialization::make_nvp("mapping", mapping)
 		<< boost::serialization::make_nvp("arr", arr)
+		<< boost::serialization::make_nvp("binary", boost::serialization::make_binary_object(&binary, sizeof(binary)))
 		<< boost::serialization::make_nvp("tree", tree)
 		<< boost::serialization::make_nvp("tree2", tree2)
 	;
@@ -283,6 +287,7 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 		map<int, int> que_to_map;
 		Mapping<string, int> new_mapping;
 		auto optional_new_mapping = lv::serialization::make_optional(new_mapping);
+		uint64_t new_binary;
 
 		ia >> boost::serialization::make_nvp("vertex", new_vertex) 
 			>> boost::serialization::make_nvp("number", new_num)
@@ -291,6 +296,7 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 			>> boost::serialization::make_nvp("que_to_map", que_to_map)
 			>> boost::serialization::make_nvp("mapping", optional_new_mapping)
 			>> boost::serialization::make_nvp("arr", new_arr)
+			>> boost::serialization::make_nvp("binary", boost::serialization::make_binary_object(&new_binary, sizeof(new_binary)))
 			>> boost::serialization::make_nvp("tree", new_tree)
 			>> boost::serialization::make_nvp("tree2", new_tree2)
 		;
@@ -305,6 +311,7 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 		BOOST_CHECK_EQUAL(que_to_map[1], que[0]);
 		BOOST_CHECK_EQUAL(new_mapping.size(), 1u);
 		BOOST_CHECK_EQUAL(new_mapping.get_left(mapping_key), 1);
+		BOOST_CHECK_EQUAL(binary, new_binary);
 	}
 
 	{
@@ -320,6 +327,7 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 		Mapping<string, int> new_mapping;
 		auto optional_new_mapping = lv::serialization::make_optional(new_mapping);
 		array<string, 3> new_arr;
+		uint64_t new_binary;
 
 		ia >> boost::serialization::make_nvp("vertex", new_vertex) 
 			>> boost::serialization::make_nvp("number", new_num)
@@ -328,6 +336,7 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 			>> boost::serialization::make_nvp("que_to_map", que_to_map)
 			>> boost::serialization::make_nvp("mapping", optional_new_mapping)
 			>> boost::serialization::make_nvp("arr", new_arr)
+			>> boost::serialization::make_nvp("binary", boost::serialization::make_binary_object(&new_binary, sizeof(new_binary)))
 			// >> boost::serialization::make_nvp("tree", new_tree)
 			// >> boost::serialization::make_nvp("tree2", new_tree2)
 		;

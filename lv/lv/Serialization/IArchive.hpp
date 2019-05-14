@@ -15,6 +15,7 @@
 
 #include <boost/noncopyable.hpp>
 #include <boost/serialization/array_wrapper.hpp>
+#include <boost/archive/detail/check.hpp>
 
 #include <string>
 
@@ -43,6 +44,7 @@ namespace lv
 		template<class T>
 		IArchive & operator >> (T & t)
 		{
+			boost::archive::detail::check_const_loading<T>();
 			load(const_cast<std::remove_const_t<T> &>(t));
 			return *this;
 		}

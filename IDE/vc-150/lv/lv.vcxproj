@@ -327,6 +327,7 @@
     <ClInclude Include="..\..\..\lv\lv\Log\StringGather.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Log\Utility.hpp" />
     <ClInclude Include="..\..\..\lv\lv\LuaArchive\Array.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\LuaArchive\BinaryObject.hpp" />
     <ClInclude Include="..\..\..\lv\lv\LuaArchive\Common.hpp" />
     <ClInclude Include="..\..\..\lv\lv\LuaArchive\Deque.hpp" />
     <ClInclude Include="..\..\..\lv\lv\LuaArchive\DSTree.hpp" />
@@ -445,6 +446,7 @@
     <ClCompile Include="..\..\..\lv\src\lv\Graphics\Color.cpp" />
     <ClCompile Include="..\..\..\lv\src\lv\Graphics\Font.cpp" />
     <ClCompile Include="..\..\..\lv\src\lv\Graphics\FreeTypeFont.cpp" />
+    <ClCompile Include="..\..\..\lv\src\lv\LuaArchive\BinaryObject.cpp" />
     <ClCompile Include="..\..\..\lv\src\lv\LuaArchive\PlainISerializer.cpp" />
     <ClCompile Include="..\..\..\lv\src\lv\Lua\Exec.cpp" />
     <ClCompile Include="..\..\..\lv\src\lv\Lua\StackBalance.cpp" />

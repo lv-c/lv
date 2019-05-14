@@ -811,6 +811,9 @@
     <ClInclude Include="..\..\..\lv\lv\ContainerAdaptor\Array.hpp">
       <Filter>ContainerAdaptor\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\LuaArchive\BinaryObject.hpp">
+      <Filter>LuaArchive\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\lv\src\lv\Console.cpp">
@@ -866,6 +869,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\lv\src\lv\Concurrent\ThreadPool.cpp">
       <Filter>Concurrent\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lv\src\lv\LuaArchive\BinaryObject.cpp">
+      <Filter>LuaArchive\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
