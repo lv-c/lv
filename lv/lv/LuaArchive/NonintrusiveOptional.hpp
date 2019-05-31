@@ -10,8 +10,10 @@
 
 #pragma once
 
-#include <lv/LuaArchive/Fwd.hpp>
+#include <lv/LuaArchive/ISerializer.hpp>
+#include <lv/LuaArchive/PlainISerializer.hpp>
 #include <lv/Serialization/NonintrusiveOptional.hpp>
+
 
 namespace lv::lua::archive
 {

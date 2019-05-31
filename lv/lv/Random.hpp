@@ -19,10 +19,6 @@
 
 #include <ctime>
 
-#ifdef LV_PLATFORM_WINDOWS
-#include <Windows.h>
-#endif
-
 
 namespace lv
 {
@@ -69,11 +65,7 @@ namespace lv
 		Random(T min = std::numeric_limits<T>::min(), T max = std::numeric_limits<T>::max())
 			: die_(engine_type(), distribution_type(min, max))
 		{
-#ifdef LV_PLATFORM_WINDOWS
-			seed(clock() * rand() * GetTickCount());	// WINDOWS
-#else
-			seed(clock() * rand());
-#endif
+			seed(clock() * rand() * static_cast<uint32_t>(time(nullptr)));
 		}
 
 		void	seed(uint32_t value)

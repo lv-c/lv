@@ -2,6 +2,9 @@
 
 #ifdef LV_PLATFORM_WINDOWS
 
+#include <Windows.h>
+
+
 // see http://msdn.microsoft.com/en-us/library/xcb2z8hs.aspx
 
 #pragma pack(push,8)

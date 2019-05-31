@@ -15,10 +15,6 @@
 
 #ifdef LV_PLATFORM_WINDOWS
 
-#include <thread>
-
-#include <Windows.h>
-
 
 namespace lv
 {
