@@ -12,6 +12,7 @@
 
 #include <lv/Serialization/Serialization.hpp>
 #include <lv/Stream/IStreamProxy.hpp>
+#include <lv/Ensure.hpp>
 
 #include <boost/noncopyable.hpp>
 #include <boost/serialization/array_wrapper.hpp>
@@ -73,10 +74,8 @@ namespace lv
 				success = false;
 			}
 
-			if (!istream_ || !success)
-			{
-				throw boost::archive::archive_exception(boost::archive::archive_exception::input_stream_error);
-			}
+			LV_ENSURE(istream_ && success, boost::archive::archive_exception(
+				boost::archive::archive_exception::input_stream_error));
 		}
 
 		unsigned int	get_library_version() const

@@ -1,5 +1,6 @@
 #include <lv/FileSystem/RawFileReader.hpp>
 #include <lv/Exception.hpp>
+#include <lv/Ensure.hpp>
 
 #include <filesystem>
 #include <fstream>
@@ -17,10 +18,7 @@ namespace lv
 		std::string path = resolve(file);
 
 		std::ifstream infile(path, std::ios_base::binary);
-		if (!infile)
-		{
-			throw std::system_error(std::make_error_code(std::errc::io_error), "error opening file: " + file);
-		}
+		LV_ENSURE(infile, std::system_error(std::make_error_code(std::errc::io_error), "error opening file: " + file));
 
 		// get the size of the file
 		infile.seekg(0, std::ios_base::end);
@@ -38,10 +36,7 @@ namespace lv
 			buf->clear();
 		}
 
-		if (!infile)
-		{
-			throw std::system_error(std::make_error_code(std::errc::io_error), "error reading file : " + file);
-		}
+		LV_ENSURE(infile, std::system_error(std::make_error_code(std::errc::io_error), "error reading file: " + file));
 	}
 
 	bool RawFileReader::exist(std::string const & file)

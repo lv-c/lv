@@ -3,6 +3,7 @@
 
 #include <lv/MyZip.hpp>
 #include <lv/lvlib.hpp>
+#include <lv/Ensure.hpp>
 
 #include <clocale>
 
@@ -63,19 +64,16 @@ namespace lv
 			err = std::make_error_code(std::errc::no_such_file_or_directory);
 		}
 
-		if (err)
-		{
-			throw std::system_error(err, "error reading file: " + file);
-		}
+		LV_ENSURE(!err, std::system_error(err, "error reading file: " + file));
 	}
 
 	MyZipReader::UnzipPtr MyZipReader::get_unzip(std::string const & file, std::string & inner_path)
 	{
 		std::string zip_file = get_zip_file(file);
-		if (zip_file.empty() || zip_file.size() + 1 >= file.size())	// + 1 : '\\' or '/'
-		{
-			throw std::system_error(std::make_error_code(std::errc::invalid_argument), "invalid file name: " + file);
-		}
+
+		// + 1 : '\\' or '/'
+		LV_ENSURE(!zip_file.empty() && zip_file.size() + 1 < file.size(),
+			std::system_error(std::make_error_code(std::errc::invalid_argument), "invalid file name: " + file));
 
 		UnzipMap::iterator it = unzip_.find(zip_file);
 		UnzipPtr uz;
@@ -105,10 +103,7 @@ namespace lv
 				ret = uz->open(zip_path, password_);
 			}
 
-			if (ret != ZR_OK)
-			{
-				throw std::system_error(std::make_error_code(std::errc::io_error), "error opening pkt file: " + zip_path);
-			}
+			LV_ENSURE(ret == ZR_OK, std::system_error(std::make_error_code(std::errc::io_error), "error opening pkt file: " + zip_path));
 
 			unzip_.emplace(zip_file, uz);
 		}

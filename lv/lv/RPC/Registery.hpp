@@ -14,6 +14,7 @@
 #include <lv/RPC/Invoker.hpp>
 
 #include <lv/Exception.hpp>
+#include <lv/Ensure.hpp>
 #include <lv/MPL/Functional.hpp>
 #include <lv/Concurrent/SpinMutex.hpp>
 
@@ -86,10 +87,7 @@ namespace lv::rpc
 			{
 				std::lock_guard<SpinMutex> lock(mutex_);
 
-				if (invokers_.find(id) != invokers_.end())
-				{
-					throw std::runtime_error("The id has already been used");
-				}
+				LV_ENSURE(invokers_.find(id) == invokers_.end(), "The id has already been used");
 
 				invokers_.emplace(id, detail::Invoker<Signature, ArchivePair>(std::forward<F>(f)));
 
@@ -113,10 +111,8 @@ namespace lv::rpc
 					std::lock_guard<SpinMutex> lock(mutex_);
 				
 					it = invokers_.find(id);
-					if (it == invokers_.end())
-					{
-						throw InvalidFunctionID("invalid function id: " + boost::lexical_cast<std::string>(id));
-					}
+					LV_ENSURE(it != invokers_.end(), InvalidFunctionID("invalid function id: " +
+						boost::lexical_cast<std::string>(id)));
 				}
 
 				try

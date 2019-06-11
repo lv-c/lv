@@ -12,6 +12,7 @@
 
 #include <lv/Singleton.hpp>
 #include <lv/Log/Log.hpp>
+#include <lv/Ensure.hpp>
 
 #include <string>
 #include <memory>
@@ -71,10 +72,7 @@ namespace lv::log
 			lock_guard lock(mutex_);
 
 			auto it = loggers_.find(name);
-			if (it == loggers_.end())
-			{
-				throw std::runtime_error(std::string("logger not exist : ") + name);
-			}
+			LV_ENSURE(it != loggers_.end(), "logger not exist: " + name);
 
 			return *it->second;
 		}

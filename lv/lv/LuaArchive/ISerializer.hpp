@@ -51,10 +51,7 @@ namespace lv::lua::archive
 	inline void	expect_obj_type(luabind::object const & obj, int expected)
 	{
 		int given = luabind::type(obj);
-		if (given != expected)
-		{
-			throw UnmatchedLuaType(given, expected);
-		}
+		LV_ENSURE(given == expected, UnmatchedLuaType(given, expected));
 	}
 
 

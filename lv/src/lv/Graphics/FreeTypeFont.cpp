@@ -4,6 +4,7 @@
 #include <lv/Graphics/FreeTypeFont.hpp>
 #include <lv/Graphics/RenderFactory.hpp>
 #include <lv/Graphics/Renderer.hpp>
+#include <lv/Ensure.hpp>
 
 #include <boost/assert.hpp>
 
@@ -96,10 +97,8 @@ namespace lv
 		Size sz = Renderer::instance().max_texture_size();
 		tex_size_.set(std::min(sz.cx, tex_size_.cx), std::min(sz.cy, tex_size_.cy));
 		texture_ = RenderFactory::instance().create_texture(tex_size_, PF_L8);
-		if (!texture_)
-		{
-			throw std::runtime_error(std::string("FreeTypeFont::load Error creating texture : ") + name());
-		}
+
+		LV_ENSURE(texture_, "FreeTypeFont::load Error creating texture: " + name());
 
 		// keep the buffer
 		buf_holder_ = buffer;

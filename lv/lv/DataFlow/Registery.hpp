@@ -14,6 +14,7 @@
 #include <lv/DataFlow/Invoker.hpp>
 
 #include <lv/Exception.hpp>
+#include <lv/Ensure.hpp>
 #include <lv/MPL/Functional.hpp>
 #include <lv/Concurrent/SpinMutex.hpp>
 
@@ -70,11 +71,8 @@ namespace lv::flow
 			{
 				std::lock_guard<SpinMutex> lock(mutex_);
 
-				if (invokers_.find(key) != invokers_.end())
-				{
-					throw std::runtime_error(std::string("The key has already been used: ") + 
+				LV_ENSURE(invokers_.find(key) == invokers_.end(), "The key has already been used: " + 
 						boost::lexical_cast<std::string>(key));
-				}
 
 				invokers_.emplace(key, detail::Invoker<Signature, IArchive>(std::forward<F>(f)));
 			}

@@ -13,6 +13,7 @@
 
 #include <lv/Concurrent/Fwd.hpp>
 #include <lv/Exception.hpp>
+#include <lv/Ensure.hpp>
 
 #include <limits>
 #include <thread>
@@ -168,10 +169,7 @@ namespace lv
 
 		void	check_closed()
 		{
-			if (closed_)
-			{
-				throw TaskQueueClosed();
-			}
+			LV_ENSURE(!closed_, TaskQueueClosed());
 		}
 
 	};

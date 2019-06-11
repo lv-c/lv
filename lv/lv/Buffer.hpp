@@ -278,10 +278,7 @@ namespace lv
 
 		inline void	insert(Buffer & buf, size_t pos, void const * data, size_t size)
 		{
-			if (pos > buf.size())
-			{
-				throw std::out_of_range("buffer::insert out of range");
-			}
+			LV_ENSURE(pos <= buf.size(), std::out_of_range("buffer::insert out of range"));
 
 			buf.insert(buf.begin() + pos, static_cast<char const *>(data), static_cast<char const *>(data) + size);
 		}
@@ -298,10 +295,7 @@ namespace lv
 		/// @exception std::out_of_range
 		inline	void write(BufferRef buf, size_t pos, void const * data, size_t size)
 		{
-			if (pos + size > buf.size())
-			{
-				throw std::out_of_range("buffer::write out of range");
-			}
+			LV_ENSURE(pos + size <= buf.size(), std::out_of_range("buffer::write out of range"));
 
 			std::copy(static_cast<char const *>(data), static_cast<char const *>(data) + size, buf.data() + pos);
 		}
@@ -318,10 +312,7 @@ namespace lv
 		/// @exception std::out_of_range
 		inline	void read(ConstBufferRef const & buf, size_t pos, void * data, size_t size)
 		{
-			if (pos + size > buf.size())
-			{
-				throw std::out_of_range("buffer::read out of range");
-			}
+			LV_ENSURE(pos + size <= buf.size(), std::out_of_range("buffer::read out of range"));
 
 			std::copy(buf.data() + pos, buf.data() + pos + size, static_cast<char *>(data));
 		}

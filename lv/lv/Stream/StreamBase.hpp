@@ -124,6 +124,11 @@ namespace lv
 			return fail();
 		}
 
+		explicit operator bool() const
+		{
+			return !fail();
+		}
+
 
 	private:
 

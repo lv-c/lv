@@ -13,6 +13,7 @@
 #include <lv/BinaryStream/BinaryIStream.hpp>
 #include <lv/BinaryStream/BinaryOStream.hpp>
 #include <lv/Exception.hpp>
+#include <lv/Ensure.hpp>
 
 #include <boost/serialization/split_member.hpp>
 
@@ -51,10 +52,8 @@ namespace lv::bstream
 			{
 				T val;
 				is >> val;
-				if (val != ce.t_)
-				{
-					throw ce.ex_;
-				}
+
+				LV_ENSURE(val == ce.t_, ce.ex_);
 
 				return is;
 			}

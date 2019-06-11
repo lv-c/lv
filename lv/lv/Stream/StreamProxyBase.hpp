@@ -115,6 +115,11 @@ namespace lv
 			LV_STREAMPROXY_FW_CALL_0(operator !, return);
 		}
 
+		explicit operator bool() const
+		{
+			LV_STREAMPROXY_FW_CALL_0(operator bool, return);
+		}
+
 	};
 
 }

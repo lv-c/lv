@@ -13,6 +13,7 @@
 #include <boost/assert.hpp>
 
 #include <lv/Buffer.hpp>
+#include <lv/Ensure.hpp>
 #include <lv/Graphics/Rect.hpp>
 #include <lv/Graphics/PixelFormat.hpp>
 
@@ -86,16 +87,8 @@ namespace lv
 		template<int PF>
 		typename ViewPtrT<PF>::type map(Rect const & rect)
 		{
-			BOOST_ASSERT(PF == this->format_);
-			if (PF != this->format_)
-			{
-				throw std::runtime_error("Texture::map Invalid format");
-			}
-
-			if (!Rect(Point(), texture_size_).contains(rect))
-			{
-				throw std::runtime_error("Texture::map rect out of bound");
-			}
+			LV_ENSURE(PF == this->format_, "Texture::map Invalid format");
+			LV_ENSURE(Rect(Point(), texture_size_).contains(rect), "Texture::map rect out of bound");
 
 			using view_t = typename GIL::ViewT<PF>::type;
 			return ViewPtrT<PF>::type(new view_t(boost::gil::interleaved_view(rect.width(), rect.height(), 

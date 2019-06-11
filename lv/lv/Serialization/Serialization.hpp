@@ -11,6 +11,7 @@
 #pragma once
 
 #include <lv/Serialization/Fwd.hpp>
+#include <lv/Ensure.hpp>
 
 #include <boost/serialization/collection_size_type.hpp>
 #include <boost/serialization/array.hpp>
@@ -91,10 +92,8 @@ namespace lv::serialization
 				boost::serialization::collection_size_type count;
 				ar >> count;
 
-				if (static_cast<std::size_t>(count) > current_count)
-				{
-					throw boost::archive::archive_exception(boost::archive::archive_exception::array_size_too_short);
-				}
+				LV_ENSURE(static_cast<std::size_t>(count) <= current_count, boost::archive::archive_exception(
+					boost::archive::archive_exception::array_size_too_short));
 
 				ar >> boost::serialization::make_array(static_cast<value_type*>(&t[0]), count);
 			}
@@ -128,10 +127,8 @@ namespace lv::serialization
 				{
 					ar >> file_ver;
 
-					if (file_ver > boost::archive::version_type(boost::serialization::version<T>::value))
-					{
-						throw boost::archive::archive_exception(boost::archive::archive_exception::unsupported_class_version);
-					}
+					LV_ENSURE(file_ver <= boost::archive::version_type(boost::serialization::version<T>::value),
+						boost::archive::archive_exception(boost::archive::archive_exception::unsupported_class_version));
 				}
 
 				boost::serialization::serialize_adl(ar, t, file_ver);

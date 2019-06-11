@@ -12,6 +12,7 @@
 #pragma once
 
 #include <lv/IntType.hpp>
+#include <lv/Ensure.hpp>
 
 #include <boost/assert.hpp>
 
@@ -32,10 +33,7 @@ namespace lv::rle
 		BOOST_ASSERT(src != dest && dest_size >= encode_bound(src_size));
 		BOOST_ASSERT(src_size % EleSize == 0);
 
-		if (dest_size < encode_bound(src_size))
-		{
-			throw std::invalid_argument("the destination buffer is too small");
-		}
+		LV_ENSURE(dest_size >= encode_bound(src_size), std::invalid_argument("the destination buffer is too small"));
 
 		using element = IntType<EleSize>::type;
 		size_t ele_num = src_size / EleSize;

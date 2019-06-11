@@ -1,5 +1,6 @@
 #include <lv/Lua/Exec.hpp>
 #include <lv/Lua/StackBalance.hpp>
+#include <lv/Ensure.hpp>
 
 #include <stdexcept>
 
@@ -19,17 +20,8 @@ namespace lv::lua
 
 		lua_pushcclosure(L, h, 0);
 
-		if (luaL_loadbuffer(L, str, size, name))
-		{
-			std::runtime_error err(lua_tostring(L, -1));
-			throw err;
-		}
-
-		if (lua_pcall(L, 0, 0, -2))
-		{
-			std::runtime_error err(lua_tostring(L, -1));
-			throw err;
-		}
+		LV_ENSURE(luaL_loadbuffer(L, str, size, name) == 0, lua_tostring(L, -1));
+		LV_ENSURE(lua_pcall(L, 0, 0, -2) == 0, lua_tostring(L, -1));
 	}
 
 }
