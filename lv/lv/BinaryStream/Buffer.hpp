@@ -12,6 +12,7 @@
 
 #include <lv/Buffer.hpp>
 #include <lv/BinaryStream/Tags.hpp>
+#include <lv/BinaryStream/Vector.hpp>
 
 
 namespace lv::bstream
