@@ -33,20 +33,20 @@ namespace boost::serialization
 	{
 		using tree_type = lv::DSTree<Key, Data, Pred>;
 
-		typename tree_type::size_type size = tree.size();
-		ar & size;
+		boost::serialization::collection_size_type const count(tree.size());
+		ar << count;
 
 		for (typename tree_type::value_type const & v : tree)
 		{
 			bool has_data(v.data());
-			ar & v.key() & has_data;
+			ar << v.key() << has_data;
 
 			if (has_data)
 			{
-				ar & (*v.data());
+				ar << (*v.data());
 			}
 				
-			ar & v;
+			ar << v;
 		}
 	}
 
@@ -59,25 +59,25 @@ namespace boost::serialization
 
 		tree.clear();
 
-		typename tree_type::size_type size;
-		ar & size;
+		boost::serialization::collection_size_type count;
+		ar >> count;
 
-		tree.reserve(size);
+		tree.reserve(count);
 
-		for (typename tree_type::size_type i = 0; i < size; ++i)
+		for (size_t i = 0; i < count; ++i)
 		{
 			Key key[1];
 			typename tree_type::data_pointer data;
 
-			ar & key[0];
+			ar >> key[0];
 
 			bool has_data;
-			ar & has_data;
+			ar >> has_data;
 
 			if (has_data)
 			{
 				data = std::make_shared<typename tree_type::data_type>();
-				ar & (*data);
+				ar >> (*data);
 			}
 
 			tree.insert(boost::as_array(key), data);
@@ -85,7 +85,7 @@ namespace boost::serialization
 			auto it = tree.find_child(key[0]);
 			BOOST_ASSERT(it != tree.end());
 
-			ar & (*it);
+			ar >> (*it);
 		}
 	}
 

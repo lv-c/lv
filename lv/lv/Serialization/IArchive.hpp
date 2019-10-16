@@ -124,20 +124,20 @@ namespace lv
 
 		void	load(std::string & str)
 		{
-			std::size_t size;
-			load(size);
+			boost::serialization::collection_size_type count;
+			load(count);
 
-			str.resize(size);
-			load_binary(const_cast<char *>(str.data()), size);
+			str.resize(count);
+			load_binary(const_cast<char *>(str.data()), count);
 		}
 
 		void	load(std::wstring & wstr)
 		{
-			std::size_t size;
-			load(size);
+			boost::serialization::collection_size_type count;
+			load(count);
 
-			wstr.resize(size);
-			load_binary(const_cast<wchar_t *>(wstr.data()), size * sizeof(wchar_t) / sizeof(char));
+			wstr.resize(count);
+			load_binary(const_cast<wchar_t *>(wstr.data()), count * sizeof(wchar_t) / sizeof(char));
 		}
 
 	};

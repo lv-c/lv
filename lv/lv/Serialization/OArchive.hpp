@@ -111,16 +111,16 @@ namespace lv
 
 		void	save(std::string const & str)
 		{
-			std::size_t size = str.size();
-			save(size);
-			save_binary(str.data(), size);
+			boost::serialization::collection_size_type count(str.size());
+			save(count);
+			save_binary(str.data(), count);
 		}
 
 		void	save(std::wstring const & wstr)
 		{
-			std::size_t size = wstr.size();
-			save(size);
-			save_binary(wstr.data(), size * sizeof(wchar_t) / sizeof(char));
+			boost::serialization::collection_size_type count(wstr.size());
+			save(count);
+			save_binary(wstr.data(), count * sizeof(wchar_t) / sizeof(char));
 		}
 
 	};
