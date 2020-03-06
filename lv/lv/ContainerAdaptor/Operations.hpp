@@ -26,6 +26,15 @@ namespace lv
 			}
 
 
+			//
+			template<class T>
+			void	resize_dispatch(T & t, size_t size, sequence_tag)
+			{
+				t.resize(size);
+			}
+
+
+			//
 			template<class T, class V>
 			void	push_dispatch(T & t, V && v, back_insertion_sequence_tag)
 			{
@@ -39,6 +48,7 @@ namespace lv
 			}
 
 
+			//
 			template<class T, class Iter>
 			void	assign_dispatch(T & t, Iter begin, Iter end, container_tag)
 			{
@@ -51,6 +61,13 @@ namespace lv
 		void	clear(T & t)
 		{
 			detail::clear_dispatch(t, container_category<T>());
+		}
+
+
+		template<class T>
+		void	resize(T & t, size_t size)
+		{
+			detail::resize_dispatch(t, size, container_category<T>());
 		}
 
 
@@ -70,6 +87,8 @@ namespace lv
 
 
 	using container_adaptor::clear;
+
+	using container_adaptor::resize;
 
 	using container_adaptor::push;
 

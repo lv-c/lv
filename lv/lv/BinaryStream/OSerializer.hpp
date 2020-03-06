@@ -56,7 +56,7 @@ namespace lv::bstream
 		{
 			if (!std::empty(t))
 			{
-				size_t const value_size = sizeof(typename boost::range_value<T>::type);
+				constexpr size_t value_size = sizeof(typename boost::range_value<T>::type);
 
 				if (os.switch_endian() && value_size != 1)
 				{

@@ -56,7 +56,7 @@ namespace lv::bstream
 		{
 			if (!std::empty(t))
 			{
-				size_t const value_size = sizeof(typename boost::range_value<T>::type);
+				constexpr size_t value_size = sizeof(typename boost::range_value<T>::type);
 
 				if (is.switch_endian() && value_size != 1)
 				{
@@ -65,7 +65,7 @@ namespace lv::bstream
 				else
 				{
 					is.read(reinterpret_cast<char*>(&*std::begin(t)), static_cast<std::streamsize>(
-						std::size(t) * sizeof(typename boost::range_value<T>::type)));
+						std::size(t) * value_size));
 				}
 			}
 		}

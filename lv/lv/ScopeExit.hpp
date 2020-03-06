@@ -10,31 +10,39 @@
 
 #pragma once
 
-#include <functional>
-
 #include <boost/preprocessor/cat.hpp>
 #include <boost/noncopyable.hpp>
 
 
 namespace lv
 {
+	template<class Fn>
 	class ScopeExit : boost::noncopyable
 	{
-		std::function<void()>	fn_;
+		Fn		fn_;
 
 	public:
 
-		explicit ScopeExit(std::function<void()> fn)
+		explicit ScopeExit(Fn fn)
 			: fn_(std::move(fn))
 		{
 		}
-
 
 		~ScopeExit()
 		{
 			fn_();
 		}
 	};
+
+
+	namespace detail
+	{
+		template<class Fn>
+		ScopeExit<Fn>	make_scope_exit(Fn && fn)
+		{
+			return ScopeExit<Fn>(std::forward<Fn>(fn));
+		}
+	}
 }
 
-#define LV_SCOPE_EXIT(fn) lv::ScopeExit BOOST_PP_CAT(_LV_EXIT_, __LINE__) (fn)
+#define LV_SCOPE_EXIT(fn) auto BOOST_PP_CAT(_LV_EXIT_, __LINE__) = lv::detail::make_scope_exit(fn)

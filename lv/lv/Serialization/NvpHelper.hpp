@@ -15,6 +15,17 @@
 namespace lv
 {
 	template<class Archive>
+	struct NvpSerializer
+	{
+		template<class T>
+		static void	apply(Archive & ar, char const * name, T & t)
+		{
+			ar & boost::serialization::make_nvp(name, t);
+		}
+	};
+
+
+	template<class Archive>
 	class NvpHelper
 	{
 		Archive &	ar_;
@@ -34,7 +45,7 @@ namespace lv
 		template<class T>
 		NvpHelper const & operator () (char const * name, T & t) const
 		{
-			ar_ & boost::serialization::make_nvp(name, t);
+			NvpSerializer<Archive>::template apply<T>(ar_, name, t);
 			return *this;
 		}
 
@@ -53,6 +64,7 @@ namespace lv
 			return (*this) (name, t);
 		}
 	};
+
 
 	template<class Archive>
 	NvpHelper<Archive>	make_nvp_helper(Archive & ar)
