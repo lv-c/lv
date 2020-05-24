@@ -262,6 +262,12 @@ namespace lv::bstream
 		return detail::variable_len_range_impl<SizeType, Range>(range);
 	}
 
+	template<class SizeType, class Range>
+	auto	variable_len_range(Range const & range)
+	{
+		return detail::variable_len_range_impl<SizeType, Range const>(range);
+	}
+
 	//
 
 	namespace detail
@@ -300,6 +306,12 @@ namespace lv::bstream
 	std::enable_if_t<std::is_pod_v<T>, detail::pod_impl<T> >	pod(T & t)
 	{
 		return detail::pod_impl<T>(t);
+	}
+
+	template<class T>
+	std::enable_if_t<std::is_pod_v<T>, detail::pod_impl<T const> >	pod(T const & t)
+	{
+		return detail::pod_impl<T const>(t);
 	}
 
 }
