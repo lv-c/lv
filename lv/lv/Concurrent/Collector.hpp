@@ -94,6 +94,10 @@ namespace lv
 			, results_(size)
 			, future_(promise_.get_future())
 		{
+			if (size == 0)
+			{
+				set_value(is_void_result());
+			}
 		}
 
 		~Collector()
