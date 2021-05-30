@@ -40,9 +40,7 @@ namespace lv::log
 		 */
 		Log &	logger()
 		{
-			// lock_guard lock(mutex_);
-
-			static Log log;		// not thread-safe until C++0x ?
+			static Log log;
 			return log;
 		}
 

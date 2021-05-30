@@ -58,7 +58,7 @@ namespace lv
 			}
 			else
 			{
-				return strand_->get_io_context();
+				return strand_->context();
 			}
 		}
 

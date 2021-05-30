@@ -8,13 +8,5 @@
 // 
 // *********************************************************************
 
+#define BOOST_TEST_MAIN
 #include "UnitTest.hpp"
-using namespace boost::unit_test;
-
-// #include <vld.h>
-
-
-test_suite * init_unit_test_suite( int, char* [] )
-{
-	return 0;
-}

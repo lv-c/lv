@@ -18,9 +18,6 @@
 
 #	define LV_PLATFORM_WINDOWS
 
-#	define _HAS_AUTO_PTR_ETC 1
-
-
 #	ifdef _WIN64
 #		define LV_WIN64
 #	else
