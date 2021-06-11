@@ -26,11 +26,8 @@ local usage-requirements =
 project lv
 	: requirements 
 		$(usage-requirements)
-		<toolset>msvc:<cxxflags>-std\:c++17
-		<toolset>msvc:<define>_SCL_SECURE_NO_WARNINGS
-		<toolset>msvc:<define>_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING
-		<toolset>msvc:<define>_SILENCE_CXX17_ALLOCATOR_VOID_DEPRECATION_WARNING
-		<toolset>gcc:<cxxflags>-std=gnu++17
+		<toolset>msvc:<cxxflags>-std\:c++latest
+		<toolset>gcc:<cxxflags>-std=c++20
 	: usage-requirements $(usage-requirements)
 	: build-dir build
 	;
@@ -45,9 +42,9 @@ rule tag-names ( name : type ? : property-set )
 			name = $(name)D ;
 		}
 
-		if [ $(property-set).get <address-model> ] = 64
+		if [ $(property-set).get <address-model> ] = 32
 		{
-			name = $(name)-x64 ;
+			name = $(name)-x86 ;
 		}
 	}
 

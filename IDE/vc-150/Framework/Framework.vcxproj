@@ -95,27 +95,27 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>..\..\..\bin\lv\</OutDir>
     <IntDir>..\..\..\build\$(ProjectName)\msvc-$(MSBuildToolsVersion)\$(Configuration)\link-static\</IntDir>
-    <TargetName>lib$(ProjectName)D</TargetName>
+    <TargetName>lib$(ProjectName)D-$(PlatformTarget)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <TargetName>lib$(ProjectName)D-$(Platform)</TargetName>
+    <TargetName>lib$(ProjectName)D</TargetName>
     <IntDir>..\..\..\build\$(ProjectName)\msvc-$(MSBuildToolsVersion)\$(Platform)\$(Configuration)\link-static\</IntDir>
     <OutDir>..\..\..\bin\lv\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>..\..\..\bin\lv\</OutDir>
     <IntDir>..\..\..\build\$(ProjectName)\msvc-$(MSBuildToolsVersion)\$(Configuration)\link-static\</IntDir>
-    <TargetName>lib$(ProjectName)</TargetName>
+    <TargetName>lib$(ProjectName)-$(PlatformTarget)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseRuntimeStatic|Win32'">
     <OutDir>..\..\..\bin\lv\</OutDir>
     <IntDir>..\..\..\build\$(ProjectName)\msvc-8.0\release\runtime-static\</IntDir>
-    <TargetName>lib$(ProjectName)S</TargetName>
+    <TargetName>lib$(ProjectName)S-$(PlatformTarget)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IntDir>..\..\..\build\$(ProjectName)\msvc-$(MSBuildToolsVersion)\$(Platform)\$(Configuration)\link-static\</IntDir>
     <OutDir>..\..\..\bin\lv\</OutDir>
-    <TargetName>lib$(ProjectName)-$(Platform)</TargetName>
+    <TargetName>lib$(ProjectName)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

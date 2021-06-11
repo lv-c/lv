@@ -32,9 +32,9 @@
 #	endif
 
 #	ifdef LV_WIN64
-#		define LV_LIB_PLATFORM_OPT	"-x64"
-#	else
 #		define LV_LIB_PLATFORM_OPT
+#	else
+#		define LV_LIB_PLATFORM_OPT	"-x86"
 #	endif
 
 #	pragma comment(lib, LV_LIB_PREFIX LV_LIB_NAME LV_LIB_LINK_OPT LV_LIB_DEBUG_OPT LV_LIB_PLATFORM_OPT ".lib")
