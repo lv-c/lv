@@ -24,9 +24,10 @@ namespace lv::detail
 		throw std::runtime_error(msg);
 	}
 
-	[[noreturn]] inline void	ensure_throw(std::string const & msg)
+	template<class Alloc>
+	[[noreturn]] void	ensure_throw(std::basic_string<char, std::char_traits<char>, Alloc> const & msg)
 	{
-		throw std::runtime_error(msg);
+		throw std::runtime_error(msg.c_str());
 	}
 
 	// we can't do it like this: void ensure_throw(std::exception const & ex) { throw ex; }
