@@ -10,9 +10,8 @@
 
 #pragma once
 
+#include <lv/FrameWork/AutoLink.hpp>
 #include <lv/Buffer.hpp>
-
-#include <boost/assert.hpp>
 
 #include <array>
 #include <mutex>
@@ -37,7 +36,7 @@ namespace lv::net
 
 			ScopedLock(DoubleBuffer * obj, Buffer const * buf);
 
-			ScopedLock(ScopedLock && other);
+			ScopedLock(ScopedLock && other) noexcept;
 
 			~ScopedLock();
 

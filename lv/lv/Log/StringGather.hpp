@@ -22,11 +22,11 @@ namespace lv::log
 	{
 	public:
 		
-		using receiver_t = std::function<void(log::string_type &&, int)>;
+		using receiver_t = std::function<void(string_type const &, int)>;
 
 	protected:
 
-		std::basic_ostringstream<log::char_type> 	oss_;
+		std::basic_ostringstream<char_type> 	oss_;
 
 		receiver_t	receiver_;
 
@@ -46,17 +46,20 @@ namespace lv::log
 
 			end_record(lvl);
 
-			string_type str = oss_.str();
-			oss_.str(string_type());
+			string_type str = std::move(oss_).str();
+			LV_SCOPE_EXIT([this, &str] {
+				str.clear();
+				oss_.str(std::move(str));
+			});
 
-			on_receive(std::move(str), lvl);
+			on_receive(str, lvl);
 		}
 
-		virtual	void	on_receive(string_type && str, int lvl)
+		virtual	void	on_receive(string_type const & str, int lvl)
 		{
 			if (receiver_)
 			{
-				receiver_(std::move(str), lvl);
+				receiver_(str, lvl);
 			}
 		}
 	};

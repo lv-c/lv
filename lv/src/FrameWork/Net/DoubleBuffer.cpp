@@ -1,5 +1,7 @@
 #include <lv/FrameWork/Net/DoubleBuffer.hpp>
 
+#include <boost/assert.hpp>
+
 
 namespace lv::net
 {
@@ -10,7 +12,7 @@ namespace lv::net
 	{
 	}
 
-	DoubleBuffer::ScopedLock::ScopedLock(ScopedLock && other)
+	DoubleBuffer::ScopedLock::ScopedLock(ScopedLock && other) noexcept
 		: obj_(other.obj_)
 		, buf_(other.buf_)
 	{

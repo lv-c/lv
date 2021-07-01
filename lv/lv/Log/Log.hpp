@@ -16,10 +16,10 @@
 #include <boost/noncopyable.hpp>
 
 #include <set>
-#include <iostream>
 #include <memory>
 #include <mutex>
 #include <exception>
+#include <ranges>
 
 
 namespace lv::log
@@ -38,9 +38,8 @@ namespace lv::log
 
 		std::mutex	mutex_;
 
-		volatile bool	enabled_;
+		bool	enabled_ = true;
 
-	
 		int		lvl_;	// level of the current record
 
 
@@ -55,7 +54,7 @@ namespace lv::log
 			{
 			}
 
-			Proxy(Proxy && other)
+			Proxy(Proxy && other) noexcept
 				: log_(other.log_)
 			{
 				other.log_ = nullptr;
@@ -86,10 +85,6 @@ namespace lv::log
 
 	public:
 
-		Log()
-			: enabled_(true)
-		{
-		}
 
 		/**
 		 * the default parameter will make your life easier if you just want a simple
@@ -128,19 +123,19 @@ namespace lv::log
 		}
 
 	private:
+
+
+		auto	filter_gathers()
+		{
+			return gathers_ | std::views::filter([this](gather_ptr const & v) { return enabled_ && v->filter(lvl_); });
+		}
 		
 		template<class T>
 		void	log(T const & t)
 		{
-			if (enabled_)
+			for (gather_ptr const & gather : filter_gathers())
 			{
-				for (gather_ptr gather : this->gathers_)
-				{
-					if (gather->filter(lvl_))
-					{
-						gather->log(t);
-					}
-				}
+				gather->log(t);
 			}
 		}
 
@@ -151,15 +146,9 @@ namespace lv::log
 
 			this->lvl_ = lvl;
 
-			if (enabled_)
+			for (gather_ptr const & gather : filter_gathers())
 			{
-				for (gather_ptr gather : this->gathers_)
-				{
-					if (gather->filter(lvl_))
-					{
-						gather->on_record_begin(lvl_);
-					}
-				}
+				gather->on_record_begin(lvl_);
 			}
 		}
 
@@ -171,29 +160,23 @@ namespace lv::log
 		{
 			LV_SCOPE_EXIT([this] { mutex_.unlock(); });
 
-			if (enabled_)
+			std::exception_ptr last_ex;
+
+			for (gather_ptr const & gather : filter_gathers())
 			{
-				std::exception_ptr last_ex;
-
-				for (gather_ptr gather : this->gathers_)
+				try
 				{
-					if (gather->filter(lvl_))
-					{
-						try
-						{
-							gather->on_record_end(lvl_);
-						}
-						catch (...)
-						{
-							last_ex = std::current_exception();
-						}
-					}
+					gather->on_record_end(lvl_);
 				}
-
-				if (last_ex)
+				catch (...)
 				{
-					std::rethrow_exception(last_ex);
+					last_ex = std::current_exception();
 				}
+			}
+
+			if (last_ex)
+			{
+				std::rethrow_exception(last_ex);
 			}
 		}
 

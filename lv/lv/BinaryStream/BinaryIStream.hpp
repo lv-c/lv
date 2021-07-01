@@ -55,7 +55,7 @@ namespace lv::bstream
 			set_exceptions();
 		}
 
-		BinaryIStream(BinaryIStream && other)
+		BinaryIStream(BinaryIStream && other) noexcept
 			: BinaryStreamBase(std::move(other))
 			, IStreamProxy(std::move(other))
 			, raw_is_(std::move(other.raw_is_))

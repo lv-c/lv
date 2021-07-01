@@ -87,9 +87,9 @@ namespace lv::rpc
 			{
 			}
 
-			PrivateHandler(PrivateHandler && other)
+			PrivateHandler(PrivateHandler && other) noexcept
 				: client_(other.client_)
-				, buffer_(other.buffer_)
+				, buffer_(std::move(other.buffer_))
 				, oa_(std::move(other.oa_))
 				, request_id_(other.request_id_)
 				, sent_(false)

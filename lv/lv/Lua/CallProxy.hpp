@@ -40,13 +40,12 @@ namespace lv::lua
 			oss_ << fn << "(";
 		}
 
-		CallProxy(CallProxy && other)
+		CallProxy(CallProxy && other) noexcept
 			: oss_(other.oss_)
 			, first_param_(other.first_param_)
-			, callback_(other.callback_)
+			, callback_(std::move(other.callback_))
 			, finished_(other.finished_)
 		{
-			other.callback_ = Callback();
 			other.finished_ = true;
 		}
 

@@ -45,4 +45,4 @@ namespace lv
 	}
 }
 
-#define LV_SCOPE_EXIT(fn) auto BOOST_PP_CAT(_LV_EXIT_, __LINE__) = lv::detail::make_scope_exit(fn)
+#define LV_SCOPE_EXIT(...) auto BOOST_PP_CAT(_LV_EXIT_, __LINE__) = lv::detail::make_scope_exit(__VA_ARGS__)

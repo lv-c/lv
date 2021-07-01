@@ -62,7 +62,7 @@ namespace lv::bstream
 
 		// to make things simple, only provides move constructor and no
 		// move assignment
-		BinaryOStream(BinaryOStream && other)
+		BinaryOStream(BinaryOStream && other) noexcept
 			: BinaryStreamBase(std::move(other))
 			, OStreamProxy(std::move(other))
 			, raw_os_(std::move(other.raw_os_))
