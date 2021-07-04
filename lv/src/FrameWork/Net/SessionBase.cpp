@@ -187,7 +187,7 @@ namespace lv::net
 			that perform writes) until this operation completes.
 			*/
 
-			write_buffers_.put(buf);
+			write_buffers_.write(buf);
 
 			check_write();
 		}
@@ -280,7 +280,7 @@ namespace lv::net
 		{
 			size_t size = buf.size();
 
-			write_buffers_.unlock(buf);
+			write_buffers_.end_read(buf);
 			check_write();
 
 			on_write(size);
@@ -308,7 +308,7 @@ namespace lv::net
 	{
 		bool need_shutdown;
 
-		if (Buffer const * buf = write_buffers_.lock(&need_shutdown))
+		if (Buffer const * buf = write_buffers_.start_read(&need_shutdown))
 		{
 			auto handler = [shared_this = shared_from_this(), buf](boost::system::error_code const & error, size_t) {
 				return shared_this->handle_write(*buf, error);

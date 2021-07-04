@@ -14,10 +14,3 @@
 #include <lv/DataFlow/DataFlow.hpp>
 #include <lv/DataFlow/Source.hpp>
 #include <lv/DataFlow/Sink.hpp>
-
-// push policies
-#include <lv/DataFlow/SyncPush.hpp>
-
-// not included by default
-// #include <lv/DataFlow/AsyncPush.hpp>
-// #include <lv/DataFlow/ThreadedPush.hpp>

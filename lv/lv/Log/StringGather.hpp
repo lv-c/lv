@@ -10,11 +10,12 @@
 
 #pragma once
 
-#include <sstream>
-
 #include <lv/Log/Fwd.hpp>
 #include <lv/Log/Gather.hpp>
 #include <lv/SharedPtr.hpp>
+
+#include <sstream>
+
 
 namespace lv::log
 {
@@ -33,8 +34,8 @@ namespace lv::log
 	public:
 
 		StringGather(receiver_t receiver, filter_type filter = filter_type())
-			: Gather(lv::shared_from_object(oss_), filter)
-			, receiver_(receiver)
+			: Gather(lv::shared_from_object(oss_), std::move(filter))
+			, receiver_(std::move(receiver))
 		{
 		}
 

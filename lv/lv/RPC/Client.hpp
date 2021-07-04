@@ -19,6 +19,7 @@
 #include <lv/RPC/Common.hpp>
 
 #include <boost/assert.hpp>
+#include <boost/noncopyable.hpp>
 
 #include <map>
 #include <atomic>
@@ -64,7 +65,7 @@ namespace lv::rpc
 
 
 		template<class Ret>
-		class PrivateHandler
+		class PrivateHandler : boost::noncopyable
 		{
 			Client & client_;
 
@@ -85,17 +86,6 @@ namespace lv::rpc
 				, request_id_(request_id)
 				, sent_(false)
 			{
-			}
-
-			PrivateHandler(PrivateHandler && other) noexcept
-				: client_(other.client_)
-				, buffer_(std::move(other.buffer_))
-				, oa_(std::move(other.oa_))
-				, request_id_(other.request_id_)
-				, sent_(false)
-			{
-				BOOST_ASSERT(!other.sent_);
-				other.sent_ = true;
 			}
 
 			~PrivateHandler()
@@ -158,7 +148,7 @@ namespace lv::rpc
 		 * @exception InvalidProtocolValue
 		 * @exception boost::archive::archive_exception
 		 */
-		void	on_receive(ConstBufferRef const & buf)
+		void	on_receive(ConstBufferRef buf)
 		{
 			IArchiveWrapper<iarchive_type> ia(istream_factory_, buf);
 

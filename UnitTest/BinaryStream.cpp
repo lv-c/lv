@@ -68,6 +68,8 @@ BOOST_AUTO_TEST_CASE(test_binary_stream)
 
 	static_assert(std::is_base_of_v<bstream::primitive_buffer_tag, bstream::object_tag<std::vector<int> > >);
 	static_assert(std::is_base_of_v<bstream::primitive_buffer_tag, bstream::object_tag<Buffer> >);
+	static_assert(std::is_base_of_v<bstream::primitive_buffer_tag, bstream::object_tag<BufferRef> >);
+	static_assert(std::is_base_of_v<bstream::primitive_buffer_tag, bstream::object_tag<ConstBufferRef> >);
 	static_assert(std::is_base_of_v<bstream::primitive_buffer_tag, bstream::object_tag<std::string> >);
 
 	static_assert(std::is_base_of_v<bstream::primitive_buffer_tag, bstream::object_tag<boost::interprocess::string> >);

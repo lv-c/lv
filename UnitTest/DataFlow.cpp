@@ -20,9 +20,6 @@
 #include <lv/DataFlow/Sink.hpp>
 #include <lv/DataFlow/Source.hpp>
 
-#include <lv/DataFlow/SyncPush.hpp>
-#include <lv/DataFlow/ThreadedPush.hpp>
-
 #include <lv/Serialization/IArchive.hpp>
 #include <lv/Serialization/OArchive.hpp>
 
@@ -91,19 +88,6 @@ struct TestMemFn
 };
 
 
-// handle some exceptions
-void proxy_push(lv::flow::slot_type const & slot, lv::ConstBufferRef const & buf)
-{
-	try
-	{
-		slot(buf);
-	}
-	catch (lv::flow::SerializationError const & ex)
-	{
-		std::cout << "flow::SerializationError: " << ex.what() << std::endl;
-	}
-}
-
 BOOST_AUTO_TEST_CASE(test_dataflow)
 {
 	lv::BufferManagerPtr buf_manager = std::make_shared<lv::SimpleBufferManager>(1024);
@@ -111,14 +95,14 @@ BOOST_AUTO_TEST_CASE(test_dataflow)
 	using key_type = std::string;
 	using port_type = std::string;
 
-	using dataflow_type = lv::flow::DataFlow<lv::flow::ThreadedPush, port_type>;
-	dataflow_type dataflow(5);	// number of threads
+	using dataflow_type = lv::flow::DataFlow<port_type>;
+	dataflow_type dataflow;
 
 	using source_type = lv::flow::Source<key_type>;
 	source_type source([&dataflow](lv::BufferPtr buf) { dataflow.push(port_type(), buf); }, buf_manager);
 
-	using sink_type = lv::flow::Sink<lv::flow::SyncPush, key_type>;
-	sink_type sink(&proxy_push);
+	using sink_type = lv::flow::Sink<key_type>;
+	sink_type sink;
 
 	sink
 		.reg("hello", &hello)
@@ -131,7 +115,14 @@ BOOST_AUTO_TEST_CASE(test_dataflow)
 	;
 
 	
-	lv::flow::Connection conn = dataflow.connect(port_type(), [&sink](lv::ConstBufferRef buf) { sink.push(buf); });
+	lv::flow::Connection conn = dataflow.connect(port_type(), [&sink](lv::BufferPtr buf) {
+		try {
+			sink.push(*buf);
+		}
+		catch (lv::flow::SerializationError const & ex) {
+			std::cout << "flow::SerializationError: " << ex.what() << std::endl;
+		}
+	});
 
 	source.call("hello");
 	source.call("sum", 10, 40.3f);
@@ -186,7 +177,7 @@ BOOST_AUTO_TEST_CASE(test_dataflow)
 	conn.disconnect();
 	BOOST_CHECK(!conn.connected());
 
-	// it's diconnected and the function @a sum will not be called
+	// it's disconnected and the function @a sum will not be called
 	source.call("sum", 10, 20.0f);
 
 }

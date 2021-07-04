@@ -15,11 +15,9 @@
 
 namespace lv
 {
-	/// shared_from_object
 	template<class T>
 	std::shared_ptr<T> shared_from_object(T & t)
 	{
-		// null deleter
 		return std::shared_ptr<T>(&t, [](void const *) {});
 	}
 }

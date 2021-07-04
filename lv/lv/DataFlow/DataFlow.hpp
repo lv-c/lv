@@ -10,10 +10,9 @@
 
 #pragma once
 
-#include <lv/Buffer.hpp>
-
 #include <lv/DataFlow/Fwd.hpp>
 #include <lv/DataFlow/Connection.hpp>
+#include <lv/Buffer.hpp>
 
 #include <boost/noncopyable.hpp>
 
@@ -24,18 +23,10 @@
 namespace lv::flow
 {
 	// thread-safe and the data flow is running concurrently when 
-	// push_impl is called in multiple threads.
-	template<template<class> class PushPolicy, class Port, class Compare>
+	// push is called in multiple threads.
+	template<class Port, class Compare>
 	class DataFlow : boost::noncopyable
 	{
-		using port_buffer_pair = std::pair<Port, BufferPtr>;
-
-	public:
-
-		using push_policy_type = PushPolicy<port_buffer_pair>;
-
-	private:
-
 		struct ConnectionSlotPair
 		{
 			std::shared_ptr<detail::ConnectionImpl>	conn;
@@ -46,18 +37,9 @@ namespace lv::flow
 		slots_map_type	slots_;
 
 		
-		push_policy_type	push_policy_;
-
 		std::shared_timed_mutex shared_mutex_;
 
 	public:
-
-		DataFlow(push_policy_type policy = push_policy_type())
-			: push_policy_(std::move(policy))
-		{
-			push_policy_.set_callback([this](port_buffer_pair const & port_buf) { push_impl(port_buf); });
-		}
-
 
 		Connection	connect(Port const & port, slot_type slot)
 		{
@@ -75,7 +57,15 @@ namespace lv::flow
 
 		void	push(Port port, BufferPtr buf)
 		{
-			push_policy_(std::make_pair(std::move(port), std::move(buf)));
+			// a read lock
+			std::shared_lock<std::shared_timed_mutex> lock(shared_mutex_);
+
+			auto ret = slots_.equal_range(port);
+
+			for (auto it = ret.first; it != ret.second; ++it)
+			{
+				it->second.slot(buf);
+			}
 		}
 
 		// clear all the slots
@@ -88,21 +78,6 @@ namespace lv::flow
 		}
 
 	private:
-
-
-		void	push_impl(port_buffer_pair const & port_buf)
-		{
-			// a read lock
-			std::shared_lock<std::shared_timed_mutex> lock(shared_mutex_);
-
-			auto ret = slots_.equal_range(port_buf.first);
-
-			for (auto it = ret.first; it != ret.second; ++it)
-			{
-				it->second.slot(port_buf.second);
-			}
-		}
-
 
 		static void disconnect_fun(void * obj, std::any const & iter)
 		{

@@ -32,10 +32,11 @@ namespace lv::flow
 			std::any	iter_;
 
 		public:
-			ConnectionImpl(void * dataflow, disconnect_fn_type fn, std::any const & iter)
+
+			ConnectionImpl(void * dataflow, disconnect_fn_type fn, std::any iter)
 				: dataflow_(dataflow)
 				, disconnect_fn_(fn)
-				, iter_(iter)
+				, iter_(std::move(iter))
 			{
 			}
 
@@ -77,7 +78,7 @@ namespace lv::flow
 
 	private:
 
-		template<template<class> class, class, class> friend class DataFlow;
+		template<class, class> friend class DataFlow;
 
 		Connection(std::shared_ptr<detail::ConnectionImpl> const & impl)
 			: impl_(impl)

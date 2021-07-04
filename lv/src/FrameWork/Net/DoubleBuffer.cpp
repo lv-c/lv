@@ -6,77 +6,22 @@
 namespace lv::net
 {
 
-	DoubleBuffer::ScopedLock::ScopedLock(DoubleBuffer * obj, Buffer const * buf)
-		: obj_(obj)
-		, buf_(buf)
-	{
-	}
-
-	DoubleBuffer::ScopedLock::ScopedLock(ScopedLock && other) noexcept
-		: obj_(other.obj_)
-		, buf_(other.buf_)
-	{
-		other.obj_ = nullptr;
-		other.buf_ = nullptr;
-	}
-
-	DoubleBuffer::ScopedLock::~ScopedLock()
-	{
-		if (buf_ != nullptr)
-		{
-			obj_->unlock(*buf_);
-		}
-	}
-
-	DoubleBuffer::ScopedLock::operator bool() const
-	{
-		return (buf_ != nullptr);
-	}
-
-	Buffer const * DoubleBuffer::ScopedLock::buffer() const
-	{
-		return buf_;
-	}
-
 	DoubleBuffer::DoubleBuffer()
 	{
 		reset();
 	}
 
-	//
-	void DoubleBuffer::reset()
-	{
-		std::lock_guard<std::mutex> lock(mutex_);
-
-		for (Buffer & buf : buffers_)
-		{
-			buf.clear();
-		}
-
-		write_index_ = 0;
-		lock_index_ = NullLock;
-
-		shutdown_ = false;
-	}
-
-	void DoubleBuffer::put(ConstBufferRef buf)
+	void DoubleBuffer::write(ConstBufferRef data)
 	{
 		std::lock_guard<std::mutex> lock(mutex_);
 
 		if (!shutdown_)
 		{
-			buffer::append(buffers_[write_index_], buf);
+			buffer::append(buffers_[write_index_], data);
 		}
 	}
 
-	void DoubleBuffer::shutdown()
-	{
-		std::lock_guard<std::mutex> lock(mutex_);
-
-		shutdown_ = true;
-	}
-
-	Buffer const * DoubleBuffer::lock(bool * need_shutdown /* = nullptr */)
+	Buffer const * DoubleBuffer::start_read(bool * need_shutdown /* = nullptr */)
 	{
 		std::lock_guard<std::mutex> lock(mutex_);
 
@@ -106,7 +51,7 @@ namespace lv::net
 		return ret;
 	}
 
-	void DoubleBuffer::unlock(Buffer const & buf)
+	void DoubleBuffer::end_read(Buffer const & buf)
 	{
 		std::lock_guard<std::mutex> lock(mutex_);
 
@@ -121,9 +66,30 @@ namespace lv::net
 		}
 	}
 
-	DoubleBuffer::ScopedLock DoubleBuffer::scope_lock()
+	DoubleBuffer::ScopedRead DoubleBuffer::scoped_read()
 	{
-		return ScopedLock(this, lock());
+		return ScopedRead(this, start_read());
 	}
 
+	void DoubleBuffer::reset()
+	{
+		std::lock_guard<std::mutex> lock(mutex_);
+
+		for (Buffer & buf : buffers_)
+		{
+			buf.clear();
+		}
+
+		write_index_ = 0;
+		lock_index_ = NullLock;
+
+		shutdown_ = false;
+	}
+
+	void DoubleBuffer::shutdown()
+	{
+		std::lock_guard<std::mutex> lock(mutex_);
+
+		shutdown_ = true;
+	}
 }

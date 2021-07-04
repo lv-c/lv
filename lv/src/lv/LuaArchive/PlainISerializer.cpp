@@ -1,5 +1,7 @@
 #include <lv/LuaArchive/PlainISerializer.hpp>
 
+#include <boost/assert.hpp>
+
 
 namespace lv::lua::archive
 {

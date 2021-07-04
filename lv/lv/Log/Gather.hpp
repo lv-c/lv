@@ -82,8 +82,8 @@ namespace lv::log
 
 
 		Gather(ostream_ptr os, filter_type filter = filter_type())
-			: os_(os)
-			, filter_(filter)
+			: os_(std::move(os))
+			, filter_(std::move(filter))
 		{
 		}
 
@@ -92,19 +92,19 @@ namespace lv::log
 
 		void	set_filter(filter_type filter)
 		{
-			this->filter_ = filter;
+			this->filter_ = std::move(filter);
 		}
 
 		
 		Gather &	add_header(formatter_type header)
 		{
-			this->headers_.push_back(header);
+			this->headers_.push_back(std::move(header));
 			return *this;
 		}
 
 		Gather &	add_tailer(formatter_type tailer)
 		{
-			this->tailers_.push_back(tailer);
+			this->tailers_.push_back(std::move(tailer));
 			return *this;
 		}
 
@@ -137,7 +137,7 @@ namespace lv::log
 			// lock
 			mutex_.lock();
 
-			for (formatter_type & fmt : headers_)
+			for (formatter_type const & fmt : headers_)
 			{
 				fmt(*os_, lvl);
 			}
@@ -153,7 +153,7 @@ namespace lv::log
 
 		void	end_record(int lvl)
 		{
-			for (formatter_type & fmt : tailers_)
+			for (formatter_type const & fmt : tailers_)
 			{
 				fmt(*os_, lvl);
 			}

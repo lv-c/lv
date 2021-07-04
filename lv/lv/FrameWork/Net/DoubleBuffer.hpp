@@ -13,6 +13,8 @@
 #include <lv/FrameWork/AutoLink.hpp>
 #include <lv/Buffer.hpp>
 
+#include <boost/noncopyable.hpp>
+
 #include <array>
 #include <mutex>
 
@@ -26,7 +28,7 @@ namespace lv::net
 	{
 	public:
 
-		class ScopedLock
+		class ScopedRead : boost::noncopyable
 		{
 			DoubleBuffer *	obj_;
 
@@ -34,17 +36,39 @@ namespace lv::net
 
 		public:
 
-			ScopedLock(DoubleBuffer * obj, Buffer const * buf);
+			ScopedRead(DoubleBuffer * obj, Buffer const * buf)
+				: obj_(obj)
+				, buf_(buf)
+			{
+			}
 
-			ScopedLock(ScopedLock && other) noexcept;
+			~ScopedRead()
+			{
+				if (buf_ != nullptr)
+				{
+					obj_->end_read(*buf_);
+				}
+			}
 
-			~ScopedLock();
+			operator bool() const { return buf_ != nullptr; }
 
-
-			operator bool() const;
-
-			Buffer const *	buffer() const;
+			Buffer const *	buffer() const { return buf_; }
 		};
+
+		class BatchWriter : boost::noncopyable
+		{
+			Buffer &	buf_;
+
+		public:
+
+			explicit BatchWriter(Buffer & buf) : buf_(buf) {}
+
+			void	write(ConstBufferRef data) const
+			{
+				buffer::append(buf_, data);
+			}
+		};
+
 
 	private:
 
@@ -68,20 +92,31 @@ namespace lv::net
 
 		DoubleBuffer();
 
+
+		void	write(ConstBufferRef data);
+
+		// batch_write ensure that all the data will be written into the same buffer
+		template<class Fn>
+		void	batch_write(Fn && fn)
+		{
+			std::lock_guard<std::mutex> lock(mutex_);
+
+			if (!shutdown_)
+			{
+				fn(BatchWriter(buffers_[write_index_]));
+			}
+		}
+
+
+		Buffer const *	start_read(bool * need_shutdown = nullptr);
+
+		void	end_read(Buffer const & buf);
+
+		ScopedRead	scoped_read();
+
+
 		void	reset();
 
-
-		void	put(ConstBufferRef buf);
-
 		void	shutdown();
-
-
-		Buffer const *	lock(bool * need_shutdown = nullptr);
-
-		void	unlock(Buffer const & buf);
-
-
-		ScopedLock	scope_lock();
-
 	};
 }

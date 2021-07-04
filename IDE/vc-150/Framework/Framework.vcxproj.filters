@@ -92,9 +92,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\lv\src\FrameWork\Net\PacketProxy.cpp">
-      <Filter>Net\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\lv\src\FrameWork\Net\ServerBase.cpp">
       <Filter>Net\Source Files</Filter>
     </ClCompile>
@@ -123,6 +120,9 @@
       <Filter>Net\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\lv\src\FrameWork\Net\DoubleBuffer.cpp">
+      <Filter>Net\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lv\src\FrameWork\Net\PacketProxy.cpp">
       <Filter>Net\Source Files</Filter>
     </ClCompile>
   </ItemGroup>

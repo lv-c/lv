@@ -13,6 +13,9 @@
 #include <lv/Buffer.hpp>
 #include <lv/Stream/StreamBase.hpp>
 
+#include <boost/assert.hpp>
+
+
 namespace lv
 {
 	class OBufferStream : public StreamBase

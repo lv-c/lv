@@ -38,7 +38,7 @@ namespace lv::flow
 
 		OStreamFactory	ostream_factory_;
 
-		// It's a simple flag. So we don't have a mutex for ( it.
+		// It's a simple flag. So we don't have a mutex for it.
 		volatile bool	enabled_;
 
 	public:

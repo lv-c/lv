@@ -315,7 +315,7 @@ BOOST_AUTO_TEST_CASE(test_lua_archive)
 	}
 
 	{
-		PlainLuaIArchive ia(ConstBufferRef(ret.data(), ret.size()));
+		PlainLuaIArchive ia(ret);
 		
 		Vertex new_vertex;
 		int new_num;

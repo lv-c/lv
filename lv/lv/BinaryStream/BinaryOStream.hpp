@@ -60,19 +60,6 @@ namespace lv::bstream
 			set_exceptions();
 		}
 
-		// to make things simple, only provides move constructor and no
-		// move assignment
-		BinaryOStream(BinaryOStream && other) noexcept
-			: BinaryStreamBase(std::move(other))
-			, OStreamProxy(std::move(other))
-			, raw_os_(std::move(other.raw_os_))
-		{
-			if (raw_os_)
-			{
-				OStreamProxy::set(nullptr, &(*raw_os_));
-			}
-		}
-
 		Buffer &	buffer()
 		{
 			return raw_os_->buffer();

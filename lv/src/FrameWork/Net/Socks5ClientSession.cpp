@@ -117,7 +117,7 @@ namespace lv::net
 
 		//
 		Buffer temp_buf = std::move(cache_);
-		buffer::append(temp_buf, buf);
+		buffer::append(temp_buf, *buf);
 
 		BinaryIStream bis(temp_buf);
 
@@ -325,7 +325,8 @@ namespace lv::net
 		}
 
 		uint8_t const cmd = 1;	// CONNECT
-		PacketProxy proxy = std::move(socks_send() << Socks5::Version << cmd << uint8_t(0));
+		PacketProxy proxy = socks_send();
+		proxy << Socks5::Version << cmd << uint8_t(0);
 
 		unsigned short port = 0;
 
@@ -360,7 +361,10 @@ namespace lv::net
 
 	PacketProxy Socks5ClientSession::socks_send()
 	{
-		return PacketProxy(std::make_shared<Buffer>(1024), [this](ConstBufferRef buf) { start_write(buf); });
+		auto buf = std::make_shared<Buffer>();
+		buf->reserve(1024);
+
+		return PacketProxy(std::move(buf), [this](BufferPtr buf) { start_write(*buf); });
 	}
 
 }

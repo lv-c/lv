@@ -82,7 +82,7 @@ namespace lv::rpc
 		 * @exception InvalidProtocolValue
 		 * @exception boost::archive::archive_exception
 		 */
-		BufferPtr	on_receive(ConstBufferRef const & data)
+		BufferPtr	on_receive(ConstBufferRef data)
 		{
 			IArchiveWrapper<iarchive_type> ia(istream_factory_, data);
 

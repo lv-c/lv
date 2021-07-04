@@ -245,7 +245,7 @@ namespace lv::lua::archive
 			LV_ENSURE(token.size() < size, "too long number: " + token.str());
 
 			char buf[size];
-			memcpy(buf, token.begin, token.size());
+			std::copy(token.begin, token.end, buf);
 			buf[token.size()] = '\0';
 
 			char * end = nullptr;

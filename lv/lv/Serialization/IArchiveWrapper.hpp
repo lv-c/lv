@@ -24,7 +24,7 @@ namespace lv
 
 	public:
 
-		IArchiveWrapper(IStreamFactory & factory, ConstBufferRef const & buf)
+		IArchiveWrapper(IStreamFactory & factory, ConstBufferRef buf)
 			: raw_is_(factory.open(buf))
 			, ar_(*raw_is_)
 		{

@@ -299,7 +299,7 @@ namespace lv::net
 					send_queue_->on_reply(id);
 				}
 
-				buf = buf.sub(static_cast<size_t>(bis.tellg()));
+				buf = buf.subspan(static_cast<size_t>(bis.tellg()));
 			}
 			else
 			{

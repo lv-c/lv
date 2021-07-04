@@ -54,18 +54,9 @@ namespace lv::log
 			{
 			}
 
-			Proxy(Proxy && other) noexcept
-				: log_(other.log_)
-			{
-				other.log_ = nullptr;
-			}
-
 			~Proxy() noexcept(false)
 			{
-				if (log_ != nullptr)
-				{
-					log_->on_record_end();
-				}
+				log_->on_record_end();
 			}
 
 			template<class T>
@@ -104,7 +95,7 @@ namespace lv::log
 		{
 			lock_guard lock(mutex_);
 
-			this->gathers_.insert(gather);
+			this->gathers_.insert(std::move(gather));
 		}
 
 		void	remove_gather(gather_ptr gather)

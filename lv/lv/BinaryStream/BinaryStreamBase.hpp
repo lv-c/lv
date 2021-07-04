@@ -10,19 +10,16 @@
 
 #pragma once
 
+#include <boost/noncopyable.hpp>
+
 
 namespace lv::bstream
 {
-	class BinaryStreamBase
+	class BinaryStreamBase : boost::noncopyable
 	{
-		bool	switch_endian_;
+		bool	switch_endian_ = false;
 
 	public:
-
-		BinaryStreamBase()
-			: switch_endian_(false)
-		{
-		}
 
 		bool	switch_endian() const
 		{

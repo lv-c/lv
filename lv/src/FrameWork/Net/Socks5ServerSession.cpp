@@ -227,7 +227,8 @@ namespace lv::net
 
 		uint8_t rep = error_to_rep(error);
 
-		PacketProxy proxy = std::move(send() << Socks5::Version << rep << uint8_t(0));
+		PacketProxy proxy = send();
+		proxy << Socks5::Version << rep << uint8_t(0);
 
 		if (!error)
 		{
@@ -358,7 +359,7 @@ namespace lv::net
 		auto buf = std::make_shared<Buffer>();
 		buf->reserve(1024);
 
-		return PacketProxy(buf, [this](ConstBufferRef buf) { start_write(buf); });
+		return PacketProxy(std::move(buf), [this](BufferPtr buf) { start_write(*buf); });
 	}
 
 }

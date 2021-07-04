@@ -33,7 +33,7 @@ namespace lv::net
 		using base_type = S;
 		using key_type = Key;
 
-		using sink_type = flow::Sink<flow::SyncPush, key_type>;
+		using sink_type = flow::Sink<key_type>;
 		sink_type		sink_;
 
 		using source_type = flow::Source<key_type>;
@@ -48,26 +48,22 @@ namespace lv::net
 		{
 		}
 
-		void	close() override
-		{
-			base_type::close();
-
-			sink_.stop();
-		}
-
 	protected:
 
 		void	push(BufferPtr buf)
 		{
-			if (buf->size() > 2)
+			if (!this->closed())
 			{
-				buffer::write(*buf, 0, uint16_t(buf->size()));
+				if (buf->size() > 2)
+				{
+					buffer::write(*buf, 0, uint16_t(buf->size()));
 
-				this->start_write(buf);
-			}
-			else
-			{
-				BOOST_ASSERT(false);
+					this->start_write(*buf);
+				}
+				else
+				{
+					BOOST_ASSERT(false);
+				}
 			}
 		}
 
@@ -84,7 +80,7 @@ namespace lv::net
 				catch (std::exception const & /* ex */)
 				{
 					BOOST_ASSERT(false);
-					close();
+					this->close();
 
 					return;
 				}

@@ -21,19 +21,15 @@ namespace lv::net
 {
 	using PacketProxyCallback = std::function<void(BufferPtr)>;
 
-	class PacketProxy
+	class PacketProxy : boost::noncopyable
 	{
 		BinaryOStream	bos_;
-
-		bool	valid_;
 
 		PacketProxyCallback	callback_;
 
 	public:
 
 		PacketProxy(BufferPtr buf, PacketProxyCallback callback);
-
-		PacketProxy(PacketProxy && rhs);
 
 		~PacketProxy();
 
@@ -42,8 +38,6 @@ namespace lv::net
 		template<class T>
 		PacketProxy & operator << (T const & t)
 		{
-			BOOST_ASSERT(valid_);
-
 			bos_ << t;
 			return *this;
 		}

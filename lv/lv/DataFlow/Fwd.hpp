@@ -18,28 +18,18 @@
 
 namespace lv::flow
 {
-	template<template<class> class PushPolicy, class Port = std::string, class Compare = std::less<Port> >
+	template<class Port = std::string, class Compare = std::less<Port> >
 	class DataFlow;
 
 	template<class Key = std::string, class OArchive = OArchive>
 	class Source;
 
-	template<template<class> class PushPolicy, class Key = std::string, class IArchive = IArchive>
+	template<class Key = std::string, class IArchive = IArchive>
 	class Sink;
 
 	template<class Key = std::string, class IArchive = IArchive>
 	class Registery;
 
-	template<class T>
-	class SyncPush;
-
-	template<class T>
-	class AsyncPush;
-
-	template<class T>
-	class ThreadedPush;
-
-	using slot_type = std::function<void(ConstBufferRef)>;
-	
+	using slot_type = std::function<void(BufferPtr)>;
 
 } 

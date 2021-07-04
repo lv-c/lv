@@ -137,10 +137,10 @@ struct Tunnel
 
 	void operator ()(BufferPtr buf)
 	{
-		BufferPtr reply = server->on_receive(buf);
+		BufferPtr reply = server->on_receive(*buf);
 		if (reply)
 		{
-			client->on_receive(reply);
+			client->on_receive(*reply);
 		}
 	}
 };

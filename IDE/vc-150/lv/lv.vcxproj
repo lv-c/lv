@@ -277,17 +277,13 @@
     <ClInclude Include="..\..\..\lv\lv\ContainerAdaptor\Tags.hpp" />
     <ClInclude Include="..\..\..\lv\lv\ContainerAdaptor\Vector.hpp" />
     <ClInclude Include="..\..\..\lv\lv\DataFlow.hpp" />
-    <ClInclude Include="..\..\..\lv\lv\DataFlow\AsyncPush.hpp" />
     <ClInclude Include="..\..\..\lv\lv\DataFlow\Connection.hpp" />
     <ClInclude Include="..\..\..\lv\lv\DataFlow\DataFlow.hpp" />
     <ClInclude Include="..\..\..\lv\lv\DataFlow\Fwd.hpp" />
     <ClInclude Include="..\..\..\lv\lv\DataFlow\Invoker.hpp" />
-    <ClInclude Include="..\..\..\lv\lv\DataFlow\PushPolicyBase.hpp" />
     <ClInclude Include="..\..\..\lv\lv\DataFlow\Registery.hpp" />
     <ClInclude Include="..\..\..\lv\lv\DataFlow\Sink.hpp" />
     <ClInclude Include="..\..\..\lv\lv\DataFlow\Source.hpp" />
-    <ClInclude Include="..\..\..\lv\lv\DataFlow\SyncPush.hpp" />
-    <ClInclude Include="..\..\..\lv\lv\DataFlow\ThreadedPush.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Endian.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Ensure.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Exception.hpp" />

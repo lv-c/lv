@@ -55,7 +55,7 @@ namespace lv
 
 	public:
 
-		IArchiveWrapper(IStreamFactory &, ConstBufferRef const & buf)
+		IArchiveWrapper(IStreamFactory &, ConstBufferRef buf)
 			: ar_(buf)
 		{
 		}

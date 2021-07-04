@@ -18,27 +18,14 @@
 namespace lv::bstream
 {
 	template<class T>
-	struct object_tag<BufferRefT<T>, std::enable_if_t<is_primitive_v<T> > > 
+	struct object_tag<std::span<T>, std::enable_if_t<is_primitive_v<T> > > 
 		: primitive_buffer_tag 
 	{
 	};
 
 	template<class T>
-	struct object_tag<BufferRefT<T>, std::enable_if_t<!is_primitive_v<T> > >
+	struct object_tag<std::span<T>, std::enable_if_t<!is_primitive_v<T> > >
 		: range_tag
 	{
 	};
-
-	template<class T>
-	struct object_tag<ConstBufferRefT<T>, std::enable_if_t<is_primitive_v<T> > > 
-		: primitive_buffer_tag 
-	{
-	};
-
-	template<class T>
-	struct object_tag<ConstBufferRefT<T>, std::enable_if_t<!is_primitive_v<T> > >
-		: range_tag
-	{
-	};
-
 }

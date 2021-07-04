@@ -47,23 +47,12 @@ namespace lv::bstream
 			set_exceptions();
 		}
 
-		explicit BinaryIStream(ConstBufferRef const & buf)
+		explicit BinaryIStream(ConstBufferRef buf)
 			: raw_is_(buf)
 		{
 			IStreamProxy::set(nullptr, &(*raw_is_));
 
 			set_exceptions();
-		}
-
-		BinaryIStream(BinaryIStream && other) noexcept
-			: BinaryStreamBase(std::move(other))
-			, IStreamProxy(std::move(other))
-			, raw_is_(std::move(other.raw_is_))
-		{
-			if (raw_is_)
-			{
-				IStreamProxy::set(nullptr, &(*raw_is_));
-			}
 		}
 
 		streamsize	bytes_left()

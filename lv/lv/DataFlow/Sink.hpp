@@ -10,24 +10,19 @@
 
 #pragma once
 
-#include <lv/Buffer.hpp>
+#include <lv/DataFlow/Registery.hpp>
 #include <lv/Serialization/IArchiveWrapper.hpp>
 #include <lv/MPL/MemFn.hpp>
-#include <lv/DataFlow/Fwd.hpp>
-#include <lv/DataFlow/Registery.hpp>
 
 #include <boost/noncopyable.hpp>
 
 #include <memory>
-#include <functional>
 
 
 namespace lv::flow
 {
-	using proxy_push_type = std::function<void(slot_type const &, ConstBufferRef const &)>;
-
 	/// thread-safe
-	template<template<class> class PushPolicy, class Key, class IArchive>
+	template<class Key, class IArchive>
 	class Sink : boost::noncopyable
 	{
 	public:
@@ -35,45 +30,18 @@ namespace lv::flow
 		using key_type = Key;
 		using iarchive_type = IArchive;
 
-		using push_policy_type = PushPolicy<ConstBufferRef>;
-
 	private:
 
 		detail::Registery<key_type, iarchive_type> registery_;
 
-		push_policy_type	push_policy_;
-
-		using IStreamFactoryPtr = std::shared_ptr<IStreamFactory>;
-		using WeakIStreamFactoryPtr = std::weak_ptr<IStreamFactory>;
-
-		IStreamFactoryPtr	istream_factory_;
+		IStreamFactory	istream_factory_;
 
 	public:
 
-		/**
-		 * @proxy_push you can handle exceptions using a proxy push
-		 */
-		Sink(proxy_push_type proxy_push = proxy_push_type(), push_policy_type policy = push_policy_type())
-			: push_policy_(std::move(policy))
-			, istream_factory_(std::make_shared<IStreamFactory>())
+		void	push(ConstBufferRef buf)
 		{
-			slot_type slot = [this](ConstBufferRef const & buf) { push_impl(buf, istream_factory_); };
-
-			if (proxy_push)
-			{
-				push_policy_.set_callback([proxy_push = std::move(proxy_push), slot](ConstBufferRef const & buf) {
-					proxy_push(slot, buf);
-				});
-			}
-			else
-			{
-				push_policy_.set_callback(slot);
-			}
-		}
-
-		void	push(ConstBufferRef const & buf)
-		{
-			push_policy_(buf);
+			IArchiveWrapper<IArchive> ia(istream_factory_, buf);
+			registery_.invoke(ia.get());
 		}
 
 		/**
@@ -109,21 +77,6 @@ namespace lv::flow
 			return *this;
 		}
 
-		void	stop()
-		{
-			istream_factory_.reset();
-		}
-
-	private:
-
-		void	push_impl(ConstBufferRef const & buf, WeakIStreamFactoryPtr weak_isteram_factory)
-		{
-			if (IStreamFactoryPtr factory = weak_isteram_factory.lock())
-			{
-				IArchiveWrapper<IArchive> ia(*factory, buf);
-				registery_.invoke(ia.get());
-			}
-		}
 	};
 
 }

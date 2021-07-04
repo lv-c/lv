@@ -10,13 +10,15 @@
 
 #pragma once
 
+#include <boost/noncopyable.hpp>
+
 #include <sstream>
 #include <functional>
 
 
 namespace lv::lua
 {
-	class CallProxy
+	class CallProxy : boost::noncopyable
 	{
 		std::ostringstream &	oss_;
 
@@ -38,15 +40,6 @@ namespace lv::lua
 		{
 			oss.str(std::string());
 			oss_ << fn << "(";
-		}
-
-		CallProxy(CallProxy && other) noexcept
-			: oss_(other.oss_)
-			, first_param_(other.first_param_)
-			, callback_(std::move(other.callback_))
-			, finished_(other.finished_)
-		{
-			other.finished_ = true;
 		}
 
 		~CallProxy()
