@@ -69,9 +69,9 @@ namespace lv
 
 		public:
 
-			FnWrapper(size_t index, Fn && fn, Collector & collector)
+			FnWrapper(size_t index, Fn fn, Collector & collector)
 				: index_(index)
-				, fn_(std::forward<Fn>(fn))
+				, fn_(std::move(fn))
 				, collector_(collector)
 			{
 			}

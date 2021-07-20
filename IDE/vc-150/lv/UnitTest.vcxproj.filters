@@ -80,5 +80,8 @@
     <ClCompile Include="..\..\..\UnitTest\ContainerAdaptor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\UnitTest\Async.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -25,18 +25,25 @@ namespace lv::concurrent
 
 
 	template<class Tasks, class Fn>
-	decltype(auto)	fork_join(boost::asio::io_context & io, Tasks & tasks, Fn fn)
+	decltype(auto)	fork_join(boost::asio::io_context & io, Tasks && tasks, Fn fn)
 	{
-		using result_type = decltype(fn(*std::begin(tasks)));
+		using result_type = std::decay_t<decltype(fn(*std::begin(tasks)))>;
 
 		Collector<result_type> collector(std::size(tasks));
 		size_t index = 0;
 
-		for (auto & v : tasks)
+		for (auto && v : tasks)
 		{
-			io.post(collector.wrap(index, [&] {
-				return fn(v);
-			}));
+			if constexpr (std::is_rvalue_reference_v<decltype(v)>)
+			{
+				io.post(collector.wrap(index, [&fn, v = std::move(v)]() mutable {
+					return fn(std::move(v));
+				}));
+			}
+			else
+			{
+				io.post(collector.wrap(index, [&] { return fn(v); }));
+			}
 
 			index++;
 		}

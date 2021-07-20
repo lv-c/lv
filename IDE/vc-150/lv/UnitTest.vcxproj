@@ -291,6 +291,7 @@
     <ClInclude Include="..\..\..\UnitTest\UnitTest.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\UnitTest\Async.cpp" />
     <ClCompile Include="..\..\..\UnitTest\BinaryStream.cpp" />
     <ClCompile Include="..\..\..\UnitTest\ContainerAdaptor.cpp" />
     <ClCompile Include="..\..\..\UnitTest\DataFlow.cpp" />

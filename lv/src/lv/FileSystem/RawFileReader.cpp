@@ -1,5 +1,4 @@
 #include <lv/FileSystem/RawFileReader.hpp>
-#include <lv/Exception.hpp>
 #include <lv/Ensure.hpp>
 
 #include <filesystem>
