@@ -802,6 +802,9 @@
     <ClInclude Include="..\..\..\lv\lv\LuaArchive\BinaryObject.hpp">
       <Filter>LuaArchive\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\Concepts.hpp">
+      <Filter>Utility\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\lv\src\lv\Console.cpp">

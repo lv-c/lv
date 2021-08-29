@@ -253,6 +253,7 @@
     <ClInclude Include="..\..\..\lv\lv\BinaryStream\Tags.hpp" />
     <ClInclude Include="..\..\..\lv\lv\BinaryStream\Vector.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Buffer.hpp" />
+    <ClInclude Include="..\..\..\lv\lv\Concepts.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Concurrent\Async.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Concurrent\Collector.hpp" />
     <ClInclude Include="..\..\..\lv\lv\Concurrent\FIFOQueue.hpp" />

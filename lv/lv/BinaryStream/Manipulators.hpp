@@ -14,10 +14,10 @@
 #include <lv/BinaryStream/BinaryOStream.hpp>
 #include <lv/Exception.hpp>
 #include <lv/Ensure.hpp>
+#include <lv/Concepts.hpp>
 
 #include <boost/serialization/split_member.hpp>
 
-#include <type_traits>
 #include <algorithm>
 #include <limits>
 
@@ -272,7 +272,8 @@ namespace lv::bstream
 
 	namespace detail
 	{
-		template<class T>
+		// should we remove the requirement of is_trivially_constructible?
+		template<Pod T>
 		class pod_impl
 		{
 			T &		t_;
@@ -302,14 +303,14 @@ namespace lv::bstream
 		};
 	}
 
-	template<class T>
-	std::enable_if_t<std::is_standard_layout_v<T>, detail::pod_impl<T> >	standard_layout(T & t)
+	template<Pod T>
+	detail::pod_impl<T>		pod(T & t)
 	{
 		return detail::pod_impl<T>(t);
 	}
 
-	template<class T>
-	std::enable_if_t<std::is_standard_layout_v<T>, detail::pod_impl<T const> >	standard_layout(T const & t)
+	template<Pod T>
+	detail::pod_impl<T const>	pod(T const & t)
 	{
 		return detail::pod_impl<T const>(t);
 	}
