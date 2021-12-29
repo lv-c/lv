@@ -177,4 +177,24 @@ namespace lv
 	{
 		return detail::write_range_impl<Range>(range, delimiter, use_hex, setw);
 	}
+
+
+	//
+
+	template<size_t Precision>
+	class fixed
+	{
+		double	val_;
+
+	public:
+
+		explicit fixed(double val) : val_(val) {}
+
+		template<class C, class Tr>
+		friend std::basic_ostream<C, Tr> & operator << (std::basic_ostream<C, Tr> & os, fixed const & f)
+		{
+			boost::io::ios_flags_saver ias(os);
+			return os << std::fixed << std::setprecision(Precision) << f.val_;
+		}
+	};
 }
