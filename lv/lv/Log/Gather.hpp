@@ -54,10 +54,10 @@ namespace lv::log
 	{
 		bool operator () (int l) const
 		{
-#ifdef _DEBUG
-			return true;
-#else
+#ifdef NDEBUG
 			return l > debug;
+#else
+			return true;
 #endif
 		}
 	};

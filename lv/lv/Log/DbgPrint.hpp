@@ -11,16 +11,16 @@
 #pragma once
 
 
-#ifdef _DEBUG
-#define DbgPrint(log, exp)	log(lv::debug) << exp
+#ifdef NDEBUG
+#	define DbgPrint(log, exp)	((void)0)
 #else
-#define DbgPrint(log, exp)	((void)0)
+#	define DbgPrint(log, exp)	log(lv::debug) << exp
 #endif
 
 #ifdef LOG_ENABLE_WEAK_PRINT
-#ifdef _DEBUG
-#define WeakPrint(log, exp)	log(lv::debug - 1) << exp
-#else
-#define WeakPrint(log, exp)	((void)0)
-#endif
+#	ifdef NDEBUG
+#		define WeakPrint(log, exp)	((void)0)
+#	else
+#		define WeakPrint(log, exp)	log(lv::debug - 1) << exp
+#	endif
 #endif
