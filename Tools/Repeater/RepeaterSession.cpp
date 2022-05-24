@@ -13,8 +13,6 @@ RepeaterSession::RepeaterSession(ContextPtr context, string const & dest_ip, str
 	, dest_ip_(dest_ip)
 	, dest_port_(dest_port)
 	, monitor_(monitor)
-	, dest_connected_(false)
-	, remote_ip_(0)
 	, timer_(context->io_context())
 {
 }
@@ -40,9 +38,9 @@ void RepeaterSession::on_connected()
 
 	dest_session_ = std::make_shared<TcpSession>(context_);
 
-	dest_session_->connect_event().connect(boost::bind(&RepeaterSession::dest_on_connected, this));
-	dest_session_->error_event().connect(boost::bind(&RepeaterSession::dest_on_error, this, _1, _2));
-	dest_session_->receive_event().connect(boost::bind(&RepeaterSession::dest_on_receive, this, _1));
+	dest_session_->connect_event().connect(std::bind(&RepeaterSession::dest_on_connected, this));
+	dest_session_->error_event().connect(std::bind(&RepeaterSession::dest_on_error, this, placeholders::_1, placeholders::_2));
+	dest_session_->receive_event().connect(std::bind(&RepeaterSession::dest_on_receive, this, placeholders::_1));
 
 	dest_session_->connect(dest_ip_, dest_port_);
 

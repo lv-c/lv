@@ -5,7 +5,6 @@
 #include <lv/StreamHelper.hpp>
 #include <lv/Log/Utility.hpp>
 
-#include <boost/bind.hpp>
 #include <boost/asio/ip/address_v4.hpp>
 
 
@@ -86,7 +85,7 @@ void Monitor::increase(uint32_t ip, IPStat::Type type, uint32_t num)
 void Monitor::start_timer()
 {
 	timer_.expires_from_now(boost::posix_time::minutes(Config::instance().stat_minutes));
-	timer_.async_wait(boost::bind(&Monitor::on_timer, this, _1));
+	timer_.async_wait(std::bind(&Monitor::on_timer, this, placeholders::_1));
 }
 
 void Monitor::on_timer(boost::system::error_code const & error)

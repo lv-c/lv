@@ -27,13 +27,13 @@ class RepeaterSession : public TcpSession
 
 	string	dest_port_;
 
-	bool	dest_connected_;
+	bool	dest_connected_ = false;
 
 	BufferPtr	cache_;
 
 	Monitor &	monitor_;
 
-	uint32_t	remote_ip_;
+	uint32_t	remote_ip_ = 0;
 
 	Timer		active_timer_;
 

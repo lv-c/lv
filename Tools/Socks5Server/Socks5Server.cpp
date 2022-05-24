@@ -1,8 +1,5 @@
 #include <lv/Config.hpp>
 
-#define _SCL_SECURE_NO_WARNINGS
-#define _SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING
-#define _SILENCE_CXX17_ALLOCATOR_VOID_DEPRECATION_WARNING
 #define BOOST_SP_USE_QUICK_ALLOCATOR
 
 #pragma warning(disable : 4819)
@@ -17,12 +14,12 @@
 #pragma comment(lib, "IPHLPAPI.lib")
 #pragma comment(lib, "Ws2_32.lib")
 
-#ifdef _DEBUG
-#pragma comment(lib, "libluabindd.lib")
-#else
-#pragma comment(lib, "libluabind.lib")
-#endif
-#pragma comment(lib, "liblua.lib")
+
+#define LV_LIB_NAME "luabind"
+#include <lv/AutoLink.hpp>
+
+#define LV_LIB_NAME "lua"
+#include <lv/AutoLink.hpp>
 
 
 #include <vector>

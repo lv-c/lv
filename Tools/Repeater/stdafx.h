@@ -1,10 +1,5 @@
-#pragma once
-
-#define _SCL_SECURE_NO_WARNINGS
-#define _SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING
-#define _SILENCE_CXX17_ALLOCATOR_VOID_DEPRECATION_WARNING
-
-#pragma warning(disable : 4819)
+#ifndef REPEATER_STDAFX_H
+#define REPEATER_STDAFX_H
 
 #define WIN32_LEAN_AND_MEAN
 #define _WIN32_WINNT	0x0501
@@ -26,10 +21,10 @@ using namespace std;
 #include <boost/asio/deadline_timer.hpp>
 
 
-#ifdef _DEBUG
-#pragma comment(lib, "libluabindd.lib")
-#pragma comment(lib, "libluad.lib")
-#else
-#pragma comment(lib, "libluabind.lib")
-#pragma comment(lib, "liblua.lib")
+#define LV_LIB_NAME "luabind"
+#include <lv/AutoLink.hpp>
+
+#define LV_LIB_NAME "lua"
+#include <lv/AutoLink.hpp>
+
 #endif
