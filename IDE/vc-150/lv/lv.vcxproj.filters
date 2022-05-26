@@ -805,6 +805,9 @@
     <ClInclude Include="..\..\..\lv\lv\Concepts.hpp">
       <Filter>Utility\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\lv\lv\FileSystem\MyZipReader.ipp">
+      <Filter>FileSystem\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\lv\src\lv\Console.cpp">
@@ -820,9 +823,6 @@
       <Filter>Graphics\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\lv\src\lv\FileSystem\IFileIO.cpp">
-      <Filter>FileSystem\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\lv\src\lv\FileSystem\MyZipReader.cpp">
       <Filter>FileSystem\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\lv\src\lv\FileSystem\RawFileReader.cpp">

@@ -1,7 +1,7 @@
 
 
 lib lv2
-	: [ glob-tree *.cpp : ZeroMQ Graphics UI MyZipReader.cpp ]
+	: [ glob-tree *.cpp ]
 	: <link>static 
 	  <tag>@tag-names
 	;

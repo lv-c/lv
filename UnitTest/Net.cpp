@@ -23,6 +23,12 @@
 #include <thread>
 #include <condition_variable>
 
+#ifdef LV_PLATFORM_WINDOWS
+#	pragma comment(lib, "libcrypto.lib")
+#	pragma comment(lib, "libssl.lib")
+#	pragma comment(lib, "CRYPT32.LIB")
+#endif
+
 
 using namespace lv::net;
 using namespace lv;

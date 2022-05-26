@@ -3,6 +3,7 @@
 
 #include <climits>
 #include <algorithm>
+#include <limits>
 
 namespace lv
 {

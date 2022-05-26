@@ -17,7 +17,6 @@ local usage-requirements =
 	<library>/luabind
 	<library>/lua
 	<library>/boost//date_time
-	<library>/boost//filesystem
 	<library>/boost//system
 	<library>/boost//serialization
 	;
