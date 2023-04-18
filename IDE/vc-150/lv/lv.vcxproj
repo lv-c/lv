@@ -436,7 +436,6 @@
     <ClInclude Include="..\..\..\lv\lv\UI\Progress.hpp" />
     <ClInclude Include="..\..\..\lv\lv\UI\Window.hpp" />
     <ClInclude Include="..\..\..\lv\lv\UI\WindowRenderer.hpp" />
-    <ClInclude Include="..\..\..\lv\lv\ZeroMQ.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\lv\src\lv\Concurrent\Async.cpp" />

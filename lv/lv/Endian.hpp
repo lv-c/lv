@@ -48,6 +48,12 @@ namespace lv
 	}
 
 
+	inline bool		endian_switch(bool v) noexcept
+	{
+		return v;
+	}
+
+
 	constexpr	bool	little_endian() noexcept
 	{
 #ifdef BOOST_LITTLE_ENDIAN

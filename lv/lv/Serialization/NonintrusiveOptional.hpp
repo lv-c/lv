@@ -40,8 +40,6 @@ namespace lv::serialization
 		return NonintrusiveOptional<T>(val);
 	}
 
-
-#define	LV_SERIALIZATION_OPTIONAL_NVP(name)				\
-	boost::serialization::make_nvp(#name, lv::serialization::make_optional(name))
-
 }
+
+#define LV_OPT(x)	(#x, lv::serialization::make_optional(x))

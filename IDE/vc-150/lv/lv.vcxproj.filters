@@ -505,9 +505,6 @@
     <ClInclude Include="..\..\..\lv\lv\DataFlow.hpp">
       <Filter>Include\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\lv\lv\ZeroMQ.hpp">
-      <Filter>Include\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\lv\lv\Lua\CallProxy.hpp">
       <Filter>Lua\Header Files</Filter>
     </ClInclude>
