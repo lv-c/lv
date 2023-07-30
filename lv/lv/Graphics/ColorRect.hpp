@@ -99,6 +99,7 @@ namespace lv
 			{
 				(*this)[i] += cr[i];
 			}
+			return *this;
 		}
 
 		ColorRect & operator *= (ColorRect const & cr)
@@ -107,6 +108,7 @@ namespace lv
 			{
 				(*this)[i] *= cr[i];
 			}
+			return *this;
 		}
 
 		friend bool operator == (ColorRect const & lhs, ColorRect const & rhs)
