@@ -17,6 +17,12 @@
 
 namespace lv::lua::archive
 {
+	template <class T>
+	void save(std::ostream & os, lv::serialization::NonintrusiveOptional<T> const & t, size_t level)
+	{
+		save(os, t.value(), level);
+	}
+
 	template<class T>
 	void	load(luabind::object const & obj, lv::serialization::NonintrusiveOptional<T> & t)
 	{
@@ -26,7 +32,6 @@ namespace lv::lua::archive
 		}
 	}
 
-
 	template<class T>
 	void	load(Parser & parser, lv::serialization::NonintrusiveOptional<T> & t)
 	{
@@ -35,5 +40,4 @@ namespace lv::lua::archive
 			parser >> t.value();
 		}
 	}
-
 }
