@@ -1,11 +1,4 @@
-
-import modules ;
-import virtual-target ;
-import property-set ;
-import ac ;
-import path ;
-import project ;
-
+import lv-tag ;
 
 use-project /boost : $(BOOST_ROOT) ;
 use-project /luabind : $(LUABIND_ROOT) ;
@@ -29,27 +22,6 @@ project lv
 	: usage-requirements $(usage-requirements)
 	: build-dir build
 	;
-
-
-rule tag-names ( name : type ? : property-set )
-{
-	if $(type) in STATIC_LIB SHARED_LIB EXE
-	{
-		if [ $(property-set).get <variant> ] = debug
-		{
-			name = $(name)D ;
-		}
-
-		if [ $(property-set).get <address-model> ] = 32
-		{
-			name = $(name)-x86 ;
-		}
-	}
-
-	local result = [ virtual-target.add-prefix-and-suffix $(name) : $(type) : $(property-set) ] ;
-
-	return $(result) ;
-}
 
 
 local proj =

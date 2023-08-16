@@ -1,9 +1,9 @@
-
+import lv-tag ;
 
 lib FrameWork
 	: [ glob-tree *.cpp : SSL* ]
 	: <link>static
-	  <tag>@tag-names
+	  <tag>@lv-tag.tag-names
 	;
 
 

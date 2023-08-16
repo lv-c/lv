@@ -1,9 +1,9 @@
-
+import lv-tag ;
 
 lib lv2
 	: [ glob-tree *.cpp ]
 	: <link>static 
-	  <tag>@tag-names
+	  <tag>@lv-tag.tag-names
 	;
 
 install stage
