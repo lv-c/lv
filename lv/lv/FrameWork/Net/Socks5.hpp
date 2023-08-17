@@ -15,9 +15,9 @@ namespace lv::net
 {
 	struct Socks5
 	{
-		static uint8_t const	Version		= 0x05;
+		static constexpr uint8_t	Version		= 0x05;
 
-		static uint8_t const	AuthVersion	= 0x01;
+		static constexpr uint8_t	AuthVersion	= 0x01;
 
 		enum Method : uint8_t
 		{
