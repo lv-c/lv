@@ -41,7 +41,7 @@ namespace lv::detail
 }
 
 #define LV_ENSURE(check, msg)			\
-	if (!(check)) {						\
+	if (!(check))[[unlikely]] {			\
 		lv::detail::ensure_throw(msg);	\
 	}
 
