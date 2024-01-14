@@ -16,6 +16,7 @@
 #include <boost/assert.hpp>
 
 #include <algorithm>
+#include <cstdint>
 
 namespace lv
 {

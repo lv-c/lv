@@ -22,7 +22,7 @@ namespace lv
 	{
 		std::ostream &	os_;
 
-		std::string		spliter_;
+		std::string		splitter_;
 
 		bool	first_time_;
 
@@ -33,7 +33,7 @@ namespace lv
 
 		LuaOArchive(std::ostream & os, std::string const & spliter = ", ")
 			: os_(os)
-			, spliter_(spliter)
+			, splitter_(spliter)
 			, first_time_(true)
 		{
 			os_.exceptions(std::ios_base::badbit | std::ios_base::failbit);
@@ -44,7 +44,7 @@ namespace lv
 		{
 			if (!first_time_)
 			{
-				os_ << spliter_;
+				os_ << splitter_;
 			}
 			else
 			{
