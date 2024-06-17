@@ -89,7 +89,7 @@ namespace lv
 
 	//
 	template<class T>
-	inline int	sign(T val) noexcept
+	inline int	sign(T val)
 	{
 		return (T(0) < val) - (val < T(0));
 	}
